@@ -26,20 +26,18 @@
   }
 
   browser.contextMenus.onClicked.addListener(function(info, tab) {
-    console.log(info.menuItemId);
-    console.log(info.selectionText);
     for(let i=0; i<config["options"].length; i++){
       let item = config.options[i];
       if( info.menuItemId == item["id"] ) {
-        console.log(item["id"]);
-        console.log(item["title"]);
-        console.log(item["contexts"]);
-        console.log(item["url"]);
-        let url = item["url"];
-        url = url.replace("$1", info.selectionText);
-        browser.tabs.create({url: url});
+        gotoSite(item["url"],info.selectionText);
       }
     }
   });
+
+  function gotoSite(url,text){
+    url = url.replace("$1", text);
+    console.log('url='+url);
+    browser.tabs.create({url: url});
+  }
 
 })();
