@@ -12,5 +12,8 @@
       "page": "options.html",
       "browser_style": true
   },
-  "permissions": ["contextMenus"]
+  "permissions": [
+      "contextMenus",
+      "storage"
+  ]
 }
