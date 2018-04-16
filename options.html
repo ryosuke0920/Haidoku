@@ -1,25 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div>
     <form id="optionForm">
-      <div><label><input type="checkbox" name="Google" />&nbsp;Google</label></div>
-      <div><label><input type="checkbox" name="Yahoo" />&nbsp;Yahoo</label></div>
-      <div><label><input type="checkbox" name="Cambridge Dictionary" />&nbsp;Cambridge Dictionary</label></div>
       <div>
-        <input type="checkbox" name="" />&nbsp;
-        <label>name&nbsp;<input type="text" name="name" /></label>&nbsp;
-        <label>url&nbsp;<input type="text" name="url" /></label>
+        <input type="checkbox" name="register" value="Google">
+        <label>Google</label>
       </div>
       <div>
-        <input type="checkbox" name="" />&nbsp;
-        <label>name&nbsp;<input type="text" name="name" /></label>&nbsp;
-        <label>url&nbsp;<input type="text" name="url" /></label>
+        <input type="checkbox" name="register" value="Yahoo">
+        <label>Yahoo</label>
       </div>
-      <div><input type="submit" value="save"></input></div>
+      <div>
+        <input type="checkbox" name="register" value="Cambridge Dictionary">
+        <label>Cambridge Dictionary</label>
+      </div>
+      <div>
+        <button class="save">save</button>
+      </div>
     </form>
   </div>
 <script src="option.js"></script>
