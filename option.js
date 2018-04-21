@@ -1,49 +1,77 @@
 ( () => {
-  let conf = {
-    "defailt":{
-      "google":"1",
-      "yahoo":"2",
-      "dictionary.cambridge.org":"3"
-    }
-  };
 
-  document.querySelector('#optionForm').addEventListener('submit',resistFormOption);
+	let conf = {
+		"defailt":{
+			"www.google.co.jp":"1",
+			"www.yahoo.co.jp":"2",
+			"dictionary.cambridge.org":"3"
+		}
+	};
 
-  function resistFormOption(e){
-    console.log(e);
-    e.preventDefault();
+	document.querySelector('#optionForm').addEventListener('submit',saveOptions);
+	document.addEventListener('DOMContentLoaded', restoreOptions);
 
-    let form = e.target;
-    let registers = form.querySelectorAll("input[name=register]:checked");
+	function restoreOptions(e){
+		console.log(e);
 
-    for(let i=0; i<registers.length; i++){
-      console.log("i="+i);
-      let value = registers[i].value;
-      console.log("value="+value);
+		let getter = browser.storage.local.get({
+			"registors": []
+		});
+		getter.then(onGot, onError);
 
-      browser.contextMenus.create(
-        {
-          "id":value,
-          "title":value,
-          "contexts":["selection"]
-        },
-        onCreated
-      );
-    }
+		function onGot(res){
+			"use strict";
+			console.log("onGot");
+			console.log(res);
+			let registors = res["registors"];
+			console.log(registors);
+			for(let i=0; i<registors.length; i++){
+				console.log("i="+i);
 
-    function onCreated(e){
-      console.log("e="+e);
-    }
+				let value = registors[i];
+				console.log("value=" + value);
 
-    browser.contextMenus.onClicked.addListener(function(info, tab) {
-      console.log(info);
-      console.log(tab);
-      switch (info.menuItemId) {
-        case "log-selection":
-          console.log(info.selectionText);
-          break;
-      }
-    });
+				let select = "input[name=register][value=\"" + value + "\"]";
+				console.log("select="+select);
 
-  }
+				let checkbox = document.querySelector(select);
+				checkbox.setAttribute("checked", true);
+				console.log("checkbox="+checkbox);
+
+			}
+		}
+		function onError(e){
+			console.error(e);
+			console.error("getter ng");
+		}
+	}
+
+	function saveOptions(e){
+		e.preventDefault();
+		console.log(e);
+
+		let form = e.target;
+		let registers = form.querySelectorAll("input[name=register]:checked");
+		let store_registers = [];
+
+		for(let i=0; i<registers.length; i++){
+			let value = registers[i].value;
+			store_registers.push(value);
+		}
+
+		console.log(store_registers);
+
+		let setter = browser.storage.local.set({
+			"registors": store_registers
+		});
+		setter.then((e)=>{ok(e)}, ng);
+
+		function ok(e){
+			console.log("setter ok");
+		}
+		function ng(e){
+			console.error("setter ng");
+		}
+
+	}
 })();
