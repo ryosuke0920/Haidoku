@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name":"add url your context menu",
+  "name":"GoToSite",
   "description":"You can add some url links to firefox context menu. that looks like Searching by Google. ",
   "version":"1.0",
   "background": {
