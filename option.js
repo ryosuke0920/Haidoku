@@ -1,13 +1,12 @@
 ( () => {
-	document.querySelector('#optionForm').addEventListener('submit',saveOptions);
-	document.addEventListener('DOMContentLoaded', restoreOptions);
+	console.log(document.addEventListener('DOMContentLoaded', initOptions));
 
-	function restoreOptions(e){
-		console.log("restoreOptions");
+	function initOptions(e){
+		console.log("initOptions");
 		let getter = browser.storage.local.get({
 			"registors": []
 		});
-		getter.then(onGot, onError);
+		getter.then(onGot, onError).then(addEvents, onError);
 
 		function onGot(res){
 			console.log("onGot");
@@ -25,6 +24,14 @@
 			}
 		}
 
+		function addEvents(res){
+			console.log("aadEvents");
+			let inputs = document.querySelectorAll('input[name="register"]');
+			for( let i=0; i<inputs.length; i++){
+				inputs[i].addEventListener("CheckboxStateChange", saveOptions);
+			}
+		}
+
 		function onError(e){
 			console.log("onError");
 			console.error(e);
@@ -34,8 +41,7 @@
 	function saveOptions(e){
 		console.log("saveOptions");
 		e.preventDefault();
-		let form = e.target;
-		let registers = form.querySelectorAll("input[name=register]:checked");
+		let registers = document.querySelectorAll("input[name=register]:checked");
 		let store_registers = [];
 		for(let i=0; i<registers.length; i++){
 			let value = registers[i].value;
