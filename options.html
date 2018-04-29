@@ -7,40 +7,52 @@
 <body>
 <div>
 	<form>
-		<div class="box" id="preset">
-			<div>
-				<label>
-					<input type="checkbox" name="register" value="www.google.co.jp">
-					Google
-				</label>
-			</div>
-			<div>
-				<label>
-					<input type="checkbox" name="register" value="www.yahoo.co.jp">
-					Yahoo
-				</label>
-			</div>
-			<div>
-				<label>
-					<input type="checkbox" name="register" value="dictionary.cambridge.org">
-					Cambridge Dictionary
-				</label>
-			</div>
-		</div>
-		<div class="box" id="custom">
-			<div id="hiddenPrototype">
-				<input type="checkbox" name="register" value="custom1">
-				<label>
-					label
-					<input type="text" name="label" value="" title="this will be appeared in the context menu.">
-				</label>
-				<label>
-					url
-					<input type="text" name="url" value="" title="the url you want to go. if you set &quot;$1&quot;, it will be replaced to the words you selected." >
-				</label>
+
+		<div class="box">
+			<h1>fixed fields</h1>
+			<divid="preset">
+				<div>
+					<label>
+						<input type="checkbox" name="register" value="www.google.co.jp">
+						Google
+					</label>
+				</div>
+				<div>
+					<label>
+						<input type="checkbox" name="register" value="www.yahoo.co.jp">
+						Yahoo
+					</label>
+				</div>
+				<div>
+					<label>
+						<input type="checkbox" name="register" value="dictionary.cambridge.org">
+						Cambridge Dictionary
+					</label>
+				</div>
 			</div>
 		</div>
+		<div class="box">
+			<h1>custom fields</h1>
+			<div>
+					<input type="button" class="addInputField" value="add field" >
+			</div>
+			<div class="box" id="custom"></div>
+			<div>
+					<input type="button" class="addInputField" value="add field" >
+			</div>
 	</form>
+</div>
+<div id="inputPrototype" style="display:none;">
+	<input type="checkbox" name="register" value="custom1">
+	<label>
+		label
+		<input type="text" name="label" value="" title="this will be appeared in the context menu.">
+	</label>
+	<label>
+		url
+		<input type="text" name="url" value="" title="the url you want to go. if you set &quot;$1&quot;, it will be replaced to the words you selected." >
+	</label>
+	<input type="button" class="removeField" value="remove field" >
 </div>
 <script src="option.js"></script>
 </body>

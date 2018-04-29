@@ -1,8 +1,38 @@
 ( () => {
-	console.log(document.addEventListener('DOMContentLoaded', initOptions));
+	document.addEventListener("DOMContentLoaded", initOptions);
+
+	let buttons = document.querySelectorAll(".addInputField");
+	for(let i=0; i<buttons.length; i++){
+		console.log(buttons[i]);
+		buttons[i].addEventListener("click", addInputField);
+	}
+
+	let removeFieldNode = document.querySelectorAll(".removeField");
+	for(let i=0; i<removeFieldNode.length; i++){
+		console.log(removeFieldNode[i]);
+		removeFieldNode[i].addEventListener("click", removeField);
+	}
+	addInputField();
+
+	function removeField(){
+		console.log("removeField");
+	}
+
+	function addInputField(){
+		console.log("addInputField");
+		let customNode = document.querySelector("#custom");
+		console.log(customNode);
+		let inputPrototypeNode = document.querySelector("#inputPrototype");
+		inputPrototypeNode = inputPrototypeNode.cloneNode(true);
+		inputPrototypeNode.removeAttribute("id");
+		customNode.appendChild(inputPrototypeNode);
+		inputPrototypeNode.style.display="block";
+		console.log(inputPrototypeNode);
+	}
 
 	function initOptions(e){
 		console.log("initOptions");
+
 		let getter = browser.storage.local.get({
 			"registors": []
 		});
