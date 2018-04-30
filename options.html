@@ -3,56 +3,32 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="style.css">
+<title>title</title>
 </head>
 <body>
 <div>
-	<form>
-
+	<form id="form">
 		<div class="box">
 			<h1>fixed fields</h1>
-			<divid="preset">
-				<div>
-					<label>
-						<input type="checkbox" name="register" value="www.google.co.jp">
-						Google
-					</label>
-				</div>
-				<div>
-					<label>
-						<input type="checkbox" name="register" value="www.yahoo.co.jp">
-						Yahoo
-					</label>
-				</div>
-				<div>
-					<label>
-						<input type="checkbox" name="register" value="dictionary.cambridge.org">
-						Cambridge Dictionary
-					</label>
-				</div>
+			<div id="preset">
+				<div><label><input type="checkbox" class="register" name="register" value="www.google.co.jp">Google</label></div>
+				<div><label><input type="checkbox" class="register" name="register" value="www.yahoo.co.jp">Yahoo</label></div>
+				<div><label><input type="checkbox" class="register" name="register" value="dictionary.cambridge.org">Cambridge Dictionary</label></div>
 			</div>
 		</div>
 		<div class="box">
 			<h1>custom fields</h1>
-			<div>
-					<input type="button" class="addInputField" value="add field" >
-			</div>
+			<div><button type="button" class="add">add field</button></div>
 			<div class="box" id="custom"></div>
-			<div>
-					<input type="button" class="addInputField" value="add field" >
-			</div>
+			<div><button type="button" class="add">add field</button></div>
+		</div>
 	</form>
 </div>
-<div id="inputPrototype" style="display:none;">
-	<input type="checkbox" name="register" value="custom1">
-	<label>
-		label
-		<input type="text" name="label" value="" title="this will be appeared in the context menu.">
-	</label>
-	<label>
-		url
-		<input type="text" name="url" value="" title="the url you want to go. if you set &quot;$1&quot;, it will be replaced to the words you selected." >
-	</label>
-	<input type="button" class="removeField" value="remove field" >
+<div id="inputPrototype" class="field" style="display:none;">
+	<input class="register" type="checkbox" name="register" value="1">
+	<label>label<input type="text" name="label" title="this will be appeared in the context menu."></label>
+	<label>url<input type="text" name="url" title="the url you want to go. if you set &quot;$1&quot;, it will be replaced to the words you selected." ></label>
+	<button type="button" class="removeField">remove field</button>
 </div>
 <script src="option.js"></script>
 </body>
