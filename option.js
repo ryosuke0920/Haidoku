@@ -12,7 +12,7 @@
 			let registors = res["registors"];
 			for(let i=0; i<registors.length; i++){
 				let value = registors[i];
-				let select = "#form input[name=register][value=\"" + value + "\"]";
+				let select = "#form input[name=check][value=\"" + value + "\"]";
 				let checkbox = document.querySelector(select);
 				checkbox.setAttribute("checked", true);
 			}
@@ -22,14 +22,13 @@
 		}
 
 		function onError(e){
-			console.log("onError");
 			console.error(e);
 		}
 	}
 
 	function mainBehavior(e){
 		switch(e.target.getAttribute("class")){
-			case "register":
+			case "check":
 				saveOptions();
 				return;
 			case "add":
@@ -51,39 +50,51 @@
 
 	function fetchValue(element, selector){
 		let tmp = element.querySelector(selector);
-		if (!tmp){
-			return null;
-		}
+		if (!tmp) return null;
 		return tmp.value;
+	}
+
+	function makeMetadata(){
+		let manifest = browser.runtime.getManifest();
+		let now = new Date();
+		let data = {
+			"version": manifest.version,
+			"updateDate": now.toString()
+		};
+		console.log(data);
+		return data;
 	}
 
 	function saveOptions(){
 		let fields = document.querySelectorAll("#form .field");
+		let optionList = [];
 		for( let i=0; i<fields.length; i++){
-			let register = fields[i].querySelector(".register");
+			let check = fields[i].querySelector(".check");
+			let checked = check.checked;
+			let value = check.value;
 			let label = fetchValue(fields[i], ".label");
 			let url = fetchValue(fields[i], ".url");
-			console.log(register);
-			console.log(label);
-			console.log(url);
+			let data = {
+				"id": (i+1),
+				"value": value,
+				"checked": checked,
+				"label": label,
+				"url": url,
+				"sort": i,
+			};
+			optionList.push(data);
 		}
-		let store_registers = [];
-/*
-		let registers = document.querySelectorAll("input[name=register]:checked");
-		for(let i=0; i<registers.length; i++){
-			let value = registers[i].value;
-			store_registers.push(value);
-		}
-*/
 		let setter = browser.storage.local.set({
-			"registors": store_registers
+			"metadata": makeMetadata(),
+			"optionList": optionList
 		});
 		setter.then(onSet, onError);
 
-		function onSet(){}
+		function onSet(){
+			console.log("optionList saved.");
+		}
 
 		function onError(e){
-			console.log("onError");
 			console.error(e);
 		}
 	}
