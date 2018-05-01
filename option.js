@@ -3,26 +3,14 @@
 
 	function init(e){
 		let getter = browser.storage.local.get({
-			"registors": []
+			"optionList": []
 		});
 		getter.then(onGot, onError);
 
 		function onGot(res){
-/*
-			let registors = res["registors"];
-			for(let i=0; i<registors.length; i++){
-				let value = registors[i];
-				let select = "#form input[name=check][value=\"" + value + "\"]";
-				let checkbox = document.querySelector(select);
-				checkbox.setAttribute("checked", true);
-			}
-*/
+			console.log(res);
 			addInputField();
 			document.querySelector("#form").addEventListener("click", mainBehavior);
-		}
-
-		function onError(e){
-			console.error(e);
 		}
 	}
 
@@ -61,7 +49,7 @@
 			"version": manifest.version,
 			"updateDate": now.toString()
 		};
-		console.log(data);
+		//console.log(data);
 		return data;
 	}
 
@@ -84,18 +72,21 @@
 			};
 			optionList.push(data);
 		}
-		let setter = browser.storage.local.set({
-			"metadata": makeMetadata(),
-			"optionList": optionList
-		});
-		setter.then(onSet, onError);
 
-		function onSet(){
-			console.log("optionList saved.");
+		let getter = browser.runtime.getBackgroundPage();
+		getter.then(onGot, onError).then(onSave, onError);
+
+		function onGot(page){
+			let saver = page.saveOptions( makeMetadata(), optionList );
+			return saver;
+		}
+		function onSave(){
+			//console.log("onSave");
 		}
 
-		function onError(e){
-			console.error(e);
-		}
+	}
+
+	function onError(e){
+		console.error(e);
 	}
 })();
