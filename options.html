@@ -11,9 +11,9 @@
 		<div class="box">
 			<h1>fixed fields</h1>
 			<div id="preset">
-				<div><label><input type="checkbox" class="register" name="register" value="www.google.co.jp">Google</label></div>
-				<div><label><input type="checkbox" class="register" name="register" value="www.yahoo.co.jp">Yahoo</label></div>
-				<div><label><input type="checkbox" class="register" name="register" value="dictionary.cambridge.org">Cambridge Dictionary</label></div>
+				<div class="field"><label><input type="checkbox" class="register" value="www.google.co.jp">Google</label></div>
+				<div class="field"><label><input type="checkbox" class="register" value="www.yahoo.co.jp">Yahoo</label></div>
+				<div class="field"><label><input type="checkbox" class="register" value="dictionary.cambridge.org">Cambridge Dictionary</label></div>
 			</div>
 		</div>
 		<div class="box">
@@ -25,9 +25,9 @@
 	</form>
 </div>
 <div id="inputPrototype" class="field" style="display:none;">
-	<input class="register" type="checkbox" name="register" value="1">
-	<label>label<input type="text" name="label" title="this will be appeared in the context menu."></label>
-	<label>url<input type="text" name="url" title="the url you want to go. if you set &quot;$1&quot;, it will be replaced to the words you selected." ></label>
+	<input type="checkbox" class="register" value="1">
+	<label>label<input type="text" class="label" title="this will be appeared in the context menu."></label>
+	<label>url<input type="text" class="url" title="the url you want to go. if you set &quot;$1&quot;, it will be replaced to the words you selected." ></label>
 	<button type="button" class="removeField">remove field</button>
 </div>
 <script src="option.js"></script>

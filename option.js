@@ -43,15 +43,30 @@
 
 	function addInputField(){
 		let customNode = document.querySelector("#custom");
-		let inputPrototypeNode = document.querySelector("#inputPrototype");
-		inputPrototypeNode = inputPrototypeNode.cloneNode(true);
+		let inputPrototypeNode = document.querySelector("#inputPrototype").cloneNode(true);
 		inputPrototypeNode.removeAttribute("id");
 		customNode.appendChild(inputPrototypeNode);
 		inputPrototypeNode.style.display="block";
 	}
 
+	function fetchValue(element, selector){
+		let tmp = element.querySelector(selector);
+		if (!tmp){
+			return null;
+		}
+		return tmp.value;
+	}
 
 	function saveOptions(){
+		let fields = document.querySelectorAll("#form .field");
+		for( let i=0; i<fields.length; i++){
+			let register = fields[i].querySelector(".register");
+			let label = fetchValue(fields[i], ".label");
+			let url = fetchValue(fields[i], ".url");
+			console.log(register);
+			console.log(label);
+			console.log(url);
+		}
 		let store_registers = [];
 /*
 		let registers = document.querySelectorAll("input[name=register]:checked");
