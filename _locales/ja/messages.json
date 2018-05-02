@@ -1,0 +1,27 @@
+{
+   "extensionName": {
+      "message": "右クリ辞書検索",
+      "description": ""
+   },
+
+   "extensionDescription": {
+      "message": "検索したい文字を選択して右クリックしてください。辞書サイトで検索できます。",
+      "description": "Description of the extension."
+   },
+
+   "notificationTitle": {
+      "message": "Click notification",
+      "description": "Title of the click notification."
+   },
+
+   "notificationContent": {
+      "message": "You clicked $URL$.",
+      "description": "Tells the user which link they clicked.",
+      "placeholders": {
+         "url" : {
+            "content" : "$1",
+            "example" : "https://developer.mozilla.org"
+         }
+      }
+   }
+}

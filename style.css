@@ -5,4 +5,5 @@
 }
 .box {
 	padding: 0.5em;
+   background-image: url(../images/__MSG_@@ui_locale__/header.png);
 }

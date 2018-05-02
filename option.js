@@ -69,6 +69,7 @@
 				"label": label,
 				"url": url,
 				"sort": i,
+				"a": check,
 			};
 			optionList.push(data);
 		}
@@ -77,11 +78,13 @@
 		getter.then(onGot, onError).then(onSave, onError);
 
 		function onGot(page){
+			console.log("onGot");
 			let saver = page.saveOptions( makeMetadata(), optionList );
 			return saver;
 		}
+
 		function onSave(){
-			//console.log("onSave");
+			console.log("onSave");
 		}
 
 	}
@@ -89,4 +92,5 @@
 	function onError(e){
 		console.error(e);
 	}
+
 })();

@@ -63,12 +63,25 @@ function saveOptions(metadata, optionList){
 		"metadata": metadata,
 		"optionList": optionList
 	});
+	let promise = setter.then(onSet, onError);
 
-	function onSet(){
-		//console.log("onSet");
+	function onSet(){}
+
+	function onError(e){
+		console.error(e);
+		let noticer = browser.notifications.create({
+			"type": "basic",
+			"title": browser.i18n.getMessage("extensionName"),
+			"message": "設定の保存に失敗しました。"
+		});
+		noticer.then( (e)=>{console.log(e);} );
 	}
 
-	return setter.then(onSet, onError);
+	function onNotice(id){
+		console.log(id);
+	}
+
+	return promise;
 }
 
 function onError(e){
