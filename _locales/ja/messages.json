@@ -1,7 +1,7 @@
 {
    "extensionName": {
       "message": "右クリ辞書検索",
-      "description": ""
+      "description": "Name of the extension."
    },
 
    "extensionDescription": {
@@ -9,19 +9,8 @@
       "description": "Description of the extension."
    },
 
-   "notificationTitle": {
-      "message": "Click notification",
-      "description": "Title of the click notification."
-   },
-
-   "notificationContent": {
-      "message": "You clicked $URL$.",
-      "description": "Tells the user which link they clicked.",
-      "placeholders": {
-         "url" : {
-            "content" : "$1",
-            "example" : "https://developer.mozilla.org"
-         }
-      }
+   "notificationSaveOptionError": {
+      "message": "設定の保存に失敗しました。",
+      "description": "save option error notification."
    }
 }

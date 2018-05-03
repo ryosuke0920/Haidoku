@@ -1,5 +1,6 @@
 ( () => {
 	document.addEventListener("DOMContentLoaded", init);
+	window.addEventListener("blur",saveOptions);
 
 	function init(e){
 		let getter = browser.storage.local.get({
@@ -8,7 +9,6 @@
 		getter.then(onGot, onError);
 
 		function onGot(res){
-			console.log(res);
 			addInputField();
 			document.querySelector("#form").addEventListener("click", mainBehavior);
 		}
@@ -18,13 +18,14 @@
 		switch(e.target.getAttribute("class")){
 			case "check":
 				saveOptions();
-				return;
+				break;
 			case "add":
 				addInputField();
-				return;
+				saveOptions();
+				break;
 			case "removeField":
 				e.target.closest(".field").remove();
-				return;
+				break;
 		}
 	}
 
@@ -49,11 +50,10 @@
 			"version": manifest.version,
 			"updateDate": now.toString()
 		};
-		//console.log(data);
 		return data;
 	}
 
-	function saveOptions(){
+	function makeOptionList(){
 		let fields = document.querySelectorAll("#form .field");
 		let optionList = [];
 		for( let i=0; i<fields.length; i++){
@@ -62,31 +62,39 @@
 			let value = check.value;
 			let label = fetchValue(fields[i], ".label");
 			let url = fetchValue(fields[i], ".url");
+			let id = i+1;
+			id = id.toString();
 			let data = {
-				"id": (i+1),
+				"id": id,
 				"value": value,
 				"checked": checked,
 				"label": label,
 				"url": url,
-				"sort": i,
-				"a": check,
+				"sort": i
 			};
 			optionList.push(data);
 		}
+		return optionList;
+	}
 
-		let getter = browser.runtime.getBackgroundPage();
-		getter.then(onGot, onError).then(onSave, onError);
+	function saveOptions(){
+		let setter = browser.storage.local.set({
+			"metadata": makeMetadata(),
+			"optionList": makeOptionList()
+		});
+		let promise = setter.then(onSet, onError);
 
-		function onGot(page){
-			console.log("onGot");
-			let saver = page.saveOptions( makeMetadata(), optionList );
-			return saver;
+		function onSet(){
 		}
 
-		function onSave(){
-			console.log("onSave");
+		function onError(e){
+			console.error(e);
+			browser.notifications.create({
+				"type": "basic",
+				"title": browser.i18n.getMessage("extensionName"),
+				"message": browser.i18n.getMessage("notificationSaveOptionError")
+			});
 		}
-
 	}
 
 	function onError(e){
