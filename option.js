@@ -1,16 +1,60 @@
 ( () => {
+	let windowId = Math.random();
+	let form = document.querySelector("#form");
+
 	document.addEventListener("DOMContentLoaded", init);
-	window.addEventListener("blur",saveOptions);
 
 	function init(e){
 		let getter = browser.storage.local.get({
-			"optionList": []
+			"optionList": null
 		});
 		getter.then(onGot, onError);
 
 		function onGot(res){
-			addInputField();
-			document.querySelector("#form").addEventListener("click", mainBehavior);
+			console.log(res);
+			let optionList;
+			if (!res["optionList"]){
+				console.log("no data");
+				optionList = [
+					{
+						"checked": true,
+						"label": "Google",
+						"url": "https://www.google.co.jp/search?q=$1",
+						"ico": "ico/www.google.co.jp.ico"
+					},
+					{
+						"checked": true,
+						"label": "Yahoo!",
+						"url": "https://search.yahoo.co.jp/q=$1",
+						"ico": "ico/dummy.svg"
+					},
+					{
+						"checked": true,
+						"label": "Cambridge",
+						"url": "https://dictionary.cambridge.org/search/english/direct/?q=$1",
+						"ico": "ico/dictionary.cambridge.org.ico"
+					}
+				];
+			}
+			else {
+				console.log("has data");
+				optionList = res["optionList"];
+			}
+			console.log(optionList);
+			for(let i=0; i<optionList.length; i++){
+				let item = optionList[i];
+				addInputField(item["checked"], item["label"], item["url"], item["ico"]);
+			}
+			browser.storage.onChanged.addListener(fileChangeBehavior);
+			window.addEventListener("blur",saveOptions);
+			form.addEventListener("click", mainBehavior);
+		}
+	}
+
+	function fileChangeBehavior(e){
+		if ( e["metadata"]["newValue"]["windowId"] != windowId) {
+			let newValue = e["optionList"]["newValue"];
+			makeForm(e["optionList"]["newValue"]);
 		}
 	}
 
@@ -29,11 +73,18 @@
 		}
 	}
 
-	function addInputField(){
-		let customNode = document.querySelector("#custom");
+	function makeForm(optionList){
+		console.log(optionList);
+	}
+
+	function addInputField( checked=false, label="", url="", ico="ico/dummy.ico" ){
 		let inputPrototypeNode = document.querySelector("#inputPrototype").cloneNode(true);
 		inputPrototypeNode.removeAttribute("id");
-		customNode.appendChild(inputPrototypeNode);
+		inputPrototypeNode.querySelector(".check").checked = checked;
+		inputPrototypeNode.querySelector(".label").value = label;
+		inputPrototypeNode.querySelector(".url").value = url;
+		inputPrototypeNode.querySelector(".ico").src = ico;
+		form.appendChild(inputPrototypeNode);
 		inputPrototypeNode.style.display="block";
 	}
 
@@ -48,13 +99,14 @@
 		let now = new Date();
 		let data = {
 			"version": manifest.version,
-			"updateDate": now.toString()
+			"updateDate": now.toString(),
+			"windowId": windowId
 		};
 		return data;
 	}
 
 	function makeOptionList(){
-		let fields = document.querySelectorAll("#form .field");
+		let fields = form.querySelectorAll(".field");
 		let optionList = [];
 		for( let i=0; i<fields.length; i++){
 			let check = fields[i].querySelector(".check");
@@ -62,6 +114,7 @@
 			let value = check.value;
 			let label = fetchValue(fields[i], ".label");
 			let url = fetchValue(fields[i], ".url");
+			let ico = fields[i].querySelector(".ico").src;
 			let id = i+1;
 			id = id.toString();
 			let data = {
@@ -70,6 +123,7 @@
 				"checked": checked,
 				"label": label,
 				"url": url,
+				"ico": ico,
 				"sort": i
 			};
 			optionList.push(data);
@@ -101,4 +155,15 @@
 		console.error(e);
 	}
 
+})();
+( () => {
+	let list;
+	list = document.querySelectorAll(".url");
+	for( let i=0; i<list.length; i++){
+		list[i].setAttribute("title", "the url you want to go. if you set \"$1\", it will be replaced to the words you selected.");
+	}
+	list = document.querySelectorAll(".label");
+	for( let i=0; i<list.length; i++){
+		list[i].setAttribute("title", "this will be appeared in the context menu.");
+	}
 })();

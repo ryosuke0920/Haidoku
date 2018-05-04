@@ -7,30 +7,19 @@
 </head>
 <body>
 <div>
+	<div><button type="button" class="add">add field</button></div>
 	<form id="form">
-		<button type="button" class="save">save</button>
-		<div class="box">
-			<h1>fixed fields</h1>
-			<div id="preset">
-				<div class="field"><label><input type="checkbox" class="check" value="www.google.co.jp">Google</label></div>
-				<div class="field"><label><input type="checkbox" class="check" value="www.yahoo.co.jp">Yahoo</label></div>
-				<div class="field"><label><input type="checkbox" class="check" value="dictionary.cambridge.org">Cambridge Dictionary</label></div>
-			</div>
-		</div>
-		<div class="box">
-			<h1>custom fields</h1>
-			<div><button type="button" class="add">add field</button></div>
-			<div class="box" id="custom"></div>
-			<div><button type="button" class="add">add field</button></div>
-		</div>
-		<button type="button" class="save">save</button>
 	</form>
+	<div><button type="button" class="add">add field</button></div>
 </div>
 <div id="inputPrototype" class="field" style="display:none;">
-	<input type="checkbox" class="check">
-	<label>label<input type="text" class="label" title="this will be appeared in the context menu."></label>
-	<label>url<input type="text" class="url" title="the url you want to go. if you set &quot;$1&quot;, it will be replaced to the words you selected." ></label>
-	<button type="button" class="removeField">remove field</button>
+	<label>
+		<input type="checkbox" class="check" value="">&nbsp;
+		<img class="ico" src="ico/dummy.ico" title="">&nbsp;
+	</label>&nbsp;
+	<label>label&nbsp;<input type="text" class="label" value=""></label>&nbsp;
+	<label>url&nbsp;<input type="text" class="url" value=""></label>&nbsp;
+	<button type="button" class="removeField">remove</button>
 </div>
 <script src="option.js"></script>
 </body>
