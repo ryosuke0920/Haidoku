@@ -11,3 +11,8 @@
    width: 16px;
    height: 16px;
 }
+.hold {
+   cursor: grab;
+   width: 18px;
+   height: 16px;
+}

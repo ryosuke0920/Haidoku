@@ -30,10 +30,17 @@
 				}
 			}
 		}
+		browser.contextMenus.create({
+			"id": "option",
+			"title": browser.i18n.getMessage("extensionName")
+		});
 	}
 
 	browser.contextMenus.onClicked.addListener( (info, tab) => {
-		if ( options[info.menuItemId] ){
+		if ( info.menuItemId == "option" ){
+			browser.runtime.openOptionsPage();
+		}
+		else if ( options[info.menuItemId] ){
 			let url = options[info.menuItemId].replace("$1", info.selectionText);
 			browser.tabs.create({"url": url});
 		}

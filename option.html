@@ -7,18 +7,26 @@
 </head>
 <body>
 <div>
-	<div><button type="button" class="add">add field</button></div>
 	<form id="form">
+		<div>
+			<button type="button" class="addPriset">add from priset</button>
+			<button type="button" class="add">add blank field</button>
+		</div>
+		<div id="container"></div>
+		<div>
+			<button type="button" class="addPriset">add from priset</button>
+			<button type="button" class="add">add blank field</button>
+		</div>
 	</form>
-	<div><button type="button" class="add">add field</button></div>
 </div>
 <div id="inputPrototype" class="field" style="display:none;">
+	<img class="hold" src="image/hold.svg">
 	<label>
 		<input type="checkbox" class="check" value="">&nbsp;
-		<img class="ico" src="ico/dummy.ico" title="">&nbsp;
+		<img class="ico" src="image/dummy.ico" title="">&nbsp;
 	</label>&nbsp;
-	<label>label&nbsp;<input type="text" class="label" value=""></label>&nbsp;
-	<label>url&nbsp;<input type="text" class="url" value=""></label>&nbsp;
+	<label>label&nbsp;<input type="text" class="label" placeholder="example.com" size="12" ></label>&nbsp;
+	<label>url&nbsp;<input type="text" class="url" placeholder="https://www.example.com/?q=$1" size="32"></label>&nbsp;
 	<button type="button" class="removeField">remove</button>
 </div>
 <script src="option.js"></script>
