@@ -30,5 +30,13 @@
    "htmlUrlText": {
       "message": "URL",
       "description": "Name of url."
+   },
+   "htmlLabelDescription": {
+      "message": "this will be appeared in the context menu.",
+      "description": "Name of label."
+   },
+   "htmlUrlDescription": {
+      "message": "the url you want to go. if you set \"$1\", it will be replaced to the words you selected.",
+      "description": "Name of url."
    }
 }

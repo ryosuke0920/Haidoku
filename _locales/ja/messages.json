@@ -11,13 +11,13 @@
       "message": "設定の保存に失敗しました。",
       "description": "save option error notification."
    },
-   "htmlAddBlankFieldButtonName": {
-      "message": "検索サイトを追加",
-      "description": "Name of add blank field button."
-   },
    "htmlAddPresetFieldButtonName": {
-      "message": "入力欄を追加",
+      "message": "検索サイトを追加",
       "description": "Name of add priset field button."
+   },
+   "htmlAddBlankFieldButtonName": {
+      "message": "入力欄を追加",
+      "description": "Name of add blank field button."
    },
    "htmlRemoveButtonName": {
       "message": "削除",
@@ -29,6 +29,14 @@
    },
    "htmlUrlText": {
       "message": "URL",
+      "description": "Name of url."
+   },
+   "htmlLabelDescription": {
+      "message": "検索するサイトの名称を入力してください。右クリックで開くコンテキストメニューに表示されます。",
+      "description": "Name of label."
+   },
+   "htmlUrlDescription": {
+      "message": "検索したいサイトのURLを入力してください。\"$$1\"は選択したテキストに置き換えられます。",
       "description": "Name of url."
    }
 }
