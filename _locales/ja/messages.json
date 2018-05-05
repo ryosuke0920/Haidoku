@@ -3,14 +3,32 @@
       "message": "右クリ辞書検索",
       "description": "Name of the extension."
    },
-
    "extensionDescription": {
       "message": "検索したい文字を選択して右クリックしてください。辞書サイトで検索できます。",
       "description": "Description of the extension."
    },
-
    "notificationSaveOptionError": {
       "message": "設定の保存に失敗しました。",
       "description": "save option error notification."
+   },
+   "htmlAddBlankFieldButtonName": {
+      "message": "検索サイトを追加",
+      "description": "Name of add blank field button."
+   },
+   "htmlAddPresetFieldButtonName": {
+      "message": "入力欄を追加",
+      "description": "Name of add priset field button."
+   },
+   "htmlRemoveButtonName": {
+      "message": "削除",
+      "description": "Name of url."
+   },
+   "htmlLabelText": {
+      "message": "サイト名称",
+      "description": "Name of label."
+   },
+   "htmlUrlText": {
+      "message": "URL",
+      "description": "Name of url."
    }
 }

@@ -26,7 +26,8 @@
 						"contexts": ["selection"]
 					};
 					options[id] = url;
-					browser.contextMenus.create(args);
+					let ret = browser.contextMenus.create(args);
+					//console.log(ret);
 				}
 			}
 		}

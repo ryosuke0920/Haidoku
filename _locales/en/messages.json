@@ -3,25 +3,32 @@
       "message": "GoToDictionary",
       "description": "Name of the extension."
    },
-
    "extensionDescription": {
       "message": "Select text and show context menu (right click). You cant seacrh the word by the dictionary site.",
       "description": "Description of the extension."
    },
-
-   "notificationTitle": {
-      "message": "Click notification",
-      "description": "Title of the click notification."
+   "notificationSaveOptionError": {
+      "message": "failed to save your configuration.",
+      "description": "save option error notification."
    },
-
-   "notificationContent": {
-      "message": "You clicked $URL$.",
-      "description": "Tells the user which link they clicked.",
-      "placeholders": {
-         "url" : {
-            "content" : "$1",
-            "example" : "https://developer.mozilla.org"
-         }
-      }
+   "htmlAddBlankFieldButtonName": {
+      "message": "add site",
+      "description": "Name of add blank field button."
+   },
+   "htmlAddPresetFieldButtonName": {
+      "message": "add blank field",
+      "description": "Name of add priset field button."
+   },
+   "htmlRemoveButtonName": {
+      "message": "URL",
+      "description": "Name of url."
+   },
+   "htmlLabelText": {
+      "message": "label",
+      "description": "Name of label."
+   },
+   "htmlUrlText": {
+      "message": "URL",
+      "description": "Name of url."
    }
 }

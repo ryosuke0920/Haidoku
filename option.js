@@ -94,13 +94,16 @@
 			case "check":
 				saveOptions();
 				break;
-			case "add":
+			case "addBlank":
 				addInputField();
 				saveOptions();
 				break;
 			case "removeField":
 				e.target.closest(".field").remove();
 				saveOptions();
+				break;
+			case "addPreset":
+				console.log("preset");
 				break;
 		}
 		console.log("clickBehavior drop.");
@@ -201,8 +204,24 @@
 	for( let i=0; i<list.length; i++){
 		list[i].setAttribute("title", "this will be appeared in the context menu.");
 	}
-	list = document.querySelectorAll(".add");
+	list = document.querySelectorAll(".addBlank");
 	for( let i=0; i<list.length; i++){
-		list[i].innerText = "add";
+		list[i].innerText = browser.i18n.getMessage("htmlAddBlankFieldButtonName");
+	}
+	list = document.querySelectorAll(".addPriset");
+	for( let i=0; i<list.length; i++){
+		list[i].innerText = browser.i18n.getMessage("htmlAddPresetFieldButtonName");
+	}
+	list = document.querySelectorAll(".labelText");
+	for( let i=0; i<list.length; i++){
+		list[i].innerText = browser.i18n.getMessage("htmlLabelCaption");
+	}
+	list = document.querySelectorAll(".urlText");
+	for( let i=0; i<list.length; i++){
+		list[i].innerText = browser.i18n.getMessage("htmlUrlCaption");
+	}
+	list = document.querySelectorAll(".removeField");
+	for( let i=0; i<list.length; i++){
+		list[i].innerText = browser.i18n.getMessage("htmlRemoveButtonName");
 	}
 })();
