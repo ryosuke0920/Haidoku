@@ -196,13 +196,13 @@
 })();
 ( () => {
 	let list;
-	list = document.querySelectorAll(".url");
-	for( let i=0; i<list.length; i++){
-		list[i].setAttribute("title", "the url you want to go. if you set \"$1\", it will be replaced to the words you selected.");
-	}
 	list = document.querySelectorAll(".label");
 	for( let i=0; i<list.length; i++){
-		list[i].setAttribute("title", "this will be appeared in the context menu.");
+		list[i].setAttribute("title", browser.i18n.getMessage("htmlLabelDescription"));
+	}
+	list = document.querySelectorAll(".url");
+	for( let i=0; i<list.length; i++){
+		list[i].setAttribute("title", browser.i18n.getMessage("htmlUrlDescription"));
 	}
 	list = document.querySelectorAll(".addBlank");
 	for( let i=0; i<list.length; i++){

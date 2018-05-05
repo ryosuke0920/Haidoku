@@ -11,8 +11,11 @@
    width: 16px;
    height: 16px;
 }
-.hold {
+.handle {
    cursor: grab;
+   /*cursor: grabbing;*/
+}
+.handle img {
    width: 18px;
    height: 16px;
 }
