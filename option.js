@@ -3,8 +3,9 @@
 	document.addEventListener("DOMContentLoaded", init);
 
 	function init(e){
+		applyI18n();
 		let getter = browser.storage.local.get({
-			"optionList": null
+			"optionList": []
 		});
 		getter.then(onGot, onError);
 
@@ -72,9 +73,14 @@
 		let inputPrototypeNode = document.querySelector("#inputPrototype").cloneNode(true);
 		inputPrototypeNode.removeAttribute("id");
 		inputPrototypeNode.querySelector(".check").checked = checked;
-		inputPrototypeNode.querySelector(".label").value = label;
-		inputPrototypeNode.querySelector(".url").value = url;
+		let labelNode = inputPrototypeNode.querySelector(".label")
+		labelNode.value = label;
+		labelNode.addEventListener("blur", blurBehavior);
+		let urlNode = inputPrototypeNode.querySelector(".url");
+		urlNode.value = url;
+		urlNode.addEventListener("blur", blurBehavior);
 		inputPrototypeNode.querySelector(".ico").src = ico;
+
 		let container = document.querySelector("#container");
 		container.appendChild(inputPrototypeNode);
 		inputPrototypeNode.style.display="block";
@@ -108,14 +114,11 @@
 			let ico = field.querySelector(".ico").src;
 			let id = ( "" + (i+1) ).toString();
 			let data = {
-				"id": id,
 				"checked": checked,
 				"label": label,
 				"url": url,
 				"ico": ico,
-				"sort": i
 			};
-			//console.log(data);
 			optionList.push(data);
 		}
 		return optionList;
@@ -133,39 +136,40 @@
 		}
 	}
 
+	function applyI18n(){
+		let list;
+		list = document.querySelectorAll(".label");
+		for( let i=0; i<list.length; i++){
+			list[i].setAttribute("title", browser.i18n.getMessage("htmlLabelDescription"));
+		}
+		list = document.querySelectorAll(".url");
+		for( let i=0; i<list.length; i++){
+			list[i].setAttribute("title", browser.i18n.getMessage("htmlUrlDescription"));
+		}
+		list = document.querySelectorAll(".addBlank");
+		for( let i=0; i<list.length; i++){
+			list[i].innerText = browser.i18n.getMessage("htmlAddBlankFieldButtonName");
+		}
+		list = document.querySelectorAll(".addPriset");
+		for( let i=0; i<list.length; i++){
+			list[i].innerText = browser.i18n.getMessage("htmlAddPresetFieldButtonName");
+		}
+		list = document.querySelectorAll(".labelText");
+		for( let i=0; i<list.length; i++){
+			list[i].innerText = browser.i18n.getMessage("htmlLabelText");
+		}
+		list = document.querySelectorAll(".urlText");
+		for( let i=0; i<list.length; i++){
+			list[i].innerText = browser.i18n.getMessage("htmlUrlText");
+		}
+		list = document.querySelectorAll(".removeField");
+		for( let i=0; i<list.length; i++){
+			list[i].innerText = browser.i18n.getMessage("htmlRemoveButtonName");
+		}
+	}
+
 	function onError(e){
 		console.error(e);
 	}
 
-})();
-( () => {
-	let list;
-	list = document.querySelectorAll(".label");
-	for( let i=0; i<list.length; i++){
-		list[i].setAttribute("title", browser.i18n.getMessage("htmlLabelDescription"));
-	}
-	list = document.querySelectorAll(".url");
-	for( let i=0; i<list.length; i++){
-		list[i].setAttribute("title", browser.i18n.getMessage("htmlUrlDescription"));
-	}
-	list = document.querySelectorAll(".addBlank");
-	for( let i=0; i<list.length; i++){
-		list[i].innerText = browser.i18n.getMessage("htmlAddBlankFieldButtonName");
-	}
-	list = document.querySelectorAll(".addPriset");
-	for( let i=0; i<list.length; i++){
-		list[i].innerText = browser.i18n.getMessage("htmlAddPresetFieldButtonName");
-	}
-	list = document.querySelectorAll(".labelText");
-	for( let i=0; i<list.length; i++){
-		list[i].innerText = browser.i18n.getMessage("htmlLabelText");
-	}
-	list = document.querySelectorAll(".urlText");
-	for( let i=0; i<list.length; i++){
-		list[i].innerText = browser.i18n.getMessage("htmlUrlText");
-	}
-	list = document.querySelectorAll(".removeField");
-	for( let i=0; i<list.length; i++){
-		list[i].innerText = browser.i18n.getMessage("htmlRemoveButtonName");
-	}
 })();

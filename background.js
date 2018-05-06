@@ -101,7 +101,7 @@ function resetMenu(optionList){
 		let data = optionList[i];
 		let checked = data["checked"];
 		if ( checked ) {
-			let id = data["id"];
+			let id = "" + (i+1);
 			let label = data["label"];
 			let url = data["url"];
 			let args = {
