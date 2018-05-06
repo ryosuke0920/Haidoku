@@ -7,17 +7,21 @@
       "message": "Select text and show context menu (right click). You cant seacrh the word by the dictionary site.",
       "description": "Description of the extension."
    },
+   "extensionOptionName": {
+      "message": "GoToDictionary Options",
+      "description": "Name of the extension option."
+   },
    "notificationSaveOptionError": {
       "message": "failed to save your configuration.",
       "description": "save option error notification."
    },
-   "htmlAddBlankFieldButtonName": {
-      "message": "add site",
-      "description": "Name of add blank field button."
-   },
    "htmlAddPresetFieldButtonName": {
       "message": "add blank field",
       "description": "Name of add priset field button."
+   },
+   "htmlAddBlankFieldButtonName": {
+      "message": "add site",
+      "description": "Name of add blank field button."
    },
    "htmlRemoveButtonName": {
       "message": "URL",

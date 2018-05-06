@@ -1,7 +1,5 @@
 ( () => {
 	let windowId = Math.random();
-	let form = document.querySelector("#form");
-
 	document.addEventListener("DOMContentLoaded", init);
 
 	function init(e){
@@ -11,45 +9,7 @@
 		getter.then(onGot, onError);
 
 		function onGot(res){
-			let optionList;
-			if (!res["optionList"]){
-				optionList = [
-					{
-						"checked": true,
-						"label": "Google",
-						"url": "https://www.google.co.jp/search?q=$1",
-						"ico": "image/www.google.co.jp.ico"
-					},
-					{
-						"checked": true,
-						"label": "Google Translate en->ja",
-						"url": "https://translate.google.co.jp/?hl=ja&tab=TT#en/ja/$1",
-						"ico": "image/translate.google.co.jp.ico"
-					},
-					{
-						"checked": true,
-						"label": "Google Translate ja->en",
-						"url": "https://translate.google.co.jp/?hl=ja&tab=TT#ja/en/$1",
-						"ico": "image/translate.google.co.jp.ico"
-					},
-					{
-						"checked": true,
-						"label": "Yahoo!",
-						"url": "https://search.yahoo.co.jp/q=$1",
-						"ico": "image/dummy.svg"
-					},
-					{
-						"checked": true,
-						"label": "Cambridge",
-						"url": "https://dictionary.cambridge.org/search/english/direct/?q=$1",
-						"ico": "image/dictionary.cambridge.org.ico"
-					}
-				];
-			}
-			else {
-				optionList = res["optionList"];
-			}
-			resetInputField();
+			let optionList = res["optionList"];
 			for(let i=0; i<optionList.length; i++){
 				let item = optionList[i];
 				addInputField(item["checked"], item["label"], item["url"], item["ico"]);
@@ -59,13 +19,11 @@
 			for(let i=0; i<inputs.length; i++){
 				inputs[i].addEventListener("blur", blurBehavior);
 			}
-			form.addEventListener("click", clickBehavior);
+			document.querySelector("#form").addEventListener("click", clickBehavior);
 		}
 	}
 
 	function fileChangeBehavior(e){
-		console.log("windowId="+windowId);
-		console.log("fileChangeBehavior");
 		if ( e["metadata"]["newValue"]["windowId"] != windowId) {
 			let optionList = e["optionList"]["newValue"];
 			resetInputField();
@@ -74,39 +32,33 @@
 				addInputField(item["checked"], item["label"], item["url"], item["ico"]);
 			}
 		}
-		console.log("fileChangeBehavior drop.");
 	}
 
 	function blurBehavior(e){
-		console.log("blurBehavior");
 		switch(e.target.getAttribute("class")){
 			case "label":
 			case "url":
-				saveOptions();
+				saveOption();
 				break;
 		}
-		console.log("blurBehavior drop.");
 	}
 
 	function clickBehavior(e){
-		console.log("clickBehavior");
 		switch(e.target.getAttribute("class")){
 			case "check":
-				saveOptions();
+				saveOption();
 				break;
 			case "addBlank":
 				addInputField();
-				saveOptions();
+				saveOption();
 				break;
 			case "removeField":
 				e.target.closest(".field").remove();
-				saveOptions();
+				saveOption();
 				break;
 			case "addPreset":
-				console.log("preset");
 				break;
 		}
-		console.log("clickBehavior drop.");
 	}
 
 	function resetInputField(){
@@ -147,7 +99,7 @@
 
 	function makeOptionList(){
 		let optionList = [];
-		let fields = form.querySelectorAll(".field");
+		let fields = document.querySelectorAll("#form .field");
 		for( let i=0; i<fields.length; i++){
 			let field = fields[i];
 			let checked = field.querySelector(".check").checked;
@@ -169,23 +121,15 @@
 		return optionList;
 	}
 
-	function saveOptions(){
-		let setter = browser.storage.local.set({
-			"metadata": makeMetadata(),
-			"optionList": makeOptionList()
-		});
-		setter.then(onSet, onError);
+	function saveOption(){
+		let getter = browser.runtime.getBackgroundPage();
+		getter.then( onGet, onError );
 
-		function onSet(){
-		}
-
-		function onError(e){
-			console.error(e);
-			browser.notifications.create({
-				"type": "basic",
-				"title": browser.i18n.getMessage("extensionName"),
-				"message": browser.i18n.getMessage("notificationSaveOptionError")
-			});
+		function onGet(page){
+			let metadata = page.makeMetadata(windowId);
+			let optionList = makeOptionList();
+			let saver = page.saveOption( metadata, optionList );
+			return saver;
 		}
 	}
 
@@ -214,11 +158,11 @@
 	}
 	list = document.querySelectorAll(".labelText");
 	for( let i=0; i<list.length; i++){
-		list[i].innerText = browser.i18n.getMessage("htmlLabelCaption");
+		list[i].innerText = browser.i18n.getMessage("htmlLabelText");
 	}
 	list = document.querySelectorAll(".urlText");
 	for( let i=0; i<list.length; i++){
-		list[i].innerText = browser.i18n.getMessage("htmlUrlCaption");
+		list[i].innerText = browser.i18n.getMessage("htmlUrlText");
 	}
 	list = document.querySelectorAll(".removeField");
 	for( let i=0; i<list.length; i++){
