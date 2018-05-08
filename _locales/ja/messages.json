@@ -20,7 +20,7 @@
       "description": "Name of add priset field button."
    },
    "htmlAddBlankFieldButtonName": {
-      "message": "入力欄を追加",
+      "message": "入力欄のみを追加",
       "description": "Name of add blank field button."
    },
    "htmlRemoveButtonName": {

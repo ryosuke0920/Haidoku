@@ -1,118 +1,148 @@
 ( () => {
 	let windowId = Math.random();
+	let containerNode;
+	let inputPrototypeNode;
+	let formNode;
+
 	document.addEventListener("DOMContentLoaded", init);
 
 	function init(e){
-		applyI18n();
-		let getter = browser.storage.local.get({
-			"optionList": []
-		});
-		getter.then(onGot, onError);
+		initProperties();
+		initI18n();
+		let promise = initField();
+		promise.then( initListener, onError );
+	}
 
-		function onGot(res){
-			let optionList = res["optionList"];
-			for(let i=0; i<optionList.length; i++){
-				let item = optionList[i];
-				addInputField(item["checked"], item["label"], item["url"], item["ico"]);
+	function initProperties(){
+		this.containerNode = document.querySelector("#container");
+		this.inputPrototypeNode = document.querySelector("#inputPrototype");
+		this.formNode = document.querySelector("#form");
+	}
+
+	function initI18n(){
+		let joson_list = [
+			{ "selector": ".label", "property": "title", "key": "htmlLabelDescription" },
+			{ "selector": ".url", "property": "title", "key": "htmlUrlDescription" },
+			{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
+			{ "selector": ".addPriset", "property": "innerText", "key": "htmlAddPresetFieldButtonName" },
+			{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
+			{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
+			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" }
+		];
+		for( let json of joson_list ){
+			let list = document.querySelectorAll(json["selector"]);
+			for( let node of list ){
+				node[json["property"]] = browser.i18n.getMessage( json["key"] );
 			}
-			browser.storage.onChanged.addListener(fileChangeBehavior);
-			let inputs = document.querySelectorAll(".label,.url");
-			for(let i=0; i<inputs.length; i++){
-				inputs[i].addEventListener("blur", blurBehavior);
-			}
-			document.querySelector("#form").addEventListener("click", clickBehavior);
 		}
 	}
 
-	function fileChangeBehavior(e){
-		if ( e["metadata"]["newValue"]["windowId"] != windowId) {
-			let optionList = e["optionList"]["newValue"];
-			resetInputField();
-			for(let i=0; i<optionList.length; i++){
-				let item = optionList[i];
+	function initField(){
+		let getter = browser.storage.local.get({
+			"optionList": []
+		});
+
+		function onGot(res){
+			let optionList = res["optionList"];
+			for(let item of optionList ){
 				addInputField(item["checked"], item["label"], item["url"], item["ico"]);
 			}
+			resetSort();
+		}
+		return getter.then(onGot, onError);
+	}
+
+	function initListener(){
+		browser.storage.onChanged.addListener(fileChangeBehavior);
+		this.formNode.addEventListener("click", clickBehavior);
+	}
+
+	function fileChangeBehavior(e){
+		if ( e["metadata"]["newValue"]["windowId"] != windowId ) {
+			let optionList = e["optionList"]["newValue"];
+			removeAllField();
+			for( let item of optionList ){
+				addInputField(item["checked"], item["label"], item["url"], item["ico"]);
+			}
+			resetSort();
 		}
 	}
 
 	function blurBehavior(e){
+		let promise;
 		switch(e.target.getAttribute("class")){
 			case "label":
 			case "url":
-				saveOption();
+				promise = saveOption();
 				break;
 		}
 	}
 
 	function clickBehavior(e){
+		let promise;
 		switch(e.target.getAttribute("class")){
 			case "check":
 				saveOption();
 				break;
 			case "addBlank":
 				addInputField();
-				saveOption();
+				resetSort();
+				promise = saveOption();
 				break;
 			case "removeField":
 				e.target.closest(".field").remove();
-				saveOption();
+				resetSort();
+				promise = saveOption();
 				break;
 			case "addPreset":
 				break;
 		}
 	}
 
-	function resetInputField(){
-		let container = document.querySelector("#container");
-		while(container.firstChild){
-			container.removeChild(container.firstChild);
+	function removeAllField(){
+		while(this.containerNode.firstChild){
+			this.containerNode.removeChild(this.containerNode.firstChild);
+		}
+	}
+
+	function resetSort(){
+		let fields = this.containerNode.querySelectorAll(".field");
+		for(let i=0; i<fields.length; i++){
+			let sort = i+1;
+			fields[i].setAttribute("sort", sort);
 		}
 	}
 
 	function addInputField( checked=false, label="", url="", ico="image/dummy.svg" ){
-		let inputPrototypeNode = document.querySelector("#inputPrototype").cloneNode(true);
-		inputPrototypeNode.removeAttribute("id");
-		inputPrototypeNode.querySelector(".check").checked = checked;
-		let labelNode = inputPrototypeNode.querySelector(".label")
+		let node = this.inputPrototypeNode.cloneNode(true);
+		node.removeAttribute("id");
+		node.querySelector(".check").checked = checked;
+		let labelNode = node.querySelector(".label")
 		labelNode.value = label;
 		labelNode.addEventListener("blur", blurBehavior);
-		let urlNode = inputPrototypeNode.querySelector(".url");
+		let urlNode = node.querySelector(".url");
 		urlNode.value = url;
 		urlNode.addEventListener("blur", blurBehavior);
-		inputPrototypeNode.querySelector(".ico").src = ico;
-
-		let container = document.querySelector("#container");
-		container.appendChild(inputPrototypeNode);
-		inputPrototypeNode.style.display="block";
+		node.querySelector(".ico").src = ico;
+		this.containerNode.appendChild(node);
+		node.style.display="block";
 	}
 
 	function fetchValue(element, selector){
-		let tmp = element.querySelector(selector);
-		if (!tmp) return null;
-		return tmp.value;
-	}
-
-	function makeMetadata(){
-		let manifest = browser.runtime.getManifest();
-		let now = new Date();
-		let data = {
-			"version": manifest.version,
-			"updateDate": now.toString(),
-			"windowId": windowId
-		};
-		return data;
+		let node = element.querySelector(selector);
+		if (!node) return null;
+		return node.value;
 	}
 
 	function makeOptionList(){
 		let optionList = [];
-		let fields = document.querySelectorAll("#form .field");
+		let fields = this.containerNode.querySelectorAll(".field");
 		for( let i=0; i<fields.length; i++){
 			let field = fields[i];
 			let checked = field.querySelector(".check").checked;
 			let label = fetchValue(field, ".label");
 			let url = fetchValue(field, ".url");
 			let ico = field.querySelector(".ico").src;
-			let id = ( "" + (i+1) ).toString();
 			let data = {
 				"checked": checked,
 				"label": label,
@@ -126,7 +156,6 @@
 
 	function saveOption(){
 		let getter = browser.runtime.getBackgroundPage();
-		getter.then( onGet, onError );
 
 		function onGet(page){
 			let metadata = page.makeMetadata(windowId);
@@ -134,38 +163,8 @@
 			let saver = page.saveOption( metadata, optionList );
 			return saver;
 		}
-	}
 
-	function applyI18n(){
-		let list;
-		list = document.querySelectorAll(".label");
-		for( let i=0; i<list.length; i++){
-			list[i].setAttribute("title", browser.i18n.getMessage("htmlLabelDescription"));
-		}
-		list = document.querySelectorAll(".url");
-		for( let i=0; i<list.length; i++){
-			list[i].setAttribute("title", browser.i18n.getMessage("htmlUrlDescription"));
-		}
-		list = document.querySelectorAll(".addBlank");
-		for( let i=0; i<list.length; i++){
-			list[i].innerText = browser.i18n.getMessage("htmlAddBlankFieldButtonName");
-		}
-		list = document.querySelectorAll(".addPriset");
-		for( let i=0; i<list.length; i++){
-			list[i].innerText = browser.i18n.getMessage("htmlAddPresetFieldButtonName");
-		}
-		list = document.querySelectorAll(".labelText");
-		for( let i=0; i<list.length; i++){
-			list[i].innerText = browser.i18n.getMessage("htmlLabelText");
-		}
-		list = document.querySelectorAll(".urlText");
-		for( let i=0; i<list.length; i++){
-			list[i].innerText = browser.i18n.getMessage("htmlUrlText");
-		}
-		list = document.querySelectorAll(".removeField");
-		for( let i=0; i<list.length; i++){
-			list[i].innerText = browser.i18n.getMessage("htmlRemoveButtonName");
-		}
+		return getter.then( onGet, onError );
 	}
 
 	function onError(e){
