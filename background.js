@@ -34,35 +34,46 @@ let options = {};
 init();
 
 function init(){
+	let promise = initContextMenu();
+	promise.then( initListener, onError);
+};
+
+function initContextMenu(){
 	let getter = browser.storage.local.get({
 		"optionList": null
 	});
-	let installPromise = getter.then( installOrNot, onError );
-	let afterPromise = installPromise.then( after, onError);
-	afterPromise.catch(onError);
 
 	function installOrNot(res){
 		if ( res["optionList"] ){
 			resetMenu(res["optionList"]);
 			return ;
 		}
-		let setter = saveOption( makeMetadata(), DEFAULT_OPTION_LIST );
-		return setter.then( resetDefaultMenu, onSaveError );
+		let promise = saveOption( makeMetadata(), DEFAULT_OPTION_LIST );
+		return promise.then( resetDefaultMenu, onSaveError );
 	}
 
-	function after(){
-		browser.storage.onChanged.addListener(resetMenuFromStorage);
-		browser.contextMenus.onClicked.addListener( (info, tab) => {
-			if ( info.menuItemId == "option" ){
-				browser.runtime.openOptionsPage();
-			}
-			else if ( this.options[info.menuItemId] ){
-				let url = this.options[info.menuItemId].replace("$1", info.selectionText);
-				browser.tabs.create({"url": url});
-			}
-		});
+	return getter.then( installOrNot, onReadError );
+}
+
+function initListener(){
+	browser.storage.onChanged.addListener( resetMenuFromStorage );
+	browser.contextMenus.onClicked.addListener( contextMenuBehavior );
+}
+
+function contextMenuBehavior(info, tab){
+	if ( info.menuItemId == "option" ){
+		browser.runtime.openOptionsPage();
 	}
-};
+	else if ( this.options.hasOwnProperty( info.menuItemId ) ){
+		openWindow(this.options[info.menuItemId],info.selectionText );
+	}
+}
+
+function openWindow( url, text){
+	url = url.replace("$1", text);
+	let promise = browser.tabs.create({"url": url});
+	return promise.then( null, onOpenWindowError);
+}
 
 function saveOption( metadata, optionList ){
 	let setter = browser.storage.local.set({
@@ -117,6 +128,26 @@ function resetMenu(optionList){
 		"id": "option",
 		"title": browser.i18n.getMessage("extensionOptionName")
 	});
+}
+
+function onOpenWindowError(e){
+	console.error(e);
+	let noticer = browser.notifications.create({
+		"type": "basic",
+		"title": browser.i18n.getMessage("extensionName"),
+		"message": browser.i18n.getMessage("notificationOpenWindowError")
+	});
+	return noticer;
+}
+
+function onReadError(e){
+	console.log(e);
+	let noticer = browser.notifications.create({
+		"type": "basic",
+		"title": browser.i18n.getMessage("extensionName"),
+		"message": browser.i18n.getMessage("notificationReadWindowError")
+	});
+	return noticer;
 }
 
 function onSaveError(e){

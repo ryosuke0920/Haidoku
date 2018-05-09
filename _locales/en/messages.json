@@ -11,9 +11,17 @@
       "message": "GoToDictionary Options",
       "description": "Name of the extension option."
    },
+   "notificationReadOptionError": {
+      "message": "failed to read your configuration.",
+      "description": "save option error notification."
+   },
    "notificationSaveOptionError": {
       "message": "failed to save your configuration.",
       "description": "save option error notification."
+   },
+   "notificationopenWindowError": {
+      "message": "failed to open new window.",
+      "description": "open window error notification."
    },
    "htmlAddPresetFieldButtonName": {
       "message": "add blank field",

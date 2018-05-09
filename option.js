@@ -164,7 +164,7 @@
 			return saver;
 		}
 
-		return getter.then( onGet, onError );
+		return getter.then( onGet, (e)=>{ page.onSaveError(e) } );
 	}
 
 	function onError(e){

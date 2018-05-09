@@ -11,9 +11,17 @@
       "message": "右クリ辞書検索 設定",
       "description": "Name of the extension option."
    },
+   "notificationReadOptionError": {
+      "message": "設定の読み込みに失敗しました。",
+      "description": "save option error notification."
+   },
    "notificationSaveOptionError": {
       "message": "設定の保存に失敗しました。",
       "description": "save option error notification."
+   },
+   "notificationOpenWindowError": {
+      "message": "新しい画面を開けませんでした。",
+      "description": "open window error notification."
    },
    "htmlAddPresetFieldButtonName": {
       "message": "検索サイトを追加",
