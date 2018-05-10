@@ -11,11 +11,21 @@
    width: 16px;
    height: 16px;
 }
+.field{
+   white-space: nowrap;
+}
 .handle {
    cursor: grab;
-   /*cursor: grabbing;*/
 }
 .handle img {
    width: 18px;
    height: 16px;
+}
+.hold {
+	opacity:0.8;
+   position:absolute;
+   z-index:1;
+}
+.draggable.hide {
+   visibility: hidden;
 }
