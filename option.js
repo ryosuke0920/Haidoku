@@ -4,6 +4,7 @@
 	let inputPrototypeNode;
 	let formNode;
 	let pointer;
+	let preset;
 
 	let holded;
 	let dragged;
@@ -25,6 +26,7 @@
 		inputPrototypeNode = document.querySelector("#inputPrototype");
 		formNode = document.querySelector("#form");
 		pointer = document.querySelector("#pointer");
+		preset = document.querySelector("#preset");
 	}
 
 	function initI18n(){
@@ -32,7 +34,7 @@
 			{ "selector": ".label", "property": "title", "key": "htmlLabelDescription" },
 			{ "selector": ".url", "property": "title", "key": "htmlUrlDescription" },
 			{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
-			{ "selector": ".addPriset", "property": "innerText", "key": "htmlAddPresetFieldButtonName" },
+			{ "selector": ".showPreset", "property": "innerText", "key": "htmlAddPresetFieldButtonName" },
 			{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
 			{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
 			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" }
@@ -104,9 +106,18 @@
 				resetSort();
 				promise = saveOption();
 				break;
-			case "addPreset":
+			case "showPreset":
+				showPreset();
 				break;
 		}
+	}
+
+	function showPreset(){
+		let list = form.querySelectorAll("input,button");
+		for(let node of list){
+			node.setAttribute("disabled", true);
+		}
+		preset.classList.add("show");
 	}
 
 	function removeAllField(){
