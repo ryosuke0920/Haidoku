@@ -32,8 +32,8 @@
       "description": "Name of add blank field button."
    },
    "htmlRemoveButtonName": {
-      "message": "URL",
-      "description": "Name of url."
+      "message": "remove",
+      "description": "Name of remove."
    },
    "htmlLabelText": {
       "message": "label",
@@ -45,10 +45,30 @@
    },
    "htmlLabelDescription": {
       "message": "this will be appeared in the context menu.",
-      "description": "Name of label."
+      "description": "Name of label description."
    },
    "htmlUrlDescription": {
       "message": "the url you want to go. if you set \"$1\", it will be replaced to the words you selected.",
-      "description": "Name of url."
+      "description": "Name of url description."
+   },
+   "htmlAddPresetButtonName": {
+      "message": "add preset and back",
+      "description": "Name of cancel."
+   },
+   "htmlCancelButtonName": {
+      "message": "back",
+      "description": "Name of cancel."
+   },
+   "presetGoogleSearch": {
+      "message": "Google Search",
+      "description": ""
+   },
+   "presetGoogleTranslateEn2Ja": {
+      "message": "Google Translate en->ja",
+      "description": ""
+   },
+   "presetGoogleTranslateJa2En": {
+      "message": "Google TranseLate ja->en",
+      "description": ""
    }
 }

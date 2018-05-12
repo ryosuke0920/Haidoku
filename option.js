@@ -3,11 +3,13 @@
 	let containerNode;
 	let inputPrototypeNode;
 	let formNode;
-	let pointer;
-	let preset;
+	let presetNode;
+	let tableNode;
+	let cellPrototypeNode;
+	let bgPage;
 
-	let holded;
-	let dragged;
+	let holdedNode;
+	let draggedNode;
 	let draggable_list = [];
 	let dx = 0;
 	let dy = 0;
@@ -15,29 +17,37 @@
 	document.addEventListener("DOMContentLoaded", init);
 
 	function init(e){
-		initProperties();
-		initI18n();
-		let promise = initField();
-		promise.then( initListener, onError );
+		let promise = initProperties();
+		promise.then( initI18n ).then( initPreset ).then( initField ).then( initListener ).catch( onError );
 	}
 
 	function initProperties(){
-		containerNode = document.querySelector("#container");
-		inputPrototypeNode = document.querySelector("#inputPrototype");
-		formNode = document.querySelector("#form");
-		pointer = document.querySelector("#pointer");
-		preset = document.querySelector("#preset");
+		let getter = browser.runtime.getBackgroundPage();
+
+		function onGet(page) {
+			bgPage = page;
+			containerNode = document.querySelector("#container");
+			inputPrototypeNode = document.querySelector("#inputPrototype");
+			formNode = document.querySelector("#form");
+			presetNode = document.querySelector("#preset");
+			tableNode = document.querySelector("#table");
+			cellPrototypeNode = document.querySelector("#cellPrototype");
+		}
+
+		return getter.then( onGet );
 	}
 
 	function initI18n(){
 		let joson_list = [
-			{ "selector": ".label", "property": "title", "key": "htmlLabelDescription" },
-			{ "selector": ".url", "property": "title", "key": "htmlUrlDescription" },
+			{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
+			{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" },
 			{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
 			{ "selector": ".showPreset", "property": "innerText", "key": "htmlAddPresetFieldButtonName" },
 			{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
 			{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
-			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" }
+			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" },
+			{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
+			{ "selector": ".cancelPreset", "property": "innerText", "key": "htmlCancelButtonName" }
 		];
 		for( let json of joson_list ){
 			let list = document.querySelectorAll(json["selector"]);
@@ -62,9 +72,22 @@
 		return getter.then(onGot, onError);
 	}
 
+	function initPreset(){
+		let list = bgPage.getPresetOptionList();
+		for(let option of list){
+			let node = cellPrototypeNode.cloneNode(true);
+			node.removeAttribute("id");
+			node.querySelector(".label").innerText = option["label"];
+			node.querySelector(".url").innerText = option["url"];
+			tableNode.appendChild(node);
+			node.classList.remove("hide");
+		}
+	}
+
 	function initListener(){
 		browser.storage.onChanged.addListener(fileChangeBehavior);
-		formNode.addEventListener("click", clickBehavior);
+		formNode.addEventListener("click", formBehavior);
+		presetNode.addEventListener("click", presetBehavior);
 		window.addEventListener("mouseup", sortEnd);
 		window.addEventListener("mousemove", sortMove);
 	}
@@ -80,6 +103,14 @@
 		}
 	}
 
+	function presetBehavior(e){
+		switch(e.target.getAttribute("class")){
+			case "cancelPreset":
+				closePreset();
+				break;
+		}
+	}
+
 	function blurBehavior(e){
 		let promise;
 		switch(e.target.getAttribute("class")){
@@ -90,7 +121,7 @@
 		}
 	}
 
-	function clickBehavior(e){
+	function formBehavior(e){
 		let promise;
 		switch(e.target.getAttribute("class")){
 			case "check":
@@ -117,7 +148,17 @@
 		for(let node of list){
 			node.setAttribute("disabled", true);
 		}
+		form.classList.add("hide");
 		preset.classList.add("show");
+	}
+
+	function closePreset(){
+		let list = form.querySelectorAll("input,button");
+		for(let node of list){
+			node.removeAttribute("disabled");
+		}
+		form.classList.remove("hide");
+		preset.classList.remove("show");
 	}
 
 	function removeAllField(){
@@ -141,21 +182,21 @@
 		handleNode.addEventListener("mousedown", sortStart);
 		node.querySelector(".ico").src = ico;
 		containerNode.appendChild(node);
-		node.style.display="block";
+		node.classList.remove("hide");
 	}
 
 	function sortStart(e){
-		dragged = e.target.closest(".draggable");
-		holded = dragged.cloneNode(true);
-		holded.removeAttribute("id");
-		holded.classList.add("hold");
-		holded.classList.remove("draggable");
-		containerNode.insertBefore(holded, dragged);
-		dx = holded.offsetLeft - e.clientX;
-		dy = holded.offsetTop - e.clientY;
-		holded.style.left = (e.clientX + dx) +"px";
-		holded.style.top = (e.clientY + dy) +"px";
-		dragged.classList.add("hide");
+		draggedNode = e.target.closest(".draggable");
+		holdedNode = draggedNode.cloneNode(true);
+		holdedNode.removeAttribute("id");
+		holdedNode.classList.add("hold");
+		holdedNode.classList.remove("draggable");
+		containerNode.insertBefore(holdedNode, draggedNode);
+		dx = holdedNode.offsetLeft - e.clientX;
+		dy = holdedNode.offsetTop - e.clientY;
+		holdedNode.style.left = (e.clientX + dx) +"px";
+		holdedNode.style.top = (e.clientY + dy) +"px";
+		draggedNode.classList.add("hide");
 		draggable_list = containerNode.querySelectorAll(".draggable");
 		e.preventDefault();
 	}
@@ -172,18 +213,18 @@
 	}
 
 	function sortMove(e){
-		if(dragged){
-			holded.style.left = (e.clientX + dx) +"px";
-			holded.style.top = (e.clientY + dy) +"px";
-			let overed = mouseOver(e.clientX, e.clientY);
-			if( overed && overed != dragged ) {
-				let draggedSort = dragged.getAttribute("sort");
-				let overedSort = overed.getAttribute("sort");
+		if(draggedNode){
+			holdedNode.style.left = (e.clientX + dx) +"px";
+			holdedNode.style.top = (e.clientY + dy) +"px";
+			let overedNode = mouseOver(e.clientX, e.clientY);
+			if( overedNode && overedNode != draggedNode ) {
+				let draggedSort = draggedNode.getAttribute("sort");
+				let overedSort = overedNode.getAttribute("sort");
 				if ( overedSort < draggedSort ) {
-					containerNode.insertBefore(dragged, overed);
+					containerNode.insertBefore(draggedNode, overedNode);
 				}
 				else if ( draggedSort < overedSort ) {
-					containerNode.insertBefore(dragged, overed.nextElementSibling);
+					containerNode.insertBefore(draggedNode, overedNode.nextElementSibling);
 				}
 				resetSort();
 			}
@@ -204,11 +245,11 @@
 		for(let node of list){
 			node.classList.remove("hide");
 		}
-		if ( holded ) holded.remove();
-		holded = null;
+		if ( holdedNode ) holdedNode.remove();
+		holdedNode = null;
 		draggable_list = [];
-		if( dragged ) saveOption();
-		dragged = null;
+		if( draggedNode ) saveOption();
+		draggedNode = null;
 	}
 
 	function fetchValue(element, selector){
@@ -238,16 +279,10 @@
 	}
 
 	function saveOption(){
-		let getter = browser.runtime.getBackgroundPage();
-
-		function onGet(page){
-			let metadata = page.makeMetadata(windowId);
-			let optionList = makeOptionList();
-			let saver = page.saveOption( metadata, optionList );
-			return saver;
-		}
-
-		return getter.then( onGet, (e)=>{ page.onSaveError(e) } );
+		let metadata = bgPage.makeMetadata(windowId);
+		let optionList = makeOptionList();
+		let saver = bgPage.saveOption( metadata, optionList );
+		return saver.then( ()=>{}, (e)=>{ bgPage.onSaveError(e) } );
 	}
 
 	function onError(e){

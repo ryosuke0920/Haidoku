@@ -33,7 +33,7 @@
    },
    "htmlRemoveButtonName": {
       "message": "削除",
-      "description": "Name of url."
+      "description": "Name of remove."
    },
    "htmlLabelText": {
       "message": "サイト名称",
@@ -45,10 +45,46 @@
    },
    "htmlLabelDescription": {
       "message": "検索するサイトの名称を入力してください。右クリックで開くコンテキストメニューに表示されます。",
-      "description": "Name of label."
+      "description": "Name of label description."
    },
    "htmlUrlDescription": {
       "message": "検索したいサイトのURLを入力してください。\"$$1\"は選択したテキストに置き換えられます。",
-      "description": "Name of url."
+      "description": "Name of url description."
+   },
+   "htmlAddPresetButtonName": {
+      "message": "追加して戻る",
+      "description": "Name of cancel."
+   },
+   "htmlCancelButtonName": {
+      "message": "キャンセルして戻る",
+      "description": "Name of cancel."
+   },
+   "presetWeblioDictionary": {
+      "message": "weblio 辞書",
+      "description": ""
+   },
+   "presetWeblioEnglishDictionary": {
+      "message": "weblio 英和辞典・和英辞典",
+      "description": ""
+   },
+   "presetGoogleSearch": {
+      "message": "Google 検索",
+      "description": ""
+   },
+   "presetGoogleTranslateEn2Ja": {
+      "message": "Google 翻訳 英→日",
+      "description": ""
+   },
+   "presetGoogleTranslateJa2En": {
+      "message": "Google 翻訳 日→英",
+      "description": ""
+   },
+   "presetCambridgeDictionaryEn2Ja": {
+      "message": "Cambridge Dictionary 日→英",
+      "description": ""
+   },
+   "presetCambridgeDictionaryEn2En": {
+      "message": "Cambridge Dictionary 英→英",
+      "description": ""
    }
 }

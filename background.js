@@ -1,35 +1,3 @@
-const DEFAULT_OPTION_LIST = [
-	{
-		"checked": true,
-		"label": "Google",
-		"url": "https://www.google.co.jp/search?q=$1",
-		"ico": "image/www.google.co.jp.ico"
-	},
-	{
-		"checked": true,
-		"label": "Google Translate en->ja",
-		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#en/ja/$1",
-		"ico": "image/translate.google.co.jp.ico"
-	},
-	{
-		"checked": true,
-		"label": "Google Translate ja->en",
-		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#ja/en/$1",
-		"ico": "image/translate.google.co.jp.ico"
-	},
-	{
-		"checked": true,
-		"label": "Yahoo!",
-		"url": "https://search.yahoo.co.jp/q=$1",
-		"ico": "image/dummy.svg"
-	},
-	{
-		"checked": true,
-		"label": "Cambridge",
-		"url": "https://dictionary.cambridge.org/search/english/direct/?q=$1",
-		"ico": "image/dictionary.cambridge.org.ico"
-	}
-];
 let options = {};
 init();
 
@@ -37,6 +5,10 @@ function init(){
 	let promise = initContextMenu();
 	promise.then( initListener, onError);
 };
+
+function getPresetOptionList(){
+	return PRESET_OPTION_LIST;
+}
 
 function initContextMenu(){
 	let getter = browser.storage.local.get({

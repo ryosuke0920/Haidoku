@@ -4,8 +4,12 @@
   font: 1em, sans-serif;
 }
 .box {
+   clear: both;
 	padding: 0.5em;
    background-image: url(../images/__MSG_@@ui_locale__/header.png);
+}
+.right {
+   text-align: right;
 }
 .ico {
    width: 16px;
@@ -29,18 +33,38 @@
 .draggable.hide {
    visibility: hidden;
 }
+.hide {
+   display: none;
+}
 #preset {
-    position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
-    height: 100%; /* Full height (cover the whole page) */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+   display: none;
 }
 #preset.show {
    display: block;
+}
+#preset section {
+   padding:10px;
+   margin:10px;
+   border: solid 1px gray;
+}
+#preset .checkbox:hover {
+   cursor: pointer;
+   color: black;
+}
+#preset .checkbox {
+   color: dimgray;
+}
+#table .cell {
+   float: left;
+   width: 90%;
+}
+@media (min-width: 653px) {
+   #table .cell {
+      width: 43%;
+   }
+}
+@media (min-width: 979px) {
+   #table .cell {
+      width: 29%;
+   }
 }

@@ -7,29 +7,43 @@
 </head>
 <body>
 <div>
-	<div id="preset"></div>
-	<form id="form">
-		<div class="box">
+	<div id="preset">
+		<div class="box right">
+			<button type="button" class="addPreset">add and back</button>
+			<button type="button" class="cancelPreset">back</button>
+		</div>
+		<div id="table"></div>
+		<div class="box right">
+			<button type="button" class="addPreset">add and back</button>
+			<button type="button" class="cancelPreset">back</button>
+		</div>
+		<section id="cellPrototype" class="cell hide checkbox">
+			<h1 class="label">label</h1>
+			<p class="url">url</p>
+		</section>
+	</div>
+	<div id="form">
+		<div class="box right">
 			<button type="button" class="showPreset">add from preset</button>
 			<button type="button" class="addBlank">add blank field</button>
 		</div>
 		<div id="container" class="box"></div>
-		<div class="box">
+		<div class="box right">
 			<button type="button" class="showPreset">add from preset</button>
 			<button type="button" class="addBlank">add blank field</button>
 		</div>
-	</form>
-</div>
-<div id="inputPrototype" class="field draggable" style="display:none;">
-	<span class="handle"><img src="image/hold.svg" draggable="false"></span>
-	<label>
-		<input type="checkbox" class="check">&nbsp;
-		<img class="ico" src="image/dummy.ico" draggable="false">&nbsp;
-	</label>&nbsp;
-	<label><span class="labelText">label</span>&nbsp;<input type="text" class="label" placeholder="example.com" size="12" ></label>&nbsp;
-	<label><span class="urlText">url</span>&nbsp;<input type="text" class="url" placeholder="https://www.example.com/?q=$1" size="32"></label>&nbsp;
-	<button type="button" class="testURL">testURL</button>&nbsp;
-	<button type="button" class="removeField">remove</button>
+		<div id="inputPrototype" class="field draggable hide">
+			<span class="handle"><img src="image/hold.svg" draggable="false"></span>
+			<label>
+				<input type="checkbox" class="check">&nbsp;
+				<img class="ico" src="image/dummy.ico" draggable="false">&nbsp;
+			</label>&nbsp;
+			<label><span class="labelText">label</span>&nbsp;<input type="text" class="label" placeholder="example.com" size="12" ></label>&nbsp;
+			<label><span class="urlText">url</span>&nbsp;<input type="text" class="url" placeholder="https://www.example.com/?q=$1" size="32"></label>&nbsp;
+			<button type="button" class="testURL">testURL</button>&nbsp;
+			<button type="button" class="removeField">remove</button>
+		</div>
+	</div>
 </div>
 <script src="option.js"></script>
 </body>
