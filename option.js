@@ -65,7 +65,7 @@
 		function onGot(res){
 			let optionList = res["optionList"];
 			for(let item of optionList ){
-				addInputField(item["checked"], item["label"], item["url"], item["ico"]);
+				addInputField(item["checked"], item["label"], item["url"]);
 			}
 			resetSort();
 		}
@@ -98,7 +98,7 @@
 			let optionList = e["optionList"]["newValue"];
 			removeAllField();
 			for( let item of optionList ){
-				addInputField(item["checked"], item["label"], item["url"], item["ico"]);
+				addInputField(item["checked"], item["label"], item["url"]);
 			}
 			resetSort();
 		}
@@ -193,7 +193,7 @@
 		}
 	}
 
-	function addInputField( checked=false, label="", url="", ico="image/dummy.svg" ){
+	function addInputField( checked=false, label="", url="" ){
 		let node = inputPrototypeNode.cloneNode(true);
 		node.removeAttribute("id");
 		node.querySelector(".check").checked = checked;
@@ -205,7 +205,6 @@
 		urlNode.addEventListener("blur", blurBehavior);
 		let handleNode = node.querySelector(".handle");
 		handleNode.addEventListener("mousedown", sortStart);
-		node.querySelector(".ico").src = ico;
 		containerNode.appendChild(node);
 		node.classList.remove("hide");
 	}
@@ -291,12 +290,10 @@
 			let checked = field.querySelector(".check").checked;
 			let label = fetchValue(field, ".label");
 			let url = fetchValue(field, ".url");
-			let ico = field.querySelector(".ico").src;
 			let data = {
 				"checked": checked,
 				"label": label,
-				"url": url,
-				"ico": ico,
+				"url": url
 			};
 			optionList.push(data);
 		}

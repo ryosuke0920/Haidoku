@@ -1,29 +1,14 @@
 const DEFAULT_OPTION_LIST = [
 	{
 		"checked": true,
-		"label": "Google",
-		"url": "https://www.google.co.jp/search?q=$1",
+		"label": browser.i18n.getMessage("presetWeblioDictionary"),
+		"url": "https://www.weblio.jp/content_find?searchType=exact&query=$1"
 	},
 	{
 		"checked": true,
-		"label": "Google Translate en->ja",
-		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#en/ja/$1",
+		"label": browser.i18n.getMessage("presetWeblioEnglishDictionary"),
+		"url": "https://ejje.weblio.jp/content_find?searchType=exact&query=$1"
 	},
-	{
-		"checked": true,
-		"label": "Google Translate ja->en",
-		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#ja/en/$1",
-	},
-	{
-		"checked": true,
-		"label": "Yahoo!",
-		"url": "https://search.yahoo.co.jp/q=$1",
-	},
-	{
-		"checked": true,
-		"label": "Cambridge",
-		"url": "https://dictionary.cambridge.org/search/english/direct/?q=$1",
-	}
 ];
 const PRESET_OPTION_LIST = [
 	{
