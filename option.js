@@ -79,6 +79,7 @@
 			node.removeAttribute("id");
 			node.querySelector(".label").innerText = option["label"];
 			node.querySelector(".url").innerText = option["url"];
+			node.addEventListener("click",checkPreset);
 			tableNode.appendChild(node);
 			node.classList.remove("hide");
 		}
@@ -103,62 +104,86 @@
 		}
 	}
 
-	function presetBehavior(e){
-		switch(e.target.getAttribute("class")){
-			case "cancelPreset":
-				closePreset();
-				break;
-		}
-	}
-
 	function blurBehavior(e){
+		let cassList = e.target.classList;
 		let promise;
-		switch(e.target.getAttribute("class")){
-			case "label":
-			case "url":
-				promise = saveOption();
-				break;
+		if(cassList.contains("label") || cassList.contains("url")){
+			promise = saveOption();
 		}
 	}
 
 	function formBehavior(e){
+		let cassList = e.target.classList;
 		let promise;
-		switch(e.target.getAttribute("class")){
-			case "check":
-				saveOption();
-				break;
-			case "addBlank":
-				addInputField();
-				resetSort();
-				promise = saveOption();
-				break;
-			case "removeField":
-				e.target.closest(".field").remove();
-				resetSort();
-				promise = saveOption();
-				break;
-			case "showPreset":
-				showPreset();
-				break;
+		if(cassList.contains("check")){
+			promise = saveOption();
+		}
+		else if(cassList.contains("addBlank")){
+			addInputField();
+			resetSort();
+			promise = saveOption();
+		}
+		else if(cassList.contains("removeField")){
+			e.target.closest(".field").remove();
+			resetSort();
+			promise = saveOption();
+		}
+		else if(cassList.contains("showPreset")){
+			showPreset();
 		}
 	}
 
+	function presetBehavior(e){
+		let cassList = e.target.classList;
+		if(cassList.contains("cancelPreset")){
+			closePreset();
+		}
+		else if(cassList.contains("addPreset")){
+			addPreset();
+		}
+	}
+
+	function addPreset(e){
+		let list = tableNode.querySelectorAll(".checkbox:checked");
+		for(let node of list){
+			let checkWrapperNode = node.closest(".checkWrapper");
+			let label = checkWrapperNode.querySelector(".label").innerText;
+			let p = checkWrapperNode.querySelector(".url").innerText;
+			addInputField(true, label, p);
+		}
+		let promise = saveOption();
+		closePreset();
+	}
+
+	function checkPreset(e){
+		if( e.target.tagName == "INPUT" ) {
+			return;
+		}
+		let checkboxNode = this.querySelector(".checkbox");
+		checkboxNode.checked = !checkboxNode.checked;
+	}
+
 	function showPreset(){
-		let list = form.querySelectorAll("input,button");
+		let list = formNode.querySelectorAll("input,button");
 		for(let node of list){
 			node.setAttribute("disabled", true);
 		}
-		form.classList.add("hide");
+		formNode.classList.add("hide");
 		preset.classList.add("show");
 	}
 
 	function closePreset(){
-		let list = form.querySelectorAll("input,button");
+		let list;
+		list = formNode.querySelectorAll("input,button");
 		for(let node of list){
 			node.removeAttribute("disabled");
 		}
-		form.classList.remove("hide");
+		formNode.classList.remove("hide");
 		preset.classList.remove("show");
+		list = tableNode.querySelectorAll(".checkbox:checked");
+		for(let node of list){
+			node.removeAttribute("checked");
+		}
 	}
 
 	function removeAllField(){
@@ -196,7 +221,7 @@
 		dy = holdedNode.offsetTop - e.clientY;
 		holdedNode.style.left = (e.clientX + dx) +"px";
 		holdedNode.style.top = (e.clientY + dy) +"px";
-		draggedNode.classList.add("hide");
+		draggedNode.classList.add("invisible");
 		draggable_list = containerNode.querySelectorAll(".draggable");
 		e.preventDefault();
 	}
@@ -241,15 +266,15 @@
 	}
 
 	function sortEnd(e){
-		let list = containerNode.querySelectorAll(".draggable");
-		for(let node of list){
-			node.classList.remove("hide");
+		if( draggedNode ){
+			let node = containerNode.querySelector(".draggable.invisible");
+			if( node )node.classList.remove("invisible");
+			if ( holdedNode ) holdedNode.remove();
+			holdedNode = null;
+			draggable_list = [];
+			draggedNode = null;
+			saveOption();
 		}
-		if ( holdedNode ) holdedNode.remove();
-		holdedNode = null;
-		draggable_list = [];
-		if( draggedNode ) saveOption();
-		draggedNode = null;
 	}
 
 	function fetchValue(element, selector){

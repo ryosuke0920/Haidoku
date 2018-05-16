@@ -8,9 +8,6 @@
 	padding: 0.5em;
    background-image: url(../images/__MSG_@@ui_locale__/header.png);
 }
-.right {
-   text-align: right;
-}
 .ico {
    width: 16px;
    height: 16px;
@@ -30,7 +27,7 @@
    position:absolute;
    z-index:1;
 }
-.draggable.hide {
+.draggable.invisible {
    visibility: hidden;
 }
 .hide {
@@ -43,28 +40,25 @@
    display: block;
 }
 #preset section {
-   padding:10px;
-   margin:10px;
-   border: solid 1px gray;
+   padding:0.5em;
+   margin:0.5em;
+   border: solid 1px black;
 }
-#preset .checkbox:hover {
+#preset .checkWrapper:hover {
    cursor: pointer;
-   color: black;
+   border-color: orange;
 }
-#preset .checkbox {
-   color: dimgray;
-}
-#table .cell {
-   float: left;
-   width: 90%;
+#table {
+   display: grid;
+   grid-template-columns: 1fr;
 }
 @media (min-width: 653px) {
-   #table .cell {
-      width: 43%;
+   #table {
+      grid-template-columns: 1fr 1fr;
    }
 }
 @media (min-width: 979px) {
-   #table .cell {
-      width: 29%;
+   #table {
+      grid-template-columns: 1fr 1fr 1fr;
    }
 }

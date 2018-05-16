@@ -1,6 +1,0 @@
-<svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg">
-<rect width="16" height="16" fill="gray" />
-<rect width="12" height="12" fill="white" x="2" y="2" />
-<line x1="0" y1="0" x2="16" y2="16" stroke="gray" stroke-width="2"/>
-<line x1="16" y1="0" x2="0" y2="16" stroke="gray" stroke-width="2"/>
-</svg>

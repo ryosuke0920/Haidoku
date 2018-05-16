@@ -42,6 +42,7 @@ function contextMenuBehavior(info, tab){
 }
 
 function openWindow( url, text){
+	text  = encodeURIComponent(text);
 	url = url.replace("$1", text);
 	let promise = browser.tabs.create({"url": url});
 	return promise.then( null, onOpenWindowError);
