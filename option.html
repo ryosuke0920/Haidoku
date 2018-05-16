@@ -6,33 +6,36 @@
 <title>title</title>
 </head>
 <body>
-<div>
-	<div id="preset">
-		<nav class="box">
-			<button type="button" class="addPreset">add and back</button>
-			<button type="button" class="cancelPreset">back</button>
-		</nav>
-		<div id="table"></div>
-		<section id="cellPrototype" class="cell hide checkWrapper">
-			<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
-			<p class="url">url</p>
-		</section>
-	</div>
-	<div id="form">
-		<nav class="box">
-			<button type="button" class="showPreset">add from preset</button>
-			<button type="button" class="addBlank">add blank field</button>
-		</nav>
-		<div id="container" class="box main"></div>
-		<div id="inputPrototype" class="field draggable hide">
-			<span class="handle"><img src="image/hold.svg" draggable="false"></span>&nbsp;
-			<input type="checkbox" class="check">&nbsp;
-			<label><span class="labelText">label</span>&nbsp;<input type="text" class="label" placeholder="example.com" size="12" ></label>&nbsp;
-			<label><span class="urlText">url</span>&nbsp;<input type="text" class="url" placeholder="https://www.example.com/?q=$1" size="32"></label>&nbsp;
-			<button type="button" class="testURL">testURL</button>&nbsp;
-			<button type="button" class="removeField">remove</button>
-		</div>
-	</div>
+<header>
+	<h1 class="title">title</h1>
+</header>
+<div id="preset">
+	<nav class="box">
+		<p class="presetDescription">presetDescription</p>
+		<button type="button" class="addPreset">add and back</button>
+		<button type="button" class="cancelPreset">back</button>
+	</nav>
+	<div id="table" class="box"></div>
+	<section id="cellPrototype" class="cell hide checkWrapper">
+		<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
+		<p class="url">url</p>
+	</section>
+</div>
+<div id="form">
+	<nav class="box">
+		<p class="formDescription">formDescription</p>
+		<button type="button" class="showPreset">add from preset</button>
+		<button type="button" class="addBlank">add blank field</button>
+	</nav>
+	<div id="container" class="box"></div>
+	<form id="inputPrototype" class="field draggable hide">
+		<span class="handle"><img src="image/hold.svg" draggable="false"></span>&nbsp;
+		<input type="checkbox" class="check">&nbsp;
+		<label class="textbox"><span class="labelText">label</span>&nbsp;<input type="text" class="label" placeholder="example.com" required></label>&nbsp;
+		<label class="textbox"><span class="urlText">url</span>&nbsp;<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required></label>&nbsp;
+		<button type="button" class="removeField">remove</button>
+		<input type="submit" class="submit ">
+	</form>
 </div>
 <script src="option.js"></script>
 </body>

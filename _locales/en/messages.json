@@ -11,6 +11,14 @@
       "message": "GoToDictionary Options",
       "description": "Name of the extension option."
    },
+   "extensionOptionDescription": {
+      "message": "You can add, delete and change the order of sites.",
+      "description": "Description of the extension option."
+   },
+   "extensionPresetDescription": {
+      "message": "select the site which you wanto to add.",
+      "description": "Description of the preset option."
+   },
    "notificationReadOptionError": {
       "message": "failed to read your configuration.",
       "description": "save option error notification."
@@ -59,6 +67,14 @@
       "message": "back",
       "description": "Name of cancel."
    },
+   "presetWeblioDictionary": {
+      "message": "weblio Japanese dictionary",
+      "description": ""
+   },
+   "presetWeblioEnglishDictionary": {
+      "message": "weblio Japanese<->English dictionary",
+      "description": ""
+   },
    "presetGoogleSearch": {
       "message": "Google Search",
       "description": ""
@@ -69,6 +85,26 @@
    },
    "presetGoogleTranslateJa2En": {
       "message": "Google TranseLate ja->en",
+      "description": ""
+   },
+   "presetCambridgeDictionary": {
+      "message": "Cambridge Dictionary",
+      "description": ""
+   },
+   "presetCambridgeDictionaryEn2Ja": {
+      "message": "Cambridge Dictionary(English-Japanese)",
+      "description": ""
+   },
+   "presetOxfordDictionary": {
+      "message": "Oxford Dictionaries",
+      "description": ""
+   },
+   "presetOxfordDictionaryUS": {
+      "message": "Oxford Dictionaries(North American English)",
+      "description": ""
+   },
+   "presetDictionaryCom": {
+      "message": "Dictionary.com",
       "description": ""
    }
 }

@@ -5,14 +5,15 @@
    "description":"__MSG_extensionDescription__",
    "version":"1.0.0",
    "background": {
-   "scripts": [
-      "config.js",
-      "background.js"
-   ]
+      "scripts": [
+         "config.js",
+         "background.js"
+      ]
    },
    "options_ui": {
       "page": "option.html",
-      "browser_style": false
+      "browser_style": true,
+      "open_in_tab": true
    },
    "permissions": [
       "contextMenus",

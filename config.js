@@ -32,11 +32,23 @@ const PRESET_OPTION_LIST = [
 		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#ja/en/$1"
 	},
 	{
+		"label": browser.i18n.getMessage("presetCambridgeDictionary"),
+		"url": "https://dictionary.cambridge.org/search/english/direct/?q=$1"
+	},
+	{
 		"label": browser.i18n.getMessage("presetCambridgeDictionaryEn2Ja"),
 		"url": "https://dictionary.cambridge.org/search/english-japanese/direct/?q=$1"
 	},
 	{
-		"label": browser.i18n.getMessage("presetCambridgeDictionaryEn2En"),
-		"url": "https://dictionary.cambridge.org/search/english/direct/?q=$1"
+		"label": browser.i18n.getMessage("presetOxfordDictionary"),
+		"url": "https://en.oxforddictionaries.com/search?utf8=✓&filter=dictionary&query=$1"
+	},
+	{
+		"label": browser.i18n.getMessage("presetOxfordDictionaryUS"),
+		"url": "https://en.oxforddictionaries.com/search?utf8=✓&filter=noad&query=$1"
+	},
+	{
+		"label": browser.i18n.getMessage("presetDictionaryCom"),
+		"url": "http://www.dictionary.com/browse/$1?s=ts"
 	}
 ];

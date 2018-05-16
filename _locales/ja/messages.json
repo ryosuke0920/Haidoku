@@ -11,6 +11,14 @@
       "message": "右クリ辞書検索 設定",
       "description": "Name of the extension option."
    },
+   "extensionOptionDescription": {
+      "message": "サイトの追加、削除、並び順の変更ができます。",
+      "description": "Description of the extension option."
+   },
+   "extensionPresetDescription": {
+      "message": "追加したいサイトを選択してください。",
+      "description": "Description of the preset option."
+   },
    "notificationReadOptionError": {
       "message": "設定の読み込みに失敗しました。",
       "description": "save option error notification."
@@ -72,19 +80,31 @@
       "description": ""
    },
    "presetGoogleTranslateEn2Ja": {
-      "message": "Google 翻訳 英→日",
+      "message": "Google 翻訳 英語→日本語",
       "description": ""
    },
    "presetGoogleTranslateJa2En": {
-      "message": "Google 翻訳 日→英",
+      "message": "Google 翻訳 日本語→英語",
+      "description": ""
+   },
+   "presetCambridgeDictionary": {
+      "message": "Cambridge Dictionary",
       "description": ""
    },
    "presetCambridgeDictionaryEn2Ja": {
-      "message": "Cambridge Dictionary 日→英",
+      "message": "Cambridge Dictionary(English-Japanese)",
       "description": ""
    },
-   "presetCambridgeDictionaryEn2En": {
-      "message": "Cambridge Dictionary 英→英",
+   "presetOxfordDictionary": {
+      "message": "Oxford Dictionaries",
+      "description": ""
+   },
+   "presetOxfordDictionaryUS": {
+      "message": "Oxford Dictionaries(North American English)",
+      "description": ""
+   },
+   "presetDictionaryCom": {
+      "message": "Dictionary.com",
       "description": ""
    }
 }

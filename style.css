@@ -4,16 +4,16 @@
   font: 1em, sans-serif;
 }
 .box {
-   clear: both;
 	padding: 0.5em;
-   background-image: url(../images/__MSG_@@ui_locale__/header.png);
 }
-.ico {
-   width: 16px;
-   height: 16px;
+.field {
+   margin-bottom: 0.3em;
 }
-.field{
-   white-space: nowrap;
+input.label {
+   width:16em;
+}
+input.url {
+   width:32em;
 }
 .handle {
    cursor: grab;
@@ -52,13 +52,18 @@
    display: grid;
    grid-template-columns: 1fr;
 }
-@media (min-width: 653px) {
+@media (min-width: 768px) {
    #table {
       grid-template-columns: 1fr 1fr;
    }
 }
-@media (min-width: 979px) {
+@media (min-width: 992px) {
    #table {
       grid-template-columns: 1fr 1fr 1fr;
+   }
+}
+@media (min-width: 1200px) {
+   #table {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
    }
 }

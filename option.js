@@ -39,6 +39,10 @@
 
 	function initI18n(){
 		let joson_list = [
+			{ "selector": "title", "property": "innerText", "key": "extensionOptionName" },
+			{ "selector": ".title", "property": "innerText", "key": "extensionOptionName" },
+			{ "selector": ".formDescription", "property": "innerText", "key": "extensionOptionDescription" },
+			{ "selector": ".presetDescription", "property": "innerText", "key": "extensionPresetDescription" },
 			{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
 			{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" },
 			{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
@@ -69,7 +73,7 @@
 			}
 			resetSort();
 		}
-		return getter.then(onGot, onError);
+		return getter.then(onGot);
 	}
 
 	function initPreset(){
@@ -182,7 +186,7 @@
 		preset.classList.remove("show");
 		list = tableNode.querySelectorAll(".checkbox:checked");
 		for(let node of list){
-			node.removeAttribute("checked");
+			node.checked = false;
 		}
 	}
 
@@ -196,13 +200,39 @@
 	function addInputField( checked=false, label="", url="" ){
 		let node = inputPrototypeNode.cloneNode(true);
 		node.removeAttribute("id");
-		node.querySelector(".check").checked = checked;
+		node.addEventListener("submit", (e)=>{
+			e.preventDefault();
+		});
+		let submitButton = node.querySelector(".submit");
+
+		let check = node.querySelector(".check");
+		check.checked = checked;
+		check.addEventListener("click", (e)=>{
+			if(e.target.checked && !node.checkValidity()){
+				e.preventDefault();
+				e.target.checked = false;
+				submitButton.click();
+			}
+		});
 		let labelNode = node.querySelector(".label")
 		labelNode.value = label;
+		labelNode.addEventListener("change", (e)=>{
+			if( !node.checkValidity() ){
+				check.checked = false;
+				submitButton.click();
+			}
+		});
 		labelNode.addEventListener("blur", blurBehavior);
 		let urlNode = node.querySelector(".url");
 		urlNode.value = url;
+		urlNode.addEventListener("change", (e)=>{
+			if( !node.checkValidity() ){
+				check.checked = false;
+				submitButton.click();
+			}
+		});
 		urlNode.addEventListener("blur", blurBehavior);
+
 		let handleNode = node.querySelector(".handle");
 		handleNode.addEventListener("mousedown", sortStart);
 		containerNode.appendChild(node);
@@ -225,7 +255,7 @@
 		e.preventDefault();
 	}
 
-	function mouseOver(x, y) {
+	function isMouseOver(x, y) {
 		for( let node of draggable_list ){
 			//console.log("x=" + x + ", top=" + node.offsetTop + ", bottom=" + (node.offsetTop + node.offsetHeight) + ", left=" + node.offsetLeft + ", right=" + (node.offsetLeft + node.offsetWidth) );
 			if( node.offsetTop <= y && y <= (node.offsetTop + node.offsetHeight)
@@ -240,7 +270,7 @@
 		if(draggedNode){
 			holdedNode.style.left = (e.clientX + dx) +"px";
 			holdedNode.style.top = (e.clientY + dy) +"px";
-			let overedNode = mouseOver(e.clientX, e.clientY);
+			let overedNode = isMouseOver(e.clientX, e.clientY);
 			if( overedNode && overedNode != draggedNode ) {
 				let draggedSort = draggedNode.getAttribute("sort");
 				let overedSort = overedNode.getAttribute("sort");
