@@ -12,7 +12,6 @@
 	let holdedNode;
 	let draggedNode;
 	let draggable_list = [];
-	let dx = 0;
 	let dy = 0;
 
 	document.addEventListener("DOMContentLoaded", init);
@@ -55,6 +54,7 @@
 			{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
 			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" },
 			{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
+			{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
 		];
 		for( let json of joson_list ){
 			let list = document.querySelectorAll(json["selector"]);
@@ -217,7 +217,7 @@
 		}
 		let promise = saveOption();
 		resetPreset();
-		Form();
+		showForm();
 	}
 
 	function checkPreset(e){
@@ -292,9 +292,7 @@
 		holdedNode.classList.add("hold");
 		holdedNode.classList.remove("draggable");
 		containerNode.insertBefore(holdedNode, draggedNode);
-		dx = holdedNode.offsetLeft - e.clientX;
 		dy = holdedNode.offsetTop - e.clientY;
-		holdedNode.style.left = (e.clientX + dx) +"px";
 		holdedNode.style.top = (e.clientY + dy) +"px";
 		draggedNode.classList.add("invisible");
 		draggable_list = containerNode.querySelectorAll(".draggable");
@@ -303,9 +301,7 @@
 
 	function isMouseOver(x, y) {
 		for( let node of draggable_list ){
-			//console.log("x=" + x + ", top=" + node.offsetTop + ", bottom=" + (node.offsetTop + node.offsetHeight) + ", left=" + node.offsetLeft + ", right=" + (node.offsetLeft + node.offsetWidth) );
-			if( node.offsetTop <= y && y <= (node.offsetTop + node.offsetHeight)
-				&& node.offsetLeft <= x && x <= (node.offsetLeft + node.offsetWidth) ){
+			if( node.offsetTop <= y && y <= (node.offsetTop + node.offsetHeight) ){
 				return node;
 			}
 		}
@@ -314,7 +310,6 @@
 
 	function sortMove(e){
 		if(draggedNode){
-			holdedNode.style.left = (e.clientX + dx) +"px";
 			holdedNode.style.top = (e.clientY + dy) +"px";
 			let overedNode = isMouseOver(e.clientX, e.clientY);
 			if( overedNode && overedNode != draggedNode ) {

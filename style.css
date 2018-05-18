@@ -6,8 +6,6 @@
 body {
    background-color: white;
 }
-#wrapper {
-}
 #header {
    position: fixed;
    top: 0;
@@ -25,7 +23,7 @@ body {
    left: 0;
    width: 160px;
    height: 100%;
-   background-color: AliceBlue;
+   background-color:AliceBlue;
 }
 #nav .order {
    color: gray;
@@ -44,18 +42,29 @@ body {
 }
 #main {
    margin-top: 45px;
-   margin-left: 200px;
+   margin-left: 160px;
 }
 .controller {
    position: fixed;
-   right: 0;
-   bottom: 0;
+   top: 45px;
+   left: 160px;
+   width: 100%;
+   white-space: nowrap;
+   background-color: white;
+   border-bottom: solid 1px black;
+}
+.desk {
+   margin-top: 50px;
+
 }
 .box {
 	padding: 0.5em;
 }
 .field {
-   margin-bottom: 0.3em;
+   margin-bottom: 1em;
+}
+.textbox {
+   white-space: nowrap;
 }
 input.label {
    width:16em;
@@ -86,6 +95,9 @@ input.url {
    margin:0.5em;
    border: solid 1px black;
 }
+#preset .url {
+   font-size:70%
+}
 #preset .checkWrapper:hover {
    cursor: pointer;
    border-color: orange;
@@ -108,7 +120,4 @@ input.url {
    #table {
       grid-template-columns: 1fr 1fr 1fr 1fr;
    }
-}
-footer address {
-   font-size:80%;
 }

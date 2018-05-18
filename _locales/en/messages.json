@@ -63,6 +63,10 @@
       "message": "add",
       "description": "Name of adding button."
    },
+   "htmlContactText": {
+      "message": "ご意見・ご感想・バグなどのお問い合わせ先<br>フリーランス プログラマ<br>太田亮介",
+      "description": "contact."
+   },
    "presetWeblioDictionary": {
       "message": "weblio Japanese dictionary",
       "description": ""

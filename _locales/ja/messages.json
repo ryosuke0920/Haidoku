@@ -12,11 +12,11 @@
       "description": "Name of the extension option."
    },
    "extensionOptionDescription": {
-      "message": "サイトの追加、削除、並び順の変更ができます。",
+      "message": "サイトの追加、削除、並び順の変更ができます。検索サイトを選択する場合は左メニューの「検索サイトを追加」を、入力欄のみを追加する場合は「入力欄のみ追加」を押して下さい。",
       "description": "Description of the extension option."
    },
    "extensionPresetDescription": {
-      "message": "追加したいサイトを選択してください。",
+      "message": "追加したいサイトを選択してください。「追加」ボタンを押すと基本設定に追加されます。",
       "description": "Description of the preset option."
    },
    "notificationReadOptionError": {
@@ -62,6 +62,10 @@
    "htmlAddPresetButtonName": {
       "message": "追加",
       "description": "Name of adding button."
+   },
+   "htmlContactText": {
+      "message": "ご意見・ご感想・バグなどのお問い合わせ先<br>フリーランス プログラマ<br>太田亮介",
+      "description": "contact."
    },
    "presetWeblioDictionary": {
       "message": "weblio 辞書",
