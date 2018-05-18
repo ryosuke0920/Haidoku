@@ -1,7 +1,55 @@
 * {
   margin: 0;
   padding: 0;
-  font: 1em, sans-serif;
+  font: 1em sans-serif;
+}
+body {
+   background-color: white;
+}
+#wrapper {
+}
+#header {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 45px;
+   background-color: gray;
+}
+#header h1 {
+   color: white;
+}
+#nav {
+   position: fixed;
+   top: 45px;
+   left: 0;
+   width: 160px;
+   height: 100%;
+   background-color: AliceBlue;
+}
+#nav .order {
+   color: gray;
+}
+#nav .order:hover {
+   text-decoration: underline;
+   cursor: pointer;
+}
+#nav div.active {
+   color: black;
+   background-color: white;
+}
+#nav .order.active:hover {
+   text-decoration: none;
+   cursor: auto;
+}
+#main {
+   margin-top: 45px;
+   margin-left: 200px;
+}
+.controller {
+   position: fixed;
+   right: 0;
+   bottom: 0;
 }
 .box {
 	padding: 0.5em;
@@ -33,12 +81,6 @@ input.url {
 .hide {
    display: none;
 }
-#preset {
-   display: none;
-}
-#preset.show {
-   display: block;
-}
 #preset section {
    padding:0.5em;
    margin:0.5em;
@@ -52,18 +94,21 @@ input.url {
    display: grid;
    grid-template-columns: 1fr;
 }
-@media (min-width: 768px) {
+@media (min-width: 802px) {
    #table {
       grid-template-columns: 1fr 1fr;
    }
 }
-@media (min-width: 992px) {
+@media (min-width: 1094px) {
    #table {
       grid-template-columns: 1fr 1fr 1fr;
    }
 }
-@media (min-width: 1200px) {
+@media (min-width: 1372px) {
    #table {
       grid-template-columns: 1fr 1fr 1fr 1fr;
    }
+}
+footer address {
+   font-size:80%;
 }

@@ -60,12 +60,8 @@
       "description": "Name of url description."
    },
    "htmlAddPresetButtonName": {
-      "message": "追加して戻る",
-      "description": "Name of cancel."
-   },
-   "htmlCancelButtonName": {
-      "message": "キャンセルして戻る",
-      "description": "Name of cancel."
+      "message": "追加",
+      "description": "Name of adding button."
    },
    "presetWeblioDictionary": {
       "message": "weblio 辞書",

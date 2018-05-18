@@ -6,36 +6,57 @@
 <title>title</title>
 </head>
 <body>
-<header>
-	<h1 class="title">title</h1>
-</header>
-<div id="preset">
-	<nav class="box">
-		<p class="presetDescription">presetDescription</p>
-		<button type="button" class="addPreset">add and back</button>
-		<button type="button" class="cancelPreset">back</button>
+<div id="wrapper">
+	<header id="header">
+		<h1 class="title box">title</h1>
+	</header>
+	<nav id="nav">
+		<div class="box order active showForm">基本設定</div>
+		<div class="box order showPreset">検索サイト追加</div>
+		<div class="box order showContact">お問い合わせ</div>
 	</nav>
-	<div id="table" class="box"></div>
-	<section id="cellPrototype" class="cell hide checkWrapper">
-		<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
-		<p class="url">url</p>
-	</section>
-</div>
-<div id="form">
-	<nav class="box">
-		<p class="formDescription">formDescription</p>
-		<button type="button" class="showPreset">add from preset</button>
-		<button type="button" class="addBlank">add blank field</button>
-	</nav>
-	<div id="container" class="box"></div>
-	<form id="inputPrototype" class="field draggable hide">
-		<span class="handle"><img src="image/hold.svg" draggable="false"></span>&nbsp;
-		<input type="checkbox" class="check">&nbsp;
-		<label class="textbox"><span class="labelText">label</span>&nbsp;<input type="text" class="label" placeholder="example.com" required></label>&nbsp;
-		<label class="textbox"><span class="urlText">url</span>&nbsp;<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required></label>&nbsp;
-		<button type="button" class="removeField">remove</button>
-		<input type="submit" class="submit ">
-	</form>
+	<div id="main">
+		<div id="form" class="box">
+			<nav class="box">
+				<p class="formDescription">formDescription</p>
+			</nav>
+			<div id="container" class="box"></div>
+			<form id="inputPrototype" class="field draggable hide">
+				<span class="handle"><img src="image/hold.svg" draggable="false"></span>&nbsp;
+				<input type="checkbox" class="check">&nbsp;
+				<label class="textbox"><span class="labelText">label</span>&nbsp;<input type="text" class="label" placeholder="example.com" required></label>&nbsp;
+				<label class="textbox"><span class="urlText">url</span>&nbsp;<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required></label>&nbsp;
+				<button type="button" class="removeField">remove</button>
+				<input type="submit" class="submit hide">
+			</form>
+			<div class="controller box">
+				<button type="button" class="addBlank">add blank field</button>
+				<a href="#main">top</a>
+			</div>
+		</div>
+		<div id="preset" class="box hide">
+			<nav class="box">
+				<p class="presetDescription">presetDescription</p>
+			</nav>
+			<div id="table" class="box"></div>
+			<section id="cellPrototype" class="cell hide checkWrapper">
+				<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
+				<p class="url">url</p>
+			</section>
+			<div class="controller box">
+				<button type="button" class="addPreset">add and back</button>
+				<a href="#main">top</a>
+			</div>
+		</div>
+		<div id="contact" class="box hide">
+			<address>
+				ご意見・ご感想・バグなどのお問い合わせ先<br>
+				フリーランス プログラマ<br>
+				太田亮介<br>
+				<a href="mailto:ryosuke.ohta.programmer@gmail.com">ryosuke.ohta.programmer@gmail.com</a><br>
+			</address>
+		</div>
+	</div>
 </div>
 <script src="option.js"></script>
 </body>

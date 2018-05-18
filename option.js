@@ -1,13 +1,14 @@
 ( () => {
 	let windowId = Math.random();
-	let containerNode;
-	let inputPrototypeNode;
+	let navNode;
 	let formNode;
 	let presetNode;
+	let contactNode;
+	let containerNode;
+	let inputPrototypeNode;
 	let tableNode;
 	let cellPrototypeNode;
 	let bgPage;
-
 	let holdedNode;
 	let draggedNode;
 	let draggable_list = [];
@@ -26,13 +27,16 @@
 
 		function onGet(page) {
 			bgPage = page;
-			containerNode = document.querySelector("#container");
-			inputPrototypeNode = document.querySelector("#inputPrototype");
-			formNode = document.querySelector("#form");
-			presetNode = document.querySelector("#preset");
-			tableNode = document.querySelector("#table");
-			cellPrototypeNode = document.querySelector("#cellPrototype");
 		}
+
+		navNode = document.querySelector("#nav");
+		formNode = document.querySelector("#form");
+		presetNode = document.querySelector("#preset");
+		contactNode = document.querySelector("#contact");
+		containerNode = document.querySelector("#container");
+		inputPrototypeNode = document.querySelector("#inputPrototype");
+		tableNode = document.querySelector("#table");
+		cellPrototypeNode = document.querySelector("#cellPrototype");
 
 		return getter.then( onGet );
 	}
@@ -51,7 +55,6 @@
 			{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
 			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" },
 			{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
-			{ "selector": ".cancelPreset", "property": "innerText", "key": "htmlCancelButtonName" }
 		];
 		for( let json of joson_list ){
 			let list = document.querySelectorAll(json["selector"]);
@@ -85,12 +88,13 @@
 			node.querySelector(".url").innerText = option["url"];
 			node.addEventListener("click",checkPreset);
 			tableNode.appendChild(node);
-			node.classList.remove("hide");
+			show(node);
 		}
 	}
 
 	function initListener(){
 		browser.storage.onChanged.addListener(fileChangeBehavior);
+		navNode.addEventListener("click", navBehavior);
 		formNode.addEventListener("click", formBehavior);
 		presetNode.addEventListener("click", presetBehavior);
 		window.addEventListener("mouseup", sortEnd);
@@ -116,6 +120,65 @@
 		}
 	}
 
+	function navBehavior(e){
+		let cassList = e.target.classList;
+		if(cassList.contains("showForm")){
+			showForm();
+		}
+		else if(cassList.contains("showPreset")){
+			showPreset();
+		}
+		else if(cassList.contains("showContact")){
+			showContact();
+		}
+	}
+
+	function removeActive(){
+		let node = navNode.querySelector(".order.active");
+		if( node ){
+			node.classList.remove("active");
+		}
+	}
+
+	function addActive(txt){
+		let node = navNode.querySelector(".order."+txt);
+		if( node ){
+			node.classList.add("active");
+		}
+	}
+
+	function show(node){
+		node.classList.remove("hide");
+	}
+
+	function hide(node){
+		node.classList.add("hide");
+	}
+
+	function showForm(){
+		removeActive();
+		addActive("showForm");
+		show(formNode);
+		hide(presetNode)
+		hide(contactNode);
+	}
+
+	function showPreset(){
+		removeActive();
+		addActive("showPreset");
+		hide(formNode);
+		show(presetNode)
+		hide(contactNode);
+	}
+
+	function showContact(){
+		removeActive();
+		addActive("showContact");
+		hide(formNode);
+		hide(presetNode)
+		show(contactNode);
+	}
+
 	function formBehavior(e){
 		let cassList = e.target.classList;
 		let promise;
@@ -139,10 +202,7 @@
 
 	function presetBehavior(e){
 		let cassList = e.target.classList;
-		if(cassList.contains("cancelPreset")){
-			closePreset();
-		}
-		else if(cassList.contains("addPreset")){
+		if(cassList.contains("addPreset")){
 			addPreset();
 		}
 	}
@@ -156,7 +216,8 @@
 			addInputField(true, label, p);
 		}
 		let promise = saveOption();
-		closePreset();
+		resetPreset();
+		Form();
 	}
 
 	function checkPreset(e){
@@ -167,24 +228,9 @@
 		checkboxNode.checked = !checkboxNode.checked;
 	}
 
-	function showPreset(){
-		let list = formNode.querySelectorAll("input,button");
-		for(let node of list){
-			node.setAttribute("disabled", true);
-		}
-		formNode.classList.add("hide");
-		preset.classList.add("show");
-	}
 
-	function closePreset(){
-		let list;
-		list = formNode.querySelectorAll("input,button");
-		for(let node of list){
-			node.removeAttribute("disabled");
-		}
-		formNode.classList.remove("hide");
-		preset.classList.remove("show");
-		list = tableNode.querySelectorAll(".checkbox:checked");
+	function resetPreset(){
+		let list = tableNode.querySelectorAll(".checkbox:checked");
 		for(let node of list){
 			node.checked = false;
 		}
@@ -236,7 +282,7 @@
 		let handleNode = node.querySelector(".handle");
 		handleNode.addEventListener("mousedown", sortStart);
 		containerNode.appendChild(node);
-		node.classList.remove("hide");
+		show(node);
 	}
 
 	function sortStart(e){
