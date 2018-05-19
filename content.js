@@ -9,6 +9,7 @@
 	let scrollbarWidth = 17;
 	let select;
 	let optionList = [];
+	let boxFlag = false;
 	let promise = init();
 
 	function init(){
@@ -33,8 +34,9 @@
 		}
 
 		function linkBehavior(e){
-			let select = window.getSelection().toString();
-			if( select && select.length > 0 ) {
+			let selection = window.getSelection();
+			select = selection.toString();
+			if( boxFlag && select && select.length > 0 ) {
 				if( retrieveLink() ) {
 					let yy = window.innerHeight - scrollbarWidth - ( cy + linkNodeHeight );
 					if ( 0 < yy || window.innerHeight < linkNodeHeight ) yy = 0;
@@ -62,24 +64,40 @@
 			cx = e.clientX;
 		})
 
-		browser.storage.onChanged.addListener(reload);
+		browser.storage.onChanged.addListener(onStorageChange);
 
 		return reload();
 	}
 
+	function onStorageChange(e){
+		let data = {};
+		if( e["optionList"] ) resetOptionList( e["optionList"]["newValue"] );
+		if( e["boxFlag"] ) resetBoxFlag( e["boxFlag"]["newValue"] );
+	}
+
 	function reload(){
 		let getter = browser.storage.local.get({
-			"optionList": []
+			"optionList": [],
+			"boxFlag": false
 		});
 
-		function onGot(res){
-			optionList = [];
-			for( let data of res["optionList"] ){
-				if ( data["checked"] ) optionList.push(data);
-			}
-		}
+		return getter.then(resetVer);
+	}
 
-		return getter.then(onGot);
+	function resetVer( res ){
+		resetOptionList( res["optionList"] );
+		resetBoxFlag( res["boxFlag"] );
+	}
+
+	function resetBoxFlag(res){
+		boxFlag = res;
+	}
+
+	function resetOptionList(res){
+		optionList = [];
+		for( let data of res ){
+			if ( data["checked"] ) optionList.push(data);
+		}
 	}
 
 	function retrieveLink(){
@@ -95,17 +113,18 @@
 	border: none;\n\
 }\n\
 body {\n\
-	font-size: 0.8em;\n\
+	font-size: small;\n\
 	font-family: sans-serif;\n\
 	margin-top: 1em;\n\
 }\n\
 div {\n\
-	height: 80px;\n\
+	height: "+(linkNodeHeight-20)+"px;\n\
 	background-color: white;\n\
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;\n\
 	margin: 2px;\n\
 	padding: 0.2em;\n\
 	overflow: scroll;\n\
+	white-space: nowrap;\n\
 }\n\
 a {\n\
 	text-decoration: none;\n\
@@ -119,8 +138,10 @@ a:hover {\n\
 		html.appendChild(body);
 		let div = document.createElement("div");
 		body.appendChild(div);
+		/*
 		div.innerText = browser.i18n.getMessage("extensionName");
 		div.innerHTML += "<br>";
+		*/
 		for(let item of optionList){
 			if ( !item["checked"]) continue;
 			let url = item["url"];

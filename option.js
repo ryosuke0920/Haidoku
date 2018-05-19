@@ -66,7 +66,8 @@
 
 	function initField(){
 		let getter = browser.storage.local.get({
-			"optionList": []
+			"optionList": [],
+			"boxFlag": true
 		});
 
 		function onGot(res){
@@ -102,7 +103,8 @@
 	}
 
 	function fileChangeBehavior(e){
-		if ( e["metadata"]["newValue"]["windowId"] != windowId ) {
+		console.log(e);
+		if ( e["windowId"]["newValue"] != windowId ) {
 			let optionList = e["optionList"]["newValue"];
 			removeAllField();
 			for( let item of optionList ){
@@ -213,7 +215,7 @@
 			let checkWrapperNode = node.closest(".checkWrapper");
 			let label = checkWrapperNode.querySelector(".label").innerText;
 			let p = checkWrapperNode.querySelector(".url").innerText;
-			addInputField(true, label, p);
+			addInputField(true, label, p, "added");
 		}
 		let promise = saveOption();
 		resetPreset();
@@ -243,12 +245,13 @@
 		}
 	}
 
-	function addInputField( checked=false, label="", url="" ){
+	function addInputField( checked=false, label="", url="", cls=null ){
 		let node = inputPrototypeNode.cloneNode(true);
 		node.removeAttribute("id");
 		node.addEventListener("submit", (e)=>{
 			e.preventDefault();
 		});
+		if(cls)node.classList.add(cls);
 		let submitButton = node.querySelector(".submit");
 
 		let check = node.querySelector(".check");
@@ -372,9 +375,8 @@
 	}
 
 	function saveOption(){
-		let metadata = bgPage.makeMetadata(windowId);
 		let optionList = makeOptionList();
-		let saver = bgPage.saveOption( metadata, optionList );
+		let saver = bgPage.saveOption( optionList, windowId );
 		return saver.then( ()=>{}, (e)=>{ bgPage.onSaveError(e) } );
 	}
 

@@ -7,6 +7,10 @@
       "message": "Select text and show context menu (right click). You cant seacrh the word by the dictionary site.",
       "description": "Description of the extension."
    },
+   "extensionOptionBox": {
+      "message": "box viwer",
+      "description": "Name of the box option."
+   },
    "extensionOptionName": {
       "message": "GoToDictionary Options",
       "description": "Name of the extension option."
