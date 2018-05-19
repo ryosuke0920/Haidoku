@@ -15,7 +15,15 @@
       "browser_style": true,
       "open_in_tab": true
    },
+   "content_scripts": [
+      {
+         "matches": ["*://*/*"],
+         "js": ["content.js"],
+         "run_at": "document_end"
+      }
+   ],
    "permissions": [
+      "activeTab",
       "contextMenus",
       "storage",
       "notifications"
