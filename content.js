@@ -33,7 +33,7 @@
 			closeLink();
 		}
 
-		function linkBehavior(e){
+		function linkBehavior(){
 			let selection = window.getSelection();
 			select = selection.toString();
 			if( boxFlag && select && select.length > 0 ) {
@@ -138,10 +138,6 @@ a:hover {\n\
 		html.appendChild(body);
 		let div = document.createElement("div");
 		body.appendChild(div);
-		/*
-		div.innerText = browser.i18n.getMessage("extensionName");
-		div.innerHTML += "<br>";
-		*/
 		for(let item of optionList){
 			if ( !item["checked"]) continue;
 			let url = item["url"];

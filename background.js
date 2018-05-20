@@ -38,7 +38,7 @@ function contextMenuBehavior(info, tab){
 		browser.runtime.openOptionsPage();
 	}
 	else if ( info.menuItemId == "box" ){
-		saveBoxViewr(info.checked);
+		saveBoxViewr(info.checked).catch(onSaveError);
 	}
 	else if ( this.options.hasOwnProperty( info.menuItemId ) ){
 		openWindow(this.options[info.menuItemId],info.selectionText );

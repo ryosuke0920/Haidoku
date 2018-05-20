@@ -103,7 +103,6 @@
 	}
 
 	function fileChangeBehavior(e){
-		console.log(e);
 		if ( e["windowId"]["newValue"] != windowId ) {
 			let optionList = e["optionList"]["newValue"];
 			removeAllField();
@@ -377,7 +376,7 @@
 	function saveOption(){
 		let optionList = makeOptionList();
 		let saver = bgPage.saveOption( optionList, windowId );
-		return saver.then( ()=>{}, (e)=>{ bgPage.onSaveError(e) } );
+		return saver.catch( (e)=>{ bgPage.onSaveError(e) } );
 	}
 
 	function onError(e){

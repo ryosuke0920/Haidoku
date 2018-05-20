@@ -71,12 +71,68 @@
       "message": "ご意見・ご感想・バグなどのお問い合わせ先<br>フリーランス プログラマ<br>太田亮介",
       "description": "contact."
    },
+   "presetWikipedia": {
+      "message": "ウィキペディア",
+      "description": ""
+   },
    "presetWeblioDictionary": {
       "message": "weblio 辞書",
       "description": ""
    },
+   "presetWeblioThesaurus": {
+      "message": "weblio 類語辞典",
+      "description": ""
+   },
+   "presetWeblioThesaurusAntonym": {
+      "message": "weblio 対義語・反対語",
+      "description": ""
+   },
    "presetWeblioEnglishDictionary": {
       "message": "weblio 英和辞典・和英辞典",
+      "description": ""
+   },
+   "presetWeblioChineseDictionary": {
+      "message": "weblio 日中・中日辞典",
+      "description": ""
+   },
+   "presetWeblioKoreanDictionary": {
+      "message": "weblio 日韓韓日辞典",
+      "description": ""
+   },
+   "presetWeblioKobun": {
+      "message": "weblio 古語辞典",
+      "description": ""
+   },
+   "presetYahooJapanDictionar": {
+      "message": "YAHOO!Japan辞書",
+      "description": ""
+   },
+   "presetGooDictionar": {
+      "message": "goo 辞書",
+      "description": ""
+   },
+   "presetGooJapaneseDictionar": {
+      "message": "goo 国語辞書",
+      "description": ""
+   },
+   "presetGooJapaneseThesaurus": {
+      "message": "goo 類語辞書",
+      "description": ""
+   },
+   "presetGooEnglishDictionary": {
+      "message": "goo 英和・和英辞書",
+      "description": ""
+   },
+   "presetGooChineseJapaneseDictionary": {
+      "message": "goo 中日辞書",
+      "description": ""
+   },
+   "presetGooJapaneseChineseDictionary": {
+      "message": "goo 日中辞書",
+      "description": ""
+   },
+   "presetEijiro": {
+      "message": "英辞郎 on the WEB",
       "description": ""
    },
    "presetGoogleSearch": {
