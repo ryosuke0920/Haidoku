@@ -40,8 +40,8 @@ function contextMenuBehavior(info, tab){
 	else if ( info.menuItemId == "box" ){
 		saveBoxViewr(info.checked).catch(onSaveError);
 	}
-	else if ( this.options.hasOwnProperty( info.menuItemId ) ){
-		openWindow(this.options[info.menuItemId],info.selectionText );
+	else if ( options.hasOwnProperty( info.menuItemId ) ){
+		openWindow(options[info.menuItemId],info.selectionText );
 	}
 }
 
@@ -106,7 +106,7 @@ function resetDefaultMenu(){
 function resetMenu(json){
 	let optionList = json["optionList"];
 	let boxFlag = json["boxFlag"];
-	this.options = {};
+	options = {};
 	for(let i=0; i<optionList.length; i++){
 		let data = optionList[i];
 		let checked = data["checked"];
@@ -119,7 +119,7 @@ function resetMenu(json){
 				"title": label || "(" + id + ") undefined label",
 				"contexts": ["selection"]
 			};
-			this.options[id] = url;
+			options[id] = url;
 			let ret = browser.contextMenus.create(args);
 		}
 	}
@@ -136,7 +136,10 @@ function resetMenu(json){
 	});
 	browser.contextMenus.create({
 		"id": "option",
-		"title": browser.i18n.getMessage("extensionOptionName")
+		"title": browser.i18n.getMessage("extensionOptionName"),
+		"icons": {
+			"32":"image/icon.svg"
+		}
 	});
 }
 
