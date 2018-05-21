@@ -147,6 +147,7 @@ function onOpenWindowError(e){
 	console.error(e);
 	let noticer = browser.notifications.create({
 		"type": "basic",
+		"iconUrl": browser.extension.getURL("image/icon.svg"),
 		"title": browser.i18n.getMessage("extensionName"),
 		"message": browser.i18n.getMessage("notificationOpenWindowError")
 	});
@@ -154,9 +155,10 @@ function onOpenWindowError(e){
 }
 
 function onReadError(e){
-	console.log(e);
+	console.error(e);
 	let noticer = browser.notifications.create({
 		"type": "basic",
+		"iconUrl": browser.extension.getURL("image/icon.svg"),
 		"title": browser.i18n.getMessage("extensionName"),
 		"message": browser.i18n.getMessage("notificationReadWindowError")
 	});
@@ -167,6 +169,7 @@ function onSaveError(e){
 	console.error(e);
 	let noticer = browser.notifications.create({
 		"type": "basic",
+		"iconUrl": browser.extension.getURL("image/icon.svg"),
 		"title": browser.i18n.getMessage("extensionName"),
 		"message": browser.i18n.getMessage("notificationSaveOptionError")
 	});

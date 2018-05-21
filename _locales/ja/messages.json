@@ -12,7 +12,7 @@
       "description": "Name of the box option."
    },
    "extensionOptionName": {
-      "message": "右クリ辞書検索 設定",
+      "message": "手間なし辞書検索 設定",
       "description": "Name of the extension option."
    },
    "extensionOptionDescription": {

@@ -12,7 +12,7 @@
       "description": "Name of the box option."
    },
    "extensionOptionName": {
-      "message": "GoToDictionary Options",
+      "message": "LessLaborGoToDictionay Options",
       "description": "Name of the extension option."
    },
    "extensionOptionDescription": {
@@ -68,7 +68,7 @@
       "description": "Name of adding button."
    },
    "htmlContactText": {
-      "message": "ご意見・ご感想・バグなどのお問い合わせ先<br>フリーランス プログラマ<br>太田亮介",
+      "message": "contact<br>programmer<br>Ryosuke Ohta",
       "description": "contact."
    },
    "presetWikipedia": {
