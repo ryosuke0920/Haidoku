@@ -4,10 +4,10 @@
 	let cx;
 	let cy;
 	let linkNode;
+	let dist = 5;
 	let linkNodeHeight = 100;
 	let linkNodeWidth = 200;
 	let scrollbarWidth = 17;
-	let select;
 	let optionList = [];
 	let boxFlag = false;
 	let promise = init();
@@ -26,7 +26,9 @@
 		document.querySelector("body").appendChild(linkNode);
 
 		document.onmouseup = (e)=>{
-			linkBehavior();
+			if( e.button == "0" ) {
+				linkBehavior(e);
+			}
 		}
 
 		window.onresize = (e)=>{
@@ -35,15 +37,15 @@
 
 		function linkBehavior(){
 			let selection = window.getSelection();
-			select = selection.toString();
+			let select = selection.toString();
 			if( boxFlag && select && select.length > 0 ) {
-				if( retrieveLink() ) {
+				if( retrieveLink(select) ) {
 					let yy = window.innerHeight - scrollbarWidth - ( cy + linkNodeHeight );
 					if ( 0 < yy || window.innerHeight < linkNodeHeight ) yy = 0;
 					let xx = window.innerWidth - scrollbarWidth - ( cx + linkNodeWidth );
 					if ( 0 < xx || window.innerWidth < linkNodeWidth ) xx = 0;
-					linkNode.style.top = ( py + yy )+"px";
-					linkNode.style.left = ( px + xx ) +"px";
+					linkNode.style.top = ( py + yy + dist )+"px";
+					linkNode.style.left = ( px + xx + dist ) +"px";
 					linkNode.style.display = "block";
 				}
 			}
@@ -52,10 +54,6 @@
 			}
 		}
 
-		function closeLink(){
-			select = null;
-			linkNode.style.display = "none";
-		}
 
 		document.addEventListener('mousemove', function(e) {
 			py = e.pageY;
@@ -64,15 +62,21 @@
 			cx = e.clientX;
 		})
 
-		browser.storage.onChanged.addListener(onStorageChange);
+		browser.storage.onChanged.addListener( onStorageChanged );
 
 		return reload();
 	}
 
-	function onStorageChange(e){
+	function closeLink(){
+		linkNode.style.display = "none";
+		linkNode.srcdoc = "";
+	}
+
+	function onStorageChanged(change, area){
+		closeLink();
 		let data = {};
-		if( e["optionList"] ) resetOptionList( e["optionList"]["newValue"] );
-		if( e["boxFlag"] ) resetBoxFlag( e["boxFlag"]["newValue"] );
+		if( change["optionList"] ) resetOptionList( change["optionList"]["newValue"] );
+		if( change["boxFlag"] ) resetBoxFlag( change["boxFlag"]["newValue"] );
 	}
 
 	function reload(){
@@ -100,7 +104,7 @@
 		}
 	}
 
-	function retrieveLink(){
+	function retrieveLink(select){
 		if ( optionList.length <= 0 ) return false;
 		let html = document.createElement("html");
 		let head = document.createElement("head");
@@ -115,10 +119,8 @@
 body {\n\
 	font-size: small;\n\
 	font-family: sans-serif;\n\
-	margin-top: 1em;\n\
 }\n\
 div {\n\
-	height: "+(linkNodeHeight-20)+"px;\n\
 	background-color: white;\n\
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;\n\
 	margin: 2px;\n\
@@ -137,6 +139,7 @@ a:hover {\n\
 		let body = document.createElement("body");
 		html.appendChild(body);
 		let div = document.createElement("div");
+		div.style.height = (linkNodeHeight-20)+"px";
 		body.appendChild(div);
 		for(let item of optionList){
 			if ( !item["checked"]) continue;

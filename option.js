@@ -294,8 +294,8 @@
 		holdedNode.classList.add("hold");
 		holdedNode.classList.remove("draggable");
 		containerNode.insertBefore(holdedNode, draggedNode);
-		dy = holdedNode.offsetTop - e.clientY;
-		holdedNode.style.top = (e.clientY + dy) +"px";
+		dy = holdedNode.offsetTop - e.pageY;
+		holdedNode.style.top = (e.pageY + dy) +"px";
 		draggedNode.classList.add("invisible");
 		draggable_list = containerNode.querySelectorAll(".draggable");
 		e.preventDefault();
@@ -312,8 +312,8 @@
 
 	function sortMove(e){
 		if(draggedNode){
-			holdedNode.style.top = (e.clientY + dy) +"px";
-			let overedNode = isMouseOver(e.clientX, e.clientY);
+			holdedNode.style.top = (e.pageY + dy) +"px";
+			let overedNode = isMouseOver(e.pageX, e.pageY);
 			if( overedNode && overedNode != draggedNode ) {
 				let draggedSort = draggedNode.getAttribute("sort");
 				let overedSort = overedNode.getAttribute("sort");

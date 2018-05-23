@@ -6,16 +6,19 @@
 body {
    background-color: white;
 }
+button {
+   padding: 1px 20px;
+}
 #header {
    position: fixed;
    top: 0;
    left: 0;
    width: 100%;
    height: 45px;
-   background-color: gray;
+   background-color: WhiteSmoke;
 }
 #header h1 {
-   color: white;
+   color: black;
 }
 #nav {
    position: fixed;
@@ -23,17 +26,22 @@ body {
    left: 0;
    width: 160px;
    height: 100%;
-   background-color:AliceBlue;
+   border-right: solid 1px rgb(222, 226, 230);
+   box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
+   z-index:2;
 }
 #nav .order {
-   color: gray;
+   color: black;
+   border-radius: 5px;
+   background-color: white;
+   margin: 3px;
 }
 #nav .order:hover {
-   text-decoration: underline;
+   background-color: Gainsboro;
    cursor: pointer;
 }
-#nav div.active {
-   color: black;
+#nav .order.active {
+   color: DodgerBlue;
    background-color: white;
 }
 #nav .order.active:hover {
@@ -51,17 +59,19 @@ body {
    width: 100%;
    white-space: nowrap;
    background-color: white;
-   border-bottom: solid 1px black;
+   border-bottom: solid 1px rgb(222, 226, 230);
+   box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
 }
 .desk {
    margin-top: 50px;
-
 }
 .box {
 	padding: 0.5em;
 }
 .field {
-   margin-bottom: 1em;
+   margin-bottom: 0.5em;
+   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 3px 0px;
+   padding: 5px 0.5em;
 }
 .textbox {
    white-space: nowrap;
@@ -76,7 +86,7 @@ input.url {
    cursor: grab;
 }
 .handle img {
-   width: 18px;
+   width: 13px;
    height: 16px;
 }
 .hold {
