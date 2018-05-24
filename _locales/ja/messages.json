@@ -4,24 +4,16 @@
       "description": "Name of the extension."
    },
    "extensionDescription": {
-      "message": "検索したい文字を選択して右クリックしてください。辞書サイトで検索できます。",
+      "message": "文字を選択すると辞書サイトへのリンク一覧が表示されます。右クリックからも移動でき、リンク一覧の表示設定、設定画面の表示ができます。",
       "description": "Description of the extension."
    },
    "extensionOptionBox": {
-      "message": "ボックス表示",
-      "description": "Name of the box option."
+      "message": "リンクリスト表示",
+      "description": "Name of link list option."
    },
    "extensionOptionName": {
       "message": "手間なし辞書検索 設定",
       "description": "Name of the extension option."
-   },
-   "extensionOptionDescription": {
-      "message": "サイトの追加、削除、並び順の変更ができます。検索サイトを選択する場合は左メニューの「検索サイトを追加」を、入力欄のみを追加する場合は「入力欄のみ追加」を押して下さい。",
-      "description": "Description of the extension option."
-   },
-   "extensionPresetDescription": {
-      "message": "追加したいサイトを選択してください。「追加」ボタンを押すと基本設定に追加されます。",
-      "description": "Description of the preset option."
    },
    "notificationReadOptionError": {
       "message": "設定の読み込みに失敗しました。",
@@ -35,33 +27,53 @@
       "message": "新しい画面を開けませんでした。",
       "description": "open window error notification."
    },
-   "htmlAddPresetFieldButtonName": {
-      "message": "検索サイトを追加",
-      "description": "Name of add priset field button."
+   "htmlFormName": {
+      "message": "設定",
+      "description": "Name of the form on the side menu."
+   },
+   "htmlPresetName": {
+      "message": "検索サイト追加",
+      "description": "Name of the preset on the side menu."
+   },
+   "htmlContactName": {
+      "message": "お問い合わせ",
+      "description": "Name of the contact on the side menu."
+   },
+   "htmlFormDescription": {
+      "message": "サイトの追加、変更、削除、並び順の変更ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。",
+      "description": "Description of the extension option."
+   },
+   "htmlPresetDescription": {
+      "message": "サイトを選択してから「追加」ボタンを押すと追加されます。",
+      "description": "Description of the preset option."
    },
    "htmlAddBlankFieldButtonName": {
-      "message": "入力欄のみを追加",
+      "message": "入力欄のみ追加",
       "description": "Name of add blank field button."
    },
-   "htmlRemoveButtonName": {
-      "message": "削除",
-      "description": "Name of remove."
+   "htmlHandle": {
+      "message": "sort.",
+      "description": "title of sort."
    },
    "htmlLabelText": {
-      "message": "サイト名称",
+      "message": "サイト名",
       "description": "Name of label."
    },
    "htmlUrlText": {
       "message": "URL",
       "description": "Name of url."
    },
+   "htmlRemoveButtonName": {
+      "message": "削除",
+      "description": "Name of remove."
+   },
    "htmlLabelDescription": {
-      "message": "検索するサイトの名称を入力してください。右クリックで開くコンテキストメニューに表示されます。",
-      "description": "Name of label description."
+      "message": "リンク一覧やコンテキストメニュー（右クリック）に表示されます。",
+      "description": "title of label description."
    },
    "htmlUrlDescription": {
-      "message": "検索したいサイトのURLを入力してください。\"$$1\"は選択したテキストに置き換えられます。",
-      "description": "Name of url description."
+      "message": "\"$$1\"は選択した文字に置き換えられます。",
+      "description": "title of url description."
    },
    "htmlAddPresetButtonName": {
       "message": "追加",
@@ -69,7 +81,7 @@
    },
    "htmlContactText": {
       "message": "ご意見・ご感想・バグなどのお問い合わせ先<br>フリーランス プログラマ<br>太田亮介",
-      "description": "contact."
+      "description": "Sentence of contact."
    },
    "presetWikipedia": {
       "message": "ウィキペディア",

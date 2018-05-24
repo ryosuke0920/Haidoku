@@ -4,24 +4,16 @@
       "description": "Name of the extension."
    },
    "extensionDescription": {
-      "message": "Select text and show context menu (right click). You cant seacrh the word by the dictionary site.",
+      "message": "If you select a text in the site, link list you made will be displayed. If you fire right click, You can go to the site too, setting link list view or not, and configuration which sites you need to.",
       "description": "Description of the extension."
    },
    "extensionOptionBox": {
-      "message": "box viwer",
-      "description": "Name of the box option."
+      "message": "link list viewer",
+      "description": "Name of link list option."
    },
    "extensionOptionName": {
       "message": "LessLaborGoToDictionay Options",
       "description": "Name of the extension option."
-   },
-   "extensionOptionDescription": {
-      "message": "You can add, delete and change the order of sites.",
-      "description": "Description of the extension option."
-   },
-   "extensionPresetDescription": {
-      "message": "select the site which you wanto to add.",
-      "description": "Description of the preset option."
    },
    "notificationReadOptionError": {
       "message": "failed to read your configuration.",
@@ -35,41 +27,61 @@
       "message": "failed to open new window.",
       "description": "open window error notification."
    },
-   "htmlAddPresetFieldButtonName": {
-      "message": "add blank field",
-      "description": "Name of add priset field button."
+   "htmlFormName": {
+      "message": "Configuration",
+      "description": "Name of the form on the side menu"
+   },
+   "htmlPresetName": {
+      "message": "Add search site",
+      "description": "Name of the preset on the side menu."
+   },
+   "htmlContactName": {
+      "message": "Contact",
+      "description": "Name of the contact on the side menu."
+   },
+   "htmlFormDescription": {
+      "message": "You can add, edit, delete and sort fields. If added blank fields, You have to input \"site name\" and \"URL\" by yourself.",
+      "description": "Description of the extension option."
+   },
+   "htmlPresetDescription": {
+      "message": "Select your favorite sites and press \"add\" button.",
+      "description": "Description of the preset option."
    },
    "htmlAddBlankFieldButtonName": {
-      "message": "add site",
+      "message": "add blank field",
       "description": "Name of add blank field button."
    },
-   "htmlRemoveButtonName": {
-      "message": "remove",
-      "description": "Name of remove."
+   "htmlHandle": {
+      "message": "sort.",
+      "description": "title of sort."
    },
    "htmlLabelText": {
-      "message": "label",
-      "description": "Name of label."
+      "message": "site name",
+      "description": "Name of site."
    },
    "htmlUrlText": {
       "message": "URL",
       "description": "Name of url."
    },
+   "htmlRemoveButtonName": {
+      "message": "delete",
+      "description": "Name of remove."
+   },
    "htmlLabelDescription": {
-      "message": "this will be appeared in the context menu.",
-      "description": "Name of label description."
+      "message": "This will be displayed in the link list or context menu(right click).",
+      "description": "title of label description."
    },
    "htmlUrlDescription": {
-      "message": "the url you want to go. if you set \"$1\", it will be replaced to the words you selected.",
-      "description": "Name of url description."
+      "message": "If you input \"$1\", it will be replaced to the word you selected.",
+      "description": "title of url description."
    },
    "htmlAddPresetButtonName": {
       "message": "add",
-      "description": "Name of adding button."
+      "description": "title of adding button."
    },
    "htmlContactText": {
-      "message": "contact<br>programmer<br>Ryosuke Ohta",
-      "description": "contact."
+      "message": "Inquiries such as opinions, impressions, bugs.<br>freelance programmer<br>Ryosuke Ohta",
+      "description": "Sentence of contact."
    },
    "presetWikipedia": {
       "message": "Wikipedia",

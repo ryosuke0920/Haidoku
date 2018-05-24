@@ -80,7 +80,7 @@
 	}
 
 	function reload(){
-		let getter = browser.storage.local.get({
+		let getter = browser.storage.sync.get({
 			"optionList": [],
 			"boxFlag": false
 		});

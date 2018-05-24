@@ -1,6 +1,11 @@
 const DEFAULT_OPTION_LIST = [
 	{
 		"checked": true,
+		"label": browser.i18n.getMessage("presetGoogleSearch"),
+		"url": "https://www.google.co.jp/search?q=$1"
+	},
+	{
+		"checked": true,
 		"label": browser.i18n.getMessage("presetWikipedia"),
 		"url": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
 	},
@@ -16,6 +21,18 @@ const DEFAULT_OPTION_LIST = [
 	},
 ];
 const PRESET_OPTION_LIST = [
+	{
+		"label": browser.i18n.getMessage("presetGoogleSearch"),
+		"url": "https://www.google.co.jp/search?q=$1"
+	},
+	{
+		"label": browser.i18n.getMessage("presetGoogleTranslateEn2Ja"),
+		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#en/ja/$1"
+	},
+	{
+		"label": browser.i18n.getMessage("presetGoogleTranslateJa2En"),
+		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#ja/en/$1"
+	},
 	{
 		"label": browser.i18n.getMessage("presetWikipedia"),
 		"url": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
@@ -79,18 +96,6 @@ const PRESET_OPTION_LIST = [
 	{
 		"label": browser.i18n.getMessage("presetEijiro"),
 		"url": "https://eow.alc.co.jp/search?q=$1"
-	},
-	{
-		"label": browser.i18n.getMessage("presetGoogleSearch"),
-		"url": "https://www.google.co.jp/search?q=$1"
-	},
-	{
-		"label": browser.i18n.getMessage("presetGoogleTranslateEn2Ja"),
-		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#en/ja/$1"
-	},
-	{
-		"label": browser.i18n.getMessage("presetGoogleTranslateJa2En"),
-		"url": "https://translate.google.co.jp/?hl=ja&tab=TT#ja/en/$1"
 	},
 	{
 		"label": browser.i18n.getMessage("presetCambridgeDictionary"),

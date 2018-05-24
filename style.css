@@ -6,6 +6,9 @@
 body {
    background-color: white;
 }
+p {
+   margin-bottom: 0.5em;
+}
 button {
    padding: 1px 20px;
 }

@@ -44,12 +44,14 @@
 		let joson_list = [
 			{ "selector": "title", "property": "innerText", "key": "extensionOptionName" },
 			{ "selector": ".title", "property": "innerText", "key": "extensionOptionName" },
-			{ "selector": ".formDescription", "property": "innerText", "key": "extensionOptionDescription" },
-			{ "selector": ".presetDescription", "property": "innerText", "key": "extensionPresetDescription" },
+			{ "selector": ".formDescription", "property": "innerText", "key": "htmlFormDescription" },
+			{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
+			{ "selector": ".showForm", "property": "innerText", "key": "htmlFormName" },
+			{ "selector": ".showPreset", "property": "innerText", "key": "htmlPresetName" },
+			{ "selector": ".showContact", "property": "innerText", "key": "htmlContactName" },
 			{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
 			{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" },
 			{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
-			{ "selector": ".showPreset", "property": "innerText", "key": "htmlAddPresetFieldButtonName" },
 			{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
 			{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
 			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" },
@@ -65,7 +67,7 @@
 	}
 
 	function initField(){
-		let getter = browser.storage.local.get({
+		let getter = browser.storage.sync.get({
 			"optionList": [],
 			"boxFlag": true
 		});

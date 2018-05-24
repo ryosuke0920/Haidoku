@@ -11,7 +11,7 @@ function getPresetOptionList(){
 }
 
 function initContextMenu(){
-	let getter = browser.storage.local.get({
+	let getter = browser.storage.sync.get({
 		"optionList": null,
 		"boxFlag": true
 	});
@@ -57,12 +57,12 @@ function saveBoxViewr(boxFlag){
 		"metadata": makeMetadata(),
 		"boxFlag": boxFlag
 	};
-	let setter = browser.storage.local.set(data);
+	let setter = browser.storage.sync.set(data);
 	return setter;
 }
 
 function saveInit(){
-	let setter = browser.storage.local.set({
+	let setter = browser.storage.sync.set({
 		"metadata": makeMetadata(),
 		"optionList": DEFAULT_OPTION_LIST,
 		"windowId": "",
@@ -72,7 +72,7 @@ function saveInit(){
 }
 
 function saveOption( optionList, windowId="" ){
-	let setter = browser.storage.local.set({
+	let setter = browser.storage.sync.set({
 		"metadata": makeMetadata(),
 		"optionList": optionList,
 		"windowId": windowId
@@ -92,7 +92,7 @@ function makeMetadata(){
 
 function resetMenuFromStorage(){
 	browser.contextMenus.removeAll();
-	let getter = browser.storage.local.get({
+	let getter = browser.storage.sync.get({
 		"optionList": [],
 		"boxFlag": true
 	});
@@ -149,7 +149,7 @@ function onOpenWindowError(e){
 		"type": "basic",
 		"iconUrl": browser.extension.getURL("image/icon.svg"),
 		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationOpenWindowError")
+		"message": browser.i18n.getMessage("notificationOpenWindowError") + "\n" + e
 	});
 	return noticer;
 }
@@ -160,7 +160,7 @@ function onReadError(e){
 		"type": "basic",
 		"iconUrl": browser.extension.getURL("image/icon.svg"),
 		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationReadWindowError")
+		"message": browser.i18n.getMessage("notificationReadWindowError") + "\n" + e
 	});
 	return noticer;
 }
@@ -171,7 +171,7 @@ function onSaveError(e){
 		"type": "basic",
 		"iconUrl": browser.extension.getURL("image/icon.svg"),
 		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationSaveOptionError")
+		"message": browser.i18n.getMessage("notificationSaveOptionError") + "\n" + e
 	});
 	return noticer;
 }
