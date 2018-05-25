@@ -104,7 +104,7 @@
 	}
 
 	function fileChangeBehavior(e){
-		if ( e["w"]["newValue"] != windowId ) {
+		if ( e.hasOwnProperty("ol") && e.hasOwnProperty("w") && e["w"]["newValue"] != windowId ) {
 			let optionList = e["ol"]["newValue"];
 			removeAllField();
 			for( let item of optionList ){
