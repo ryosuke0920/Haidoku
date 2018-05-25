@@ -17,14 +17,13 @@
 	document.addEventListener("DOMContentLoaded", init);
 
 	function init(e){
-		let promise = initProperties();
-		promise.then( initI18n ).then( initPreset ).then( initField ).then( initListener ).catch( onError );
+		initProperties().then( initI18n ).then( initPreset ).then( initField ).then( initListener ).catch( onError );
 	}
 
 	function initProperties(){
 		let getter = browser.runtime.getBackgroundPage();
 
-		function onGet(page) {
+		function onGot(page) {
 			bgPage = page;
 		}
 
@@ -37,7 +36,7 @@
 		tableNode = document.querySelector("#table");
 		cellPrototypeNode = document.querySelector("#cellPrototype");
 
-		return getter.then( onGet );
+		return getter.then( onGot );
 	}
 
 	function initI18n(){
@@ -66,33 +65,33 @@
 		}
 	}
 
-	function initField(){
-		let getter = browser.storage.sync.get({
-			"optionList": [],
-			"boxFlag": true
-		});
-
-		function onGot(res){
-			let optionList = res["optionList"];
-			for(let item of optionList ){
-				addInputField(item["checked"], item["label"], item["url"]);
-			}
-			resetSort();
-		}
-		return getter.then(onGot);
-	}
-
 	function initPreset(){
 		let list = bgPage.getPresetOptionList();
 		for(let option of list){
 			let node = cellPrototypeNode.cloneNode(true);
 			node.removeAttribute("id");
-			node.querySelector(".label").innerText = option["label"];
-			node.querySelector(".url").innerText = option["url"];
+			node.querySelector(".label").innerText = option["l"];
+			node.querySelector(".url").innerText = option["u"];
 			node.addEventListener("click",checkPreset);
 			tableNode.appendChild(node);
 			show(node);
 		}
+	}
+
+	function initField(){
+		let getter = browser.storage.sync.get({
+			"ol": [],
+			"bf": true
+		});
+
+		function onGot(res){
+			let optionList = res["ol"];
+			for(let item of optionList ){
+				addInputField(item["c"], item["l"], item["u"]);
+			}
+			resetSort();
+		}
+		return getter.then(onGot);
 	}
 
 	function initListener(){
@@ -105,21 +104,13 @@
 	}
 
 	function fileChangeBehavior(e){
-		if ( e["windowId"]["newValue"] != windowId ) {
-			let optionList = e["optionList"]["newValue"];
+		if ( e["w"]["newValue"] != windowId ) {
+			let optionList = e["ol"]["newValue"];
 			removeAllField();
 			for( let item of optionList ){
-				addInputField(item["checked"], item["label"], item["url"]);
+				addInputField(item["c"], item["l"], item["u"]);
 			}
 			resetSort();
-		}
-	}
-
-	function blurBehavior(e){
-		let cassList = e.target.classList;
-		let promise;
-		if(cassList.contains("label") || cassList.contains("url")){
-			promise = saveOption();
 		}
 	}
 
@@ -134,52 +125,6 @@
 		else if(cassList.contains("showContact")){
 			showContact();
 		}
-	}
-
-	function removeActive(){
-		let node = navNode.querySelector(".order.active");
-		if( node ){
-			node.classList.remove("active");
-		}
-	}
-
-	function addActive(txt){
-		let node = navNode.querySelector(".order."+txt);
-		if( node ){
-			node.classList.add("active");
-		}
-	}
-
-	function show(node){
-		node.classList.remove("hide");
-	}
-
-	function hide(node){
-		node.classList.add("hide");
-	}
-
-	function showForm(){
-		removeActive();
-		addActive("showForm");
-		show(formNode);
-		hide(presetNode)
-		hide(contactNode);
-	}
-
-	function showPreset(){
-		removeActive();
-		addActive("showPreset");
-		hide(formNode);
-		show(presetNode)
-		hide(contactNode);
-	}
-
-	function showContact(){
-		removeActive();
-		addActive("showContact");
-		hide(formNode);
-		hide(presetNode)
-		show(contactNode);
 	}
 
 	function formBehavior(e){
@@ -210,6 +155,52 @@
 		}
 	}
 
+	function showForm(){
+		removeActive();
+		addActive("showForm");
+		show(formNode);
+		hide(presetNode)
+		hide(contactNode);
+	}
+
+	function showPreset(){
+		removeActive();
+		addActive("showPreset");
+		hide(formNode);
+		show(presetNode)
+		hide(contactNode);
+	}
+
+	function showContact(){
+		removeActive();
+		addActive("showContact");
+		hide(formNode);
+		hide(presetNode)
+		show(contactNode);
+	}
+
+	function removeActive(){
+		let node = navNode.querySelector(".order.active");
+		if( node ){
+			node.classList.remove("active");
+		}
+	}
+
+	function addActive(className){
+		let node = navNode.querySelector(".order."+className);
+		if( node ){
+			node.classList.add("active");
+		}
+	}
+
+	function show(node){
+		node.classList.remove("hide");
+	}
+
+	function hide(node){
+		node.classList.add("hide");
+	}
+
 	function addPreset(e){
 		let list = tableNode.querySelectorAll(".checkbox:checked");
 		for(let node of list){
@@ -225,12 +216,12 @@
 
 	function checkPreset(e){
 		if( e.target.tagName == "INPUT" ) {
+			/* input type="checkbox" */
 			return;
 		}
 		let checkboxNode = this.querySelector(".checkbox");
 		checkboxNode.checked = !checkboxNode.checked;
 	}
-
 
 	function resetPreset(){
 		let list = tableNode.querySelectorAll(".checkbox:checked");
@@ -289,6 +280,14 @@
 		show(node);
 	}
 
+	function blurBehavior(e){
+		let cassList = e.target.classList;
+		let promise;
+		if(cassList.contains("label") || cassList.contains("url")){
+			promise = saveOption();
+		}
+	}
+
 	function sortStart(e){
 		draggedNode = e.target.closest(".draggable");
 		holdedNode = draggedNode.cloneNode(true);
@@ -301,15 +300,6 @@
 		draggedNode.classList.add("invisible");
 		draggable_list = containerNode.querySelectorAll(".draggable");
 		e.preventDefault();
-	}
-
-	function isMouseOver(x, y) {
-		for( let node of draggable_list ){
-			if( node.offsetTop <= y && y <= (node.offsetTop + node.offsetHeight) ){
-				return node;
-			}
-		}
-		return null;
 	}
 
 	function sortMove(e){
@@ -328,6 +318,15 @@
 				resetSort();
 			}
 		}
+	}
+
+	function isMouseOver(x, y) {
+		for( let node of draggable_list ){
+			if( node.offsetTop <= y && y <= (node.offsetTop + node.offsetHeight) ){
+				return node;
+			}
+		}
+		return null;
 	}
 
 	function resetSort(){
@@ -351,12 +350,6 @@
 		}
 	}
 
-	function fetchValue(element, selector){
-		let node = element.querySelector(selector);
-		if (!node) return null;
-		return node.value;
-	}
-
 	function makeOptionList(){
 		let optionList = [];
 		let fields = containerNode.querySelectorAll(".field");
@@ -366,13 +359,19 @@
 			let label = fetchValue(field, ".label");
 			let url = fetchValue(field, ".url");
 			let data = {
-				"checked": checked,
-				"label": label,
-				"url": url
+				"c": checked,
+				"l": label,
+				"u": url
 			};
 			optionList.push(data);
 		}
 		return optionList;
+	}
+
+	function fetchValue(element, selector){
+		let node = element.querySelector(selector);
+		if (!node) return null;
+		return node.value;
 	}
 
 	function saveOption(){

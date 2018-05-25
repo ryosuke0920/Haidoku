@@ -12,12 +12,12 @@ function getPresetOptionList(){
 
 function initContextMenu(){
 	let getter = browser.storage.sync.get({
-		"optionList": null,
-		"boxFlag": true
+		"ol": null,
+		"bf": true
 	});
 
 	function installOrNot(res){
-		if ( res["optionList"] ){
+		if ( res["ol"] ){
 			resetMenu(res);
 			return ;
 		}
@@ -49,13 +49,13 @@ function openWindow( url, text){
 	text  = encodeURIComponent(text);
 	url = url.replace("$1", text);
 	let promise = browser.tabs.create({"url": url});
-	return promise.then( null, onOpenWindowError);
+	return promise.catch(onOpenWindowError);
 }
 
 function saveBoxViewr(boxFlag){
 	let data = {
-		"metadata": makeMetadata(),
-		"boxFlag": boxFlag
+		"m": makeMetadata(),
+		"bf": boxFlag
 	};
 	let setter = browser.storage.sync.set(data);
 	return setter;
@@ -63,19 +63,19 @@ function saveBoxViewr(boxFlag){
 
 function saveInit(){
 	let setter = browser.storage.sync.set({
-		"metadata": makeMetadata(),
-		"optionList": DEFAULT_OPTION_LIST,
-		"windowId": "",
-		"boxFlag": true
+		"m": makeMetadata(),
+		"ol": DEFAULT_OPTION_LIST,
+		"w": "",
+		"bf": true
 	});
 	return setter;
 }
 
 function saveOption( optionList, windowId="" ){
 	let setter = browser.storage.sync.set({
-		"metadata": makeMetadata(),
-		"optionList": optionList,
-		"windowId": windowId
+		"m": makeMetadata(),
+		"ol": optionList,
+		"w": windowId
 	});
 	return setter;
 }
@@ -84,8 +84,8 @@ function makeMetadata(){
 	let manifest = browser.runtime.getManifest();
 	let now = new Date();
 	let data = {
-		"version": manifest.version,
-		"updateDate": now.toString(),
+		"v": manifest.version,
+		"d": now.toString(),
 	};
 	return data;
 }
@@ -93,27 +93,27 @@ function makeMetadata(){
 function resetMenuFromStorage(){
 	browser.contextMenus.removeAll();
 	let getter = browser.storage.sync.get({
-		"optionList": [],
-		"boxFlag": true
+		"ol": [],
+		"bf": true
 	});
 	return getter.then( resetMenu, onError);
 }
 
 function resetDefaultMenu(){
-	resetMenu( {"optionList": DEFAULT_OPTION_LIST, "boxFlag": true} );
+	resetMenu( {"ol": DEFAULT_OPTION_LIST, "bf": true} );
 }
 
 function resetMenu(json){
-	let optionList = json["optionList"];
-	let boxFlag = json["boxFlag"];
+	let optionList = json["ol"];
+	let boxFlag = json["bf"];
 	options = {};
 	for(let i=0; i<optionList.length; i++){
 		let data = optionList[i];
-		let checked = data["checked"];
+		let checked = data["c"];
 		if ( checked ) {
 			let id = "" + (i+1);
-			let label = data["label"];
-			let url = data["url"];
+			let label = data["l"];
+			let url = data["u"];
 			let args = {
 				"id": id,
 				"title": label || "(" + id + ") undefined label",

@@ -75,22 +75,22 @@
 	function onStorageChanged(change, area){
 		closeLink();
 		let data = {};
-		if( change["optionList"] ) resetOptionList( change["optionList"]["newValue"] );
-		if( change["boxFlag"] ) resetBoxFlag( change["boxFlag"]["newValue"] );
+		if( change["ol"] ) resetOptionList( change["ol"]["newValue"] );
+		if( change["bf"] ) resetBoxFlag( change["bf"]["newValue"] );
 	}
 
 	function reload(){
 		let getter = browser.storage.sync.get({
-			"optionList": [],
-			"boxFlag": false
+			"ol": [],
+			"bf": false
 		});
 
 		return getter.then(resetVer);
 	}
 
 	function resetVer( res ){
-		resetOptionList( res["optionList"] );
-		resetBoxFlag( res["boxFlag"] );
+		resetOptionList( res["ol"] );
+		resetBoxFlag( res["bf"] );
 	}
 
 	function resetBoxFlag(res){
@@ -100,7 +100,7 @@
 	function resetOptionList(res){
 		optionList = [];
 		for( let data of res ){
-			if ( data["checked"] ) optionList.push(data);
+			if ( data["c"] ) optionList.push(data);
 		}
 	}
 
@@ -142,13 +142,13 @@ a:hover {\n\
 		div.style.height = (linkNodeHeight-20)+"px";
 		body.appendChild(div);
 		for(let item of optionList){
-			if ( !item["checked"]) continue;
-			let url = item["url"];
+			if ( !item["c"]) continue;
+			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(select) );
 			let a = document.createElement("a");
 			a.setAttribute( "href", url );
 			a.setAttribute( "target", "_blank" );
-			a.innerText = item["label"];
+			a.innerText = item["l"];
 			div.appendChild(a);
 			let br = document.createElement("br");
 			div.appendChild(br);
