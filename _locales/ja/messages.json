@@ -80,8 +80,44 @@
       "description": "Name of adding button."
    },
    "htmlContactText": {
-      "message": "ご意見・ご感想・バグなどのお問い合わせ先<br>フリーランス プログラマ<br>太田亮介",
+      "message": "ご意見・ご感想・バグなどのお問い合わせ先<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
       "description": "Sentence of contact."
+   },
+   "htmlMyself": {
+      "message": "太田亮介<br>フリーランス プログラマ<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
+      "description": "Sentence of myself."
+   },
+   "htmlCheckFieldLengthError": {
+      "message": "サイトの追加は最大で$MAX_FIELDS$個までです。",
+      "description": "",
+      "placeholders": {
+         "MAX_FIELDS": {
+            "content": "$1",
+            "example": "0"
+         }
+      }
+   },
+   "htmlCheckPresetLengthError": {
+      "message": "サイトの追加は最大で$MAX_FIELDS$個までです。設定済みは$SUM$個です。現在$CHECKED$個選択しています。追加できるのでは$REMAINING$個です。",
+      "description": "",
+      "placeholders": {
+         "MAX_FIELDS": {
+            "content": "$1",
+            "example": "1"
+         },
+         "SUM": {
+            "content": "$2",
+            "example": "22"
+         },
+         "CHECKED": {
+            "content": "$3",
+            "example": "333"
+         },
+         "REMAINING": {
+            "content": "$4",
+            "example": "4444"
+         }
+      }
    },
    "presetWikipedia": {
       "message": "ウィキペディア",

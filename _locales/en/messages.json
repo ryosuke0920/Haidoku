@@ -80,8 +80,44 @@
       "description": "title of adding button."
    },
    "htmlContactText": {
-      "message": "Inquiries such as opinions, impressions, bugs.<br>freelance programmer<br>Ryosuke Ohta",
+      "message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
       "description": "Sentence of contact."
+   },
+   "htmlMyself": {
+      "message": "Ryosuke Ohta<br>freelance programmer in Tokyo Japan.<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
+      "description": "Sentence of myself."
+   },
+   "htmlCheckFieldLengthError": {
+      "message": "You can add up to $MAX_FIELDS$ items at maximum.",
+      "description": "",
+      "placeholders": {
+         "MAX_FIELDS": {
+            "content": "$1",
+            "example": "0"
+         }
+      }
+   },
+   "htmlCheckPresetLengthError": {
+      "message": "Up to $MAX_FIELDS$ sites can be added. It is set to $SUM$ pieces. Currently $CHECKED$ items are selected. You can add $REMAINING$ more.",
+      "description": "",
+      "placeholders": {
+         "MAX_FIELDS": {
+            "content": "$1",
+            "example": "1"
+         },
+         "SUM": {
+            "content": "$2",
+            "example": "22"
+         },
+         "CHECKED": {
+            "content": "$3",
+            "example": "333"
+         },
+         "REMAINING": {
+            "content": "$4",
+            "example": "4444"
+         }
+      }
    },
    "presetWikipedia": {
       "message": "Wikipedia",

@@ -79,6 +79,10 @@ button {
 .textbox {
    white-space: nowrap;
 }
+.sortNo {
+   display: inline-block;
+   width: 2em;
+}
 input.label {
    width:16em;
 }

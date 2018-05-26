@@ -1,4 +1,5 @@
 ( () => {
+	const MAX_FIELDS = 50;
 	let windowId = Math.random();
 	let navNode;
 	let formNode;
@@ -8,6 +9,7 @@
 	let inputPrototypeNode;
 	let tableNode;
 	let cellPrototypeNode;
+	let messageNode;
 	let bgPage;
 	let holdedNode;
 	let draggedNode;
@@ -35,6 +37,7 @@
 		inputPrototypeNode = document.querySelector("#inputPrototype");
 		tableNode = document.querySelector("#table");
 		cellPrototypeNode = document.querySelector("#cellPrototype");
+		messageNode = document.querySelector("#message");
 
 		return getter.then( onGot );
 	}
@@ -56,6 +59,7 @@
 			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" },
 			{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
 			{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
+			{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" }
 		];
 		for( let json of joson_list ){
 			let list = document.querySelectorAll(json["selector"]);
@@ -87,7 +91,7 @@
 		function onGot(res){
 			let optionList = res["ol"];
 			for(let item of optionList ){
-				addInputField(item["c"], item["l"], item["u"]);
+				addField(item["c"], item["l"], item["u"]);
 			}
 			resetSort();
 		}
@@ -108,7 +112,7 @@
 			let optionList = e["ol"]["newValue"];
 			removeAllField();
 			for( let item of optionList ){
-				addInputField(item["c"], item["l"], item["u"]);
+				addField(item["c"], item["l"], item["u"]);
 			}
 			resetSort();
 		}
@@ -134,14 +138,18 @@
 			promise = saveOption();
 		}
 		else if(cassList.contains("addBlank")){
-			addInputField();
-			resetSort();
+			if ( !checkFieldLength(1) ) {
+				onCheckFieldLengthError();
+				return ;
+			}
+			addField();
 			promise = saveOption();
+			resetSort();
 		}
 		else if(cassList.contains("removeField")){
 			e.target.closest(".field").remove();
-			resetSort();
 			promise = saveOption();
+			resetSort();
 		}
 		else if(cassList.contains("showPreset")){
 			showPreset();
@@ -151,6 +159,10 @@
 	function presetBehavior(e){
 		let cassList = e.target.classList;
 		if(cassList.contains("addPreset")){
+			if ( !checkPrestLength() ) {
+				onCheckPresetLengthError();
+				return ;
+			}
 			addPreset();
 		}
 	}
@@ -201,16 +213,33 @@
 		node.classList.add("hide");
 	}
 
+	function checkPrestLength(){
+		let list = tableNode.querySelectorAll(".checkbox:checked");
+		return checkFieldLength(list.length);
+	}
+
+	function onCheckPresetLengthError(){
+		let sum = ""+0;
+		let list = containerNode.querySelectorAll(".field");
+		if( list ) sum = list.length;
+		let remaining = MAX_FIELDS - sum;
+		let list2 = tableNode.querySelectorAll(".checkbox:checked");
+		let sum2 = 0;
+		if( list2 ) sum2 = list2.length;
+		messageManager( browser.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELDS, sum, sum2, remaining ] ));
+	}
+
 	function addPreset(e){
 		let list = tableNode.querySelectorAll(".checkbox:checked");
 		for(let node of list){
 			let checkWrapperNode = node.closest(".checkWrapper");
 			let label = checkWrapperNode.querySelector(".label").innerText;
 			let p = checkWrapperNode.querySelector(".url").innerText;
-			addInputField(true, label, p, "added");
+			addField(true, label, p, "added");
 		}
 		let promise = saveOption();
 		resetPreset();
+		resetSort();
 		showForm();
 	}
 
@@ -237,7 +266,31 @@
 		}
 	}
 
-	function addInputField( checked=false, label="", url="", cls=null ){
+	function checkFieldLength(n=0){
+		let count = 0;
+		let list = containerNode.querySelectorAll(".field");
+		if( list ) {
+			count = list.length;
+		}
+		if ( MAX_FIELDS < ( count + n ) ) return false;
+		return true;
+	}
+
+	function onCheckFieldLengthError(){
+		messageManager( browser.i18n.getMessage("htmlCheckFieldLengthError", MAX_FIELDS ));
+	}
+
+	function messageManager( message="exampleMessage" ){
+		let noticer = browser.notifications.create({
+			"type": "basic",
+			"iconUrl": browser.extension.getURL("image/icon.svg"),
+			"title": browser.i18n.getMessage("extensionName"),
+			"message": message
+		});
+		return noticer;
+	}
+
+	function addField( checked=false, label="", url="", cls=null ){
 		let node = inputPrototypeNode.cloneNode(true);
 		node.removeAttribute("id");
 		node.addEventListener("submit", (e)=>{
@@ -335,6 +388,7 @@
 			let sort = i+1;
 			fields[i].setAttribute("id", sort);
 			fields[i].setAttribute("sort", sort);
+			fields[i].querySelector(".sortNo").innerText = sort;
 		}
 	}
 
