@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="style.css">
-<title>title</title>
+<title>extensionOptionName</title>
 </head>
 <body>
 <div>
 	<header id="header">
-		<h1 class="title box">title</h1>
+		<h1 class="title box">extensionOptionName</h1>
 	</header>
 	<nav id="nav">
 		<div class="box order showForm active">htmlFormName</div>
@@ -18,24 +18,33 @@
 	<div id="main">
 		<div id="form" class="box">
 			<nav class="controller box">
-				<button type="button" class="addBlank">addBlank</button>
+				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
 			</nav>
 			<div class="desk">
 				<p class="formDescription">htmlFormDescription</p>
 				<div id="container" class="box"></div>
-				<form id="inputPrototype" class="field draggable hide">
+				<div id="inputPrototype" class="field draggable hide">
 					<span class="handle"><img src="image/hold.svg" draggable="false"></span>&nbsp;
 					<label><input type="checkbox" class="check">&nbsp;#<span class="sortNo"></span></label>
-					<label class="textbox"><span class="labelText">label</span>&nbsp;<input type="text" class="label" placeholder="example.com (maxlength 100)" required maxlength="100"></label>&nbsp;
-					<label class="textbox"><span class="urlText">url</span>&nbsp;<input type="URL" class="url" placeholder="https://www.example.com/?q=$1 (maxlength 500)" required maxlength="500"></label>&nbsp;
-					<button type="button" class="removeField">remove</button>
-					<input type="submit" class="submit hide">
-				</form>
+					<label class="textbox"><span class="labelText">htmlLabelText</span>&nbsp;
+						<form class="inline">
+							<input type="text" class="label" placeholder="example.com" required maxlength="100">
+							<input type="submit" class="labelSubmit hide">
+						</form>
+					</label>&nbsp;
+					<label class="textbox"><span class="urlText">htmlUrlDescription</span>&nbsp;
+						<form class="inline">
+							<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="500">
+							<input type="submit" class="urlSubmit hide">
+						</form>
+					</label>&nbsp;
+					<button type="button" class="removeField">htmlRemoveButtonName</button>
+				</div>
 			</div>
 		</div>
 		<div id="preset" class="box hide">
 			<nav class="controller box">
-				<button type="button" class="addPreset">add and back</button>
+				<button type="button" class="addPreset">htmlAddPresetButtonName</button>
 			</nav>
 			<div class="desk">
 				<div class="presetDescription">htmlPresetDescription</div>
@@ -48,8 +57,8 @@
 		</div>
 		<div id="contact" class="box hide">
 			<address>
-				<p class="contactText">contactText</p>
-				<p class="myself">myself</p>
+				<p class="contactText">htmlContactText</p>
+				<p class="myself">htmlMyself</p>
 			</address>
 		</div>
 	</div>

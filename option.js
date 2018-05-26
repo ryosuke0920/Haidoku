@@ -1,5 +1,7 @@
 ( () => {
-	const MAX_FIELDS = 50;
+	const MAX_FIELD = 50;
+	const MAX_LABEL_BYTE = 100;
+	const MAX_URL_BYTE = 300;
 	let windowId = Math.random();
 	let navNode;
 	let formNode;
@@ -222,11 +224,11 @@
 		let sum = ""+0;
 		let list = containerNode.querySelectorAll(".field");
 		if( list ) sum = list.length;
-		let remaining = MAX_FIELDS - sum;
+		let remaining = MAX_FIELD - sum;
 		let list2 = tableNode.querySelectorAll(".checkbox:checked");
 		let sum2 = 0;
 		if( list2 ) sum2 = list2.length;
-		messageManager( browser.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELDS, sum, sum2, remaining ] ));
+		messageManager( browser.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
 	}
 
 	function addPreset(e){
@@ -272,12 +274,12 @@
 		if( list ) {
 			count = list.length;
 		}
-		if ( MAX_FIELDS < ( count + n ) ) return false;
+		if ( MAX_FIELD < ( count + n ) ) return false;
 		return true;
 	}
 
 	function onCheckFieldLengthError(){
-		messageManager( browser.i18n.getMessage("htmlCheckFieldLengthError", MAX_FIELDS ));
+		messageManager( browser.i18n.getMessage("htmlCheckFieldLengthError", MAX_FIELD ));
 	}
 
 	function messageManager( message="exampleMessage" ){
@@ -295,42 +297,92 @@
 		node.removeAttribute("id");
 		node.addEventListener("submit", (e)=>{
 			e.preventDefault();
+			/* only trigger validation */
 		});
-		if(cls)node.classList.add(cls);
-		let submitButton = node.querySelector(".submit");
-
+		if(cls) node.classList.add(cls);
+		let labelSubmit = node.querySelector(".labelSubmit");
+		let urlSubmit = node.querySelector(".urlSubmit");
 		let check = node.querySelector(".check");
+		let labelNode = node.querySelector(".label")
+		let urlNode = node.querySelector(".url");
+		let handleNode = node.querySelector(".handle");
 		check.checked = checked;
 		check.addEventListener("click", (e)=>{
-			if(e.target.checked && !node.checkValidity()){
-				e.preventDefault();
-				e.target.checked = false;
-				submitButton.click();
+			if(e.target.checked ){
+				if( !checkLabel(labelNode) ){
+					e.preventDefault();
+					e.target.checked = false;
+					labelSubmit.click();
+				}
+				else if( !checkUrl(urlNode) ){
+					e.preventDefault();
+					e.target.checked = false;
+					urlSubmit.click();
+				}
 			}
 		});
-		let labelNode = node.querySelector(".label")
 		labelNode.value = label;
-		labelNode.addEventListener("change", (e)=>{
-			if( !node.checkValidity() ){
+		labelNode.addEventListener("input", (e)=>{
+			if( !checkLabel(labelNode) ){
 				check.checked = false;
-				submitButton.click();
+				labelSubmit.click();
 			}
 		});
 		labelNode.addEventListener("blur", blurBehavior);
-		let urlNode = node.querySelector(".url");
 		urlNode.value = url;
-		urlNode.addEventListener("change", (e)=>{
-			if( !node.checkValidity() ){
+		urlNode.addEventListener("input", (e)=>{
+			if( !checkUrl(urlNode) ){
 				check.checked = false;
-				submitButton.click();
+				urlSubmit.click();
 			}
 		});
 		urlNode.addEventListener("blur", blurBehavior);
-
-		let handleNode = node.querySelector(".handle");
 		handleNode.addEventListener("mousedown", sortStart);
 		containerNode.appendChild(node);
 		show(node);
+	}
+
+	function checkLabel(node){
+		return checkTextBox(node, MAX_LABEL_BYTE);
+	}
+
+	function checkUrl(node){
+		return checkTextBox(node, MAX_URL_BYTE);
+	}
+
+	function checkTextBox(node, maxLength){
+		node.setCustomValidity("");
+		if ( !node.checkValidity() ){
+			return false;
+		}
+		if ( !checkByte(node.value, maxLength) ) {
+			let length = byteLength(node.value);
+			node.setCustomValidity(browser.i18n.getMessage("htmlCheckByteLengthError", [maxLength, length] ));
+			return false;
+		}
+		return true;
+	}
+
+	function checkByte(text,length){
+		let count = byteLength(text);
+		if( count <= length ) return true;
+		return false;
+	}
+
+	function byteLength(text){
+		text = encodeURIComponent(text);
+		let count = 0;
+		let i = 0;
+		while( i < text.length ){
+			count++;
+			if( text.substr(i,1) == "%" ){
+				i += 3;
+			}
+			else {
+				i += 1;
+			}
+		}
+		return count;
 	}
 
 	function blurBehavior(e){
@@ -360,8 +412,8 @@
 			holdedNode.style.top = (e.pageY + dy) +"px";
 			let overedNode = isMouseOver(e.pageX, e.pageY);
 			if( overedNode && overedNode != draggedNode ) {
-				let draggedSort = draggedNode.getAttribute("sort");
-				let overedSort = overedNode.getAttribute("sort");
+				let draggedSort = draggedNode.getAttribute("data-sort");
+				let overedSort = overedNode.getAttribute("data-sort");
 				if ( overedSort < draggedSort ) {
 					containerNode.insertBefore(draggedNode, overedNode);
 				}
@@ -384,10 +436,13 @@
 
 	function resetSort(){
 		let fields = containerNode.querySelectorAll(".draggable");
+		for(let node of fields){
+			node.removeAttribute("id");
+		}
 		for(let i=0; i<fields.length; i++){
 			let sort = i+1;
-			fields[i].setAttribute("id", sort);
-			fields[i].setAttribute("sort", sort);
+			fields[i].setAttribute("id", "field-"+sort);
+			fields[i].setAttribute("data-sort", sort);
 			fields[i].querySelector(".sortNo").innerText = sort;
 		}
 	}

@@ -87,6 +87,20 @@
       "message": "太田亮介<br>フリーランス プログラマ<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
       "description": "Sentence of myself."
    },
+   "htmlCheckByteLengthError": {
+      "message": "テキストを$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイトです）。",
+      "description": "",
+      "placeholders": {
+         "MAX_LENGTH": {
+            "content": "$1",
+            "example": "1"
+         },
+         "LENGTH": {
+            "content": "$2",
+            "example": "2"
+         }
+      }
+   },
    "htmlCheckFieldLengthError": {
       "message": "サイトの追加は最大で$MAX_FIELDS$個までです。",
       "description": "",

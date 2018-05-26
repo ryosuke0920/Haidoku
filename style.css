@@ -7,7 +7,7 @@ body {
    background-color: white;
 }
 p {
-   margin-bottom: 0.5em;
+   margin-bottom: 1em;
 }
 button {
    padding: 1px 20px;
@@ -54,6 +54,9 @@ button {
 #main {
    margin-top: 45px;
    margin-left: 160px;
+}
+.inline {
+   display: inline;
 }
 .controller {
    position: fixed;

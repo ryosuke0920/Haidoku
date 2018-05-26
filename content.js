@@ -1,13 +1,37 @@
 (()=>{
+	const DIST = 5;
+	const LINK_NODE_HEIGHT = 100;
+	const LINK_NODE_WIDTH = 200;
+	const SCROLL_BAR_WIDTH = 17;
+	const STYLE = "\n\
+* {\n\
+	margin: 0;\n\
+	padding: 0;\n\
+	border: none;\n\
+}\n\
+body {\n\
+	font-size: small;\n\
+	font-family: sans-serif;\n\
+}\n\
+div {\n\
+	background-color: white;\n\
+	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;\n\
+	margin: 2px;\n\
+	padding: 0.2em;\n\
+	overflow: scroll;\n\
+	white-space: nowrap;\n\
+}\n\
+a {\n\
+	text-decoration: none;\n\
+}\n\
+a:hover {\n\
+	text-decoration: underline;\n\
+}";
 	let px;
 	let py;
 	let cx;
 	let cy;
 	let linkNode;
-	let dist = 5;
-	let linkNodeHeight = 100;
-	let linkNodeWidth = 200;
-	let scrollbarWidth = 17;
 	let optionList = [];
 	let boxFlag = false;
 	let promise = init();
@@ -21,54 +45,28 @@
 		linkNode.style.display = "none";
 		linkNode.style["z-index"] = "2147483646";
 		linkNode.style.border = "none";
-		linkNode.style["max-height"] = linkNodeHeight + "px";
-		linkNode.style.width = linkNodeWidth + "px";
+		linkNode.style.height = LINK_NODE_HEIGHT + "px";
+		linkNode.style.width = LINK_NODE_WIDTH + "px";
 		document.querySelector("body").appendChild(linkNode);
-
 		document.onmouseup = (e)=>{
 			if( e.button == "0" ) {
 				linkBehavior(e);
 			}
 		}
-
 		window.onresize = (e)=>{
 			closeLink();
 		}
-
 		document.onkeypress = (e)=>{
-			console.log(e);
 			if( e.key == "Escape" || e.key == "Esc") {
 				closeLink();
 			}
 		}
-
-		function linkBehavior(){
-			let selection = window.getSelection();
-			let select = selection.toString();
-			if( boxFlag && select && select.length > 0 ) {
-				if( retrieveLink(select) ) {
-					let yy = window.innerHeight - scrollbarWidth - ( cy + linkNodeHeight );
-					if ( 0 < yy || window.innerHeight < linkNodeHeight ) yy = 0;
-					let xx = window.innerWidth - scrollbarWidth - ( cx + linkNodeWidth );
-					if ( 0 < xx || window.innerWidth < linkNodeWidth ) xx = 0;
-					linkNode.style.top = ( py + yy + dist )+"px";
-					linkNode.style.left = ( px + xx + dist ) +"px";
-					linkNode.style.display = "block";
-				}
-			}
-			else {
-				closeLink();
-			}
-		}
-
-
-		document.addEventListener('mousemove', function(e) {
+		document.addEventListener('mousemove', (e)=>{
 			py = e.pageY;
 			px = e.pageX;
 			cy = e.clientY;
 			cx = e.clientX;
 		})
-
 		browser.storage.onChanged.addListener( onStorageChanged );
 
 		return reload();
@@ -77,6 +75,25 @@
 	function closeLink(){
 		linkNode.style.display = "none";
 		linkNode.srcdoc = "";
+	}
+
+	function linkBehavior(){
+		let selection = window.getSelection();
+		let select = selection.toString();
+		if( boxFlag && select && select.length > 0 ) {
+			if( retrieveLink(select) ) {
+				let yy = window.innerHeight - SCROLL_BAR_WIDTH - ( cy + LINK_NODE_HEIGHT );
+				if ( 0 < yy || window.innerHeight < LINK_NODE_HEIGHT ) yy = 0;
+				let xx = window.innerWidth - SCROLL_BAR_WIDTH - ( cx + LINK_NODE_WIDTH );
+				if ( 0 < xx || window.innerWidth < LINK_NODE_WIDTH ) xx = 0;
+				linkNode.style.top = ( py + yy + DIST )+"px";
+				linkNode.style.left = ( px + xx + DIST ) +"px";
+				linkNode.style.display = "block";
+			}
+		}
+		else {
+			closeLink();
+		}
 	}
 
 	function onStorageChanged(change, area){
@@ -117,36 +134,12 @@
 		let head = document.createElement("head");
 		html.appendChild(head);
 		let style = document.createElement("style");
-		style.innerHTML = "\n\
-* { \n\
-	margin: 0;\n\
-	padding: 0;\n\
-	border: none;\n\
-}\n\
-body {\n\
-	font-size: small;\n\
-	font-family: sans-serif;\n\
-}\n\
-div {\n\
-	background-color: white;\n\
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;\n\
-	margin: 2px;\n\
-	padding: 0.2em;\n\
-	overflow: scroll;\n\
-	white-space: nowrap;\n\
-}\n\
-a {\n\
-	text-decoration: none;\n\
-}\n\
-a:hover {\n\
-	text-decoration: underline;\n\
-}\n\
-";
+		style.innerHTML = STYLE;
 		head.appendChild(style);
 		let body = document.createElement("body");
 		html.appendChild(body);
 		let div = document.createElement("div");
-		div.style.height = (linkNodeHeight-20)+"px";
+		div.style.height = ( LINK_NODE_HEIGHT - SCROLL_BAR_WIDTH ) +"px";
 		body.appendChild(div);
 		for(let item of optionList){
 			if ( !item["c"]) continue;
