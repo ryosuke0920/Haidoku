@@ -35,6 +35,13 @@
 			closeLink();
 		}
 
+		document.onkeypress = (e)=>{
+			console.log(e);
+			if( e.key == "Escape" || e.key == "Esc") {
+				closeLink();
+			}
+		}
+
 		function linkBehavior(){
 			let selection = window.getSelection();
 			let select = selection.toString();
