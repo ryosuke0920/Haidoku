@@ -134,7 +134,7 @@ a:hover {\n\
 		let head = document.createElement("head");
 		html.appendChild(head);
 		let style = document.createElement("style");
-		style.innerHTML = STYLE;
+		style.appendChild(document.createTextNode(STYLE));
 		head.appendChild(style);
 		let body = document.createElement("body");
 		html.appendChild(body);
