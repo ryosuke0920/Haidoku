@@ -45,11 +45,9 @@ button {
 }
 #nav .order.active {
    color: DodgerBlue;
-   background-color: white;
 }
 #nav .order.active:hover {
-   text-decoration: none;
-   cursor: auto;
+   cursor: default;
 }
 #main {
    margin-top: 45px;

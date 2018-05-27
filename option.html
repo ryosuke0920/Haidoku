@@ -44,12 +44,19 @@
 		</div>
 		<div id="preset" class="box hide">
 			<nav class="controller box">
-				<button type="button" class="addPreset">htmlAddPresetButtonName</button>
+				<span class="filterText">htmlFilterText</span>&nbsp;
+				<select id="languageFilter">
+					<option value="">htmlLanguageAll</option>
+					<option value="en">htmlLanguageEn</option>
+					<option value="ja">htmlLanguageJa</option>
+				</select>&nbsp;
+				&nbsp;
+				<button type="button" class="addPreset">htmlAddPresetButtonName</button>&nbsp;
 			</nav>
 			<div class="desk">
 				<div class="presetDescription">htmlPresetDescription</div>
 				<div id="table" class="box"></div>
-				<section id="cellPrototype" class="cell hide checkWrapper">
+				<section id="cellPrototype" class="cell hide checkWrapper" data-language="">
 					<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
 					<p class="url">url</p>
 				</section>

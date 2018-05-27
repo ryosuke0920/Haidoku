@@ -17,6 +17,8 @@
 	let draggedNode;
 	let draggable_list = [];
 	let dy = 0;
+	let language;
+	let languageJson = {};
 
 	document.addEventListener("DOMContentLoaded", init);
 
@@ -40,6 +42,11 @@
 		tableNode = document.querySelector("#table");
 		cellPrototypeNode = document.querySelector("#cellPrototype");
 		messageNode = document.querySelector("#message");
+		language = browser.i18n.getUILanguage();
+		let matcher = language.match("^(.+?)-");
+		if ( matcher ){
+			language = matcher[1];
+		}
 
 		return getter.then( onGot );
 	}
@@ -59,6 +66,10 @@
 			{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
 			{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
 			{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" },
+			{ "selector": ".filterText", "property": "innerText", "key": "htmlFilterText" },
+			{ "selector": "#languageFilter option[value=\"\"]", "property": "innerText", "key": "htmlLanguageAll" },
+			{ "selector": "#languageFilter option[value=en]", "property": "innerText", "key": "htmlLanguageEn" },
+			{ "selector": "#languageFilter option[value=ja]", "property": "innerText", "key": "htmlLanguageJa" },
 			{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
 			{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
 			{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" }
@@ -76,12 +87,17 @@
 		for(let option of list){
 			let node = cellPrototypeNode.cloneNode(true);
 			node.removeAttribute("id");
+			node.setAttribute("data-language",option["la"]);
 			node.querySelector(".label").innerText = option["l"];
 			node.querySelector(".url").innerText = option["u"];
 			node.addEventListener("click",checkPreset);
 			tableNode.appendChild(node);
-			show(node);
+			languageJson[option["la"]] = true;
 		}
+		if(languageJson.hasOwnProperty(language)){
+			presetNode.querySelector("#languageFilter").value = language;
+		}
+		languageFilter(language);
 	}
 
 	function initField(){
@@ -105,6 +121,7 @@
 		navNode.addEventListener("click", navBehavior);
 		formNode.addEventListener("click", formBehavior);
 		presetNode.addEventListener("click", presetBehavior);
+		presetNode.querySelector("#languageFilter").addEventListener("change", languageFilterBehavior);
 		window.addEventListener("mouseup", sortEnd);
 		window.addEventListener("mousemove", sortMove);
 	}
@@ -169,6 +186,10 @@
 		}
 	}
 
+	function languageFilterBehavior(e){
+		languageFilter(e.target.value);
+	}
+
 	function showForm(){
 		removeActive();
 		addActive("showForm");
@@ -213,6 +234,24 @@
 
 	function hide(node){
 		node.classList.add("hide");
+	}
+
+	function languageFilter(language){
+		if ( !language || !languageJson.hasOwnProperty(language) ) {
+			let list = tableNode.querySelectorAll(".checkWrapper");
+			for( let node of list ){
+				show(node);
+			}
+			return;
+		}
+		let list = tableNode.querySelectorAll(".checkWrapper[data-language=\""+language+"\"]");
+		for( let node of list ){
+			show(node);
+		}
+		list = tableNode.querySelectorAll(".checkWrapper:not([data-language=\""+language+"\"])");
+		for( let node of list ){
+			hide(node);
+		}
 	}
 
 	function checkPrestLength(){
@@ -297,7 +336,7 @@
 		node.removeAttribute("id");
 		node.addEventListener("submit", (e)=>{
 			e.preventDefault();
-			/* only trigger validation */
+			/* trigger validation */
 		});
 		if(cls) node.classList.add(cls);
 		let labelSubmit = node.querySelector(".labelSubmit");
