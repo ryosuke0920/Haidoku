@@ -208,25 +208,5 @@
    "presetGoogleTranslateJa2En": {
       "message": "Google Translate ja->en",
       "description": ""
-   },
-   "presetCambridgeDictionary": {
-      "message": "Cambridge Dictionary",
-      "description": ""
-   },
-   "presetCambridgeDictionaryEn2Ja": {
-      "message": "Cambridge Dictionary(English-Japanese)",
-      "description": ""
-   },
-   "presetOxfordDictionary": {
-      "message": "Oxford Dictionaries",
-      "description": ""
-   },
-   "presetOxfordDictionaryUS": {
-      "message": "Oxford Dictionaries(North American English)",
-      "description": ""
-   },
-   "presetDictionaryCom": {
-      "message": "Dictionary.com",
-      "description": ""
    }
 }
