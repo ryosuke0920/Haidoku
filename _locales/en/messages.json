@@ -1,6 +1,6 @@
 {
    "extensionName": {
-      "message": "LessLaborGoToDictionay",
+      "message": "LessLaborGoToDictionary",
       "description": "Name of the extension."
    },
    "extensionDescription": {
@@ -12,7 +12,7 @@
       "description": "Name of link list option."
    },
    "extensionOptionName": {
-      "message": "LessLaborGoToDictionay Options",
+      "message": "LessLaborGoToDictionary Options",
       "description": "Name of the extension option."
    },
    "notificationReadOptionError": {

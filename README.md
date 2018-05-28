@@ -1,4 +1,4 @@
-# LessLaborGoToDictionay
+# LessLaborGoToDictionary
 This is Firefox add-on. When you select a word on the website, a link list （something like a dictionary site) is displayed. By using this add-on, it is possible to omit this series of trouble of copying words, opening a dictionary site, pasting words and searching. The link list is also displayed in the right click (context menu). In addition, you can make settings such as hide display of link list, addition and deletion of link. Since I prepared URLs of several dictionary sites beforehand, you can use it without knowledge of URL. You can also add the URL manually.
 
 ## Website list
