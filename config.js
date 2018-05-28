@@ -2,7 +2,7 @@ const DEFAULT_OPTION_LIST = {
 	"en":[
 		{
 			"c": true,
-			"l": "Wikipedia",
+			"l": "Wikipedia (en.wikipedia.org)",
 			"u": "https://en.wikipedia.org/w/index.php?search=$1&title=Special:Search&go=Go"
 		},
 		{
@@ -12,14 +12,14 @@ const DEFAULT_OPTION_LIST = {
 		},
 		{
 			"c": true,
-			"l": "Google",
+			"l": "Google (google.com)",
 			"u": "https://www.google.com/search?q=$1"
 		}
 	],
 	"ja": [
 		{
 			"c": true,
-			"l": "ウィキペディア",
+			"l": "Wikipedia (ja.wikipedia.org)",
 			"u": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
 		},
 		{
@@ -34,7 +34,7 @@ const DEFAULT_OPTION_LIST = {
 		},
 		{
 			"c": true,
-			"l": "Google",
+			"l": "Google (google.co.jp)",
 			"u": "https://www.google.co.jp/search?q=$1"
 		}
 	]
@@ -42,12 +42,12 @@ const DEFAULT_OPTION_LIST = {
 const PRESET_OPTION_LIST = [
 	{
 		"la": "en",
-		"l": "Wikipedia",
+		"l": "Wikipedia (en.wikipedia.org)",
 		"u": "https://en.wikipedia.org/w/index.php?search=$1&title=Special:Search&go=Go"
 	},
 	{
 		"la": "en",
-		"l": "Google",
+		"l": "Google (google.com)",
 		"u": "https://www.google.com/search?q=$1"
 	},
 	{
@@ -102,12 +102,12 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "ja",
-		"l": "ウィキペディア",
+		"l": "Wikipedia (ja.wikipedia.org)",
 		"u": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
 	},
 	{
 		"la": "ja",
-		"l": "Google",
+		"l": "Google (google.co.jp)",
 		"u": "https://www.google.co.jp/search?q=$1"
 	},
 	{
