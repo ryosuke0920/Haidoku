@@ -64,7 +64,7 @@ function saveBoxViewr(boxFlag){
 function saveInit(){
 	let setter = browser.storage.sync.set({
 		"m": makeMetadata(),
-		"ol": DEFAULT_OPTION_LIST,
+		"ol": getDefaultOptionList(),
 		"w": "",
 		"bf": true
 	});
@@ -100,7 +100,7 @@ function resetMenuFromStorage(){
 }
 
 function resetDefaultMenu(){
-	resetMenu( {"ol": DEFAULT_OPTION_LIST, "bf": true} );
+	resetMenu( {"ol": getDefaultOptionList(), "bf": true} );
 }
 
 function resetMenu(json){
@@ -141,6 +141,13 @@ function resetMenu(json){
 			"32":"image/icon.svg"
 		}
 	});
+}
+
+function getDefaultOptionList(){
+	let lang = browser.i18n.getUILanguage();
+	if ( !lang ) lang = browser.runtime.getManifest()["default_locale"];
+	if ( !DEFAULT_OPTION_LIST[lang] ) return [];
+	return DEFAULT_OPTION_LIST[lang];
 }
 
 function onOpenWindowError(e){

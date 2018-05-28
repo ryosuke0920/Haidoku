@@ -75,6 +75,22 @@
       "message": "If you input \"$1\", it will be replaced to the word you selected.",
       "description": "title of url description."
    },
+   "htmlFilterText": {
+      "message": "filter",
+      "description": "Name of filter select box."
+   },
+   "htmlLanguageAll": {
+      "message": "all",
+      "description": "Name of all."
+   },
+   "htmlLanguageEn": {
+      "message": "English",
+      "description": "Name of en."
+   },
+   "htmlLanguageJa": {
+      "message": "Japanese",
+      "description": "Name of ja."
+   },
    "htmlAddPresetButtonName": {
       "message": "add",
       "description": "title of adding button."
@@ -132,101 +148,5 @@
             "example": "4444"
          }
       }
-   },
-   "presetWikipedia": {
-      "message": "Wikipedia",
-      "description": ""
-   },
-   "presetWeblioDictionary": {
-      "message": "weblio Japanese dictionary",
-      "description": ""
-   },
-   "presetWeblioThesaurus": {
-      "message": "weblio Thesaurus",
-      "description": ""
-   },
-   "presetWeblioThesaurusAntonym": {
-      "message": "weblio Antonym",
-      "description": ""
-   },
-   "presetWeblioEnglishDictionary": {
-      "message": "weblio Japanese<->English dictionary",
-      "description": ""
-   },
-   "presetWeblioChineseDictionary": {
-      "message": "weblio Japanese<->Chinese dictionary",
-      "description": ""
-   },
-   "presetWeblioKoreanDictionary": {
-      "message": "weblio Japanese<->Korean dictionary",
-      "description": ""
-   },
-   "presetWeblioKobun": {
-      "message": "weblio Ancient writing",
-      "description": ""
-   },
-   "presetYahooJapanDictionar": {
-      "message": "YAHOO!Japan dictionary",
-      "description": ""
-   },
-   "presetGooDictionar": {
-      "message": "goo dictionary",
-      "description": ""
-   },
-   "presetGooJapaneseDictionar": {
-      "message": "goo Japanese dictionary",
-      "description": ""
-   },
-   "presetGooJapaneseThesaurus": {
-      "message": "goo Japanese thesaurus",
-      "description": ""
-   },
-   "presetGooEnglishDictionary": {
-      "message": "goo Japanese<->English dictionary",
-      "description": ""
-   },
-   "presetGooChineseJapaneseDictionary": {
-      "message": "goo Chinese Japanese dictionary",
-      "description": ""
-   },
-   "presetGooJapaneseChineseDictionary": {
-      "message": "goo Japanese Chinese dictionary",
-      "description": ""
-   },
-   "presetEijiro": {
-      "message": "Eijiro on the WEB",
-      "description": ""
-   },
-   "presetGoogleSearch": {
-      "message": "Google Search",
-      "description": ""
-   },
-   "presetGoogleTranslateEn2Ja": {
-      "message": "Google Translate en->ja",
-      "description": ""
-   },
-   "presetGoogleTranslateJa2En": {
-      "message": "Google Translate ja->en",
-      "description": ""
-   },
-   "presetCambridgeDictionary": {
-      "message": "Cambridge Dictionary",
-      "description": ""
-   },
-   "presetCambridgeDictionaryEn2Ja": {
-      "message": "Cambridge Dictionary(English-Japanese)",
-      "description": ""
-   },
-   "presetOxfordDictionary": {
-      "message": "Oxford Dictionaries",
-      "description": ""
-   },
-   "presetOxfordDictionaryUS": {
-      "message": "Oxford Dictionaries(North American English)",
-      "description": ""
-   },
-   "presetDictionaryCom": {
-      "message": "Dictionary.com",
-      "description": ""
    }
 }

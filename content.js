@@ -14,7 +14,7 @@ body {\n\
 	font-family: sans-serif;\n\
 }\n\
 div {\n\
-	background-color: white;\n\
+	background-color: rgba(255, 255, 255, 0.8);\n\
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;\n\
 	margin: 2px;\n\
 	padding: 0.2em;\n\
@@ -134,7 +134,7 @@ a:hover {\n\
 		let head = document.createElement("head");
 		html.appendChild(head);
 		let style = document.createElement("style");
-		style.innerHTML = STYLE;
+		style.appendChild(document.createTextNode(STYLE));
 		head.appendChild(style);
 		let body = document.createElement("body");
 		html.appendChild(body);
