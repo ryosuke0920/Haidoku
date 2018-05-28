@@ -43,3 +43,6 @@ This is a list of currently prepared websites (URLs).
 
 If you can send a request to me, I will add it
 ryosuke.ohta.programmer@gmail.com
+
+# License
+This software is released under the MIT License, see LICENSE.md.

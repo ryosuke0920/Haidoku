@@ -43,3 +43,6 @@
 
 私宛に依頼を頂ければ追加します。
 ryosuke.ohta.programmer@gmail.com
+
+# License
+This software is released under the MIT License, see LICENSE.md.
