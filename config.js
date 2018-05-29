@@ -47,8 +47,23 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
-		"l": "Google (google.com)",
+		"l": "Google (www.google.com)",
 		"u": "https://www.google.com/search?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Google Images",
+		"u": "https://www.google.com/search?tbm=isch&q=$1"
+	},
+	{
+		"la": "en ja",
+		"l": "Bing",
+		"u": "https://www.bing.com/search?q=$1"
+	},
+	{
+		"la": "en ja",
+		"l": "DuckDuckGo",
+		"u": "https://duckduckgo.com/?q=$1"
 	},
 	{
 		"la": "en",
@@ -107,8 +122,13 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "ja",
-		"l": "Google (google.co.jp)",
+		"l": "Google (www.google.co.jp)",
 		"u": "https://www.google.co.jp/search?q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "Google 画像検索",
+		"u": "https://www.google.co.jp/search?tbm=isch&q=$1"
 	},
 	{
 		"la": "ja",
@@ -119,11 +139,6 @@ const PRESET_OPTION_LIST = [
 		"la": "ja",
 		"l": "Google 翻訳 日本語→英語",
 		"u": "https://translate.google.co.jp/?hl=ja&tab=TT#ja/en/$1"
-	},
-	{
-		"la": "ja",
-		"l": "Bing",
-		"u": "https://www.bing.com/search?q=$1"
 	},
 	{
 		"la": "ja",

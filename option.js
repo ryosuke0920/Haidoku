@@ -237,18 +237,14 @@
 	}
 
 	function languageFilter(language){
-		if ( !language || !languageJson.hasOwnProperty(language) ) {
-			let list = tableNode.querySelectorAll(".checkWrapper");
-			for( let node of list ){
-				show(node);
-			}
-			return;
-		}
-		let list = tableNode.querySelectorAll(".checkWrapper[data-language=\""+language+"\"]");
+		let list = tableNode.querySelectorAll(".checkWrapper");
 		for( let node of list ){
 			show(node);
 		}
-		list = tableNode.querySelectorAll(".checkWrapper:not([data-language=\""+language+"\"])");
+		if ( !language || !languageJson.hasOwnProperty(language) ) {
+			return;
+		}
+		list = tableNode.querySelectorAll(".checkWrapper:not([data-language~=\""+language+"\"])");
 		for( let node of list ){
 			hide(node);
 		}
