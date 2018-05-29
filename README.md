@@ -46,7 +46,7 @@ This is a list of currently prepared websites (URLs).
 * goo 日中辞書
 * 英辞郎 on the WEB
 
-If you can send a request to me, I will add it
+If you can send a request to me, I will add it  
 ryosuke.ohta.programmer@gmail.com
 
 # License

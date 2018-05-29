@@ -46,7 +46,7 @@
 * goo 日中辞書
 * 英辞郎 on the WEB
 
-私宛に依頼を頂ければ追加します。
+私宛に依頼を頂ければ追加します。  
 ryosuke.ohta.programmer@gmail.com
 
 # License
