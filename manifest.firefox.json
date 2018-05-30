@@ -15,19 +15,22 @@
    },
    "background": {
       "scripts": [
+         "ponyfill.js",
          "config.js",
          "background.js"
       ]
    },
    "options_ui": {
       "page": "option.html",
-      "browser_style": true,
       "open_in_tab": true
    },
    "content_scripts": [
       {
          "matches": ["*://*/*"],
-         "js": ["content.js"],
+         "js": [
+            "ponyfill.js",
+            "content.js"
+         ],
          "run_at": "document_end"
       }
    ],

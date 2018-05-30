@@ -27,7 +27,7 @@
 	}
 
 	function initProperties(){
-		let getter = browser.runtime.getBackgroundPage();
+		let getter = ponyfill.runtime.getBackgroundPage();
 
 		function onGot(page) {
 			bgPage = page;
@@ -42,7 +42,7 @@
 		tableNode = document.querySelector("#table");
 		cellPrototypeNode = document.querySelector("#cellPrototype");
 		messageNode = document.querySelector("#message");
-		language = browser.i18n.getUILanguage();
+		language = chrome.i18n.getUILanguage();
 		let matcher = language.match("^(.+?)-");
 		if ( matcher ){
 			language = matcher[1];
@@ -77,7 +77,7 @@
 		for( let json of joson_list ){
 			let list = document.querySelectorAll(json["selector"]);
 			for( let node of list ){
-				node[json["property"]] = browser.i18n.getMessage( json["key"] );
+				node[json["property"]] = chrome.i18n.getMessage( json["key"] );
 			}
 		}
 	}
@@ -101,7 +101,7 @@
 	}
 
 	function initField(){
-		let getter = browser.storage.sync.get({
+		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true
 		});
@@ -117,7 +117,7 @@
 	}
 
 	function initListener(){
-		browser.storage.onChanged.addListener(fileChangeBehavior);
+		chrome.storage.onChanged.addListener(fileChangeBehavior);
 		navNode.addEventListener("click", navBehavior);
 		formNode.addEventListener("click", formBehavior);
 		presetNode.addEventListener("click", presetBehavior);
@@ -263,7 +263,7 @@
 		let list2 = tableNode.querySelectorAll(".checkbox:checked");
 		let sum2 = 0;
 		if( list2 ) sum2 = list2.length;
-		messageManager( browser.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
+		messageManager( chrome.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
 	}
 
 	function addPreset(e){
@@ -314,14 +314,14 @@
 	}
 
 	function onCheckFieldLengthError(){
-		messageManager( browser.i18n.getMessage("htmlCheckFieldLengthError", MAX_FIELD ));
+		messageManager( chrome.i18n.getMessage("htmlCheckFieldLengthError", MAX_FIELD ));
 	}
 
 	function messageManager( message="exampleMessage" ){
-		let noticer = browser.notifications.create({
+		let noticer = chrome.notifications.create({
 			"type": "basic",
-			"iconUrl": browser.extension.getURL("image/icon.svg"),
-			"title": browser.i18n.getMessage("extensionName"),
+			"iconUrl": chrome.extension.getURL("image/icon.svg"),
+			"title": chrome.i18n.getMessage("extensionName"),
 			"message": message
 		});
 		return noticer;
@@ -392,7 +392,7 @@
 		}
 		if ( !checkByte(node.value, maxLength) ) {
 			let length = byteLength(node.value);
-			node.setCustomValidity(browser.i18n.getMessage("htmlCheckByteLengthError", [maxLength, length] ));
+			node.setCustomValidity(chrome.i18n.getMessage("htmlCheckByteLengthError", [maxLength, length] ));
 			return false;
 		}
 		return true;
@@ -520,6 +520,7 @@
 
 	function saveOption(){
 		let optionList = makeOptionList();
+		windowId = Math.random();
 		let saver = bgPage.saveOption( optionList, windowId );
 		return saver.catch( (e)=>{ bgPage.onSaveError(e) } );
 	}

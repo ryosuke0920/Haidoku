@@ -56,7 +56,7 @@ a:hover {\n\
 		window.onresize = (e)=>{
 			closeLink();
 		}
-		document.onkeypress = (e)=>{
+		document.onkeydown = (e)=>{
 			if( e.key == "Escape" || e.key == "Esc") {
 				closeLink();
 			}
@@ -67,7 +67,7 @@ a:hover {\n\
 			cy = e.clientY;
 			cx = e.clientX;
 		})
-		browser.storage.onChanged.addListener( onStorageChanged );
+		chrome.storage.onChanged.addListener( onStorageChanged );
 
 		return reload();
 	}
@@ -104,7 +104,7 @@ a:hover {\n\
 	}
 
 	function reload(){
-		let getter = browser.storage.sync.get({
+		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": false
 		});

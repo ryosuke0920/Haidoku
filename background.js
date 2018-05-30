@@ -11,7 +11,7 @@ function getPresetOptionList(){
 }
 
 function initContextMenu(){
-	let getter = browser.storage.sync.get({
+	let getter = ponyfill.storage.sync.get({
 		"ol": null,
 		"bf": true
 	});
@@ -29,13 +29,13 @@ function initContextMenu(){
 }
 
 function initListener(){
-	browser.storage.onChanged.addListener( resetMenuFromStorage );
-	browser.contextMenus.onClicked.addListener( contextMenuBehavior );
+	chrome.storage.onChanged.addListener( resetMenuFromStorage );
+	chrome.contextMenus.onClicked.addListener( contextMenuBehavior );
 }
 
 function contextMenuBehavior(info, tab){
 	if ( info.menuItemId == "option" ){
-		browser.runtime.openOptionsPage();
+		chrome.runtime.openOptionsPage();
 	}
 	else if ( info.menuItemId == "box" ){
 		saveBoxViewr(info.checked).catch(onSaveError);
@@ -48,7 +48,7 @@ function contextMenuBehavior(info, tab){
 function openWindow( url, text){
 	text  = encodeURIComponent(text);
 	url = url.replace("$1", text);
-	let promise = browser.tabs.create({"url": url});
+	let promise = ponyfill.tabs.create({"url": url});
 	return promise.catch(onOpenWindowError);
 }
 
@@ -57,12 +57,12 @@ function saveBoxViewr(boxFlag){
 		"m": makeMetadata(),
 		"bf": boxFlag
 	};
-	let setter = browser.storage.sync.set(data);
+	let setter = ponyfill.storage.sync.set(data);
 	return setter;
 }
 
 function saveInit(){
-	let setter = browser.storage.sync.set({
+	let setter = ponyfill.storage.sync.set({
 		"m": makeMetadata(),
 		"ol": getDefaultOptionList(),
 		"w": "",
@@ -72,7 +72,7 @@ function saveInit(){
 }
 
 function saveOption( optionList, windowId="" ){
-	let setter = browser.storage.sync.set({
+	let setter = ponyfill.storage.sync.set({
 		"m": makeMetadata(),
 		"ol": optionList,
 		"w": windowId
@@ -81,7 +81,7 @@ function saveOption( optionList, windowId="" ){
 }
 
 function makeMetadata(){
-	let manifest = browser.runtime.getManifest();
+	let manifest = chrome.runtime.getManifest();
 	let now = new Date();
 	let data = {
 		"v": manifest.version,
@@ -91,8 +91,8 @@ function makeMetadata(){
 }
 
 function resetMenuFromStorage(){
-	browser.contextMenus.removeAll();
-	let getter = browser.storage.sync.get({
+	chrome.contextMenus.removeAll();
+	let getter = ponyfill.storage.sync.get({
 		"ol": [],
 		"bf": true
 	});
@@ -120,65 +120,68 @@ function resetMenu(json){
 				"contexts": ["selection"]
 			};
 			options[id] = url;
-			let ret = browser.contextMenus.create(args);
+			let ret = ponyfill.contextMenus.create(args);
 		}
 	}
 	if( 0 < optionList.length ) {
-		browser.contextMenus.create({
-			"type": "separator"
+		ponyfill.contextMenus.create({
+			"type": "separator",
+			"contexts": ["selection"]
 		});
 	}
-	browser.contextMenus.create({
+	ponyfill.contextMenus.create({
 		"id": "box",
-		"title": browser.i18n.getMessage("extensionOptionBox"),
+		"title": chrome.i18n.getMessage("extensionOptionBox"),
 		"checked": boxFlag,
-		"type": "checkbox"
+		"type": "checkbox",
+		"contexts": ["all"]
 	});
-	browser.contextMenus.create({
+	ponyfill.contextMenus.create({
 		"id": "option",
-		"title": browser.i18n.getMessage("extensionOptionName"),
+		"title": chrome.i18n.getMessage("extensionOptionName"),
 		"icons": {
 			"32":"image/icon.svg"
-		}
+		},
+		"contexts": ["all"]
 	});
 }
 
 function getDefaultOptionList(){
-	let lang = browser.i18n.getUILanguage();
-	if ( !lang ) lang = browser.runtime.getManifest()["default_locale"];
+	let lang = chrome.i18n.getUILanguage();
+	if ( !lang ) lang = chrome.runtime.getManifest()["default_locale"];
 	if ( !DEFAULT_OPTION_LIST[lang] ) return [];
 	return DEFAULT_OPTION_LIST[lang];
 }
 
 function onOpenWindowError(e){
 	console.error(e);
-	let noticer = browser.notifications.create({
+	let noticer = chrome.notifications.create({
 		"type": "basic",
-		"iconUrl": browser.extension.getURL("image/icon.svg"),
-		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationOpenWindowError") + "\n" + e
+		"iconUrl": chrome.extension.getURL("image/icon.svg"),
+		"title": chrome.i18n.getMessage("extensionName"),
+		"message": chrome.i18n.getMessage("notificationOpenWindowError") + "\n" + e
 	});
 	return noticer;
 }
 
 function onReadError(e){
 	console.error(e);
-	let noticer = browser.notifications.create({
+	let noticer = chrome.notifications.create({
 		"type": "basic",
-		"iconUrl": browser.extension.getURL("image/icon.svg"),
-		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationReadWindowError") + "\n" + e
+		"iconUrl": chrome.extension.getURL("image/icon.svg"),
+		"title": chrome.i18n.getMessage("extensionName"),
+		"message": chrome.i18n.getMessage("notificationReadWindowError") + "\n" + e
 	});
 	return noticer;
 }
 
 function onSaveError(e){
 	console.error(e);
-	let noticer = browser.notifications.create({
+	let noticer = chrome.notifications.create({
 		"type": "basic",
-		"iconUrl": browser.extension.getURL("image/icon.svg"),
-		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationSaveOptionError") + "\n" + e
+		"iconUrl": chrome.extension.getURL("image/icon.svg"),
+		"title": chrome.i18n.getMessage("extensionName"),
+		"message": chrome.i18n.getMessage("notificationSaveOptionError") + "\n" + e
 	});
 	return noticer;
 }

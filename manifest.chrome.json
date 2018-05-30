@@ -4,30 +4,27 @@
    "name":"__MSG_extensionName__",
    "description":"__MSG_extensionDescription__",
    "version":"1.0.3",
-   "applications": {
-     "gecko": {
-       "id": "{31729e3f-c535-43f8-91a0-706f572fc1c6}",
-       "strict_min_version": "60.0"
-     }
-  },
    "icons": {
       "32": "image/icon.svg"
    },
    "background": {
       "scripts": [
+         "ponyfill.js",
          "config.js",
          "background.js"
       ]
    },
    "options_ui": {
       "page": "option.html",
-      "browser_style": true,
       "open_in_tab": true
    },
    "content_scripts": [
       {
          "matches": ["*://*/*"],
-         "js": ["content.js"],
+         "js": [
+            "ponyfill.js",
+            "content.js"
+         ],
          "run_at": "document_end"
       }
    ],
