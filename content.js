@@ -33,7 +33,7 @@ a:hover {\n\
 	let cy;
 	let linkNode;
 	let optionList = [];
-	let boxFlag = false;
+	let linkListFlag = false;
 	let promise = init();
 
 	function init(){
@@ -48,40 +48,66 @@ a:hover {\n\
 		linkNode.style.height = LINK_NODE_HEIGHT + "px";
 		linkNode.style.width = LINK_NODE_WIDTH + "px";
 		document.querySelector("body").appendChild(linkNode);
-		document.onmouseup = (e)=>{
-			if( e.button == "0" ) {
-				linkBehavior(e);
-			}
-		}
-		window.onresize = (e)=>{
-			closeLink();
-		}
-		document.onkeypress = (e)=>{
-			if( e.key == "Escape" || e.key == "Esc") {
-				closeLink();
-			}
-		}
-		document.addEventListener('mousemove', (e)=>{
-			py = e.pageY;
-			px = e.pageX;
-			cy = e.clientY;
-			cx = e.clientX;
-		})
 		browser.storage.onChanged.addListener( onStorageChanged );
 
 		return reload();
 	}
 
-	function closeLink(){
+	function addLinkListEvents(){
+		document.addEventListener("mouseup", mouseupBehavior);
+		window.addEventListener("resize", resizeBehavior);
+		document.addEventListener("keydown", keydownBehavior);
+		document.addEventListener("mousemove", mousemoveBehavior);
+		document.addEventListener("mousemove", mousemoveBehavior);
+		document.addEventListener("selectionchange", selectionChangeBehavior);
+	}
+
+	function removeLinkListEvents(){
+		document.removeEventListener("mouseup", mouseupBehavior);
+		window.removeEventListener("resize", resizeBehavior);
+		document.removeEventListener("keydown", keydownBehavior);
+		document.removeEventListener("mousemove", mousemoveBehavior);
+		document.removeEventListener("selectionchange", selectionChangeBehavior);
+	}
+
+	function mouseupBehavior(e){
+		if( e.button == "0" ) {
+			linkBehavior(e);
+		}
+	}
+
+	function resizeBehavior(e){
+		closeLinkList();
+	}
+
+	function keydownBehavior(e){
+		if( e.key == "Escape" || e.key == "Esc") {
+			closeLinkList();
+		}
+	}
+
+	function mousemoveBehavior(e){
+		py = e.pageY;
+		px = e.pageX;
+		cy = e.clientY;
+		cx = e.clientX;
+	}
+
+	function closeLinkList(){
 		linkNode.style.display = "none";
-		linkNode.srcdoc = "";
+	}
+
+	function selectionChangeBehavior(){
+		let selection = window.getSelection();
+		let select = selection.toString();
+		if( linkListFlag && select.length <= 0 ) closeLinkList();
 	}
 
 	function linkBehavior(){
-		let selection = window.getSelection();
-		let select = selection.toString();
-		if( boxFlag && select && select.length > 0 ) {
-			if( retrieveLink(select) ) {
+		if( linkListFlag ){
+			let selection = window.getSelection();
+			let select = selection.toString();
+			if( select.length > 0 && retrieveLink(select) ) {
 				let yy = window.innerHeight - SCROLL_BAR_WIDTH - ( cy + LINK_NODE_HEIGHT );
 				if ( 0 < yy || window.innerHeight < LINK_NODE_HEIGHT ) yy = 0;
 				let xx = window.innerWidth - SCROLL_BAR_WIDTH - ( cx + LINK_NODE_WIDTH );
@@ -89,18 +115,17 @@ a:hover {\n\
 				linkNode.style.top = ( py + yy + DIST )+"px";
 				linkNode.style.left = ( px + xx + DIST ) +"px";
 				linkNode.style.display = "block";
+				return;
 			}
 		}
-		else {
-			closeLink();
-		}
+		closeLinkList();
 	}
 
 	function onStorageChanged(change, area){
-		closeLink();
+		closeLinkList();
 		let data = {};
 		if( change["ol"] ) resetOptionList( change["ol"]["newValue"] );
-		if( change["bf"] ) resetBoxFlag( change["bf"]["newValue"] );
+		if( change["bf"] ) resetLinkListFlag( change["bf"]["newValue"] );
 	}
 
 	function reload(){
@@ -114,11 +139,13 @@ a:hover {\n\
 
 	function resetVer( res ){
 		resetOptionList( res["ol"] );
-		resetBoxFlag( res["bf"] );
+		resetLinkListFlag( res["bf"] );
 	}
 
-	function resetBoxFlag(res){
-		boxFlag = res;
+	function resetLinkListFlag(res){
+		linkListFlag = res;
+		removeLinkListEvents();
+		if(linkListFlag) addLinkListEvents();
 	}
 
 	function resetOptionList(res){
