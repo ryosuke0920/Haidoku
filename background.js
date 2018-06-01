@@ -31,6 +31,7 @@ function initContextMenu(){
 function initListener(){
 	browser.storage.onChanged.addListener( resetMenuFromStorage );
 	browser.contextMenus.onClicked.addListener( contextMenuBehavior );
+	browser.runtime.onMessage.addListener(notify);
 }
 
 function contextMenuBehavior(info, tab){
@@ -69,6 +70,15 @@ function saveInit(){
 		"bf": true
 	});
 	return setter;
+}
+
+function notify(message){
+	if( message.method == "saveLinkListSize"){
+		let data = message.data;
+		data["m"] = makeMetadata();
+		let setter = browser.storage.sync.set(data);
+		return setter.catch(onSaveError);
+	}
 }
 
 function saveOption( optionList, windowId="" ){
