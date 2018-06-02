@@ -184,16 +184,13 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function resizeWatcher(){
-		let height = linkListNode.clientHeight - ( 2 * LINK_NODE_PADDING );
-		let width = linkListNode.clientWidth - ( 2 * LINK_NODE_PADDING );
+		let height = linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
 		if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
+		let width = linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
 		if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
-		if ( linkListNodeHeight != height  ){
+		if ( linkListNodeHeight != height || linkListNodeWidth != width ){
 			resizeWatcherFlag = true;
 			linkListNodeHeight = height;
-		}
-		if ( linkListNodeWidth != width ){
-			resizeWatcherFlag = true;
 			linkListNodeWidth = width;
 		}
 	}
@@ -250,6 +247,8 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		linkListNodeLeft = px + xx + SPACE;
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
+		linkListNode.scrollTop = 0;
+		linkListNode.scrollLeft = 0;
 		isLinkListShown = true;
 	}
 
