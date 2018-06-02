@@ -6,6 +6,53 @@
 	const LINK_NODE_PADDING = 3;
 	const SPACE = 5;
 	const SCROLL_BAR_WIDTH = 17;
+	const ANCHOR_DEFAULT_SIZE = 0.8;
+	const ANCHOR_MAX_SIZE = 2;
+	const ANCHOR_RESIO = 0.1;
+	const STYLE = "\n\
+.lessLaborGoToDictionary-common { \n\
+	all: initial; \n\
+	font-family: sans-serif; \n\
+	user-select: none; \n\
+	-moz-user-select: none; \n\
+} \n\
+div.lessLaborGoToDictionary-viewer { \n\
+	display: none; \n\
+	position: absolute; \n\
+	z-index: 2147483646; \n\
+	background-color: white; \n\
+	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px; \n\
+	overflow: scroll; \n\
+	resize: both; \n\
+} \n\
+a.lessLaborGoToDictionary-anchor { \n\
+	color: rgb(0, 0, 238); \n\
+	cursor: pointer; \n\
+	white-space: nowrap; \n\
+} \n\
+a.lessLaborGoToDictionary-anchor:visited { \n\
+	color: #551a8b; \n\
+} \n\
+a.lessLaborGoToDictionary-anchor:hover { \n\
+	text-decoration: underline; \n\
+} \n\
+a.lessLaborGoToDictionary-anchor:active { \n\
+	color: #ee0000; \n\
+} \n\
+nav.lessLaborGoToDictionary-menu { \n\
+	display: block; \n\
+	height: 22px; \n\
+	width: 100%; \n\
+	line-height: 0; \n\
+} \n\
+img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
+	height: 16px; \n\
+	width: 16px; \n\
+	cursor: pointer; \n\
+	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px; \n\
+	margin-right: 4px; \n\
+} \n\
+";
 	let px;
 	let py;
 	let cx;
@@ -21,46 +68,40 @@
 	let selectStartFlag = false;
 	let selectedText = "";
 	let resizeWatcherFlag = false;
+	let anchorSize = ANCHOR_DEFAULT_SIZE;
+	let menuNode;
 
 	let promise = init();
+	promise.catch(onError);
 
 	function init(){
+		let style = document.createElement("style");
+		style.innerText = STYLE;
+		document.querySelector("head").appendChild(style);
 		linkListNode = document.createElement("div");
-		linkListNode.style.all = "initial";
-		linkListNode.style.margin = "0";
+		linkListNode.classList.add("lessLaborGoToDictionary-common");
+		linkListNode.classList.add("lessLaborGoToDictionary-viewer");
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
-		linkListNode.style.display = "none";
-		linkListNode.style.position = "absolute";
-		linkListNode.style["z-index"] = "2147483646";
-		linkListNode.style["background-color"] = "white";
-		linkListNode.style["box-shadow"] = "rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px";
-		linkListNode.style["overflow"] = "auto";
-		linkListNode.style["resize"] = "both";
 		document.querySelector("body").appendChild( linkListNode );
 		browser.storage.onChanged.addListener( onStorageChanged );
-		let style = document.createElement("style");
-		style.innerText = "\n\
-a.lessLaborGoToDictionary-anchor { \n\
-	all: initial; \n\
-	font-family: sans-serif; \n\
-	font-size: 13px; \n\
-	color: rgb(0, 0, 238); \n\
-	cursor: pointer; \n\
-	white-space: nowrap; \n\
-} \n\
-a.lessLaborGoToDictionary-anchor:visited { \n\
-	color: #551a8b; \n\
-} \n\
-a.lessLaborGoToDictionary-anchor:hover { \n\
-	text-decoration: underline; \n\
-} \n\
-a.lessLaborGoToDictionary-anchor:active { \n\
-	color: #ee0000; \n\
-}";
-		document.querySelector("head").appendChild(style);
-
+		menuNode = document.createElement("nav");
+		menuNode.classList.add("lessLaborGoToDictionary-common");
+		menuNode.classList.add("lessLaborGoToDictionary-menu");
+		linkListNode.appendChild(menuNode);
+		let zoomDownNode = document.createElement("img");
+		zoomDownNode.src = browser.extension.getURL("image/minus.svg");
+		zoomDownNode.classList.add("lessLaborGoToDictionary-common");
+		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
+		zoomDownNode.title = browser.i18n.getMessage("htmlZoomDown");
+		menuNode.appendChild(zoomDownNode);
+		let zoomUpNode = document.createElement("img");
+		zoomUpNode.src = browser.extension.getURL("image/plus.svg");
+		zoomUpNode.classList.add("lessLaborGoToDictionary-common");
+		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
+		zoomUpNode.title = browser.i18n.getMessage("htmlZoomUp");
+		menuNode.appendChild(zoomUpNode);
 		return reload();
 	}
 
@@ -71,6 +112,7 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 		window.addEventListener("resize", resizeBehavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
+		menuNode.addEventListener("click", menuClickBihavior);
 	}
 
 	function removeLinkListEvents(){
@@ -80,6 +122,7 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 		window.removeEventListener("resize", resizeBehavior);
 		document.removeEventListener("keydown", keydownBehavior);
 		document.removeEventListener("mousemove", mousemoveBehavior);
+		menuNode.removeEventListener("click", menuClickBihavior);
 	}
 
 	function selectStartBehavior(e) {
@@ -95,8 +138,11 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 	}
 
 	function mouseupBehavior(e){
+		let promise;
 		if ( resizeWatcherFlag ) {
-			saveLinkListSize();
+			resizeWatcherFlag = false;
+			promise = saveLinkListSize();
+			promise.catch(onError);
 		}
 		if( selectedText.length <= 0 && !isLinkListNodeUnderMouse(py,px) ){
 			closeLinkList();
@@ -106,7 +152,6 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 			selectStartFlag = false;
 			makeLinkList();
 			showLinkList();
-			return ;
 		}
 	}
 
@@ -124,15 +169,8 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 	}
 
 	function isLinkListNodeUnderMouse(yy,xx){
-		/*
-		console.log("isLinkListNodeUnderMouse");
-		console.log(e.pageY+":"+e.pageX);
-		console.log(linkListNodeTop+":"+linkListNodeLeft);
-		console.log(linkListNode.clientHeight+":"+linkListNode.clientWidth);
-		*/
 		if( linkListNodeTop <= yy && yy < ( linkListNodeTop + linkListNode.clientHeight )
 		&& linkListNodeLeft <= xx && xx < ( linkListNodeLeft + linkListNode.clientWidth ) ){
-			console.log("hit");
 			return true;
 		}
 		return false;
@@ -161,7 +199,6 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 	}
 
 	function saveLinkListSize(){
-		resizeWatcherFlag = false;
 		let res = browser.runtime.sendMessage({
 			"method": "saveLinkListSize",
 			"data": {
@@ -169,7 +206,7 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 				"lw": linkListNodeWidth
 			}
 		});
-		res.catch((e)=>{console.log(e)});
+		return res;
 	}
 
 	function closeLinkList(){
@@ -178,19 +215,25 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 	}
 
 	function makeLinkList(){
-		while(linkListNode.firstChild) linkListNode.removeChild(linkListNode.firstChild);
+		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor,br.lessLaborGoToDictionary-braek");
+		for(let node of list){
+			linkListNode.removeChild(node);
+		}
 		for(let item of optionList){
 			if ( !item["c"] ) continue;
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(selectedText) );
 			let a = document.createElement("a");
+			a.classList.add("lessLaborGoToDictionary-common");
 			a.classList.add("lessLaborGoToDictionary-anchor");
+			a.style["font-size"] = anchorSize + "em";
 			a.setAttribute( "href", url );
 			a.setAttribute( "target", "_blank" );
 			a.innerText = item["l"];
 			linkListNode.appendChild(a);
 			let br = document.createElement("br");
-			br.style.all = "initial";
+			br.classList.add("lessLaborGoToDictionary-common");
+			br.classList.add("lessLaborGoToDictionary-braek");
 			linkListNode.appendChild(br);
 		}
 	}
@@ -215,6 +258,10 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 			setLinkListSize( change["lh"]["newValue"], change["lw"]["newValue"] );
 			return ;
 		}
+		if( change["as"] ){
+			setAnchorSize( change["as"]["newValue"] );
+			return ;
+		}
 		closeLinkList();
 		if( change["ol"] ) setOptionList( change["ol"]["newValue"] );
 		if( change["bf"] ) setLinkListFlag( change["bf"]["newValue"] );
@@ -231,17 +278,22 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 			"ol": [],
 			"bf": false,
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
-			"lw": LINK_NODE_DEFAULT_WIDTH
+			"lw": LINK_NODE_DEFAULT_WIDTH,
+			"as": ANCHOR_DEFAULT_SIZE
 		});
-
 		return getter.then(setVer);
 	}
 
 	function setVer( res ){
+		setAnchorSize( res["as"] );
 		setLinkListSize( res["lh"], res["lw"] );
 		setOptionList( res["ol"] );
 		setLinkListFlag( res["bf"] );
 		resetLinkListEvents();
+	}
+
+	function setAnchorSize(res){
+		anchorSize = res;
 	}
 
 	function setLinkListFlag(res){
@@ -256,14 +308,56 @@ a.lessLaborGoToDictionary-anchor:active { \n\
 	function setOptionList(res){
 		optionList = [];
 		for( let data of res ){
-			if ( data["c"] ) { /* checked == true */
-				optionList.push(data);
-			}
+			/* checked == true */
+			if ( data["c"] ) optionList.push(data);
 		}
 	}
 
 	function hasLinkList(){
 		if( optionList.length > 0 ) return true;
 		return false;
+	}
+
+	function menuClickBihavior(e){
+		let promise;
+		if(e.target.classList.contains("lessLaborGoToDictionary-zoomUp")){
+			if( zoomLinkList(1) ){
+				promise = saveAnchorSize();
+				promise.catch(onError);
+			}
+		}
+		else if(e.target.classList.contains("lessLaborGoToDictionary-zoomDown")){
+			if( zoomLinkList(-1) ){
+				promise = saveAnchorSize();
+				promise.catch(onError);
+			}
+		}
+	}
+
+	function zoomLinkList(direction=1){
+		if ( direction < 0 && anchorSize <= ANCHOR_RESIO ) return false;
+		if ( 0 < direction && ANCHOR_MAX_SIZE <= anchorSize ) return false;
+		anchorSize += direction * ANCHOR_RESIO;
+		anchorSize += 0.01;
+		anchorSize *= 10 ;
+		anchorSize = Math.floor(anchorSize);
+		anchorSize /= 10 ;
+		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor");
+		for(let node of list)　node.style["font-size"] = anchorSize + "em";
+		return true;
+	}
+
+	function saveAnchorSize(){
+		let res = browser.runtime.sendMessage({
+			"method": "saveAnchorSize",
+			"data": {
+				"as": anchorSize
+			}
+		});
+		return res;
+	}
+
+	function onError(e){
+		console.error(e);
 	}
 })();

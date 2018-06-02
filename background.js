@@ -73,12 +73,10 @@ function saveInit(){
 }
 
 function notify(message){
-	if( message.method == "saveLinkListSize"){
-		let data = message.data;
-		data["m"] = makeMetadata();
-		let setter = browser.storage.sync.set(data);
-		return setter.catch(onSaveError);
-	}
+	let data = message.data;
+	data["m"] = makeMetadata();
+	let setter = browser.storage.sync.set(data);
+	return setter.catch(onSaveError);
 }
 
 function saveOption( optionList, windowId="" ){

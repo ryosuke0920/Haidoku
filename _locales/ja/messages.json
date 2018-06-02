@@ -27,6 +27,14 @@
       "message": "新しい画面を開けませんでした。",
       "description": "open window error notification."
    },
+   "htmlZoomDown": {
+      "message": "縮小",
+      "description": ""
+   },
+   "htmlZoomUp": {
+      "message": "拡大",
+      "description": ""
+   },
    "htmlFormName": {
       "message": "設定",
       "description": "Name of the form on the side menu."

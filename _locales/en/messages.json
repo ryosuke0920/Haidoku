@@ -27,6 +27,14 @@
       "message": "failed to open new window.",
       "description": "open window error notification."
    },
+   "htmlZoomDown": {
+      "message": "zoom down",
+      "description": ""
+   },
+   "htmlZoomUp": {
+      "message": "zoom up",
+      "description": ""
+   },
    "htmlFormName": {
       "message": "Configuration",
       "description": "Name of the form on the side menu"
