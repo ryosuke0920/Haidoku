@@ -54,10 +54,6 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	margin-right: 4px; \n\
 } \n\
 ";
-	let px;
-	let py;
-	let cx;
-	let cy;
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -72,6 +68,7 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	let resizeWatcherFlag = false;
 	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let menuNode;
+	let mousedownFlag = false;
 
 	let promise = init();
 	promise.catch(onError);
@@ -110,52 +107,70 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	function addCommonLinkListEvents(){
 		window.addEventListener("resize", resizeBehavior);
 		menuNode.addEventListener("click", menuClickBihavior);
-		document.addEventListener("mouseup", mouseupCommonBehavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
+		document.addEventListener("mouseup", mouseupCommonBehavior);
 	}
 
 	function addAutoLinkListEvents(){
-		document.addEventListener("selectstart", selectStartBehavior);
-		document.addEventListener("selectionchange", selectionChangeBehavior);
+		document.addEventListener("selectionchange", selectionChangeAutoBehavior);
+		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		document.addEventListener("mouseup", mouseupAutoBehavior);
+		document.addEventListener("mousedown", mousedownAutoBehavior);
 	}
 
 	function removeAutoLinkListEvents(){
-		document.removeEventListener("selectstart", selectStartBehavior);
-		document.removeEventListener("selectionchange", selectionChangeBehavior);
+		document.removeEventListener("selectionchange", selectionChangeAutoBehavior);
+		document.addEventListener("selectionchange", manualSelectionChangeBehavior);
 		document.removeEventListener("mouseup", mouseupAutoBehavior);
+		document.removeEventListener("mousedown", mousedownAutoBehavior);
 	}
 
-	function selectStartBehavior(e) {
-		selectStartFlag = true;
+	function manualSelectionChangeBehavior(e){
+		closeLinkList();
 	}
 
-	function selectionChangeBehavior(e){
+	function selectionChangeAutoBehavior(e){
+		if(mousedownFlag) return;
 		let selection = window.getSelection();
-		selectedText = selection.toString();
-		if( selectedText.length <= 0 && !isLinkListNodeUnderMouse(py,px) ){
+		if( selection.isCollapsed ){
+			closeLinkList();
+		}
+		else {
+			makeLinkList(selection.toString());
+			let lastRange = selection.getRangeAt(selection.rangeCount-1);
+			let rectList = lastRange.getClientRects();
+			let rect = rectList[rectList.length-1];
+			showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right);
+		}
+	}
+
+	function mousedownAutoBehavior(e){
+		mousedownFlag = true;
+		if( e.button != 0 ) return;
+		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ){
 			closeLinkList();
 		}
 	}
 
-	function mouseupAutoBehavior(e){
+	function mouseupCommonBehavior(e){
 		let promise;
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
 			promise = saveLinkListSize();
 			promise.catch(onError);
 		}
-		if( selectStartFlag ){
-			selectStartFlag = false;
-			makeLinkList(selectedText);
-			showLinkList(py,px,cy,cx);
-		}
 	}
 
-	function mouseupCommonBehavior(e){
-		if( selectedText.length <= 0 && !isLinkListNodeUnderMouse(py,px) ){
-			closeLinkList();
+	function mouseupAutoBehavior(e){
+		mousedownFlag = false;
+		if( e.button != 0 ) return;
+		if( !isLinkListNodeUnderMouse(e.pageY,e.pageX) ){
+			let selection = window.getSelection();
+			if( !selection.isCollapsed ){
+				makeLinkList(selection.toString());
+				showLinkList(e.pageY, e.pageX, e.clientY, e.clientX);
+			}
 		}
 	}
 
@@ -167,49 +182,37 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		if( e.key == "Escape" || e.key == "Esc"){
 			closeLinkList();
 		}
-		else if( shiftKeyFlag && e.shiftKey ){
-			pushLinkList();
-		}
-		else if( ctrlKeyFlag && e.ctrlKey ){
-			pushLinkList();
+		else if((shiftKeyFlag && e.key == "Shift")||(ctrlKeyFlag && e.key == "Control")){
+			switchLinkList();
 		}
 	}
 
-	function pushLinkList(){
+	function switchLinkList(){
 		if(isLinkListShown()){
 			closeLinkList();
 		}
 		else {
 			let selection = window.getSelection();
-			selectedText = selection.toString();
-			if( 0 <  selectedText.length ){
+			if( !selection.isCollapsed ){
 				let lastRange = selection.getRangeAt(selection.rangeCount-1);
 				let rectList = lastRange.getClientRects();
 				let rect = rectList[rectList.length-1];
-				makeLinkList(selectedText);
-				showLinkList(rect.bottom+window.scrollY,rect.right-window.scrollX,rect.bottom,rect.right);
+				makeLinkList(selection.toString());
+				showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right);
 			}
 		}
 	}
 
 	function mousemoveBehavior(e){
-		updatePoints(e);
 		if ( isLinkListShown() ) resizeWatcher();
 	}
 
 	function isLinkListNodeUnderMouse(yy,xx){
-		if( linkListNodeTop <= yy && yy < ( linkListNodeTop + linkListNode.clientHeight )
-		&& linkListNodeLeft <= xx && xx < ( linkListNodeLeft + linkListNode.clientWidth ) ){
+		if( linkListNodeTop <= yy && yy < ( linkListNodeTop + linkListNode.offsetHeight )
+		&& linkListNodeLeft <= xx && xx < ( linkListNodeLeft + linkListNode.offsetWidth ) ){
 			return true;
 		}
 		return false;
-	}
-
-	function updatePoints(e){
-		py = e.pageY;
-		px = e.pageX;
-		cy = e.clientY;
-		cx = e.clientX;
 	}
 
 	function resizeWatcher(){
@@ -225,13 +228,12 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function saveLinkListSize(){
-		let data = {
-			"lh": linkListNodeHeight,
-			"lw": linkListNodeWidth
-		};
 		let res = browser.runtime.sendMessage({
 			"method": "saveLinkListSize",
-			"data": data
+			"data": {
+				"lh": linkListNodeHeight,
+				"lw": linkListNodeWidth
+			}
 		});
 		return res;
 	}
