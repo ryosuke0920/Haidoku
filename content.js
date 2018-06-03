@@ -44,6 +44,7 @@ nav.lessLaborGoToDictionary-menu { \n\
 	height: 22px; \n\
 	width: 100%; \n\
 	line-height: 0; \n\
+	white-space: nowrap; \n\
 } \n\
 img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	height: 16px; \n\
@@ -64,7 +65,8 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
 	let optionList = [];
 	let linkListFlag = false;
-	let isLinkListShown = false;
+	let shiftKeyFlag = false;
+	let ctrlKeyFlag = false;
 	let selectStartFlag = false;
 	let selectedText = "";
 	let resizeWatcherFlag = false;
@@ -105,24 +107,24 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		return reload();
 	}
 
-	function addLinkListEvents(){
-		document.addEventListener("selectstart", selectStartBehavior);
-		document.addEventListener("selectionchange", selectionChangeBehavior);
-		document.addEventListener("mouseup", mouseupBehavior);
+	function addCommonLinkListEvents(){
 		window.addEventListener("resize", resizeBehavior);
+		menuNode.addEventListener("click", menuClickBihavior);
+		document.addEventListener("mouseup", mouseupCommonBehavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
-		menuNode.addEventListener("click", menuClickBihavior);
 	}
 
-	function removeLinkListEvents(){
+	function addAutoLinkListEvents(){
+		document.addEventListener("selectstart", selectStartBehavior);
+		document.addEventListener("selectionchange", selectionChangeBehavior);
+		document.addEventListener("mouseup", mouseupAutoBehavior);
+	}
+
+	function removeAutoLinkListEvents(){
 		document.removeEventListener("selectstart", selectStartBehavior);
 		document.removeEventListener("selectionchange", selectionChangeBehavior);
-		document.removeEventListener("mouseup", mouseupBehavior);
-		window.removeEventListener("resize", resizeBehavior);
-		document.removeEventListener("keydown", keydownBehavior);
-		document.removeEventListener("mousemove", mousemoveBehavior);
-		menuNode.removeEventListener("click", menuClickBihavior);
+		document.removeEventListener("mouseup", mouseupAutoBehavior);
 	}
 
 	function selectStartBehavior(e) {
@@ -137,21 +139,23 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		}
 	}
 
-	function mouseupBehavior(e){
+	function mouseupAutoBehavior(e){
 		let promise;
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
 			promise = saveLinkListSize();
 			promise.catch(onError);
 		}
-		if( selectedText.length <= 0 && !isLinkListNodeUnderMouse(py,px) ){
-			closeLinkList();
-			return ;
-		}
 		if( selectStartFlag ){
 			selectStartFlag = false;
-			makeLinkList();
-			showLinkList();
+			makeLinkList(selectedText);
+			showLinkList(py,px,cy,cx);
+		}
+	}
+
+	function mouseupCommonBehavior(e){
+		if( selectedText.length <= 0 && !isLinkListNodeUnderMouse(py,px) ){
+			closeLinkList();
 		}
 	}
 
@@ -160,12 +164,37 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function keydownBehavior(e){
-		if( e.key == "Escape" || e.key == "Esc") closeLinkList();
+		if( e.key == "Escape" || e.key == "Esc"){
+			closeLinkList();
+		}
+		else if( shiftKeyFlag && e.shiftKey ){
+			pushLinkList();
+		}
+		else if( ctrlKeyFlag && e.ctrlKey ){
+			pushLinkList();
+		}
+	}
+
+	function pushLinkList(){
+		if(isLinkListShown()){
+			closeLinkList();
+		}
+		else {
+			let selection = window.getSelection();
+			selectedText = selection.toString();
+			if( 0 <  selectedText.length ){
+				let lastRange = selection.getRangeAt(selection.rangeCount-1);
+				let rectList = lastRange.getClientRects();
+				let rect = rectList[rectList.length-1];
+				makeLinkList(selectedText);
+				showLinkList(rect.bottom+window.scrollY,rect.right-window.scrollX,rect.bottom,rect.right);
+			}
+		}
 	}
 
 	function mousemoveBehavior(e){
 		updatePoints(e);
-		if ( isLinkListShown ) resizeWatcher();
+		if ( isLinkListShown() ) resizeWatcher();
 	}
 
 	function isLinkListNodeUnderMouse(yy,xx){
@@ -196,22 +225,22 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function saveLinkListSize(){
+		let data = {
+			"lh": linkListNodeHeight,
+			"lw": linkListNodeWidth
+		};
 		let res = browser.runtime.sendMessage({
 			"method": "saveLinkListSize",
-			"data": {
-				"lh": linkListNodeHeight,
-				"lw": linkListNodeWidth
-			}
+			"data": data
 		});
 		return res;
 	}
 
 	function closeLinkList(){
 		linkListNode.style.display = "none";
-		isLinkListShown = false;
 	}
 
-	function makeLinkList(){
+	function makeLinkList(text){
 		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor,br.lessLaborGoToDictionary-braek");
 		for(let node of list){
 			linkListNode.removeChild(node);
@@ -219,7 +248,7 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		for(let item of optionList){
 			if ( !item["c"] ) continue;
 			let url = item["u"];
-			url = url.replace( "$1", encodeURIComponent(selectedText) );
+			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
 			a.classList.add("lessLaborGoToDictionary-common");
 			a.classList.add("lessLaborGoToDictionary-anchor");
@@ -235,21 +264,24 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		}
 	}
 
-	function showLinkList(){
+	function showLinkList(pageY, pageX, clientY, clientX){
 		linkListNode.style.display = "block"; /* if none, clientHeight and clientWidth return undefined. */
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
-		let yy = window.innerHeight - cy - linkListNode.clientHeight - SCROLL_BAR_WIDTH;
-		if ( 0 < yy || window.innerHeight < linkListNode.clientHeight ) yy = 0;
-		let xx = window.innerWidth - cx - linkListNode.clientWidth - SCROLL_BAR_WIDTH;
-		if ( 0 < xx || window.innerWidth < linkListNode.clientWidth ) xx = 0;
-		linkListNodeTop = py + yy + SPACE;
-		linkListNodeLeft = px + xx + SPACE;
+		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
+		if ( 0 < yy || window.innerHeight < linkListNode.offsetHeight ) yy = 0;
+		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH;
+		if ( 0 < xx || window.innerWidth < linkListNode.offsetWidth ) xx = 0;
+		linkListNodeTop = pageY + yy + SPACE;
+		linkListNodeLeft = pageX + xx + SPACE;
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
 		linkListNode.scrollTop = 0;
 		linkListNode.scrollLeft = 0;
-		isLinkListShown = true;
+	}
+
+	function isLinkListShown(){
+		return linkListNode.style.display == "block";
 	}
 
 	function onStorageChanged(change, area){
@@ -259,6 +291,14 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		}
 		if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
+			return ;
+		}
+		if( change["ck"] ){
+			setCtrlKeyFlag( change["ck"]["newValue"] );
+			return ;
+		}
+		if( change["sk"] ){
+			setShiftKeyFlag( change["sk"]["newValue"] );
 			return ;
 		}
 		closeLinkList();
@@ -275,7 +315,9 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	function reload(){
 		let getter = browser.storage.sync.get({
 			"ol": [],
-			"bf": false,
+			"bf": true,
+			"sk": false,
+			"ck": false,
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE
@@ -288,6 +330,8 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		setLinkListSize( res["lh"], res["lw"] );
 		setOptionList( res["ol"] );
 		setLinkListFlag( res["bf"] );
+		setCtrlKeyFlag( res["ck"] );
+		setShiftKeyFlag( res["sk"] );
 		resetLinkListEvents();
 	}
 
@@ -299,9 +343,18 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		linkListFlag = res;
 	}
 
+	function setShiftKeyFlag(res){
+		shiftKeyFlag = res;
+	}
+
+	function setCtrlKeyFlag(res){
+		ctrlKeyFlag = res;
+	}
+
 	function resetLinkListEvents(){
-		removeLinkListEvents();
-		if( linkListFlag && hasLinkList() ) addLinkListEvents();
+		removeAutoLinkListEvents();
+		if( linkListFlag && hasLinkList() ) addAutoLinkListEvents();
+		addCommonLinkListEvents();
 	}
 
 	function setOptionList(res){
