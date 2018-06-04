@@ -12,11 +12,11 @@
       "description": "Name of the extension option."
    },
    "extensionOptionAutoView": {
-      "message": "auto link list view",
+      "message": "automatically display link list",
       "description": "Name of link list option."
    },
    "extensionOptionManualView": {
-      "message": "manual link list view",
+      "message": "manually display link list",
       "description": "Name of link list option."
    },
    "extensionOptionManualViewByShiftKey": {
