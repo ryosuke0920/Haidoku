@@ -5,55 +5,10 @@
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
 	const SPACE = 5;
-	const SCROLL_BAR_WIDTH = 17;
+	const SCROLL_BAR_WIDTH = 20;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
 	const ANCHOR_RESIO = 0.1;
-	const STYLE = "\n\
-.lessLaborGoToDictionary-common { \n\
-	all: initial; \n\
-	font-family: sans-serif; \n\
-	user-select: none; \n\
-	-moz-user-select: none; \n\
-} \n\
-div.lessLaborGoToDictionary-viewer { \n\
-	display: none; \n\
-	position: absolute; \n\
-	z-index: 2147483646; \n\
-	background-color: white; \n\
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px; \n\
-	overflow: scroll; \n\
-	resize: both; \n\
-} \n\
-a.lessLaborGoToDictionary-anchor { \n\
-	color: rgb(0, 0, 238); \n\
-	cursor: pointer; \n\
-	white-space: nowrap; \n\
-} \n\
-a.lessLaborGoToDictionary-anchor:visited { \n\
-	color: #551a8b; \n\
-} \n\
-a.lessLaborGoToDictionary-anchor:hover { \n\
-	text-decoration: underline; \n\
-} \n\
-a.lessLaborGoToDictionary-anchor:active { \n\
-	color: #ee0000; \n\
-} \n\
-nav.lessLaborGoToDictionary-menu { \n\
-	display: block; \n\
-	height: 22px; \n\
-	width: 100%; \n\
-	line-height: 0; \n\
-	white-space: nowrap; \n\
-} \n\
-img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
-	height: 16px; \n\
-	width: 16px; \n\
-	cursor: pointer; \n\
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px; \n\
-	margin-right: 4px; \n\
-} \n\
-";
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -68,17 +23,19 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	let menuNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
-
 	let promise = init();
 	promise.catch(onError);
 
 	function init(){
-		let style = document.createElement("style");
-		style.innerText = STYLE;
-		document.querySelector("head").appendChild(style);
+		let link = document.createElement("link");
+		link.setAttribute("rel", "stylesheet");
+		link.setAttribute("type", "text/css");
+		link.setAttribute("href", browser.extension.getURL("content.css"));
+		document.querySelector("head").appendChild(link);
 		linkListNode = document.createElement("div");
 		linkListNode.classList.add("lessLaborGoToDictionary-common");
 		linkListNode.classList.add("lessLaborGoToDictionary-viewer");
+		linkListNode.classList.add("lessLaborGoToDictionary-hide");
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
@@ -109,6 +66,7 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
+		document.addEventListener("mousedown", mousedownCommonBehavior);
 	}
 
 	function addAutoLinkListEvents(){
@@ -145,8 +103,11 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 		}
 	}
 
-	function mousedownAutoBehavior(e){
+	function mousedownCommonBehavior(e){
 		mousedownFlag = true;
+	}
+
+	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
 		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ){
 			closeLinkList();
@@ -154,6 +115,7 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function mouseupCommonBehavior(e){
+		mousedownFlag = false;
 		let promise;
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
@@ -163,7 +125,6 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function mouseupAutoBehavior(e){
-		mousedownFlag = false;
 		if( e.button != 0 ) return;
 		if( selectionChangedFlag && !isLinkListNodeUnderMouse(e.pageY,e.pageX) ){
 			let selectioin = window.getSelection();
@@ -205,7 +166,7 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function mousemoveBehavior(e){
-		if ( isLinkListShown() ) resizeWatcher();
+		if ( isLinkListShown() && mousedownFlag ) resizeWatcher();
 	}
 
 	function isLinkListNodeUnderMouse(yy,xx){
@@ -240,7 +201,7 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function closeLinkList(){
-		linkListNode.style.display = "none";
+		linkListNode.classList.add("lessLaborGoToDictionary-hide");
 	}
 
 	function makeLinkList(text){
@@ -268,7 +229,8 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function showLinkList(pageY, pageX, clientY, clientX){
-		linkListNode.style.display = "block"; /* if none, clientHeight and clientWidth return undefined. */
+		/* when display equals none, offsetHeight and offsetWidth return undefined. */
+		linkListNode.classList.remove("lessLaborGoToDictionary-hide");
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
 		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
@@ -284,7 +246,7 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function isLinkListShown(){
-		return linkListNode.style.display == "block";
+		return !linkListNode.classList.contains("lessLaborGoToDictionary-hide");
 	}
 
 	function onStorageChanged(change, area){
