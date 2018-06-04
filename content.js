@@ -5,7 +5,7 @@
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
 	const SPACE = 5;
-	const SCROLL_BAR_WIDTH = 20;
+	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
 	const ANCHOR_RESIO = 0.1;

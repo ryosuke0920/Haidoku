@@ -1,10 +1,20 @@
 # 手間なし辞書検索
-これはFirefoxのアドオンです。ウェブサイト上で文字を選択すると辞書サイト等へのリンク一覧が表示されます。このアドオンを利用すれば、文字をコピーしてから辞書サイト等を開いて検索する、この一連の手間を省くことができます。右クリック（コンテキストメニュ）にもリンク一覧が表示されます。その他にリンク一覧の表示非表示、リンクの追加や削除などの設定ができます。予めいくつかの辞書サイトのURLを用意してあるので、URLの知識がなくても利用できます。URLを手動で追加することもできます。
+ウェブサイト上で文字を選択すると辞書サイト等へのリンクの一覧（以下、リンクリスト）が表示されます。  
+文字をコピー、辞書サイトを開く、コピーした文字を貼り付ける、これら一連の手間を省くことができます。  
+文字選択を解除するか、エスケープ（Esc）キーを押すとリンクリストが非表示されます。  
+* コンテキストメニュー（右クリック）
+   * コンテキストメニューにもリンクリストが表示されます。
+   * 自動表示と手動表示が可能です。
+   * 手動表示はシフト（Shift）キーまたはコントロール（Ctrl）キーを選択できます。
+   * 設定画面を開けます。
+* 設定画面
+   * リンクリストの追加、並び順変更、名称変更、削除ができます。
+   * 予めいくつか辞書サイトのURLを用意してあるので、URLの知識がなくても問題ありません。
+   * URLを手動で追加することもできます。
 
-# ウェブサイト一覧
-現在用意しているウェブサイト(URL)の一覧です。
-
-## English
+## ウェブサイト一覧
+現在、用意しているウェブサイト(URL)の一覧です。
+### 英語
 * Wikipedia (www.wikipedia.org)
 * Google (google.com)
 * Google Images
@@ -21,7 +31,7 @@
 * Merriam-Webster
 * YourDictionary.com
 
-## Japanese
+### 日本語
 * Bing
 * DuckDuckGo
 * Wikipedia (ja.wikipedia.org)
@@ -46,10 +56,10 @@
 * goo 日中辞書
 * 英辞郎 on the WEB
 
-# Build and Run
-These codes were written just pure JavaScript which doesn't relate any other library.
+## Build and Run
+純粋なjavascriptだけで書かれており、他のライブラリは使用していません。
 
     $ web-ext build
     $ web-ext run
-# License
+## License
 This software is released under the MIT License, see LICENSE.md.
