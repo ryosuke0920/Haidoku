@@ -7,13 +7,25 @@
       "message": "文字を選択すると辞書サイトへのリンク一覧が表示されます。右クリックからも移動でき、リンク一覧の表示設定、設定画面の表示ができます。",
       "description": "Description of the extension."
    },
-   "extensionOptionBox": {
-      "message": "リンクリスト表示",
-      "description": "Name of link list option."
-   },
    "extensionOptionName": {
       "message": "手間なし辞書検索 設定",
       "description": "Name of the extension option."
+   },
+   "extensionOptionAutoView": {
+      "message": "自動リンクリスト表示",
+      "description": "Name of link list option."
+   },
+   "extensionOptionManualView": {
+      "message": "手動リンクリスト表示",
+      "description": "Name of link list option."
+   },
+   "extensionOptionManualViewByShiftKey": {
+      "message": "shiftボタンで表示",
+      "description": "Name of link list option."
+   },
+   "extensionOptionManualViewByCtrlKey": {
+      "message": "ctrlボタンで表示",
+      "description": "Name of link list option."
    },
    "notificationReadOptionError": {
       "message": "設定の読み込みに失敗しました。",
@@ -26,6 +38,14 @@
    "notificationOpenWindowError": {
       "message": "新しい画面を開けませんでした。",
       "description": "open window error notification."
+   },
+   "htmlZoomDown": {
+      "message": "縮小",
+      "description": ""
+   },
+   "htmlZoomUp": {
+      "message": "拡大",
+      "description": ""
    },
    "htmlFormName": {
       "message": "設定",

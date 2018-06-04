@@ -7,13 +7,25 @@
       "message": "If you select a text in the site, link list you made will be displayed. If you fire right click, You can go to the site too, setting link list view or not, and configuration which sites you need to.",
       "description": "Description of the extension."
    },
-   "extensionOptionBox": {
-      "message": "link list viewer",
-      "description": "Name of link list option."
-   },
    "extensionOptionName": {
       "message": "LessLaborGoToDictionary Options",
       "description": "Name of the extension option."
+   },
+   "extensionOptionAutoView": {
+      "message": "automatically display link list",
+      "description": "Name of link list option."
+   },
+   "extensionOptionManualView": {
+      "message": "manually display link list",
+      "description": "Name of link list option."
+   },
+   "extensionOptionManualViewByShiftKey": {
+      "message": "switch with shift",
+      "description": "Name of link list option."
+   },
+   "extensionOptionManualViewByCtrlKey": {
+      "message": "switch with ctrl",
+      "description": "Name of link list option."
    },
    "notificationReadOptionError": {
       "message": "failed to read your configuration.",
@@ -26,6 +38,14 @@
    "notificationOpenWindowError": {
       "message": "failed to open new window.",
       "description": "open window error notification."
+   },
+   "htmlZoomDown": {
+      "message": "zoom down",
+      "description": ""
+   },
+   "htmlZoomUp": {
+      "message": "zoom up",
+      "description": ""
    },
    "htmlFormName": {
       "message": "Configuration",
