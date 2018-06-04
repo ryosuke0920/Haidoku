@@ -63,12 +63,11 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	let linkListFlag = false;
 	let shiftKeyFlag = false;
 	let ctrlKeyFlag = false;
-	let selectStartFlag = false;
-	let selectedText = "";
 	let resizeWatcherFlag = false;
 	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let menuNode;
 	let mousedownFlag = false;
+	let selectionChangedFlag = false;
 
 	let promise = init();
 	promise.catch(onError);
@@ -131,6 +130,7 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	}
 
 	function selectionChangeAutoBehavior(e){
+		selectionChangedFlag = true;
 		if(mousedownFlag) return;
 		let selection = window.getSelection();
 		if( selection.isCollapsed ){
@@ -165,10 +165,11 @@ img.lessLaborGoToDictionary-zoomDown, img.lessLaborGoToDictionary-zoomUp { \n\
 	function mouseupAutoBehavior(e){
 		mousedownFlag = false;
 		if( e.button != 0 ) return;
-		if( !isLinkListNodeUnderMouse(e.pageY,e.pageX) ){
-			let selection = window.getSelection();
-			if( !selection.isCollapsed ){
-				makeLinkList(selection.toString());
+		if( selectionChangedFlag && !isLinkListNodeUnderMouse(e.pageY,e.pageX) ){
+			let selectioin = window.getSelection();
+			if( !selectioin.isCollapsed ){
+				selectionChangedFlag = false;
+				makeLinkList(selectioin.toString());
 				showLinkList(e.pageY, e.pageX, e.clientY, e.clientX);
 			}
 		}
