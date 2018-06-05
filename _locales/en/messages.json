@@ -23,6 +23,10 @@
 		"message": "switch with ctrl",
 		"description": "Name of link list option."
 	},
+	"extensionOptionName": {
+		"message": "options",
+		"description": "Name of link list option."
+	},
 	"notificationReadOptionError": {
 		"message": "failed to read your configuration.",
 		"description": "save option error notification."
@@ -45,7 +49,7 @@
 	},
 	"htmlFormName": {
 		"message": "Link list",
-		"description": "Name of the form on the side menu"
+		"description": "Name of the form on the side menu."
 	},
 	"htmlPresetName": {
 		"message": "Add search site",

@@ -23,6 +23,10 @@
 		"message": "ctrlボタンで表示",
 		"description": "Name of link list option."
 	},
+	"extensionOptionName": {
+		"message": "設定",
+		"description": "Name of link list option."
+	},
 	"notificationReadOptionError": {
 		"message": "設定の読み込みに失敗しました。",
 		"description": "save option error notification."
