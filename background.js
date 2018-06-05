@@ -133,7 +133,8 @@ function resetMenu(json){
 	}
 	if( 0 < optionList.length ) {
 		browser.contextMenus.create({
-			"type": "separator"
+			"type": "separator",
+			"contexts": ["selection"]
 		});
 	}
 	browser.contextMenus.create({

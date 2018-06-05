@@ -1,172 +1,172 @@
 {
-   "extensionName": {
-      "message": "LessLaborGoToDictionary",
-      "description": "Name of the extension."
-   },
-   "extensionDescription": {
-      "message": "If you select a text in the site, link list you made will be displayed. If you fire right click, You can go to the site too, setting link list view or not, and configuration which sites you need to.",
-      "description": "Description of the extension."
-   },
-   "extensionOptionName": {
-      "message": "LessLaborGoToDictionary Options",
-      "description": "Name of the extension option."
-   },
-   "extensionOptionAutoView": {
-      "message": "automatically display link list",
-      "description": "Name of link list option."
-   },
-   "extensionOptionManualView": {
-      "message": "manually display link list",
-      "description": "Name of link list option."
-   },
-   "extensionOptionManualViewByShiftKey": {
-      "message": "switch with shift",
-      "description": "Name of link list option."
-   },
-   "extensionOptionManualViewByCtrlKey": {
-      "message": "switch with ctrl",
-      "description": "Name of link list option."
-   },
-   "notificationReadOptionError": {
-      "message": "failed to read your configuration.",
-      "description": "save option error notification."
-   },
-   "notificationSaveOptionError": {
-      "message": "failed to save your configuration.",
-      "description": "save option error notification."
-   },
-   "notificationOpenWindowError": {
-      "message": "failed to open new window.",
-      "description": "open window error notification."
-   },
-   "htmlZoomDown": {
-      "message": "zoom down",
-      "description": ""
-   },
-   "htmlZoomUp": {
-      "message": "zoom up",
-      "description": ""
-   },
-   "htmlFormName": {
-      "message": "Configuration",
-      "description": "Name of the form on the side menu"
-   },
-   "htmlPresetName": {
-      "message": "Add search site",
-      "description": "Name of the preset on the side menu."
-   },
-   "htmlContactName": {
-      "message": "Contact",
-      "description": "Name of the contact on the side menu."
-   },
-   "htmlFormDescription": {
-      "message": "You can add, edit, delete and sort fields. If added blank fields, You have to input \"site name\" and \"URL\" by yourself.",
-      "description": "Description of the extension option."
-   },
-   "htmlPresetDescription": {
-      "message": "Select your favorite sites and press \"add\" button.",
-      "description": "Description of the preset option."
-   },
-   "htmlAddBlankFieldButtonName": {
-      "message": "add blank field",
-      "description": "Name of add blank field button."
-   },
-   "htmlHandle": {
-      "message": "sort.",
-      "description": "title of sort."
-   },
-   "htmlLabelText": {
-      "message": "site name",
-      "description": "Name of site."
-   },
-   "htmlUrlText": {
-      "message": "URL",
-      "description": "Name of url."
-   },
-   "htmlRemoveButtonName": {
-      "message": "delete",
-      "description": "Name of remove."
-   },
-   "htmlLabelDescription": {
-      "message": "This will be displayed in the link list or context menu(right click).",
-      "description": "title of label description."
-   },
-   "htmlUrlDescription": {
-      "message": "If you input \"$1\", it will be replaced to the word you selected.",
-      "description": "title of url description."
-   },
-   "htmlFilterText": {
-      "message": "filter",
-      "description": "Name of filter select box."
-   },
-   "htmlLanguageAll": {
-      "message": "all",
-      "description": "Name of all."
-   },
-   "htmlLanguageEn": {
-      "message": "English",
-      "description": "Name of en."
-   },
-   "htmlLanguageJa": {
-      "message": "Japanese",
-      "description": "Name of ja."
-   },
-   "htmlAddPresetButtonName": {
-      "message": "add",
-      "description": "title of adding button."
-   },
-   "htmlContactText": {
-      "message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
-      "description": "Sentence of contact."
-   },
-   "htmlMyself": {
-      "message": "Ryosuke Ohta<br>freelance programmer in Tokyo Japan.<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
-      "description": "Sentence of myself."
-   },
-   "htmlCheckByteLengthError": {
-      "message": "Shorten to $MAX_LENGTH$ byte or less (Currently $LENGTH$ bytes).",
-      "description": "",
-      "placeholders": {
-         "MAX_LENGTH": {
-            "content": "$1",
-            "example": "1"
-         },
-         "LENGTH": {
-            "content": "$2",
-            "example": "2"
-         }
-      }
-   },
-   "htmlCheckFieldLengthError": {
-      "message": "You can add up to $MAX_FIELDS$ items at maximum.",
-      "description": "",
-      "placeholders": {
-         "MAX_FIELDS": {
-            "content": "$1",
-            "example": "0"
-         }
-      }
-   },
-   "htmlCheckPresetLengthError": {
-      "message": "Up to $MAX_FIELDS$ sites can be added. It is set to $SUM$ pieces. Currently $CHECKED$ items are selected. You can add $REMAINING$ more.",
-      "description": "",
-      "placeholders": {
-         "MAX_FIELDS": {
-            "content": "$1",
-            "example": "1"
-         },
-         "SUM": {
-            "content": "$2",
-            "example": "22"
-         },
-         "CHECKED": {
-            "content": "$3",
-            "example": "333"
-         },
-         "REMAINING": {
-            "content": "$4",
-            "example": "4444"
-         }
-      }
-   }
+	"extensionName": {
+		"message": "Less Labor Go To Dictionary",
+		"description": "Name of the extension."
+	},
+	"extensionDescription": {
+		"message": "If you select a text in the site, link list you made will be displayed. If you fire right click, You can go to the site too, setting link list view or not, and configuration which sites you need to.",
+		"description": "Description of the extension."
+	},
+	"extensionOptionAutoView": {
+		"message": "automatically display link list",
+		"description": "Name of link list option."
+	},
+	"extensionOptionManualView": {
+		"message": "manually display link list",
+		"description": "Name of link list option."
+	},
+	"extensionOptionManualViewByShiftKey": {
+		"message": "switch with shift",
+		"description": "Name of link list option."
+	},
+	"extensionOptionManualViewByCtrlKey": {
+		"message": "switch with ctrl",
+		"description": "Name of link list option."
+	},
+	"extensionOptionName": {
+		"message": "options",
+		"description": "Name of link list option."
+	},
+	"notificationReadOptionError": {
+		"message": "failed to read your configuration.",
+		"description": "save option error notification."
+	},
+	"notificationSaveOptionError": {
+		"message": "failed to save your configuration.",
+		"description": "save option error notification."
+	},
+	"notificationOpenWindowError": {
+		"message": "failed to open new window.",
+		"description": "open window error notification."
+	},
+	"htmlZoomDown": {
+		"message": "zoom down",
+		"description": ""
+	},
+	"htmlZoomUp": {
+		"message": "zoom up",
+		"description": ""
+	},
+	"htmlFormName": {
+		"message": "Link list",
+		"description": "Name of the form on the side menu."
+	},
+	"htmlPresetName": {
+		"message": "Add search site",
+		"description": "Name of the preset on the side menu."
+	},
+	"htmlContactName": {
+		"message": "Contact",
+		"description": "Name of the contact on the side menu."
+	},
+	"htmlFormDescription": {
+		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"site name\" and \"URL\" by yourself.",
+		"description": "Description of the extension option."
+	},
+	"htmlPresetDescription": {
+		"message": "Select your favorite sites and press \"add\" button.",
+		"description": "Description of the preset option."
+	},
+	"htmlAddBlankFieldButtonName": {
+		"message": "add blank field",
+		"description": "Name of add blank field button."
+	},
+	"htmlHandle": {
+		"message": "sort.",
+		"description": "title of sort."
+	},
+	"htmlLabelText": {
+		"message": "site name",
+		"description": "Name of site."
+	},
+	"htmlUrlText": {
+		"message": "URL",
+		"description": "Name of url."
+	},
+	"htmlRemoveButtonName": {
+		"message": "delete",
+		"description": "Name of remove."
+	},
+	"htmlLabelDescription": {
+		"message": "This will be displayed in the link list or context menu(right click).",
+		"description": "title of label description."
+	},
+	"htmlUrlDescription": {
+		"message": "If you input \"$1\", it will be replaced to the word you selected.",
+		"description": "title of url description."
+	},
+	"htmlFilterText": {
+		"message": "filter",
+		"description": "Name of filter select box."
+	},
+	"htmlLanguageAll": {
+		"message": "all",
+		"description": "Name of all."
+	},
+	"htmlLanguageEn": {
+		"message": "English",
+		"description": "Name of en."
+	},
+	"htmlLanguageJa": {
+		"message": "Japanese",
+		"description": "Name of ja."
+	},
+	"htmlAddPresetButtonName": {
+		"message": "add",
+		"description": "title of adding button."
+	},
+	"htmlContactText": {
+		"message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
+		"description": "Sentence of contact."
+	},
+	"htmlMyself": {
+		"message": "Ryosuke Ohta<br>freelance programmer in Tokyo Japan.<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
+		"description": "Sentence of myself."
+	},
+	"htmlCheckByteLengthError": {
+		"message": "Shorten to $MAX_LENGTH$ byte or less (Currently $LENGTH$ bytes).",
+		"description": "",
+		"placeholders": {
+			"MAX_LENGTH": {
+				"content": "$1",
+				"example": "1"
+			},
+			"LENGTH": {
+				"content": "$2",
+				"example": "2"
+			}
+		}
+	},
+	"htmlCheckFieldLengthError": {
+		"message": "You can add up to $MAX_FIELDS$ items at maximum.",
+		"description": "",
+		"placeholders": {
+			"MAX_FIELDS": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlCheckPresetLengthError": {
+		"message": "Up to $MAX_FIELDS$ sites can be added. It is set to $SUM$ pieces. Currently $CHECKED$ items are selected. You can add $REMAINING$ more.",
+		"description": "",
+		"placeholders": {
+			"MAX_FIELDS": {
+				"content": "$1",
+				"example": "1"
+			},
+			"SUM": {
+				"content": "$2",
+				"example": "22"
+			},
+			"CHECKED": {
+				"content": "$3",
+				"example": "333"
+			},
+			"REMAINING": {
+				"content": "$4",
+				"example": "4444"
+			}
+		}
+	}
 }

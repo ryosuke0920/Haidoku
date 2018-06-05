@@ -1,172 +1,172 @@
 {
-   "extensionName": {
-      "message": "手間なし辞書検索",
-      "description": "Name of the extension."
-   },
-   "extensionDescription": {
-      "message": "文字を選択すると辞書サイトへのリンク一覧が表示されます。右クリックからも移動でき、リンク一覧の表示設定、設定画面の表示ができます。",
-      "description": "Description of the extension."
-   },
-   "extensionOptionName": {
-      "message": "手間なし辞書検索 設定",
-      "description": "Name of the extension option."
-   },
-   "extensionOptionAutoView": {
-      "message": "自動リンクリスト表示",
-      "description": "Name of link list option."
-   },
-   "extensionOptionManualView": {
-      "message": "手動リンクリスト表示",
-      "description": "Name of link list option."
-   },
-   "extensionOptionManualViewByShiftKey": {
-      "message": "shiftボタンで表示",
-      "description": "Name of link list option."
-   },
-   "extensionOptionManualViewByCtrlKey": {
-      "message": "ctrlボタンで表示",
-      "description": "Name of link list option."
-   },
-   "notificationReadOptionError": {
-      "message": "設定の読み込みに失敗しました。",
-      "description": "save option error notification."
-   },
-   "notificationSaveOptionError": {
-      "message": "設定の保存に失敗しました。",
-      "description": "save option error notification."
-   },
-   "notificationOpenWindowError": {
-      "message": "新しい画面を開けませんでした。",
-      "description": "open window error notification."
-   },
-   "htmlZoomDown": {
-      "message": "縮小",
-      "description": ""
-   },
-   "htmlZoomUp": {
-      "message": "拡大",
-      "description": ""
-   },
-   "htmlFormName": {
-      "message": "設定",
-      "description": "Name of the form on the side menu."
-   },
-   "htmlPresetName": {
-      "message": "検索サイト追加",
-      "description": "Name of the preset on the side menu."
-   },
-   "htmlContactName": {
-      "message": "お問い合わせ",
-      "description": "Name of the contact on the side menu."
-   },
-   "htmlFormDescription": {
-      "message": "サイトの追加、変更、削除、並び順の変更ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。",
-      "description": "Description of the extension option."
-   },
-   "htmlPresetDescription": {
-      "message": "サイトを選択してから「追加」ボタンを押すと追加されます。",
-      "description": "Description of the preset option."
-   },
-   "htmlAddBlankFieldButtonName": {
-      "message": "入力欄のみ追加",
-      "description": "Name of add blank field button."
-   },
-   "htmlHandle": {
-      "message": "sort.",
-      "description": "title of sort."
-   },
-   "htmlLabelText": {
-      "message": "サイト名",
-      "description": "Name of label."
-   },
-   "htmlUrlText": {
-      "message": "URL",
-      "description": "Name of url."
-   },
-   "htmlRemoveButtonName": {
-      "message": "削除",
-      "description": "Name of remove."
-   },
-   "htmlLabelDescription": {
-      "message": "リンク一覧やコンテキストメニュー（右クリック）に表示されます。",
-      "description": "title of label description."
-   },
-   "htmlUrlDescription": {
-      "message": "\"$$1\"は選択した文字に置き換えられます。",
-      "description": "title of url description."
-   },
-   "htmlFilterText": {
-      "message": "フィルタ",
-      "description": "Name of filter select box."
-   },
-   "htmlLanguageAll": {
-      "message": "すべて",
-      "description": "Name of all."
-   },
-   "htmlLanguageEn": {
-      "message": "英語",
-      "description": "Name of en."
-   },
-   "htmlLanguageJa": {
-      "message": "日本語",
-      "description": "Name of ja."
-   },
-   "htmlAddPresetButtonName": {
-      "message": "追加",
-      "description": "Name of adding button."
-   },
-   "htmlContactText": {
-      "message": "ご意見・ご感想・バグなどのお問い合わせ先<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
-      "description": "Sentence of contact."
-   },
-   "htmlMyself": {
-      "message": "太田亮介<br>フリーランス プログラマ<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
-      "description": "Sentence of myself."
-   },
-   "htmlCheckByteLengthError": {
-      "message": "テキストを$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイトです）。",
-      "description": "",
-      "placeholders": {
-         "MAX_LENGTH": {
-            "content": "$1",
-            "example": "1"
-         },
-         "LENGTH": {
-            "content": "$2",
-            "example": "2"
-         }
-      }
-   },
-   "htmlCheckFieldLengthError": {
-      "message": "サイトの追加は最大で$MAX_FIELDS$個までです。",
-      "description": "",
-      "placeholders": {
-         "MAX_FIELDS": {
-            "content": "$1",
-            "example": "0"
-         }
-      }
-   },
-   "htmlCheckPresetLengthError": {
-      "message": "サイトの追加は最大で$MAX_FIELDS$個までです。設定済みは$SUM$個です。現在$CHECKED$個選択しています。追加できるのでは$REMAINING$個です。",
-      "description": "",
-      "placeholders": {
-         "MAX_FIELDS": {
-            "content": "$1",
-            "example": "1"
-         },
-         "SUM": {
-            "content": "$2",
-            "example": "22"
-         },
-         "CHECKED": {
-            "content": "$3",
-            "example": "333"
-         },
-         "REMAINING": {
-            "content": "$4",
-            "example": "4444"
-         }
-      }
-   }
+	"extensionName": {
+		"message": "手間なし辞書検索",
+		"description": "Name of the extension."
+	},
+	"extensionDescription": {
+		"message": "文字を選択すると辞書サイトへのリンク一覧が表示されます。右クリックからも移動でき、リンク一覧の表示設定、設定画面の表示ができます。",
+		"description": "Description of the extension."
+	},
+	"extensionOptionAutoView": {
+		"message": "自動リンクリスト表示",
+		"description": "Name of link list option."
+	},
+	"extensionOptionManualView": {
+		"message": "手動リンクリスト表示",
+		"description": "Name of link list option."
+	},
+	"extensionOptionManualViewByShiftKey": {
+		"message": "shiftボタンで表示",
+		"description": "Name of link list option."
+	},
+	"extensionOptionManualViewByCtrlKey": {
+		"message": "ctrlボタンで表示",
+		"description": "Name of link list option."
+	},
+	"extensionOptionName": {
+		"message": "設定",
+		"description": "Name of link list option."
+	},
+	"notificationReadOptionError": {
+		"message": "設定の読み込みに失敗しました。",
+		"description": "save option error notification."
+	},
+	"notificationSaveOptionError": {
+		"message": "設定の保存に失敗しました。",
+		"description": "save option error notification."
+	},
+	"notificationOpenWindowError": {
+		"message": "新しい画面を開けませんでした。",
+		"description": "open window error notification."
+	},
+	"htmlZoomDown": {
+		"message": "縮小",
+		"description": ""
+	},
+	"htmlZoomUp": {
+		"message": "拡大",
+		"description": ""
+	},
+	"htmlFormName": {
+		"message": "リンクリスト",
+		"description": "Name of the form on the side menu."
+	},
+	"htmlPresetName": {
+		"message": "検索サイト追加",
+		"description": "Name of the preset on the side menu."
+	},
+	"htmlContactName": {
+		"message": "お問い合わせ",
+		"description": "Name of the contact on the side menu."
+	},
+	"htmlFormDescription": {
+		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。",
+		"description": "Description of the extension option."
+	},
+	"htmlPresetDescription": {
+		"message": "サイトを選択してから「追加」ボタンを押すと追加されます。",
+		"description": "Description of the preset option."
+	},
+	"htmlAddBlankFieldButtonName": {
+		"message": "入力欄のみ追加",
+		"description": "Name of add blank field button."
+	},
+	"htmlHandle": {
+		"message": "sort.",
+		"description": "title of sort."
+	},
+	"htmlLabelText": {
+		"message": "サイト名",
+		"description": "Name of label."
+	},
+	"htmlUrlText": {
+		"message": "URL",
+		"description": "Name of url."
+	},
+	"htmlRemoveButtonName": {
+		"message": "削除",
+		"description": "Name of remove."
+	},
+	"htmlLabelDescription": {
+		"message": "リンク一覧やコンテキストメニュー（右クリック）に表示されます。",
+		"description": "title of label description."
+	},
+	"htmlUrlDescription": {
+		"message": "\"$$1\"は選択した文字に置き換えられます。",
+		"description": "title of url description."
+	},
+	"htmlFilterText": {
+		"message": "フィルタ",
+		"description": "Name of filter select box."
+	},
+	"htmlLanguageAll": {
+		"message": "すべて",
+		"description": "Name of all."
+	},
+	"htmlLanguageEn": {
+		"message": "英語",
+		"description": "Name of en."
+	},
+	"htmlLanguageJa": {
+		"message": "日本語",
+		"description": "Name of ja."
+	},
+	"htmlAddPresetButtonName": {
+		"message": "追加",
+		"description": "Name of adding button."
+	},
+	"htmlContactText": {
+		"message": "ご意見・ご感想・バグなどのお問い合わせ先<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
+		"description": "Sentence of contact."
+	},
+	"htmlMyself": {
+		"message": "太田亮介<br>フリーランス プログラマ<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
+		"description": "Sentence of myself."
+	},
+	"htmlCheckByteLengthError": {
+		"message": "テキストを$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイトです）。",
+		"description": "",
+		"placeholders": {
+			"MAX_LENGTH": {
+				"content": "$1",
+				"example": "1"
+			},
+			"LENGTH": {
+				"content": "$2",
+				"example": "2"
+			}
+		}
+	},
+	"htmlCheckFieldLengthError": {
+		"message": "サイトの追加は最大で$MAX_FIELDS$個までです。",
+		"description": "",
+		"placeholders": {
+			"MAX_FIELDS": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlCheckPresetLengthError": {
+		"message": "サイトの追加は最大で$MAX_FIELDS$個までです。設定済みは$SUM$個です。現在$CHECKED$個選択しています。追加できるのでは$REMAINING$個です。",
+		"description": "",
+		"placeholders": {
+			"MAX_FIELDS": {
+				"content": "$1",
+				"example": "1"
+			},
+			"SUM": {
+				"content": "$2",
+				"example": "22"
+			},
+			"CHECKED": {
+				"content": "$3",
+				"example": "333"
+			},
+			"REMAINING": {
+				"content": "$4",
+				"example": "4444"
+			}
+		}
+	}
 }
