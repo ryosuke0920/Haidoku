@@ -45,6 +45,7 @@ var ponyfill = (()=>{
 			});
 			return promise;
 		}
+
 		sendMessage(message){
 			let promise = new Promise((resolve, reject)=>{
 				try {

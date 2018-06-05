@@ -8,6 +8,7 @@
 	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
+	const ANCHOR_MIN_SIZE = 0.6;
 	const ANCHOR_RESIO = 0.1;
 	let linkListNode;
 	let linkListNodeTop = 0;
@@ -348,7 +349,7 @@
 	}
 
 	function zoomLinkList(direction=1){
-		if ( direction < 0 && anchorSize <= ANCHOR_RESIO ) return false;
+		if ( direction < 0 && anchorSize <= ANCHOR_MIN_SIZE ) return false;
 		if ( 0 < direction && ANCHOR_MAX_SIZE <= anchorSize ) return false;
 		anchorSize += direction * ANCHOR_RESIO;
 		anchorSize += 0.01;
