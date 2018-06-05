@@ -1,159 +1,380 @@
 (()=>{
-	const DIST = 5;
-	const LINK_NODE_HEIGHT = 100;
-	const LINK_NODE_WIDTH = 200;
-	const SCROLL_BAR_WIDTH = 17;
-	const STYLE = "\n\
-* {\n\
-	margin: 0;\n\
-	padding: 0;\n\
-	border: none;\n\
-}\n\
-body {\n\
-	font-size: small;\n\
-	font-family: sans-serif;\n\
-}\n\
-div {\n\
-	background-color: white;\n\
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;\n\
-	margin: 2px;\n\
-	padding: 0.2em;\n\
-	overflow: scroll;\n\
-	white-space: nowrap;\n\
-}\n\
-a {\n\
-	text-decoration: none;\n\
-}\n\
-a:hover {\n\
-	text-decoration: underline;\n\
-}";
-	let px;
-	let py;
-	let cx;
-	let cy;
-	let linkNode;
+	const LINK_NODE_DEFAULT_HEIGHT = 100;
+	const LINK_NODE_DEFAULT_WIDTH = 200;
+	const LINK_NODE_MIN_HEIGHT = 50;
+	const LINK_NODE_MIN_WIDTH = 50;
+	const LINK_NODE_PADDING = 3;
+	const SPACE = 5;
+	const SCROLL_BAR_WIDTH = 22;
+	const ANCHOR_DEFAULT_SIZE = 0.8;
+	const ANCHOR_MAX_SIZE = 2;
+	const ANCHOR_RESIO = 0.1;
+	let linkListNode;
+	let linkListNodeTop = 0;
+	let linkListNodeLeft = 0;
+	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
+	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
 	let optionList = [];
-	let boxFlag = false;
+	let linkListFlag = false;
+	let shiftKeyFlag = false;
+	let ctrlKeyFlag = false;
+	let resizeWatcherFlag = false;
+	let anchorSize = ANCHOR_DEFAULT_SIZE;
+	let menuNode;
+	let mousedownFlag = false;
+	let selectionChangedFlag = false;
 	let promise = init();
+	promise.catch(onError);
 
 	function init(){
-		linkNode = document.createElement("iframe");
-		linkNode.scrolling = "no";
-		linkNode.style.position = "absolute";
-		linkNode.style.top = "0px";
-		linkNode.style.left = "0px";
-		linkNode.style.display = "none";
-		linkNode.style["z-index"] = "2147483646";
-		linkNode.style.border = "none";
-		linkNode.style.height = LINK_NODE_HEIGHT + "px";
-		linkNode.style.width = LINK_NODE_WIDTH + "px";
-		document.querySelector("body").appendChild(linkNode);
-		document.onmouseup = (e)=>{
-			if( e.button == "0" ) {
-				linkBehavior(e);
-			}
-		}
-		window.onresize = (e)=>{
-			closeLink();
-		}
-		document.onkeydown = (e)=>{
-			if( e.key == "Escape" || e.key == "Esc") {
-				closeLink();
-			}
-		}
-		document.addEventListener('mousemove', (e)=>{
-			py = e.pageY;
-			px = e.pageX;
-			cy = e.clientY;
-			cx = e.clientX;
-		})
-		chrome.storage.onChanged.addListener( onStorageChanged );
-
+		let link = document.createElement("link");
+		link.setAttribute("rel", "stylesheet");
+		link.setAttribute("type", "text/css");
+		link.setAttribute("href", browser.extension.getURL("content.css"));
+		document.querySelector("head").appendChild(link);
+		linkListNode = document.createElement("div");
+		linkListNode.classList.add("lessLaborGoToDictionary-common");
+		linkListNode.classList.add("lessLaborGoToDictionary-viewer");
+		linkListNode.classList.add("lessLaborGoToDictionary-hide");
+		linkListNode.style.padding = LINK_NODE_PADDING + "px";
+		linkListNode.style.height = linkListNodeHeight + "px";
+		linkListNode.style.width = linkListNodeWidth + "px";
+		document.querySelector("body").appendChild( linkListNode );
+		browser.storage.onChanged.addListener( onStorageChanged );
+		menuNode = document.createElement("nav");
+		menuNode.classList.add("lessLaborGoToDictionary-common");
+		menuNode.classList.add("lessLaborGoToDictionary-menu");
+		linkListNode.appendChild(menuNode);
+		let zoomDownNode = document.createElement("img");
+		zoomDownNode.src = browser.extension.getURL("image/minus.svg");
+		zoomDownNode.classList.add("lessLaborGoToDictionary-common");
+		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
+		zoomDownNode.title = browser.i18n.getMessage("htmlZoomDown");
+		menuNode.appendChild(zoomDownNode);
+		let zoomUpNode = document.createElement("img");
+		zoomUpNode.src = browser.extension.getURL("image/plus.svg");
+		zoomUpNode.classList.add("lessLaborGoToDictionary-common");
+		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
+		zoomUpNode.title = browser.i18n.getMessage("htmlZoomUp");
+		menuNode.appendChild(zoomUpNode);
 		return reload();
 	}
 
-	function closeLink(){
-		linkNode.style.display = "none";
-		linkNode.srcdoc = "";
+	function addCommonLinkListEvents(){
+		window.addEventListener("resize", resizeBehavior);
+		menuNode.addEventListener("click", menuClickBihavior);
+		document.addEventListener("keydown", keydownBehavior);
+		document.addEventListener("mousemove", mousemoveBehavior);
+		document.addEventListener("mouseup", mouseupCommonBehavior);
+		document.addEventListener("mousedown", mousedownCommonBehavior);
 	}
 
-	function linkBehavior(){
+	function addAutoLinkListEvents(){
+		document.addEventListener("selectionchange", selectionChangeAutoBehavior);
+		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
+		document.addEventListener("mouseup", mouseupAutoBehavior);
+		document.addEventListener("mousedown", mousedownAutoBehavior);
+	}
+
+	function removeAutoLinkListEvents(){
+		document.removeEventListener("selectionchange", selectionChangeAutoBehavior);
+		document.addEventListener("selectionchange", manualSelectionChangeBehavior);
+		document.removeEventListener("mouseup", mouseupAutoBehavior);
+		document.removeEventListener("mousedown", mousedownAutoBehavior);
+	}
+
+	function manualSelectionChangeBehavior(e){
+		closeLinkList();
+	}
+
+	function selectionChangeAutoBehavior(e){
+		selectionChangedFlag = true;
+		if(mousedownFlag) return;
 		let selection = window.getSelection();
-		let select = selection.toString();
-		if( boxFlag && select && select.length > 0 ) {
-			if( retrieveLink(select) ) {
-				let yy = window.innerHeight - SCROLL_BAR_WIDTH - ( cy + LINK_NODE_HEIGHT );
-				if ( 0 < yy || window.innerHeight < LINK_NODE_HEIGHT ) yy = 0;
-				let xx = window.innerWidth - SCROLL_BAR_WIDTH - ( cx + LINK_NODE_WIDTH );
-				if ( 0 < xx || window.innerWidth < LINK_NODE_WIDTH ) xx = 0;
-				linkNode.style.top = ( py + yy + DIST )+"px";
-				linkNode.style.left = ( px + xx + DIST ) +"px";
-				linkNode.style.display = "block";
-			}
+		if( selection.isCollapsed ){
+			closeLinkList();
 		}
 		else {
-			closeLink();
+			makeLinkList(selection.toString());
+			let lastRange = selection.getRangeAt(selection.rangeCount-1);
+			let rectList = lastRange.getClientRects();
+			let rect = rectList[rectList.length-1];
+			showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right);
 		}
+	}
+
+	function mousedownCommonBehavior(e){
+		mousedownFlag = true;
+	}
+
+	function mousedownAutoBehavior(e){
+		if( e.button != 0 ) return;
+		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ){
+			closeLinkList();
+		}
+	}
+
+	function mouseupCommonBehavior(e){
+		mousedownFlag = false;
+		let promise;
+		if ( resizeWatcherFlag ) {
+			resizeWatcherFlag = false;
+			promise = saveLinkListSize();
+			promise.catch(onError);
+		}
+	}
+
+	function mouseupAutoBehavior(e){
+		if( e.button != 0 ) return;
+		if( selectionChangedFlag && !isLinkListNodeUnderMouse(e.pageY,e.pageX) ){
+			let selectioin = window.getSelection();
+			if( !selectioin.isCollapsed ){
+				selectionChangedFlag = false;
+				makeLinkList(selectioin.toString());
+				showLinkList(e.pageY, e.pageX, e.clientY, e.clientX);
+			}
+		}
+	}
+
+	function resizeBehavior(e){
+		closeLinkList();
+	}
+
+	function keydownBehavior(e){
+		if( e.key == "Escape" || e.key == "Esc"){
+			closeLinkList();
+		}
+		else if((shiftKeyFlag && e.key == "Shift")||(ctrlKeyFlag && e.key == "Control")){
+			switchLinkList();
+		}
+	}
+
+	function switchLinkList(){
+		if(isLinkListShown()){
+			closeLinkList();
+		}
+		else {
+			let selection = window.getSelection();
+			if( !selection.isCollapsed ){
+				let lastRange = selection.getRangeAt(selection.rangeCount-1);
+				let rectList = lastRange.getClientRects();
+				let rect = rectList[rectList.length-1];
+				makeLinkList(selection.toString());
+				showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right);
+			}
+		}
+	}
+
+	function mousemoveBehavior(e){
+		if ( isLinkListShown() && mousedownFlag ) resizeWatcher();
+	}
+
+	function isLinkListNodeUnderMouse(yy,xx){
+		if( linkListNodeTop <= yy && yy < ( linkListNodeTop + linkListNode.offsetHeight )
+		&& linkListNodeLeft <= xx && xx < ( linkListNodeLeft + linkListNode.offsetWidth ) ){
+			return true;
+		}
+		return false;
+	}
+
+	function resizeWatcher(){
+		let height = linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
+		if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
+		let width = linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
+		if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
+		if ( linkListNodeHeight != height || linkListNodeWidth != width ){
+			resizeWatcherFlag = true;
+			linkListNodeHeight = height;
+			linkListNodeWidth = width;
+		}
+	}
+
+	function saveLinkListSize(){
+		let res = browser.runtime.sendMessage({
+			"method": "saveLinkListSize",
+			"data": {
+				"lh": linkListNodeHeight,
+				"lw": linkListNodeWidth
+			}
+		});
+		return res;
+	}
+
+	function closeLinkList(){
+		linkListNode.classList.add("lessLaborGoToDictionary-hide");
+	}
+
+	function makeLinkList(text){
+		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor,br.lessLaborGoToDictionary-braek");
+		for(let node of list){
+			linkListNode.removeChild(node);
+		}
+		for(let item of optionList){
+			if ( !item["c"] ) continue;
+			let url = item["u"];
+			url = url.replace( "$1", encodeURIComponent(text) );
+			let a = document.createElement("a");
+			a.classList.add("lessLaborGoToDictionary-common");
+			a.classList.add("lessLaborGoToDictionary-anchor");
+			a.style["font-size"] = anchorSize + "em";
+			a.setAttribute( "href", url );
+			a.setAttribute( "target", "_blank" );
+			a.innerText = item["l"];
+			linkListNode.appendChild(a);
+			let br = document.createElement("br");
+			br.classList.add("lessLaborGoToDictionary-common");
+			br.classList.add("lessLaborGoToDictionary-braek");
+			linkListNode.appendChild(br);
+		}
+	}
+
+	function showLinkList(pageY, pageX, clientY, clientX){
+		/* when display equals none, offsetHeight and offsetWidth return undefined. */
+		linkListNode.classList.remove("lessLaborGoToDictionary-hide");
+		linkListNode.style.height = linkListNodeHeight + "px";
+		linkListNode.style.width = linkListNodeWidth + "px";
+		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
+		if ( 0 < yy || window.innerHeight < linkListNode.offsetHeight ) yy = 0;
+		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH;
+		if ( 0 < xx || window.innerWidth < linkListNode.offsetWidth ) xx = 0;
+		linkListNodeTop = pageY + yy + SPACE;
+		linkListNodeLeft = pageX + xx + SPACE;
+		linkListNode.style.top = linkListNodeTop+"px";
+		linkListNode.style.left = linkListNodeLeft+"px";
+		linkListNode.scrollTop = 0;
+		linkListNode.scrollLeft = 0;
+	}
+
+	function isLinkListShown(){
+		return !linkListNode.classList.contains("lessLaborGoToDictionary-hide");
 	}
 
 	function onStorageChanged(change, area){
-		closeLink();
-		let data = {};
-		if( change["ol"] ) resetOptionList( change["ol"]["newValue"] );
-		if( change["bf"] ) resetBoxFlag( change["bf"]["newValue"] );
+		if( change["lh"] || change["lw"] ){
+			setLinkListSize( change["lh"]["newValue"], change["lw"]["newValue"] );
+			return ;
+		}
+		if( change["as"] ){
+			setAnchorSize( change["as"]["newValue"] );
+			return ;
+		}
+		if( change["ck"] ){
+			setCtrlKeyFlag( change["ck"]["newValue"] );
+			return ;
+		}
+		if( change["sk"] ){
+			setShiftKeyFlag( change["sk"]["newValue"] );
+			return ;
+		}
+		closeLinkList();
+		if( change["ol"] ) setOptionList( change["ol"]["newValue"] );
+		if( change["bf"] ) setLinkListFlag( change["bf"]["newValue"] );
+		resetLinkListEvents();
+	}
+
+	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
+		linkListNodeHeight = height;
+		linkListNodeWidth = width;
 	}
 
 	function reload(){
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
-			"bf": false
+			"bf": true,
+			"sk": false,
+			"ck": false,
+			"lh": LINK_NODE_DEFAULT_HEIGHT,
+			"lw": LINK_NODE_DEFAULT_WIDTH,
+			"as": ANCHOR_DEFAULT_SIZE
 		});
-
-		return getter.then(resetVer);
+		return getter.then(setVer);
 	}
 
-	function resetVer( res ){
-		resetOptionList( res["ol"] );
-		resetBoxFlag( res["bf"] );
+	function setVer( res ){
+		setAnchorSize( res["as"] );
+		setLinkListSize( res["lh"], res["lw"] );
+		setOptionList( res["ol"] );
+		setLinkListFlag( res["bf"] );
+		setCtrlKeyFlag( res["ck"] );
+		setShiftKeyFlag( res["sk"] );
+		resetLinkListEvents();
 	}
 
-	function resetBoxFlag(res){
-		boxFlag = res;
+	function setAnchorSize(res){
+		anchorSize = res;
 	}
 
-	function resetOptionList(res){
+	function setLinkListFlag(res){
+		linkListFlag = res;
+	}
+
+	function setShiftKeyFlag(res){
+		shiftKeyFlag = res;
+	}
+
+	function setCtrlKeyFlag(res){
+		ctrlKeyFlag = res;
+	}
+
+	function resetLinkListEvents(){
+		removeAutoLinkListEvents();
+		if( linkListFlag && hasLinkList() ) addAutoLinkListEvents();
+		addCommonLinkListEvents();
+	}
+
+	function setOptionList(res){
 		optionList = [];
 		for( let data of res ){
+			/* checked == true */
 			if ( data["c"] ) optionList.push(data);
 		}
 	}
 
-	function retrieveLink(select){
-		if ( optionList.length <= 0 ) return false;
-		let html = document.createElement("html");
-		let head = document.createElement("head");
-		html.appendChild(head);
-		let style = document.createElement("style");
-		style.appendChild(document.createTextNode(STYLE));
-		head.appendChild(style);
-		let body = document.createElement("body");
-		html.appendChild(body);
-		let div = document.createElement("div");
-		div.style.height = ( LINK_NODE_HEIGHT - SCROLL_BAR_WIDTH ) +"px";
-		body.appendChild(div);
-		for(let item of optionList){
-			if ( !item["c"]) continue;
-			let url = item["u"];
-			url = url.replace( "$1", encodeURIComponent(select) );
-			let a = document.createElement("a");
-			a.setAttribute( "href", url );
-			a.setAttribute( "target", "_blank" );
-			a.innerText = item["l"];
-			div.appendChild(a);
-			let br = document.createElement("br");
-			div.appendChild(br);
+	function hasLinkList(){
+		if( optionList.length > 0 ) return true;
+		return false;
+	}
+
+	function menuClickBihavior(e){
+		let promise;
+		if(e.target.classList.contains("lessLaborGoToDictionary-zoomUp")){
+			if( zoomLinkList(1) ){
+				promise = saveAnchorSize();
+				promise.catch(onError);
+			}
 		}
-		linkNode.srcdoc = html.outerHTML;
+		else if(e.target.classList.contains("lessLaborGoToDictionary-zoomDown")){
+			if( zoomLinkList(-1) ){
+				promise = saveAnchorSize();
+				promise.catch(onError);
+			}
+		}
+	}
+
+	function zoomLinkList(direction=1){
+		if ( direction < 0 && anchorSize <= ANCHOR_RESIO ) return false;
+		if ( 0 < direction && ANCHOR_MAX_SIZE <= anchorSize ) return false;
+		anchorSize += direction * ANCHOR_RESIO;
+		anchorSize += 0.01;
+		anchorSize *= 10 ;
+		anchorSize = Math.floor(anchorSize);
+		anchorSize /= 10 ;
+		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor");
+		for(let node of list)　node.style["font-size"] = anchorSize + "em";
 		return true;
+	}
+
+	function saveAnchorSize(){
+		let res = browser.runtime.sendMessage({
+			"method": "saveAnchorSize",
+			"data": {
+				"as": anchorSize
+			}
+		});
+		return res;
+	}
+
+	function onError(e){
+		console.error(e);
 	}
 })();

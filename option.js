@@ -53,8 +53,8 @@
 
 	function initI18n(){
 		let joson_list = [
-			{ "selector": "title", "property": "innerText", "key": "extensionOptionName" },
-			{ "selector": ".title", "property": "innerText", "key": "extensionOptionName" },
+			{ "selector": "title", "property": "innerText", "key": "extensionName" },
+			{ "selector": ".title", "property": "innerText", "key": "extensionName" },
 			{ "selector": ".formDescription", "property": "innerText", "key": "htmlFormDescription" },
 			{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
 			{ "selector": ".showForm", "property": "innerText", "key": "htmlFormName" },
