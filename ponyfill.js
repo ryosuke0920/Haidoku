@@ -33,23 +33,29 @@ var ponyfill = (()=>{
 		}
 
 		getBackgroundPage(){
-			let promise;
-			if( this._browser == this._firefox ) {
-				promise = browser.runtime.getBackgroundPage();
-			}
-			else {
-				/* chrome */
-				promise = new Promise((resolve, reject)=>{
-					try {
-						chrome.runtime.getBackgroundPage(function(e){
-							resolve(e);
-						});
-					}
-					catch(e){
-						reject(e);
-					}
-				});
-			}
+			let promise = new Promise((resolve, reject)=>{
+				try {
+					chrome.runtime.getBackgroundPage((e)=>{
+						resolve(e);
+					});
+				}
+				catch(e){
+					reject(e);
+				}
+			});
+			return promise;
+		}
+		sendMessage(message){
+			let promise = new Promise((resolve, reject)=>{
+				try {
+					chrome.runtime.sendMessage(message, (e)=>{
+						resolve(e);
+					});
+				}
+				catch(e){
+					reject(e);
+				}
+			});
 			return promise;
 		}
 	}
@@ -60,23 +66,16 @@ var ponyfill = (()=>{
 		}
 
 		create(data){
-			let promise;
-			if( this._browser == this._firefox ) {
-				promise = browser.tabs.create(data);
-			}
-			else {
-				/* chrome */
-				promise = new Promise((resolve, reject)=>{
-					try {
-						chrome.tabs.create(data, function(e){
-							resolve(e);
-						});
-					}
-					catch(e){
-						reject(e);
-					}
-				});
-			}
+			let promise = new Promise((resolve, reject)=>{
+				try {
+					chrome.tabs.create(data, (e)=>{
+						resolve(e);
+					});
+				}
+				catch(e){
+					reject(e);
+				}
+			});
 			return promise;
 		}
 	}
@@ -94,44 +93,30 @@ var ponyfill = (()=>{
 		}
 
 		set(data){
-			if( this._browser == this._firefox ) {
-				let promise = browser.storage.sync.set(data);
-				return promise;
-			}
-			else if( this._browser == this._chrome ) {
-				let promise = new Promise((resolve, reject)=>{
-					try {
-						chrome.storage.sync.set(data, function(e){
-							resolve(e);
-						});
-					}
-					catch(e){
-						reject(e);
-					}
-				});
-				return promise;
-			}
-			this.error("error");
+			let promise = new Promise((resolve, reject)=>{
+				try {
+					chrome.storage.sync.set(data, (e)=>{
+						resolve(e);
+					});
+				}
+				catch(e){
+					reject(e);
+				}
+			});
+			return promise;
 		}
 
 		get( data ){
-			let promise;
-			if( this._browser == this._firefox ) {
-				promise = browser.storage.sync.get(data);
-			}
-			else {
-				/* chrome */
-				promise = new Promise((resolve, reject)=>{
-					try {
-						chrome.storage.sync.get(data, function(e){
-							resolve(e);
-						});
-					}
-					catch(e){
-						reject(e);
-					}
-				});
-			}
+			let promise = new Promise((resolve, reject)=>{
+				try {
+					chrome.storage.sync.get(data, (e)=>{
+						resolve(e);
+					});
+				}
+				catch(e){
+					reject(e);
+				}
+			});
 			return promise;
 		}
 	}

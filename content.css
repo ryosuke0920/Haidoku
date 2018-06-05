@@ -1,10 +1,8 @@
-.lessLaborGoToDictionary-common {
+div.lessLaborGoToDictionary-viewer {
 	all: initial;
 	font-family: sans-serif;
 	user-select: none;
 	-moz-user-select: none;
-}
-div.lessLaborGoToDictionary-viewer {
 	display: block;
 	position: absolute;
 	z-index: 2147483646;
@@ -17,6 +15,10 @@ div.lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-hide {
 	display: none;
 }
 div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
+	all: initial;
+	font-family: sans-serif;
+	user-select: none;
+	-moz-user-select: none;
 	cursor: pointer;
 	white-space: nowrap;
 }
@@ -33,6 +35,10 @@ div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:active {
 	color: #ee0000;
 }
 div.lessLaborGoToDictionary-viewer nav.lessLaborGoToDictionary-menu {
+	all: initial;
+	font-family: sans-serif;
+	user-select: none;
+	-moz-user-select: none;
 	display: block;
 	height: 22px;
 	width: 100%;
@@ -41,6 +47,10 @@ div.lessLaborGoToDictionary-viewer nav.lessLaborGoToDictionary-menu {
 }
 div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomDown,
 div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomUp {
+	all: initial;
+	font-family: sans-serif;
+	user-select: none;
+	-moz-user-select: none;
 	height: 16px;
 	width: 16px;
 	cursor: pointer;

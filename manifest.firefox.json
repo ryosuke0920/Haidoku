@@ -27,7 +27,13 @@
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
-			"js": ["ponyfill.js","content.js"]
+			"css": [
+				"content.css"
+			],
+			"js": [
+				"ponyfill.js",
+				"content.js"
+			]
 		}
 	],
 	"permissions": [
@@ -35,5 +41,10 @@
 		"contextMenus",
 		"storage",
 		"notifications"
+	],
+	"web_accessible_resources": [
+		"image/icon.svg",
+		"image/minus.svg",
+		"image/plus.svg"
 	]
 }

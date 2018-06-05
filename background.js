@@ -139,20 +139,20 @@ function resetMenu(json){
 	}
 	ponyfill.contextMenus.create({
 		"id": "autoView",
-		"title": browser.i18n.getMessage("extensionOptionAutoView"),
+		"title": chrome.i18n.getMessage("extensionOptionAutoView"),
 		"checked": autoViewFlag,
 		"type": "checkbox",
 		"contexts": ["all"]
 	});
 	ponyfill.contextMenus.create({
 		"id": "manualView",
-		"title": browser.i18n.getMessage("extensionOptionManualView"),
+		"title": chrome.i18n.getMessage("extensionOptionManualView"),
 		"contexts": ["all"]
 	});
 	ponyfill.contextMenus.create({
 		"parentId": "manualView",
 		"id": "manualViewShiftKey",
-		"title": browser.i18n.getMessage("extensionOptionManualViewByShiftKey"),
+		"title": chrome.i18n.getMessage("extensionOptionManualViewByShiftKey"),
 		"checked": shiftKey,
 		"type": "checkbox",
 		"contexts": ["all"]
@@ -160,7 +160,7 @@ function resetMenu(json){
 	ponyfill.contextMenus.create({
 		"parentId": "manualView",
 		"id": "manualViewCtrlKey",
-		"title": browser.i18n.getMessage("extensionOptionManualViewByCtrlKey"),
+		"title": chrome.i18n.getMessage("extensionOptionManualViewByCtrlKey"),
 		"checked": ctrlKey,
 		"type": "checkbox",
 		"contexts": ["all"]
@@ -177,7 +177,7 @@ function resetMenu(json){
 
 function contextMenuBehavior(info, tab){
 	if ( info.menuItemId == "option" ){
-		browser.runtime.openOptionsPage();
+		chrome.runtime.openOptionsPage();
 	}
 	else if ( info.menuItemId == "autoView" ){
 		saveAutoViewFlag(info.checked);

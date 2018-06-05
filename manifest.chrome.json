@@ -1,37 +1,50 @@
 {
-   "manifest_version": 2,
-   "default_locale": "en",
-   "name":"__MSG_extensionName__",
-   "description":"__MSG_extensionDescription__",
-   "version":"1.0.3",
-   "icons": {
-      "32": "image/icon.svg"
-   },
-   "background": {
-      "scripts": [
-         "ponyfill.js",
-         "config.js",
-         "background.js"
-      ]
-   },
-   "options_ui": {
-      "page": "option.html",
-      "open_in_tab": true
-   },
-   "content_scripts": [
-      {
-         "matches": ["*://*/*"],
-         "js": [
-            "ponyfill.js",
-            "content.js"
-         ],
-         "run_at": "document_end"
-      }
-   ],
-   "permissions": [
-      "activeTab",
-      "contextMenus",
-      "storage",
-      "notifications"
-   ]
+	"manifest_version": 2,
+	"default_locale": "en",
+	"name":"__MSG_extensionName__",
+	"description":"__MSG_extensionDescription__",
+	"version":"1.1.4",
+
+
+
+
+
+
+	"icons": {
+		"32": "image/icon.svg"
+	},
+	"background": {
+		"scripts": [
+			"ponyfill.js",
+			"config.js",
+			"background.js"
+		]
+	},
+	"options_ui": {
+		"page": "option.html",
+		"open_in_tab": true
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://*/*"],
+			"css": [
+				"content.css"
+			],
+			"js": [
+				"ponyfill.js",
+				"content.js"
+			]
+		}
+	],
+	"permissions": [
+		"activeTab",
+		"contextMenus",
+		"storage",
+		"notifications"
+	],
+	"web_accessible_resources": [
+		"image/icon.svg",
+		"image/minus.svg",
+		"image/plus.svg"
+	]
 }

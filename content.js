@@ -27,35 +27,33 @@
 	promise.catch(onError);
 
 	function init(){
+		/*
 		let link = document.createElement("link");
 		link.setAttribute("rel", "stylesheet");
 		link.setAttribute("type", "text/css");
-		link.setAttribute("href", browser.extension.getURL("content.css"));
+		link.setAttribute("href", chrome.extension.getURL("content.css"));
 		document.querySelector("head").appendChild(link);
+		*/
 		linkListNode = document.createElement("div");
-		linkListNode.classList.add("lessLaborGoToDictionary-common");
 		linkListNode.classList.add("lessLaborGoToDictionary-viewer");
 		linkListNode.classList.add("lessLaborGoToDictionary-hide");
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
 		document.querySelector("body").appendChild( linkListNode );
-		browser.storage.onChanged.addListener( onStorageChanged );
+		chrome.storage.onChanged.addListener( onStorageChanged );
 		menuNode = document.createElement("nav");
-		menuNode.classList.add("lessLaborGoToDictionary-common");
 		menuNode.classList.add("lessLaborGoToDictionary-menu");
 		linkListNode.appendChild(menuNode);
 		let zoomDownNode = document.createElement("img");
-		zoomDownNode.src = browser.extension.getURL("image/minus.svg");
-		zoomDownNode.classList.add("lessLaborGoToDictionary-common");
+		zoomDownNode.src = chrome.extension.getURL("image/minus.svg");
 		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
-		zoomDownNode.title = browser.i18n.getMessage("htmlZoomDown");
+		zoomDownNode.title = chrome.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 		let zoomUpNode = document.createElement("img");
-		zoomUpNode.src = browser.extension.getURL("image/plus.svg");
-		zoomUpNode.classList.add("lessLaborGoToDictionary-common");
+		zoomUpNode.src = chrome.extension.getURL("image/plus.svg");
 		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
-		zoomUpNode.title = browser.i18n.getMessage("htmlZoomUp");
+		zoomUpNode.title = chrome.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 		return reload();
 	}
@@ -190,7 +188,7 @@
 	}
 
 	function saveLinkListSize(){
-		let res = browser.runtime.sendMessage({
+		let res = ponyfill.runtime.sendMessage({
 			"method": "saveLinkListSize",
 			"data": {
 				"lh": linkListNodeHeight,
@@ -214,7 +212,6 @@
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
-			a.classList.add("lessLaborGoToDictionary-common");
 			a.classList.add("lessLaborGoToDictionary-anchor");
 			a.style["font-size"] = anchorSize + "em";
 			a.setAttribute( "href", url );
@@ -222,7 +219,6 @@
 			a.innerText = item["l"];
 			linkListNode.appendChild(a);
 			let br = document.createElement("br");
-			br.classList.add("lessLaborGoToDictionary-common");
 			br.classList.add("lessLaborGoToDictionary-braek");
 			linkListNode.appendChild(br);
 		}
@@ -365,7 +361,7 @@
 	}
 
 	function saveAnchorSize(){
-		let res = browser.runtime.sendMessage({
+		let res = ponyfill.runtime.sendMessage({
 			"method": "saveAnchorSize",
 			"data": {
 				"as": anchorSize
