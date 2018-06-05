@@ -1,10 +1,20 @@
-# LessLaborGoToDictionary
-This is Firefox add-on. When you select a word on the website, a link list （something like a dictionary site) is displayed. By using this add-on, it is possible to omit this series of trouble of copying words, opening a dictionary site, pasting words and searching. The link list is also displayed in the right click (context menu). In addition, you can make settings such as hide display of link list, addition and deletion of link. Since I prepared URLs of several dictionary sites beforehand, you can use it without knowledge of URL. You can also add the URL manually.
+# Less Labor Go To Dictionary
+When you select a character on the website, a list of links to the dictionary site and the like ("link list") is displayed.  
+Copy characters, open a dictionary site, paste copied characters, you can save a series of these troubles.  
+If you deselect the words selection or press the escape (Esc) key, the link list will be hidden.  
+* Context menu (right click)
+   * The link list is also displayed in the context menu.
+   * Automatic display and manual display are possible.
+   * You can select shift (Shift) key or control (Ctrl) key for manual display.
+   * Open the setting screen.
+* Setting screen
+   * Link list can be added, changed in order, renamed, deleted.
+   * Since we prepared several URLs of dictionary sites beforehand, there is no problem even if there is no knowledge of the URL.
+   * You can also add the URL manually.
 
-# Website list
+## Website list
 This is a list of currently prepared websites (URLs).
-
-## English
+### English
 * Wikipedia (www.wikipedia.org)
 * Google (google.com)
 * Google Images
@@ -21,7 +31,7 @@ This is a list of currently prepared websites (URLs).
 * Merriam-Webster
 * YourDictionary.com
 
-## Japanese
+### Japanese
 * Bing
 * DuckDuckGo
 * Wikipedia (ja.wikipedia.org)
@@ -46,10 +56,10 @@ This is a list of currently prepared websites (URLs).
 * goo 日中辞書
 * 英辞郎 on the WEB
 
-# Build and Run
-These codes were written just pure JavaScript which doesn't relate any other library.
+## Build and Run
+These are written in pure javascript only, not using any other libraries.
 
     $ web-ext build
     $ web-ext run
-# License
+## License
 This software is released under the MIT License, see LICENSE.md.
