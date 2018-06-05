@@ -7,10 +7,6 @@
 		"message": "文字を選択すると辞書サイトへのリンク一覧が表示されます。右クリックからも移動でき、リンク一覧の表示設定、設定画面の表示ができます。",
 		"description": "Description of the extension."
 	},
-	"extensionOptionName": {
-		"message": "手間なし辞書検索 設定",
-		"description": "Name of the extension option."
-	},
 	"extensionOptionAutoView": {
 		"message": "自動リンクリスト表示",
 		"description": "Name of link list option."
@@ -48,7 +44,7 @@
 		"description": ""
 	},
 	"htmlFormName": {
-		"message": "設定",
+		"message": "リンクリスト",
 		"description": "Name of the form on the side menu."
 	},
 	"htmlPresetName": {
@@ -60,7 +56,7 @@
 		"description": "Name of the contact on the side menu."
 	},
 	"htmlFormDescription": {
-		"message": "サイトの追加、変更、削除、並び順の変更ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。",
+		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。",
 		"description": "Description of the extension option."
 	},
 	"htmlPresetDescription": {
