@@ -243,26 +243,28 @@
 	}
 
 	function onStorageChanged(change, area){
-		if( change["lh"] || change["lw"] ){
+		if( change["lh"] && change["lw"] ){
 			setLinkListSize( change["lh"]["newValue"], change["lw"]["newValue"] );
-			return ;
 		}
-		if( change["as"] ){
+		else if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
-			return ;
 		}
-		if( change["ck"] ){
+		else if( change["ck"] ){
 			setCtrlKeyFlag( change["ck"]["newValue"] );
-			return ;
 		}
-		if( change["sk"] ){
+		else if( change["sk"] ){
 			setShiftKeyFlag( change["sk"]["newValue"] );
-			return ;
 		}
-		closeLinkList();
-		if( change["ol"] ) setOptionList( change["ol"]["newValue"] );
-		if( change["bf"] ) setLinkListFlag( change["bf"]["newValue"] );
-		resetLinkListEvents();
+		else if( change["ol"] ) {
+			closeLinkList();
+			setOptionList( change["ol"]["newValue"] );
+			resetLinkListEvents();
+		}
+		else if( change["bf"] ){
+			closeLinkList();
+			setLinkListFlag( change["bf"]["newValue"] );
+			resetLinkListEvents();
+		}
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
