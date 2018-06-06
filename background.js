@@ -116,28 +116,28 @@ function resetMenu(json){
 				"contexts": ["selection"]
 			};
 			options[id] = url;
-			let ret = ponyfill.contextMenus.create(args);
+			chrome.contextMenus.create(args);
 		}
 	}
 	if( 0 < optionList.length ) {
-		ponyfill.contextMenus.create({
+		chrome.contextMenus.create({
 			"type": "separator",
 			"contexts": ["selection"]
 		});
 	}
-	ponyfill.contextMenus.create({
+	chrome.contextMenus.create({
 		"id": "autoView",
 		"title": chrome.i18n.getMessage("extensionOptionAutoView"),
 		"checked": autoViewFlag,
 		"type": "checkbox",
 		"contexts": ["page","selection"]
 	});
-	ponyfill.contextMenus.create({
+	chrome.contextMenus.create({
 		"id": "manualView",
 		"title": chrome.i18n.getMessage("extensionOptionManualView"),
 		"contexts": ["page","selection"]
 	});
-	ponyfill.contextMenus.create({
+	chrome.contextMenus.create({
 		"parentId": "manualView",
 		"id": "manualViewShiftKey",
 		"title": chrome.i18n.getMessage("extensionOptionManualViewByShiftKey"),
@@ -145,7 +145,7 @@ function resetMenu(json){
 		"type": "checkbox",
 		"contexts": ["page","selection"]
 	});
-	ponyfill.contextMenus.create({
+	chrome.contextMenus.create({
 		"parentId": "manualView",
 		"id": "manualViewCtrlKey",
 		"title": chrome.i18n.getMessage("extensionOptionManualViewByCtrlKey"),
@@ -153,12 +153,9 @@ function resetMenu(json){
 		"type": "checkbox",
 		"contexts": ["page","selection"]
 	});
-	ponyfill.contextMenus.create({
+	chrome.contextMenus.create({
 		"id": "option",
 		"title": chrome.i18n.getMessage("extensionOptionName"),
-		"icons": {
-			"32":"image/icon.svg"
-		},
 		"contexts": ["page","selection"]
 	});
 }

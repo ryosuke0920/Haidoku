@@ -22,7 +22,6 @@ var ponyfill = (()=>{
 			super(definition);
 			this.runtime = new runtime(definition);
 			this.tabs = new tabs(definition);
-			this.contextMenus = new contextMenus(definition);
 			this.storage = new storage(definition);
 		}
 	}
@@ -119,19 +118,6 @@ var ponyfill = (()=>{
 				}
 			});
 			return promise;
-		}
-	}
-
-	class contextMenus extends base {
-		constructor( definition ){
-			super(definition);
-		}
-
-		create( data, callback=null ){
-			if( this._browser == this._chrome ) {
-				delete data["icons"];
-			}
-			return chrome.contextMenus.create(data, callback);
 		}
 	}
 
