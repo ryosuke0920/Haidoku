@@ -20,10 +20,11 @@
 	let language;
 	let languageJson = {};
 
-	document.addEventListener("DOMContentLoaded", init);
 
-	function init(e){
-		initProperties().then( initI18n ).then( initPreset ).then( initField ).then( initListener ).catch( onError );
+	starter().then(initProperties).then( initI18n ).then( initPreset ).then( initField ).then( initListener ).catch( onError );
+
+	function starter(){
+		return new Promise((resolve)=>{resolve()});
 	}
 
 	function initProperties(){

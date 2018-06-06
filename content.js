@@ -24,8 +24,12 @@
 	let menuNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
-	let promise = init();
-	promise.catch(onError);
+
+	starter().then(init).then(reload).catch(onError);
+
+	function starter(){
+		return new Promise((resolve)=>{resolve()});
+	}
 
 	function init(){
 		linkListNode = document.createElement("div");
@@ -49,7 +53,6 @@
 		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
 		zoomUpNode.title = chrome.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
-		return reload();
 	}
 
 	function addCommonLinkListEvents(){
