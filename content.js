@@ -28,13 +28,6 @@
 	promise.catch(onError);
 
 	function init(){
-		/*
-		let link = document.createElement("link");
-		link.setAttribute("rel", "stylesheet");
-		link.setAttribute("type", "text/css");
-		link.setAttribute("href", chrome.extension.getURL("content.css"));
-		document.querySelector("head").appendChild(link);
-		*/
 		linkListNode = document.createElement("div");
 		linkListNode.classList.add("lessLaborGoToDictionary-viewer");
 		linkListNode.classList.add("lessLaborGoToDictionary-hide");

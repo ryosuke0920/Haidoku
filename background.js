@@ -1,10 +1,19 @@
 let options = {};
-init();
+chrome.runtime.onInstalled.addListener( install );
+starter().then(initContextMenu).then(initListener);
 
-function init(){
-	let promise = initContextMenu();
-	promise.then( initListener, onError);
-};
+function starter(){
+	return new Promise((resolve)=>{resolve()});
+}
+
+function install(e){
+	if(e.reason == "install"){
+		let data = {
+			"ol": getDefaultOptionList()
+		};
+		return save(data).catch(onSaveError);
+	}
+}
 
 function getPresetOptionList(){
 	return PRESET_OPTION_LIST;
@@ -12,22 +21,12 @@ function getPresetOptionList(){
 
 function initContextMenu(){
 	let getter = ponyfill.storage.sync.get({
-		"ol": null,
+		"ol": [],
 		"bf": true,
 		"sk": false,
 		"ck": false
 	});
-
-	function installOrNot(res){
-		if ( res["ol"] ){
-			resetMenu(res);
-			return ;
-		}
-		let promise = saveInit();
-		return promise.then( resetDefaultMenu, onSaveError );
-	}
-
-	return getter.then( installOrNot, onReadError );
+	return getter.then(resetMenu, onReadError);
 }
 
 function initListener(){
@@ -49,15 +48,6 @@ function save(data){
 	return setter;
 }
 
-function saveInit(){
-	let data = {
-		"ol": getDefaultOptionList(),
-		"w": "",
-		"bf": true
-	};
-	return save(data);
-}
-
 function notify(message){
 	//let method = message.method;
 	let data = message.data;
@@ -69,7 +59,7 @@ function saveOption( optionList, windowId="" ){
 		"ol": optionList,
 		"w": windowId
 	};
-	return save(data);
+	return save(data).catch(onSaveError);
 }
 
 function saveAutoViewFlag(flag=true){
@@ -105,10 +95,6 @@ function resetMenuFromStorage(){
 	return getter.then( resetMenu, onError);
 }
 
-function resetDefaultMenu(){
-	resetMenu( {"ol": getDefaultOptionList(), "bf": true} );
-}
-
 function resetMenu(json){
 	let optionList = json["ol"];
 	let autoViewFlag = json["bf"];
@@ -119,12 +105,12 @@ function resetMenu(json){
 		let data = optionList[i];
 		let checked = data["c"];
 		if ( checked ) {
-			let id = "" + (i+1);
+			let id = (i+1).toString();
 			let label = data["l"];
 			let url = data["u"];
 			let args = {
 				"id": id,
-				"title": label || "(" + id + ") undefined label",
+				"title": label,
 				"contexts": ["selection"]
 			};
 			options[id] = url;

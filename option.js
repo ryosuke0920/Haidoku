@@ -162,13 +162,13 @@
 				return ;
 			}
 			addField();
-			promise = saveOption();
 			resetSort();
+			promise = saveOption();
 		}
 		else if(cassList.contains("removeField")){
 			e.target.closest(".field").remove();
-			promise = saveOption();
 			resetSort();
+			promise = saveOption();
 		}
 		else if(cassList.contains("showPreset")){
 			showPreset();
@@ -522,7 +522,7 @@
 		let optionList = makeOptionList();
 		windowId = Math.random();
 		let saver = bgPage.saveOption( optionList, windowId );
-		return saver.catch( (e)=>{ bgPage.onSaveError(e) } );
+		return saver;
 	}
 
 	function onError(e){
