@@ -30,7 +30,7 @@ function initContextMenu(){
 }
 
 function initListener(){
-	chrome.storage.onChanged.addListener( resetMenuFromStorage );
+	chrome.storage.onChanged.addListener( onStorageChanged );
 	chrome.contextMenus.onClicked.addListener( contextMenuBehavior );
 	chrome.runtime.onMessage.addListener(notify);
 }
@@ -84,15 +84,17 @@ function makeMetadata(){
 	return data;
 }
 
-function resetMenuFromStorage(){
-	chrome.contextMenus.removeAll();
-	let getter = ponyfill.storage.sync.get({
-		"ol": [],
-		"bf": true,
-		"sk": false,
-		"ck": false
-	});
-	return getter.then( resetMenu, onError);
+function onStorageChanged(change, area){
+	if(change["ol"] || change["bf"] || change["sk"] || change["ck"]) {
+		chrome.contextMenus.removeAll();
+		let getter = ponyfill.storage.sync.get({
+			"ol": [],
+			"bf": true,
+			"sk": false,
+			"ck": false
+		});
+		return getter.then(resetMenu, onError);
+	}
 }
 
 function resetMenu(json){
