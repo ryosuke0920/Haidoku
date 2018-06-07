@@ -27,17 +27,45 @@
 		"message": "options",
 		"description": "Name of link list option."
 	},
+	"notificationUnexpectedError": {
+		"message": "unexpected error. $ERROR$",
+		"description": "unexpected error notification.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "An error has occurred."
+			}
+		}
+	},
 	"notificationReadOptionError": {
-		"message": "failed to read your configuration.",
-		"description": "save option error notification."
+		"message": "failed to read your configuration. $ERROR$",
+		"description": "save option error notification.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "An error has occurred."
+			}
+		}
 	},
 	"notificationSaveOptionError": {
-		"message": "failed to save your configuration.",
-		"description": "save option error notification."
+		"message": "failed to save your configuration. $ERROR$",
+		"description": "save option error notification.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "An error has occurred."
+			}
+		}
 	},
 	"notificationOpenWindowError": {
-		"message": "failed to open new window.",
-		"description": "open window error notification."
+		"message": "failed to open new window. $ERROR$",
+		"description": "open window error notification.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "An error has occurred."
+			}
+		}
 	},
 	"htmlZoomDown": {
 		"message": "zoom down",
@@ -72,7 +100,7 @@
 		"description": "Name of add blank field button."
 	},
 	"htmlHandle": {
-		"message": "sort.",
+		"message": "changing the order.",
 		"description": "title of sort."
 	},
 	"htmlLabelText": {

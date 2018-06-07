@@ -21,10 +21,10 @@
 	let languageJson = {};
 
 
-	starter().then(initProperties).then( initI18n ).then( initPreset ).then( initField ).then( initListener ).catch( onError );
+	starter().then(initProperties).then( initI18n ).then( initPreset ).then( initField ).then( initListener ).catch( unexpectedError );
 
 	function starter(){
-		return new Promise((resolve)=>{resolve()});
+		return Promise.resolve();
 	}
 
 	function initProperties(){
@@ -263,7 +263,7 @@
 		let list2 = tableNode.querySelectorAll(".checkbox:checked");
 		let sum2 = 0;
 		if( list2 ) sum2 = list2.length;
-		messageManager( chrome.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
+		return notice( chrome.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
 	}
 
 	function addPreset(e){
@@ -314,11 +314,11 @@
 	}
 
 	function onCheckFieldLengthError(){
-		messageManager( chrome.i18n.getMessage("htmlCheckFieldLengthError", MAX_FIELD ));
+		return notice( chrome.i18n.getMessage("htmlCheckFieldLengthError", MAX_FIELD ));
 	}
 
-	function messageManager( message="exampleMessage" ){
-		let noticer = chrome.notifications.create({
+	function notice(message){
+		let noticer = ponyfill.notifications.create({
 			"type": "basic",
 			"iconUrl": chrome.extension.getURL("image/icon.svg"),
 			"title": chrome.i18n.getMessage("extensionName"),
@@ -525,7 +525,8 @@
 		return saver;
 	}
 
-	function onError(e){
+	function unexpectedError(e){
 		console.error(e);
+		return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.toString()]));
 	}
 })();

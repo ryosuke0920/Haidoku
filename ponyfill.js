@@ -4,10 +4,6 @@ var ponyfill = (()=>{
 		constructor(definition={}){
 			for( let key in definition ) this[key] = definition[key];
 		}
-
-		error(e){
-			throw(e);
-		}
 	}
 
 	class ponyfill extends base {
@@ -23,6 +19,7 @@ var ponyfill = (()=>{
 			this.runtime = new runtime(definition);
 			this.tabs = new tabs(definition);
 			this.storage = new storage(definition);
+			this.notifications = new notifications(definition);
 		}
 	}
 
@@ -32,29 +29,24 @@ var ponyfill = (()=>{
 		}
 
 		getBackgroundPage(){
-			let promise = new Promise((resolve, reject)=>{
-				try {
-					chrome.runtime.getBackgroundPage((e)=>{
-						resolve(e);
-					});
-				}
-				catch(e){
-					reject(e);
-				}
+			let promise = new Promise((resolve)=>{
+				chrome.runtime.getBackgroundPage((page)=>{
+					resolve(page);
+				});
 			});
 			return promise;
 		}
 
 		sendMessage(message){
-			let promise = new Promise((resolve, reject)=>{
-				try {
-					chrome.runtime.sendMessage(message, (e)=>{
-						resolve(e);
-					});
-				}
-				catch(e){
-					reject(e);
-				}
+			let promise = new Promise((resolve,reject)=>{
+				chrome.runtime.sendMessage(message, (res)=>{
+					if(chrome.runtime.lastError){
+						reject(chrome.runtime.lastError);
+					}
+					else {
+						resolve(res);
+					}
+				});
 			});
 			return promise;
 		}
@@ -66,15 +58,10 @@ var ponyfill = (()=>{
 		}
 
 		create(data){
-			let promise = new Promise((resolve, reject)=>{
-				try {
-					chrome.tabs.create(data, (e)=>{
-						resolve(e);
-					});
-				}
-				catch(e){
-					reject(e);
-				}
+			let promise = new Promise((resolve)=>{
+				chrome.tabs.create(data, (tab)=>{
+					resolve(tab);
+				});
 			});
 			return promise;
 		}
@@ -94,32 +81,46 @@ var ponyfill = (()=>{
 
 		set(data){
 			let promise = new Promise((resolve, reject)=>{
-				try {
-					chrome.storage.sync.set(data, (e)=>{
-						resolve(e);
-					});
-				}
-				catch(e){
-					reject(e);
-				}
+				chrome.storage.sync.set(data, (res)=>{
+					if(chrome.runtime.lastError){
+						reject(chrome.runtime.lastError);
+					}
+					else {
+						resolve(res);
+					}
+				});
 			});
 			return promise;
 		}
 
 		get( data ){
 			let promise = new Promise((resolve, reject)=>{
-				try {
-					chrome.storage.sync.get(data, (e)=>{
-						resolve(e);
-					});
-				}
-				catch(e){
-					reject(e);
-				}
+				chrome.storage.sync.get(data, (res)=>{
+					if(chrome.runtime.lastError){
+						reject(chrome.runtime.lastError);
+					}
+					else {
+						resolve(res);
+					}
+				});
 			});
 			return promise;
 		}
 	}
 
+	class notifications extends base {
+		constructor( definition ){
+			super(definition);
+		}
+
+		create(options){
+			let promise = new Promise((resolve)=>{
+				chrome.notifications.create(options, (notificationId)=>{
+					resolve(notificationId);
+				});
+			});
+			return promise;
+		}
+	}
 	return new ponyfill();
 })();

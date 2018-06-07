@@ -1,9 +1,9 @@
 let options = {};
 chrome.runtime.onInstalled.addListener( install );
-starter().then(initContextMenu).then(initListener);
+starter().then(initContextMenu).then(initListener).catch(unexpectedError);
 
 function starter(){
-	return new Promise((resolve)=>{resolve()});
+	return Promise.resolve();
 }
 
 function install(e){
@@ -49,9 +49,14 @@ function save(data){
 }
 
 function notify(message){
-	//let method = message.method;
+	let method = message.method;
 	let data = message.data;
-	return save(data).catch(onSaveError);
+	if( method == "notice" ){
+		return notice(data);
+	}
+	else {
+		return save(data);
+	}
 }
 
 function saveOption( optionList, windowId="" ){
@@ -93,7 +98,7 @@ function onStorageChanged(change, area){
 			"sk": false,
 			"ck": false
 		});
-		return getter.then(resetMenu, onError);
+		return getter.then(resetMenu, onReadError);
 	}
 }
 
@@ -186,38 +191,31 @@ function getDefaultOptionList(){
 }
 
 function onOpenWindowError(e){
-	onError(e);
-	let noticer = chrome.notifications.create({
-		"type": "basic",
-		"iconUrl": chrome.extension.getURL("image/icon.svg"),
-		"title": chrome.i18n.getMessage("extensionName"),
-		"message": chrome.i18n.getMessage("notificationOpenWindowError") + "\n" + e
-	});
-	return noticer;
+	console.error(e);
+	return notice(chrome.i18n.getMessage("notificationOpenWindowError", [e.toString()]));
 }
 
 function onReadError(e){
-	onError(e);
-	let noticer = chrome.notifications.create({
-		"type": "basic",
-		"iconUrl": chrome.extension.getURL("image/icon.svg"),
-		"title": chrome.i18n.getMessage("extensionName"),
-		"message": chrome.i18n.getMessage("notificationReadWindowError") + "\n" + e
-	});
-	return noticer;
+	console.error(e);
+	return notice(chrome.i18n.getMessage("notificationReadOptionError", [e.toString()]));
 }
 
 function onSaveError(e){
-	onError(e);
-	let noticer = chrome.notifications.create({
+	console.error(e);
+	return notice(chrome.i18n.getMessage("notificationSaveOptionError", [e.toString()]));
+}
+
+function unexpectedError(e){
+	console.error(e);
+	return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.toString()]));
+}
+
+function notice(message){
+	let noticer = ponyfill.notifications.create({
 		"type": "basic",
 		"iconUrl": chrome.extension.getURL("image/icon.svg"),
 		"title": chrome.i18n.getMessage("extensionName"),
-		"message": chrome.i18n.getMessage("notificationSaveOptionError") + "\n" + e
+		"message": message
 	});
 	return noticer;
-}
-
-function onError(e){
-	console.error(e);
 }

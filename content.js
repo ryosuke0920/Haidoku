@@ -25,10 +25,10 @@
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 
-	starter().then(init).then(reload).then(addCommonLinkListEvents).catch(onError);
+	starter().then(init).then(reload).then(addCommonLinkListEvents).catch(unexpectedError);
 
 	function starter(){
-		return new Promise((resolve)=>{resolve()});
+		return Promise.resolve();
 	}
 
 	function init(){
@@ -39,7 +39,6 @@
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
 		document.querySelector("body").appendChild( linkListNode );
-		chrome.storage.onChanged.addListener( onStorageChanged );
 		menuNode = document.createElement("nav");
 		menuNode.classList.add("lessLaborGoToDictionary-menu");
 		linkListNode.appendChild(menuNode);
@@ -56,6 +55,7 @@
 	}
 
 	function addCommonLinkListEvents(){
+		chrome.storage.onChanged.addListener( onStorageChanged );
 		window.addEventListener("resize", resizeBehavior);
 		menuNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
@@ -115,7 +115,7 @@
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
 			promise = saveLinkListSize();
-			promise.catch(onError);
+			promise.catch(onSaveError);
 		}
 	}
 
@@ -282,7 +282,7 @@
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE
 		});
-		return getter.then(setVer);
+		return getter.then(setVer, onReadError);
 	}
 
 	function setVer( res ){
@@ -334,13 +334,13 @@
 		if(e.target.classList.contains("lessLaborGoToDictionary-zoomUp")){
 			if( zoomLinkList(1) ){
 				promise = saveAnchorSize();
-				promise.catch(onError);
+				promise.catch(onSaveError);
 			}
 		}
 		else if(e.target.classList.contains("lessLaborGoToDictionary-zoomDown")){
 			if( zoomLinkList(-1) ){
 				promise = saveAnchorSize();
-				promise.catch(onError);
+				promise.catch(onSaveError);
 			}
 		}
 	}
@@ -368,7 +368,30 @@
 		return res;
 	}
 
-	function onError(e){
+	function onSaveError(e){
 		console.error(e);
+		let res = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": chrome.i18n.getMessage("notificationSaveOptionError", [e.toString()])
+		});
+		return res;
+	}
+
+	function onReadError(e){
+		console.error(e);
+		let res = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": chrome.i18n.getMessage("notificationReadOptionError", [e.toString()])
+		});
+		return res;
+	}
+
+	function unexpectedError(e){
+		console.error(e);
+		let res = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": chrome.i18n.getMessage("notificationUnexpectedError", [e.toString()])
+		});
+		return res;
 	}
 })();
