@@ -103,8 +103,7 @@
 
 	function initField(){
 		let getter = ponyfill.storage.sync.get({
-			"ol": [],
-			"bf": true
+			"ol": []
 		});
 
 		function onGot(res){
