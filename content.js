@@ -25,7 +25,7 @@
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 
-	starter().then(init).then(reload).catch(onError);
+	starter().then(init).then(reload).then(addCommonLinkListEvents).catch(onError);
 
 	function starter(){
 		return new Promise((resolve)=>{resolve()});
@@ -314,7 +314,6 @@
 	function resetLinkListEvents(){
 		removeAutoLinkListEvents();
 		if( linkListFlag && hasLinkList() ) addAutoLinkListEvents();
-		addCommonLinkListEvents();
 	}
 
 	function setOptionList(res){

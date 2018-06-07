@@ -64,7 +64,7 @@
 		"description": "Description of the extension option."
 	},
 	"htmlPresetDescription": {
-		"message": "Select your favorite sites and press \"add\" button.",
+		"message": "Select some of sites and press \"add\" button.",
 		"description": "Description of the preset option."
 	},
 	"htmlAddBlankFieldButtonName": {
