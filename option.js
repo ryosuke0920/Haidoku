@@ -314,7 +314,7 @@
 	}
 
 	function onCheckFieldLengthError(){
-		return notice( chrome.i18n.getMessage("htmlCheckFieldLengthError", MAX_FIELD ));
+		return notice( chrome.i18n.getMessage("htmlCheckFieldLengthError", [MAX_FIELD] ));
 	}
 
 	function notice(message){
@@ -527,6 +527,6 @@
 
 	function unexpectedError(e){
 		console.error(e);
-		return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.toString()]));
+		return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.message]));
 	}
 })();

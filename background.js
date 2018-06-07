@@ -48,15 +48,16 @@ function save(data){
 	return setter;
 }
 
-function notify(message){
+function notify(message, sender, sendResponse){
 	let method = message.method;
 	let data = message.data;
 	if( method == "notice" ){
-		return notice(data);
+		sendResponse( notice(data) );
 	}
 	else {
-		return save(data);
+		sendResponse( save(data) );
 	}
+	return true;
 }
 
 function saveOption( optionList, windowId="" ){
@@ -192,22 +193,22 @@ function getDefaultOptionList(){
 
 function onOpenWindowError(e){
 	console.error(e);
-	return notice(chrome.i18n.getMessage("notificationOpenWindowError", [e.toString()]));
+	return notice(chrome.i18n.getMessage("notificationOpenWindowError", [e.message]));
 }
 
 function onReadError(e){
 	console.error(e);
-	return notice(chrome.i18n.getMessage("notificationReadOptionError", [e.toString()]));
+	return notice(chrome.i18n.getMessage("notificationReadOptionError", [e.message]));
 }
 
 function onSaveError(e){
 	console.error(e);
-	return notice(chrome.i18n.getMessage("notificationSaveOptionError", [e.toString()]));
+	return notice(chrome.i18n.getMessage("notificationSaveOptionError", [e.message]));
 }
 
 function unexpectedError(e){
 	console.error(e);
-	return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.toString()]));
+	return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.message]));
 }
 
 function notice(message){

@@ -372,7 +372,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationSaveOptionError", [e.toString()])
+			"data": chrome.i18n.getMessage("notificationSaveOptionError", [e.message])
 		});
 		return res;
 	}
@@ -381,7 +381,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationReadOptionError", [e.toString()])
+			"data": chrome.i18n.getMessage("notificationReadOptionError", [e.message])
 		});
 		return res;
 	}
@@ -390,7 +390,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationUnexpectedError", [e.toString()])
+			"data": chrome.i18n.getMessage("notificationUnexpectedError", [e.message])
 		});
 		return res;
 	}

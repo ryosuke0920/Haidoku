@@ -105,7 +105,7 @@
 	},
 	"htmlLabelText": {
 		"message": "サイト名",
-		"description": "Name of label."
+		"description": "Name of site."
 	},
 	"htmlUrlText": {
 		"message": "URL",
