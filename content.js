@@ -10,6 +10,8 @@
 	const ANCHOR_MAX_SIZE = 2;
 	const ANCHOR_MIN_SIZE = 0.6;
 	const ANCHOR_RESIO = 0.1;
+	const SILENT_ERROR_PREFIX = "[silent]";
+	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -25,20 +27,30 @@
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 
-	starter().then(init).then(reload).then(addCommonLinkListEvents).catch(unexpectedError);
+	starter()
+		.then(init)
+		.then(
+			()=>{ starter().then(reload).then(addCommonLinkListEvents); },
+			silentError
+		).catch(unexpectedError);
 
 	function starter(){
 		return Promise.resolve();
 	}
 
 	function init(){
+		let body = document.querySelector("body");
+		if( !body ){
+			/* break promise chain, but not need notification. */
+			throw( new Error( SILENT_ERROR_PREFIX + " not found body") );
+		}
 		linkListNode = document.createElement("div");
 		linkListNode.classList.add("lessLaborGoToDictionary-viewer");
 		linkListNode.classList.add("lessLaborGoToDictionary-hide");
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
-		document.querySelector("body").appendChild( linkListNode );
+		body.appendChild( linkListNode );
 		menuNode = document.createElement("nav");
 		menuNode.classList.add("lessLaborGoToDictionary-menu");
 		linkListNode.appendChild(menuNode);
@@ -393,5 +405,14 @@
 			"data": chrome.i18n.getMessage("notificationUnexpectedError", [e.message])
 		});
 		return res;
+	}
+
+	function silentError(e){
+		if( e.message.match( SILENT_ERROR_REGEX ) ){
+			console.error(e);
+		}
+		else {
+			throw(e);
+		}
 	}
 })();
