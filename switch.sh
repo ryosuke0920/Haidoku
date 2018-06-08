@@ -1,4 +1,4 @@
-#!/bin/bash
+#! /bin/bash
 
 function check() {
 	if [ ${?} != "0" ]; then
@@ -9,7 +9,7 @@ function check() {
 
 APP_DIR=$(dirname $0)"/";
 
-if [ -h ${APP_DIR}"manifest.json" ]; then
+if [ -e ${APP_DIR}"manifest.json" ]; then
 	rm ${APP_DIR}"manifest.json";
 	check ${1};
 fi
