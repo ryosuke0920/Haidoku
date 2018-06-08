@@ -4,7 +4,7 @@
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
-		"message": "If you select a text in the site, link list you made will be displayed. If you fire right click, You can go to the site too, setting link list view or not, and configuration which sites you need to.",
+		"message": "If you select a text in the site, link list you made will be displayed. So you can search faster.",
 		"description": "Description of the extension."
 	},
 	"extensionOptionAutoView": {
