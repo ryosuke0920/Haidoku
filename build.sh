@@ -19,11 +19,13 @@ case ${1} in
 		cp ${APP_DIR}"manifest.firefox.json" ${APP_DIR}"manifest.json";
 		check ${?};
 		web-ext lint --ignore-files \
+			${APP_DIR}"chrome-artifacts" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
 			${APP_DIR}"*.sh";
 		check ${?};
-		web-ext build --ignore-files \
+		web-ext build --overwrite-dest --ignore-files \
+			${APP_DIR}"chrome-artifacts" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
 			${APP_DIR}"*.sh";
