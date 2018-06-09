@@ -1,67 +1,63 @@
 let options = {};
-init();
+chrome.runtime.onInstalled.addListener( install );
+starter().then(initContextMenu).then(initListener).catch(unexpectedError);
 
-function init(){
-	let promise = initContextMenu();
-	promise.then( initListener, onError);
-};
+function starter(){
+	return Promise.resolve();
+}
+
+function install(e){
+	if(e.reason == "install"){
+		let data = {
+			"ol": getDefaultOptionList()
+		};
+		return save(data).catch(onSaveError);
+	}
+}
 
 function getPresetOptionList(){
 	return PRESET_OPTION_LIST;
 }
 
 function initContextMenu(){
-	let getter = browser.storage.sync.get({
-		"ol": null,
+	let getter = ponyfill.storage.sync.get({
+		"ol": [],
 		"bf": true,
 		"sk": false,
 		"ck": false
 	});
-
-	function installOrNot(res){
-		if ( res["ol"] ){
-			resetMenu(res);
-			return ;
-		}
-		let promise = saveInit();
-		return promise.then( resetDefaultMenu, onSaveError );
-	}
-
-	return getter.then( installOrNot, onReadError );
+	return getter.then(resetMenu, onReadError);
 }
 
 function initListener(){
-	browser.storage.onChanged.addListener( resetMenuFromStorage );
-	browser.contextMenus.onClicked.addListener( contextMenuBehavior );
-	browser.runtime.onMessage.addListener(notify);
+	chrome.storage.onChanged.addListener( onStorageChanged );
+	chrome.contextMenus.onClicked.addListener( contextMenuBehavior );
+	chrome.runtime.onMessage.addListener(notify);
 }
 
 function openWindow( url, text){
 	text  = encodeURIComponent(text);
 	url = url.replace("$1", text);
-	let promise = browser.tabs.create({"url": url});
+	let promise = ponyfill.tabs.create({"url": url});
 	return promise.catch(onOpenWindowError);
 }
 
 function save(data){
 	data["m"] = makeMetadata();
-	let setter = browser.storage.sync.set(data);
+	let setter = ponyfill.storage.sync.set(data);
 	return setter;
 }
 
-function saveInit(){
-	let data = {
-		"ol": getDefaultOptionList(),
-		"w": "",
-		"bf": true
-	};
-	return save(data);
-}
-
-function notify(message){
-	//let method = message.method;
+function notify(message, sender, sendResponse){
+	let method = message.method;
 	let data = message.data;
-	return save(data).catch(onSaveError);
+	if( method == "notice" ){
+		sendResponse( notice(data) );
+	}
+	else {
+		sendResponse( save(data) );
+	}
+	return true;
 }
 
 function saveOption( optionList, windowId="" ){
@@ -69,7 +65,7 @@ function saveOption( optionList, windowId="" ){
 		"ol": optionList,
 		"w": windowId
 	};
-	return save(data);
+	return save(data).catch(onSaveError);
 }
 
 function saveAutoViewFlag(flag=true){
@@ -85,7 +81,7 @@ function saveManualViewCtrlKey(flag=false){
 }
 
 function makeMetadata(){
-	let manifest = browser.runtime.getManifest();
+	let manifest = chrome.runtime.getManifest();
 	let now = new Date();
 	let data = {
 		"v": manifest.version,
@@ -94,19 +90,17 @@ function makeMetadata(){
 	return data;
 }
 
-function resetMenuFromStorage(){
-	browser.contextMenus.removeAll();
-	let getter = browser.storage.sync.get({
-		"ol": [],
-		"bf": true,
-		"sk": false,
-		"ck": false
-	});
-	return getter.then( resetMenu, onError);
-}
-
-function resetDefaultMenu(){
-	resetMenu( {"ol": getDefaultOptionList(), "bf": true} );
+function onStorageChanged(change, area){
+	if(change["ol"] || change["bf"] || change["sk"] || change["ck"]) {
+		chrome.contextMenus.removeAll();
+		let getter = ponyfill.storage.sync.get({
+			"ol": [],
+			"bf": true,
+			"sk": false,
+			"ck": false
+		});
+		return getter.then(resetMenu, onReadError);
+	}
 }
 
 function resetMenu(json){
@@ -119,60 +113,62 @@ function resetMenu(json){
 		let data = optionList[i];
 		let checked = data["c"];
 		if ( checked ) {
-			let id = "" + (i+1);
+			let id = (i+1).toString();
 			let label = data["l"];
 			let url = data["u"];
 			let args = {
 				"id": id,
-				"title": label || "(" + id + ") undefined label",
+				"title": label,
 				"contexts": ["selection"]
 			};
 			options[id] = url;
-			let ret = browser.contextMenus.create(args);
+			chrome.contextMenus.create(args);
 		}
 	}
 	if( 0 < optionList.length ) {
-		browser.contextMenus.create({
+		chrome.contextMenus.create({
 			"type": "separator",
 			"contexts": ["selection"]
 		});
 	}
-	browser.contextMenus.create({
+	chrome.contextMenus.create({
 		"id": "autoView",
-		"title": browser.i18n.getMessage("extensionOptionAutoView"),
+		"title": chrome.i18n.getMessage("extensionOptionAutoView"),
 		"checked": autoViewFlag,
-		"type": "checkbox"
+		"type": "checkbox",
+		"contexts": ["page","selection"]
 	});
-	browser.contextMenus.create({
+	chrome.contextMenus.create({
 		"id": "manualView",
-		"title": browser.i18n.getMessage("extensionOptionManualView"),
+		"title": chrome.i18n.getMessage("extensionOptionManualView"),
+		"contexts": ["page","selection"]
 	});
-	browser.contextMenus.create({
+	chrome.contextMenus.create({
 		"parentId": "manualView",
 		"id": "manualViewShiftKey",
-		"title": browser.i18n.getMessage("extensionOptionManualViewByShiftKey"),
+		"title": chrome.i18n.getMessage("extensionOptionManualViewByShiftKey"),
 		"checked": shiftKey,
-		"type": "checkbox"
+		"type": "checkbox",
+		"contexts": ["page","selection"]
 	});
-	browser.contextMenus.create({
+	chrome.contextMenus.create({
 		"parentId": "manualView",
 		"id": "manualViewCtrlKey",
-		"title": browser.i18n.getMessage("extensionOptionManualViewByCtrlKey"),
+		"title": chrome.i18n.getMessage("extensionOptionManualViewByCtrlKey"),
 		"checked": ctrlKey,
-		"type": "checkbox"
+		"type": "checkbox",
+		"contexts": ["page","selection"]
 	});
-	browser.contextMenus.create({
+	chrome.contextMenus.create({
 		"id": "option",
-		"title": browser.i18n.getMessage("extensionOptionName"),
-		"icons": {
-			"32":"image/icon.svg"
-		}
+		"title": chrome.i18n.getMessage("extensionOptionName"),
+		"contexts": ["page","selection"]
 	});
 }
 
 function contextMenuBehavior(info, tab){
 	if ( info.menuItemId == "option" ){
-		browser.runtime.openOptionsPage();
+		chrome.runtime.openOptionsPage();
 	}
 	else if ( info.menuItemId == "autoView" ){
 		saveAutoViewFlag(info.checked);
@@ -189,45 +185,38 @@ function contextMenuBehavior(info, tab){
 }
 
 function getDefaultOptionList(){
-	let lang = browser.i18n.getUILanguage();
-	if ( !lang ) lang = browser.runtime.getManifest()["default_locale"];
+	let lang = chrome.i18n.getUILanguage();
+	if ( !lang ) lang = chrome.runtime.getManifest()["default_locale"];
 	if ( !DEFAULT_OPTION_LIST[lang] ) return [];
 	return DEFAULT_OPTION_LIST[lang];
 }
 
 function onOpenWindowError(e){
-	onError(e);
-	let noticer = browser.notifications.create({
-		"type": "basic",
-		"iconUrl": browser.extension.getURL("image/icon.svg"),
-		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationOpenWindowError") + "\n" + e
-	});
-	return noticer;
+	console.error(e);
+	return notice(chrome.i18n.getMessage("notificationOpenWindowError", [e.message]));
 }
 
 function onReadError(e){
-	onError(e);
-	let noticer = browser.notifications.create({
-		"type": "basic",
-		"iconUrl": browser.extension.getURL("image/icon.svg"),
-		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationReadWindowError") + "\n" + e
-	});
-	return noticer;
+	console.error(e);
+	return notice(chrome.i18n.getMessage("notificationReadOptionError", [e.message]));
 }
 
 function onSaveError(e){
-	onError(e);
-	let noticer = browser.notifications.create({
-		"type": "basic",
-		"iconUrl": browser.extension.getURL("image/icon.svg"),
-		"title": browser.i18n.getMessage("extensionName"),
-		"message": browser.i18n.getMessage("notificationSaveOptionError") + "\n" + e
-	});
-	return noticer;
+	console.error(e);
+	return notice(chrome.i18n.getMessage("notificationSaveOptionError", [e.message]));
 }
 
-function onError(e){
+function unexpectedError(e){
 	console.error(e);
+	return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.message]));
+}
+
+function notice(message){
+	let noticer = ponyfill.notifications.create({
+		"type": "basic",
+		"iconUrl": chrome.extension.getURL("image/icon.svg"),
+		"title": chrome.i18n.getMessage("extensionName"),
+		"message": message
+	});
+	return noticer;
 }

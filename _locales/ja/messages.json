@@ -27,17 +27,45 @@
 		"message": "設定",
 		"description": "Name of link list option."
 	},
+	"notificationUnexpectedError": {
+		"message": "予期せぬエラーが発生しました。$ERROR$",
+		"description": "unexpected error notification.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "An error has occurred."
+			}
+		}
+	},
 	"notificationReadOptionError": {
-		"message": "設定の読み込みに失敗しました。",
-		"description": "save option error notification."
+		"message": "設定の読み込みに失敗しました。$ERROR$",
+		"description": "save option error notification.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "An error has occurred."
+			}
+		}
 	},
 	"notificationSaveOptionError": {
-		"message": "設定の保存に失敗しました。",
-		"description": "save option error notification."
+		"message": "設定の保存に失敗しました。$ERROR$",
+		"description": "save option error notification.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "An error has occurred."
+			}
+		}
 	},
 	"notificationOpenWindowError": {
-		"message": "新しい画面を開けませんでした。",
-		"description": "open window error notification."
+		"message": "新しい画面を開けませんでした。$ERROR$",
+		"description": "open window error notification.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "An error has occurred."
+			}
+		}
 	},
 	"htmlZoomDown": {
 		"message": "縮小",
@@ -72,12 +100,12 @@
 		"description": "Name of add blank field button."
 	},
 	"htmlHandle": {
-		"message": "sort.",
+		"message": "並び順",
 		"description": "title of sort."
 	},
 	"htmlLabelText": {
 		"message": "サイト名",
-		"description": "Name of label."
+		"description": "Name of site."
 	},
 	"htmlUrlText": {
 		"message": "URL",
