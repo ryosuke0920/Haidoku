@@ -1,0 +1,43 @@
+{
+	"manifest_version": 2,
+	"default_locale": "en",
+	"name":"__MSG_extensionName__",
+	"description":"__MSG_extensionDescription__",
+	"version":"1.1.7",
+	"icons": {
+		"32": "image/icon.png"
+	},
+	"background": {
+		"scripts": [
+			"ponyfill.js",
+			"config.js",
+			"background.js"
+		]
+	},
+	"options_ui": {
+		"page": "option.html",
+		"open_in_tab": true
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://*/*"],
+			"css": [
+				"content.css"
+			],
+			"js": [
+				"ponyfill.js",
+				"content.js"
+			]
+		}
+	],
+	"permissions": [
+		"activeTab",
+		"contextMenus",
+		"storage",
+		"notifications"
+	],
+	"web_accessible_resources": [
+		"image/minus.svg",
+		"image/plus.svg"
+	]
+}

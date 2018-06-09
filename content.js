@@ -8,7 +8,10 @@
 	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
+	const ANCHOR_MIN_SIZE = 0.6;
 	const ANCHOR_RESIO = 0.1;
+	const SILENT_ERROR_PREFIX = "[silent]";
+	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -23,44 +26,48 @@
 	let menuNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
-	let promise = init();
-	promise.catch(onError);
+
+	starter()
+		.then(init)
+		.then(
+			()=>{ starter().then(reload).then(addCommonLinkListEvents); },
+			silentError
+		).catch(unexpectedError);
+
+	function starter(){
+		return Promise.resolve();
+	}
 
 	function init(){
-		let link = document.createElement("link");
-		link.setAttribute("rel", "stylesheet");
-		link.setAttribute("type", "text/css");
-		link.setAttribute("href", browser.extension.getURL("content.css"));
-		document.querySelector("head").appendChild(link);
+		let body = document.querySelector("body");
+		if( !body ){
+			/* break promise chain, but not need notification. */
+			throw( new Error( SILENT_ERROR_PREFIX + " not found body") );
+		}
 		linkListNode = document.createElement("div");
-		linkListNode.classList.add("lessLaborGoToDictionary-common");
 		linkListNode.classList.add("lessLaborGoToDictionary-viewer");
 		linkListNode.classList.add("lessLaborGoToDictionary-hide");
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
-		document.querySelector("body").appendChild( linkListNode );
-		browser.storage.onChanged.addListener( onStorageChanged );
+		body.appendChild( linkListNode );
 		menuNode = document.createElement("nav");
-		menuNode.classList.add("lessLaborGoToDictionary-common");
 		menuNode.classList.add("lessLaborGoToDictionary-menu");
 		linkListNode.appendChild(menuNode);
 		let zoomDownNode = document.createElement("img");
-		zoomDownNode.src = browser.extension.getURL("image/minus.svg");
-		zoomDownNode.classList.add("lessLaborGoToDictionary-common");
+		zoomDownNode.src = chrome.extension.getURL("image/minus.svg");
 		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
-		zoomDownNode.title = browser.i18n.getMessage("htmlZoomDown");
+		zoomDownNode.title = chrome.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 		let zoomUpNode = document.createElement("img");
-		zoomUpNode.src = browser.extension.getURL("image/plus.svg");
-		zoomUpNode.classList.add("lessLaborGoToDictionary-common");
+		zoomUpNode.src = chrome.extension.getURL("image/plus.svg");
 		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
-		zoomUpNode.title = browser.i18n.getMessage("htmlZoomUp");
+		zoomUpNode.title = chrome.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
-		return reload();
 	}
 
 	function addCommonLinkListEvents(){
+		chrome.storage.onChanged.addListener( onStorageChanged );
 		window.addEventListener("resize", resizeBehavior);
 		menuNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
@@ -120,7 +127,7 @@
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
 			promise = saveLinkListSize();
-			promise.catch(onError);
+			promise.catch(onSaveError);
 		}
 	}
 
@@ -190,7 +197,7 @@
 	}
 
 	function saveLinkListSize(){
-		let res = browser.runtime.sendMessage({
+		let res = ponyfill.runtime.sendMessage({
 			"method": "saveLinkListSize",
 			"data": {
 				"lh": linkListNodeHeight,
@@ -214,7 +221,6 @@
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
-			a.classList.add("lessLaborGoToDictionary-common");
 			a.classList.add("lessLaborGoToDictionary-anchor");
 			a.style["font-size"] = anchorSize + "em";
 			a.setAttribute( "href", url );
@@ -222,7 +228,6 @@
 			a.innerText = item["l"];
 			linkListNode.appendChild(a);
 			let br = document.createElement("br");
-			br.classList.add("lessLaborGoToDictionary-common");
 			br.classList.add("lessLaborGoToDictionary-braek");
 			linkListNode.appendChild(br);
 		}
@@ -250,26 +255,28 @@
 	}
 
 	function onStorageChanged(change, area){
-		if( change["lh"] || change["lw"] ){
+		if( change["lh"] && change["lw"] ){
 			setLinkListSize( change["lh"]["newValue"], change["lw"]["newValue"] );
-			return ;
 		}
-		if( change["as"] ){
+		else if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
-			return ;
 		}
-		if( change["ck"] ){
+		else if( change["ck"] ){
 			setCtrlKeyFlag( change["ck"]["newValue"] );
-			return ;
 		}
-		if( change["sk"] ){
+		else if( change["sk"] ){
 			setShiftKeyFlag( change["sk"]["newValue"] );
-			return ;
 		}
-		closeLinkList();
-		if( change["ol"] ) setOptionList( change["ol"]["newValue"] );
-		if( change["bf"] ) setLinkListFlag( change["bf"]["newValue"] );
-		resetLinkListEvents();
+		else if( change["ol"] ) {
+			closeLinkList();
+			setOptionList( change["ol"]["newValue"] );
+			resetLinkListEvents();
+		}
+		else if( change["bf"] ){
+			closeLinkList();
+			setLinkListFlag( change["bf"]["newValue"] );
+			resetLinkListEvents();
+		}
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
@@ -278,7 +285,7 @@
 	}
 
 	function reload(){
-		let getter = browser.storage.sync.get({
+		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,
 			"sk": false,
@@ -287,7 +294,7 @@
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE
 		});
-		return getter.then(setVer);
+		return getter.then(setVer, onReadError);
 	}
 
 	function setVer( res ){
@@ -319,7 +326,6 @@
 	function resetLinkListEvents(){
 		removeAutoLinkListEvents();
 		if( linkListFlag && hasLinkList() ) addAutoLinkListEvents();
-		addCommonLinkListEvents();
 	}
 
 	function setOptionList(res){
@@ -340,19 +346,19 @@
 		if(e.target.classList.contains("lessLaborGoToDictionary-zoomUp")){
 			if( zoomLinkList(1) ){
 				promise = saveAnchorSize();
-				promise.catch(onError);
+				promise.catch(onSaveError);
 			}
 		}
 		else if(e.target.classList.contains("lessLaborGoToDictionary-zoomDown")){
 			if( zoomLinkList(-1) ){
 				promise = saveAnchorSize();
-				promise.catch(onError);
+				promise.catch(onSaveError);
 			}
 		}
 	}
 
 	function zoomLinkList(direction=1){
-		if ( direction < 0 && anchorSize <= ANCHOR_RESIO ) return false;
+		if ( direction < 0 && anchorSize <= ANCHOR_MIN_SIZE ) return false;
 		if ( 0 < direction && ANCHOR_MAX_SIZE <= anchorSize ) return false;
 		anchorSize += direction * ANCHOR_RESIO;
 		anchorSize += 0.01;
@@ -365,7 +371,7 @@
 	}
 
 	function saveAnchorSize(){
-		let res = browser.runtime.sendMessage({
+		let res = ponyfill.runtime.sendMessage({
 			"method": "saveAnchorSize",
 			"data": {
 				"as": anchorSize
@@ -374,7 +380,39 @@
 		return res;
 	}
 
-	function onError(e){
+	function onSaveError(e){
 		console.error(e);
+		let res = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": chrome.i18n.getMessage("notificationSaveOptionError", [e.message])
+		});
+		return res;
+	}
+
+	function onReadError(e){
+		console.error(e);
+		let res = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": chrome.i18n.getMessage("notificationReadOptionError", [e.message])
+		});
+		return res;
+	}
+
+	function unexpectedError(e){
+		console.error(e);
+		let res = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": chrome.i18n.getMessage("notificationUnexpectedError", [e.message])
+		});
+		return res;
+	}
+
+	function silentError(e){
+		if( e.message.match( SILENT_ERROR_REGEX ) ){
+			console.error(e);
+		}
+		else {
+			throw(e);
+		}
 	}
 })();
