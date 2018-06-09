@@ -1,6 +1,6 @@
 {
 	"extensionName": {
-		"message": "Less Labor Go To Dictionary",
+		"message": "popup link list",
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
@@ -120,7 +120,7 @@
 		"description": "title of label description."
 	},
 	"htmlUrlDescription": {
-		"message": "If you input \"$1\", it will be replaced to the word you selected.",
+		"message": "If you input \"$$1\", it will be replaced to the word you selected.",
 		"description": "title of url description."
 	},
 	"htmlFilterText": {
@@ -139,9 +139,13 @@
 		"message": "Japanese",
 		"description": "Name of ja."
 	},
+	"htmlLanguageZh": {
+		"message": "Chinese",
+		"description": "Name of zh."
+	},
 	"htmlAddPresetButtonName": {
 		"message": "add",
-		"description": "title of adding button."
+		"description": "Name of adding button."
 	},
 	"htmlContactText": {
 		"message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
