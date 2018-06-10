@@ -47,6 +47,11 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Wiktionary (en.wiktionary.org)",
+		"u": "https://en.wiktionary.org/wiki/Special:Search?search=$1&go=Look+up"
+	},
+	{
+		"la": "en",
 		"l": "Google (www.google.com)",
 		"u": "https://www.google.com/search?q=$1"
 	},
@@ -69,6 +74,41 @@ const PRESET_OPTION_LIST = [
 		"la": "en",
 		"l": "Cambridge Dictionary",
 		"u": "https://dictionary.cambridge.org/search/english/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Cambridge Dictionary(English-Spanish)",
+		"u": "https://dictionary.cambridge.org/search/english-spanish/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Cambridge Dictionary(English-French)",
+		"u": "https://dictionary.cambridge.org/search/english-french/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Cambridge Dictionary(English-German)",
+		"u": "https://dictionary.cambridge.org/search/english-german/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Cambridge Dictionary(English-Indonesian)",
+		"u": "https://dictionary.cambridge.org/search/english-indonesian/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Cambridge Dictionary(English-Italian)",
+		"u": "https://dictionary.cambridge.org/search/english-italian/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Cambridge Dictionary(English-Polish)",
+		"u": "https://dictionary.cambridge.org/search/english-polish/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Cambridge Dictionary(English-Portuguese)",
+		"u": "https://dictionary.cambridge.org/search/english-portuguese/direct/?q=$1"
 	},
 	{
 		"la": "en",
@@ -119,6 +159,11 @@ const PRESET_OPTION_LIST = [
 		"la": "ja",
 		"l": "Wikipedia (ja.wikipedia.org)",
 		"u": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
+	},
+	{
+		"la": "ja",
+		"l": "Wiktionary (ja.wiktionary.org)",
+		"u": "https://ja.wiktionary.org/wiki/?search=$1"
 	},
 	{
 		"la": "ja",
@@ -219,5 +264,40 @@ const PRESET_OPTION_LIST = [
 		"la": "ja",
 		"l": "英辞郎 on the WEB",
 		"u": "https://eow.alc.co.jp/search?q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "経済用語基礎辞典",
+		"u": "http://1joho.sakura.ne.jp/cgi/mt02/mt-search.cgi?IncludeBlogs=2&search=$1"
+	},
+	{
+		"la": "ja",
+		"l": "語源由来辞典",
+		"u": "http://search.gogen-allguide.com/search.cgi?charset=utf8&q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "e-Words IT用語辞典",
+		"u": "http://e-words.jp/?q=$1"
+	},
+	{
+		"la": "zh",
+		"l": "维基百科 (zh.wikipedia.org)",
+		"u": "https://zh.wikipedia.org/w/index.php?search=$1"
+	},
+	{
+		"la": "zh",
+		"l": "维基词典 (zh.wiktionary.org)",
+		"u": "https://zh.wiktionary.org/w/index.php?search=$1"
+	},
+	{
+		"la": "zh",
+		"l": "Baidu百度",
+		"u": "https://www.baidu.com/s?wd=$1"
+	},
+	{
+		"la": "zh",
+		"l": "Google(www.google.com.hk)",
+		"u": "https://www.google.com.hk/search?q=$1"
 	}
 ];
