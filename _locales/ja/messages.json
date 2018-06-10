@@ -1,10 +1,10 @@
 {
 	"extensionName": {
-		"message": "手間なし辞書検索",
+		"message": "ポップアップ リンク リスト",
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
-		"message": "文字を選択すると辞書サイトへのリンク一覧が表示されます。右クリックからも移動でき、リンク一覧の表示設定、設定画面の表示ができます。",
+		"message": "WEBサイト上で文字を選択するとリンクリストが表示されます。リンクリストに辞書サイトを登録しておけば、効率よく検索できます。",
 		"description": "Description of the extension."
 	},
 	"extensionOptionAutoView": {
@@ -88,7 +88,7 @@
 		"description": "Name of the contact on the side menu."
 	},
 	"htmlFormDescription": {
-		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。",
+		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。URLに$$1を入力すると、それは選択したテキストに置き換えられます。",
 		"description": "Description of the extension option."
 	},
 	"htmlPresetDescription": {
@@ -116,7 +116,7 @@
 		"description": "Name of remove."
 	},
 	"htmlLabelDescription": {
-		"message": "リンク一覧やコンテキストメニュー（右クリック）に表示されます。",
+		"message": "URLの代わりにリンクリストやコンテキストメニュー（右クリック）に表示されます。",
 		"description": "title of label description."
 	},
 	"htmlUrlDescription": {
@@ -138,6 +138,10 @@
 	"htmlLanguageJa": {
 		"message": "日本語",
 		"description": "Name of ja."
+	},
+	"htmlLanguageZh": {
+		"message": "中国語",
+		"description": "Name of zh."
 	},
 	"htmlAddPresetButtonName": {
 		"message": "追加",
