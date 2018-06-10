@@ -4,7 +4,7 @@
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
-		"message": "When select a text, link list will be displayed. If you specify some dictionary to the link list, search faster without copy & paste.",
+		"message": "When select a text, link list which contains some dictionary will be displayed. So you can search faster.",
 		"description": "Description of the extension."
 	},
 	"extensionOptionAutoView": {
