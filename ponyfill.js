@@ -27,6 +27,10 @@ var ponyfill = (()=>{
 			if( !this.isEdge() && !this.isFirefox() ) return true;
 			return false;
 		}
+
+		getDepObj(){
+			return window[this.depName];
+		}
 	}
 
 	class ponyfill extends base {
@@ -45,11 +49,21 @@ var ponyfill = (()=>{
 	class contextMenus extends base {
 		constructor(){
 			super();
+			this.onClicked = new contextMenusOnClicked();
 		}
 
 		create(json){
-			console.log(json.title);
-			return window[this.depName].contextMenus.create(json);
+			return this.getDepObj().contextMenus.create(json);
+		}
+	}
+
+	class contextMenusOnClicked extends base {
+		constructor(){
+			super();
+		}
+
+		addListener(callback){
+			this.getDepObj().contextMenus.onClicked.addListener(callback);
 		}
 	}
 
@@ -59,7 +73,7 @@ var ponyfill = (()=>{
 		}
 		
 		getURL(path){
-			return window[this.depName].extension.getURL(path);
+			return this.getDepObj().extension.getURL(path);
 		}
 	}
 
@@ -69,11 +83,11 @@ var ponyfill = (()=>{
 		}
 
 		getMessage(key,list=[]){
-			return window[this.depName].i18n.getMessage(key,list);
+			return this.getDepObj().i18n.getMessage(key,list);
 		}
 
 		getUILanguage(){
-			return window[this.depName].i18n.getUILanguage();
+			return this.getDepObj().i18n.getUILanguage();
 		}
 	}
 
@@ -81,6 +95,7 @@ var ponyfill = (()=>{
 		constructor(){
 			super();
 			this.onInstalled = new runtimeOnInstalled();
+			this.onMessage = new runtimeOnMessage();
 		}
 
 		getBackgroundPage(){
@@ -96,7 +111,28 @@ var ponyfill = (()=>{
 		}
 
 		getManifest(){
-			return window[this.depName].runtime.getManifest();
+			return this.getDepObj().runtime.getManifest();
+		}
+		
+		onMessage(callback){
+			this.getDepObj().runtime.onMessage(callback);
+		}
+
+		openOptionsPage(){
+			if(this.isChrome()) {
+				let promise = new Promise((resolve,reject)=>{
+					chrome.runtime.openOptionsPage((res)=>{
+						if(chrome.runtime.lastError){
+							reject(chrome.runtime.lastError);
+						}
+						else {
+							resolve(res);
+						}
+					});
+				});
+				return promise;
+			}
+			return browser.runtime.openOptionsPage();
 		}
 
 		sendMessage(message){
@@ -115,7 +151,6 @@ var ponyfill = (()=>{
 			}
 			return browser.runtime.sendMessage(message);
 		}
-		
 	}
 
 	class runtimeOnInstalled extends base {
@@ -124,12 +159,17 @@ var ponyfill = (()=>{
 		}
 
 		addListener(listener){
-			if(this.isChrome()){
-				chrome.runtime.onInstalled.addListener(listener);
-			}
-			else {
-				browser.runtime.onInstalled.addListener(listener);
-			}
+			this.getDepObj().runtime.onInstalled.addListener(listener);
+		}
+	}
+
+	class runtimeOnMessage extends base {
+		constructor(){
+			super();
+		}
+
+		addListener(listener){
+			this.getDepObj().runtime.onMessage.addListener(listener);
 		}
 	}
 
@@ -155,6 +195,17 @@ var ponyfill = (()=>{
 		constructor(){
 			super();
 			this.sync = new storageSync();
+			this.onChanged = new storageOnChanged();
+		}
+	}
+
+	class storageOnChanged extends base {
+		constructor(){
+			super();
+		}
+
+		addListener(callback){
+			this.getDepObj().storage.onChanged.addListener(callback);
 		}
 	}
 
@@ -166,9 +217,9 @@ var ponyfill = (()=>{
 		set(data){
 			if(!this.isFirefox()){
 				let promise = new Promise((resolve, reject)=>{
-					window[this.depName].storage.sync.set(data, (res)=>{
-						if(window[this.depName].runtime.lastError){
-							reject(window[this.depName].runtime.lastError);
+					this.getDepObj().storage.sync.set(data, (res)=>{
+						if(this.getDepObj().runtime.lastError){
+							reject(this.getDepObj().runtime.lastError);
 						}
 						else {
 							resolve(res);
@@ -183,9 +234,9 @@ var ponyfill = (()=>{
 		get( data ){
 			if(!this.isFirefox()){
 				let promise = new Promise((resolve, reject)=>{
-					window[this.depName].storage.sync.get(data, (res)=>{
-						if(window[this.depName].runtime.lastError){
-							reject(window[this.depName].runtime.lastError);
+					this.getDepObj().storage.sync.get(data, (res)=>{
+						if(this.getDepObj().runtime.lastError){
+							reject(this.getDepObj().runtime.lastError);
 						}
 						else {
 							resolve(res);

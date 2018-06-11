@@ -67,7 +67,7 @@
 	}
 
 	function addCommonLinkListEvents(){
-		chrome.storage.onChanged.addListener( onStorageChanged );
+		ponyfill.storage.onChanged.addListener( onStorageChanged );
 		window.addEventListener("resize", resizeBehavior);
 		menuNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);

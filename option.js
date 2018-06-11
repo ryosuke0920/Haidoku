@@ -118,7 +118,7 @@
 	}
 
 	function initListener(){
-		chrome.storage.onChanged.addListener(fileChangeBehavior);
+		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
 		navNode.addEventListener("click", navBehavior);
 		formNode.addEventListener("click", formBehavior);
 		presetNode.addEventListener("click", presetBehavior);

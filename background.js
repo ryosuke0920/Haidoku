@@ -30,9 +30,9 @@ function initContextMenu(){
 }
 
 function initListener(){
-	chrome.storage.onChanged.addListener( onStorageChanged );
-	chrome.contextMenus.onClicked.addListener( contextMenuBehavior );
-	chrome.runtime.onMessage.addListener(notify);
+	ponyfill.storage.onChanged.addListener( onStorageChanged );
+	ponyfill.contextMenus.onClicked.addListener( contextMenuBehavior );
+	ponyfill.runtime.onMessage.addListener(notify);
 }
 
 function openWindow( url, text){
@@ -167,8 +167,9 @@ function resetMenu(json){
 }
 
 function contextMenuBehavior(info, tab){
+	let promise;
 	if ( info.menuItemId == "option" ){
-		chrome.runtime.openOptionsPage();
+		promise = ponyfill.runtime.openOptionsPage();
 	}
 	else if ( info.menuItemId == "autoView" ){
 		saveAutoViewFlag(info.checked);
