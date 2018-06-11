@@ -16,15 +16,18 @@ fi
 
 case ${1} in
 	"firefox") 
-		ln -s ${APP_DIR}"manifest.firefox.json" ${APP_DIR}"manifest.json";
+		cp ${APP_DIR}"manifest.firefox.json" ${APP_DIR}"manifest.json";
 		check ${?};
 		;;
 	"chrome") 
-		ln -s ${APP_DIR}"manifest.chrome.json" ${APP_DIR}"manifest.json";
+		cp ${APP_DIR}"manifest.chrome.json" ${APP_DIR}"manifest.json";
+		check ${?};
+		;;
+	"edge") 
+		cp ${APP_DIR}"manifest.edge.json" ${APP_DIR}"manifest.json";
 		check ${?};
 		;;
 esac
 
 ls -l ${APP_DIR};
 exit ;
-

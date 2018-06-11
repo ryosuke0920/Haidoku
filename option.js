@@ -43,7 +43,7 @@
 		tableNode = document.querySelector("#table");
 		cellPrototypeNode = document.querySelector("#cellPrototype");
 		messageNode = document.querySelector("#message");
-		language = chrome.i18n.getUILanguage();
+		language = ponyfill.i18n.getUILanguage();
 		let matcher = language.match("^(.+?)-");
 		if ( matcher ){
 			language = matcher[1];
@@ -79,7 +79,7 @@
 		for( let json of joson_list ){
 			let list = document.querySelectorAll(json["selector"]);
 			for( let node of list ){
-				node[json["property"]] = chrome.i18n.getMessage( json["key"] );
+				node[json["property"]] = ponyfill.i18n.getMessage( json["key"] );
 			}
 		}
 	}
@@ -264,7 +264,7 @@
 		let list2 = tableNode.querySelectorAll(".checkbox:checked");
 		let sum2 = 0;
 		if( list2 ) sum2 = list2.length;
-		return notice( chrome.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
+		return notice( ponyfill.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
 	}
 
 	function addPreset(e){
@@ -315,14 +315,14 @@
 	}
 
 	function onCheckFieldLengthError(){
-		return notice( chrome.i18n.getMessage("htmlCheckFieldLengthError", [MAX_FIELD] ));
+		return notice( ponyfill.i18n.getMessage("htmlCheckFieldLengthError", [MAX_FIELD] ));
 	}
 
 	function notice(message){
 		let noticer = ponyfill.notifications.create({
 			"type": "basic",
-			"iconUrl": chrome.extension.getURL("image/icon.svg"),
-			"title": chrome.i18n.getMessage("extensionName"),
+			"iconUrl": ponyfill.extension.getURL("image/icon.svg"),
+			"title": ponyfill.i18n.getMessage("extensionName"),
 			"message": message
 		});
 		return noticer;
@@ -393,7 +393,7 @@
 		}
 		if ( !checkByte(node.value, maxLength) ) {
 			let length = byteLength(node.value);
-			node.setCustomValidity(chrome.i18n.getMessage("htmlCheckByteLengthError", [maxLength, length] ));
+			node.setCustomValidity(ponyfill.i18n.getMessage("htmlCheckByteLengthError", [maxLength, length] ));
 			return false;
 		}
 		return true;
@@ -528,6 +528,6 @@
 
 	function unexpectedError(e){
 		console.error(e);
-		return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.message]));
+		return notice(ponyfill.i18n.getMessage("notificationUnexpectedError", [e.message]));
 	}
 })();

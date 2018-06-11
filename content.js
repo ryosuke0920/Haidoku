@@ -55,14 +55,14 @@
 		menuNode.classList.add("lessLaborGoToDictionary-menu");
 		linkListNode.appendChild(menuNode);
 		let zoomDownNode = document.createElement("img");
-		zoomDownNode.src = chrome.extension.getURL("image/minus.svg");
+		zoomDownNode.src = ponyfill.extension.getURL("image/minus.svg");
 		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
-		zoomDownNode.title = chrome.i18n.getMessage("htmlZoomDown");
+		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 		let zoomUpNode = document.createElement("img");
-		zoomUpNode.src = chrome.extension.getURL("image/plus.svg");
+		zoomUpNode.src = ponyfill.extension.getURL("image/plus.svg");
 		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
-		zoomUpNode.title = chrome.i18n.getMessage("htmlZoomUp");
+		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 	}
 
@@ -384,7 +384,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationSaveOptionError", [e.message])
+			"data": ponyfill.i18n.getMessage("notificationSaveOptionError", [e.message])
 		});
 		return res;
 	}
@@ -393,7 +393,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationReadOptionError", [e.message])
+			"data": ponyfill.i18n.getMessage("notificationReadOptionError", [e.message])
 		});
 		return res;
 	}
@@ -402,7 +402,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationUnexpectedError", [e.message])
+			"data": ponyfill.i18n.getMessage("notificationUnexpectedError", [e.message])
 		});
 		return res;
 	}
