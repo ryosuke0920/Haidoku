@@ -226,6 +226,7 @@
 			a.setAttribute( "href", url );
 			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
+			a.setAttribute( "rel", "noreferrer" );
 			a.innerText = item["l"];
 			linkListNode.appendChild(a);
 			let br = document.createElement("br");
