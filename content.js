@@ -224,6 +224,7 @@
 			a.classList.add("lessLaborGoToDictionary-anchor");
 			a.style["font-size"] = anchorSize + "em";
 			a.setAttribute( "href", url );
+			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
 			a.innerText = item["l"];
 			linkListNode.appendChild(a);
