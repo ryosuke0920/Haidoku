@@ -152,7 +152,7 @@
 		"description": "Sentence of contact."
 	},
 	"htmlMyself": {
-		"message": "Ryosuke Ohta<br>freelance programmer in Tokyo Japan.<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
+		"message": "Freelance programmer in Tokyo Japan.<br>Ryosuke Ohta",
 		"description": "Sentence of myself."
 	},
 	"htmlCheckByteLengthError": {
