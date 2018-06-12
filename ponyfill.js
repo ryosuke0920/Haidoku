@@ -6,13 +6,13 @@ var ponyfill = (()=>{
 			if(this.isChrome()){
 				this.depName = "chrome";
 			}
+			/*
+			console.log(navigator.userAgent);
+			Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134
+			Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
+			Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0"
+			*/
 		}
-		/*
-		console.log(navigator.userAgent);
-		Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134
-		Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36
-		Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0"
-		*/
 		isEdge(){
 			if( navigator.userAgent.match("Edge") ) return true;
 			return false;
@@ -55,7 +55,7 @@ var ponyfill = (()=>{
 		create(json){
 			return this.getDepObj().contextMenus.create(json);
 		}
-		
+
 		removeAll(){
 			this.getDepObj().contextMenus.removeAll();
 		}
@@ -146,11 +146,11 @@ var ponyfill = (()=>{
 		}
 
 		sendMessage(message){
-			if(this.isChrome()) {
+			if(!this.isFirefox()) {
 				let promise = new Promise((resolve,reject)=>{
-					chrome.runtime.sendMessage(message, (res)=>{
-						if(chrome.runtime.lastError){
-							reject(chrome.runtime.lastError);
+					this.getDepObj().runtime.sendMessage(message, (res)=>{
+						if(this.getDepObj().runtime.lastError){
+							reject(this.getDepObj().runtime.lastError);
 						}
 						else {
 							resolve(res);

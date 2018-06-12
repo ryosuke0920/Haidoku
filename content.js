@@ -213,11 +213,11 @@
 
 	function makeLinkList(text){
 		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor,br.lessLaborGoToDictionary-braek");
-		for(let i=0; i<list.lenght; i++){
+		for(let i=0; i<list.length; i++){
 			let node = list[i];
 			linkListNode.removeChild(node);
 		}
-		for(let i=0; i<optionList.lenght; i++){
+		for(let i=0; i<optionList.length; i++){
 			let item = optionList[i];
 			if ( !item["c"] ) continue;
 			let url = item["u"];
@@ -371,7 +371,7 @@
 		anchorSize = Math.floor(anchorSize);
 		anchorSize /= 10 ;
 		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor");
-		for(let i=0; i<list.lenght; i++){
+		for(let i=0; i<list.length; i++){
 			let node = list[i];
 			node.style["font-size"] = anchorSize + "em";
 		}

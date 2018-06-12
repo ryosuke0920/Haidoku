@@ -33,5 +33,9 @@
 		"contextMenus",
 		"storage",
 		"notifications"
+	],
+	"web_accessible_resources": [
+		"image/minus.svg",
+		"image/plus.svg"
 	]
 }
