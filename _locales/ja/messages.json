@@ -92,7 +92,7 @@
 		"description": "Description of the extension option."
 	},
 	"htmlPresetDescription": {
-		"message": "サイトを選択してから「追加」ボタンを押すと追加されます。",
+		"message": "サイトを選択してから「追加」ボタンを押すとリンクリストに追加されます。",
 		"description": "Description of the preset option."
 	},
 	"htmlAddBlankFieldButtonName": {

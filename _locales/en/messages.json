@@ -92,7 +92,7 @@
 		"description": "Description of the extension option."
 	},
 	"htmlPresetDescription": {
-		"message": "Select some sites and press \"add\" button.",
+		"message": "Select some sites and press \"add\" button. Then it's added to link list.",
 		"description": "Description of the preset option."
 	},
 	"htmlAddBlankFieldButtonName": {
