@@ -1,3 +1,4 @@
+const DEFAULT_LOCALE = "en";
 let options = {};
 ponyfill.runtime.onInstalled.addListener( install );
 starter().then(initContextMenu).then(initListener).catch(unexpectedError);
@@ -7,7 +8,7 @@ function starter(){
 }
 
 function install(e){
-	if(e.reason == "install"){
+	if(e.reason === "install"){
 		let data = {
 			"ol": getDefaultOptionList()
 		};
@@ -187,9 +188,18 @@ function contextMenuBehavior(info, tab){
 
 function getDefaultOptionList(){
 	let lang = ponyfill.i18n.getUILanguage();
-	if ( !lang ) lang = ponyfill.runtime.getManifest()["default_locale"];
-	if ( !DEFAULT_OPTION_LIST[lang] ) return [];
-	return DEFAULT_OPTION_LIST[lang];
+	let matcher = lang.match(/^([a-zA-Z0-9]+)\-[a-zA-Z0-9]+$/);
+	if( matcher ){
+		lang = matcher[1];
+	}
+	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
+		return DEFAULT_OPTION_LIST[lang];
+	}
+	lang = ponyfill.runtime.getManifest()["default_locale"];
+	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
+		return DEFAULT_OPTION_LIST[lang];
+	}
+	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
 function onOpenWindowError(e){

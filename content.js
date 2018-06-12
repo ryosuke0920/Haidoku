@@ -213,10 +213,12 @@
 
 	function makeLinkList(text){
 		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor,br.lessLaborGoToDictionary-braek");
-		for(let node of list){
+		for(let i=0; i<list.lenght; i++){
+			let node = list[i];
 			linkListNode.removeChild(node);
 		}
-		for(let item of optionList){
+		for(let i=0; i<optionList.lenght; i++){
+			let item = optionList[i];
 			if ( !item["c"] ) continue;
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(text) );
@@ -332,7 +334,8 @@
 
 	function setOptionList(res){
 		optionList = [];
-		for( let data of res ){
+		for(let i=0; i<res.length; i++){
+			let data = res[i];
 			/* checked == true */
 			if ( data["c"] ) optionList.push(data);
 		}
@@ -368,7 +371,10 @@
 		anchorSize = Math.floor(anchorSize);
 		anchorSize /= 10 ;
 		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor");
-		for(let node of list)　node.style["font-size"] = anchorSize + "em";
+		for(let i=0; i<list.lenght; i++){
+			let node = list[i];
+			node.style["font-size"] = anchorSize + "em";
+		}
 		return true;
 	}
 
@@ -379,6 +385,7 @@
 				"as": anchorSize
 			}
 		});
+		console.log(res);
 		return res;
 	}
 
