@@ -1,4 +1,4 @@
-# popup link list
+# Search Dictionary Faster
 When you select a text on the website, link list will be displayed. If you specify some dictionay site to the link list, you can search faster without copy & paste. When you press the escape (Esc) key, the link list will be hidden.
 
 * Context menu (right click)
