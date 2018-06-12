@@ -92,7 +92,7 @@ function makeMetadata(){
 
 function onStorageChanged(change, area){
 	if(change["ol"] || change["bf"] || change["sk"] || change["ck"]) {
-		chrome.contextMenus.removeAll();
+		ponyfill.contextMenus.removeAll();
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,

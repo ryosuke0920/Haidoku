@@ -55,6 +55,10 @@ var ponyfill = (()=>{
 		create(json){
 			return this.getDepObj().contextMenus.create(json);
 		}
+		
+		removeAll(){
+			this.getDepObj().contextMenus.removeAll();
+		}
 	}
 
 	class contextMenusOnClicked extends base {
@@ -99,9 +103,9 @@ var ponyfill = (()=>{
 		}
 
 		getBackgroundPage(){
-			if(this.isChrome()) {
+			if(!this.isFirefox()) {
 				let promise = new Promise((resolve)=>{
-					chrome.runtime.getBackgroundPage((page)=>{
+					this.getDepObj().runtime.getBackgroundPage((page)=>{
 						resolve(page);
 					});
 				});
@@ -131,6 +135,12 @@ var ponyfill = (()=>{
 					});
 				});
 				return promise;
+			}
+			else if(this.isEdge()){
+				return browser.tabs.create({
+					"active": true,
+					"url": browser.extension.getURL("option.html")
+				});
 			}
 			return browser.runtime.openOptionsPage();
 		}
