@@ -1,10 +1,10 @@
 {
 	"extensionName": {
-		"message": "Less Labor Go To Dictionary",
+		"message": "Search Dictionary Faster",
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
-		"message": "If you select a text in the site, link list you made will be displayed. So you can search faster.",
+		"message": "When select a text, link list which contains some dictionary will be displayed. So you can search faster.",
 		"description": "Description of the extension."
 	},
 	"extensionOptionAutoView": {
@@ -16,11 +16,11 @@
 		"description": "Name of link list option."
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "switch with shift",
+		"message": "display link list with shift key",
 		"description": "Name of link list option."
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "switch with ctrl",
+		"message": "display link list with ctrl key",
 		"description": "Name of link list option."
 	},
 	"extensionOptionName": {
@@ -88,11 +88,11 @@
 		"description": "Name of the contact on the side menu."
 	},
 	"htmlFormDescription": {
-		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"site name\" and \"URL\" by yourself.",
+		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected.",
 		"description": "Description of the extension option."
 	},
 	"htmlPresetDescription": {
-		"message": "Select some of sites and press \"add\" button.",
+		"message": "Select some sites and press \"add\" button. Then it's added to link list.",
 		"description": "Description of the preset option."
 	},
 	"htmlAddBlankFieldButtonName": {
@@ -116,11 +116,11 @@
 		"description": "Name of remove."
 	},
 	"htmlLabelDescription": {
-		"message": "This will be displayed in the link list or context menu(right click).",
+		"message": "This will be displayed in the link list or context menu(right click) instead of URL.",
 		"description": "title of label description."
 	},
 	"htmlUrlDescription": {
-		"message": "If you input \"$1\", it will be replaced to the word you selected.",
+		"message": "\"$$1\" will be replaced to the text you selected.",
 		"description": "title of url description."
 	},
 	"htmlFilterText": {
@@ -139,16 +139,20 @@
 		"message": "Japanese",
 		"description": "Name of ja."
 	},
+	"htmlLanguageZh": {
+		"message": "Chinese",
+		"description": "Name of zh."
+	},
 	"htmlAddPresetButtonName": {
 		"message": "add",
-		"description": "title of adding button."
+		"description": "Name of adding button."
 	},
 	"htmlContactText": {
 		"message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
 		"description": "Sentence of contact."
 	},
 	"htmlMyself": {
-		"message": "Ryosuke Ohta<br>freelance programmer in Tokyo Japan.<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
+		"message": "Freelance programmer<br>Tokyo Japan<br>Ryosuke Ohta",
 		"description": "Sentence of myself."
 	},
 	"htmlCheckByteLengthError": {

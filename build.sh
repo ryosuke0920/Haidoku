@@ -15,35 +15,45 @@ if [ -e ${APP_DIR}"manifest.json" ]; then
 fi
 
 case ${1} in
-	"firefox") 
+	"firefox")
 		cp ${APP_DIR}"manifest.firefox.json" ${APP_DIR}"manifest.json";
 		check ${?};
 		web-ext lint --ignore-files \
+			${APP_DIR}"material" \
 			${APP_DIR}"chrome-artifacts" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
 			${APP_DIR}"*.sh";
 		check ${?};
-		web-ext build --overwrite-dest --ignore-files \
+		web-ext build --ignore-files \
+			${APP_DIR}"material" \
 			${APP_DIR}"chrome-artifacts" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
 			${APP_DIR}"*.sh";
 		check ${?};
 		;;
-	"chrome") 
+	"chrome")
 		cp ${APP_DIR}"manifest.chrome.json" ${APP_DIR}"manifest.json";
 		check ${?};
 		version=$( grep "\"version\"" "manifest.json" );
 		check ${?};
 		version=$( echo ${version} | sed -r "s/^\"version\"\s*:\s*\"(.*)\".*/\1/" );
 		check ${?};
-		zip -r ${APP_DIR}"chrome-artifacts/"${version}".zip" ${APP_DIR} -x \
+		filename=${APP_DIR}"chrome-artifacts/"${version}".zip";
+		echo ${filename};
+		if [ -e ${filename} ]; then
+			echo "already exists.";
+			exit 1;
+		fi
+		zip -r ${filename} ${APP_DIR} -x \
 			${APP_DIR}".git*" \
+			${APP_DIR}"material" \
 			${APP_DIR}"web-ext-artifacts/*" \
 			${APP_DIR}"chrome-artifacts/*" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
+			${APP_DIR}"BUILD.md" \
 			${APP_DIR}"*.sh";
 		check ${?};
 		;;
@@ -56,4 +66,3 @@ fi
 
 ls -l ${APP_DIR};
 exit ;
-
