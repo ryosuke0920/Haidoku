@@ -1,6 +1,6 @@
 {
 	"extensionName": {
-		"message": "ポップアップ リンク リスト",
+		"message": "手間なし辞書検索",
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
@@ -92,7 +92,7 @@
 		"description": "Description of the extension option."
 	},
 	"htmlPresetDescription": {
-		"message": "サイトを選択してから「追加」ボタンを押すと追加されます。",
+		"message": "サイトを選択してから「追加」ボタンを押すとリンクリストに追加されます。",
 		"description": "Description of the preset option."
 	},
 	"htmlAddBlankFieldButtonName": {
@@ -152,7 +152,7 @@
 		"description": "Sentence of contact."
 	},
 	"htmlMyself": {
-		"message": "太田亮介<br>フリーランス プログラマ<br><a href=\"https://twitter.com/iam_ryosuke\" target=\"_blank\">twitter</a>&nbsp;<a href=\"https://www.facebook.com/ryosuke.ohta1\" target=\"_blank\">facebook</a>&nbsp;<a href=\"https://michikaeru.blogspot.jp/\" target=\"_blank\">blog</a>",
+		"message": "フリーランス プログラマ<br>太田亮介",
 		"description": "Sentence of myself."
 	},
 	"htmlCheckByteLengthError": {
