@@ -4,7 +4,7 @@
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
-	const SPACE = 5;
+	const SPACE = 10;
 	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
@@ -12,6 +12,7 @@
 	const ANCHOR_RESIO = 0.1;
 	const SILENT_ERROR_PREFIX = "[silent]";
 	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
+	const LINK_LIST_CLOSE_TIME = 1000;
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -24,6 +25,7 @@
 	let resizeWatcherFlag = false;
 	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let menuNode;
+	let containerNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 
@@ -54,6 +56,9 @@
 		menuNode = document.createElement("nav");
 		menuNode.classList.add("lessLaborGoToDictionary-menu");
 		linkListNode.appendChild(menuNode);
+		containerNode = document.createElement("ul");
+		containerNode.classList.add("lessLaborGoToDictionary-container");
+		linkListNode.appendChild(containerNode);
 		let zoomDownNode = document.createElement("img");
 		zoomDownNode.src = ponyfill.extension.getURL("/image/minus.svg");
 		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
@@ -211,11 +216,15 @@
 		linkListNode.classList.add("lessLaborGoToDictionary-hide");
 	}
 
+	function closeLinkListDelay(e){
+		window.setTimeout(closeLinkList, LINK_LIST_CLOSE_TIME);
+	}
+
 	function makeLinkList(text){
-		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor,br.lessLaborGoToDictionary-braek");
+		let list = containerNode.querySelectorAll(".lessLaborGoToDictionary-list");
 		for(let i=0; i<list.length; i++){
 			let node = list[i];
-			linkListNode.removeChild(node);
+			containerNode.removeChild(node);
 		}
 		for(let i=0; i<optionList.length; i++){
 			let item = optionList[i];
@@ -230,10 +239,11 @@
 			a.setAttribute( "target", "_blank" );
 			a.setAttribute( "rel", "noreferrer" );
 			a.innerText = item["l"];
-			linkListNode.appendChild(a);
-			let br = document.createElement("br");
-			br.classList.add("lessLaborGoToDictionary-braek");
-			linkListNode.appendChild(br);
+			a.addEventListener("click", closeLinkListDelay);
+			let li = document.createElement("li");
+			li.classList.add("lessLaborGoToDictionary-list");
+			li.appendChild(a);
+			containerNode.appendChild(li);
 		}
 	}
 
@@ -281,6 +291,9 @@
 			setLinkListFlag( change["bf"]["newValue"] );
 			resetLinkListEvents();
 		}
+		else if( change["cl"] ){
+			setLinkListClass( change["cl"]["newValue"] );
+		}
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
@@ -296,7 +309,8 @@
 			"ck": false,
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
-			"as": ANCHOR_DEFAULT_SIZE
+			"as": ANCHOR_DEFAULT_SIZE,
+			"cl": "",
 		});
 		return getter.then(setVer, onReadError);
 	}
@@ -308,6 +322,7 @@
 		setLinkListFlag( res["bf"] );
 		setCtrlKeyFlag( res["ck"] );
 		setShiftKeyFlag( res["sk"] );
+		setLinkListClass( res["cl"] );
 		resetLinkListEvents();
 	}
 
@@ -325,6 +340,17 @@
 
 	function setCtrlKeyFlag(res){
 		ctrlKeyFlag = res;
+	}
+
+	function setLinkListClass(res){
+		linkListNode.classList.remove("lessLaborGoToDictionary-pop");
+		linkListNode.classList.remove("lessLaborGoToDictionary-modern");
+		if( res == "p" ) {
+			linkListNode.classList.add("lessLaborGoToDictionary-pop");
+		}
+		else if( res == "m" ) {
+			linkListNode.classList.add("lessLaborGoToDictionary-modern");
+		}
 	}
 
 	function resetLinkListEvents(){

@@ -4,21 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="option.css">
+<link rel="stylesheet" type="text/css" href="/content/content.css">
 <title>extensionName</title>
 </head>
-<body>
+<body class="hide">
 <div>
 	<header id="header">
 		<h1 class="title box">extensionName</h1>
 	</header>
 	<nav id="nav">
-		<div class="box order showForm active">htmlFormName</div>
-		<div class="box order showPreset">htmlPresetName</div>
-		<div class="box order showContact">htmlContactName</div>
+		<div class="box navi showForm active">htmlFormName</div>
+		<div class="box navi showPreset">htmlPresetName</div>
+		<div class="box navi showAppearance">htmlAppearanceName</div>
+		<div class="box navi showContact">htmlContactName</div>
 	</nav>
 	<div id="main">
-		<div id="form" class="box">
+		<div id="form" class="panel box">
 			<nav class="controller box">
 				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
 			</nav>
@@ -44,7 +46,7 @@
 				</div>
 			</div>
 		</div>
-		<div id="preset" class="box hide">
+		<div id="preset" class="panel box hide">
 			<nav class="controller box">
 				<span class="filterText">htmlFilterText</span>&nbsp;
 				<select id="languageFilter">
@@ -65,7 +67,28 @@
 				</section>
 			</div>
 		</div>
-		<div id="contact" class="box hide">
+		<div id="appearance" class="panel box hide">
+			<div class="appearanceTable">
+				<p class="linkListStyle">htmlLinkListStyle</p>
+				<p>
+					<label><input type="radio" class="linkListClass" name="linkListClass" value=""/> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
+					<label><input type="radio" class="linkListClass" name="linkListClass" value="m" /> <span class="linkListStyleModern">htmlLinkListStyleModern</span></label><br>
+					<label><input type="radio" class="linkListClass" name="linkListClass" value="p" /> <span class="linkListStylePop">htmlLinkListStylePop</span></label><br>
+				</p>
+				<div>
+					<div id="sampleLinkList" class="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px;">
+						<nav class="lessLaborGoToDictionary-menu">
+							<img class="lessLaborGoToDictionary-zoomDown" title="縮小">
+							<img class="lessLaborGoToDictionary-zoomUp" title="拡大">
+						</nav>
+						<a class="lessLaborGoToDictionary-anchor">test1 </a>
+						<a class="lessLaborGoToDictionary-anchor">test2 test2 </a>
+						<a class="lessLaborGoToDictionary-anchor">test3 test3 test3 </a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="contact" class="panel box hide">
 			<address>
 				<p class="contactText">htmlContactText</p>
 				<p class="myself">htmlMyself</p>

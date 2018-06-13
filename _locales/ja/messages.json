@@ -83,6 +83,10 @@
 		"message": "検索サイト追加",
 		"description": "Name of the preset on the side menu."
 	},
+	"htmlAppearanceName": {
+		"message": "表示",
+		"description": "Name of the appearance on the side menu."
+	},
 	"htmlContactName": {
 		"message": "お問い合わせ",
 		"description": "Name of the contact on the side menu."
@@ -146,6 +150,22 @@
 	"htmlAddPresetButtonName": {
 		"message": "追加",
 		"description": "Name of adding button."
+	},
+	"htmlLinkListStyle": {
+		"message": "リンクリストのスタイル",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStyleClassic": {
+		"message": "クラシック",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStyleModern": {
+		"message": "モダン",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStylePop": {
+		"message": "ポップ",
+		"description": "Name of the propertie."
 	},
 	"htmlContactText": {
 		"message": "ご意見・ご感想・バグなどのお問い合わせ先<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",

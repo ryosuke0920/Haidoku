@@ -2,10 +2,15 @@
 	const MAX_FIELD = 50;
 	const MAX_LABEL_BYTE = 100;
 	const MAX_URL_BYTE = 300;
+	const CLASS_PREFIX = "lessLaborGoToDictionary";
 	let windowId = Math.random();
 	let navNode;
+	let mainNode;
 	let formNode;
 	let presetNode;
+	let appearanceNode;
+	let sampleLinkListNode;
+	let linkListClassNodeList;
 	let contactNode;
 	let containerNode;
 	let inputPrototypeNode;
@@ -21,7 +26,14 @@
 	let languageJson = {};
 
 
-	starter().then(initProperties).then( initI18n ).then( initPreset ).then( initField ).then( initListener ).catch( unexpectedError );
+	starter()
+		.then(initProperties)
+		.then( initI18n )
+		.then( initPreset )
+		.then( initField )
+		.then( initListener )
+		.then( showBody )
+		.catch( unexpectedError );
 
 	function starter(){
 		return Promise.resolve();
@@ -34,9 +46,23 @@
 			bgPage = page;
 		}
 
+		mainNode = document.querySelector("#main");
 		navNode = document.querySelector("#nav");
 		formNode = document.querySelector("#form");
 		presetNode = document.querySelector("#preset");
+		appearanceNode = document.querySelector("#appearance");
+		sampleLinkListNode = document.querySelector("#sampleLinkList");
+		sampleLinkListNode.resetClass = ()=>{
+			sampleLinkListNode.classList.remove(CLASS_PREFIX+"-modern");
+			sampleLinkListNode.classList.remove(CLASS_PREFIX+"-pop");
+		};
+		sampleLinkListNode.setClassModern = ()=>{
+			sampleLinkListNode.classList.add(CLASS_PREFIX+"-modern");
+		};
+		sampleLinkListNode.setClassPop = ()=>{
+			sampleLinkListNode.classList.add(CLASS_PREFIX+"-pop");
+		};
+		linkListClassNodeList = document.querySelectorAll(".linkListClass");
 		contactNode = document.querySelector("#contact");
 		containerNode = document.querySelector("#container");
 		inputPrototypeNode = document.querySelector("#inputPrototype");
@@ -60,6 +86,7 @@
 			{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
 			{ "selector": ".showForm", "property": "innerText", "key": "htmlFormName" },
 			{ "selector": ".showPreset", "property": "innerText", "key": "htmlPresetName" },
+			{ "selector": ".showAppearance", "property": "innerText", "key": "htmlAppearanceName" },
 			{ "selector": ".showContact", "property": "innerText", "key": "htmlContactName" },
 			{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
 			{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" },
@@ -73,15 +100,26 @@
 			{ "selector": "#languageFilter option[value=ja]", "property": "innerText", "key": "htmlLanguageJa" },
 			{ "selector": "#languageFilter option[value=zh]", "property": "innerText", "key": "htmlLanguageZh" },
 			{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
+			{ "selector": ".linkListStyle", "property": "innerText", "key": "htmlLinkListStyle" },
+			{ "selector": ".linkListStyleClassic", "property": "innerText", "key": "htmlLinkListStyleClassic" },
+			{ "selector": ".linkListStyleModern", "property": "innerText", "key": "htmlLinkListStyleModern" },
+			{ "selector": ".linkListStylePop", "property": "innerText", "key": "htmlLinkListStylePop" },
 			{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
-			{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" }
+			{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" },
+			{ "selector": ".lessLaborGoToDictionary-zoomDown", "property": "src", "value": ponyfill.extension.getURL("/image/minus.svg"), },
+			{ "selector": ".lessLaborGoToDictionary-zoomUp", "property": "src", "value": ponyfill.extension.getURL("/image/plus.svg"), }
 		];
 		for(let i=0; i<joson_list.length; i++){
 			let json = joson_list[i];
 			let list = document.querySelectorAll(json["selector"]);
 			for(let i=0; i<list.length; i++){
 				let node = list[i];
-				node[json["property"]] = ponyfill.i18n.getMessage( json["key"] );
+				if( json.hasOwnProperty("key") ){
+					node[json["property"]] = ponyfill.i18n.getMessage( json["key"] );
+				}
+				else {
+					node[json["property"]] = json["value"];
+				}
 			}
 		}
 	}
@@ -107,7 +145,8 @@
 
 	function initField(){
 		let getter = ponyfill.storage.sync.get({
-			"ol": []
+			"ol": [],
+			"cl": ""
 		});
 
 		function onGot(res){
@@ -117,6 +156,7 @@
 				addField(item["c"], item["l"], item["u"]);
 			}
 			resetSort();
+			setLinkListClass(res["cl"]);
 		}
 		return getter.then(onGot);
 	}
@@ -129,10 +169,42 @@
 		presetNode.querySelector("#languageFilter").addEventListener("change", languageFilterBehavior);
 		window.addEventListener("mouseup", sortEnd);
 		window.addEventListener("mousemove", sortMove);
+		for(let i=0; i<linkListClassNodeList.length; i++) {
+			let node = linkListClassNodeList[i];
+			node.addEventListener("click", linkListClassBehavior);
+		}
+	}
+
+	function setLinkListClass(value){
+		let node = appearanceNode.querySelector(".linkListClass[value=\""+value+"\"]");
+		node.checked = true;
+		setSampleLinkListStyle(value);
+	}
+
+	function linkListClassBehavior(e){
+		let value = e.target.value;
+		setSampleLinkListStyle(value);
+		saveLinkListClass(value);
+	}
+
+	function setSampleLinkListStyle(value){
+		sampleLinkListNode.resetClass();
+		if( value == "p" ){
+			sampleLinkListNode.setClassPop();
+		}
+		else if( value == "m" ){
+			sampleLinkListNode.setClassModern();
+		}
+	}
+
+	function saveLinkListClass(value){
+		let data = { "cl": value };
+		return save(data).catch(onSaveError);
 	}
 
 	function fileChangeBehavior(e){
-		if ( e.hasOwnProperty("ol") && e.hasOwnProperty("w") && e["w"]["newValue"] != windowId ) {
+		if( e["w"]["newValue"] == windowId ) return;
+		if( e.hasOwnProperty("ol") && e.hasOwnProperty("w") ){
 			let optionList = e["ol"]["newValue"];
 			removeAllField();
 			for( let i=0; i<optionList.length; i++){
@@ -140,6 +212,9 @@
 				addField(item["c"], item["l"], item["u"]);
 			}
 			resetSort();
+		}
+		else if( e.hasOwnProperty("cl") ){
+			setLinkListClass(e["cl"]["newValue"]);
 		}
 	}
 
@@ -153,6 +228,9 @@
 		}
 		else if(cassList.contains("showContact")){
 			showContact();
+		}
+		else if(cassList.contains("showAppearance")){
+			showAppearance();
 		}
 	}
 
@@ -196,39 +274,55 @@
 		languageFilter(e.target.value);
 	}
 
+	function showBody(){
+		show( document.querySelector("body") );
+	}
+
 	function showForm(){
 		removeActive();
 		addActive("showForm");
+		hideAllPanels();
 		show(formNode);
-		hide(presetNode)
-		hide(contactNode);
 	}
 
 	function showPreset(){
 		removeActive();
 		addActive("showPreset");
-		hide(formNode);
+		hideAllPanels();
 		show(presetNode)
-		hide(contactNode);
 	}
 
 	function showContact(){
 		removeActive();
 		addActive("showContact");
-		hide(formNode);
-		hide(presetNode)
+		hideAllPanels();
 		show(contactNode);
 	}
 
+	function showAppearance(){
+		removeActive();
+		addActive("showAppearance");
+		hideAllPanels();
+		show(appearanceNode);
+	}
+
+	function hideAllPanels(){
+		let list = mainNode.querySelectorAll(".panel");
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
+			hide(node);
+		}
+	}
+
 	function removeActive(){
-		let node = navNode.querySelector(".order.active");
+		let node = navNode.querySelector(".navi.active");
 		if( node ){
 			node.classList.remove("active");
 		}
 	}
 
 	function addActive(className){
-		let node = navNode.querySelector(".order."+className);
+		let node = navNode.querySelector(".navi."+className);
 		if( node ){
 			node.classList.add("active");
 		}
@@ -532,14 +626,20 @@
 	}
 
 	function saveOption(){
-		let optionList = makeOptionList();
-		windowId = Math.random();
-		let saver = bgPage.saveOption( optionList, windowId );
-		return saver;
+		let data = { "ol": makeOptionList() };
+		return save(data).catch(onSaveError);
+	}
+
+	function save(data) {
+		data["w"] = Math.random();
+		return bgPage.save(data)
+	}
+
+	function onSaveError(e){
+		return bgPage.onSaveError(e);
 	}
 
 	function unexpectedError(e){
-		console.error(e);
-		return notice(ponyfill.i18n.getMessage("notificationUnexpectedError", [e.message]));
+		return bgPage.unexpectedError(e);
 	}
 })();

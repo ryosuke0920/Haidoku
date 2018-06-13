@@ -61,14 +61,6 @@ function notify(message, sender, sendResponse){
 	return true;
 }
 
-function saveOption( optionList, windowId="" ){
-	let data = {
-		"ol": optionList,
-		"w": windowId
-	};
-	return save(data).catch(onSaveError);
-}
-
 function saveAutoViewFlag(flag=true){
 	return save({"bf":flag}).catch(onSaveError);
 }

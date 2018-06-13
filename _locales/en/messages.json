@@ -83,6 +83,10 @@
 		"message": "Add search site",
 		"description": "Name of the preset on the side menu."
 	},
+	"htmlAppearanceName": {
+		"message": "Appearance",
+		"description": "Name of the appearance on the side menu."
+	},
 	"htmlContactName": {
 		"message": "Contact",
 		"description": "Name of the contact on the side menu."
@@ -146,6 +150,22 @@
 	"htmlAddPresetButtonName": {
 		"message": "add",
 		"description": "Name of adding button."
+	},
+	"htmlLinkListStyle": {
+		"message": "link list's style",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStyleClassic": {
+		"message": "Classic",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStyleModern": {
+		"message": "Modern",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStylePop": {
+		"message": "Pop",
+		"description": "Name of the propertie."
 	},
 	"htmlContactText": {
 		"message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",

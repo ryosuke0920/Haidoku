@@ -33,20 +33,20 @@ button {
    box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
    z-index:2;
 }
-#nav .order {
+#nav .navi {
    color: black;
    border-radius: 5px;
    background-color: white;
    margin: 3px;
 }
-#nav .order:hover {
+#nav .navi:hover {
    background-color: Gainsboro;
    cursor: pointer;
 }
-#nav .order.active {
+#nav .navi.active {
    color: DodgerBlue;
 }
-#nav .order.active:hover {
+#nav .navi.active:hover {
    cursor: default;
 }
 #main {
@@ -137,5 +137,23 @@ input.url {
 @media (min-width: 1372px) {
    #table {
       grid-template-columns: 1fr 1fr 1fr 1fr;
+   }
+}
+
+.appearanceTable {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+.appearanceTable > * {
+	margin-bottom: 1em;
+}
+@media (min-width: 802px) {
+   .appearanceTable {
+      grid-template-columns: 1fr 1fr;
+   }
+}
+@media (min-width: 1094px) {
+	.appearanceTable {
+      grid-template-columns: 1fr 1fr 1fr;
    }
 }
