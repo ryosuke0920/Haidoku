@@ -1,0 +1,41 @@
+{
+	"manifest_version": 2,
+	"default_locale": "en",
+	"name":"Search Dictionary Faster",
+	"description":"When select a text, link list which contains some dictionary will be displayed. So you can search faster.",
+	"author": "Ryosuke Ohta",
+	"version":"1.1.10",
+	"icons": {
+		"32": "image/icon.svg"
+	},
+	"background": {
+		"persistent": true,
+		"scripts": [
+			"ponyfill.js",
+			"config.js",
+			"background.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://*/*"],
+			"css": [
+				"content.css"
+			],
+			"js": [
+				"ponyfill.js",
+				"content.js"
+			]
+		}
+	],
+	"permissions": [
+		"activeTab",
+		"contextMenus",
+		"storage",
+		"notifications"
+	],
+	"web_accessible_resources": [
+		"image/minus.svg",
+		"image/plus.svg"
+	]
+}

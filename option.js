@@ -43,7 +43,7 @@
 		tableNode = document.querySelector("#table");
 		cellPrototypeNode = document.querySelector("#cellPrototype");
 		messageNode = document.querySelector("#message");
-		language = chrome.i18n.getUILanguage();
+		language = ponyfill.i18n.getUILanguage();
 		let matcher = language.match("^(.+?)-");
 		if ( matcher ){
 			language = matcher[1];
@@ -76,17 +76,20 @@
 			{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
 			{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" }
 		];
-		for( let json of joson_list ){
+		for(let i=0; i<joson_list.length; i++){
+			let json = joson_list[i];
 			let list = document.querySelectorAll(json["selector"]);
-			for( let node of list ){
-				node[json["property"]] = chrome.i18n.getMessage( json["key"] );
+			for(let i=0; i<list.length; i++){
+				let node = list[i];
+				node[json["property"]] = ponyfill.i18n.getMessage( json["key"] );
 			}
 		}
 	}
 
 	function initPreset(){
 		let list = bgPage.getPresetOptionList();
-		for(let option of list){
+		for(let i=0; i<list.length; i++){
+			let option = list[i];
 			let node = cellPrototypeNode.cloneNode(true);
 			node.removeAttribute("id");
 			node.setAttribute("data-language",option["la"]);
@@ -109,7 +112,8 @@
 
 		function onGot(res){
 			let optionList = res["ol"];
-			for(let item of optionList ){
+			for(let i=0; i<optionList.length; i++){
+				let item = optionList[i];
 				addField(item["c"], item["l"], item["u"]);
 			}
 			resetSort();
@@ -118,7 +122,7 @@
 	}
 
 	function initListener(){
-		chrome.storage.onChanged.addListener(fileChangeBehavior);
+		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
 		navNode.addEventListener("click", navBehavior);
 		formNode.addEventListener("click", formBehavior);
 		presetNode.addEventListener("click", presetBehavior);
@@ -131,7 +135,8 @@
 		if ( e.hasOwnProperty("ol") && e.hasOwnProperty("w") && e["w"]["newValue"] != windowId ) {
 			let optionList = e["ol"]["newValue"];
 			removeAllField();
-			for( let item of optionList ){
+			for( let i=0; i<optionList.length; i++){
+				let item = optionList[i];
 				addField(item["c"], item["l"], item["u"]);
 			}
 			resetSort();
@@ -239,14 +244,16 @@
 
 	function languageFilter(language){
 		let list = tableNode.querySelectorAll(".checkWrapper");
-		for( let node of list ){
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
 			show(node);
 		}
 		if ( !language || !languageJson.hasOwnProperty(language) ) {
 			return;
 		}
 		list = tableNode.querySelectorAll(".checkWrapper:not([data-language~=\""+language+"\"])");
-		for( let node of list ){
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
 			hide(node);
 		}
 	}
@@ -264,12 +271,13 @@
 		let list2 = tableNode.querySelectorAll(".checkbox:checked");
 		let sum2 = 0;
 		if( list2 ) sum2 = list2.length;
-		return notice( chrome.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
+		return notice( ponyfill.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
 	}
 
 	function addPreset(e){
 		let list = tableNode.querySelectorAll(".checkbox:checked");
-		for(let node of list){
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
 			let checkWrapperNode = node.closest(".checkWrapper");
 			let label = checkWrapperNode.querySelector(".label").innerText;
 			let p = checkWrapperNode.querySelector(".url").innerText;
@@ -292,14 +300,16 @@
 
 	function resetPreset(){
 		let list = tableNode.querySelectorAll(".checkbox:checked");
-		for(let node of list){
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
 			node.checked = false;
 		}
 	}
 
 	function removeAllField(){
 		let list = containerNode.querySelectorAll(".field");
-		for( let node of list ){
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
 			node.remove();
 		}
 	}
@@ -315,14 +325,14 @@
 	}
 
 	function onCheckFieldLengthError(){
-		return notice( chrome.i18n.getMessage("htmlCheckFieldLengthError", [MAX_FIELD] ));
+		return notice( ponyfill.i18n.getMessage("htmlCheckFieldLengthError", [MAX_FIELD] ));
 	}
 
 	function notice(message){
 		let noticer = ponyfill.notifications.create({
 			"type": "basic",
-			"iconUrl": chrome.extension.getURL("image/icon.svg"),
-			"title": chrome.i18n.getMessage("extensionName"),
+			"iconUrl": ponyfill.extension.getURL("image/icon.svg"),
+			"title": ponyfill.i18n.getMessage("extensionName"),
 			"message": message
 		});
 		return noticer;
@@ -393,7 +403,7 @@
 		}
 		if ( !checkByte(node.value, maxLength) ) {
 			let length = byteLength(node.value);
-			node.setCustomValidity(chrome.i18n.getMessage("htmlCheckByteLengthError", [maxLength, length] ));
+			node.setCustomValidity(ponyfill.i18n.getMessage("htmlCheckByteLengthError", [maxLength, length] ));
 			return false;
 		}
 		return true;
@@ -462,7 +472,8 @@
 	}
 
 	function isMouseOver(x, y) {
-		for( let node of draggable_list ){
+		for(let i=0; i<draggable_list.length; i++){
+			let node = draggable_list[i];
 			if( node.offsetTop <= y && y <= (node.offsetTop + node.offsetHeight) ){
 				return node;
 			}
@@ -472,7 +483,8 @@
 
 	function resetSort(){
 		let fields = containerNode.querySelectorAll(".draggable");
-		for(let node of fields){
+		for(let i=0; i<fields.length; i++){
+			let node = fields[i];
 			node.removeAttribute("id");
 		}
 		for(let i=0; i<fields.length; i++){
@@ -528,6 +540,6 @@
 
 	function unexpectedError(e){
 		console.error(e);
-		return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.message]));
+		return notice(ponyfill.i18n.getMessage("notificationUnexpectedError", [e.message]));
 	}
 })();
