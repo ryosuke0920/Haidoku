@@ -1,5 +1,6 @@
+const DEFAULT_LOCALE = "en";
 let options = {};
-chrome.runtime.onInstalled.addListener( install );
+ponyfill.runtime.onInstalled.addListener( install );
 starter().then(initContextMenu).then(initListener).catch(unexpectedError);
 
 function starter(){
@@ -7,7 +8,7 @@ function starter(){
 }
 
 function install(e){
-	if(e.reason == "install"){
+	if(e.reason === "install"){
 		let data = {
 			"ol": getDefaultOptionList()
 		};
@@ -30,9 +31,9 @@ function initContextMenu(){
 }
 
 function initListener(){
-	chrome.storage.onChanged.addListener( onStorageChanged );
-	chrome.contextMenus.onClicked.addListener( contextMenuBehavior );
-	chrome.runtime.onMessage.addListener(notify);
+	ponyfill.storage.onChanged.addListener( onStorageChanged );
+	ponyfill.contextMenus.onClicked.addListener( contextMenuBehavior );
+	ponyfill.runtime.onMessage.addListener(notify);
 }
 
 function openWindow( url, text){
@@ -81,7 +82,7 @@ function saveManualViewCtrlKey(flag=false){
 }
 
 function makeMetadata(){
-	let manifest = chrome.runtime.getManifest();
+	let manifest = ponyfill.runtime.getManifest();
 	let now = new Date();
 	let data = {
 		"v": manifest.version,
@@ -92,7 +93,7 @@ function makeMetadata(){
 
 function onStorageChanged(change, area){
 	if(change["ol"] || change["bf"] || change["sk"] || change["ck"]) {
-		chrome.contextMenus.removeAll();
+		ponyfill.contextMenus.removeAll();
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,
@@ -122,53 +123,54 @@ function resetMenu(json){
 				"contexts": ["selection"]
 			};
 			options[id] = url;
-			chrome.contextMenus.create(args);
+			ponyfill.contextMenus.create(args);
 		}
 	}
 	if( 0 < optionList.length ) {
-		chrome.contextMenus.create({
+		ponyfill.contextMenus.create({
 			"type": "separator",
 			"contexts": ["selection"]
 		});
 	}
-	chrome.contextMenus.create({
+	ponyfill.contextMenus.create({
 		"id": "autoView",
-		"title": chrome.i18n.getMessage("extensionOptionAutoView"),
+		"title": ponyfill.i18n.getMessage("extensionOptionAutoView"),
 		"checked": autoViewFlag,
 		"type": "checkbox",
 		"contexts": ["page","selection"]
 	});
-	chrome.contextMenus.create({
+	ponyfill.contextMenus.create({
 		"id": "manualView",
-		"title": chrome.i18n.getMessage("extensionOptionManualView"),
+		"title": ponyfill.i18n.getMessage("extensionOptionManualView"),
 		"contexts": ["page","selection"]
 	});
-	chrome.contextMenus.create({
+	ponyfill.contextMenus.create({
 		"parentId": "manualView",
 		"id": "manualViewShiftKey",
-		"title": chrome.i18n.getMessage("extensionOptionManualViewByShiftKey"),
+		"title": ponyfill.i18n.getMessage("extensionOptionManualViewByShiftKey"),
 		"checked": shiftKey,
 		"type": "checkbox",
 		"contexts": ["page","selection"]
 	});
-	chrome.contextMenus.create({
+	ponyfill.contextMenus.create({
 		"parentId": "manualView",
 		"id": "manualViewCtrlKey",
-		"title": chrome.i18n.getMessage("extensionOptionManualViewByCtrlKey"),
+		"title": ponyfill.i18n.getMessage("extensionOptionManualViewByCtrlKey"),
 		"checked": ctrlKey,
 		"type": "checkbox",
 		"contexts": ["page","selection"]
 	});
-	chrome.contextMenus.create({
+	ponyfill.contextMenus.create({
 		"id": "option",
-		"title": chrome.i18n.getMessage("extensionOptionName"),
+		"title": ponyfill.i18n.getMessage("extensionOptionName"),
 		"contexts": ["page","selection"]
 	});
 }
 
 function contextMenuBehavior(info, tab){
+	let promise;
 	if ( info.menuItemId == "option" ){
-		chrome.runtime.openOptionsPage();
+		promise = ponyfill.runtime.openOptionsPage();
 	}
 	else if ( info.menuItemId == "autoView" ){
 		saveAutoViewFlag(info.checked);
@@ -185,37 +187,46 @@ function contextMenuBehavior(info, tab){
 }
 
 function getDefaultOptionList(){
-	let lang = chrome.i18n.getUILanguage();
-	if ( !lang ) lang = chrome.runtime.getManifest()["default_locale"];
-	if ( !DEFAULT_OPTION_LIST[lang] ) return [];
-	return DEFAULT_OPTION_LIST[lang];
+	let lang = ponyfill.i18n.getUILanguage();
+	let matcher = lang.match(/^([a-zA-Z0-9]+)\-[a-zA-Z0-9]+$/);
+	if( matcher ){
+		lang = matcher[1];
+	}
+	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
+		return DEFAULT_OPTION_LIST[lang];
+	}
+	lang = ponyfill.runtime.getManifest()["default_locale"];
+	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
+		return DEFAULT_OPTION_LIST[lang];
+	}
+	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
 function onOpenWindowError(e){
 	console.error(e);
-	return notice(chrome.i18n.getMessage("notificationOpenWindowError", [e.message]));
+	return notice(ponyfill.i18n.getMessage("notificationOpenWindowError", [e.message]));
 }
 
 function onReadError(e){
 	console.error(e);
-	return notice(chrome.i18n.getMessage("notificationReadOptionError", [e.message]));
+	return notice(ponyfill.i18n.getMessage("notificationReadOptionError", [e.message]));
 }
 
 function onSaveError(e){
 	console.error(e);
-	return notice(chrome.i18n.getMessage("notificationSaveOptionError", [e.message]));
+	return notice(ponyfill.i18n.getMessage("notificationSaveOptionError", [e.message]));
 }
 
 function unexpectedError(e){
 	console.error(e);
-	return notice(chrome.i18n.getMessage("notificationUnexpectedError", [e.message]));
+	return notice(ponyfill.i18n.getMessage("notificationUnexpectedError", [e.message]));
 }
 
 function notice(message){
 	let noticer = ponyfill.notifications.create({
 		"type": "basic",
-		"iconUrl": chrome.extension.getURL("image/icon.svg"),
-		"title": chrome.i18n.getMessage("extensionName"),
+		"iconUrl": ponyfill.extension.getURL("/image/icon.svg"),
+		"title": ponyfill.i18n.getMessage("extensionName"),
 		"message": message
 	});
 	return noticer;

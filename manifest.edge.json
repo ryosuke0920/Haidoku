@@ -1,24 +1,20 @@
 {
 	"manifest_version": 2,
 	"default_locale": "en",
-	"name":"__MSG_extensionName__",
-	"description":"__MSG_extensionDescription__",
+	"name":"Search Dictionary Faster",
+	"description":"When select a text, link list which contains some dictionary will be displayed. So you can search faster.",
 	"author": "Ryosuke Ohta",
 	"version":"1.1.12",
 	"icons": {
 		"32": "image/icon.svg"
 	},
 	"background": {
+		"persistent": true,
 		"scripts": [
 			"lib/ponyfill.js",
 			"lib/config.js",
 			"background/background.js"
 		]
-	},
-	"options_ui": {
-		"page": "option/option.html",
-		"open_in_tab": true,
-		"browser_style": false
 	},
 	"content_scripts": [
 		{
@@ -38,10 +34,8 @@
 		"storage",
 		"notifications"
 	],
-	"applications": {
-		"gecko": {
-		"id": "{31729e3f-c535-43f8-91a0-706f572fc1c6}",
-		"strict_min_version": "60.0"
-		}
-	}
+	"web_accessible_resources": [
+		"image/minus.svg",
+		"image/plus.svg"
+	]
 }
