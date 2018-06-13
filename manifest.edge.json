@@ -4,27 +4,27 @@
 	"name":"Search Dictionary Faster",
 	"description":"When select a text, link list which contains some dictionary will be displayed. So you can search faster.",
 	"author": "Ryosuke Ohta",
-	"version":"1.1.10",
+	"version":"1.1.12",
 	"icons": {
 		"32": "image/icon.svg"
 	},
 	"background": {
 		"persistent": true,
 		"scripts": [
-			"ponyfill.js",
-			"config.js",
-			"background.js"
+			"lib/ponyfill.js",
+			"lib/config.js",
+			"background/background.js"
 		]
 	},
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
 			"css": [
-				"content.css"
+				"content/content.css"
 			],
 			"js": [
-				"ponyfill.js",
-				"content.js"
+				"lib/ponyfill.js",
+				"content/content.js"
 			]
 		}
 	],

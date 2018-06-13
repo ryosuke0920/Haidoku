@@ -55,12 +55,12 @@
 		menuNode.classList.add("lessLaborGoToDictionary-menu");
 		linkListNode.appendChild(menuNode);
 		let zoomDownNode = document.createElement("img");
-		zoomDownNode.src = ponyfill.extension.getURL("image/minus.svg");
+		zoomDownNode.src = ponyfill.extension.getURL("/image/minus.svg");
 		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
 		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 		let zoomUpNode = document.createElement("img");
-		zoomUpNode.src = ponyfill.extension.getURL("image/plus.svg");
+		zoomUpNode.src = ponyfill.extension.getURL("/image/plus.svg");
 		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
@@ -385,7 +385,6 @@
 				"as": anchorSize
 			}
 		});
-		console.log(res);
 		return res;
 	}
 

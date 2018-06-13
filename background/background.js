@@ -225,7 +225,7 @@ function unexpectedError(e){
 function notice(message){
 	let noticer = ponyfill.notifications.create({
 		"type": "basic",
-		"iconUrl": ponyfill.extension.getURL("image/icon.svg"),
+		"iconUrl": ponyfill.extension.getURL("/image/icon.svg"),
 		"title": ponyfill.i18n.getMessage("extensionName"),
 		"message": message
 	});
