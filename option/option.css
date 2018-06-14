@@ -139,21 +139,23 @@ input.url {
       grid-template-columns: 1fr 1fr 1fr 1fr;
    }
 }
-
 .appearanceTable {
 	display: grid;
 	grid-template-columns: 1fr;
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 3px 0px;
 }
 .appearanceTable > * {
 	margin-bottom: 1em;
 }
-@media (min-width: 802px) {
-   .appearanceTable {
-      grid-template-columns: 1fr 1fr;
-   }
-}
-@media (min-width: 1094px) {
+@media (min-width: 948px) {
 	.appearanceTable {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 400px 1fr ;
    }
+	.appearanceHeader {
+		grid-column-start: 1;
+		grid-column-end: 4;
+	}
+}
+.appearanceHeader h1 {
+	background-color: WhiteSmoke;
 }

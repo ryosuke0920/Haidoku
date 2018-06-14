@@ -67,27 +67,59 @@
 				</section>
 			</div>
 		</div>
-		<div id="appearance" class="panel box hide">
-			<div class="appearanceTable">
-				<p class="linkListStyle">htmlLinkListStyle</p>
-				<p>
+		<article id="appearance" class="panel box hide">
+			<section class="appearanceTable box">
+				<section class="appearanceHeader">
+					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
+				</section>
+				<section>
 					<label><input type="radio" class="linkListClass" name="linkListClass" value=""/> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
 					<label><input type="radio" class="linkListClass" name="linkListClass" value="m" /> <span class="linkListStyleModern">htmlLinkListStyleModern</span></label><br>
-					<label><input type="radio" class="linkListClass" name="linkListClass" value="p" /> <span class="linkListStylePop">htmlLinkListStylePop</span></label><br>
-				</p>
-				<div>
-					<div id="sampleLinkList" class="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px;">
+					<label style="display:none;"><input type="radio" class="linkListClass" name="linkListClass" value="p" /> <span class="linkListStylePop">htmlLinkListStylePop</span></label><br>
+				</section>
+				<section>
+					<div id="sampleLinkList" class="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
 						<nav class="lessLaborGoToDictionary-menu">
 							<img class="lessLaborGoToDictionary-zoomDown" title="縮小">
 							<img class="lessLaborGoToDictionary-zoomUp" title="拡大">
 						</nav>
-						<a class="lessLaborGoToDictionary-anchor">test1 </a>
-						<a class="lessLaborGoToDictionary-anchor">test2 test2 </a>
-						<a class="lessLaborGoToDictionary-anchor">test3 test3 test3 </a>
+						<ul class="lessLaborGoToDictionary-container">
+							<li class="lessLaborGoToDictionary-list">
+								<a class="lessLaborGoToDictionary-anchor">test1 </a>
+							</li>
+							<li class="lessLaborGoToDictionary-list">
+								<a class="lessLaborGoToDictionary-anchor">test2 test2 </a>
+							</li>
+							<li class="lessLaborGoToDictionary-list">
+								<a class="lessLaborGoToDictionary-anchor">test3 test3 test3 </a>
+							</li>
+						</ul>
 					</div>
-				</div>
-			</div>
-		</div>
+				</section>
+			</section>
+			<!--
+			<section class="appearanceTable box">
+				<section class="appearanceHeader">
+					<h1 class="">test titile 2</h1>
+				</section>
+				<section>
+					<p>ccccccccccccccccccccccccccccccccc</p>
+					aaaaaaaaaaaaaaaaaaaaaaaaaa<br >
+					aaaaaaaaaaaaaaaaaaaaaaaaaa<br >
+					aaaaaaaaaaaaaaaaaaaaaaaaaa<br >
+				</section>
+				<section>
+					bbbbbbbbbbbbbbbbbbbbbbbb<br>
+					bbbbbbbbbbbbbbbbbbbbbbbb<br>
+					bbbbbbbbbbbbbbbbbbbbbbbb<br>
+					bbbbbbbbbbbbbbbbbbbbbbbb<br>
+					aaaaaaaaaaaaaaaaaaaaaaaaaa<br >
+					aaaaaaaaaaaaaaaaaaaaaaaaaa<br >
+					aaaaaaaaaaaaaaaaaaaaaaaaaa<br >
+				</section>
+			</section>
+			-->
+		</article>
 		<div id="contact" class="panel box hide">
 			<address>
 				<p class="contactText">htmlContactText</p>
