@@ -27,7 +27,7 @@
 
 
 	starter()
-		.then(initProperties)
+		.then( initProperties )
 		.then( initI18n )
 		.then( initPreset )
 		.then( initField )
@@ -203,10 +203,11 @@
 	}
 
 	function fileChangeBehavior(e){
+		if( !e.hasOwnProperty("w")) return;
 		if( e["w"]["newValue"] == windowId ) return;
-		if( e.hasOwnProperty("ol") && e.hasOwnProperty("w") ){
-			let optionList = e["ol"]["newValue"];
+		if( e.hasOwnProperty("ol") ){
 			removeAllField();
+			let optionList = e["ol"]["newValue"];
 			for( let i=0; i<optionList.length; i++){
 				let item = optionList[i];
 				addField(item["c"], item["l"], item["u"]);

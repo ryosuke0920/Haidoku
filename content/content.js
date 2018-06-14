@@ -216,8 +216,32 @@
 		linkListNode.classList.add("lessLaborGoToDictionary-hide");
 	}
 
-	function closeLinkListDelay(e){
+	function closeLinkListDelay(){
 		window.setTimeout(closeLinkList, LINK_LIST_CLOSE_TIME);
+	}
+
+	function onClickAnchor(e){
+		closeLinkListDelay();
+		saveHistory(e).catch(onSaveError);
+	}
+
+	function saveHistory(e){
+		let node = e.target;
+		let text = node.getAttribute("data-text");
+		let label = node.getAttribute("data-label");
+		let url = node.getAttribute("data-url");
+		let location = window.location.toString();
+		let data = {
+			"method": "saveHistory",
+			"data": {
+				"text": text,
+				"label": label,
+				"url": url,
+				"location": location
+			}
+		};
+		let res = ponyfill.runtime.sendMessage(data);
+		return res;
 	}
 
 	function makeLinkList(text){
@@ -238,8 +262,11 @@
 			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
 			a.setAttribute( "rel", "noreferrer" );
+			a.setAttribute( "data-text", text );
+			a.setAttribute( "data-url", item["u"] );
+			a.setAttribute( "data-label", item["l"] );
 			a.innerText = item["l"];
-			a.addEventListener("click", closeLinkListDelay);
+			a.addEventListener("click", onClickAnchor);
 			let li = document.createElement("li");
 			li.classList.add("lessLaborGoToDictionary-list");
 			li.appendChild(a);

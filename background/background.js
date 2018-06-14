@@ -55,6 +55,9 @@ function notify(message, sender, sendResponse){
 	if( method == "notice" ){
 		sendResponse( notice(data) );
 	}
+	else if( method == "saveHistory" ){
+		return saveHistory( data["text"], data["label"], data["url"], data["location"] );
+	}
 	else {
 		sendResponse( save(data) );
 	}
@@ -72,6 +75,22 @@ function saveManualViewShiftKey(flag=false){
 function saveManualViewCtrlKey(flag=false){
 	return save({"ck":flag}).catch(onSaveError);
 }
+
+function saveHistory(text, label, url, location){
+	text = text.trim();
+	label = label.trim();
+	url = url.trim();
+	location = location.trim();
+
+	console.log(text);
+	console.log(label);
+	console.log(url);
+	console.log(location);
+
+	return starter();
+
+}
+
 
 function makeMetadata(){
 	let manifest = ponyfill.runtime.getManifest();
@@ -114,7 +133,10 @@ function resetMenu(json){
 				"title": label,
 				"contexts": ["selection"]
 			};
-			options[id] = url;
+			options[id] = {
+				"url": url,
+				"label": label
+			}
 			ponyfill.contextMenus.create(args);
 		}
 	}
@@ -174,7 +196,8 @@ function contextMenuBehavior(info, tab){
 		saveManualViewCtrlKey(info.checked);
 	}
 	else if ( options.hasOwnProperty( info.menuItemId ) ){
-		openWindow(options[info.menuItemId],info.selectionText );
+		saveHistory(info.selectionText, options[info.menuItemId]["label"], options[info.menuItemId]["url"], info.pageUrl );
+		openWindow(options[info.menuItemId]["url"], info.selectionText );
 	}
 }
 
