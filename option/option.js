@@ -52,14 +52,14 @@
 		presetNode = document.querySelector("#preset");
 		appearanceNode = document.querySelector("#appearance");
 		sampleLinkListNode = document.querySelector("#sampleLinkList");
-		sampleLinkListNode.resetClass = ()=>{
+		sampleLinkListNode.resetClassStyles = ()=>{
 			sampleLinkListNode.classList.remove(CLASS_PREFIX+"-modern");
 			sampleLinkListNode.classList.remove(CLASS_PREFIX+"-pop");
 		};
-		sampleLinkListNode.setClassModern = ()=>{
+		sampleLinkListNode.setClassModernStyle = ()=>{
 			sampleLinkListNode.classList.add(CLASS_PREFIX+"-modern");
 		};
-		sampleLinkListNode.setClassPop = ()=>{
+		sampleLinkListNode.setClassPopStyle = ()=>{
 			sampleLinkListNode.classList.add(CLASS_PREFIX+"-pop");
 		};
 		linkListClassNodeList = document.querySelectorAll(".linkListClass");
@@ -188,12 +188,12 @@
 	}
 
 	function setSampleLinkListStyle(value){
-		sampleLinkListNode.resetClass();
+		sampleLinkListNode.resetClassStyles();
 		if( value == "p" ){
-			sampleLinkListNode.setClassPop();
+			sampleLinkListNode.setClassPopStyle();
 		}
 		else if( value == "m" ){
-			sampleLinkListNode.setClassModern();
+			sampleLinkListNode.setClassModernStyle();
 		}
 	}
 
