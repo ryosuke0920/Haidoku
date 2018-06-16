@@ -83,15 +83,13 @@ function saveManualViewCtrlKey(flag=false){
 }
 
 function upgrade(e){
-	console.log("upgrade");
-	let db = e.currentTarget.result;
+	let db = e.target.result;
 	let historys = db.createObjectStore(HISTORYS, {"keyPath": "id", "autoIncrement": true});
 	historys.createIndex("text", "text", {"unique": false});
 }
 
-function prepareRequest(){
-	let request = window.indexedDB.open( INDEXED_DB_NAME, INDEXED_DB_VERSION );
-	return new Promise((resolve,reject)=>{
+function prepareRequest(request){
+	let promise = new Promise((resolve,reject)=>{
 		request.onupgradeneeded = (e)=>{
 			console.log("onupgradeneeded");
 			console.log(e);
@@ -100,12 +98,7 @@ function prepareRequest(){
 		request.onsuccess = (e)=>{
 			console.log("onsuccess");
 			console.log(e);
-			resolve(e.target.result);
-		};
-		request.onblocked = (e)=>{
-			console.log("onblocked");
-			console.error(e);
-			reject(e);
+			resolve(e);
 		};
 		request.onerror = (e)=>{
 			console.log("onerror");
@@ -113,6 +106,7 @@ function prepareRequest(){
 			reject(e);
 		};
 	});
+	return promise;
 }
 
 function saveHistory(data){
@@ -121,8 +115,10 @@ function saveHistory(data){
 	let url = data["url"].trim();
 	let location = data["location"].trim();
 	let title = data["title"].trim();
+	let request = window.indexedDB.open( INDEXED_DB_NAME, INDEXED_DB_VERSION );
 
-	function putHistory(db){
+	function putHistory(e){
+		let db = e.target.result;
 		let transaction = db.transaction(["historys"], WRITE);
 		let promise = new Promise((resolve,reject)=>{
 			transaction.oncomplete = (e)=>{
@@ -133,7 +129,7 @@ function saveHistory(data){
 				console.log("reject put ObjectStore");
 				reject(e);
 			};
-		})
+		});
 		let historys = transaction.objectStore(HISTORYS);
 		historys.put({
 			"text": text,
@@ -145,7 +141,7 @@ function saveHistory(data){
 		return promise;
 	}
 
-	return prepareRequest().then(putHistory);
+	return prepareRequest(request).then(putHistory);
 }
 
 function makeMetadata(){
