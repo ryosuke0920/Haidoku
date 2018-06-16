@@ -226,18 +226,14 @@
 	}
 
 	function saveHistory(e){
-		let node = e.target;
-		let text = node.getAttribute("data-text");
-		let label = node.getAttribute("data-label");
-		let url = node.getAttribute("data-url");
-		let location = window.location.toString();
 		let data = {
 			"method": "saveHistory",
 			"data": {
-				"text": text,
-				"label": label,
-				"url": url,
-				"location": location
+				"text": e.target.getAttribute("data-text"),
+				"label": e.target.getAttribute("data-label"),
+				"url": e.target.getAttribute("data-url"),
+				"location": window.location.toString(),
+				"title": document.title.toString()
 			}
 		};
 		let res = ponyfill.runtime.sendMessage(data);

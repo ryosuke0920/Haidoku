@@ -1,4 +1,10 @@
 const DEFAULT_LOCALE = "en";
+const INDEXED_DB_NAME = "SearchDictionaryFaster";
+const INDEXED_DB_VERSION = 1; /* don't use 1.1 */
+const READ = "readonly";
+const WRITE = "readwrite";
+const HISTORYS = "historys";
+
 let options = {};
 ponyfill.runtime.onInstalled.addListener( install );
 starter().then(initContextMenu).then(initListener).catch(unexpectedError);
@@ -8,7 +14,7 @@ function starter(){
 }
 
 function install(e){
-	if(e.reason === "install"){
+	if(e.reason == "install"){
 		let data = {
 			"ol": getDefaultOptionList()
 		};
@@ -22,7 +28,7 @@ function getPresetOptionList(){
 
 function initContextMenu(){
 	let getter = ponyfill.storage.sync.get({
-		"ol": [],
+		"ol": getDefaultOptionList(),
 		"bf": true,
 		"sk": false,
 		"ck": false
@@ -56,7 +62,7 @@ function notify(message, sender, sendResponse){
 		sendResponse( notice(data) );
 	}
 	else if( method == "saveHistory" ){
-		return saveHistory( data["text"], data["label"], data["url"], data["location"] );
+		sendResponse( saveHistory(data) );
 	}
 	else {
 		sendResponse( save(data) );
@@ -76,21 +82,71 @@ function saveManualViewCtrlKey(flag=false){
 	return save({"ck":flag}).catch(onSaveError);
 }
 
-function saveHistory(text, label, url, location){
-	text = text.trim();
-	label = label.trim();
-	url = url.trim();
-	location = location.trim();
-
-	console.log(text);
-	console.log(label);
-	console.log(url);
-	console.log(location);
-
-	return starter();
-
+function upgrade(e){
+	console.log("upgrade");
+	let db = e.currentTarget.result;
+	let historys = db.createObjectStore(HISTORYS, {"keyPath": "id", "autoIncrement": true});
+	historys.createIndex("text", "text", {"unique": false});
 }
 
+function prepareRequest(){
+	let request = window.indexedDB.open( INDEXED_DB_NAME, INDEXED_DB_VERSION );
+	return new Promise((resolve,reject)=>{
+		request.onupgradeneeded = (e)=>{
+			console.log("onupgradeneeded");
+			console.log(e);
+			upgrade(e);
+		};
+		request.onsuccess = (e)=>{
+			console.log("onsuccess");
+			console.log(e);
+			resolve(e.target.result);
+		};
+		request.onblocked = (e)=>{
+			console.log("onblocked");
+			console.error(e);
+			reject(e);
+		};
+		request.onerror = (e)=>{
+			console.log("onerror");
+			console.error(e);
+			reject(e);
+		};
+	});
+}
+
+function saveHistory(data){
+	let text = data["text"].trim();
+	let label = data["label"].trim();
+	let url = data["url"].trim();
+	let location = data["location"].trim();
+	let title = data["title"].trim();
+
+	function putHistory(db){
+		let transaction = db.transaction(["historys"], WRITE);
+		let promise = new Promise((resolve,reject)=>{
+			transaction.oncomplete = (e)=>{
+				console.log("resolve put ObjectStore");
+				resolve(e);
+			};
+			transaction.onerror = (e)=>{
+				console.log("reject put ObjectStore");
+				reject(e);
+			};
+		})
+		let historys = transaction.objectStore(HISTORYS);
+		historys.put({
+			"text": text,
+			"label": label,
+			"url": url,
+			"location": location,
+			"title": title
+		});
+		return promise;
+	}
+
+	return prepareRequest().then(putHistory);
+}
 
 function makeMetadata(){
 	let manifest = ponyfill.runtime.getManifest();
@@ -196,8 +252,14 @@ function contextMenuBehavior(info, tab){
 		saveManualViewCtrlKey(info.checked);
 	}
 	else if ( options.hasOwnProperty( info.menuItemId ) ){
-		saveHistory(info.selectionText, options[info.menuItemId]["label"], options[info.menuItemId]["url"], info.pageUrl );
 		openWindow(options[info.menuItemId]["url"], info.selectionText );
+		saveHistory({
+			"text": info.selectionText,
+			"label": options[info.menuItemId]["label"],
+			"url": options[info.menuItemId]["url"],
+			"location": tab.url,
+			"title": tab.title
+		}).catch( onSaveError );
 	}
 }
 

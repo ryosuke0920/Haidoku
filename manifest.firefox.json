@@ -12,7 +12,6 @@
 		"scripts": [
 			"lib/ponyfill.js",
 			"etc/config.js",
-			"background/MyDB.js",
 			"background/background.js"
 		]
 	},
