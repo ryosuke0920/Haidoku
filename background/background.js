@@ -1,9 +1,4 @@
 const DEFAULT_LOCALE = "en";
-const INDEXED_DB_NAME = "SearchDictionaryFaster";
-const INDEXED_DB_VERSION = 1; /* don't use 1.1 */
-const READ = "readonly";
-const WRITE = "readwrite";
-const HISTORYS = "historys";
 const LINE_BREAK_REGEX = new RegExp(/\r?\n/,"g");
 
 let options = {};
@@ -83,30 +78,6 @@ function saveManualViewCtrlKey(flag=false){
 	return save({"ck":flag}).catch(onSaveError);
 }
 
-function upgrade(db){
-	let historys = db.createObjectStore(HISTORYS, {"keyPath": "id", "autoIncrement": true});
-	historys.createIndex("textIndex", "text", {"unique": false});
-}
-
-function open(){
-	return window.indexedDB.open( INDEXED_DB_NAME, INDEXED_DB_VERSION );
-}
-
-function prepareRequest(request){
-	let promise = new Promise((resolve,reject)=>{
-		request.onupgradeneeded = (e)=>{
-			upgrade(e.target.result);
-		};
-		request.onsuccess = (e)=>{
-			resolve(e);
-		};
-		request.onerror = (e)=>{
-			reject(e);
-		};
-	});
-	return promise;
-}
-
 function addHistory(e){
 	let db = e.target.result;
 	let transaction = db.transaction(["historys"], WRITE);
@@ -133,7 +104,7 @@ function saveHistory(data){
 		"date": new Date()
 	};
 	let obj = {"data": data};
-	return starter().then(open).then(prepareRequest).then(addHistory.bind(obj));
+	return starter().then(indexeddb.open).then(indexeddb.prepareRequest).then(addHistory.bind(obj));
 }
 
 function makeMetadata(){
