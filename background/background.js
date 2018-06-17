@@ -4,6 +4,7 @@ const INDEXED_DB_VERSION = 1; /* don't use 1.1 */
 const READ = "readonly";
 const WRITE = "readwrite";
 const HISTORYS = "historys";
+const LINE_BREAK_REGEX = new RegExp(/\r?\n/,"g");
 
 let options = {};
 ponyfill.runtime.onInstalled.addListener( install );
@@ -82,27 +83,40 @@ function saveManualViewCtrlKey(flag=false){
 	return save({"ck":flag}).catch(onSaveError);
 }
 
-function upgrade(e){
-	let db = e.target.result;
+function upgrade(db){
 	let historys = db.createObjectStore(HISTORYS, {"keyPath": "id", "autoIncrement": true});
-	historys.createIndex("text", "text", {"unique": false});
+	historys.createIndex("textIndex", "text", {"unique": false});
+}
+
+function open(){
+	return window.indexedDB.open( INDEXED_DB_NAME, INDEXED_DB_VERSION );
 }
 
 function prepareRequest(request){
 	let promise = new Promise((resolve,reject)=>{
 		request.onupgradeneeded = (e)=>{
-			console.log("onupgradeneeded");
-			console.log(e);
-			upgrade(e);
+			upgrade(e.target.result);
 		};
 		request.onsuccess = (e)=>{
-			console.log("onsuccess");
-			console.log(e);
 			resolve(e);
 		};
 		request.onerror = (e)=>{
-			console.log("onerror");
-			console.error(e);
+			reject(e);
+		};
+	});
+	return promise;
+}
+
+function addHistory(e){
+	let db = e.target.result;
+	let transaction = db.transaction(["historys"], WRITE);
+	let promise = new Promise((resolve,reject)=>{
+		let historys = transaction.objectStore(HISTORYS);
+		let req = historys.add(this.data);
+		req.onsuccess = (e)=>{
+			resolve(e);
+		};
+		req.onerror = (e)=>{
 			reject(e);
 		};
 	});
@@ -110,38 +124,16 @@ function prepareRequest(request){
 }
 
 function saveHistory(data){
-	let text = data["text"].trim();
-	let label = data["label"].trim();
-	let url = data["url"].trim();
-	let location = data["location"].trim();
-	let title = data["title"].trim();
-	let request = window.indexedDB.open( INDEXED_DB_NAME, INDEXED_DB_VERSION );
-
-	function putHistory(e){
-		let db = e.target.result;
-		let transaction = db.transaction(["historys"], WRITE);
-		let promise = new Promise((resolve,reject)=>{
-			transaction.oncomplete = (e)=>{
-				console.log("resolve put ObjectStore");
-				resolve(e);
-			};
-			transaction.onerror = (e)=>{
-				console.log("reject put ObjectStore");
-				reject(e);
-			};
-		});
-		let historys = transaction.objectStore(HISTORYS);
-		historys.put({
-			"text": text,
-			"label": label,
-			"url": url,
-			"location": location,
-			"title": title
-		});
-		return promise;
-	}
-
-	return prepareRequest(request).then(putHistory);
+	data = {
+		"text": data["text"].trim().replace(LINE_BREAK_REGEX," "),
+		"label": data["label"].trim(),
+		"url": data["url"].trim(),
+		"location": data["location"].trim(),
+		"title": data["title"].trim(),
+		"date": new Date()
+	};
+	let obj = {"data": data};
+	return starter().then(open).then(prepareRequest).then(addHistory.bind(obj));
 }
 
 function makeMetadata(){
