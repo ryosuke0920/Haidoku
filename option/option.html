@@ -16,7 +16,8 @@
 	<nav id="nav">
 		<div class="box navi showForm active">htmlFormName</div>
 		<div class="box navi showPreset">htmlPresetName</div>
-		<div class="box navi showAppearance">htmlAppearanceName</div>
+		<div class="box navi showHistory">htmlHistoryName</div>
+		<div class="box navi showOthers">htmlOthersName</div>
 		<div class="box navi showContact">htmlContactName</div>
 	</nav>
 	<div id="main">
@@ -42,7 +43,7 @@
 							<input type="submit" class="urlSubmit hide">
 						</form>
 					</label>&nbsp;
-					<button type="button" class="removeField">htmlRemoveButtonName</button>
+					<button type="button" class="removeField">htmlDelete</button>
 				</div>
 			</div>
 		</div>
@@ -55,7 +56,6 @@
 					<option value="ja">htmlLanguageJa</option>
 					<option value="zh">htmlLanguageZh</option>
 				</select>&nbsp;
-				&nbsp;
 				<button type="button" class="addPreset">htmlAddPresetButtonName</button>&nbsp;
 			</nav>
 			<div class="desk">
@@ -67,7 +67,60 @@
 				</section>
 			</div>
 		</div>
-		<div id="appearance" class="panel box hide">
+		<div id="history" class="panel box hide">
+			<nav class="controller box">
+				<button class="historyUpdateButton">htmlHistoryUpdateButton</button>&nbsp;
+				<label>
+					<span class="historyPageText">htmlHistoryPageText</span>&nbsp;
+					<input class="historyPage" type="number" value="1" min="1">&nbsp;
+				</label>
+				<label>
+					<span class="historyRowSizeText">htmlHistoryRowSizeText</span>&nbsp;
+					<input class="historyRowSize" type="number" value="10" min="10" step="10">&nbsp;
+				</label>
+				<label>
+					<input class="historyRowSizeAll" type="checkbox" value="1">&nbsp;
+					<span class="historyRowSizeAllText">htmlHistoryRowSizeAllText</span>&nbsp;
+				</label>
+				<button class="historyDeleteButton">htmlHistoryCheckDelete</button>&nbsp;
+				<button class="historyDeleteAllButton">htmlHistoryAllDelete</button>&nbsp;
+			</nav>
+			<div class="desk">
+				<p class="historyDescription">htmlHistoryDescription</p>
+				<div class="historyTableWrapper">
+					<table class="pagenation">
+						<tr>
+							<td class="historyPageFirst">htmlPageFirst</td>
+							<td class="historyPagePrev">htmlPagePrev</td>
+							<td class="historyPageNext">htmlPageNext</td>
+							<td class="historyPageLast">htmlPageLast</td>
+						</tr>
+					</table>
+					<table id="historyTable">
+						<thead>
+							<tr>
+								<th class="headHistoryID"><input type="checkbox" class="historyCheckAllRows"></th>
+								<th class="headHistoryDate">htmlHistoryDate</th>
+								<th class="headHistoryText">htmlHistoryText</th>
+								<th class="headHistoryFromSite">htmlHistoryFromSite</th>
+								<th class="headHistoryToSite">htmlHistoryToSite</th>
+							</tr>
+						</thead>
+						<tbody id="historyContainer"></tbody>
+					</table>
+				</div>
+				<table class="hide">
+					<tr id="rowPrototype" class="historyRow">
+						<td class="historyID"><input class="historyCheckbox" type="checkbox" value="ID"></td>
+						<td class="historyDate" title="historyDate">historyDate</td>
+						<td class="historyText" title="historyText">historyText</td>
+						<td class="historyFromSite" title="historyFromSite"><a target="_blank" rel="noreferrer">historyFromSite</a></td>
+						<td class="historyToSite" title="historyToSite"><a target="_blank" rel="noreferrer">historyToSite</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="others" class="panel box hide">
 			<section class="appearanceTable box">
 				<section class="appearanceHeader">
 					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
@@ -107,6 +160,7 @@
 	</div>
 </div>
 <script src="/lib/ponyfill.js"></script>
+<script src="/lib/indexeddb.js"></script>
 <script src="option.js"></script>
 </body>
 </html>

@@ -1,5 +1,4 @@
 const DEFAULT_LOCALE = "en";
-const LINE_BREAK_REGEX = new RegExp(/\r?\n/,"g");
 
 let options = {};
 ponyfill.runtime.onInstalled.addListener( install );
@@ -96,11 +95,11 @@ function addHistory(e){
 
 function saveHistory(data){
 	data = {
-		"text": data["text"].trim().replace(LINE_BREAK_REGEX," "),
-		"label": data["label"].trim(),
-		"url": data["url"].trim(),
-		"location": data["location"].trim(),
-		"title": data["title"].trim(),
+		"text": data["text"],
+		"fromURL": data["fromURL"],
+		"fromTitle": data["fromTitle"],
+		"toURL": data["toURL"],
+		"toTitle": data["toTitle"],
 		"date": new Date()
 	};
 	let obj = {"data": data};
@@ -214,10 +213,10 @@ function contextMenuBehavior(info, tab){
 		openWindow(options[info.menuItemId]["url"], info.selectionText );
 		saveHistory({
 			"text": info.selectionText,
-			"label": options[info.menuItemId]["label"],
-			"url": options[info.menuItemId]["url"],
-			"location": tab.url,
-			"title": tab.title
+			"fromURL": tab.url.toString(),
+			"fromTitle": tab.title.toString(),
+			"toURL": options[info.menuItemId]["url"],
+			"toTitle": options[info.menuItemId]["label"]
 		}).catch( onSaveError );
 	}
 }

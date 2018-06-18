@@ -159,3 +159,52 @@ input.url {
 .appearanceHeader h1 {
 	background-color: WhiteSmoke;
 }
+.historyPage,.historyRowSize {
+	width:50px;
+}
+.historyTableWrapper {
+	margin: 1em;
+}
+#historyTable {
+	border-collapse: collapse;
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+}
+#historyTable thead th {
+	background-color: WhiteSmoke;
+	color: black;
+	font-weight:bold;
+}
+#historyTable tbody tr:nth-child(2n) {
+	background-color: WhiteSmoke;
+}
+#historyTable thead th, #historyTable tbody td {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+.headHistoryID {
+	width: 20px;
+}
+.headHistoryDate {
+	width: 150px;
+}
+.headHistoryText,.headHistoryFromSite,.headHistoryToSite {
+	width: 320px;
+}
+.headHistoryID, .historyID {
+	text-align: left;
+}
+.pagenation {
+	width:1112px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	margin-bottom: 1em;
+}
+.pagenation td {
+	border-radius: 10px;
+	text-align: center;
+	cursor: pointer;
+}
+.pagenation td:hover {
+	background-color: Gainsboro;
+}

@@ -83,9 +83,13 @@
 		"message": "検索サイト追加",
 		"description": "Name of the preset on the side menu."
 	},
-	"htmlAppearanceName": {
-		"message": "表示",
-		"description": "Name of the appearance on the side menu."
+	"htmlHistoryName": {
+		"message": "履歴",
+		"description": "Name of the history on the side menu."
+	},
+	"htmlOthersName": {
+		"message": "その他",
+		"description": "Name of the others on the side menu."
 	},
 	"htmlContactName": {
 		"message": "お問い合わせ",
@@ -151,6 +155,70 @@
 		"message": "追加",
 		"description": "Name of adding button."
 	},
+	"htmlHistoryUpdateButton": {
+		"message": "更新",
+		"description": "Name of update button."
+	},
+	"htmlHistoryPageText": {
+		"message": "ページ",
+		"description": "Name of page."
+	},
+	"htmlHistoryRowSizeText": {
+		"message": "行数",
+		"description": "Name of row size."
+	},
+	"htmlHistoryRowSizeAllText": {
+		"message": "全行",
+		"description": "Name of all rows."
+	},
+	"htmlHistoryCheckDelete": {
+		"message": "チェックした履歴を削除",
+		"description": "Name of delete."
+	},
+	"htmlHistoryAllDelete": {
+		"message": "全ての履歴を削除",
+		"description": "Name of delete."
+	},
+	"alertHistoryAllDelete": {
+		"message": "全ての履歴を削除します。表に表示されていない履歴も削除されます。",
+		"description": "alert of delete all."
+	},
+	"htmlHistoryDescription": {
+		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの共有サービスの対象ではありません。履歴の保存は「リンクリスト」で設定してください。",
+		"description": "Description of history."
+	},
+	"htmlHistoryDate": {
+		"message": "日時",
+		"description": "Name of date."
+	},
+	"htmlHistoryText": {
+		"message": "選択テキスト",
+		"description": "Name of selected text."
+	},
+	"htmlHistoryFromSite": {
+		"message": "遷移元サイト",
+		"description": "Name of base site."
+	},
+	"htmlHistoryToSite": {
+		"message": "遷移先サイト",
+		"description": "Name of destination site."
+	},
+	"htmlPageFirst": {
+		"message": "最初",
+		"description": "Name of first."
+	},
+	"htmlPagePrev": {
+		"message": "戻る",
+		"description": "Name of preview."
+	},
+	"htmlPageNext": {
+		"message": "次へ",
+		"description": "Name of next."
+	},
+	"htmlPageLast": {
+		"message": "最後",
+		"description": "Name of end."
+	},
 	"htmlLinkListStyle": {
 		"message": "リンクリストのスタイル",
 		"description": "Name of the propertie."
@@ -160,7 +228,7 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListStyleModern": {
-		"message": "モダン",
+		"message": "ダーク",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListStylePop": {

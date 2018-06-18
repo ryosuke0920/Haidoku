@@ -12,7 +12,7 @@
 	const ANCHOR_RESIO = 0.1;
 	const SILENT_ERROR_PREFIX = "[silent]";
 	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
-	const LINK_LIST_CLOSE_TIME = 1000;
+	const LINK_LIST_CLOSE_TIME = 500;
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -230,10 +230,10 @@
 			"method": "saveHistory",
 			"data": {
 				"text": e.target.getAttribute("data-text"),
-				"label": e.target.getAttribute("data-label"),
-				"url": e.target.getAttribute("data-url"),
-				"location": window.location.toString(),
-				"title": document.title.toString()
+				"fromURL": window.location.toString(),
+				"fromTitle": document.title.toString(),
+				"toURL": e.target.getAttribute("data-url"),
+				"toTitle": e.target.getAttribute("data-label")
 			}
 		};
 		let res = ponyfill.runtime.sendMessage(data);
