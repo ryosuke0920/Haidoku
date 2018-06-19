@@ -4,13 +4,14 @@
 	"name":"__MSG_extensionName__",
 	"description":"__MSG_extensionDescription__",
 	"author": "Ryosuke Ohta",
-	"version":"1.1.12",
+	"version":"1.2.0",
 	"icons": {
 		"32": "image/icon.png"
 	},
 	"background": {
 		"scripts": [
 			"lib/ponyfill.js",
+			"lib/indexeddb.js",
 			"etc/config.js",
 			"background/background.js"
 		]
