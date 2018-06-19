@@ -70,7 +70,11 @@
 		<div id="history" class="panel box hide">
 			<nav class="controller box">
 				<span class="groupLine">
-					<button class="historyUpdateButton">htmlHistoryUpdateButton</button>&nbsp;
+					<button class="historyUpdateButton">htmlHistoryUpdateButton</button>
+					<select class="historyOrder">
+						<option class="historyOrderDesc" value="prev">htmlHistoryOrderDesc</option>
+						<option class="historyOrderAsc" value="next">htmlHistoryOrderAsc</option>
+					</select>
 					<label>
 						<input class="historyRowSize" type="number" value="10" min="10" step="10">&nbsp;
 						<span class="historyRowSizeText">htmlHistoryRowSizeText</span>&nbsp;
@@ -81,7 +85,7 @@
 					</label>
 					<label>
 						<input class="historyRowSizeAll" type="checkbox" value="1">&nbsp;
-						<span class="historyRowSizeAllText">htmlHistoryRowSizeAllText</span>&nbsp;
+						<span class="historyRowSizeAllText">htmlHistoryRowSizeAllText</span>
 					</label>
 				</span>
 				&nbsp;
@@ -92,18 +96,14 @@
 				<p class="historyDescription">htmlHistoryDescription</p>
 				<p>
 					<span class="groupLine">
-						&nbsp;
 						<span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;
 						<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;
 						<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;
-						<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span>
-						&nbsp;
+						<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span>&nbsp;
 					</span>
 					&nbsp;
 					<span class="groupLine">
-						&nbsp;
 						<span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span>
-						&nbsp;
 					</span>
 				</p>
 				<table id="historyTable">

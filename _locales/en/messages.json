@@ -171,6 +171,14 @@
 		"message": "display all rows",
 		"description": "Name of all rows."
 	},
+	"htmlHistoryOrderDesc": {
+		"message": "new->old",
+		"description": "Name of desc."
+	},
+	"htmlHistoryOrderAsc": {
+		"message": "old->new",
+		"description": "Name of asc."
+	},
 	"htmlHistoryCheckDelete": {
 		"message": "delete checked history",
 		"description": "Name of delete."

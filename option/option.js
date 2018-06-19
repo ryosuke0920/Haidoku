@@ -109,6 +109,8 @@
 			{ "selector": ".historyPageText", "property": "innerText", "key": "htmlHistoryPageText" },
 			{ "selector": ".historyRowSizeText", "property": "innerText", "key": "htmlHistoryRowSizeText" },
 			{ "selector": ".historyRowSizeAllText", "property": "innerText", "key": "htmlHistoryRowSizeAllText" },
+			{ "selector": ".historyOrderAsc", "property": "innerText", "key": "htmlHistoryOrderAsc" },
+			{ "selector": ".historyOrderDesc", "property": "innerText", "key": "htmlHistoryOrderDesc" },
 			{ "selector": ".historyDeleteButton", "property": "innerText", "key": "htmlHistoryCheckDelete" },
 			{ "selector": ".historyDeleteAllButton", "property": "innerText", "key": "htmlHistoryAllDelete" },
 			{ "selector": ".historyDescription", "property": "innerText", "key": "htmlHistoryDescription" },
@@ -450,10 +452,16 @@
 		return historyUpdateTable(page);
 	}
 
+	function getHistoryOrder(){
+		let node = historyNode.querySelector(".historyOrder");
+		return node.value;
+	}
+
 	function historyUpdateTableEnd(){
 		if( isAllSize() ) return historyUpdateTableAll();
 		let size = getHistoryRowSize();
 		let data = {
+			"order": getHistoryOrder(),
 			"affectedRow": 0,
 			"size": size
 		};
@@ -474,6 +482,7 @@
 	function historyUpdateTableAll(){
 		let data = {
 			"all":true,
+			"order": getHistoryOrder(),
 			"affectedRow":0
 		};
 		return starter()
@@ -488,6 +497,7 @@
 	function historyUpdateTable(page=0){
 		let size = getHistoryRowSize();
 		let data = {
+			"order": getHistoryOrder(),
 			"affectedRow": 0,
 			"size": size,
 			"page": page
@@ -557,7 +567,7 @@
 		let promise = new Promise((resolve,reject)=>{
 			let transaction = e.target.transaction;
 			let objectStore = transaction.objectStore(HISTORYS);
-			let req = objectStore.openCursor(null,"prev");
+			let req = objectStore.openCursor(null,this.order);
 			let i=0;
 			req.onsuccess = (e)=>{
 				let cursor = e.target.result;

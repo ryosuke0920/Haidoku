@@ -171,6 +171,14 @@
 		"message": "全行を表示",
 		"description": "Name of all rows."
 	},
+	"htmlHistoryOrderDesc": {
+		"message": "新->古",
+		"description": "Name of desc."
+	},
+	"htmlHistoryOrderAsc": {
+		"message": "古->新",
+		"description": "Name of asc."
+	},
 	"htmlHistoryCheckDelete": {
 		"message": "チェックした履歴を削除",
 		"description": "Name of delete."
