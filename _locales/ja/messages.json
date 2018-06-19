@@ -168,7 +168,7 @@
 		"description": "Name of row size."
 	},
 	"htmlHistoryRowSizeAllText": {
-		"message": "全行",
+		"message": "全行を表示",
 		"description": "Name of all rows."
 	},
 	"htmlHistoryCheckDelete": {

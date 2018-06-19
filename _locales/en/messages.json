@@ -168,11 +168,11 @@
 		"description": "Name of row size."
 	},
 	"htmlHistoryRowSizeAllText": {
-		"message": "all rows",
+		"message": "display all rows",
 		"description": "Name of all rows."
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "delete checked　hgistory",
+		"message": "delete checked history",
 		"description": "Name of delete."
 	},
 	"htmlHistoryAllDelete": {

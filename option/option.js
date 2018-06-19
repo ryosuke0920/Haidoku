@@ -357,8 +357,16 @@
 		return promise;
 	}
 
+	function thisToZero(){
+		this.page = 0;
+		this.start = this.end = -1;
+	}
+
 	function historyDeleteAllClose() {
 		removeHistoryRows();
+		let data = {};
+		thisToZero.bind(data)();
+		historyClose.bind(data)();
 	}
 
 	function historyDelete() {
@@ -508,6 +516,10 @@
 	function historyAllRange(e){
 		let db = e.target.result;
 		this.count = e.target.result;
+		if( !this.count ){
+			thisToZero.bind(this)();
+			return e;
+		}
 		this.page = 0;
 		this.start = 0;
 		this.end = this.count - 1;
@@ -517,23 +529,31 @@
 	function historyDecideRange(e){
 		let db = e.target.result;
 		this.count = e.target.result;
+		if( !this.count ){
+			thisToZero.bind(this)();
+			return e;
+		}
 		this.start = this.page * this.size;
 		this.end = this.start + this.size - 1;
-		if ( this.count < this.end + 1 ) return historyDecideRangeEnd.bind(this)(e);
+		if ( this.count - 1 < this.end ) historyDecideRangeEnd.bind(this)(e);
 		return e;
 	}
 
 	function historyDecideRangeEnd(e){
 		let db = e.target.result;
 		this.count = e.target.result;
+		if( !this.count ){
+			thisToZero.bind(this)();
+			return e;
+		}
 		this.page = Math.ceil( this.count / this.size )-1;
 		this.start = this.page * this.size;
-		this.end = this.start + this.size - 1;
+		this.end = this.count - 1;
 		return e;
 	}
 
 	function historyCursor(e){
-		if( this.count < this.start ) return Promise.resolve();
+		if( !this.count ) return Promise.resolve();
 		let promise = new Promise((resolve,reject)=>{
 			let transaction = e.target.transaction;
 			let objectStore = transaction.objectStore(HISTORYS);
@@ -592,7 +612,13 @@
 
 	function historyClose(){
 		let pageNode = historyNode.querySelector(".historyPage");
-		pageNode.value = this.page+1;
+		pageNode.value = this.page + 1;
+		let startRowNode = historyNode.querySelector(".historyStartRow");
+		startRowNode.innerText = this.start + 1;
+		let endRowNode = historyNode.querySelector(".historyEndRow");
+		endRowNode.innerText = this.end + 1;
+		let countRowNode = historyNode.querySelector(".historyCountRow");
+		countRowNode.innerText = this.count || 0;
 	}
 
 	function historyCheckAllRows(checked){

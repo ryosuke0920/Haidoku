@@ -108,6 +108,15 @@ input.url {
 .hide {
    display: none;
 }
+.groupLine {
+	padding:5px;
+	background-color: WhiteSmoke;
+	border: solid 1px rgb(222, 226, 230);
+	border-radius: 5px;
+}
+.controller .groupLine {
+	padding:10px;
+}
 #preset section {
    padding:0.5em;
    margin:0.5em;
@@ -139,31 +148,35 @@ input.url {
       grid-template-columns: 1fr 1fr 1fr 1fr;
    }
 }
-.appearanceTable {
+.othersTable {
 	display: grid;
 	grid-template-columns: 1fr;
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 3px 0px;
 }
-.appearanceTable > * {
+.othersTable > * {
 	margin-bottom: 1em;
 }
 @media (min-width: 948px) {
-	.appearanceTable {
+	.othersTable {
       grid-template-columns: 400px 1fr ;
    }
-	.appearanceHeader {
+	.othersHeader {
 		grid-column-start: 1;
 		grid-column-end: 3;
 	}
 }
-.appearanceHeader h1 {
+.othersHeader h1 {
 	background-color: WhiteSmoke;
 }
 .historyPage,.historyRowSize {
-	width:50px;
+	width:40px;
 }
-.historyTableWrapper {
-	margin: 1em;
+.pagination {
+	cursor: pointer;
+	color: rgb(0, 0, 238);
+}
+.pagination:hover {
+	text-decoration: underline;
 }
 #historyTable {
 	border-collapse: collapse;
@@ -193,18 +206,4 @@ input.url {
 }
 .headHistoryID, .historyID {
 	text-align: left;
-}
-.pagenation {
-	width:1112px;
-	border: 1px solid #ccc;
-	border-radius: 10px;
-	margin-bottom: 1em;
-}
-.pagenation td {
-	border-radius: 10px;
-	text-align: center;
-	cursor: pointer;
-}
-.pagenation td:hover {
-	background-color: Gainsboro;
 }

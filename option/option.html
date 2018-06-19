@@ -69,46 +69,55 @@
 		</div>
 		<div id="history" class="panel box hide">
 			<nav class="controller box">
-				<button class="historyUpdateButton">htmlHistoryUpdateButton</button>&nbsp;
-				<label>
-					<span class="historyPageText">htmlHistoryPageText</span>&nbsp;
-					<input class="historyPage" type="number" value="1" min="1">&nbsp;
-				</label>
-				<label>
-					<span class="historyRowSizeText">htmlHistoryRowSizeText</span>&nbsp;
-					<input class="historyRowSize" type="number" value="10" min="10" step="10">&nbsp;
-				</label>
-				<label>
-					<input class="historyRowSizeAll" type="checkbox" value="1">&nbsp;
-					<span class="historyRowSizeAllText">htmlHistoryRowSizeAllText</span>&nbsp;
-				</label>
+				<span class="groupLine">
+					<button class="historyUpdateButton">htmlHistoryUpdateButton</button>&nbsp;
+					<label>
+						<input class="historyRowSize" type="number" value="10" min="10" step="10">&nbsp;
+						<span class="historyRowSizeText">htmlHistoryRowSizeText</span>&nbsp;
+					</label>
+					<label>
+						<input class="historyPage" type="number" value="1" min="1">&nbsp;
+						<span class="historyPageText">htmlHistoryPageText</span>&nbsp;
+					</label>
+					<label>
+						<input class="historyRowSizeAll" type="checkbox" value="1">&nbsp;
+						<span class="historyRowSizeAllText">htmlHistoryRowSizeAllText</span>&nbsp;
+					</label>
+				</span>
+				&nbsp;
 				<button class="historyDeleteButton">htmlHistoryCheckDelete</button>&nbsp;
 				<button class="historyDeleteAllButton">htmlHistoryAllDelete</button>&nbsp;
 			</nav>
 			<div class="desk">
 				<p class="historyDescription">htmlHistoryDescription</p>
-				<div class="historyTableWrapper">
-					<table class="pagenation">
+				<p>
+					<span class="groupLine">
+						&nbsp;
+						<span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;
+						<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;
+						<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;
+						<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span>
+						&nbsp;
+					</span>
+					&nbsp;
+					<span class="groupLine">
+						&nbsp;
+						<span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span>
+						&nbsp;
+					</span>
+				</p>
+				<table id="historyTable">
+					<thead>
 						<tr>
-							<td class="historyPageFirst">htmlPageFirst</td>
-							<td class="historyPagePrev">htmlPagePrev</td>
-							<td class="historyPageNext">htmlPageNext</td>
-							<td class="historyPageLast">htmlPageLast</td>
+							<th class="headHistoryID"><input type="checkbox" class="historyCheckAllRows"></th>
+							<th class="headHistoryDate">htmlHistoryDate</th>
+							<th class="headHistoryText">htmlHistoryText</th>
+							<th class="headHistoryFromSite">htmlHistoryFromSite</th>
+							<th class="headHistoryToSite">htmlHistoryToSite</th>
 						</tr>
-					</table>
-					<table id="historyTable">
-						<thead>
-							<tr>
-								<th class="headHistoryID"><input type="checkbox" class="historyCheckAllRows"></th>
-								<th class="headHistoryDate">htmlHistoryDate</th>
-								<th class="headHistoryText">htmlHistoryText</th>
-								<th class="headHistoryFromSite">htmlHistoryFromSite</th>
-								<th class="headHistoryToSite">htmlHistoryToSite</th>
-							</tr>
-						</thead>
-						<tbody id="historyContainer"></tbody>
-					</table>
-				</div>
+					</thead>
+					<tbody id="historyContainer"></tbody>
+				</table>
 				<table class="hide">
 					<tr id="rowPrototype" class="historyRow">
 						<td class="historyID"><input class="historyCheckbox" type="checkbox" value="ID"></td>
@@ -121,8 +130,8 @@
 			</div>
 		</div>
 		<div id="others" class="panel box hide">
-			<section class="appearanceTable box">
-				<section class="appearanceHeader">
+			<section class="othersTable box">
+				<section class="othersHeader">
 					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
 				</section>
 				<section>
