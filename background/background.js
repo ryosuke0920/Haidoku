@@ -1,7 +1,6 @@
 const DEFAULT_LOCALE = "en";
 
 let options = {};
-ponyfill.runtime.onInstalled.addListener( install );
 starter().then(initContextMenu).then(initListener).catch(unexpectedError);
 
 function starter(){
@@ -23,7 +22,7 @@ function getPresetOptionList(){
 
 function initContextMenu(){
 	let getter = ponyfill.storage.sync.get({
-		"ol": getDefaultOptionList(),
+		"ol": [],
 		"bf": true,
 		"sk": false,
 		"ck": false
@@ -35,6 +34,7 @@ function initListener(){
 	ponyfill.storage.onChanged.addListener( onStorageChanged );
 	ponyfill.contextMenus.onClicked.addListener( contextMenuBehavior );
 	ponyfill.runtime.onMessage.addListener(notify);
+	ponyfill.runtime.onInstalled.addListener( install );
 }
 
 function openWindow( url, text){
