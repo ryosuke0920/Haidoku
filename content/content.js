@@ -367,12 +367,12 @@
 
 	function setLinkListClass(res){
 		linkListNode.classList.remove("lessLaborGoToDictionary-pop");
-		linkListNode.classList.remove("lessLaborGoToDictionary-modern");
+		linkListNode.classList.remove("lessLaborGoToDictionary-dark");
 		if( res == "p" ) {
 			linkListNode.classList.add("lessLaborGoToDictionary-pop");
 		}
-		else if( res == "m" ) {
-			linkListNode.classList.add("lessLaborGoToDictionary-modern");
+		else if( res == "d" ) {
+			linkListNode.classList.add("lessLaborGoToDictionary-dark");
 		}
 	}
 

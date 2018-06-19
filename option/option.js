@@ -56,11 +56,11 @@
 		historyNode = document.querySelector("#history");
 		sampleLinkListNode = document.querySelector("#sampleLinkList");
 		sampleLinkListNode.resetClassStyles = ()=>{
-			sampleLinkListNode.classList.remove(CLASS_PREFIX+"-modern");
+			sampleLinkListNode.classList.remove(CLASS_PREFIX+"-dark");
 			sampleLinkListNode.classList.remove(CLASS_PREFIX+"-pop");
 		};
-		sampleLinkListNode.setClassModernStyle = ()=>{
-			sampleLinkListNode.classList.add(CLASS_PREFIX+"-modern");
+		sampleLinkListNode.setClassDarkStyle = ()=>{
+			sampleLinkListNode.classList.add(CLASS_PREFIX+"-dark");
 		};
 		sampleLinkListNode.setClassPopStyle = ()=>{
 			sampleLinkListNode.classList.add(CLASS_PREFIX+"-pop");
@@ -124,7 +124,7 @@
 			{ "selector": ".historyPageLast", "property": "innerText", "key": "htmlPageLast" },
 			{ "selector": ".linkListStyle", "property": "innerText", "key": "htmlLinkListStyle" },
 			{ "selector": ".linkListStyleClassic", "property": "innerText", "key": "htmlLinkListStyleClassic" },
-			{ "selector": ".linkListStyleModern", "property": "innerText", "key": "htmlLinkListStyleModern" },
+			{ "selector": ".linkListStyleDark", "property": "innerText", "key": "htmlLinkListStyleDark" },
 			{ "selector": ".linkListStylePop", "property": "innerText", "key": "htmlLinkListStylePop" },
 			{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
 			{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" },
@@ -215,8 +215,8 @@
 		if( value == "p" ){
 			sampleLinkListNode.setClassPopStyle();
 		}
-		else if( value == "m" ){
-			sampleLinkListNode.setClassModernStyle();
+		else if( value == "d" ){
+			sampleLinkListNode.setClassDarkStyle();
 		}
 	}
 
