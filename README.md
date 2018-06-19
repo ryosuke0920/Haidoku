@@ -10,6 +10,8 @@ When you select a text on the website, link list will be displayed. If you speci
    * Link list can be added, changed in order, renamed, deleted.
    * we prepared several URLs beforehand, therefore you can choose them.
    * You can also add the URL manually.
+	* History is saved.
+	* You can change Link list style.
 
 ## License
 This software is released under the MIT License, see LICENSE.md.
