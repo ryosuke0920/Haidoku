@@ -32,6 +32,7 @@ button {
    border-right: solid 1px rgb(222, 226, 230);
    box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
    z-index:2;
+	background-color: white;
 }
 #nav .navi {
    color: black;
@@ -179,6 +180,7 @@ input.url {
 	text-decoration: underline;
 }
 #historyTable {
+	width: 100%;
 	border-collapse: collapse;
 	border: 1px solid #ccc;
 	margin-bottom: 1em;
@@ -198,11 +200,9 @@ input.url {
 .headHistoryID {
 	width: 20px;
 }
-.headHistoryDate {
-	width: 150px;
-}
-.headHistoryText,.headHistoryFromSite,.headHistoryToSite {
-	width: 320px;
+.headHistoryDate,.headHistoryText,.headHistoryFromSite,.headHistoryToSite {
+	width: auto;
+	min-width: 150px;
 }
 .headHistoryID, .historyID {
 	text-align: left;
