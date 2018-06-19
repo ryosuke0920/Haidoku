@@ -235,7 +235,7 @@
 		"message": "クラシック",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListStyleModern": {
+	"htmlLinkListStyleDark": {
 		"message": "ダーク",
 		"description": "Name of the propertie."
 	},
