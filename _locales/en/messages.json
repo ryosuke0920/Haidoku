@@ -99,6 +99,18 @@
 		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected.",
 		"description": "Description of the extension option."
 	},
+	"htmlUsageOrder" : {
+		"message": "Sort.",
+		"description": "Description of button."
+	},
+	"htmlUsageCheck" : {
+		"message": "Display in link list.",
+		"description": "Description of button."
+	},
+	"htmlUsageHist" : {
+		"message": "Save history.",
+		"description": "Description of button."
+	},
 	"htmlPresetDescription": {
 		"message": "Select some sites and press \"add\" button. Then it's added to link list.",
 		"description": "Description of the preset option."
@@ -251,8 +263,16 @@
 		"message": "Freelance programmer<br>Tokyo Japan<br>Ryosuke Ohta",
 		"description": "Sentence of myself."
 	},
+	"htmlCheckBlankError": {
+		"message": "Please fill out this fields.",
+		"description": ""
+	},
+	"htmlCheckURLError": {
+		"message": "Please enter a URL.",
+		"description": ""
+	},
 	"htmlCheckByteLengthError": {
-		"message": "Shorten to $MAX_LENGTH$ byte or less (Currently $LENGTH$ bytes).",
+		"message": "Please shorten to $MAX_LENGTH$ byte or less (Currently $LENGTH$ bytes).",
 		"description": "",
 		"placeholders": {
 			"MAX_LENGTH": {

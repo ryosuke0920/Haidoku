@@ -1,6 +1,8 @@
 const MAX_FIELD = 50;
 const MAX_LABEL_BYTE = 100;
 const MAX_URL_BYTE = 300;
+const WHITE_SPACE_REGEX = new RegExp(/^\s*$/);
+const URL_REGEX = new RegExp(/^(?:[hH][tT][tT][pP][sS]?|[fF][tT][pP][sS]?):\/\/\w+/);
 let mainNode = document.querySelector("#main");
 let navNode = document.querySelector("#nav");
 let formNode = document.querySelector("#form");
@@ -28,6 +30,9 @@ function initI18n(){
 		{ "selector": "title", "property": "innerText", "key": "extensionName" },
 		{ "selector": ".title", "property": "innerText", "key": "extensionName" },
 		{ "selector": ".formDescription", "property": "innerText", "key": "htmlFormDescription" },
+		{ "selector": ".usageOrder", "property": "innerText", "key": "htmlUsageOrder" },
+		{ "selector": ".usageCheck", "property": "innerText", "key": "htmlUsageCheck" },
+		{ "selector": ".usageHist", "property": "innerText", "key": "htmlUsageHist" },
 		{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
 		{ "selector": ".showForm", "property": "innerText", "key": "htmlFormName" },
 		{ "selector": ".showPreset", "property": "innerText", "key": "htmlPresetName" },
@@ -208,18 +213,19 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 	if(cls) node.classList.add(cls);
 	let checkNode = node.querySelector(".check");
 	let histNode = node.querySelector(".hist");
-	let labelNode = node.querySelector(".label")
+	let labelNode = node.querySelector(".label");
+	let labelMessageNode = node.querySelector(".labelMessage");
 	let urlNode = node.querySelector(".url");
+	let urlMessageNode = node.querySelector(".urlMessage");
 	let handleNode = node.querySelector(".handle");
 	if(checked) checkNode.setAttribute("data-checked", "1");
 	checkNode.addEventListener("click", (e)=>{
 		let checkNode = e.currentTarget;
 		if( !checkNode.getAttribute("data-checked") ){
-			if( !checkLabel(labelNode) ){
-				e.preventDefault();
-				return;
-			}
-			else if( !checkUrl(urlNode) ){
+			let error = false;
+			if( !checkLabel(labelNode,labelMessageNode) ) error = true;
+			if( !checkUrl(urlNode, urlMessageNode) ) error = true;
+			if( error ){
 				e.preventDefault();
 				return;
 			}
@@ -243,12 +249,12 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 	});
 	labelNode.value = label;
 	labelNode.addEventListener("input", (e)=>{
-		if( !checkLabel(labelNode) ) checkNode.removeAttribute("data-checked");
+		if( !checkLabel(labelNode,labelMessageNode) ) checkNode.removeAttribute("data-checked");
 	});
 	labelNode.addEventListener("blur", blurBehavior);
 	urlNode.value = url;
 	urlNode.addEventListener("input", (e)=>{
-		if( !checkUrl(urlNode) ) checkNode.removeAttribute("data-checked");
+		if( !checkUrl(urlNode, urlMessageNode) ) checkNode.removeAttribute("data-checked");
 	});
 	urlNode.addEventListener("blur", blurBehavior);
 	handleNode.addEventListener("mousedown", sortStart);
@@ -256,29 +262,51 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 	show(node);
 }
 
-function checkLabel(node){
-	return checkTextBox(node, MAX_LABEL_BYTE);
-}
-
-function checkUrl(node){
-	return checkTextBox(node, MAX_URL_BYTE);
-}
-
-function checkTextBox(node, maxLength){
-	node.setCustomValidity("");
-	if ( !node.checkValidity() ) return false;
-	if ( !checkByte(node.value, maxLength) ) {
-		let length = byteLength(node.value);
-		node.setCustomValidity(ponyfill.i18n.getMessage("htmlCheckByteLengthError", [maxLength, length] ));
+function checkLabel(node, messageNode){
+	hide(messageNode);
+	if( !checkBlank(node.value) ){
+		messageNode.innerText = ponyfill.i18n.getMessage("htmlCheckBlankError");
+		show(messageNode);
+		return false;
+	}
+	if( !checkByte(node.value, MAX_LABEL_BYTE) ){
+		messageNode.innerText = ponyfill.i18n.getMessage("htmlCheckByteLengthError", [MAX_LABEL_BYTE, byteLength(node.value)] );
+		show(messageNode);
 		return false;
 	}
 	return true;
 }
 
+function checkUrl(node, messageNode){
+	hide(messageNode);
+	if( !checkBlank(node.value) ){
+		messageNode.innerText = ponyfill.i18n.getMessage("htmlCheckBlankError");
+		show(messageNode);
+		return false;
+	}
+	else if( !checkByte(node.value, MAX_URL_BYTE) ){
+		messageNode.innerText = ponyfill.i18n.getMessage("htmlCheckByteLengthError", [MAX_URL_BYTE, byteLength(node.value)] );
+		show(messageNode);
+		return false;
+	}
+	else if( !checkURL(node.value) ){
+		messageNode.innerText = ponyfill.i18n.getMessage("htmlCheckURLError");
+		show(messageNode);
+		return false;
+	}
+	return true;
+}
+
+function checkBlank(text) {
+	if( text == null || text == undefined || text.length <= 0 ) return false;
+	if( text.match(WHITE_SPACE_REGEX) ) return false;
+	return true;
+}
+
 function checkByte(text,length){
 	let count = byteLength(text);
-	if( count <= length ) return true;
-	return false;
+	if( length < count ) return false;
+	return true;
 }
 
 function byteLength(text){
@@ -295,6 +323,11 @@ function byteLength(text){
 		}
 	}
 	return count;
+}
+
+function checkURL(text){
+	if( !text.match(URL_REGEX) ) return false;
+	return true;
 }
 
 function blurBehavior(e){

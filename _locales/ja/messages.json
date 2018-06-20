@@ -99,6 +99,18 @@
 		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。URLに$$1を入力すると、それは選択したテキストに置き換えられます。",
 		"description": "Description of the extension option."
 	},
+	"htmlUsageOrder" : {
+		"message": "並び順を変更する。",
+		"description": "Description of button."
+	},
+	"htmlUsageCheck" : {
+		"message": "リンクリストに表示する。",
+		"description": "Description of button."
+	},
+	"htmlUsageHist" : {
+		"message": "履歴を保存する。",
+		"description": "Description of button."
+	},
 	"htmlPresetDescription": {
 		"message": "サイトを選択してから「追加」ボタンを押すとリンクリストに追加されます。",
 		"description": "Description of the preset option."
@@ -192,7 +204,7 @@
 		"description": "alert of delete all."
 	},
 	"htmlHistoryDescription": {
-		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの共有サービスの対象ではありません。履歴の保存は「リンクリスト」で設定してください。",
+		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの共有サービスの対象ではありません。履歴の保存は「リンクリスト」メニューで設定してください。",
 		"description": "Description of history."
 	},
 	"htmlHistoryDate": {
@@ -250,6 +262,14 @@
 	"htmlMyself": {
 		"message": "フリーランス プログラマ<br>太田亮介",
 		"description": "Sentence of myself."
+	},
+	"htmlCheckBlankError": {
+		"message": "このフィールドは入力必須です。",
+		"description": ""
+	},
+	"htmlCheckURLError": {
+		"message": "URLを入力して下さい。",
+		"description": ""
 	},
 	"htmlCheckByteLengthError": {
 		"message": "テキストを$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイトです）。",

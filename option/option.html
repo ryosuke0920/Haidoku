@@ -27,9 +27,12 @@
 			</nav>
 			<div class="desk">
 				<p>
-					<span class="formDescription">htmlFormDescription</span><br>
-					<span class="check checkboxButton" data-checked="1"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span><br>
-					<span class="hist checkboxButton" data-checked="1"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span><br>
+					<span class="formDescription">htmlFormDescription</span>
+				</p>
+				<p>
+					<img src="/image/hold.svg" draggable="false"> <span class="usageOrder">htmlUsageOrder</span>&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="check checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span>&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="hist checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span><br>&nbsp;&nbsp;&nbsp;&nbsp;
 				</p>
 				<div id="container" class="box"></div>
 				<div id="inputPrototype" class="field draggable hide">
@@ -42,11 +45,17 @@
 					</span>
 					<label class="textbox">
 						<span class="labelText">htmlLabelText</span>&nbsp;
-						<input type="text" class="label" placeholder="example.com" required maxlength="100">
+						<span class="inputWrapper">
+							<input type="text" class="label" placeholder="example.com" required maxlength="100">
+							<span class="inputMessage labelMessage hide">message1</span>
+						</span>
 					</label>&nbsp;
 					<label class="textbox">
 						<span class="urlText">htmlUrlDescription</span>&nbsp;
-						<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="300">
+						<span class="inputWrapper">
+							<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="300">
+							<span class="inputMessage urlMessage hide">message2</span>
+						</span>
 					</label>&nbsp;
 					<button type="button" class="removeField">htmlDelete</button>
 				</div>
