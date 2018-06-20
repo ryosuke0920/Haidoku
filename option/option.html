@@ -26,27 +26,27 @@
 				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
 			</nav>
 			<div class="desk">
-				<p class="formDescription">htmlFormDescription</p>
+				<p>
+					<span class="formDescription">htmlFormDescription</span><br>
+					<span class="check checkboxButton" data-checked="1"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span><br>
+					<span class="hist checkboxButton" data-checked="1"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span><br>
+				</p>
 				<div id="container" class="box"></div>
 				<div id="inputPrototype" class="field draggable hide">
 					<span class="handle"><img src="/image/hold.svg" draggable="false"></span>&nbsp;
 					<span class="check checkboxButton">
 						<span class="circle"></span>
 					</span>
-					<span class="checkboxButton">
+					<span class="hist checkboxButton">
 						<span class="circle"></span>
 					</span>
-					<label class="textbox"><span class="labelText">htmlLabelText</span>&nbsp;
-						<form class="inline">
-							<input type="text" class="label" placeholder="example.com" required maxlength="100">
-							<input type="submit" class="labelSubmit hide">
-						</form>
+					<label class="textbox">
+						<span class="labelText">htmlLabelText</span>&nbsp;
+						<input type="text" class="label" placeholder="example.com" required maxlength="100">
 					</label>&nbsp;
-					<label class="textbox"><span class="urlText">htmlUrlDescription</span>&nbsp;
-						<form class="inline">
-							<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="300">
-							<input type="submit" class="urlSubmit hide">
-						</form>
+					<label class="textbox">
+						<span class="urlText">htmlUrlDescription</span>&nbsp;
+						<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="300">
 					</label>&nbsp;
 					<button type="button" class="removeField">htmlDelete</button>
 				</div>
@@ -178,6 +178,7 @@
 <script src="/lib/indexeddb.js"></script>
 <script src="/lib/common.js"></script>
 <script src="option.js"></script>
+<script src="optionPreset.js"></script>
 <script src="optionOthers.js"></script>
 <script src="optionHistory.js"></script>
 </body>

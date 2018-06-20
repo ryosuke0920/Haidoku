@@ -12,7 +12,7 @@
 	}
 
 	function initI18n(){
-		let joson_list = [
+		let list = [
 			{ "selector": ".linkListStyle", "property": "innerText", "key": "htmlLinkListStyle" },
 			{ "selector": ".linkListStyleClassic", "property": "innerText", "key": "htmlLinkListStyleClassic" },
 			{ "selector": ".linkListStyleDark", "property": "innerText", "key": "htmlLinkListStyleDark" },
@@ -20,19 +20,7 @@
 			{ "selector": ".lessLaborGoToDictionary-zoomDown", "property": "src", "value": ponyfill.extension.getURL("/image/minus.svg"), },
 			{ "selector": ".lessLaborGoToDictionary-zoomUp", "property": "src", "value": ponyfill.extension.getURL("/image/plus.svg"), }
 		];
-		for(let i=0; i<joson_list.length; i++){
-			let json = joson_list[i];
-			let list = document.querySelectorAll(json["selector"]);
-			for(let i=0; i<list.length; i++){
-				let node = list[i];
-				if( json.hasOwnProperty("key") ){
-					node[json["property"]] = ponyfill.i18n.getMessage( json["key"] );
-				}
-				else {
-					node[json["property"]] = json["value"];
-				}
-			}
-		}
+		setI18n(list);
 	}
 
 	function initNode(){

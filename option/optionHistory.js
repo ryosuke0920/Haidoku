@@ -11,7 +11,7 @@
 	}
 
 	function initI18n(){
-		let joson_list = [
+		let list = [
 			{ "selector": ".historyUpdateButton", "property": "innerText", "key": "htmlHistoryUpdateButton" },
 			{ "selector": ".historyPageText", "property": "innerText", "key": "htmlHistoryPageText" },
 			{ "selector": ".historyRowSizeText", "property": "innerText", "key": "htmlHistoryRowSizeText" },
@@ -30,14 +30,7 @@
 			{ "selector": ".historyPageNext", "property": "innerText", "key": "htmlPageNext" },
 			{ "selector": ".historyPageLast", "property": "innerText", "key": "htmlPageLast" }
 		];
-		for(let i=0; i<joson_list.length; i++){
-			let json = joson_list[i];
-			let list = document.querySelectorAll(json["selector"]);
-			for(let i=0; i<list.length; i++){
-				let node = list[i];
-				node[json["property"]] = ponyfill.i18n.getMessage( json["key"] );
-			}
-		}
+		setI18n(list);
 	}
 
 	function historyBehavior(e){

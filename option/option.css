@@ -39,6 +39,9 @@ button {
 	left: unset;
 	right: 2px;
 }
+.checkboxButton[data-checked="1"].hist {
+	background-color: Orange;
+}
 
 #header {
    position: fixed;
