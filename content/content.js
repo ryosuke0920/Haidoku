@@ -29,16 +29,12 @@
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 
-	starter()
+	Promise.resolve()
 		.then(init)
 		.then(
-			()=>{ starter().then(reload).then(addCommonLinkListEvents); },
+			()=>{ Promise.resolve().then(reload).then(addCommonLinkListEvents); },
 			silentError
 		).catch(unexpectedError);
-
-	function starter(){
-		return Promise.resolve();
-	}
 
 	function init(){
 		let body = document.querySelector("body");

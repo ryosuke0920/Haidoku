@@ -11,9 +11,11 @@
 	"background": {
 		"persistent": true,
 		"scripts": [
+			"etc/DEFAULT_OPTION_LIST.js",
+			"etc/PRESET_OPTION_LIST.js",
 			"lib/ponyfill.js",
 			"lib/indexeddb.js",
-			"etc/config.js",
+			"lib/common.js",
 			"background/background.js"
 		]
 	},

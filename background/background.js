@@ -1,11 +1,7 @@
 const DEFAULT_LOCALE = "en";
 
 let options = {};
-starter().then(initContextMenu).then(initListener).catch(unexpectedError);
-
-function starter(){
-	return Promise.resolve();
-}
+Promise.resolve().then(initContextMenu).then(initListener).catch(unexpectedError);
 
 function install(e){
 	if(e.reason == "install"){
@@ -14,10 +10,6 @@ function install(e){
 		};
 		return save(data).catch(onSaveError);
 	}
-}
-
-function getPresetOptionList(){
-	return PRESET_OPTION_LIST;
 }
 
 function initContextMenu(){
@@ -38,16 +30,8 @@ function initListener(){
 }
 
 function openWindow( url, text){
-	text  = encodeURIComponent(text);
-	url = url.replace("$1", text);
-	let promise = ponyfill.tabs.create({"url": url});
+	let promise = ponyfill.tabs.create({"url": makeURL(url,text)});
 	return promise.catch(onOpenWindowError);
-}
-
-function save(data){
-	data["m"] = makeMetadata();
-	let setter = ponyfill.storage.sync.set(data);
-	return setter;
 }
 
 function notify(message, sender, sendResponse){
@@ -103,17 +87,7 @@ function saveHistory(data){
 		"date": new Date()
 	};
 	let obj = {"data": data};
-	return starter().then(indexeddb.open).then(indexeddb.prepareRequest).then(addHistory.bind(obj));
-}
-
-function makeMetadata(){
-	let manifest = ponyfill.runtime.getManifest();
-	let now = new Date();
-	let data = {
-		"v": manifest.version,
-		"d": now.toString(),
-	};
-	return data;
+	return Promise.resolve().then(indexeddb.open).then(indexeddb.prepareRequest).then(addHistory.bind(obj));
 }
 
 function onStorageChanged(change, area){
@@ -235,34 +209,4 @@ function getDefaultOptionList(){
 		return DEFAULT_OPTION_LIST[lang];
 	}
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
-}
-
-function onOpenWindowError(e){
-	console.error(e);
-	return notice(ponyfill.i18n.getMessage("notificationOpenWindowError", [e.message]));
-}
-
-function onReadError(e){
-	console.error(e);
-	return notice(ponyfill.i18n.getMessage("notificationReadOptionError", [e.message]));
-}
-
-function onSaveError(e){
-	console.error(e);
-	return notice(ponyfill.i18n.getMessage("notificationSaveOptionError", [e.message]));
-}
-
-function unexpectedError(e){
-	console.error(e);
-	return notice(ponyfill.i18n.getMessage("notificationUnexpectedError", [e.message]));
-}
-
-function notice(message){
-	let noticer = ponyfill.notifications.create({
-		"type": "basic",
-		"iconUrl": ponyfill.extension.getURL("/image/icon.svg"),
-		"title": ponyfill.i18n.getMessage("extensionName"),
-		"message": message
-	});
-	return noticer;
 }
