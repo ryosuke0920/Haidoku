@@ -208,7 +208,7 @@
 		"description": "Name of base site."
 	},
 	"htmlHistoryToSite": {
-		"message": "Destination site",
+		"message": "Link selected",
 		"description": "Name of destination site."
 	},
 	"htmlPageFirst": {

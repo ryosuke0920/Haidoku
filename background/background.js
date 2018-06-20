@@ -78,14 +78,7 @@ function addHistory(e){
 }
 
 function saveHistory(data){
-	data = {
-		"text": data["text"],
-		"fromURL": data["fromURL"],
-		"fromTitle": data["fromTitle"],
-		"toURL": data["toURL"],
-		"toTitle": data["toTitle"],
-		"date": new Date()
-	};
+	data.date = new Date();
 	let obj = {"data": data};
 	return Promise.resolve().then(indexeddb.open).then(indexeddb.prepareRequest).then(addHistory.bind(obj));
 }
@@ -112,6 +105,7 @@ function resetMenu(json){
 	for(let i=0; i<optionList.length; i++){
 		let data = optionList[i];
 		let checked = data["c"];
+		let hist = data["h"];
 		if ( checked ) {
 			let id = (i+1).toString();
 			let label = data["l"];
@@ -122,6 +116,7 @@ function resetMenu(json){
 				"contexts": ["selection"]
 			};
 			options[id] = {
+				"hist": hist,
 				"url": url,
 				"label": label
 			}
@@ -185,13 +180,15 @@ function contextMenuBehavior(info, tab){
 	}
 	else if ( options.hasOwnProperty( info.menuItemId ) ){
 		openWindow(options[info.menuItemId]["url"], info.selectionText );
-		saveHistory({
-			"text": info.selectionText,
-			"fromURL": tab.url.toString(),
-			"fromTitle": tab.title.toString(),
-			"toURL": options[info.menuItemId]["url"],
-			"toTitle": options[info.menuItemId]["label"]
-		}).catch( onSaveError );
+		if( options[info.menuItemId]["hist"] ){
+			saveHistory({
+				"text": info.selectionText,
+				"fromURL": tab.url.toString(),
+				"fromTitle": tab.title.toString(),
+				"toURL": options[info.menuItemId]["url"],
+				"toTitle": options[info.menuItemId]["label"]
+			}).catch( onSaveError );
+		}
 	}
 }
 

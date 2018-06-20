@@ -78,6 +78,7 @@
 	}
 
 	function addAutoLinkListEvents(){
+		console.log("addAutoLinkListEvents");
 		document.addEventListener("selectionchange", selectionChangeAutoBehavior);
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		document.addEventListener("mouseup", mouseupAutoBehavior);
@@ -161,7 +162,7 @@
 		if(isLinkListShown()){
 			closeLinkList();
 		}
-		else {
+		else if ( hasLinkList() ) {
 			let selection = window.getSelection();
 			if( !selection.isCollapsed ){
 				let lastRange = selection.getRangeAt(selection.rangeCount-1);
@@ -218,6 +219,9 @@
 
 	function onClickAnchor(e){
 		closeLinkListDelay();
+	}
+
+	function onClickSaveHistory(e){
 		saveHistory(e).catch(onSaveError);
 	}
 
@@ -259,6 +263,7 @@
 			a.setAttribute( "data-label", item["l"] );
 			a.innerText = item["l"];
 			a.addEventListener("click", onClickAnchor);
+			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
 			let li = document.createElement("li");
 			li.classList.add("lessLaborGoToDictionary-list");
 			li.appendChild(a);
@@ -373,6 +378,7 @@
 	}
 
 	function resetLinkListEvents(){
+		console.log("resetLinkListEvents");
 		removeAutoLinkListEvents();
 		if( linkListFlag && hasLinkList() ) addAutoLinkListEvents();
 	}

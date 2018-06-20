@@ -204,11 +204,11 @@
 		"description": "Name of selected text."
 	},
 	"htmlHistoryFromSite": {
-		"message": "遷移元サイト",
+		"message": "元サイト",
 		"description": "Name of base site."
 	},
 	"htmlHistoryToSite": {
-		"message": "遷移先サイト",
+		"message": "選択したリンク",
 		"description": "Name of destination site."
 	},
 	"htmlPageFirst": {
