@@ -83,6 +83,14 @@
 		"message": "Add search site",
 		"description": "Name of the preset on the side menu."
 	},
+	"htmlHistoryName": {
+		"message": "History",
+		"description": "Name of the history on the side menu."
+	},
+	"htmlOthersName": {
+		"message": "Others",
+		"description": "Name of the others on the side menu."
+	},
 	"htmlContactName": {
 		"message": "Contact",
 		"description": "Name of the contact on the side menu."
@@ -90,6 +98,22 @@
 	"htmlFormDescription": {
 		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected.",
 		"description": "Description of the extension option."
+	},
+	"htmlUsageOrder" : {
+		"message": "Sort.",
+		"description": "Description of button."
+	},
+	"htmlUsageCheck" : {
+		"message": "Display in link list.",
+		"description": "Description of button."
+	},
+	"htmlUsageHist" : {
+		"message": "Save history.",
+		"description": "Description of button."
+	},
+	"htmlUsageDelete" : {
+		"message": "Delete.",
+		"description": "Description of button."
 	},
 	"htmlPresetDescription": {
 		"message": "Select some sites and press \"add\" button. Then it's added to link list.",
@@ -120,7 +144,7 @@
 		"description": "title of label description."
 	},
 	"htmlUrlDescription": {
-		"message": "\"$$1\" will be replaced to the text you selected.",
+		"message": "A URL to link. \"$$1\" will be replaced to the text you selected.",
 		"description": "title of url description."
 	},
 	"htmlFilterText": {
@@ -147,6 +171,94 @@
 		"message": "add",
 		"description": "Name of adding button."
 	},
+	"htmlHistoryUpdateButton": {
+		"message": "update",
+		"description": "Name of update button."
+	},
+	"htmlHistoryPageText": {
+		"message": "page",
+		"description": "Name of page."
+	},
+	"htmlHistoryRowSizeText": {
+		"message": "row size",
+		"description": "Name of row size."
+	},
+	"htmlHistoryRowSizeAllText": {
+		"message": "display all rows",
+		"description": "Name of all rows."
+	},
+	"htmlHistoryOrderDesc": {
+		"message": "new->old",
+		"description": "Name of desc."
+	},
+	"htmlHistoryOrderAsc": {
+		"message": "old->new",
+		"description": "Name of asc."
+	},
+	"htmlHistoryCheckDelete": {
+		"message": "delete checked history",
+		"description": "Name of delete."
+	},
+	"htmlHistoryAllDelete": {
+		"message": "delete all history",
+		"description": "Name of delete."
+	},
+	"alertHistoryAllDelete": {
+			"message": "All history will be deleted. It contains the records that isn't displayed on the table.",
+		"description": "alert of delete all."
+	},
+	"htmlHistoryDescription": {
+		"message": "You can refer to history. It's usefull to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser sharing service. You can change configuration to save or not from \"link list\" menu.",
+		"description": "Description of history."
+	},
+	"htmlHistoryDate": {
+		"message": "Date",
+		"description": "Name of date."
+	},
+	"htmlHistoryText": {
+		"message": "Text selected",
+		"description": "Name of selected text."
+	},
+	"htmlHistoryFromSite": {
+		"message": "Source site",
+		"description": "Name of base site."
+	},
+	"htmlHistoryToSite": {
+		"message": "Link selected",
+		"description": "Name of destination site."
+	},
+	"htmlPageFirst": {
+		"message": "first",
+		"description": "Name of first."
+	},
+	"htmlPagePrev": {
+		"message": "prev",
+		"description": "Name of preview."
+	},
+	"htmlPageNext": {
+		"message": "next",
+		"description": "Name of next."
+	},
+	"htmlPageLast": {
+		"message": "last",
+		"description": "Name of end."
+	},
+	"htmlLinkListStyle": {
+		"message": "link list's style",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStyleClassic": {
+		"message": "Classic",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStyleDark": {
+		"message": "Dark",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListStylePop": {
+		"message": "Pop",
+		"description": "Name of the propertie."
+	},
 	"htmlContactText": {
 		"message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
 		"description": "Sentence of contact."
@@ -155,8 +267,16 @@
 		"message": "Freelance programmer<br>Tokyo Japan<br>Ryosuke Ohta",
 		"description": "Sentence of myself."
 	},
+	"htmlCheckBlankError": {
+		"message": "Please fill out this fields.",
+		"description": ""
+	},
+	"htmlCheckURLError": {
+		"message": "Please enter a URL.",
+		"description": ""
+	},
 	"htmlCheckByteLengthError": {
-		"message": "Shorten to $MAX_LENGTH$ byte or less (Currently $LENGTH$ bytes).",
+		"message": "Please shorten to $MAX_LENGTH$ byte or less (Currently $LENGTH$ bytes).",
 		"description": "",
 		"placeholders": {
 			"MAX_LENGTH": {
