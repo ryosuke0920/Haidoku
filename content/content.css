@@ -91,36 +91,8 @@ div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:visited {
 }
 div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:hover {
 	text-decoration: none;
-	background-color:#808080;
+	background-color:#505050;
 }
 div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:active {
-	color: #FFB0B0;
-}
-div.lessLaborGoToDictionary-pop {
-	border-radius: 10px;
-	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.64),0 2px 10px 0 rgba(0,0,0,0.48);
-	background: linear-gradient(to bottom right, #FFFFFF, #FFEEFF );
-}
-div.lessLaborGoToDictionary-pop ul.lessLaborGoToDictionary-container {
-}
-div.lessLaborGoToDictionary-pop li.lessLaborGoToDictionary-list {
-	border-top: dotted 4px #FFDDFF;
-}
-div.lessLaborGoToDictionary-pop li.lessLaborGoToDictionary-list:last-child {
-	border-bottom: dotted 4px #FFDDFF;
-}
-div.lessLaborGoToDictionary-pop a.lessLaborGoToDictionary-anchor,
-div.lessLaborGoToDictionary-pop a.lessLaborGoToDictionary-anchor:link {
-	color: #404040;
-}
-div.lessLaborGoToDictionary-pop a.lessLaborGoToDictionary-anchor:visited {
-	color: #909090;
-}
-div.lessLaborGoToDictionary-pop a.lessLaborGoToDictionary-anchor:hover {
-	color: #FF6060;
-	background: #FFEEDD;
-	text-decoration: none;
-}
-div.lessLaborGoToDictionary-pop a.lessLaborGoToDictionary-anchor:active {
-	color: #FF50A0;
+	color: #F07070;
 }
