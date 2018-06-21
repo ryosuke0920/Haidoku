@@ -343,7 +343,6 @@ function blurBehavior(e){
 function sortStart(e){
 	draggedNode = e.target.closest(".draggable");
 	holdedNode = draggedNode.cloneNode(true);
-	holdedNode.style.width = draggedNode.offsetWidth + "px";
 	holdedNode.removeAttribute("id");
 	holdedNode.classList.add("hold");
 	holdedNode.classList.remove("draggable");

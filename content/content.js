@@ -333,7 +333,7 @@
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE,
-			"cl": "",
+			"cl": "c",
 		});
 		return getter.then(setVer, onReadError);
 	}

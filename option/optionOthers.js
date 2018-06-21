@@ -43,7 +43,7 @@
 
 	function initStyle(){
 		let getter = ponyfill.storage.sync.get({
-			"cl": ""
+			"cl": "c"
 		});
 		function onGot(res){
 			setLinkListClass(res["cl"]);
@@ -58,9 +58,7 @@
 	function fileChangeBehavior(e){
 		if( !e.hasOwnProperty("w")) return;
 		if( e["w"]["newValue"] == windowId ) return;
-		if( e.hasOwnProperty("cl") ){
-			setLinkListClass(e["cl"]["newValue"]);
-		}
+		if( e.hasOwnProperty("cl") ) setLinkListClass(e["cl"]["newValue"]);
 	}
 
 	function setLinkListClass(value){
@@ -77,12 +75,7 @@
 
 	function setSampleLinkListStyle(value){
 		sampleLinkListNode.resetClassStyles();
-		if( value == "p" ){
-			sampleLinkListNode.setClassPopStyle();
-		}
-		else if( value == "d" ){
-			sampleLinkListNode.setClassDarkStyle();
-		}
+		if( value == "d" ) sampleLinkListNode.setClassDarkStyle();
 	}
 
 	function saveLinkListClass(value){
