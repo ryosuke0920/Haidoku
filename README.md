@@ -1,5 +1,5 @@
 # Search Dictionary Faster
-When you select a text on the website, link list will be displayed. If you specify some dictionay site to the link list, you can search faster without copy & paste. When you press the escape (Esc) key, the link list will be hidden.
+When you select a text on the website, link list will be displayed. If you specify some dictionay site to the link list, you can search faster without copy & paste.
 
 * Context menu (right click)
    * The link list is also displayed in the context menu.
@@ -10,7 +10,7 @@ When you select a text on the website, link list will be displayed. If you speci
    * Link list can be added, changed in order, renamed, deleted.
    * we prepared several URLs beforehand, therefore you can choose them.
    * You can also add the URL manually.
-	* History is saved.
+	* You can see history.
 	* You can change Link list style.
 
 ## License

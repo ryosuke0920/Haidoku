@@ -4,7 +4,7 @@
 	"name":"__MSG_extensionName__",
 	"description":"__MSG_extensionDescription__",
 	"author": "Ryosuke Ohta",
-	"version":"1.2.0",
+	"version":"1.2.1",
 	"icons": {
 		"32": "image/icon.svg"
 	},
@@ -18,6 +18,7 @@
 			"background/background.js"
 		]
 	},
+
 	"options_ui": {
 		"page": "option/option.html",
 		"open_in_tab": true,
