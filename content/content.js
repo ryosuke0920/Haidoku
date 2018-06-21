@@ -78,7 +78,6 @@
 	}
 
 	function addAutoLinkListEvents(){
-		console.log("addAutoLinkListEvents");
 		document.addEventListener("selectionchange", selectionChangeAutoBehavior);
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		document.addEventListener("mouseup", mouseupAutoBehavior);
@@ -374,7 +373,6 @@
 	}
 
 	function resetLinkListEvents(){
-		console.log("resetLinkListEvents");
 		removeAutoLinkListEvents();
 		if( linkListFlag && hasLinkList() ) addAutoLinkListEvents();
 	}

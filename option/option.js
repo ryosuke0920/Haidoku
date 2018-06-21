@@ -206,7 +206,6 @@ function hideInputMessage(e){
 	if( e.target.closest(".check") ) return;
 	let list = formNode.querySelectorAll(".inputMessage:not(.hide)");
 	for(let i=0; i<list.length; i++){
-		console.log(list[i]);
 		hide(list[i]);
 	}
 }

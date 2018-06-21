@@ -1,89 +1,84 @@
 /* normal */
 * {
-  margin: 0;
-  padding: 0;
-  font: 16px sans-serif;
+	margin: 0;
+	padding: 0;
+	font: 16px sans-serif;
 }
 body {
-   background-color: white;
-}
-p {
-   margin-bottom: 0.5em;
-}
-button {
-   padding: 1px 20px;
-}
-
-/* main */
-
-#header {
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 45px;
-   background-color: WhiteSmoke;
-	z-index:30;
-}
-#header h1 {
-   color: black;
-}
-#nav {
-   position: fixed;
-   top: 45px;
-   left: 0;
-   width: 160px;
-   height: 100%;
-   border-right: solid 1px rgb(222, 226, 230);
-   box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
-	z-index:20;
 	background-color: white;
 }
-#nav .navi {
-   color: black;
-   border-radius: 5px;
-   background-color: white;
-   margin: 3px;
+p {
+	margin-bottom: 0.5em;
 }
-#nav .navi:hover {
-   background-color: Gainsboro;
-   cursor: pointer;
+button {
+	padding: 1px 0.5em;
 }
-#nav .navi.active {
-   color: DodgerBlue;
+#menu {
+	position: fixed;
+	top:0;
+	width: 160px;
+	height: 100%;
+	z-index:20;
+	border-right: solid 1px rgb(222, 226, 230);
+	box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
+	background-color: white;
 }
-#nav .navi.active:hover {
-   cursor: default;
+#header {
+	height: 45px;
+	background-color: WhiteSmoke;
+}
+#header h1 {
+	color: black;
+}
+#nav div{
+	color: black;
+	border-radius: 5px;
+	background-color: white;
+	margin: 3px;
+}
+#nav div:hover {
+	background-color: Gainsboro;
+	cursor: pointer;
+}
+#nav div.active {
+	color: DodgerBlue;
+}
+#nav div.active:hover {
+	cursor: default;
 }
 #main {
-   margin-top: 45px;
-   margin-left: 160px;
+	position: relative;
+	margin-left: 160px;
+	padding: 0.5em;
 }
 .controller {
-   position: fixed;
-   top: 45px;
-   left: 160px;
-   width: 100%;
-   white-space: nowrap;
-   background-color: white;
-   border-bottom: solid 1px rgb(222, 226, 230);
-   box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
+	position: fixed;
+	top: 0;
+	left: 160px;
+	right: 0;
+	padding: 0.5em;
+	height: 3em;
+	white-space: nowrap;
+	background-color: rgba(0,0,0,0.7);
+	color: white;
 	z-index:20;
+	line-height: 10px;
 }
 .desk {
-   margin-top: 50px;
+	margin-top: 4em;
 }
 .box {
 	padding: 0.5em;
 }
 .hide {
-   display: none;
+	display: none;
 }
 .groupLine {
 	padding:3px;
 	background-color: WhiteSmoke;
 	border: solid 1px rgb(222, 226, 230);
 	border-radius: 5px;
+	color: black;
 }
 .controller .groupLine {
 	padding:10px;
@@ -107,16 +102,16 @@ button {
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
 .inputMessage::before{
-  content: '';
-  position: absolute;
-  left: 10px;
-  top: -10px;
-  display: block;
-  width: 0;
-  height: 0;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid red;
-  border-left: 10px solid transparent;
+	content: '';
+	position: absolute;
+	left: 10px;
+	top: -10px;
+	display: block;
+	width: 0;
+	height: 0;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid red;
+	border-left: 10px solid transparent;
 }
 .checkboxButton {
 	position:relative;
@@ -150,8 +145,8 @@ button {
 }
 .field {
 	position:relative;
-   margin-bottom: 1em;
-   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px 0px;
+	margin-bottom: 1em;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px 0px;
 	padding: 0.5em;
 }
 .gridWrapper {
@@ -167,7 +162,7 @@ button {
 @media (min-width: 802px) {
 	.gridWrapper {
 		grid-template-columns: 1fr 1fr;
-   }
+	}
 	.fieldController {
 		grid-column-start: 1;
 		grid-column-end: 3;
@@ -176,12 +171,12 @@ button {
 @media (min-width: 1094px) {
 	.gridWrapper {
 		grid-template-columns: 100px 1fr 1fr;
-   }
+	}
 	.fieldController {
 		grid-column-start: 1;
 		grid-column-end: 2;
 	}
-	.lineBreak {
+	.labelLineBreak {
 		display: none;
 	}
 	.label,.url {
@@ -189,19 +184,19 @@ button {
 	}
 }
 .textbox {
-   white-space: nowrap;
+	white-space: nowrap;
 }
 .handle {
-   cursor: grab;
+	cursor: grab;
 }
 .handle img {
-   width: 13px;
-   height: 16px;
+	width: 13px;
+	height: 16px;
 }
 .hold {
 	opacity:0.5;
-   position:absolute;
-   z-index:1;
+	position:absolute;
+	z-index:10;
 }
 .removeField {
 	position: absolute;
@@ -212,41 +207,41 @@ button {
 	cursor: pointer;
 }
 .draggable.invisible {
-   visibility: hidden;
+	visibility: hidden;
 }
 
 /* preset menu */
 
 #preset section {
-   padding:0.5em;
-   margin:0.5em;
-   border: solid 1px black;
+	padding:0.5em;
+	margin:0.5em;
+	border: solid 1px black;
 }
 #preset .url {
-   font-size:70%
+	font-size:70%
 }
 #preset .checkWrapper:hover {
-   cursor: pointer;
-   border-color: orange;
+	cursor: pointer;
+	border-color: orange;
 }
 #table {
-   display: grid;
-   grid-template-columns: 1fr;
+	display: grid;
+	grid-template-columns: 1fr;
 }
 @media (min-width: 802px) {
-   #table {
-      grid-template-columns: 1fr 1fr;
-   }
+	#table {
+		grid-template-columns: 1fr 1fr;
+	}
 }
 @media (min-width: 1094px) {
-   #table {
-      grid-template-columns: 1fr 1fr 1fr;
-   }
+	#table {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 }
 @media (min-width: 1372px) {
-   #table {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-   }
+	#table {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
 }
 
 /* history menu */
@@ -305,8 +300,8 @@ button {
 }
 @media (min-width: 948px) {
 	.othersTable {
-      grid-template-columns: 400px 1fr ;
-   }
+		grid-template-columns: 400px 1fr ;
+	}
 	.othersHeader {
 		grid-column-start: 1;
 		grid-column-end: 3;
