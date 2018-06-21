@@ -12,18 +12,12 @@ let historyNode = document.querySelector("#history");
 let contactNode = document.querySelector("#contact");
 let containerNode = document.querySelector("#container");
 let inputPrototypeNode = document.querySelector("#inputPrototype");
-
 let holdedNode;
 let draggedNode;
 let draggable_list = [];
 let dy = 0;
 
-Promise.resolve()
-	.then( initI18n )
-	.then( initField )
-	.then( initListener )
-	.then( showBody )
-	.catch( unexpectedError );
+Promise.resolve().then( initI18n ).then( initField ).then( initListener ).then( showBody ).catch( unexpectedError );
 
 function initI18n(){
 	let list = [
@@ -33,6 +27,7 @@ function initI18n(){
 		{ "selector": ".usageOrder", "property": "innerText", "key": "htmlUsageOrder" },
 		{ "selector": ".usageCheck", "property": "innerText", "key": "htmlUsageCheck" },
 		{ "selector": ".usageHist", "property": "innerText", "key": "htmlUsageHist" },
+		{ "selector": ".usageDelete", "property": "innerText", "key": "htmlUsageDelete" },
 		{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
 		{ "selector": ".showForm", "property": "innerText", "key": "htmlFormName" },
 		{ "selector": ".showPreset", "property": "innerText", "key": "htmlPresetName" },
@@ -44,7 +39,7 @@ function initI18n(){
 		{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
 		{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
 		{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
-		{ "selector": ".removeField", "property": "innerText", "key": "htmlRemoveButtonName" },
+		{ "selector": ".removeField", "property": "title", "key": "htmlRemoveButtonName" },
 		{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
 		{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" }
 	];
@@ -74,6 +69,7 @@ function initListener(){
 	formNode.addEventListener("click", formBehavior);
 	window.addEventListener("mouseup", sortEnd);
 	window.addEventListener("mousemove", sortMove);
+	window.addEventListener("click", hideInputMessage);
 }
 
 function fileChangeBehavior(e){
@@ -92,40 +88,39 @@ function fileChangeBehavior(e){
 }
 
 function navBehavior(e){
-	let cassList = e.target.classList;
-	if(cassList.contains("showForm")){
+	let classList = e.target.classList;
+	if(classList.contains("showForm")){
 		showForm();
 	}
-	else if(cassList.contains("showPreset")){
+	else if(classList.contains("showPreset")){
 		showPreset();
 	}
-	else if(cassList.contains("showContact")){
+	else if(classList.contains("showContact")){
 		showContact();
 	}
-	else if(cassList.contains("showHistory")){
+	else if(classList.contains("showHistory")){
 		showHistory();
 	}
-	else if(cassList.contains("showOthers")){
+	else if(classList.contains("showOthers")){
 		showOthers();
 	}
 }
 
 function formBehavior(e){
-	let cassList = e.target.classList;
-	let promise;
-	if(cassList.contains("addBlank")){
+	let classList = e.target.classList;
+	if(classList.contains("addBlank")){
 		if ( !checkFieldLength(1) ) {
 			onCheckFieldLengthError();
 			return ;
 		}
 		addField();
 		resetSort();
-		promise = saveOption();
+		saveOption().catch(onSaveError);
 	}
-	else if(cassList.contains("removeField")){
+	else if(e.target.closest(".removeField")){
 		e.target.closest(".field").remove();
 		resetSort();
-		promise = saveOption();
+		saveOption().catch(onSaveError);
 	}
 }
 
@@ -207,6 +202,15 @@ function onCheckFieldLengthError(){
 	return notice( ponyfill.i18n.getMessage("htmlCheckFieldLengthError", [MAX_FIELD] ));
 }
 
+function hideInputMessage(e){
+	if( e.target.closest(".check") ) return;
+	let list = formNode.querySelectorAll(".inputMessage:not(.hide)");
+	for(let i=0; i<list.length; i++){
+		console.log(list[i]);
+		hide(list[i]);
+	}
+}
+
 function addField( checked=false, hist=true, label="", url="", cls=null ){
 	let node = inputPrototypeNode.cloneNode(true);
 	node.removeAttribute("id");
@@ -234,7 +238,7 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 		else {
 			checkNode.removeAttribute("data-checked");
 		}
-		saveOption();
+		saveOption().catch(onSaveError);
 	});
 	if(hist) histNode.setAttribute("data-checked", "1");
 	histNode.addEventListener("click",(e)=>{
@@ -245,7 +249,7 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 		else {
 			histNode.removeAttribute("data-checked");
 		}
-		saveOption();
+		saveOption().catch(onSaveError);
 	});
 	labelNode.value = label;
 	labelNode.addEventListener("input", (e)=>{
@@ -331,16 +335,16 @@ function checkURL(text){
 }
 
 function blurBehavior(e){
-	let cassList = e.target.classList;
-	let promise;
-	if(cassList.contains("label") || cassList.contains("url")){
-		promise = saveOption();
+	let classList = e.target.classList;
+	if(classList.contains("label") || classList.contains("url")){
+		saveOption().catch(onSaveError);
 	}
 }
 
 function sortStart(e){
 	draggedNode = e.target.closest(".draggable");
 	holdedNode = draggedNode.cloneNode(true);
+	holdedNode.style.width = draggedNode.offsetWidth + "px";
 	holdedNode.removeAttribute("id");
 	holdedNode.classList.add("hold");
 	holdedNode.classList.remove("draggable");
@@ -399,7 +403,7 @@ function sortEnd(e){
 		holdedNode = null;
 		draggable_list = [];
 		draggedNode = null;
-		saveOption();
+		saveOption().catch(onSaveError);
 	}
 }
 

@@ -2,6 +2,7 @@
 	let historyNode = document.querySelector("#history");
 	let historyContainerNode = historyNode.querySelector("#historyContainer");
 	let rowlPrototypeNode = historyNode.querySelector("#rowPrototype");
+
 	Promise.resolve().then(initHistory).catch( unexpectedError );
 
 	function initHistory(){

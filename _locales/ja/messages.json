@@ -111,6 +111,10 @@
 		"message": "履歴を保存する。",
 		"description": "Description of button."
 	},
+	"htmlUsageDelete" : {
+		"message": "削除する。",
+		"description": "Description of button."
+	},
 	"htmlPresetDescription": {
 		"message": "サイトを選択してから「追加」ボタンを押すとリンクリストに追加されます。",
 		"description": "Description of the preset option."
@@ -140,7 +144,7 @@
 		"description": "title of label description."
 	},
 	"htmlUrlDescription": {
-		"message": "\"$$1\"は選択した文字に置き換えられます。",
+		"message": "リンク先のURLです。\"$$1\"は選択した文字に置き換えられます。",
 		"description": "title of url description."
 	},
 	"htmlFilterText": {

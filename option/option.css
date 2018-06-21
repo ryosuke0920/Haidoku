@@ -136,22 +136,47 @@ button {
 	padding: 0.5em;
 }
 .field {
-   margin-bottom: 0.5em;
-   box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 3px 0px;
-   padding: 5px 0.5em;
+	position:relative;
+   margin-bottom: 1em;
+   box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px 0px;
+	padding: 0.5em;
+}
+.gridWrapper {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+.gridWrapper div {
+	padding: 5px;
+}
+.label,.url {
+	width: 95%;
+}
+@media (min-width: 802px) {
+	.gridWrapper {
+		grid-template-columns: 1fr 1fr;
+   }
+	.fieldController {
+		grid-column-start: 1;
+		grid-column-end: 3;
+	}
+}
+@media (min-width: 1094px) {
+	.gridWrapper {
+		grid-template-columns: 100px 1fr 1fr;
+   }
+	.fieldController {
+		grid-column-start: 1;
+		grid-column-end: 2;
+	}
+	.lineBreak {
+		display: none;
+	}
+	.label,.url {
+		width: 80%;
+	}
 }
 .textbox {
    white-space: nowrap;
-}
-.sortNo {
-   display: inline-block;
-   width: 2em;
-}
-input.label {
-   width:16em;
-}
-input.url {
-   width:32em;
 }
 .handle {
    cursor: grab;
@@ -165,6 +190,14 @@ input.url {
    position:absolute;
    z-index:1;
 }
+.removeField {
+	position: absolute;
+	top:0;
+	right:5px;
+	width:16px;
+	height:16px;
+	cursor: pointer;
+}
 .draggable.invisible {
    visibility: hidden;
 }
@@ -172,10 +205,20 @@ input.url {
    display: none;
 }
 .groupLine {
-	padding:5px;
+	padding:3px;
 	background-color: WhiteSmoke;
 	border: solid 1px rgb(222, 226, 230);
 	border-radius: 5px;
+}
+@media (min-width: 802px) {
+   #table {
+      grid-template-columns: 1fr 1fr;
+   }
+}
+@media (min-width: 1094px) {
+   #table {
+      grid-template-columns: 1fr 1fr 1fr;
+   }
 }
 .controller .groupLine {
 	padding:10px;

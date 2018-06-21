@@ -30,34 +30,43 @@
 					<span class="formDescription">htmlFormDescription</span>
 				</p>
 				<p>
-					<img src="/image/hold.svg" draggable="false"> <span class="usageOrder">htmlUsageOrder</span>&nbsp;&nbsp;&nbsp;&nbsp;
-					<span class="check checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span>&nbsp;&nbsp;&nbsp;&nbsp;
-					<span class="hist checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span><br>&nbsp;&nbsp;&nbsp;&nbsp;
+					<span class="groupLine"><img src="/image/hold.svg" draggable="false"> <span class="usageOrder">htmlUsageOrder</span></span>&nbsp;
+					<span class="groupLine"><span class="check checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span></span>&nbsp;
+					<span class="groupLine"><span class="hist checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span></span>&nbsp;
+					<span class="groupLine"><img src="/image/delete.svg" draggable="false"> <span class="usageDelete">htmlUsageDelete</span></span>
 				</p>
 				<div id="container" class="box"></div>
 				<div id="inputPrototype" class="field draggable hide">
-					<span class="handle"><img src="/image/hold.svg" draggable="false"></span>&nbsp;
-					<span class="check checkboxButton">
-						<span class="circle"></span>
-					</span>
-					<span class="hist checkboxButton">
-						<span class="circle"></span>
-					</span>
-					<label class="textbox">
-						<span class="labelText">htmlLabelText</span>&nbsp;
-						<span class="inputWrapper">
-							<input type="text" class="label" placeholder="example.com" required maxlength="100">
-							<span class="inputMessage labelMessage hide">message1</span>
-						</span>
-					</label>&nbsp;
-					<label class="textbox">
-						<span class="urlText">htmlUrlDescription</span>&nbsp;
-						<span class="inputWrapper">
-							<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="300">
-							<span class="inputMessage urlMessage hide">message2</span>
-						</span>
-					</label>&nbsp;
-					<button type="button" class="removeField">htmlDelete</button>
+					<div class="removeField" title="htmlRemoveButtonName"><img src="/image/delete.svg"></div>
+					<div class="gridWrapper">
+						<div class="fieldController">
+							<span class="handle"><img src="/image/hold.svg" draggable="false"></span>&nbsp;
+							<span class="check checkboxButton">
+								<span class="circle"></span>
+							</span>
+							<span class="hist checkboxButton">
+								<span class="circle"></span>
+							</span>
+						</div>
+						<div>
+							<label class="textbox">
+								<span class="labelText">htmlLabelText</span><br class="lineBreak">
+								<span class="inputWrapper">
+									<input type="text" class="label" placeholder="example.com" required maxlength="100">
+									<span class="inputMessage labelMessage hide">message1</span>
+								</span>
+							</label>&nbsp;
+						</div>
+						<div>
+							<label class="textbox">
+								<span class="urlText">htmlUrlDescription</span><br class="lineBreak">
+								<span class="inputWrapper">
+									<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="300">
+									<span class="inputMessage urlMessage hide">message2</span>
+								</span>
+							</label>&nbsp;
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -113,8 +122,7 @@
 						<span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;
 						<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;
 						<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;
-						<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span>&nbsp;
-					</span>
+						<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span></span>
 					&nbsp;
 					<span class="groupLine">
 						<span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span>
@@ -156,8 +164,8 @@
 				<section>
 					<div id="sampleLinkList" class="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
 						<nav class="lessLaborGoToDictionary-menu">
-							<img class="lessLaborGoToDictionary-zoomDown" title="縮小">
-							<img class="lessLaborGoToDictionary-zoomUp" title="拡大">
+							<img class="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
+							<img class="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
 						</nav>
 						<ul class="lessLaborGoToDictionary-container">
 							<li class="lessLaborGoToDictionary-list">

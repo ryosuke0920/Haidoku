@@ -111,6 +111,10 @@
 		"message": "Save history.",
 		"description": "Description of button."
 	},
+	"htmlUsageDelete" : {
+		"message": "Delete.",
+		"description": "Description of button."
+	},
 	"htmlPresetDescription": {
 		"message": "Select some sites and press \"add\" button. Then it's added to link list.",
 		"description": "Description of the preset option."
@@ -140,7 +144,7 @@
 		"description": "title of label description."
 	},
 	"htmlUrlDescription": {
-		"message": "\"$$1\" will be replaced to the text you selected.",
+		"message": "A URL to link. \"$$1\" will be replaced to the text you selected.",
 		"description": "title of url description."
 	},
 	"htmlFilterText": {

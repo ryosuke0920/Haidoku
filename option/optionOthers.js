@@ -3,6 +3,7 @@
 	let othersNode = document.querySelector("#others");
 	let sampleLinkListNode = document.querySelector("#sampleLinkList");
 	let linkListClassNodeList = document.querySelectorAll(".linkListClass");
+
 	Promise.resolve().then(initOthers).then(initStyle).catch(unexpectedError);
 
 	function initOthers(){
@@ -17,8 +18,8 @@
 			{ "selector": ".linkListStyleClassic", "property": "innerText", "key": "htmlLinkListStyleClassic" },
 			{ "selector": ".linkListStyleDark", "property": "innerText", "key": "htmlLinkListStyleDark" },
 			{ "selector": ".linkListStylePop", "property": "innerText", "key": "htmlLinkListStylePop" },
-			{ "selector": ".lessLaborGoToDictionary-zoomDown", "property": "src", "value": ponyfill.extension.getURL("/image/minus.svg"), },
-			{ "selector": ".lessLaborGoToDictionary-zoomUp", "property": "src", "value": ponyfill.extension.getURL("/image/plus.svg"), }
+			{ "selector": ".lessLaborGoToDictionary-zoomDown", "property": "title", "key": "htmlZoomDown" },
+			{ "selector": ".lessLaborGoToDictionary-zoomUp", "property": "title", "key": "htmlZoomUp" }
 		];
 		setI18n(list);
 	}
