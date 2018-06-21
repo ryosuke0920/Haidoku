@@ -24,7 +24,7 @@ button {
 	background-color: white;
 }
 #header {
-	height: 45px;
+	height: 65px;
 	background-color: WhiteSmoke;
 }
 #header h1 {
@@ -56,7 +56,8 @@ button {
 	top: 0;
 	left: 160px;
 	right: 0;
-	padding: 0.5em;
+	padding-top: 0.5em;
+	padding-left: 0.5em;
 	height: 3em;
 	white-space: nowrap;
 	background-color: rgba(0,0,0,0.7);
