@@ -208,7 +208,7 @@
 		"description": "alert of delete all."
 	},
 	"htmlHistoryDescription": {
-		"message": "You can refer to history. It's usefull to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser sharing service. You can change configuration to save or not from \"Link list\" menu.",
+		"message": "You can refer to history. It's usefull to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not from \"Link list\" menu.",
 		"description": "Description of history."
 	},
 	"htmlHistoryDate": {
