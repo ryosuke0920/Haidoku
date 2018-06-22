@@ -3,30 +3,35 @@
 	"default_locale": "en",
 	"name":"__MSG_extensionName__",
 	"description":"__MSG_extensionDescription__",
-	"version":"1.1.12",
+	"author": "Ryosuke Ohta",
+	"version":"1.2.3",
 	"icons": {
 		"32": "image/icon.png"
 	},
 	"background": {
 		"scripts": [
-			"ponyfill.js",
-			"config.js",
-			"background.js"
+			"etc/DEFAULT_OPTION_LIST.js",
+			"etc/PRESET_OPTION_LIST.js",
+			"lib/ponyfill.js",
+			"lib/indexeddb.js",
+			"lib/common.js",
+			"background/background.js"
 		]
 	},
 	"options_ui": {
-		"page": "option.html",
+		"page": "option/option.html",
 		"open_in_tab": true
 	},
+
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
 			"css": [
-				"content.css"
+				"content/content.css"
 			],
 			"js": [
-				"ponyfill.js",
-				"content.js"
+				"lib/ponyfill.js",
+				"content/content.js"
 			]
 		}
 	],

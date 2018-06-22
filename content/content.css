@@ -8,7 +8,7 @@ div.lessLaborGoToDictionary-viewer {
 	z-index: 2147483646;
 	background-color: white;
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
-	overflow: scroll;
+	overflow: auto;
 	resize: both;
 }
 div.lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-hide {
@@ -21,7 +21,9 @@ div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
 	-moz-user-select: none;
 	cursor: pointer;
 	white-space: nowrap;
+	display: block;
 }
+div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor,
 div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:link {
 	color: rgb(0, 0, 238);
 }
@@ -41,9 +43,10 @@ div.lessLaborGoToDictionary-viewer nav.lessLaborGoToDictionary-menu {
 	-moz-user-select: none;
 	display: block;
 	height: 22px;
-	width: 100%;
 	line-height: 0;
 	white-space: nowrap;
+	padding-top: 5px;
+	padding-left: 5px;
 }
 div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomDown,
 div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomUp {
@@ -55,5 +58,41 @@ div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomUp {
 	width: 16px;
 	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
-	margin-right: 4px;
+	margin-right: 5px;
+}
+div.lessLaborGoToDictionary-viewer ul.lessLaborGoToDictionary-container {
+	all: initial;
+	font-family: sans-serif;
+	user-select: none;
+	-moz-user-select: none;
+	display: block;
+}
+div.lessLaborGoToDictionary-viewer li.lessLaborGoToDictionary-list {
+	all: initial;
+	font-family: sans-serif;
+	user-select: none;
+	-moz-user-select: none;
+	display: block;
+}
+div.lessLaborGoToDictionary-dark {
+	border-radius: 5px;
+	background: linear-gradient(to bottom right, #404040, #202020);
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.64),0 2px 10px 0 rgba(0,0,0,0.48);
+}
+div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor {
+	border-top: 2px solid #505050;
+}
+div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor,
+div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:link {
+	color: white;
+}
+div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:visited {
+	color: #B0B0B0;
+}
+div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:hover {
+	text-decoration: none;
+	background-color:#505050;
+}
+div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:active {
+	color: #F07070;
 }
