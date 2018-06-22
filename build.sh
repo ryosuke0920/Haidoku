@@ -23,6 +23,7 @@ case ${1} in
 			${APP_DIR}"chrome-artifacts" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
+			${APP_DIR}"manifest.edge.json" \
 			${APP_DIR}"*.sh";
 		check ${?};
 		web-ext build --ignore-files \
@@ -30,6 +31,7 @@ case ${1} in
 			${APP_DIR}"chrome-artifacts" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
+			${APP_DIR}"manifest.edge.json" \
 			${APP_DIR}"*.sh";
 		check ${?};
 		;;
@@ -48,11 +50,12 @@ case ${1} in
 		fi
 		zip -r ${filename} ${APP_DIR} -x \
 			${APP_DIR}".git*" \
-			${APP_DIR}"material" \
+			${APP_DIR}"material/*" \
 			${APP_DIR}"web-ext-artifacts/*" \
 			${APP_DIR}"chrome-artifacts/*" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
+			${APP_DIR}"manifest.edge.json" \
 			${APP_DIR}"BUILD.md" \
 			${APP_DIR}"*.sh";
 		check ${?};
