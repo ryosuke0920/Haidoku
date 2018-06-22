@@ -4,14 +4,17 @@
 	"name":"__MSG_extensionName__",
 	"description":"__MSG_extensionDescription__",
 	"author": "Ryosuke Ohta",
-	"version":"1.1.12",
+	"version":"1.2.3",
 	"icons": {
 		"32": "image/icon.png"
 	},
 	"background": {
 		"scripts": [
+			"etc/DEFAULT_OPTION_LIST.js",
+			"etc/PRESET_OPTION_LIST.js",
 			"lib/ponyfill.js",
-			"lib/config.js",
+			"lib/indexeddb.js",
+			"lib/common.js",
 			"background/background.js"
 		]
 	},
@@ -19,6 +22,7 @@
 		"page": "option/option.html",
 		"open_in_tab": true
 	},
+
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
