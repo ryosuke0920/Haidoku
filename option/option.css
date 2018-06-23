@@ -24,11 +24,17 @@ button {
 	background-color: white;
 }
 #header {
-	height: 65px;
-	background-color: WhiteSmoke;
+	height: 200px;
+	background-color: #404040;
+	color: white;
+}
+#header .logo {
+	maring: auto;
+	text-align: center;
+	padding-top: 10px;
 }
 #header h1 {
-	color: black;
+	padding-left: 10px;
 }
 #nav div{
 	color: black;
