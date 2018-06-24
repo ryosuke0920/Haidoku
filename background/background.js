@@ -1,6 +1,7 @@
+ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 const DEFAULT_LOCALE = "en";
-
 let options = {};
+
 Promise.resolve().then(initContextMenu).then(initListener).catch(unexpectedError);
 
 function install(e){
@@ -26,7 +27,6 @@ function initListener(){
 	ponyfill.storage.onChanged.addListener( onStorageChanged );
 	ponyfill.contextMenus.onClicked.addListener( contextMenuBehavior );
 	ponyfill.runtime.onMessage.addListener(notify);
-	ponyfill.runtime.onInstalled.addListener( install );
 }
 
 function openWindow( url, text){
