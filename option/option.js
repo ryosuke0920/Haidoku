@@ -72,20 +72,20 @@ function initListener(){
 	window.addEventListener("click", hideInputMessage);
 }
 
-function fileChangeBehavior(e){
+function fileChangeBehavior(e, area){
 	if( !e.hasOwnProperty("w")) return;
 	if( e["w"]["newValue"] == windowId ) return;
-	if( e.hasOwnProperty("ol") ){
-		removeAllField();
-		let optionList = e["ol"]["newValue"];
-		for( let i=0; i<optionList.length; i++){
-			let item = optionList[i];
-			if( !item.hasOwnProperty("h") ) item["h"] = false;
-			addField(item["c"], item["h"], item["l"], item["u"]);
-		}
-		resetSort();
+	if( !e.hasOwnProperty("ol") ) return;
+	removeAllField();
+	let optionList = e["ol"]["newValue"];
+	for( let i=0; i<optionList.length; i++){
+		let item = optionList[i];
+		if( !item.hasOwnProperty("h") ) item["h"] = false;
+		addField(item["c"], item["h"], item["l"], item["u"]);
 	}
+	resetSort();
 }
+
 
 function navBehavior(e){
 	let classList = e.target.classList;
@@ -437,5 +437,5 @@ function fetchValue(element, selector){
 
 function saveOption(){
 	let data = { "ol": makeOptionList() };
-	return save(data).catch(onSaveError);
+	return saveW(data).catch(onSaveError);
 }
