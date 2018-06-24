@@ -4,7 +4,7 @@
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
-		"message": "When you select text, link list is displayed. It contains some dictionary site, so you can search faster.",
+		"message": "This is a tool to eliminate troublesome copying and pasting to search efficiently and quickly.",
 		"description": "Description of the extension."
 	},
 	"extensionOptionAutoView": {

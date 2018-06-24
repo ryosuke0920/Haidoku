@@ -4,7 +4,7 @@
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
-		"message": "WEBサイト上で文字を選択するとリンクリストが表示されます。リンクリストに辞書サイトを登録しておけば、効率よく検索できます。",
+		"message": "面倒なコピペの手間をなくし、効率よく素早く検索するツールです。",
 		"description": "Description of the extension."
 	},
 	"extensionOptionAutoView": {
