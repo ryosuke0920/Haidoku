@@ -1,6 +1,6 @@
 # Search Dictionary Faster
-
-When you select a text on the website, link list will be displayed. If you specify some dictionay site to the link list, you can search faster than copy and paste.
+This is a tool to eliminate troublesome copying and pasting to search efficiently and quickly.
+When you select a text on the website, link list will be displayed. If your favorite dictionary site URL are specified to the link list, You don't need copying and pasting.
 
 # Link list
 * Select a text on the website, link list will be displayed.

@@ -27,6 +27,9 @@ function initListener(){
 	ponyfill.storage.onChanged.addListener( onStorageChanged );
 	ponyfill.contextMenus.onClicked.addListener( contextMenuBehavior );
 	ponyfill.runtime.onMessage.addListener(notify);
+	ponyfill.browserAction.onClicked.addListener((e)=>{
+		ponyfill.runtime.openOptionsPage();
+	});
 }
 
 function openWindow( url, text){
