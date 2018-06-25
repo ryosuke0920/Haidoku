@@ -4,7 +4,7 @@
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
-	const SPACE = 5;
+	const SPACE = 10;
 	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
@@ -12,6 +12,7 @@
 	const ANCHOR_RESIO = 0.1;
 	const SILENT_ERROR_PREFIX = "[silent]";
 	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
+	const LINK_LIST_CLOSE_TIME = 500;
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -24,19 +25,16 @@
 	let resizeWatcherFlag = false;
 	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let menuNode;
+	let containerNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 
-	starter()
+	Promise.resolve()
 		.then(init)
 		.then(
-			()=>{ starter().then(reload).then(addCommonLinkListEvents); },
+			()=>{ Promise.resolve().then(reload).then(addCommonLinkListEvents); },
 			silentError
 		).catch(unexpectedError);
-
-	function starter(){
-		return Promise.resolve();
-	}
 
 	function init(){
 		let body = document.querySelector("body");
@@ -54,20 +52,23 @@
 		menuNode = document.createElement("nav");
 		menuNode.classList.add("lessLaborGoToDictionary-menu");
 		linkListNode.appendChild(menuNode);
+		containerNode = document.createElement("ul");
+		containerNode.classList.add("lessLaborGoToDictionary-container");
+		linkListNode.appendChild(containerNode);
 		let zoomDownNode = document.createElement("img");
-		zoomDownNode.src = chrome.extension.getURL("image/minus.svg");
+		zoomDownNode.src = ponyfill.extension.getURL("/image/minus.svg");
 		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
-		zoomDownNode.title = chrome.i18n.getMessage("htmlZoomDown");
+		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 		let zoomUpNode = document.createElement("img");
-		zoomUpNode.src = chrome.extension.getURL("image/plus.svg");
+		zoomUpNode.src = ponyfill.extension.getURL("/image/plus.svg");
 		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
-		zoomUpNode.title = chrome.i18n.getMessage("htmlZoomUp");
+		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 	}
 
 	function addCommonLinkListEvents(){
-		chrome.storage.onChanged.addListener( onStorageChanged );
+		ponyfill.storage.onChanged.addListener( onStorageChanged );
 		window.addEventListener("resize", resizeBehavior);
 		menuNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
@@ -160,7 +161,7 @@
 		if(isLinkListShown()){
 			closeLinkList();
 		}
-		else {
+		else if ( hasLinkList() ) {
 			let selection = window.getSelection();
 			if( !selection.isCollapsed ){
 				let lastRange = selection.getRangeAt(selection.rangeCount-1);
@@ -211,12 +212,41 @@
 		linkListNode.classList.add("lessLaborGoToDictionary-hide");
 	}
 
+	function closeLinkListDelay(){
+		window.setTimeout(closeLinkList, LINK_LIST_CLOSE_TIME);
+	}
+
+	function onClickAnchor(e){
+		closeLinkListDelay();
+	}
+
+	function onClickSaveHistory(e){
+		saveHistory(e).catch(onSaveError);
+	}
+
+	function saveHistory(e){
+		let data = {
+			"method": "saveHistory",
+			"data": {
+				"text": e.target.getAttribute("data-text"),
+				"fromURL": window.location.toString(),
+				"fromTitle": document.title.toString(),
+				"toURL": e.target.getAttribute("data-url"),
+				"toTitle": e.target.getAttribute("data-label")
+			}
+		};
+		let res = ponyfill.runtime.sendMessage(data);
+		return res;
+	}
+
 	function makeLinkList(text){
-		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor,br.lessLaborGoToDictionary-braek");
-		for(let node of list){
-			linkListNode.removeChild(node);
+		let list = containerNode.querySelectorAll(".lessLaborGoToDictionary-list");
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
+			containerNode.removeChild(node);
 		}
-		for(let item of optionList){
+		for(let i=0; i<optionList.length; i++){
+			let item = optionList[i];
 			if ( !item["c"] ) continue;
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(text) );
@@ -227,11 +257,16 @@
 			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
 			a.setAttribute( "rel", "noreferrer" );
+			a.setAttribute( "data-text", text );
+			a.setAttribute( "data-url", item["u"] );
+			a.setAttribute( "data-label", item["l"] );
 			a.innerText = item["l"];
-			linkListNode.appendChild(a);
-			let br = document.createElement("br");
-			br.classList.add("lessLaborGoToDictionary-braek");
-			linkListNode.appendChild(br);
+			a.addEventListener("click", onClickAnchor);
+			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
+			let li = document.createElement("li");
+			li.classList.add("lessLaborGoToDictionary-list");
+			li.appendChild(a);
+			containerNode.appendChild(li);
 		}
 	}
 
@@ -279,6 +314,9 @@
 			setLinkListFlag( change["bf"]["newValue"] );
 			resetLinkListEvents();
 		}
+		else if( change["cl"] ){
+			setLinkListClass( change["cl"]["newValue"] );
+		}
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
@@ -294,7 +332,8 @@
 			"ck": false,
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
-			"as": ANCHOR_DEFAULT_SIZE
+			"as": ANCHOR_DEFAULT_SIZE,
+			"cl": "c",
 		});
 		return getter.then(setVer, onReadError);
 	}
@@ -306,6 +345,7 @@
 		setLinkListFlag( res["bf"] );
 		setCtrlKeyFlag( res["ck"] );
 		setShiftKeyFlag( res["sk"] );
+		setLinkListClass( res["cl"] );
 		resetLinkListEvents();
 	}
 
@@ -325,6 +365,13 @@
 		ctrlKeyFlag = res;
 	}
 
+	function setLinkListClass(res){
+		linkListNode.classList.remove("lessLaborGoToDictionary-dark");
+		if( res == "d" ) {
+			linkListNode.classList.add("lessLaborGoToDictionary-dark");
+		}
+	}
+
 	function resetLinkListEvents(){
 		removeAutoLinkListEvents();
 		if( linkListFlag && hasLinkList() ) addAutoLinkListEvents();
@@ -332,7 +379,8 @@
 
 	function setOptionList(res){
 		optionList = [];
-		for( let data of res ){
+		for(let i=0; i<res.length; i++){
+			let data = res[i];
 			/* checked == true */
 			if ( data["c"] ) optionList.push(data);
 		}
@@ -368,7 +416,10 @@
 		anchorSize = Math.floor(anchorSize);
 		anchorSize /= 10 ;
 		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor");
-		for(let node of list)　node.style["font-size"] = anchorSize + "em";
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
+			node.style["font-size"] = anchorSize + "em";
+		}
 		return true;
 	}
 
@@ -386,7 +437,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationSaveOptionError", [e.message])
+			"data": ponyfill.i18n.getMessage("notificationSaveOptionError", [e.message])
 		});
 		return res;
 	}
@@ -395,7 +446,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationReadOptionError", [e.message])
+			"data": ponyfill.i18n.getMessage("notificationReadOptionError", [e.message])
 		});
 		return res;
 	}
@@ -404,7 +455,7 @@
 		console.error(e);
 		let res = ponyfill.runtime.sendMessage({
 			"method": "notice",
-			"data": chrome.i18n.getMessage("notificationUnexpectedError", [e.message])
+			"data": ponyfill.i18n.getMessage("notificationUnexpectedError", [e.message])
 		});
 		return res;
 	}

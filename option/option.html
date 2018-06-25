@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" type="text/css" href="option.css">
+<link rel="stylesheet" type="text/css" href="/content/content.css">
+<title>extensionName</title>
+</head>
+<body class="hide">
+<div>
+	<div id="main">
+		<div id="form" class="panel">
+			<nav class="controller">
+				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
+			</nav>
+			<div class="desk">
+				<p>
+					<span class="formDescription">htmlFormDescription</span>
+				</p>
+				<p>
+					<span class="groupLine"><img src="/image/hold.svg" draggable="false"> <span class="usageOrder">htmlUsageOrder</span></span>&nbsp;
+					<span class="groupLine"><span class="check checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span></span>&nbsp;
+					<span class="groupLine"><span class="hist checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span></span>&nbsp;
+					<span class="groupLine"><img src="/image/delete.svg" draggable="false"> <span class="usageDelete">htmlUsageDelete</span></span>
+				</p>
+				<div id="container" class="box"></div>
+				<div id="inputPrototype" class="field draggable hide">
+					<div class="removeField" title="htmlRemoveButtonName"><img src="/image/delete.svg"></div>
+					<div class="gridWrapper">
+						<div class="fieldController">
+							<span class="handle"><img src="/image/hold.svg" draggable="false"></span>&nbsp;
+							<span class="check checkboxButton">
+								<span class="circle"></span>
+							</span>
+							<span class="hist checkboxButton">
+								<span class="circle"></span>
+							</span>
+						</div>
+						<div>
+							<label class="textbox">
+								<span class="labelText">htmlLabelText</span><br class="labelLineBreak">
+								<span class="inputWrapper">
+									<input type="text" class="label" placeholder="example.com" required maxlength="100">
+									<span class="inputMessage labelMessage hide">message1</span>
+								</span>
+							</label>&nbsp;
+						</div>
+						<div>
+							<label class="textbox">
+								<span class="urlText">htmlUrlDescription</span><br class="labelLineBreak">
+								<span class="inputWrapper">
+									<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="300">
+									<span class="inputMessage urlMessage hide">message2</span>
+								</span>
+							</label>&nbsp;
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="preset" class="panel hide">
+			<nav class="controller">
+				<span class="groupLine">
+					<span class="filterText">htmlFilterText</span>&nbsp;
+					<select id="languageFilter">
+						<option value="">htmlLanguageAll</option>
+						<option value="en">htmlLanguageEn</option>
+						<option value="ja">htmlLanguageJa</option>
+						<option value="zh">htmlLanguageZh</option>
+					</select>
+				</span>
+				&nbsp;
+				<button type="button" class="addPreset">htmlAddPresetButtonName</button>&nbsp;
+			</nav>
+			<div class="desk">
+				<div class="presetDescription">htmlPresetDescription</div>
+				<div id="table" class="box"></div>
+				<section id="cellPrototype" class="cell hide checkWrapper" data-language="">
+					<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
+					<p class="url">url</p>
+				</section>
+			</div>
+		</div>
+		<div id="history" class="panel hide">
+			<nav class="controller">
+				<span class="groupLine">
+					<button class="historyUpdateButton">htmlHistoryUpdateButton</button>
+					&nbsp;
+					<select class="historyOrder">
+						<option class="historyOrderDesc" value="prev">htmlHistoryOrderDesc</option>
+						<option class="historyOrderAsc" value="next">htmlHistoryOrderAsc</option>
+					</select>
+					&nbsp;
+					<label>
+						<input class="historyRowSize" type="number" value="10" min="10" step="10">
+						<span class="historyRowSizeText">htmlHistoryRowSizeText</span>
+					</label>
+					&nbsp;
+					<label>
+						<input class="historyPage" type="number" value="1" min="1">
+						<span class="historyPageText">htmlHistoryPageText</span>
+					</label>
+					&nbsp;
+					<label>
+						<input class="historyRowSizeAll" type="checkbox" value="1">
+						<span class="historyRowSizeAllText">htmlHistoryRowSizeAllText</span>
+					</label>
+				</span>
+			</nav>
+			<div class="desk">
+				<p class="historyDescription">htmlHistoryDescription</p>
+				<p>
+					<span class="groupLine"><span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span></span>
+					<span class="groupLine"><span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span></span>
+					<button class="historyDeleteButton">htmlHistoryCheckDelete</button>
+					<button class="historyDeleteAllButton">htmlHistoryAllDelete</button>
+				</p>
+				<table id="historyTable">
+					<thead>
+						<tr>
+							<th class="headHistoryID"><input type="checkbox" class="historyCheckAllRows"></th>
+							<th class="headHistoryDate">htmlHistoryDate</th>
+							<th class="headHistoryText">htmlHistoryText</th>
+							<th class="headHistoryFromSite">htmlHistoryFromSite</th>
+							<th class="headHistoryToSite">htmlHistoryToSite</th>
+						</tr>
+					</thead>
+					<tbody id="historyContainer"></tbody>
+				</table>
+				<table class="hide">
+					<tr id="rowPrototype" class="historyRow">
+						<td class="historyID"><input class="historyCheckbox" type="checkbox" value="ID"></td>
+						<td class="historyDate" title="historyDate">historyDate</td>
+						<td class="historyText" title="historyText">historyText</td>
+						<td class="historyFromSite" title="historyFromSite"><a target="_blank" rel="noreferrer">historyFromSite</a></td>
+						<td class="historyToSite" title="historyToSite"><a target="_blank" rel="noreferrer">historyToSite</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="others" class="panel hide">
+			<section class="othersTable box">
+				<section class="othersHeader">
+					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
+				</section>
+				<section>
+					<label><input type="radio" class="linkListClass" name="linkListClass" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
+					<label><input type="radio" class="linkListClass" name="linkListClass" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
+				</section>
+				<section>
+					<div id="sampleLinkList" class="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
+						<nav class="lessLaborGoToDictionary-menu">
+							<img class="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
+							<img class="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
+						</nav>
+						<ul class="lessLaborGoToDictionary-container">
+							<li class="lessLaborGoToDictionary-list">
+								<a class="lessLaborGoToDictionary-anchor">test1 </a>
+							</li>
+							<li class="lessLaborGoToDictionary-list">
+								<a class="lessLaborGoToDictionary-anchor">test2 test2 </a>
+							</li>
+							<li class="lessLaborGoToDictionary-list">
+								<a class="lessLaborGoToDictionary-anchor">test3 test3 test3 </a>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div id="contact" class="panel hide">
+			<address>
+				<p class="contactText">htmlContactText</p>
+				<p class="myself">htmlMyself</p>
+			</address>
+		</div>
+	</div>
+	<div id="menu">
+		<header id="header">
+			<div class="logo"><img src="/image/icon128.png"></div>
+			<h1><span class="title">extensionName</span></h1>
+		</header>
+		<nav id="nav">
+			<div class="box navi showForm active">htmlFormName</div>
+			<div class="box navi showPreset">htmlPresetName</div>
+			<div class="box navi showHistory">htmlHistoryName</div>
+			<div class="box navi showOthers">htmlOthersName</div>
+			<div class="box navi showContact">htmlContactName</div>
+		</nav>
+	</div>
+</div>
+<script src="/etc/PRESET_OPTION_LIST.js"></script>
+<script src="/lib/ponyfill.js"></script>
+<script src="/lib/indexeddb.js"></script>
+<script src="/lib/common.js"></script>
+<script src="option.js"></script>
+<script src="optionPreset.js"></script>
+<script src="optionOthers.js"></script>
+<script src="optionHistory.js"></script>
+</body>
+</html>
