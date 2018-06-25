@@ -1,10 +1,10 @@
 {
 	"extensionName": {
-		"message": "手間なし辞書検索",
+		"message": "手間なし 辞書検索",
 		"description": "Name of the extension."
 	},
 	"extensionDescription": {
-		"message": "WEBサイト上で文字を選択するとリンクリストが表示されます。リンクリストに辞書サイトを登録しておけば、効率よく検索できます。",
+		"message": "面倒なコピペの手間をなくし、効率よく素早く検索するツールです。",
 		"description": "Description of the extension."
 	},
 	"extensionOptionAutoView": {
@@ -208,7 +208,7 @@
 		"description": "alert of delete all."
 	},
 	"htmlHistoryDescription": {
-		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの共有サービスの対象ではありません。履歴の保存は「リンクリスト」メニューで設定してください。",
+		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの同期サービスの対象ではありません。履歴の保存は「リンクリスト」メニューで設定してください。",
 		"description": "Description of history."
 	},
 	"htmlHistoryDate": {
