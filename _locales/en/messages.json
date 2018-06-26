@@ -75,6 +75,10 @@
 		"message": "zoom up",
 		"description": ""
 	},
+	"htmlCopy": {
+		"message": "copy",
+		"description": ""
+	},
 	"htmlFormName": {
 		"message": "Link list",
 		"description": "Name of the form on the side menu."

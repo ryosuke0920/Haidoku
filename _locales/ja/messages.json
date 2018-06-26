@@ -75,6 +75,10 @@
 		"message": "拡大",
 		"description": ""
 	},
+	"htmlCopy": {
+		"message": "コピー",
+		"description": ""
+	},
 	"htmlFormName": {
 		"message": "リンクリスト",
 		"description": "Name of the form on the side menu."

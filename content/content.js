@@ -65,6 +65,11 @@
 		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
+		let copyNode = document.createElement("img");
+		copyNode.src = ponyfill.extension.getURL("/image/copy.svg");
+		copyNode.classList.add("lessLaborGoToDictionary-copy");
+		copyNode.title = ponyfill.i18n.getMessage("htmlCopy");
+		menuNode.appendChild(copyNode);
 	}
 
 	function addCommonLinkListEvents(){
@@ -405,6 +410,13 @@
 				promise.catch(onSaveError);
 			}
 		}
+		else if(e.target.classList.contains("lessLaborGoToDictionary-copy")){
+			copyText();
+		}
+	}
+
+	function copyText(){
+		document.execCommand("copy");
 	}
 
 	function zoomLinkList(direction=1){
