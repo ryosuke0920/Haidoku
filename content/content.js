@@ -112,7 +112,7 @@
 			let lastRange = selection.getRangeAt(selection.rangeCount-1);
 			let rectList = lastRange.getClientRects();
 			let rect = rectList[rectList.length-1];
-			showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right);
+			showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
 		}
 	}
 
@@ -144,7 +144,7 @@
 			if( !selectioin.isCollapsed ){
 				selectionChangedFlag = false;
 				makeLinkList(selectioin.toString());
-				showLinkList(e.pageY, e.pageX, e.clientY, e.clientX);
+				showLinkList(e.pageY, e.pageX, e.clientY, e.clientX, selectioin);
 			}
 		}
 	}
@@ -173,7 +173,7 @@
 				let rectList = lastRange.getClientRects();
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
-				showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right);
+				showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
 			}
 		}
 	}
@@ -275,7 +275,7 @@
 		}
 	}
 
-	function showLinkList(pageY, pageX, clientY, clientX){
+	function showLinkList(pageY, pageX, clientY, clientX, selection){
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		linkListNode.classList.remove("lessLaborGoToDictionary-hide");
 		linkListNode.style.height = linkListNodeHeight + "px";
@@ -285,8 +285,19 @@
 		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH;
 		if ( 0 < xx || window.innerWidth < linkListNode.offsetWidth ) xx = 0;
 		linkListNodeTop = pageY + yy + SPACE;
-		if ( linkListNodeTop < 0 ) linkListNodeTop = 0;
 		linkListNodeLeft = pageX + xx + SPACE;
+
+		let lastRange = selection.getRangeAt(selection.rangeCount-1);
+		let rectList = lastRange.getClientRects();
+		let rect = rectList[rectList.length-1];
+
+		if ( window.scrollY + rect.top < linkListNodeTop + linkListNode.offsetHeight && linkListNodeTop < window.scrollY + rect.bottom &&
+			window.scrollX + rect.right < linkListNodeLeft + linkListNode.offsetWidth && linkListNodeLeft < window.scrollX + rect.right &&
+			0 < window.scrollY + rect.top - linkListNode.offsetHeight - SPACE ) {
+			linkListNodeTop = window.scrollY + rect.top - linkListNode.offsetHeight - SPACE;
+		}
+
+		if ( linkListNodeTop < 0 ) linkListNodeTop = 0;
 		if ( linkListNodeLeft < 0 ) linkListNodeLeft = 0;
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
