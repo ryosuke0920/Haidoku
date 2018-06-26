@@ -55,6 +55,11 @@
 		containerNode = document.createElement("ul");
 		containerNode.classList.add("lessLaborGoToDictionary-container");
 		linkListNode.appendChild(containerNode);
+		let resizeNode = document.createElement("img");
+		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
+		resizeNode.classList.add("lessLaborGoToDictionary-resize");
+		resizeNode.title = ponyfill.i18n.getMessage("htmlResize");
+		menuNode.appendChild(resizeNode);
 		let zoomDownNode = document.createElement("img");
 		zoomDownNode.src = ponyfill.extension.getURL("/image/minus.svg");
 		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
@@ -426,10 +431,22 @@
 		else if(e.target.classList.contains("lessLaborGoToDictionary-copy")){
 			copyText();
 		}
+		else if(e.target.classList.contains("lessLaborGoToDictionary-resize")){
+			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
+			promise = saveLinkListSize();
+			promise.catch(onSaveError);
+		}
 	}
 
 	function copyText(){
 		document.execCommand("copy");
+	}
+
+	function resetSize(height,width){
+		linkListNodeHeight = height;
+		linkListNodeWidth = width;
+		linkListNode.style.height = height + "px";
+		linkListNode.style.width = width + "px";
 	}
 
 	function zoomLinkList(direction=1){

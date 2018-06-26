@@ -79,6 +79,10 @@
 		"message": "copy",
 		"description": ""
 	},
+	"htmlResize": {
+		"message": "reset size",
+		"description": ""
+	},
 	"htmlFormName": {
 		"message": "Link list",
 		"description": "Name of the form on the side menu."

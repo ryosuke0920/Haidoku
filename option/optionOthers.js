@@ -20,7 +20,8 @@
 			{ "selector": ".linkListStylePop", "property": "innerText", "key": "htmlLinkListStylePop" },
 			{ "selector": ".lessLaborGoToDictionary-zoomDown", "property": "title", "key": "htmlZoomDown" },
 			{ "selector": ".lessLaborGoToDictionary-zoomUp", "property": "title", "key": "htmlZoomUp" },
-			{ "selector": ".lessLaborGoToDictionary-copy", "property": "title", "key": "htmlCopy" }
+			{ "selector": ".lessLaborGoToDictionary-copy", "property": "title", "key": "htmlCopy" },
+			{ "selector": ".lessLaborGoToDictionary-resize", "property": "title", "key": "htmlResize" }
 		];
 		setI18n(list);
 	}

@@ -79,6 +79,10 @@
 		"message": "コピー",
 		"description": ""
 	},
+	"htmlResize": {
+		"message": "サイズをリセット",
+		"description": ""
+	},
 	"htmlFormName": {
 		"message": "リンクリスト",
 		"description": "Name of the form on the side menu."
