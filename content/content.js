@@ -296,14 +296,13 @@
 		let rectList = lastRange.getClientRects();
 		let rect = rectList[rectList.length-1];
 
-		if ( window.scrollY + rect.top < linkListNodeTop + linkListNode.offsetHeight && linkListNodeTop < window.scrollY + rect.bottom &&
-			window.scrollX + rect.right < linkListNodeLeft + linkListNode.offsetWidth && linkListNodeLeft < window.scrollX + rect.right &&
-			rect.top <= linkListNode.offsetHeight + SPACE ) {
-			linkListNodeTop = window.scrollY + rect.top - linkListNode.offsetHeight - SPACE;
+		if ( window.scrollY + rect.top < linkListNodeTop + linkListNode.offsetHeight && linkListNodeTop < window.scrollY + rect.bottom ){
+			if ( window.scrollX + rect.left < linkListNodeLeft + linkListNode.offsetWidth && linkListNodeLeft < window.scrollX + rect.right ){
+				linkListNodeTop = window.scrollY + rect.top - linkListNode.offsetHeight - SPACE;
+			}
 		}
-
-		if ( linkListNodeTop < 0 ) linkListNodeTop = 0;
-		if ( linkListNodeLeft < 0 ) linkListNodeLeft = 0;
+		if ( linkListNodeTop < window.scrollY ) linkListNodeTop = window.scrollY;
+		if ( linkListNodeLeft < window.scrollX ) linkListNodeLeft = window.scrollX;
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
 		linkListNode.scrollTop = 0;
