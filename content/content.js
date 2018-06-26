@@ -298,7 +298,7 @@
 
 		if ( window.scrollY + rect.top < linkListNodeTop + linkListNode.offsetHeight && linkListNodeTop < window.scrollY + rect.bottom &&
 			window.scrollX + rect.right < linkListNodeLeft + linkListNode.offsetWidth && linkListNodeLeft < window.scrollX + rect.right &&
-			0 < window.scrollY + rect.top - linkListNode.offsetHeight - SPACE ) {
+			rect.top <= linkListNode.offsetHeight + SPACE ) {
 			linkListNodeTop = window.scrollY + rect.top - linkListNode.offsetHeight - SPACE;
 		}
 
