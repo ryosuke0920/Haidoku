@@ -285,7 +285,9 @@
 		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH;
 		if ( 0 < xx || window.innerWidth < linkListNode.offsetWidth ) xx = 0;
 		linkListNodeTop = pageY + yy + SPACE;
+		if (　linkListNodeTop < 0 ) linkListNodeTop = 0;
 		linkListNodeLeft = pageX + xx + SPACE;
+		if ( linkListNodeLeft < 0 ) linkListNodeLeft = 0;
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
 		linkListNode.scrollTop = 0;
