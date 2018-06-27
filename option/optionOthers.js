@@ -21,7 +21,8 @@
 			{ "selector": ".lessLaborGoToDictionary-zoomDown", "property": "title", "key": "htmlZoomDown" },
 			{ "selector": ".lessLaborGoToDictionary-zoomUp", "property": "title", "key": "htmlZoomUp" },
 			{ "selector": ".lessLaborGoToDictionary-copy", "property": "title", "key": "htmlCopy" },
-			{ "selector": ".lessLaborGoToDictionary-resize", "property": "title", "key": "htmlResize" }
+			{ "selector": ".lessLaborGoToDictionary-resize", "property": "title", "key": "htmlResize" },
+			{ "selector": ".lessLaborGoToDictionary-option", "property": "title", "key": "htmlOption" }
 		];
 		setI18n(list);
 	}

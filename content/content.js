@@ -75,6 +75,11 @@
 		copyNode.classList.add("lessLaborGoToDictionary-copy");
 		copyNode.title = ponyfill.i18n.getMessage("htmlCopy");
 		menuNode.appendChild(copyNode);
+		let optionNode = document.createElement("img");
+		optionNode.src = ponyfill.extension.getURL("/image/option.svg");
+		optionNode.classList.add("lessLaborGoToDictionary-option");
+		optionNode.title = ponyfill.i18n.getMessage("htmloption");
+		menuNode.appendChild(optionNode);
 	}
 
 	function addCommonLinkListEvents(){
@@ -434,6 +439,11 @@
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
 			promise = saveLinkListSize();
 			promise.catch(onSaveError);
+		}
+		else if(e.target.classList.contains("lessLaborGoToDictionary-option")){
+			let promise = ponyfill.runtime.sendMessage({
+				"method": "openOptions"
+			});
 		}
 	}
 

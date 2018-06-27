@@ -46,6 +46,9 @@ function notify(message, sender, sendResponse){
 	else if( method == "saveHistory" ){
 		sendResponse( saveHistory(data) );
 	}
+	else if( method == "openOptions" ){
+		sendResponse( ponyfill.runtime.openOptionsPage() );
+	}
 	else {
 		sendResponse( save(data) );
 	}

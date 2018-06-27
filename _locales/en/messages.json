@@ -83,6 +83,10 @@
 		"message": "reset size",
 		"description": ""
 	},
+	"htmlOption": {
+		"message": "option",
+		"description": ""
+	},
 	"htmlFormName": {
 		"message": "Link list",
 		"description": "Name of the form on the side menu."
@@ -94,6 +98,10 @@
 	"htmlHistoryName": {
 		"message": "History",
 		"description": "Name of the history on the side menu."
+	},
+	"htmlRankingName": {
+		"message": "Ranking",
+		"description": "Name of the ranking on the side menu."
 	},
 	"htmlOthersName": {
 		"message": "Others",

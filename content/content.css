@@ -51,7 +51,8 @@ div.lessLaborGoToDictionary-viewer nav.lessLaborGoToDictionary-menu {
 div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomDown,
 div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomUp,
 div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-copy,
-div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-resize {
+div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-resize,
+div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-option {
 	all: initial;
 	font-family: sans-serif;
 	user-select: none;

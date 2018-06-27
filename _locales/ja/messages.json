@@ -83,6 +83,10 @@
 		"message": "サイズをリセット",
 		"description": ""
 	},
+	"htmlOption": {
+		"message": "設定",
+		"description": ""
+	},
 	"htmlFormName": {
 		"message": "リンクリスト",
 		"description": "Name of the form on the side menu."
@@ -94,6 +98,10 @@
 	"htmlHistoryName": {
 		"message": "履歴",
 		"description": "Name of the history on the side menu."
+	},
+	"htmlRankingName": {
+		"message": "ランキング",
+		"description": "Name of the ranking on the side menu."
 	},
 	"htmlOthersName": {
 		"message": "その他",
