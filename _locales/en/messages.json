@@ -27,6 +27,10 @@
 		"message": "options",
 		"description": "Name of link list option."
 	},
+	"onNoDataInfo": {
+		"message": "Total result was 0.",
+		"description": "no data notification."
+	},
 	"notificationUnexpectedError": {
 		"message": "unexpected error. $ERROR$",
 		"description": "unexpected error notification.",
@@ -100,7 +104,7 @@
 		"description": "Name of the history on the side menu."
 	},
 	"htmlRankingName": {
-		"message": "Ranking",
+		"message": "Find weak point",
 		"description": "Name of the ranking on the side menu."
 	},
 	"htmlOthersName": {
@@ -258,6 +262,26 @@
 	"htmlPageLast": {
 		"message": "last",
 		"description": "Name of end."
+	},
+	"htmlRankingDescription": {
+		"message": "テストテストテストテストテスト",
+		"description": "Name of button."
+	},
+	"htmlRankingAggregateButton": {
+		"message": "aggregate",
+		"description": "Name of button."
+	},
+	"htmlRankingText": {
+		"message": "Text selected",
+		"description": "Name of table header."
+	},
+	"htmlRankingCount": {
+		"message": "Search count",
+		"description": "Name of table header."
+	},
+	"htmlRankingGraph": {
+		"message": "Graph",
+		"description": "Name of table header."
 	},
 	"htmlLinkListStyle": {
 		"message": "link list's style",

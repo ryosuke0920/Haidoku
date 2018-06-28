@@ -27,6 +27,10 @@
 		"message": "設定",
 		"description": "Name of link list option."
 	},
+	"onNoDataInfo": {
+		"message": "集計結果が0件でした。",
+		"description": "no data notification."
+	},
 	"notificationUnexpectedError": {
 		"message": "予期せぬエラーが発生しました。$ERROR$",
 		"description": "unexpected error notification.",
@@ -100,7 +104,7 @@
 		"description": "Name of the history on the side menu."
 	},
 	"htmlRankingName": {
-		"message": "ランキング",
+		"message": "苦手を発見",
 		"description": "Name of the ranking on the side menu."
 	},
 	"htmlOthersName": {
@@ -258,6 +262,26 @@
 	"htmlPageLast": {
 		"message": "最後",
 		"description": "Name of end."
+	},
+	"htmlRankingDescription": {
+		"message": "テストテストテストテストテスト",
+		"description": "Name of button."
+	},
+	"htmlRankingAggregateButton": {
+		"message": "集計",
+		"description": "Name of button."
+	},
+	"htmlRankingText": {
+		"message": "選択テキスト",
+		"description": "Name of table header."
+	},
+	"htmlRankingCount": {
+		"message": "検索回数",
+		"description": "Name of table header."
+	},
+	"htmlRankingGraph": {
+		"message": "グラフ",
+		"description": "Name of table header."
 	},
 	"htmlLinkListStyle": {
 		"message": "リンクリストのスタイル",

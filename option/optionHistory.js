@@ -79,7 +79,7 @@
 	function historyDeleteAllRows(e){
 		let db = e.target.result;
 		let promise = new Promise((resolve,reject)=>{
-			let transaction = db.transaction(["historys"], WRITE);
+			let transaction = db.transaction([HISTORYS], WRITE);
 			let objectStore = transaction.objectStore(HISTORYS);
 			let req = objectStore.clear();
 			req.onsuccess = (e)=>{ resolve(e); };
@@ -118,7 +118,7 @@
 
 	function historyDeleteTransaction(e){
 		let db = e.target.result;
-		let transaction = db.transaction(["historys"], WRITE);
+		let transaction = db.transaction([HISTORYS], WRITE);
 		let objectStore = transaction.objectStore(HISTORYS);
 		return objectStore;
 	}
@@ -243,7 +243,7 @@
 	function historyCount(e){
 		let db = e.target.result;
 		let promise = new Promise((resolve,reject)=>{
-			let transaction = db.transaction(["historys"], READ);
+			let transaction = db.transaction([HISTORYS], READ);
 			let objectStore = transaction.objectStore(HISTORYS);
 			let req = objectStore.count();
 			req.onsuccess = (e)=>{ resolve(e); };
