@@ -33,35 +33,59 @@
 
 	function rankingAggregate(){
 		resetRankingContainer();
-		let data = {"counter":{}};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
-		.then(rankingFetchText.bind(data))
-		.then(rankingMakeRow.bind(data))
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
+		.then(rankingClear)
+		.then(rankingFetchText)
+		.then(rankingFetchCount)
 		.catch(unexpectedError);
 	}
 
-	function rankingFetchText(e){
+	function rankingClear(e) {
+		let db = e.target.result;
 		return new Promise((resolve,reject)=>{
-			let db = e.target.result;
-			let transaction = db.transaction([HISTORYS], READ);
-			let objectStore = transaction.objectStore(HISTORYS);
-			let index = objectStore.index("textIndex");
+			let transaction = db.transaction([HISTORYS,RANKING], WRITE);
+			let rankingObjectStore = transaction.objectStore(RANKING);
+			let req = rankingObjectStore.clear();
+			req.onsuccess = (e)=>{ resolve(transaction); };
+			req.onerror = (e)=>{ reject(e); };
+		});
+	}
+
+	function rankingFetchText(transaction){
+		return new Promise((resolve,reject)=>{
+			let historyObjectStore = transaction.objectStore(HISTORYS);
+			let rankingObjectStore = transaction.objectStore(RANKING);
+			let index = historyObjectStore.index("textIndex");
 			let req = index.openCursor();
+			let chain = Promise.resolve();
 			req.onsuccess = (e)=>{
 				let cursor = e.target.result;
 				if( !cursor ) {
-					resolve();
+					chain.then( (e)=>{ resolve(transaction) } );
 					return;
 				}
 				let text = convert(cursor.key);
-				if( this.counter.hasOwnProperty(text) ) {
-					this.counter[text]["count"] += 1;
-				}
-				else {
-					this.counter[text] = { "count": 1 };
-				}
+				chain = chain.then(()=>{
+					return new Promise((resolve,reject)=>{
+						let req = rankingObjectStore.get(text);
+						req.onsuccess = (e)=>{
+							let req;
+							if( !e.target.result ){
+								let data = { "text": text, "count": 1 };
+								req = rankingObjectStore.add(data);
+							}
+							else {
+								e.target.result.count++;
+								req = rankingObjectStore.put(e.target.result);
+							}
+							req.onsuccess = (e)=>{ resolve(e); }
+							req.onerror = (e)=>{ reject(e); }
+						}
+						req.onerror = (e)=>{ reject(e); }
+					});
+				});
 				cursor.continue();
 			};
 			req.onerror = (e)=>{ reject(e); };
@@ -76,29 +100,49 @@
 			.toLocaleLowerCase();
 	}
 
-	function rankingMakeRow(e){
-		let list = sortList(toList(this.counter));
-		if( list.length <= 0 ) {
-			onNoDataInfo();
-			return;
-		}
-		let max = list[0].count;
-		for(let i=0; i<list.length; i++){
-			let obj = list[i];
-			let node = rankingPrototypeNode.cloneNode(true);
-			node.removeAttribute("id");
-			let rankingText = node.querySelector(".rankingText");
-			rankingText.title = obj.text;
-			rankingText.innerText = shortText(obj.text);
-			let rankingCount = node.querySelector(".rankingCount");
-			rankingCount.innerText = obj.count;
-			let percentage = Math.trunc( obj.count / max * 100 ) + "%";
-			let rankingGraph = node.querySelector(".rankingGraph");
-			rankingGraph.title = percentage;
-			let rankingGraphLine = node.querySelector(".rankingGraphLine");
-			rankingGraphLine.setAttribute("width", percentage );
-			rankingContainerNode.append(node);
-		}
+	function rankingFetchCount(transaction){
+		return new Promise((resolve,reject)=>{
+			let rankingObjectStore = transaction.objectStore(RANKING);
+			let index = rankingObjectStore.index("countIndex");
+			let req = index.openCursor(null,"prev");
+			req.onsuccess = (e)=>{
+				let cursor = e.target.result;
+				if( !cursor ) {
+					onNoDataInfo();
+					resolve(transaction);
+					return;
+				}
+				let max = cursor.value.count;
+				let req = index.openCursor(null,"prev");
+				req.onsuccess = (e)=>{
+					let cursor = e.target.result;
+					if( !cursor ) {
+						resolve(transaction);
+						return;
+					}
+					rankingMakeRow( cursor.value.text, cursor.value.count, max );
+					cursor.continue();
+				}
+				req.onerror = (e)=>{ reject(e); };
+			};
+			req.onerror = (e)=>{ reject(e); };
+		});
+	}
+
+	function rankingMakeRow(text, count, max){
+		let node = rankingPrototypeNode.cloneNode(true);
+		node.removeAttribute("id");
+		let rankingText = node.querySelector(".rankingText");
+		rankingText.title = text;
+		rankingText.innerText = shortText(text);
+		let rankingCount = node.querySelector(".rankingCount");
+		rankingCount.innerText = count;
+		let percentage = Math.trunc( count / max * 100 ) + "%";
+		let rankingGraph = node.querySelector(".rankingGraph");
+		rankingGraph.title = percentage;
+		let rankingGraphLine = node.querySelector(".rankingGraphLine");
+		rankingGraphLine.setAttribute("width", percentage );
+		rankingContainerNode.append(node);
 	}
 
 	function shortText(text) {

@@ -70,8 +70,8 @@
 	function historyDeleteAll(){
 		if( !window.confirm(ponyfill.i18n.getMessage("alertHistoryAllDelete")) )return;
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyDeleteAllRows)
 		.then(historyDeleteAllClose);
 	}
@@ -109,8 +109,8 @@
 		}
 		let data = {"ids": ids};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyDeleteTransaction)
 		.then(historyDeleteRow.bind(data))
 		.then(historyDeleteClose);
@@ -195,8 +195,8 @@
 			"size": size
 		};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyCount.bind(data))
 		.then(historyDecideRangeEnd.bind(data))
 		.then(historyCursor.bind(data))
@@ -215,8 +215,8 @@
 			"affectedRow":0
 		};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyCount.bind(data))
 		.then(historyAllRange.bind(data))
 		.then(historyCursor.bind(data))
@@ -232,8 +232,8 @@
 			"page": page
 		};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyCount.bind(data))
 		.then(historyDecideRange.bind(data))
 		.then(historyCursor.bind(data))

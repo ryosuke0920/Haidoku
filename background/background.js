@@ -86,7 +86,10 @@ function addHistory(e){
 function saveHistory(data){
 	data.date = new Date();
 	let obj = {"data": data};
-	return Promise.resolve().then(indexeddb.open).then(indexeddb.prepareRequest).then(addHistory.bind(obj));
+	return Promise.resolve()
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
+		.then(addHistory.bind(obj));
 }
 
 function onStorageChanged(change, area){
