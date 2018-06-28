@@ -1,6 +1,7 @@
 ( () => {
 	const FLAT_REGEX = new RegExp(/(?:\r?\n+|[,|.|"|'])/, "g");
 	const WHITESPACE_REGEX = new RegExp(/\s+/, "g");
+	const MAX_LENGHT = 31 /* Archaiomelesidonophrunicherata */
 	let rankingNode = document.querySelector("#ranking");
 	let rankingContainerNode = rankingNode.querySelector("#rankingContainer");
 	let rankingPrototypeNode = rankingNode.querySelector("#rankingRowPrototype");
@@ -87,7 +88,8 @@
 			let node = rankingPrototypeNode.cloneNode(true);
 			node.removeAttribute("id");
 			let rankingText = node.querySelector(".rankingText");
-			rankingText.innerText = obj.text;
+			rankingText.title = obj.text;
+			rankingText.innerText = shortText(obj.text);
 			let rankingCount = node.querySelector(".rankingCount");
 			rankingCount.innerText = obj.count;
 			let percentage = Math.trunc( obj.count / max * 100 ) + "%";
@@ -97,6 +99,11 @@
 			rankingGraphLine.setAttribute("width", percentage );
 			rankingContainerNode.append(node);
 		}
+	}
+
+	function shortText(text) {
+		if( text.length <= MAX_LENGHT ) return text;
+		return text.slice(0,MAX_LENGHT) + "...";
 	}
 
 	function resetRankingContainer(){
