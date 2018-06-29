@@ -1,16 +1,24 @@
 ( () => {
 	const FLAT_REGEX = new RegExp(/(?:\r?\n+|[,|.|"|'])/, "g");
 	const WHITESPACE_REGEX = new RegExp(/\s+/, "g");
-	const MAX_LENGHT = 31 /* Archaiomelesidonophrunicherata */
+	const CELL_TEXT_MAX_LENGTH = 31 /* Archaiomelesidonophrunicherata */
 	let rankingNode = document.querySelector("#ranking");
 	let rankingContainerNode = rankingNode.querySelector("#rankingContainer");
 	let rankingPrototypeNode = rankingNode.querySelector("#rankingRowPrototype");
+	let rankingDateRangeNode = rankingNode.querySelector(".rankingDateRange");
+	let rankingStartDateNode = rankingNode.querySelector(".rankingStartDate");
+	let rankingEndDateNode = rankingNode.querySelector(".rankingEndDate");
 
 	Promise.resolve().then(initranking).catch(unexpectedError);
 
 	function initranking(){
 		initI18n();
+		rankingDateDisabled();
 		rankingNode.addEventListener("click", rankingBehavior);
+		rankingDateRangeNode.addEventListener("change", rankingDateChangeBehavior);
+		let dateStr = getFormalDateString();
+		rankingStartDateNode.value = dateStr;
+		rankingEndDateNode.value = dateStr;
 	}
 
 	function initI18n(){
@@ -29,23 +37,84 @@
 		if(cassList.contains("rankingAggregateButton")){
 			rankingAggregate();
 		}
+		else if(cassList.contains("rankingText")){
+			rankingSwitchText(e.target);
+		}
+	}
+
+	function rankingDateChangeBehavior(e){
+		if(e.target.value == "custom"){
+			rankingDateEnabled();
+		}
+		else {
+			rankingDateDisabled();
+		}
+	}
+
+	function rankingSwitchText(node){
+		if(node.title != node.innerText){
+			node.innerText = node.title;
+		}
+	}
+
+	function rankingDateDisabled() {
+		hide(rankingStartDateNode);
+		hide(rankingEndDateNode);
+	}
+
+	function rankingDateEnabled() {
+		show(rankingStartDateNode);
+		show(rankingEndDateNode);
 	}
 
 	function rankingAggregate(){
 		resetRankingContainer();
+		let range = rankingMakeRange();
+		if( range === undefined ){
+			console.log("error");
+			return;
+		}
+		console.log(range);
 		return Promise.resolve()
 		.then(indexeddb.open.bind(indexeddb))
 		.then(indexeddb.prepareRequest.bind(indexeddb))
+		.then(rankingTransaction)
 		.then(rankingClear)
 		.then(rankingFetchText)
 		.then(rankingFetchCount)
 		.catch(unexpectedError);
 	}
 
-	function rankingClear(e) {
+	function rankingMakeRange(){
+		let value = rankingDateRangeNode.value;
+		if( value=="all"){
+			return null;
+		}
+		else if( value=="custom"){
+			let start = rankingStartDateNode.value;
+			let end = rankingEndDateNode.value;
+			start = new Date(start);
+			end = new Date(end);
+			if(!start || !end) {
+				console.error(start);
+				console.error(end);
+				return undefined;
+			}
+			if ( start > end ) {
+				return IDBKeyRange.bound(end, start);
+			}
+			return IDBKeyRange.bound(start, end);
+		}
+	}
+
+	function rankingTransaction(e){
 		let db = e.target.result;
+		let transaction = db.transaction([HISTORYS,RANKING], WRITE);
+		return transaction;
+	}
+
+	function rankingClear(transaction) {
 		return new Promise((resolve,reject)=>{
-			let transaction = db.transaction([HISTORYS,RANKING], WRITE);
 			let rankingObjectStore = transaction.objectStore(RANKING);
 			let req = rankingObjectStore.clear();
 			req.onsuccess = (e)=>{ resolve(transaction); };
@@ -134,7 +203,7 @@
 		node.removeAttribute("id");
 		let rankingText = node.querySelector(".rankingText");
 		rankingText.title = text;
-		rankingText.innerText = shortText(text);
+		rankingText.innerText = shortText(text,CELL_TEXT_MAX_LENGTH);
 		let rankingCount = node.querySelector(".rankingCount");
 		rankingCount.innerText = count;
 		let percentage = Math.trunc( count / max * 100 ) + "%";
@@ -143,11 +212,6 @@
 		let rankingGraphLine = node.querySelector(".rankingGraphLine");
 		rankingGraphLine.setAttribute("width", percentage );
 		rankingContainerNode.append(node);
-	}
-
-	function shortText(text) {
-		if( text.length <= MAX_LENGHT ) return text;
-		return text.slice(0,MAX_LENGHT) + "...";
 	}
 
 	function resetRankingContainer(){
