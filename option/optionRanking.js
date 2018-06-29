@@ -75,36 +75,45 @@
 			return;
 		}
 		console.log(range);
+		let data = { "range": range };
 		return Promise.resolve()
 		.then(indexeddb.open.bind(indexeddb))
 		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(rankingTransaction)
 		.then(rankingClear)
-		.then(rankingFetchText)
-		.then(rankingFetchCount)
+		.then(rankingFetchText.bind(data))
+		.then(rankingFetchRanking)
+		.then(rankingClear)
 		.catch(unexpectedError);
 	}
 
 	function rankingMakeRange(){
 		let value = rankingDateRangeNode.value;
-		if( value=="all"){
+		if( value == "all" ){
 			return null;
 		}
-		else if( value=="custom"){
+		else if( value == "custom" ){
 			let start = rankingStartDateNode.value;
 			let end = rankingEndDateNode.value;
 			start = new Date(start);
 			end = new Date(end);
-			if(!start || !end) {
-				console.error(start);
-				console.error(end);
-				return undefined;
-			}
+			if( !start || !end ) return; /* undefined */
 			if ( start > end ) {
-				return IDBKeyRange.bound(end, start);
+				let temp = end;
+				end = start;
+				start = temp;
+				rankingStartDateNode.value = getFormalDateString(start);
+				rankingEndDateNode.value = getFormalDateString(end);
 			}
+			end.setHours(23,59,59,999);
 			return IDBKeyRange.bound(start, end);
 		}
+		let start = new Date();
+		let end = new Date();
+		start.setMonth( start.getMonth() - value );
+		start.setHours(0,0,0,0);
+		end.setHours(23,59,59,999);
+		return IDBKeyRange.bound(start, end);
 	}
 
 	function rankingTransaction(e){
@@ -126,8 +135,8 @@
 		return new Promise((resolve,reject)=>{
 			let historyObjectStore = transaction.objectStore(HISTORYS);
 			let rankingObjectStore = transaction.objectStore(RANKING);
-			let index = historyObjectStore.index("textIndex");
-			let req = index.openCursor();
+			let index = historyObjectStore.index("dateIndex");
+			let req = index.openCursor(this.range);
 			let chain = Promise.resolve();
 			req.onsuccess = (e)=>{
 				let cursor = e.target.result;
@@ -135,7 +144,7 @@
 					chain.then( (e)=>{ resolve(transaction) } );
 					return;
 				}
-				let text = convert(cursor.key);
+				let text = convert(cursor.value.text);
 				chain = chain.then(()=>{
 					return new Promise((resolve,reject)=>{
 						let req = rankingObjectStore.get(text);
@@ -169,7 +178,7 @@
 			.toLocaleLowerCase();
 	}
 
-	function rankingFetchCount(transaction){
+	function rankingFetchRanking(transaction){
 		return new Promise((resolve,reject)=>{
 			let rankingObjectStore = transaction.objectStore(RANKING);
 			let index = rankingObjectStore.index("countIndex");
