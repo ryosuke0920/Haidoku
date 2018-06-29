@@ -9,7 +9,7 @@ function install(e){
 		let data = {
 			"ol": getDefaultOptionList()
 		};
-		return save(data).catch(onSaveError);
+		return save(data).then(initContextMenu).catch(onSaveError);
 	}
 }
 
@@ -94,7 +94,6 @@ function saveHistory(data){
 
 function onStorageChanged(change, area){
 	if(change["ol"] || change["bf"] || change["sk"] || change["ck"]) {
-		ponyfill.contextMenus.removeAll();
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,
@@ -106,6 +105,7 @@ function onStorageChanged(change, area){
 }
 
 function resetMenu(json){
+	ponyfill.contextMenus.removeAll();
 	let optionList = json["ol"];
 	let autoViewFlag = json["bf"];
 	let shiftKey = json["sk"];
