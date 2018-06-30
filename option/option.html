@@ -151,8 +151,14 @@
 					<option value="all" class="rankingAllRange">htmlRankingAllRange</option>
 					<option value="custom" class="rankingCustomRange">htmlRankingCustomRange</option>
 				</select>
-				<input type="date" class="rankingStartDate">
-				<input type="date" class="rankingEndDate">
+				<label class="inputWrapper rankingStartDateWrapper hide">
+					<input type="date" class="rankingStartDate">
+					<span class="inputMessage rankingStartDateMessage hide">htmlDateInputError</span>
+				</label>
+				<label class="inputWrapper rankingEndDateWrapper hide">
+					<input type="date" class="rankingEndDate">
+					<span class="inputMessage rankingEndDateMessage hide">htmlDateInputError</span>
+				</label>
 			</nav>
 			<div class="desk">
 				<p class="rankingDescription">htmlRankingDescription</p>

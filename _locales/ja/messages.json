@@ -360,5 +360,9 @@
 				"example": "4444"
 			}
 		}
+	},
+	"htmlDateInputError": {
+		"message": "日付を正しく入力して下さい。",
+		"description": ""
 	}
 }

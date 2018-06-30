@@ -6,19 +6,26 @@
 	let rankingContainerNode = rankingNode.querySelector("#rankingContainer");
 	let rankingPrototypeNode = rankingNode.querySelector("#rankingRowPrototype");
 	let rankingDateRangeNode = rankingNode.querySelector(".rankingDateRange");
+	let rankingStartDateWrapperNode = rankingNode.querySelector(".rankingStartDateWrapper");
+	let rankingEndDateWrapperNode = rankingNode.querySelector(".rankingEndDateWrapper");
 	let rankingStartDateNode = rankingNode.querySelector(".rankingStartDate");
 	let rankingEndDateNode = rankingNode.querySelector(".rankingEndDate");
+	let rankingStartDateMessageNode = rankingNode.querySelector(".rankingStartDateMessage");
+	let rankingEndDateMessageNode = rankingNode.querySelector(".rankingEndDateMessage");
 
 	Promise.resolve().then(initranking).catch(unexpectedError);
 
 	function initranking(){
 		initI18n();
-		rankingDateDisabled();
-		rankingNode.addEventListener("click", rankingBehavior);
-		rankingDateRangeNode.addEventListener("change", rankingDateChangeBehavior);
 		let dateStr = getFormalDateString();
 		rankingStartDateNode.value = dateStr;
 		rankingEndDateNode.value = dateStr;
+		rankingNode.addEventListener("click", rankingBehavior);
+		rankingDateRangeNode.addEventListener("change", rankingDateChangeBehavior);
+		rankingStartDateNode.addEventListener("input", rankingStartDateInputBehavior);
+		rankingEndDateNode.addEventListener("input", rankingEndDateInputBehavior);
+		rankingStartDateNode.addEventListener("blur", rankingStartDateBlurBehavior);
+		rankingEndDateNode.addEventListener("blur", rankingEndDateBlurBehavior);
 	}
 
 	function initI18n(){
@@ -27,7 +34,9 @@
 			{ "selector": ".rankingAggregateButton", "property": "innerText", "key": "htmlRankingAggregateButton" },
 			{ "selector": ".headRankingText", "property": "innerText", "key": "htmlRankingText" },
 			{ "selector": ".headRankingCount", "property": "innerText", "key": "htmlRankingCount" },
-			{ "selector": ".headRankingGraph", "property": "innerText", "key": "htmlRankingGraph" }
+			{ "selector": ".headRankingGraph", "property": "innerText", "key": "htmlRankingGraph" },
+			{ "selector": ".rankingStartDateMessage", "property": "innerText", "key": "htmlDateInputError" },
+			{ "selector": ".rankingEndDateMessage", "property": "innerText", "key": "htmlDateInputError" }
 		];
 		setI18n(list);
 	}
@@ -44,37 +53,49 @@
 
 	function rankingDateChangeBehavior(e){
 		if(e.target.value == "custom"){
-			rankingDateEnabled();
+			rankingShowDate();
 		}
 		else {
-			rankingDateDisabled();
+			rankingHideDate();
 		}
+	}
+
+	function rankingStartDateInputBehavior(e){
+		hide(rankingStartDateMessageNode);
+	}
+
+	function rankingEndDateInputBehavior(e){
+		hide(rankingEndDateMessageNode);
+	}
+
+	function rankingStartDateBlurBehavior(e){
+		if( !checkDate(rankingStartDateNode.value) ) show(rankingStartDateMessageNode);
+	}
+
+	function rankingEndDateBlurBehavior(e){
+		if( !checkDate(rankingEndDateNode.value) ) show(rankingEndDateMessageNode);
 	}
 
 	function rankingSwitchText(node){
-		if(node.title != node.innerText){
-			node.innerText = node.title;
-		}
+		if(node.title != node.innerText) node.innerText = node.title;
 	}
 
-	function rankingDateDisabled() {
-		hide(rankingStartDateNode);
-		hide(rankingEndDateNode);
+	function rankingHideDate() {
+		hide(rankingStartDateWrapperNode);
+		hide(rankingEndDateWrapperNode);
+		hide(rankingStartDateMessageNode)
+		hide(rankingEndDateMessageNode)
 	}
 
-	function rankingDateEnabled() {
-		show(rankingStartDateNode);
-		show(rankingEndDateNode);
+	function rankingShowDate() {
+		show(rankingStartDateWrapperNode);
+		show(rankingEndDateWrapperNode);
 	}
 
 	function rankingAggregate(){
 		resetRankingContainer();
 		let range = rankingMakeRange();
-		if( range === undefined ){
-			console.log("error");
-			return;
-		}
-		console.log(range);
+		if( range === undefined ) return;
 		let data = { "range": range };
 		return Promise.resolve()
 		.then(indexeddb.open.bind(indexeddb))
@@ -92,12 +113,23 @@
 		if( value == "all" ){
 			return null;
 		}
-		else if( value == "custom" ){
-			let start = rankingStartDateNode.value;
-			let end = rankingEndDateNode.value;
+		let start;
+		let end;
+		if( value == "custom" ){
+			start = rankingStartDateNode.value;
+			end = rankingEndDateNode.value;
+			let error = false;
+			if( !checkDate(start) ){
+				show(rankingStartDateMessageNode);
+				error = true;
+			}
+			if( !checkDate(end) ){
+				show(rankingEndDateMessageNode);
+				error = true;
+			}
+			if( error ) return;
 			start = new Date(start);
 			end = new Date(end);
-			if( !start || !end ) return; /* undefined */
 			if ( start > end ) {
 				let temp = end;
 				end = start;
@@ -105,15 +137,21 @@
 				rankingStartDateNode.value = getFormalDateString(start);
 				rankingEndDateNode.value = getFormalDateString(end);
 			}
-			end.setHours(23,59,59,999);
-			return IDBKeyRange.bound(start, end);
 		}
-		let start = new Date();
-		let end = new Date();
-		start.setMonth( start.getMonth() - value );
+		else {
+			let start = new Date();
+			let end = new Date();
+			start.setMonth( start.getMonth() - value );
+		}
 		start.setHours(0,0,0,0);
 		end.setHours(23,59,59,999);
 		return IDBKeyRange.bound(start, end);
+	}
+
+	function checkDate(value){
+		let date = new Date(value);
+		if( isNaN(date) ) return false;
+		return true;
 	}
 
 	function rankingTransaction(e){

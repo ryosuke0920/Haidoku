@@ -360,5 +360,9 @@
 				"example": "4444"
 			}
 		}
+	},
+	"htmlDateInputError": {
+		"message": "Please enter a date correctly.",
+		"description": ""
 	}
 }
