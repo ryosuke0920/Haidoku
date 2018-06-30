@@ -27,10 +27,6 @@
 		"message": "設定",
 		"description": "Name of link list option."
 	},
-	"onNoDataInfo": {
-		"message": "集計結果が0件でした。",
-		"description": "no data notification."
-	},
 	"notificationUnexpectedError": {
 		"message": "予期せぬエラーが発生しました。$ERROR$",
 		"description": "unexpected error notification.",
@@ -231,6 +227,10 @@
 		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの同期サービスの対象ではありません。履歴の保存は「リンクリスト」メニューで設定してください。",
 		"description": "Description of history."
 	},
+	"htmlHistoryZeroRowMessage": {
+		"message": "結果は0件でした。",
+		"description": "no data message."
+	},
 	"htmlHistoryDate": {
 		"message": "日時",
 		"description": "Name of date."
@@ -306,6 +306,10 @@
 	"htmlRankingGraph": {
 		"message": "グラフ",
 		"description": "Name of table header."
+	},
+	"htmlRankingZeroRowMessage": {
+		"message": "結果は0件でした。",
+		"description": "no data message."
 	},
 	"htmlLinkListStyle": {
 		"message": "リンクリストのスタイル",

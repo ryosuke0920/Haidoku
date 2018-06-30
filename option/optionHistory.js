@@ -2,6 +2,7 @@
 	let historyNode = document.querySelector("#history");
 	let historyContainerNode = historyNode.querySelector("#historyContainer");
 	let rowlPrototypeNode = historyNode.querySelector("#rowPrototype");
+	let historyMessageNode = historyNode.querySelector(".historyMessage");
 
 	Promise.resolve().then(initHistory).catch( unexpectedError );
 
@@ -29,7 +30,9 @@
 			{ "selector": ".historyPageFirst", "property": "innerText", "key": "htmlPageFirst" },
 			{ "selector": ".historyPagePrev", "property": "innerText", "key": "htmlPagePrev" },
 			{ "selector": ".historyPageNext", "property": "innerText", "key": "htmlPageNext" },
-			{ "selector": ".historyPageLast", "property": "innerText", "key": "htmlPageLast" }
+			{ "selector": ".historyPageLast", "property": "innerText", "key": "htmlPageLast" },
+			{ "selector": ".historyMessage", "property": "innerText", "key": "htmlHistoryZeroRowMessage" }
+
 		];
 		setI18n(list);
 	}
@@ -350,6 +353,8 @@
 	}
 
 	function historyClose(){
+		hide(historyMessageNode);
+		if(!this.count) show(historyMessageNode);
 		let pageNode = historyNode.querySelector(".historyPage");
 		pageNode.value = this.page + 1;
 		let startRowNode = historyNode.querySelector(".historyStartRow");

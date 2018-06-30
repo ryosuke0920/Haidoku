@@ -12,6 +12,7 @@
 	let rankingEndDateNode = rankingNode.querySelector(".rankingEndDate");
 	let rankingStartDateMessageNode = rankingNode.querySelector(".rankingStartDateMessage");
 	let rankingEndDateMessageNode = rankingNode.querySelector(".rankingEndDateMessage");
+	let rankingMessageNode = rankingNode.querySelector(".rankingMessage");
 
 	Promise.resolve().then(initranking).catch(unexpectedError);
 
@@ -42,7 +43,8 @@
 			{ "selector": ".rankingAllRange", "property": "innerText", "key": "htmlRankingAllRange" },
 			{ "selector": ".rankingCustomRange", "property": "innerText", "key": "htmlRankingCustomRange" },
 			{ "selector": ".rankingStartDateMessage", "property": "innerText", "key": "htmlDateInputError" },
-			{ "selector": ".rankingEndDateMessage", "property": "innerText", "key": "htmlDateInputError" }
+			{ "selector": ".rankingEndDateMessage", "property": "innerText", "key": "htmlDateInputError" },
+			{ "selector": ".rankingMessage", "property": "innerText", "key": "htmlRankingZeroRowMessage" }
 		];
 		setI18n(list);
 	}
@@ -99,6 +101,7 @@
 	}
 
 	function rankingAggregate(){
+		hide(rankingMessageNode);
 		resetRankingContainer();
 		let range = rankingMakeRange();
 		if( range === undefined ) return;
@@ -228,7 +231,7 @@
 			req.onsuccess = (e)=>{
 				let cursor = e.target.result;
 				if( !cursor ) {
-					onNoDataInfo();
+					show(rankingMessageNode);
 					resolve(transaction);
 					return;
 				}
@@ -269,26 +272,6 @@
 		while(rankingContainerNode.lastChild){
 			rankingContainerNode.removeChild(rankingContainerNode.lastChild);
 		}
-	}
-
-	function toList(hash) {
-		let list = [];
-		let keys = Object.keys(hash);
-		for(let i=0; i<keys.length; i++){
-			let key = keys[i];
-			list.push({
-				"text": key,
-				"count": hash[key]["count"]
-			});
-		}
-		return list;
-	}
-
-	function sortList(list) {
-		list = list.sort((a,b)=>{
-			return a["count"] < b["count"];
-		});
-		return list;
 	}
 
 })();

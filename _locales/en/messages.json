@@ -27,10 +27,6 @@
 		"message": "options",
 		"description": "Name of link list option."
 	},
-	"onNoDataInfo": {
-		"message": "Total result was 0.",
-		"description": "no data notification."
-	},
 	"notificationUnexpectedError": {
 		"message": "unexpected error. $ERROR$",
 		"description": "unexpected error notification.",
@@ -231,6 +227,10 @@
 		"message": "You can refer to history. It's useful to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not from \"Link list\" menu.",
 		"description": "Description of history."
 	},
+	"htmlHistoryZeroRowMessage": {
+		"message": "Result was 0.",
+		"description": "no data message."
+	},
 	"htmlHistoryDate": {
 		"message": "Date",
 		"description": "Name of date."
@@ -306,6 +306,10 @@
 	"htmlRankingGraph": {
 		"message": "Graph",
 		"description": "Name of table header."
+	},
+	"htmlRankingZeroRowMessage": {
+		"message": "Result was 0.",
+		"description": "no data message."
 	},
 	"htmlLinkListStyle": {
 		"message": "link list's style",
