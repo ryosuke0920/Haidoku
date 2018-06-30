@@ -1,7 +1,7 @@
 ( () => {
 	const CLASS_PREFIX = "lessLaborGoToDictionary";
 	let othersNode = document.querySelector("#others");
-	let sampleLinkListNode = document.querySelector("#sampleLinkList");
+	let sampleLinkListNode = document.querySelector("#lessLaborGoToDictionary-viewer");
 	let linkListClassNodeList = document.querySelectorAll(".linkListClass");
 
 	Promise.resolve().then(initOthers).then(initStyle).catch(unexpectedError);

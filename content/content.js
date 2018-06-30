@@ -1,4 +1,5 @@
 (()=>{
+	const LINK_LIST_PREFIX = "lessLaborGoToDictionary";
 	const LINK_NODE_DEFAULT_HEIGHT = 100;
 	const LINK_NODE_DEFAULT_WIDTH = 200;
 	const LINK_NODE_MIN_HEIGHT = 50;
@@ -43,41 +44,41 @@
 			throw( new Error( SILENT_ERROR_PREFIX + " not found body") );
 		}
 		linkListNode = document.createElement("div");
-		linkListNode.classList.add("lessLaborGoToDictionary-viewer");
-		linkListNode.classList.add("lessLaborGoToDictionary-hide");
+		linkListNode.setAttribute("id",LINK_LIST_PREFIX+"-viewer");
+		linkListNode.classList.add(LINK_LIST_PREFIX+"-hide");
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
 		body.appendChild( linkListNode );
 		menuNode = document.createElement("nav");
-		menuNode.classList.add("lessLaborGoToDictionary-menu");
+		menuNode.setAttribute("id",LINK_LIST_PREFIX+"-menu");
 		linkListNode.appendChild(menuNode);
 		containerNode = document.createElement("ul");
-		containerNode.classList.add("lessLaborGoToDictionary-container");
+		containerNode.setAttribute("id",LINK_LIST_PREFIX+"-container");
 		linkListNode.appendChild(containerNode);
 		let resizeNode = document.createElement("img");
 		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
-		resizeNode.classList.add("lessLaborGoToDictionary-resize");
+		resizeNode.setAttribute("id",LINK_LIST_PREFIX+"-resize");
 		resizeNode.title = ponyfill.i18n.getMessage("htmlResize");
 		menuNode.appendChild(resizeNode);
 		let zoomDownNode = document.createElement("img");
 		zoomDownNode.src = ponyfill.extension.getURL("/image/minus.svg");
-		zoomDownNode.classList.add("lessLaborGoToDictionary-zoomDown");
+		zoomDownNode.setAttribute("id",LINK_LIST_PREFIX+"-zoomDown");
 		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 		let zoomUpNode = document.createElement("img");
 		zoomUpNode.src = ponyfill.extension.getURL("/image/plus.svg");
-		zoomUpNode.classList.add("lessLaborGoToDictionary-zoomUp");
+		zoomUpNode.setAttribute("id",LINK_LIST_PREFIX+"-zoomUp");
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 		let copyNode = document.createElement("img");
 		copyNode.src = ponyfill.extension.getURL("/image/copy.svg");
-		copyNode.classList.add("lessLaborGoToDictionary-copy");
+		copyNode.setAttribute("id",LINK_LIST_PREFIX+"-copy");
 		copyNode.title = ponyfill.i18n.getMessage("htmlCopy");
 		menuNode.appendChild(copyNode);
 		let optionNode = document.createElement("img");
 		optionNode.src = ponyfill.extension.getURL("/image/option.svg");
-		optionNode.classList.add("lessLaborGoToDictionary-option");
+		optionNode.setAttribute("id",LINK_LIST_PREFIX+"-option");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
 	}
@@ -224,7 +225,7 @@
 	}
 
 	function closeLinkList(){
-		linkListNode.classList.add("lessLaborGoToDictionary-hide");
+		linkListNode.classList.add(LINK_LIST_PREFIX+"-hide");
 	}
 
 	function closeLinkListDelay(){
@@ -255,7 +256,7 @@
 	}
 
 	function makeLinkList(text){
-		let list = containerNode.querySelectorAll(".lessLaborGoToDictionary-list");
+		let list = containerNode.querySelectorAll("."+LINK_LIST_PREFIX+"-list");
 		for(let i=0; i<list.length; i++){
 			let node = list[i];
 			containerNode.removeChild(node);
@@ -266,7 +267,7 @@
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
-			a.classList.add("lessLaborGoToDictionary-anchor");
+			a.classList.add(LINK_LIST_PREFIX+"-anchor");
 			a.style["font-size"] = anchorSize + "em";
 			a.setAttribute( "href", url );
 			a.setAttribute( "rel", "noreferrer" );
@@ -279,7 +280,7 @@
 			a.addEventListener("click", onClickAnchor);
 			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
 			let li = document.createElement("li");
-			li.classList.add("lessLaborGoToDictionary-list");
+			li.classList.add(LINK_LIST_PREFIX+"-list");
 			li.appendChild(a);
 			containerNode.appendChild(li);
 		}
@@ -287,7 +288,7 @@
 
 	function showLinkList(pageY, pageX, clientY, clientX, selection){
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
-		linkListNode.classList.remove("lessLaborGoToDictionary-hide");
+		linkListNode.classList.remove(LINK_LIST_PREFIX+"-hide");
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
 		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
@@ -315,7 +316,7 @@
 	}
 
 	function isLinkListShown(){
-		return !linkListNode.classList.contains("lessLaborGoToDictionary-hide");
+		return !linkListNode.classList.contains(LINK_LIST_PREFIX+"-hide");
 	}
 
 	function onStorageChanged(change, area){
@@ -393,9 +394,9 @@
 	}
 
 	function setLinkListClass(res){
-		linkListNode.classList.remove("lessLaborGoToDictionary-dark");
+		linkListNode.classList.remove(LINK_LIST_PREFIX+"-dark");
 		if( res == "d" ) {
-			linkListNode.classList.add("lessLaborGoToDictionary-dark");
+			linkListNode.classList.add(LINK_LIST_PREFIX+"-dark");
 		}
 	}
 
@@ -420,27 +421,28 @@
 
 	function menuClickBihavior(e){
 		let promise;
-		if(e.target.classList.contains("lessLaborGoToDictionary-zoomUp")){
+		let id = e.target.getAttribute("id");
+		if(id == LINK_LIST_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ){
 				promise = saveAnchorSize();
 				promise.catch(onSaveError);
 			}
 		}
-		else if(e.target.classList.contains("lessLaborGoToDictionary-zoomDown")){
+		else if(id == LINK_LIST_PREFIX+"-zoomDown"){
 			if( zoomLinkList(-1) ){
 				promise = saveAnchorSize();
 				promise.catch(onSaveError);
 			}
 		}
-		else if(e.target.classList.contains("lessLaborGoToDictionary-copy")){
+		else if(id == LINK_LIST_PREFIX+"-copy"){
 			copyText();
 		}
-		else if(e.target.classList.contains("lessLaborGoToDictionary-resize")){
+		else if(id == LINK_LIST_PREFIX+"-resize"){
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
 			promise = saveLinkListSize();
 			promise.catch(onSaveError);
 		}
-		else if(e.target.classList.contains("lessLaborGoToDictionary-option")){
+		else if(id == LINK_LIST_PREFIX+"-option"){
 			let promise = ponyfill.runtime.sendMessage({
 				"method": "openOptions"
 			});
@@ -466,7 +468,7 @@
 		anchorSize *= 10 ;
 		anchorSize = Math.floor(anchorSize);
 		anchorSize /= 10 ;
-		let list = linkListNode.querySelectorAll("a.lessLaborGoToDictionary-anchor");
+		let list = linkListNode.querySelectorAll("a."+LINK_LIST_PREFIX+"-anchor");
 		for(let i=0; i<list.length; i++){
 			let node = list[i];
 			node.style["font-size"] = anchorSize + "em";
