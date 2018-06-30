@@ -35,6 +35,12 @@
 			{ "selector": ".headRankingText", "property": "innerText", "key": "htmlRankingText" },
 			{ "selector": ".headRankingCount", "property": "innerText", "key": "htmlRankingCount" },
 			{ "selector": ".headRankingGraph", "property": "innerText", "key": "htmlRankingGraph" },
+			{ "selector": ".rankingOneMonth", "property": "innerText", "key": "htmlRankingOneMonth" },
+			{ "selector": ".rankingThreeMonth", "property": "innerText", "key": "htmlRankingThreeMonth" },
+			{ "selector": ".rankingSixMonth", "property": "innerText", "key": "htmlRankingSixMonth" },
+			{ "selector": ".rankingOneYear", "property": "innerText", "key": "htmlRankingOneYear" },
+			{ "selector": ".rankingAllRange", "property": "innerText", "key": "htmlRankingAllRange" },
+			{ "selector": ".rankingCustomRange", "property": "innerText", "key": "htmlRankingCustomRange" },
 			{ "selector": ".rankingStartDateMessage", "property": "innerText", "key": "htmlDateInputError" },
 			{ "selector": ".rankingEndDateMessage", "property": "innerText", "key": "htmlDateInputError" }
 		];
@@ -110,9 +116,7 @@
 
 	function rankingMakeRange(){
 		let value = rankingDateRangeNode.value;
-		if( value == "all" ){
-			return null;
-		}
+		if( value == "all" )　return null;
 		let start;
 		let end;
 		if( value == "custom" ){
@@ -139,8 +143,8 @@
 			}
 		}
 		else {
-			let start = new Date();
-			let end = new Date();
+			start = new Date();
+			end = new Date();
 			start.setMonth( start.getMonth() - value );
 		}
 		start.setHours(0,0,0,0);

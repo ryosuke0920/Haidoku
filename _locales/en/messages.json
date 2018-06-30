@@ -264,12 +264,36 @@
 		"description": "Name of end."
 	},
 	"htmlRankingDescription": {
-		"message": "テストテストテストテストテスト",
+		"message": "Search count is aggregated from history. Please select date range and click \"aggregate\" button. If you delete some of history, Search count is reduced too. Let's find your weakness and study efficiently.",
 		"description": "Name of button."
 	},
 	"htmlRankingAggregateButton": {
 		"message": "aggregate",
 		"description": "Name of button."
+	},
+	"htmlRankingOneMonth": {
+		"message": "past 1 month",
+		"description": "Value of range."
+	},
+	"htmlRankingThreeMonth": {
+		"message": "past 3 months",
+		"description": "Value of range."
+	},
+	"htmlRankingSixMonth": {
+		"message": "past 6 months",
+		"description": "Value of range."
+	},
+	"htmlRankingOneYear": {
+		"message": "past 1 year",
+		"description": "Value of range."
+	},
+	"htmlRankingAllRange": {
+		"message": "all",
+		"description": "Value of range."
+	},
+	"htmlRankingCustomRange": {
+		"message": "specify date range",
+		"description": "Value of range."
 	},
 	"htmlRankingText": {
 		"message": "Text selected",

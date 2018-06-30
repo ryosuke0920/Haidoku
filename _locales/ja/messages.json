@@ -264,12 +264,36 @@
 		"description": "Name of end."
 	},
 	"htmlRankingDescription": {
-		"message": "テストテストテストテストテスト",
+		"message": "履歴から検索回数を集計します。日付範囲を指定して集計ボタンを押して下さい。履歴を削除すると集計結果も変化します。あなたの苦手な単語を見つけて効率よく学習しましょう。",
 		"description": "Name of button."
 	},
 	"htmlRankingAggregateButton": {
 		"message": "集計",
 		"description": "Name of button."
+	},
+	"htmlRankingOneMonth": {
+		"message": "過去１ヶ月",
+		"description": "Value of range."
+	},
+	"htmlRankingThreeMonth": {
+		"message": "過去３ヶ月",
+		"description": "Value of range."
+	},
+	"htmlRankingSixMonth": {
+		"message": "過去半年",
+		"description": "Value of range."
+	},
+	"htmlRankingOneYear": {
+		"message": "過去１年",
+		"description": "Value of range."
+	},
+	"htmlRankingAllRange": {
+		"message": "すべて",
+		"description": "Value of range."
+	},
+	"htmlRankingCustomRange": {
+		"message": "日付範囲を指定",
+		"description": "Value of range."
 	},
 	"htmlRankingText": {
 		"message": "選択テキスト",
