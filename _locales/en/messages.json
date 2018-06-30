@@ -27,6 +27,10 @@
 		"message": "options",
 		"description": "Name of link list option."
 	},
+	"notificationCopyed": {
+		"message": "The selected area was copied.",
+		"description": "copyed notification."
+	},
 	"notificationUnexpectedError": {
 		"message": "unexpected error. $ERROR$",
 		"description": "unexpected error notification.",

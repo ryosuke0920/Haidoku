@@ -27,6 +27,10 @@
 		"message": "設定",
 		"description": "Name of link list option."
 	},
+	"notificationCopyed": {
+		"message": "選択範囲をコピーしました。",
+		"description": "copyed notification."
+	},
 	"notificationUnexpectedError": {
 		"message": "予期せぬエラーが発生しました。$ERROR$",
 		"description": "unexpected error notification.",

@@ -435,7 +435,8 @@
 			}
 		}
 		else if(id == LINK_LIST_PREFIX+"-copy"){
-			copyText();
+			promise = copyText();
+			promise.then(closeLinkList);
 		}
 		else if(id == LINK_LIST_PREFIX+"-resize"){
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
@@ -443,14 +444,20 @@
 			promise.catch(onSaveError);
 		}
 		else if(id == LINK_LIST_PREFIX+"-option"){
-			let promise = ponyfill.runtime.sendMessage({
+			promise = ponyfill.runtime.sendMessage({
 				"method": "openOptions"
 			});
+			promise.then(closeLinkList);
 		}
 	}
 
 	function copyText(){
 		document.execCommand("copy");
+		let promiss = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": ponyfill.i18n.getMessage("notificationCopyed")
+		});
+		return promiss;
 	}
 
 	function resetSize(height,width){
