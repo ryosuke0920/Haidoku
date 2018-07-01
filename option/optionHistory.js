@@ -2,6 +2,7 @@
 	let historyNode = document.querySelector("#history");
 	let historyContainerNode = historyNode.querySelector("#historyContainer");
 	let rowlPrototypeNode = historyNode.querySelector("#rowPrototype");
+	let historyMessageNode = historyNode.querySelector(".historyMessage");
 
 	Promise.resolve().then(initHistory).catch( unexpectedError );
 
@@ -29,7 +30,9 @@
 			{ "selector": ".historyPageFirst", "property": "innerText", "key": "htmlPageFirst" },
 			{ "selector": ".historyPagePrev", "property": "innerText", "key": "htmlPagePrev" },
 			{ "selector": ".historyPageNext", "property": "innerText", "key": "htmlPageNext" },
-			{ "selector": ".historyPageLast", "property": "innerText", "key": "htmlPageLast" }
+			{ "selector": ".historyPageLast", "property": "innerText", "key": "htmlPageLast" },
+			{ "selector": ".historyMessage", "property": "innerText", "key": "htmlHistoryZeroRowMessage" }
+
 		];
 		setI18n(list);
 	}
@@ -70,22 +73,21 @@
 	function historyDeleteAll(){
 		if( !window.confirm(ponyfill.i18n.getMessage("alertHistoryAllDelete")) )return;
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyDeleteAllRows)
 		.then(historyDeleteAllClose);
 	}
 
 	function historyDeleteAllRows(e){
-		let db = e.target.result;
-		let promise = new Promise((resolve,reject)=>{
-			let transaction = db.transaction(["historys"], WRITE);
+		return new Promise((resolve,reject)=>{
+			let db = e.target.result;
+			let transaction = db.transaction([HISTORYS], WRITE);
 			let objectStore = transaction.objectStore(HISTORYS);
 			let req = objectStore.clear();
 			req.onsuccess = (e)=>{ resolve(e); };
 			req.onerror = (e)=>{ reject(e); };
 		});
-		return promise;
 	}
 
 	function thisToZero(){
@@ -109,8 +111,8 @@
 		}
 		let data = {"ids": ids};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyDeleteTransaction)
 		.then(historyDeleteRow.bind(data))
 		.then(historyDeleteClose);
@@ -118,7 +120,7 @@
 
 	function historyDeleteTransaction(e){
 		let db = e.target.result;
-		let transaction = db.transaction(["historys"], WRITE);
+		let transaction = db.transaction([HISTORYS], WRITE);
 		let objectStore = transaction.objectStore(HISTORYS);
 		return objectStore;
 	}
@@ -195,8 +197,8 @@
 			"size": size
 		};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyCount.bind(data))
 		.then(historyDecideRangeEnd.bind(data))
 		.then(historyCursor.bind(data))
@@ -215,8 +217,8 @@
 			"affectedRow":0
 		};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyCount.bind(data))
 		.then(historyAllRange.bind(data))
 		.then(historyCursor.bind(data))
@@ -232,8 +234,8 @@
 			"page": page
 		};
 		return Promise.resolve()
-		.then(indexeddb.open)
-		.then(indexeddb.prepareRequest)
+		.then(indexeddb.open.bind(indexeddb))
+		.then(indexeddb.prepareRequest.bind(indexeddb))
 		.then(historyCount.bind(data))
 		.then(historyDecideRange.bind(data))
 		.then(historyCursor.bind(data))
@@ -241,15 +243,14 @@
 	}
 
 	function historyCount(e){
-		let db = e.target.result;
-		let promise = new Promise((resolve,reject)=>{
-			let transaction = db.transaction(["historys"], READ);
+		return new Promise((resolve,reject)=>{
+			let db = e.target.result;
+			let transaction = db.transaction([HISTORYS], READ);
 			let objectStore = transaction.objectStore(HISTORYS);
 			let req = objectStore.count();
 			req.onsuccess = (e)=>{ resolve(e); };
 			req.onerror = (e)=>{ reject(e); };
 		});
-		return promise;
 	}
 
 	function historyAllRange(e){
@@ -293,7 +294,7 @@
 
 	function historyCursor(e){
 		if( !this.count ) return Promise.resolve();
-		let promise = new Promise((resolve,reject)=>{
+		return new Promise((resolve,reject)=>{
 			let transaction = e.target.transaction;
 			let objectStore = transaction.objectStore(HISTORYS);
 			let req = objectStore.openCursor(null,this.order);
@@ -321,7 +322,6 @@
 			};
 			req.onerror = (e)=>{ reject(e); };
 		});
-		return promise;
 	}
 
 	function historyMakeRow(id,date,text,fromURL,fromTitle,toURL,toTitle){
@@ -350,6 +350,8 @@
 	}
 
 	function historyClose(){
+		hide(historyMessageNode);
+		if(!this.count) show(historyMessageNode);
 		let pageNode = historyNode.querySelector(".historyPage");
 		pageNode.value = this.page + 1;
 		let startRowNode = historyNode.querySelector(".historyStartRow");
