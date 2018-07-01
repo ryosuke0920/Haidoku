@@ -268,7 +268,7 @@
 		"description": "Name of end."
 	},
 	"htmlRankingDescription": {
-		"message": "Search count is aggregated from history. Please select date range and click \"aggregate\" button. If you delete some of history, Search count is reduced too. Let's find your weakness and study efficiently.",
+		"message": "Search count is aggregated from history. Please select date range and click \"aggregate\" button. If you delete some of history, Search count decreases too. Let's find your weakness and study efficiently.",
 		"description": "Name of button."
 	},
 	"htmlRankingAggregateButton": {
