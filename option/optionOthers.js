@@ -1,7 +1,7 @@
 ( () => {
 	const CLASS_PREFIX = "lessLaborGoToDictionary";
 	let othersNode = document.querySelector("#others");
-	let sampleLinkListNode = document.querySelector("#sampleLinkList");
+	let sampleLinkListNode = document.querySelector("#lessLaborGoToDictionary-viewer");
 	let linkListClassNodeList = document.querySelectorAll(".linkListClass");
 
 	Promise.resolve().then(initOthers).then(initStyle).catch(unexpectedError);
@@ -19,7 +19,10 @@
 			{ "selector": ".linkListStyleDark", "property": "innerText", "key": "htmlLinkListStyleDark" },
 			{ "selector": ".linkListStylePop", "property": "innerText", "key": "htmlLinkListStylePop" },
 			{ "selector": ".lessLaborGoToDictionary-zoomDown", "property": "title", "key": "htmlZoomDown" },
-			{ "selector": ".lessLaborGoToDictionary-zoomUp", "property": "title", "key": "htmlZoomUp" }
+			{ "selector": ".lessLaborGoToDictionary-zoomUp", "property": "title", "key": "htmlZoomUp" },
+			{ "selector": ".lessLaborGoToDictionary-copy", "property": "title", "key": "htmlCopy" },
+			{ "selector": ".lessLaborGoToDictionary-resize", "property": "title", "key": "htmlResize" },
+			{ "selector": ".lessLaborGoToDictionary-option", "property": "title", "key": "htmlOption" }
 		];
 		setI18n(list);
 	}

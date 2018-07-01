@@ -13,6 +13,24 @@ p {
 button {
 	padding: 1px 0.5em;
 }
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+}
+table thead th {
+	background-color: WhiteSmoke;
+	color: black;
+	font-weight:bold;
+}
+table tbody tr:nth-child(2n) {
+	background-color: WhiteSmoke;
+}
+table thead th, table tbody td {
+	padding-left: 5px;
+	padding-right: 5px;
+}
 #menu {
 	position: fixed;
 	top:0;
@@ -263,24 +281,6 @@ button {
 .pagination:hover {
 	text-decoration: underline;
 }
-#historyTable {
-	width: 100%;
-	border-collapse: collapse;
-	border: 1px solid #ccc;
-	margin-bottom: 1em;
-}
-#historyTable thead th {
-	background-color: WhiteSmoke;
-	color: black;
-	font-weight:bold;
-}
-#historyTable tbody tr:nth-child(2n) {
-	background-color: WhiteSmoke;
-}
-#historyTable thead th, #historyTable tbody td {
-	padding-left: 5px;
-	padding-right: 5px;
-}
 .headHistoryID {
 	width: 20px;
 }
@@ -290,6 +290,12 @@ button {
 }
 .headHistoryID, .historyID {
 	text-align: left;
+}
+
+/* ranking */
+
+.rankingCount{
+	text-align: right;
 }
 
 /* others menu */
