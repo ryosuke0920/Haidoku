@@ -332,7 +332,7 @@
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {
-		"message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
+		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
 		"description": "Sentence of contact."
 	},
 	"htmlMyself": {
