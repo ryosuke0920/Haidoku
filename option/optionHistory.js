@@ -80,15 +80,14 @@
 	}
 
 	function historyDeleteAllRows(e){
-		let db = e.target.result;
-		let promise = new Promise((resolve,reject)=>{
+		return new Promise((resolve,reject)=>{
+			let db = e.target.result;
 			let transaction = db.transaction([HISTORYS], WRITE);
 			let objectStore = transaction.objectStore(HISTORYS);
 			let req = objectStore.clear();
 			req.onsuccess = (e)=>{ resolve(e); };
 			req.onerror = (e)=>{ reject(e); };
 		});
-		return promise;
 	}
 
 	function thisToZero(){
@@ -244,15 +243,14 @@
 	}
 
 	function historyCount(e){
-		let db = e.target.result;
-		let promise = new Promise((resolve,reject)=>{
+		return new Promise((resolve,reject)=>{
+			let db = e.target.result;
 			let transaction = db.transaction([HISTORYS], READ);
 			let objectStore = transaction.objectStore(HISTORYS);
 			let req = objectStore.count();
 			req.onsuccess = (e)=>{ resolve(e); };
 			req.onerror = (e)=>{ reject(e); };
 		});
-		return promise;
 	}
 
 	function historyAllRange(e){
@@ -296,7 +294,7 @@
 
 	function historyCursor(e){
 		if( !this.count ) return Promise.resolve();
-		let promise = new Promise((resolve,reject)=>{
+		return new Promise((resolve,reject)=>{
 			let transaction = e.target.transaction;
 			let objectStore = transaction.objectStore(HISTORYS);
 			let req = objectStore.openCursor(null,this.order);
@@ -324,7 +322,6 @@
 			};
 			req.onerror = (e)=>{ reject(e); };
 		});
-		return promise;
 	}
 
 	function historyMakeRow(id,date,text,fromURL,fromTitle,toURL,toTitle){
