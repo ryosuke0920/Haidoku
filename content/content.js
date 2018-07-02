@@ -297,16 +297,16 @@
 		if ( 0 < xx || window.innerWidth < linkListNode.offsetWidth ) xx = 0;
 		linkListNodeTop = pageY + yy + SPACE;
 		linkListNodeLeft = pageX + xx + SPACE;
-
+		/*
 		let lastRange = selection.getRangeAt(selection.rangeCount-1);
 		let rectList = lastRange.getClientRects();
 		let rect = rectList[rectList.length-1];
-
 		if ( window.scrollY + rect.top < linkListNodeTop + linkListNode.offsetHeight && linkListNodeTop < window.scrollY + rect.bottom ){
 			if ( window.scrollX + rect.left < linkListNodeLeft + linkListNode.offsetWidth && linkListNodeLeft < window.scrollX + rect.right ){
 				linkListNodeTop = window.scrollY + rect.top - linkListNode.offsetHeight - SPACE;
 			}
 		}
+		*/
 		if ( linkListNodeTop < window.scrollY ) linkListNodeTop = window.scrollY;
 		if ( linkListNodeLeft < window.scrollX ) linkListNodeLeft = window.scrollX;
 		linkListNode.style.top = linkListNodeTop+"px";
