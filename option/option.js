@@ -1,7 +1,7 @@
 const MAX_FIELD = 50;
 const MAX_LABEL_BYTE = 100;
 const MAX_URL_BYTE = 300;
-const WHITE_SPACE_REGEX = new RegExp(/^\s*$/);
+const BLANK_REGEX = new RegExp(/^\s*$/);
 const URL_REGEX = new RegExp(/^(?:[hH][tT][tT][pP][sS]?|[fF][tT][pP][sS]?):\/\/\w+/);
 let mainNode = document.querySelector("#main");
 let navNode = document.querySelector("#nav");
@@ -314,7 +314,7 @@ function checkUrl(node, messageNode){
 
 function checkBlank(text) {
 	if( text == null || text == undefined || text.length <= 0 ) return false;
-	if( text.match(WHITE_SPACE_REGEX) ) return false;
+	if( text.match(BLANK_REGEX) ) return false;
 	return true;
 }
 
