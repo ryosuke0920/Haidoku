@@ -39,7 +39,9 @@ When you select a text on the website, link list will be displayed. If your favo
 * If you check "Display all rows" and press "Update" button, all the history will be displayed, but it takes time to complete.
 * There are a method of deleting history by checking a checkbox and a method of deleting all history at once.
 * By checking the checkbox in the top left corner, you can check or uncheck all of the checkboxes displayed at once.
-*
+
+## 苦手を発見
+* Search count is aggregated from history. Words with a high number of searches are considered that you don't understand sufficiently despite using frequently.
 
 ## Others
 * You can change the style of the link list. If you have a site you want added please email me.

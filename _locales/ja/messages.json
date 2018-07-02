@@ -27,6 +27,10 @@
 		"message": "設定",
 		"description": "Name of link list option."
 	},
+	"notificationCopyed": {
+		"message": "選択範囲をコピーしました。",
+		"description": "copyed notification."
+	},
 	"notificationUnexpectedError": {
 		"message": "予期せぬエラーが発生しました。$ERROR$",
 		"description": "unexpected error notification.",
@@ -75,6 +79,18 @@
 		"message": "拡大",
 		"description": ""
 	},
+	"htmlCopy": {
+		"message": "コピー",
+		"description": ""
+	},
+	"htmlResize": {
+		"message": "サイズをリセット",
+		"description": ""
+	},
+	"htmlOption": {
+		"message": "設定",
+		"description": ""
+	},
 	"htmlFormName": {
 		"message": "リンクリスト",
 		"description": "Name of the form on the side menu."
@@ -86,6 +102,10 @@
 	"htmlHistoryName": {
 		"message": "履歴",
 		"description": "Name of the history on the side menu."
+	},
+	"htmlRankingName": {
+		"message": "苦手を発見",
+		"description": "Name of the ranking on the side menu."
 	},
 	"htmlOthersName": {
 		"message": "その他",
@@ -211,6 +231,10 @@
 		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの同期サービスの対象ではありません。履歴の保存は「リンクリスト」メニューで設定してください。",
 		"description": "Description of history."
 	},
+	"htmlHistoryZeroRowMessage": {
+		"message": "結果は0件でした。",
+		"description": "no data message."
+	},
 	"htmlHistoryDate": {
 		"message": "日時",
 		"description": "Name of date."
@@ -243,6 +267,54 @@
 		"message": "最後",
 		"description": "Name of end."
 	},
+	"htmlRankingDescription": {
+		"message": "履歴から選択テキストの検索回数を集計します。日付範囲を指定して集計ボタンを押して下さい。履歴を削除すると集計結果も減少します。あなたの苦手な単語を見つけて効率よく学習しましょう。",
+		"description": "Name of button."
+	},
+	"htmlRankingAggregateButton": {
+		"message": "集計",
+		"description": "Name of button."
+	},
+	"htmlRankingOneMonth": {
+		"message": "過去１ヶ月",
+		"description": "Value of range."
+	},
+	"htmlRankingThreeMonth": {
+		"message": "過去３ヶ月",
+		"description": "Value of range."
+	},
+	"htmlRankingSixMonth": {
+		"message": "過去半年",
+		"description": "Value of range."
+	},
+	"htmlRankingOneYear": {
+		"message": "過去１年",
+		"description": "Value of range."
+	},
+	"htmlRankingAllRange": {
+		"message": "すべて",
+		"description": "Value of range."
+	},
+	"htmlRankingCustomRange": {
+		"message": "日付範囲を指定",
+		"description": "Value of range."
+	},
+	"htmlRankingText": {
+		"message": "選択テキスト",
+		"description": "Name of table header."
+	},
+	"htmlRankingCount": {
+		"message": "検索回数",
+		"description": "Name of table header."
+	},
+	"htmlRankingGraph": {
+		"message": "グラフ",
+		"description": "Name of table header."
+	},
+	"htmlRankingZeroRowMessage": {
+		"message": "結果は0件でした。",
+		"description": "no data message."
+	},
 	"htmlLinkListStyle": {
 		"message": "リンクリストのスタイル",
 		"description": "Name of the propertie."
@@ -260,7 +332,7 @@
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {
-		"message": "ご意見・ご感想・バグなどのお問い合わせ先<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
+		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
 		"description": "Sentence of contact."
 	},
 	"htmlMyself": {
@@ -320,5 +392,9 @@
 				"example": "4444"
 			}
 		}
+	},
+	"htmlDateInputError": {
+		"message": "日付を正しく入力して下さい。",
+		"description": ""
 	}
 }

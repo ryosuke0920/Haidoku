@@ -129,6 +129,7 @@
 					</thead>
 					<tbody id="historyContainer"></tbody>
 				</table>
+				<p class="historyMessage message hide">htmlHistoryMessage</p>
 				<table class="hide">
 					<tr id="rowPrototype" class="historyRow">
 						<td class="historyID"><input class="historyCheckbox" type="checkbox" value="ID"></td>
@@ -136,6 +137,57 @@
 						<td class="historyText" title="historyText">historyText</td>
 						<td class="historyFromSite" title="historyFromSite"><a target="_blank" rel="noreferrer">historyFromSite</a></td>
 						<td class="historyToSite" title="historyToSite"><a target="_blank" rel="noreferrer">historyToSite</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="ranking" class="panel hide">
+			<nav class="controller">
+				<button class="rankingAggregateButton">htmlRankingAggregateButton</button>
+				<select class="rankingDateRange">
+					<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
+					<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
+					<option value="6" class="rankingSixMonth">htmlRankingSixMonth</option>
+					<option value="12" class="rankingOneYear">htmlRankingOneYear</option>
+					<option value="all" class="rankingAllRange">htmlRankingAllRange</option>
+					<option value="custom" class="rankingCustomRange">htmlRankingCustomRange</option>
+				</select>
+				<label class="inputWrapper rankingStartDateWrapper hide">
+					<input type="date" class="rankingStartDate">
+					<span class="inputMessage rankingStartDateMessage hide">htmlDateInputError</span>
+				</label>
+				<label class="inputWrapper rankingEndDateWrapper hide">
+					<input type="date" class="rankingEndDate">
+					<span class="inputMessage rankingEndDateMessage hide">htmlDateInputError</span>
+				</label>
+			</nav>
+			<div class="desk">
+				<p class="rankingDescription">htmlRankingDescription</p>
+				<table id="rankingTable">
+					<thead>
+						<tr>
+							<th class="headRankingText">htmlRankingText</th>
+							<th class="headRankingCount">htmlRankingCount</th>
+							<th class="headRankingGraph">htmlRankingGraph</th>
+						</tr>
+					</thead>
+					<tbody id="rankingContainer"></tbody>
+				</table>
+				<p class="rankingMessage message hide">htmlRankingMessage</p>
+				<table class="hide">
+					<tr id="rankingRowPrototype" class="rankingRow">
+						<td class="rankingText" title="rankingText">rankingText</td>
+						<td class="rankingCount">rankingCount</td>
+						<td class="rankingGraph" title="rankingGraph">
+							<svg class="rankingGraphSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="5">
+								<linearGradient id="MyGradient">
+									<stop offset="5%" stop-color="#F60" />
+									<stop offset="95%" stop-color="#FF6" />
+								</linearGradient>
+								<rect class="rankingGraphBox"  x="0" y="0" width="100%" height="100%" fill="#D0D0D0" />
+								<rect class="rankingGraphLine" x="0" y="0" widht="0" height="100%" fill="url(#MyGradient)" />
+							</svg>
+						</td>
 					</tr>
 				</table>
 			</div>
@@ -150,12 +202,15 @@
 					<label><input type="radio" class="linkListClass" name="linkListClass" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
 				</section>
 				<section>
-					<div id="sampleLinkList" class="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
-						<nav class="lessLaborGoToDictionary-menu">
-							<img class="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
-							<img class="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
+					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
+						<nav id="lessLaborGoToDictionary-menu">
+							<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
+							<img id="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
+							<img id="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
+							<img id="lessLaborGoToDictionary-copy" src="/image/copy.svg">
+							<img id="lessLaborGoToDictionary-option" src="/image/option.svg">
 						</nav>
-						<ul class="lessLaborGoToDictionary-container">
+						<ul id="lessLaborGoToDictionary-container">
 							<li class="lessLaborGoToDictionary-list">
 								<a class="lessLaborGoToDictionary-anchor">test1 </a>
 							</li>
@@ -186,6 +241,7 @@
 			<div class="box navi showForm active">htmlFormName</div>
 			<div class="box navi showPreset">htmlPresetName</div>
 			<div class="box navi showHistory">htmlHistoryName</div>
+			<div class="box navi showRanking">htmlRankingName</div>
 			<div class="box navi showOthers">htmlOthersName</div>
 			<div class="box navi showContact">htmlContactName</div>
 		</nav>
@@ -197,7 +253,8 @@
 <script src="/lib/common.js"></script>
 <script src="option.js"></script>
 <script src="optionPreset.js"></script>
-<script src="optionOthers.js"></script>
 <script src="optionHistory.js"></script>
+<script src="optionRanking.js"></script>
+<script src="optionOthers.js"></script>
 </body>
 </html>
