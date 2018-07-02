@@ -116,6 +116,76 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Collins English-French",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-french&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins French-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=french-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-German",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-german&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins German-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=german-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Spanish",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-spanish&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Spanish-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=spanish-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Italian",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-italian&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Italian-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=italian-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Chinese",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-chinese&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Chinese-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=chinese-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Portuguese",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-portuguese&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Portuguese-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=portuguese-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Hindi",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-hindi&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Hindi-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=hindi-english&q=$1"
+	},
+	{
+		"la": "en",
 		"l": "Merriam-Webster",
 		"u": "https://www.merriam-webster.com/dictionary/$1"
 	},
