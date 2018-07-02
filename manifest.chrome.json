@@ -55,6 +55,9 @@
 	],
 	"web_accessible_resources": [
 		"image/minus.svg",
-		"image/plus.svg"
+		"image/plus.svg",
+		"image/resize.svg",
+		"image/copy.svg",
+		"image/option.svg"
 	]
 }
