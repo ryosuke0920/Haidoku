@@ -20,6 +20,11 @@ const PRESET_OPTION_LIST = [
 		"u": "https://www.google.com/search?tbm=isch&q=$1"
 	},
 	{
+		"la": "en",
+		"l": "Google Videos",
+		"u": "https://www.google.com/search?q=$1&tbm=vid"
+	},
+	{
 		"la": "en ja",
 		"l": "Bing",
 		"u": "https://www.bing.com/search?q=$1"
@@ -28,6 +33,11 @@ const PRESET_OPTION_LIST = [
 		"la": "en ja",
 		"l": "DuckDuckGo",
 		"u": "https://duckduckgo.com/?q=$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "You Tube",
+		"u": "https://www.youtube.com/results?search_query=$1"
 	},
 	{
 		"la": "en",
@@ -133,6 +143,11 @@ const PRESET_OPTION_LIST = [
 		"la": "ja",
 		"l": "Google 画像検索",
 		"u": "https://www.google.co.jp/search?tbm=isch&q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "Google 動画検索",
+		"u": "https://www.google.co.jp/search?q=$1&tbm=vid"
 	},
 	{
 		"la": "ja",
@@ -258,5 +273,15 @@ const PRESET_OPTION_LIST = [
 		"la": "zh",
 		"l": "Google(www.google.com.hk)",
 		"u": "https://www.google.com.hk/search?q=$1"
+	},
+	{
+		"la": "zh",
+		"l": "Google Images",
+		"u": "https://www.google.com.hk/search?q=$1&tbm=isch"
+	},
+	{
+		"la": "zh",
+		"l": "Google Videos",
+		"u": "https://www.google.com.hk/search?q=$1&tbm=vid"
 	}
 ];
