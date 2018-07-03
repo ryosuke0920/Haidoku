@@ -18,6 +18,7 @@
 	let linkListNodeLeft = 0;
 	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
+	let linkListAction = "n";
 	let optionList = [];
 	let linkListFlag = false;
 	let shiftKeyFlag = false;
@@ -286,6 +287,7 @@
 	}
 
 	function showLinkList(pageY, pageX, clientY, clientX, selection){
+		if( linkListAction == LINK_LIST_ACTION_MOUSECLICK) linkListNode.classList.add(CSS_PREFIX+"-stopper");
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		linkListNode.classList.remove(CSS_PREFIX+"-hide");
 		linkListNode.style.height = linkListNodeHeight + "px";
@@ -403,8 +405,22 @@
 	}
 
 	function setLinkListAction(res){
+		linkListAction = res;
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseover");
-		if( res == LINK_LIST_ACTION_MOUSEOVER ) linkListNode.classList.add(CSS_PREFIX+"-mouseover");
+		linkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
+		linkListNode.classList.remove(CSS_PREFIX+"-mousestopper");
+		linkListNode.removeEventListener("click", removeStoper);
+		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
+			linkListNode.classList.add(CSS_PREFIX+"-mouseover");
+		}
+		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
+			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
+			linkListNode.addEventListener("click", removeStoper);
+		}
+	}
+
+	function removeStoper(e){
+		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
 	function resetLinkListEvents(){

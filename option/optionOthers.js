@@ -20,6 +20,7 @@
 			{ "selector": ".linkListAction", "property": "innerText", "key": "htmlLinkListAction" },
 			{ "selector": ".linkListActionNormal", "property": "innerText", "key": "htmlLinkListActionNormal" },
 			{ "selector": ".linkListActionMouseover", "property": "innerText", "key": "htmlLinkListActionMouseover" },
+			{ "selector": ".linkListActionMouseclick", "property": "innerText", "key": "htmlLinkListActionMouseclick" },
 			{ "selector": "."+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
 			{ "selector": "."+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
 			{ "selector": "."+CSS_PREFIX+"-copy", "property": "title", "key": "htmlCopy" },
@@ -30,18 +31,6 @@
 	}
 
 	function initNode(){
-		sampleLinkListNode.resetClassStyles = ()=>{
-			sampleLinkListNode.classList.remove(CSS_PREFIX+"-dark");
-		};
-		sampleLinkListNode.resetClassAction = ()=>{
-			sampleLinkListNode.classList.remove(CSS_PREFIX+"-mouseover");
-		};
-		sampleLinkListNode.setClassDarkStyle = ()=>{
-			sampleLinkListNode.classList.add(CSS_PREFIX+"-dark");
-		};
-		sampleLinkListNode.setClassMouseoverStyle = ()=>{
-			sampleLinkListNode.classList.add(CSS_PREFIX+"-mouseover");
-		};
 		for(let i=0; i<linkListStyleNodeList.length; i++) {
 			let node = linkListStyleNodeList[i];
 			node.addEventListener("click", linkListStyleBehavior);
@@ -55,7 +44,7 @@
 	function initStyle(){
 		let getter = ponyfill.storage.sync.get({
 			"cl": LINK_LIST_STYLE_CLASSIC,
-			"ca": LINK_LIST_ACTION_NORMAL
+			"ca": LINK_LIST_ACTION_MOUSECLICK
 		});
 		function onGot(res){
 			setlinkListStyle(res["cl"]);
@@ -100,13 +89,27 @@
 	}
 
 	function setSampleLinkListStyle(value){
-		sampleLinkListNode.resetClassStyles();
-		if( value == LINK_LIST_STYLE_DARK ) sampleLinkListNode.setClassDarkStyle();
+		sampleLinkListNode.classList.remove(CSS_PREFIX+"-dark");
+		if( value == LINK_LIST_STYLE_DARK ) sampleLinkListNode.classList.add(CSS_PREFIX+"-dark");
 	}
 
 	function setSampleLinkListAction(value){
-		sampleLinkListNode.resetClassAction();
-		if( value == LINK_LIST_ACTION_MOUSEOVER ) sampleLinkListNode.setClassMouseoverStyle();
+		sampleLinkListNode.classList.remove(CSS_PREFIX+"-mouseover");
+		sampleLinkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
+		sampleLinkListNode.classList.remove(CSS_PREFIX+"-stopper");
+		sampleLinkListNode.removeEventListener("click",removeStopper);
+		if( value == LINK_LIST_ACTION_MOUSEOVER ){
+			sampleLinkListNode.classList.add(CSS_PREFIX+"-mouseover");
+		}
+		else if( value == LINK_LIST_ACTION_MOUSECLICK ){
+			sampleLinkListNode.classList.add(CSS_PREFIX+"-mouseclick");
+			sampleLinkListNode.classList.add(CSS_PREFIX+"-stopper");
+			sampleLinkListNode.addEventListener("click",removeStopper);
+		}
+	}
+
+	function removeStopper(e){
+		sampleLinkListNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
 	function savelinkListStyle(value){
