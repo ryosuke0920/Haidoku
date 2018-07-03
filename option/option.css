@@ -10,20 +10,30 @@ body {
 p {
 	margin-bottom: 0.5em;
 }
-button {
+input[type="text"],input[type="url"],input[type="number"],
+#preset .checkWrapper {
+	border-radius: 5px;
+	border: solid 1px #ccc;
+}
+
+input[type="text"]:focus,input[type="url"]:focus,input[type="number"]:focus,
+#preset .checkWrapper:hover {
+	border: solid 1px rgb(165, 200, 238);
+	box-shadow: rgba(165, 200, 238, 0.32) 0px 3px 3px 0px, rgba(165, 200, 238, 0.32) 0px 0px 0px 2px;
+}
+button,select {
 	padding: 3px 0.5em;
 	border: none;
 	border-radius: 5px;
 	cursor: pointer;
-	background: linear-gradient(to bottom, #FFFFFF, #E0E0E0);
+	background: linear-gradient(to bottom, #FFFFFF, #EEE);
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
-button:hover {
-	background: linear-gradient(to bottom, #D0D0D0, #C0C0C0);
+button:hover,select:hover {
+	background: linear-gradient(to bottom, #EEEEEE, #DDD);
 }
 select {
 	cursor: pointer;
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
 table {
 	width: 100%;
@@ -256,9 +266,8 @@ table thead th, table tbody td {
 #preset .url {
 	font-size:70%
 }
-#preset .checkWrapper:hover {
+#preset .checkWrapper {
 	cursor: pointer;
-	border-color: orange;
 }
 #table {
 	display: grid;
@@ -283,7 +292,7 @@ table thead th, table tbody td {
 /* history menu */
 
 .historyPage,.historyRowSize {
-	width:40px;
+	width:50px;
 }
 .pagination {
 	cursor: pointer;
