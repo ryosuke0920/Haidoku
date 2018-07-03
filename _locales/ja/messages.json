@@ -332,11 +332,11 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionNormal": {
-		"message": "標準（テキストの選択後にリンクリストが表示される）",
+		"message": "標準",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "マウスオーバー（テキストの選択後にアイコンが表示される。アイコンをマウスオーバーするとリンクリストが表示される）",
+		"message": "マウスオーバ",
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {

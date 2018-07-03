@@ -332,11 +332,11 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionNormal": {
-		"message": "Normal (When the text is selected, Link list is immediately displayed.)",
+		"message": "Normal",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "Mouseover(When the text is selected, a icon is displayed. When the icon is moused over, Link list is displayed.)",
+		"message": "Mouseover",
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {
