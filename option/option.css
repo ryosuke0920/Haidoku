@@ -28,8 +28,7 @@ table tbody tr:nth-child(2n) {
 	background-color: WhiteSmoke;
 }
 table thead th, table tbody td {
-	padding-left: 5px;
-	padding-right: 5px;
+	padding: 2px 5px;
 }
 #menu {
 	position: fixed;

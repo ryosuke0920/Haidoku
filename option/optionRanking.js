@@ -1,6 +1,7 @@
 ( () => {
-	const FLAT_REGEX = new RegExp(/(?:\r?\n+|[,|.|"|'])/, "g");
-	const WHITESPACE_REGEX = new RegExp(/\s+/, "g");
+	const FLAT_REGEX = new RegExp(/[,."']+/, "g");
+	const LINE_BREAK_REGEX = new RegExp(/(:?\r?\n)+/, "g");
+	const WHITE_SPACE_REGEX = new RegExp(/\s+/, "g");
 	const CELL_TEXT_MAX_LENGTH = 31 /* Archaiomelesidonophrunicherata */
 	let rankingNode = document.querySelector("#ranking");
 	let rankingContainerNode = rankingNode.querySelector("#rankingContainer");
@@ -218,7 +219,8 @@
 	function convert(text) {
 		return text
 			.replace(FLAT_REGEX, " ")
-			.replace(WHITESPACE_REGEX, " ")
+			.replace(LINE_BREAK_REGEX, " ")
+			.replace(WHITE_SPACE_REGEX, " ")
 			.trim()
 			.toLocaleLowerCase();
 	}
