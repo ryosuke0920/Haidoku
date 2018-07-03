@@ -328,7 +328,7 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListAction": {
-		"message": "リンクリストの動作",
+		"message": "リンクリストの表示動作",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionNormal": {
@@ -337,6 +337,10 @@
 	},
 	"htmlLinkListActionMouseover": {
 		"message": "マウスオーバ",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionMouseclick": {
+		"message": "マウスクリック",
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {

@@ -143,23 +143,25 @@
 		</div>
 		<div id="ranking" class="panel hide">
 			<nav class="controller">
-				<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>
-				<select class="rankingDateRange">
-					<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
-					<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
-					<option value="6" class="rankingSixMonth">htmlRankingSixMonth</option>
-					<option value="12" class="rankingOneYear">htmlRankingOneYear</option>
-					<option value="all" class="rankingAllRange">htmlRankingAllRange</option>
-					<option value="custom" class="rankingCustomRange">htmlRankingCustomRange</option>
-				</select>
-				<label class="inputWrapper rankingStartDateWrapper hide">
-					<input type="date" class="rankingStartDate">
-					<span class="inputMessage rankingStartDateMessage hide">htmlDateInputError</span>
-				</label>
-				<label class="inputWrapper rankingEndDateWrapper hide">
-					<input type="date" class="rankingEndDate">
-					<span class="inputMessage rankingEndDateMessage hide">htmlDateInputError</span>
-				</label>
+				<span class="groupLine">
+					<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>
+					<select class="rankingDateRange">
+						<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
+						<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
+						<option value="6" class="rankingSixMonth">htmlRankingSixMonth</option>
+						<option value="12" class="rankingOneYear">htmlRankingOneYear</option>
+						<option value="all" class="rankingAllRange">htmlRankingAllRange</option>
+						<option value="custom" class="rankingCustomRange">htmlRankingCustomRange</option>
+					</select>
+					<label class="inputWrapper rankingStartDateWrapper hide">
+						<input type="date" class="rankingStartDate">
+						<span class="inputMessage rankingStartDateMessage hide">htmlDateInputError</span>
+					</label>
+					<label class="inputWrapper rankingEndDateWrapper hide">
+						<input type="date" class="rankingEndDate">
+						<span class="inputMessage rankingEndDateMessage hide">htmlDateInputError</span>
+					</label>
+				</span>
 			</nav>
 			<div class="desk">
 				<p class="rankingDescription">htmlRankingDescription</p>
@@ -206,6 +208,7 @@
 					<div>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="m"> <span class="linkListActionMouseover">htmlLinkListActionMouseover</span></label><br>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="c"> <span class="linkListActionMouseclick">htmlLinkListActionMouseclick</span></label><br>
 					</div>
 				</section>
 				<section class="linkListSample box">

@@ -328,7 +328,7 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListAction": {
-		"message": "Link list's action",
+		"message": "Link list's display action",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionNormal": {
@@ -336,7 +336,11 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "Mouseover",
+		"message": "Mouse over",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionMouseclick": {
+		"message": "Mouse click",
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {

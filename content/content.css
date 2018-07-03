@@ -103,14 +103,16 @@
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:active {
 	color: #F07070;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:not(:hover) {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:not(:hover),
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick.lessLaborGoToDictionary-stopper {
 	width:30px !important;
 	height:30px !important;
 	padding: 0 !important;
 	overflow: hidden;
 	resize: none;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:after {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:after,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick.lessLaborGoToDictionary-stopper:after {
 	width:30px;
 	height:30px;
 	content:"";
@@ -125,13 +127,20 @@
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:hover:after {
 	display: none;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:hover {
-	animation-name: lessLaborGoToDictionary-mouseover;
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:hover,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick {
+	animation-name: lessLaborGoToDictionary-open;
 	animation-duration: 0.2s;
 }
-@keyframes lessLaborGoToDictionary-mouseover {
+@keyframes lessLaborGoToDictionary-open {
 	from {
 		width:30px;
 		height:30px;
 	}
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick.lessLaborGoToDictionary-stopper {
+	animation-name: none;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick.lessLaborGoToDictionary-stopper:after {
+	cursor: pointer;
 }

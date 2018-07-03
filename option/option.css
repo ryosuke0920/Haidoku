@@ -10,13 +10,13 @@ body {
 p {
 	margin-bottom: 0.5em;
 }
-input[type="text"],input[type="url"],input[type="number"],
-#preset .checkWrapper {
+input[type="text"],input[type="url"],input[type="number"],input[type="date"],
+#preset .checkWrapper, .field, .LinkListProperty {
 	border-radius: 5px;
 	border: solid 1px #ccc;
 }
 
-input[type="text"]:focus,input[type="url"]:focus,input[type="number"]:focus,
+input[type="text"]:focus,input[type="url"]:focus,input[type="number"],input[type="date"]:focus,
 #preset .checkWrapper:hover {
 	border: solid 1px rgb(165, 200, 238);
 	box-shadow: rgba(165, 200, 238, 0.32) 0px 3px 3px 0px, rgba(165, 200, 238, 0.32) 0px 0px 0px 2px;
@@ -27,7 +27,7 @@ button,select {
 	border-radius: 5px;
 	cursor: pointer;
 	background: linear-gradient(to bottom, #FFFFFF, #EEE);
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 2px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 button:hover,select:hover {
 	background: linear-gradient(to bottom, #EEEEEE, #DDD);
@@ -192,7 +192,6 @@ table thead th, table tbody td {
 .field {
 	position:relative;
 	margin-bottom: 1em;
-	box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px 0px;
 	padding: 0.5em;
 }
 .gridWrapper {
@@ -327,9 +326,6 @@ table thead th, table tbody td {
 .othersTable > * {
 	margin-right: 1em;
 	margin-bottom: 1em;
-}
-.othersTable .LinkListProperty {
-	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 3px 0px;
 }
 .othersTable>section>h1 {
 	background-color: WhiteSmoke;
