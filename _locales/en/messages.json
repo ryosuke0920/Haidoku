@@ -327,8 +327,16 @@
 		"message": "Dark",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListStylePop": {
-		"message": "Pop",
+	"htmlLinkListAction": {
+		"message": "Link list's action",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionNormal": {
+		"message": "Normal (When the text is selected, Link list is immediately displayed.)",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionMouseover": {
+		"message": "Mouseover(When the text is selected, a icon is displayed. When the icon is moused over, Link list is displayed.)",
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {

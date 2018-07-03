@@ -302,20 +302,25 @@ table thead th, table tbody td {
 .othersTable {
 	display: grid;
 	grid-template-columns: 1fr;
-	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 3px 0px;
 }
 .othersTable > * {
+	margin-right: 1em;
 	margin-bottom: 1em;
 }
-.othersHeader h1 {
+.othersTable .LinkListProperty {
+	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 3px 0px;
+}
+.othersTable>section>h1 {
 	background-color: WhiteSmoke;
 }
 @media (min-width: 948px) {
 	.othersTable {
-		grid-template-columns: 400px 1fr ;
+		grid-template-columns: 1fr 1fr ;
 	}
-	.othersHeader {
-		grid-column-start: 1;
+	.linkListSample {
+		grid-column-start: 2;
 		grid-column-end: 3;
+		grid-row-start: 1;
+		grid-row-end: 3;
 	}
 }

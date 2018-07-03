@@ -13,6 +13,7 @@
 	},
 	"background": {
 		"scripts": [
+			"etc/CONST.js",
 			"etc/DEFAULT_OPTION_LIST.js",
 			"etc/PRESET_OPTION_LIST.js",
 			"lib/ponyfill.js",
@@ -34,6 +35,7 @@
 				"content/content.css"
 			],
 			"js": [
+				"etc/CONST.js",
 				"lib/ponyfill.js",
 				"content/content.js"
 			]

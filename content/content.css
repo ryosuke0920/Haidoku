@@ -81,6 +81,8 @@
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 	border-bottom-left-radius: 10px;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark {
 	background: linear-gradient(to bottom right, #404040, #202020);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.64),0 2px 10px 0 rgba(0,0,0,0.48);
 }
@@ -100,4 +102,36 @@
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:active {
 	color: #F07070;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:not(:hover) {
+	width:30px !important;
+	height:30px !important;
+	padding: 0 !important;
+	overflow: hidden;
+	resize: none;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:after {
+	width:30px;
+	height:30px;
+	content:"";
+	z-index: 2147483646;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0
+	bottom:0;
+	background: url("/image/rect30.png");
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:hover:after {
+	display: none;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:hover {
+	animation-name: lessLaborGoToDictionary-mouseover;
+	animation-duration: 0.2s;
+}
+@keyframes lessLaborGoToDictionary-mouseover {
+	from {
+		width:30px;
+		height:30px;
+	}
 }

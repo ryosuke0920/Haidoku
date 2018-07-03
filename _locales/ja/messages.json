@@ -327,8 +327,16 @@
 		"message": "ダーク",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListStylePop": {
-		"message": "ポップ",
+	"htmlLinkListAction": {
+		"message": "リンクリストの動作",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionNormal": {
+		"message": "標準（テキストの選択後にリンクリストが表示される）",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionMouseover": {
+		"message": "マウスオーバー（テキストの選択後にアイコンが表示される。アイコンをマウスオーバーするとリンクリストが表示される）",
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {

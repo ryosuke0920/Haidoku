@@ -194,14 +194,21 @@
 		</div>
 		<div id="others" class="panel hide">
 			<section class="othersTable box">
-				<section class="othersHeader">
+				<section class="LinkListProperty box">
 					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
+					<div>
+						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
+						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
+					</div>
 				</section>
-				<section>
-					<label><input type="radio" class="linkListClass" name="linkListClass" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
-					<label><input type="radio" class="linkListClass" name="linkListClass" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
+				<section class="LinkListProperty box">
+					<h1 class="linkListAction box">htmlLinkListAction</h1>
+					<div>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="m"> <span class="linkListActionMouseover">htmlLinkListActionMouseover</span></label><br>
+					</div>
 				</section>
-				<section>
+				<section class="linkListSample box">
 					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
 						<nav id="lessLaborGoToDictionary-menu">
 							<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
@@ -247,6 +254,7 @@
 		</nav>
 	</div>
 </div>
+<script src="/etc/CONST.js"></script>
 <script src="/etc/PRESET_OPTION_LIST.js"></script>
 <script src="/lib/ponyfill.js"></script>
 <script src="/lib/indexeddb.js"></script>
