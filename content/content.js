@@ -366,7 +366,7 @@
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE,
 			"cl": LINK_LIST_STYLE_CLASSIC,
-			"ca": LINK_LIST_ACTION_NORMAL
+			"ca": LINK_LIST_ACTION_MOUSECLICK
 		});
 		return getter.then(setVer, onReadError);
 	}
