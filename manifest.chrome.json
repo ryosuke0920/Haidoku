@@ -4,7 +4,7 @@
 	"name":"__MSG_extensionName__",
 	"description":"__MSG_extensionDescription__",
 	"author": "Ryosuke Ohta",
-	"version":"1.2.11",
+	"version":"1.3.0",
 	"icons": {
 		"128": "image/icon128.png",
 		"64": "image/icon64.png",
@@ -13,6 +13,7 @@
 	},
 	"background": {
 		"scripts": [
+			"etc/CONST.js",
 			"etc/DEFAULT_OPTION_LIST.js",
 			"etc/PRESET_OPTION_LIST.js",
 			"lib/ponyfill.js",
@@ -33,6 +34,7 @@
 				"content/content.css"
 			],
 			"js": [
+				"etc/CONST.js",
 				"lib/ponyfill.js",
 				"content/content.js"
 			]
@@ -54,10 +56,6 @@
 		"notifications"
 	],
 	"web_accessible_resources": [
-		"image/minus.svg",
-		"image/plus.svg",
-		"image/resize.svg",
-		"image/copy.svg",
-		"image/option.svg"
+		"image/*"
 	]
 }
