@@ -415,6 +415,7 @@
 		}
 		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
+			linkListNode.classList.add(CSS_PREFIX+"-stopper");
 			linkListNode.addEventListener("click", removeStoper);
 		}
 	}
