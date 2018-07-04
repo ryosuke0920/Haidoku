@@ -18,7 +18,7 @@
 	let linkListNodeLeft = 0;
 	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
-	let linkListAction = "n";
+	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
 	let optionList = [];
 	let linkListFlag = false;
 	let shiftKeyFlag = false;
