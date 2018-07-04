@@ -122,7 +122,7 @@
 	left:0;
 	right:0
 	bottom:0;
-	background: url("/image/rect30.png");
+	background-image: url("chrome-extension://__MSG_@@extension_id__/image/rect30.png"),url("/image/rect30.png");
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:hover:after {
 	display: none;
