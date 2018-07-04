@@ -327,8 +327,20 @@
 		"message": "Dark",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListStylePop": {
-		"message": "Pop",
+	"htmlLinkListAction": {
+		"message": "Link list's display action",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionNormal": {
+		"message": "Normal",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionMouseover": {
+		"message": "Mouse over",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionMouseclick": {
+		"message": "Mouse click",
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {

@@ -86,7 +86,7 @@
 		<div id="history" class="panel hide">
 			<nav class="controller">
 				<span class="groupLine">
-					<button class="historyUpdateButton">htmlHistoryUpdateButton</button>
+					<button type="button" class="historyUpdateButton">htmlHistoryUpdateButton</button>
 					&nbsp;
 					<select class="historyOrder">
 						<option class="historyOrderDesc" value="prev">htmlHistoryOrderDesc</option>
@@ -114,8 +114,8 @@
 				<p>
 					<span class="groupLine"><span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span></span>
 					<span class="groupLine"><span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span></span>
-					<button class="historyDeleteButton">htmlHistoryCheckDelete</button>
-					<button class="historyDeleteAllButton">htmlHistoryAllDelete</button>
+					<button type="button" class="historyDeleteButton">htmlHistoryCheckDelete</button>
+					<button type="button" class="historyDeleteAllButton">htmlHistoryAllDelete</button>
 				</p>
 				<table id="historyTable">
 					<thead>
@@ -143,23 +143,25 @@
 		</div>
 		<div id="ranking" class="panel hide">
 			<nav class="controller">
-				<button class="rankingAggregateButton">htmlRankingAggregateButton</button>
-				<select class="rankingDateRange">
-					<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
-					<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
-					<option value="6" class="rankingSixMonth">htmlRankingSixMonth</option>
-					<option value="12" class="rankingOneYear">htmlRankingOneYear</option>
-					<option value="all" class="rankingAllRange">htmlRankingAllRange</option>
-					<option value="custom" class="rankingCustomRange">htmlRankingCustomRange</option>
-				</select>
-				<label class="inputWrapper rankingStartDateWrapper hide">
-					<input type="date" class="rankingStartDate">
-					<span class="inputMessage rankingStartDateMessage hide">htmlDateInputError</span>
-				</label>
-				<label class="inputWrapper rankingEndDateWrapper hide">
-					<input type="date" class="rankingEndDate">
-					<span class="inputMessage rankingEndDateMessage hide">htmlDateInputError</span>
-				</label>
+				<span class="groupLine">
+					<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>
+					<select class="rankingDateRange">
+						<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
+						<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
+						<option value="6" class="rankingSixMonth">htmlRankingSixMonth</option>
+						<option value="12" class="rankingOneYear">htmlRankingOneYear</option>
+						<option value="all" class="rankingAllRange">htmlRankingAllRange</option>
+						<option value="custom" class="rankingCustomRange">htmlRankingCustomRange</option>
+					</select>
+					<label class="inputWrapper rankingStartDateWrapper hide">
+						<input type="date" class="rankingStartDate">
+						<span class="inputMessage rankingStartDateMessage hide">htmlDateInputError</span>
+					</label>
+					<label class="inputWrapper rankingEndDateWrapper hide">
+						<input type="date" class="rankingEndDate">
+						<span class="inputMessage rankingEndDateMessage hide">htmlDateInputError</span>
+					</label>
+				</span>
 			</nav>
 			<div class="desk">
 				<p class="rankingDescription">htmlRankingDescription</p>
@@ -194,14 +196,22 @@
 		</div>
 		<div id="others" class="panel hide">
 			<section class="othersTable box">
-				<section class="othersHeader">
+				<section class="LinkListProperty box">
 					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
+					<div>
+						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
+						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
+					</div>
 				</section>
-				<section>
-					<label><input type="radio" class="linkListClass" name="linkListClass" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
-					<label><input type="radio" class="linkListClass" name="linkListClass" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
+				<section class="LinkListProperty box">
+					<h1 class="linkListAction box">htmlLinkListAction</h1>
+					<div>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="m"> <span class="linkListActionMouseover">htmlLinkListActionMouseover</span></label><br>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="c"> <span class="linkListActionMouseclick">htmlLinkListActionMouseclick</span></label><br>
+					</div>
 				</section>
-				<section>
+				<section class="linkListSample box">
 					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
 						<nav id="lessLaborGoToDictionary-menu">
 							<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
@@ -247,6 +257,7 @@
 		</nav>
 	</div>
 </div>
+<script src="/etc/CONST.js"></script>
 <script src="/etc/PRESET_OPTION_LIST.js"></script>
 <script src="/lib/ponyfill.js"></script>
 <script src="/lib/indexeddb.js"></script>
