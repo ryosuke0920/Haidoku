@@ -120,7 +120,7 @@
 	position:absolute;
 	top:0;
 	left:0;
-	right:0
+	right:0;
 	bottom:0;
 	background-image: url("chrome-extension://__MSG_@@extension_id__/image/rect30.png"),url("/image/rect30.png");
 }
