@@ -58,6 +58,7 @@
 	}
 
 	function fileChangeBehavior(e){
+		console.log(e);
 		if( !e.hasOwnProperty("w")) return;
 		if( e["w"]["newValue"] == windowId ) return;
 		if( e.hasOwnProperty("cl") ) setlinkListStyle(e["cl"]["newValue"]);
@@ -65,6 +66,7 @@
 	}
 
 	function setlinkListStyle(value){
+		console.log("setlinkListStyle");
 		let node = othersNode.querySelector(".linkListStyle[value=\""+value+"\"]");
 		node.checked = true;
 		setSampleLinkListStyle(value);
@@ -114,12 +116,12 @@
 
 	function savelinkListStyle(value){
 		let data = { "cl": value };
-		return save(data).catch(onSaveError);
+		return saveW(data).catch(onSaveError);
 	}
 
 	function savelinkListAction(value){
 		let data = { "ca": value };
-		return save(data).catch(onSaveError);
+		return saveW(data).catch(onSaveError);
 	}
 
 })();
