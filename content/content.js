@@ -546,7 +546,7 @@
 
 	function silentError(e){
 		if( e.message.match( SILENT_ERROR_REGEX ) ){
-			console.error(e);
+			console.log(e);
 		}
 		else {
 			throw(e);
