@@ -8,27 +8,31 @@
 		"description": "Description of the extension."
 	},
 	"extensionOptionAutoView": {
-		"message": "automatically display link list",
+		"message": "Automatically display link list",
 		"description": "Name of link list option."
 	},
 	"extensionOptionManualView": {
-		"message": "manually display link list",
+		"message": "Manually display link list",
 		"description": "Name of link list option."
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "display link list with shift key",
+		"message": "Display link list with shift key",
 		"description": "Name of link list option."
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "display link list with ctrl key",
+		"message": "Display link list with ctrl key",
 		"description": "Name of link list option."
 	},
 	"extensionOptionName": {
-		"message": "options",
+		"message": "Options",
 		"description": "Name of link list option."
 	},
+	"notificationCopyed": {
+		"message": "The selected area was copied.",
+		"description": "copyed notification."
+	},
 	"notificationUnexpectedError": {
-		"message": "unexpected error. $ERROR$",
+		"message": "Unexpected error. $ERROR$",
 		"description": "unexpected error notification.",
 		"placeholders": {
 			"ERROR": {
@@ -38,7 +42,7 @@
 		}
 	},
 	"notificationReadOptionError": {
-		"message": "failed to read your configuration. $ERROR$",
+		"message": "Failed to read your configuration. $ERROR$",
 		"description": "save option error notification.",
 		"placeholders": {
 			"ERROR": {
@@ -48,7 +52,7 @@
 		}
 	},
 	"notificationSaveOptionError": {
-		"message": "failed to save your configuration. $ERROR$",
+		"message": "Failed to save your configuration. $ERROR$",
 		"description": "save option error notification.",
 		"placeholders": {
 			"ERROR": {
@@ -58,7 +62,7 @@
 		}
 	},
 	"notificationOpenWindowError": {
-		"message": "failed to open new window. $ERROR$",
+		"message": "Failed to open new window. $ERROR$",
 		"description": "open window error notification.",
 		"placeholders": {
 			"ERROR": {
@@ -68,11 +72,23 @@
 		}
 	},
 	"htmlZoomDown": {
-		"message": "zoom down",
+		"message": "Zoom down",
 		"description": ""
 	},
 	"htmlZoomUp": {
-		"message": "zoom up",
+		"message": "Zoom up",
+		"description": ""
+	},
+	"htmlCopy": {
+		"message": "Copy",
+		"description": ""
+	},
+	"htmlResize": {
+		"message": "Reset size",
+		"description": ""
+	},
+	"htmlOption": {
+		"message": "Option",
 		"description": ""
 	},
 	"htmlFormName": {
@@ -87,6 +103,10 @@
 		"message": "History",
 		"description": "Name of the history on the side menu."
 	},
+	"htmlRankingName": {
+		"message": "Find weak point",
+		"description": "Name of the ranking on the side menu."
+	},
 	"htmlOthersName": {
 		"message": "Others",
 		"description": "Name of the others on the side menu."
@@ -96,7 +116,7 @@
 		"description": "Name of the contact on the side menu."
 	},
 	"htmlFormDescription": {
-		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected.",
+		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected.",
 		"description": "Description of the extension option."
 	},
 	"htmlUsageOrder" : {
@@ -116,19 +136,19 @@
 		"description": "Description of button."
 	},
 	"htmlPresetDescription": {
-		"message": "Select some sites and press \"add\" button. Then it's added to link list.",
+		"message": "Select some sites and press \"Add\" button. Then it's added to link list.",
 		"description": "Description of the preset option."
 	},
 	"htmlAddBlankFieldButtonName": {
-		"message": "add blank field",
+		"message": "Add blank field",
 		"description": "Name of add blank field button."
 	},
 	"htmlHandle": {
-		"message": "changing the order.",
+		"message": "Changing the order.",
 		"description": "title of sort."
 	},
 	"htmlLabelText": {
-		"message": "site name",
+		"message": "Site name",
 		"description": "Name of site."
 	},
 	"htmlUrlText": {
@@ -136,7 +156,7 @@
 		"description": "Name of url."
 	},
 	"htmlRemoveButtonName": {
-		"message": "delete",
+		"message": "Delete",
 		"description": "Name of remove."
 	},
 	"htmlLabelDescription": {
@@ -148,11 +168,11 @@
 		"description": "title of url description."
 	},
 	"htmlFilterText": {
-		"message": "filter",
+		"message": "Filter",
 		"description": "Name of filter select box."
 	},
 	"htmlLanguageAll": {
-		"message": "all",
+		"message": "All",
 		"description": "Name of all."
 	},
 	"htmlLanguageEn": {
@@ -168,39 +188,39 @@
 		"description": "Name of zh."
 	},
 	"htmlAddPresetButtonName": {
-		"message": "add",
+		"message": "Add",
 		"description": "Name of adding button."
 	},
 	"htmlHistoryUpdateButton": {
-		"message": "update",
+		"message": "Update",
 		"description": "Name of update button."
 	},
 	"htmlHistoryPageText": {
-		"message": "page",
+		"message": "Page",
 		"description": "Name of page."
 	},
 	"htmlHistoryRowSizeText": {
-		"message": "row size",
+		"message": "Row size",
 		"description": "Name of row size."
 	},
 	"htmlHistoryRowSizeAllText": {
-		"message": "display all rows",
+		"message": "Display all rows",
 		"description": "Name of all rows."
 	},
 	"htmlHistoryOrderDesc": {
-		"message": "new->old",
+		"message": "New->Old",
 		"description": "Name of desc."
 	},
 	"htmlHistoryOrderAsc": {
-		"message": "old->new",
+		"message": "Old->New",
 		"description": "Name of asc."
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "delete checked history",
+		"message": "Delete checked history",
 		"description": "Name of delete."
 	},
 	"htmlHistoryAllDelete": {
-		"message": "delete all history",
+		"message": "Delete all history",
 		"description": "Name of delete."
 	},
 	"alertHistoryAllDelete": {
@@ -210,6 +230,10 @@
 	"htmlHistoryDescription": {
 		"message": "You can refer to history. It's useful to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not from \"Link list\" menu.",
 		"description": "Description of history."
+	},
+	"htmlHistoryZeroRowMessage": {
+		"message": "Result was 0.",
+		"description": "no data message."
 	},
 	"htmlHistoryDate": {
 		"message": "Date",
@@ -228,23 +252,71 @@
 		"description": "Name of destination site."
 	},
 	"htmlPageFirst": {
-		"message": "first",
+		"message": "First",
 		"description": "Name of first."
 	},
 	"htmlPagePrev": {
-		"message": "prev",
+		"message": "Prev",
 		"description": "Name of preview."
 	},
 	"htmlPageNext": {
-		"message": "next",
+		"message": "Next",
 		"description": "Name of next."
 	},
 	"htmlPageLast": {
-		"message": "last",
+		"message": "Last",
 		"description": "Name of end."
 	},
+	"htmlRankingDescription": {
+		"message": "Search count is aggregated from history. Please select date range and click \"Aggregate\" button. If you delete some of history, Search count decreases too. Let's find your weakness and study efficiently.",
+		"description": "Name of button."
+	},
+	"htmlRankingAggregateButton": {
+		"message": "Aggregate",
+		"description": "Name of button."
+	},
+	"htmlRankingOneMonth": {
+		"message": "Past 1 month",
+		"description": "Value of range."
+	},
+	"htmlRankingThreeMonth": {
+		"message": "Past 3 months",
+		"description": "Value of range."
+	},
+	"htmlRankingSixMonth": {
+		"message": "Past 6 months",
+		"description": "Value of range."
+	},
+	"htmlRankingOneYear": {
+		"message": "Past 1 year",
+		"description": "Value of range."
+	},
+	"htmlRankingAllRange": {
+		"message": "All",
+		"description": "Value of range."
+	},
+	"htmlRankingCustomRange": {
+		"message": "Specify date range",
+		"description": "Value of range."
+	},
+	"htmlRankingText": {
+		"message": "Text selected",
+		"description": "Name of table header."
+	},
+	"htmlRankingCount": {
+		"message": "Search count",
+		"description": "Name of table header."
+	},
+	"htmlRankingGraph": {
+		"message": "Graph",
+		"description": "Name of table header."
+	},
+	"htmlRankingZeroRowMessage": {
+		"message": "Result was 0.",
+		"description": "no data message."
+	},
 	"htmlLinkListStyle": {
-		"message": "link list's style",
+		"message": "Link list's style",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListStyleClassic": {
@@ -255,12 +327,24 @@
 		"message": "Dark",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListStylePop": {
-		"message": "Pop",
+	"htmlLinkListAction": {
+		"message": "Link list's display action",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionNormal": {
+		"message": "Normal",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionMouseover": {
+		"message": "Mouse over",
+		"description": "Name of the propertie."
+	},
+	"htmlLinkListActionMouseclick": {
+		"message": "Mouse click",
 		"description": "Name of the propertie."
 	},
 	"htmlContactText": {
-		"message": "Inquiries such as opinions, impressions, bugs.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
+		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
 		"description": "Sentence of contact."
 	},
 	"htmlMyself": {
@@ -320,5 +404,9 @@
 				"example": "4444"
 			}
 		}
+	},
+	"htmlDateInputError": {
+		"message": "Please enter a date correctly.",
+		"description": ""
 	}
 }

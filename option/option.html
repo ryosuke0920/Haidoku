@@ -86,7 +86,7 @@
 		<div id="history" class="panel hide">
 			<nav class="controller">
 				<span class="groupLine">
-					<button class="historyUpdateButton">htmlHistoryUpdateButton</button>
+					<button type="button" class="historyUpdateButton">htmlHistoryUpdateButton</button>
 					&nbsp;
 					<select class="historyOrder">
 						<option class="historyOrderDesc" value="prev">htmlHistoryOrderDesc</option>
@@ -114,8 +114,8 @@
 				<p>
 					<span class="groupLine"><span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span></span>
 					<span class="groupLine"><span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span></span>
-					<button class="historyDeleteButton">htmlHistoryCheckDelete</button>
-					<button class="historyDeleteAllButton">htmlHistoryAllDelete</button>
+					<button type="button" class="historyDeleteButton">htmlHistoryCheckDelete</button>
+					<button type="button" class="historyDeleteAllButton">htmlHistoryAllDelete</button>
 				</p>
 				<table id="historyTable">
 					<thead>
@@ -129,6 +129,7 @@
 					</thead>
 					<tbody id="historyContainer"></tbody>
 				</table>
+				<p class="historyMessage message hide">htmlHistoryMessage</p>
 				<table class="hide">
 					<tr id="rowPrototype" class="historyRow">
 						<td class="historyID"><input class="historyCheckbox" type="checkbox" value="ID"></td>
@@ -140,22 +141,86 @@
 				</table>
 			</div>
 		</div>
+		<div id="ranking" class="panel hide">
+			<nav class="controller">
+				<span class="groupLine">
+					<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>
+					<select class="rankingDateRange">
+						<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
+						<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
+						<option value="6" class="rankingSixMonth">htmlRankingSixMonth</option>
+						<option value="12" class="rankingOneYear">htmlRankingOneYear</option>
+						<option value="all" class="rankingAllRange">htmlRankingAllRange</option>
+						<option value="custom" class="rankingCustomRange">htmlRankingCustomRange</option>
+					</select>
+					<label class="inputWrapper rankingStartDateWrapper hide">
+						<input type="date" class="rankingStartDate">
+						<span class="inputMessage rankingStartDateMessage hide">htmlDateInputError</span>
+					</label>
+					<label class="inputWrapper rankingEndDateWrapper hide">
+						<input type="date" class="rankingEndDate">
+						<span class="inputMessage rankingEndDateMessage hide">htmlDateInputError</span>
+					</label>
+				</span>
+			</nav>
+			<div class="desk">
+				<p class="rankingDescription">htmlRankingDescription</p>
+				<table id="rankingTable">
+					<thead>
+						<tr>
+							<th class="headRankingText">htmlRankingText</th>
+							<th class="headRankingCount">htmlRankingCount</th>
+							<th class="headRankingGraph">htmlRankingGraph</th>
+						</tr>
+					</thead>
+					<tbody id="rankingContainer"></tbody>
+				</table>
+				<p class="rankingMessage message hide">htmlRankingMessage</p>
+				<table class="hide">
+					<tr id="rankingRowPrototype" class="rankingRow">
+						<td class="rankingText" title="rankingText">rankingText</td>
+						<td class="rankingCount">rankingCount</td>
+						<td class="rankingGraph" title="rankingGraph">
+							<svg class="rankingGraphSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="5">
+								<linearGradient id="MyGradient">
+									<stop offset="5%" stop-color="#F60" />
+									<stop offset="95%" stop-color="#FF6" />
+								</linearGradient>
+								<rect class="rankingGraphBox"  x="0" y="0" width="100%" height="100%" fill="#D0D0D0" />
+								<rect class="rankingGraphLine" x="0" y="0" widht="0" height="100%" fill="url(#MyGradient)" />
+							</svg>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 		<div id="others" class="panel hide">
 			<section class="othersTable box">
-				<section class="othersHeader">
+				<section class="LinkListProperty box">
 					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
+					<div>
+						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
+						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
+					</div>
 				</section>
-				<section>
-					<label><input type="radio" class="linkListClass" name="linkListClass" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
-					<label><input type="radio" class="linkListClass" name="linkListClass" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
+				<section class="LinkListProperty box">
+					<h1 class="linkListAction box">htmlLinkListAction</h1>
+					<div>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="m"> <span class="linkListActionMouseover">htmlLinkListActionMouseover</span></label><br>
+						<label><input type="radio" class="linkListAction" name="linkListAction" value="c"> <span class="linkListActionMouseclick">htmlLinkListActionMouseclick</span></label><br>
+					</div>
 				</section>
-				<section>
-					<div id="sampleLinkList" class="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
-						<nav class="lessLaborGoToDictionary-menu">
-							<img class="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
-							<img class="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
+				<section class="linkListSample box">
+					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
+						<nav id="lessLaborGoToDictionary-menu">
+							<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
+							<img id="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
+							<img id="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
+							<img id="lessLaborGoToDictionary-copy" src="/image/copy.svg">
+							<img id="lessLaborGoToDictionary-option" src="/image/option.svg">
 						</nav>
-						<ul class="lessLaborGoToDictionary-container">
+						<ul id="lessLaborGoToDictionary-container">
 							<li class="lessLaborGoToDictionary-list">
 								<a class="lessLaborGoToDictionary-anchor">test1 </a>
 							</li>
@@ -186,18 +251,21 @@
 			<div class="box navi showForm active">htmlFormName</div>
 			<div class="box navi showPreset">htmlPresetName</div>
 			<div class="box navi showHistory">htmlHistoryName</div>
+			<div class="box navi showRanking">htmlRankingName</div>
 			<div class="box navi showOthers">htmlOthersName</div>
 			<div class="box navi showContact">htmlContactName</div>
 		</nav>
 	</div>
 </div>
+<script src="/etc/CONST.js"></script>
 <script src="/etc/PRESET_OPTION_LIST.js"></script>
 <script src="/lib/ponyfill.js"></script>
 <script src="/lib/indexeddb.js"></script>
 <script src="/lib/common.js"></script>
 <script src="option.js"></script>
 <script src="optionPreset.js"></script>
-<script src="optionOthers.js"></script>
 <script src="optionHistory.js"></script>
+<script src="optionRanking.js"></script>
+<script src="optionOthers.js"></script>
 </body>
 </html>

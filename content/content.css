@@ -1,4 +1,4 @@
-div.lessLaborGoToDictionary-viewer {
+#lessLaborGoToDictionary-viewer {
 	all: initial;
 	font-family: sans-serif;
 	user-select: none;
@@ -11,10 +11,10 @@ div.lessLaborGoToDictionary-viewer {
 	overflow: auto;
 	resize: both;
 }
-div.lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-hide {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-hide {
 	display: none;
 }
-div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
 	all: initial;
 	font-family: sans-serif;
 	user-select: none;
@@ -23,20 +23,20 @@ div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
 	white-space: nowrap;
 	display: block;
 }
-div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor,
-div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:link {
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor,
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:link {
 	color: rgb(0, 0, 238);
 }
-div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:visited {
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:visited {
 	color: #551a8b;
 }
-div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:hover {
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:hover {
 	text-decoration: underline;
 }
-div.lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:active {
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:active {
 	color: #ee0000;
 }
-div.lessLaborGoToDictionary-viewer nav.lessLaborGoToDictionary-menu {
+#lessLaborGoToDictionary-menu {
 	all: initial;
 	font-family: sans-serif;
 	user-select: none;
@@ -48,8 +48,11 @@ div.lessLaborGoToDictionary-viewer nav.lessLaborGoToDictionary-menu {
 	padding-top: 5px;
 	padding-left: 5px;
 }
-div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomDown,
-div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomUp {
+#lessLaborGoToDictionary-zoomDown,
+#lessLaborGoToDictionary-zoomUp,
+#lessLaborGoToDictionary-copy,
+#lessLaborGoToDictionary-resize,
+#lessLaborGoToDictionary-option {
 	all: initial;
 	font-family: sans-serif;
 	user-select: none;
@@ -60,41 +63,84 @@ div.lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-zoomUp {
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 	margin-right: 5px;
 }
-div.lessLaborGoToDictionary-viewer ul.lessLaborGoToDictionary-container {
+#lessLaborGoToDictionary-container {
 	all: initial;
 	font-family: sans-serif;
 	user-select: none;
 	-moz-user-select: none;
 	display: block;
 }
-div.lessLaborGoToDictionary-viewer li.lessLaborGoToDictionary-list {
+#lessLaborGoToDictionary-viewer li.lessLaborGoToDictionary-list {
 	all: initial;
 	font-family: sans-serif;
 	user-select: none;
 	-moz-user-select: none;
 	display: block;
 }
-div.lessLaborGoToDictionary-dark {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark {
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 	border-bottom-left-radius: 10px;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark {
 	background: linear-gradient(to bottom right, #404040, #202020);
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.64),0 2px 10px 0 rgba(0,0,0,0.48);
 }
-div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor {
 	border-top: 2px solid #505050;
 }
-div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor,
-div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:link {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:link {
 	color: white;
 }
-div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:visited {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:visited {
 	color: #B0B0B0;
 }
-div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:hover {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:hover {
 	text-decoration: none;
 	background-color:#505050;
 }
-div.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:active {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:active {
 	color: #F07070;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:not(:hover),
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick.lessLaborGoToDictionary-stopper {
+	width:30px !important;
+	height:30px !important;
+	padding: 0 !important;
+	overflow: hidden;
+	resize: none;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:after,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick.lessLaborGoToDictionary-stopper:after {
+	width:30px;
+	height:30px;
+	content:"";
+	z-index: 2147483646;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	background-image: url("chrome-extension://__MSG_@@extension_id__/image/rect30.png"),url("/image/rect30.png");
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:hover:after {
+	display: none;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:hover,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick {
+	animation-name: lessLaborGoToDictionary-open;
+	animation-duration: 0.2s;
+}
+@keyframes lessLaborGoToDictionary-open {
+	from {
+		width:30px;
+		height:30px;
+	}
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick.lessLaborGoToDictionary-stopper {
+	animation-name: none;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseclick.lessLaborGoToDictionary-stopper:after {
+	cursor: pointer;
 }

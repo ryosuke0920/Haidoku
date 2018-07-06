@@ -20,6 +20,11 @@ const PRESET_OPTION_LIST = [
 		"u": "https://www.google.com/search?tbm=isch&q=$1"
 	},
 	{
+		"la": "en",
+		"l": "Google Videos",
+		"u": "https://www.google.com/search?q=$1&tbm=vid"
+	},
+	{
 		"la": "en ja",
 		"l": "Bing",
 		"u": "https://www.bing.com/search?q=$1"
@@ -28,6 +33,11 @@ const PRESET_OPTION_LIST = [
 		"la": "en ja",
 		"l": "DuckDuckGo",
 		"u": "https://duckduckgo.com/?q=$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "You Tube",
+		"u": "https://www.youtube.com/results?search_query=$1"
 	},
 	{
 		"la": "en",
@@ -106,6 +116,76 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Collins English-French",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-french&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins French-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=french-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-German",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-german&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins German-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=german-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Spanish",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-spanish&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Spanish-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=spanish-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Italian",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-italian&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Italian-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=italian-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Chinese",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-chinese&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Chinese-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=chinese-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Portuguese",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-portuguese&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Portuguese-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=portuguese-english&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins English-Hindi",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=english-hindi&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Collins Hindi-English",
+		"u": "https://www.collinsdictionary.com/search/?dictCode=hindi-english&q=$1"
+	},
+	{
+		"la": "en",
 		"l": "Merriam-Webster",
 		"u": "https://www.merriam-webster.com/dictionary/$1"
 	},
@@ -133,6 +213,11 @@ const PRESET_OPTION_LIST = [
 		"la": "ja",
 		"l": "Google 画像検索",
 		"u": "https://www.google.co.jp/search?tbm=isch&q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "Google 動画検索",
+		"u": "https://www.google.co.jp/search?q=$1&tbm=vid"
 	},
 	{
 		"la": "ja",
@@ -258,5 +343,15 @@ const PRESET_OPTION_LIST = [
 		"la": "zh",
 		"l": "Google(www.google.com.hk)",
 		"u": "https://www.google.com.hk/search?q=$1"
+	},
+	{
+		"la": "zh",
+		"l": "Google Images",
+		"u": "https://www.google.com.hk/search?q=$1&tbm=isch"
+	},
+	{
+		"la": "zh",
+		"l": "Google Videos",
+		"u": "https://www.google.com.hk/search?q=$1&tbm=vid"
 	}
 ];

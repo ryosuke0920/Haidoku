@@ -10,8 +10,47 @@ body {
 p {
 	margin-bottom: 0.5em;
 }
-button {
-	padding: 1px 0.5em;
+input[type="text"],input[type="url"],input[type="number"],input[type="date"],
+#preset .checkWrapper, .field, .LinkListProperty {
+	border-radius: 5px;
+	border: solid 1px #ccc;
+}
+
+input[type="text"]:focus,input[type="url"]:focus,input[type="number"],input[type="date"]:focus,
+#preset .checkWrapper:hover {
+	border: solid 1px rgb(165, 200, 238);
+	box-shadow: rgba(165, 200, 238, 0.32) 0px 3px 3px 0px, rgba(165, 200, 238, 0.32) 0px 0px 0px 2px;
+}
+button,select {
+	padding: 3px 0.5em;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	background: linear-gradient(to bottom, #FFFFFF, #EEE);
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 2px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+button:hover,select:hover {
+	background: linear-gradient(to bottom, #EEEEEE, #DDD);
+}
+select {
+	cursor: pointer;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+}
+table thead th {
+	background-color: WhiteSmoke;
+	color: black;
+	font-weight:bold;
+}
+table tbody tr:nth-child(2n) {
+	background-color: WhiteSmoke;
+}
+table thead th, table tbody td {
+	padding: 2px 5px;
 }
 #menu {
 	position: fixed;
@@ -153,7 +192,6 @@ button {
 .field {
 	position:relative;
 	margin-bottom: 1em;
-	box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 3px 0px;
 	padding: 0.5em;
 }
 .gridWrapper {
@@ -207,7 +245,7 @@ button {
 }
 .removeField {
 	position: absolute;
-	top:0;
+	top:5px;
 	right:5px;
 	width:16px;
 	height:16px;
@@ -227,9 +265,8 @@ button {
 #preset .url {
 	font-size:70%
 }
-#preset .checkWrapper:hover {
+#preset .checkWrapper {
 	cursor: pointer;
-	border-color: orange;
 }
 #table {
 	display: grid;
@@ -254,7 +291,7 @@ button {
 /* history menu */
 
 .historyPage,.historyRowSize {
-	width:40px;
+	width:50px;
 }
 .pagination {
 	cursor: pointer;
@@ -262,24 +299,6 @@ button {
 }
 .pagination:hover {
 	text-decoration: underline;
-}
-#historyTable {
-	width: 100%;
-	border-collapse: collapse;
-	border: 1px solid #ccc;
-	margin-bottom: 1em;
-}
-#historyTable thead th {
-	background-color: WhiteSmoke;
-	color: black;
-	font-weight:bold;
-}
-#historyTable tbody tr:nth-child(2n) {
-	background-color: WhiteSmoke;
-}
-#historyTable thead th, #historyTable tbody td {
-	padding-left: 5px;
-	padding-right: 5px;
 }
 .headHistoryID {
 	width: 20px;
@@ -292,25 +311,33 @@ button {
 	text-align: left;
 }
 
+/* ranking */
+
+.rankingCount{
+	text-align: right;
+}
+
 /* others menu */
 
 .othersTable {
 	display: grid;
 	grid-template-columns: 1fr;
-	box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 3px 0px;
 }
 .othersTable > * {
+	margin-right: 1em;
 	margin-bottom: 1em;
 }
-.othersHeader h1 {
+.othersTable>section>h1 {
 	background-color: WhiteSmoke;
 }
 @media (min-width: 948px) {
 	.othersTable {
-		grid-template-columns: 400px 1fr ;
+		grid-template-columns: 1fr 1fr ;
 	}
-	.othersHeader {
-		grid-column-start: 1;
+	.linkListSample {
+		grid-column-start: 2;
 		grid-column-end: 3;
+		grid-row-start: 1;
+		grid-row-end: 3;
 	}
 }
