@@ -27,6 +27,7 @@ URLs and search parameters of the following sites are prepared. If these specifi
 * goo 辞書
 * yahoo 辞書
 * 英辞郎 on the WEB
+
 etc. Total 71 URL.
 
 # License
