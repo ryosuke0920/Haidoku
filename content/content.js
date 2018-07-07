@@ -271,7 +271,7 @@
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
 			a.classList.add(CSS_PREFIX+"-anchor");
-			a.style["font-size"] = anchorSize + "em";
+			setFontSize(a, anchorSize);
 			a.setAttribute( "href", url );
 			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
@@ -531,9 +531,12 @@
 	function applyZoomLinkList(){
 		let list = linkListNode.querySelectorAll("a."+CSS_PREFIX+"-anchor");
 		for(let i=0; i<list.length; i++){
-			let node = list[i];
-			node.style["font-size"] = anchorSize + "em";
+			setFontSize(list[i], anchorSize);
 		}
+	}
+
+	function setFontSize(node, size){
+		node.style["font-size"] = size + "em";
 	}
 
 	function saveAnchorSize(){
