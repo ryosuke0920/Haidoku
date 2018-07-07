@@ -40,6 +40,11 @@ const PRESET_OPTION_LIST = [
 		"u": "https://www.youtube.com/results?search_query=$1"
 	},
 	{
+		"la": "en ja zh",
+		"l": "You Tube (+prononce)",
+		"u": "https://www.youtube.com/results?search_query=prononce+$1"
+	},
+	{
 		"la": "en",
 		"l": "Cambridge Dictionary",
 		"u": "https://dictionary.cambridge.org/search/english/direct/?q=$1"
