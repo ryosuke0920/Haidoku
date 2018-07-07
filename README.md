@@ -1,6 +1,6 @@
 # Search Dictionary Faster
 ## summary
-I want to be able to read foreign language sites. It's boring to search each words I don't understand. So I made the tool that directly move to several dictionary sites from the site. And it supports to study later the words searched.
+It was boring to search earch word which I don't understand. I found out several URLs of dictinary sites or search engines, I made this tool that be able to move directly to the dictionary site or the search engines.
 
 ## Description
 ### Link list
