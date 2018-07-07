@@ -48,8 +48,7 @@
 		linkListNode.setAttribute("id",CSS_PREFIX+"-viewer");
 		linkListNode.classList.add(CSS_PREFIX+"-hide");
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
-		linkListNode.style.height = linkListNodeHeight + "px";
-		linkListNode.style.width = linkListNodeWidth + "px";
+		applyLinkListSize();
 		body.appendChild( linkListNode );
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
@@ -510,8 +509,7 @@
 	function resetSize(height,width){
 		linkListNodeHeight = height;
 		linkListNodeWidth = width;
-		linkListNode.style.height = height + "px";
-		linkListNode.style.width = width + "px";
+		applyLinkListSize();
 	}
 
 	function zoomLinkList(direction=1){
