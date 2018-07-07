@@ -207,11 +207,11 @@
 
 	function resizeWatcher(){
 		let height = linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
-		if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
 		let width = linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
-		if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
 		if ( linkListNodeHeight != height || linkListNodeWidth != width ){
 			resizeWatcherFlag = true;
+			if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
+			if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
 			linkListNodeHeight = height;
 			linkListNodeWidth = width;
 		}
@@ -329,8 +329,12 @@
 	}
 
 	function onStorageChanged(change, area){
-		if( change["lh"] && change["lw"] ){
-			setLinkListSize( change["lh"]["newValue"], change["lw"]["newValue"] );
+		if( change["lh"] || change["lw"] ){
+			let lh = linkListNodeHeight;
+			if( change.hasOwnProperty("lh") ) lh = change["lh"]["newValue"];
+			let lw = linkListNodeWidth;
+			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
+			setLinkListSize( lh, lw );
 		}
 		else if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
