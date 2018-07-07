@@ -24,7 +24,6 @@
 	cursor: pointer;
 	background-image: url("chrome-extension://__MSG_@@extension_id__/image/rect30.png"),url("/image/rect30.png");
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:not(:hover),
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-stopper {
 	width: 30px !important;
 	height: 30px !important;
@@ -32,7 +31,6 @@
 	overflow: hidden;
 	resize: none;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mouseover:not(:hover) #lessLaborGoToDictionary-cover,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-cover {
 	display: block;
 }
