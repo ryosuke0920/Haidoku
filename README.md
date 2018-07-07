@@ -1,6 +1,6 @@
 # Search Dictionary Faster
 ## summary
-It was boring to search earch word which I don't understand. I found out several URLs of dictinary sites or search engines, I made this tool that be able to move directly to the dictionary site or the search engines.
+Every times it's boring to search words with copy and paste. I found out several dictinary site URLs, I made this tool let us to go directly to the dictionary site. And I noticed I always searched same words. So it saves history data to study later.
 
 ## Description
 ### Link list
