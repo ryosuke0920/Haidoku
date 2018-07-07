@@ -421,25 +421,29 @@
 		linkListAction = res;
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseover");
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
-		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
+		removeStopper();
 		linkListNode.removeEventListener("mouseenter", removeStopper);
-		linkListNode.removeEventListener("mouseleave", addStopper);
+		linkListNode.removeEventListener("mouseleave", controlStopper);
 		linkListNode.removeEventListener("click", removeStopper);
 		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
 			linkListNode.classList.add(CSS_PREFIX+"-mouseover");
-			linkListNode.classList.add(CSS_PREFIX+"-stopper");
+			addStopper();
 			linkListNode.addEventListener("mouseenter", removeStopper);
-			linkListNode.addEventListener("mouseleave", addStopper);
+			linkListNode.addEventListener("mouseleave", controlStopper);
 		}
 		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
-			linkListNode.classList.add(CSS_PREFIX+"-stopper");
+			addStopper();
 			linkListNode.addEventListener("click", removeStopper);
 		}
 	}
 
-	function addStopper(e){
-		if(!resizeWatcherFlag) linkListNode.classList.add(CSS_PREFIX+"-stopper");
+	function controlStopper(e){
+		if(!resizeWatcherFlag) addStopper();
+	}
+
+	function addStopper(){
+		linkListNode.classList.add(CSS_PREFIX+"-stopper");
 	}
 
 	function removeStopper(e){
