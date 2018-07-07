@@ -98,9 +98,8 @@
 	display: block;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark {
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	border-bottom-left-radius: 10px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark {
 	background: linear-gradient(to bottom right, #404040, #202020);
