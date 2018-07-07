@@ -19,6 +19,7 @@
 	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
 	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
+	let coverNode;
 	let optionList = [];
 	let linkListFlag = false;
 	let shiftKeyFlag = false;
@@ -50,6 +51,9 @@
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
 		body.appendChild( linkListNode );
+		coverNode = document.createElement("div");
+		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
+		linkListNode.appendChild(coverNode);
 		menuNode = document.createElement("nav");
 		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
 		linkListNode.appendChild(menuNode);
@@ -128,7 +132,7 @@
 	}
 
 	function mousedownCommonBehavior(e){
-		mousedownFlag = true;
+		if ( e.target != coverNode ) mousedownFlag = true;
 	}
 
 	function mousedownAutoBehavior(e){
