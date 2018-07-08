@@ -47,7 +47,7 @@
 			"48": "image/icon48.png",
 			"16": "image/icon16.png"
 		},
-		"default_title": "__MSG_extensionOptionName__"
+		"default_title": "__MSG_extensionName__"
 	},
 	"permissions": [
 		"activeTab",
