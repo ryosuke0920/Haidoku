@@ -25,12 +25,17 @@ const PRESET_OPTION_LIST = [
 		"u": "https://www.google.com/search?q=$1&tbm=vid"
 	},
 	{
-		"la": "en ja",
+		"la": "en ja zh",
 		"l": "Bing",
 		"u": "https://www.bing.com/search?q=$1"
 	},
 	{
-		"la": "en ja",
+		"la": "en",
+		"l": "YAHOO!",
+		"u": "https://search.yahoo.com/search?p=$1"
+	},
+	{
+		"la": "en ja zh",
 		"l": "DuckDuckGo",
 		"u": "https://duckduckgo.com/?q=$1"
 	},
@@ -38,6 +43,11 @@ const PRESET_OPTION_LIST = [
 		"la": "en ja zh",
 		"l": "You Tube",
 		"u": "https://www.youtube.com/results?search_query=$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "You Tube (+prononce)",
+		"u": "https://www.youtube.com/results?search_query=prononce+$1"
 	},
 	{
 		"la": "en",
@@ -236,6 +246,11 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "ja",
+		"l": "楽天ウェブ検索",
+		"u": "https://websearch.rakuten.co.jp/WebIS?qt=$1"
+	},
+	{
+		"la": "ja",
 		"l": "Yahoo!JAPAN 辞書",
 		"u": "https://dic.yahoo.co.jp/search/?fr=dic&stype=full&ei=UTF-8&p=$1"
 	},
@@ -338,6 +353,11 @@ const PRESET_OPTION_LIST = [
 		"la": "zh",
 		"l": "Baidu百度",
 		"u": "https://www.baidu.com/s?wd=$1"
+	},
+	{
+		"la": "zh",
+		"l": "YAHOO! (hk.yahoo.com)",
+		"u": "https://hk.search.yahoo.com/search?p=$1"
 	},
 	{
 		"la": "zh",

@@ -21,16 +21,20 @@ case ${1} in
 		web-ext lint --ignore-files \
 			${APP_DIR}"material" \
 			${APP_DIR}"chrome-artifacts" \
+			${APP_DIR}"opera-artifacts" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
+			${APP_DIR}"manifest.opera.json" \
 			${APP_DIR}"manifest.edge.json" \
 			${APP_DIR}"*.sh";
 		check ${?};
 		web-ext build --ignore-files \
 			${APP_DIR}"material" \
 			${APP_DIR}"chrome-artifacts" \
+			${APP_DIR}"opera-artifacts" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
+			${APP_DIR}"manifest.opera.json" \
 			${APP_DIR}"manifest.edge.json" \
 			${APP_DIR}"*.sh";
 		check ${?};
@@ -53,8 +57,10 @@ case ${1} in
 			${APP_DIR}"material/*" \
 			${APP_DIR}"web-ext-artifacts/*" \
 			${APP_DIR}"chrome-artifacts/*" \
+			${APP_DIR}"opera-artifacts/*" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
+			${APP_DIR}"manifest.opera.json" \
 			${APP_DIR}"manifest.edge.json" \
 			${APP_DIR}"BUILD.md" \
 			${APP_DIR}"*.sh";
