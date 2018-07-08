@@ -177,7 +177,7 @@
 	}
 
 	function switchLinkList(){
-		if(isLinkListShown()){
+		if(isLinkListShown() && !hasStopper()){
 			closeLinkList();
 		}
 		else if ( hasLinkList() ) {
