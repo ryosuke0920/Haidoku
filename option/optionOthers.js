@@ -96,16 +96,25 @@
 	function setSampleLinkListAction(value){
 		sampleLinkListNode.classList.remove(CSS_PREFIX+"-mouseover");
 		sampleLinkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
-		sampleLinkListNode.classList.remove(CSS_PREFIX+"-stopper");
+		removeStopper();
 		sampleLinkListNode.removeEventListener("click",removeStopper);
+		sampleLinkListNode.removeEventListener("mouseenter", removeStopper);
+		sampleLinkListNode.removeEventListener("mouseleave", addStopper);
 		if( value == LINK_LIST_ACTION_MOUSEOVER ){
 			sampleLinkListNode.classList.add(CSS_PREFIX+"-mouseover");
+			addStopper();
+			sampleLinkListNode.addEventListener("mouseenter", removeStopper);
+			sampleLinkListNode.addEventListener("mouseleave", addStopper);
 		}
 		else if( value == LINK_LIST_ACTION_MOUSECLICK ){
 			sampleLinkListNode.classList.add(CSS_PREFIX+"-mouseclick");
-			sampleLinkListNode.classList.add(CSS_PREFIX+"-stopper");
+			addStopper();
 			sampleLinkListNode.addEventListener("click",removeStopper);
 		}
+	}
+
+	function addStopper(e){
+		sampleLinkListNode.classList.add(CSS_PREFIX+"-stopper");
 	}
 
 	function removeStopper(e){

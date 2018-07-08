@@ -19,6 +19,7 @@
 	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
 	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
+	let coverNode;
 	let optionList = [];
 	let linkListFlag = false;
 	let shiftKeyFlag = false;
@@ -47,9 +48,11 @@
 		linkListNode.setAttribute("id",CSS_PREFIX+"-viewer");
 		linkListNode.classList.add(CSS_PREFIX+"-hide");
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
-		linkListNode.style.height = linkListNodeHeight + "px";
-		linkListNode.style.width = linkListNodeWidth + "px";
+		applyLinkListSize();
 		body.appendChild( linkListNode );
+		coverNode = document.createElement("div");
+		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
+		linkListNode.appendChild(coverNode);
 		menuNode = document.createElement("nav");
 		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
 		linkListNode.appendChild(menuNode);
@@ -123,12 +126,12 @@
 			let lastRange = selection.getRangeAt(selection.rangeCount-1);
 			let rectList = lastRange.getClientRects();
 			let rect = rectList[rectList.length-1];
-			showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+			showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
 		}
 	}
 
 	function mousedownCommonBehavior(e){
-		mousedownFlag = true;
+		if ( e.target != coverNode ) mousedownFlag = true;
 	}
 
 	function mousedownAutoBehavior(e){
@@ -155,7 +158,7 @@
 			if( !selectioin.isCollapsed ){
 				selectionChangedFlag = false;
 				makeLinkList(selectioin.toString());
-				showLinkList(e.pageY, e.pageX, e.clientY, e.clientX, selectioin);
+				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selectioin);
 			}
 		}
 	}
@@ -174,7 +177,7 @@
 	}
 
 	function switchLinkList(){
-		if(isLinkListShown()){
+		if(isLinkListShown() && !hasStopper()){
 			closeLinkList();
 		}
 		else if ( hasLinkList() ) {
@@ -184,13 +187,13 @@
 				let rectList = lastRange.getClientRects();
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
-				showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
 			}
 		}
 	}
 
 	function mousemoveBehavior(e){
-		if ( isLinkListShown() && mousedownFlag ) resizeWatcher();
+		if ( !hasStopper() && isLinkListShown() && mousedownFlag ) resizeWatcher();
 	}
 
 	function isLinkListNodeUnderMouse(yy,xx){
@@ -203,11 +206,11 @@
 
 	function resizeWatcher(){
 		let height = linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
-		if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
 		let width = linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
-		if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
 		if ( linkListNodeHeight != height || linkListNodeWidth != width ){
 			resizeWatcherFlag = true;
+			if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
+			if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
 			linkListNodeHeight = height;
 			linkListNodeWidth = width;
 		}
@@ -268,7 +271,7 @@
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
 			a.classList.add(CSS_PREFIX+"-anchor");
-			a.style["font-size"] = anchorSize + "em";
+			setFontSize(a, anchorSize);
 			a.setAttribute( "href", url );
 			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
@@ -286,12 +289,25 @@
 		}
 	}
 
-	function showLinkList(pageY, pageX, clientY, clientX, selection){
-		if( linkListAction == LINK_LIST_ACTION_MOUSECLICK) linkListNode.classList.add(CSS_PREFIX+"-stopper");
-		/* when display equals none, offsetHeight and offsetWidth return undefined. */
-		linkListNode.classList.remove(CSS_PREFIX+"-hide");
+	function applyLinkListSize(){
 		linkListNode.style.height = linkListNodeHeight + "px";
 		linkListNode.style.width = linkListNodeWidth + "px";
+	}
+
+	function showLinkListByClick(pageY, pageX, clientY, clientX, selection){
+		if( linkListAction == LINK_LIST_ACTION_MOUSECLICK || linkListAction == LINK_LIST_ACTION_MOUSEOVER ) addStopper();
+		showLinkList(pageY, pageX, clientY, clientX, selection);
+	}
+
+	function showLinkListByKey(pageY, pageX, clientY, clientX, selection){
+		removeStopper();
+		showLinkList(pageY, pageX, clientY, clientX, selection);
+	}
+
+	function showLinkList(pageY, pageX, clientY, clientX, selection){
+		/* when display equals none, offsetHeight and offsetWidth return undefined. */
+		linkListNode.classList.remove(CSS_PREFIX+"-hide");
+		applyLinkListSize();
 		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
 		if ( 0 < yy || window.innerHeight < linkListNode.offsetHeight ) yy = 0;
 		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH;
@@ -321,8 +337,12 @@
 	}
 
 	function onStorageChanged(change, area){
-		if( change["lh"] && change["lw"] ){
-			setLinkListSize( change["lh"]["newValue"], change["lw"]["newValue"] );
+		if( change["lh"] || change["lw"] ){
+			let lh = linkListNodeHeight;
+			if( change.hasOwnProperty("lh") ) lh = change["lh"]["newValue"];
+			let lw = linkListNodeWidth;
+			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
+			setLinkListSize( lh, lw );
 		}
 		else if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
@@ -354,6 +374,7 @@
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
 		linkListNodeHeight = height;
 		linkListNodeWidth = width;
+		if( isLinkListShown() ) applyLinkListSize();
 	}
 
 	function reload(){
@@ -385,6 +406,7 @@
 
 	function setAnchorSize(res){
 		anchorSize = res;
+		applyZoomLinkList();
 	}
 
 	function setLinkListFlag(res){
@@ -408,20 +430,37 @@
 		linkListAction = res;
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseover");
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
-		linkListNode.classList.remove(CSS_PREFIX+"-mousestopper");
-		linkListNode.removeEventListener("click", removeStoper);
+		removeStopper();
+		linkListNode.removeEventListener("mouseenter", removeStopper);
+		linkListNode.removeEventListener("mouseleave", controlStopper);
+		linkListNode.removeEventListener("click", removeStopper);
 		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
 			linkListNode.classList.add(CSS_PREFIX+"-mouseover");
+			addStopper();
+			linkListNode.addEventListener("mouseenter", removeStopper);
+			linkListNode.addEventListener("mouseleave", controlStopper);
 		}
 		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
-			linkListNode.classList.add(CSS_PREFIX+"-stopper");
-			linkListNode.addEventListener("click", removeStoper);
+			addStopper();
+			linkListNode.addEventListener("click", removeStopper);
 		}
 	}
 
-	function removeStoper(e){
+	function controlStopper(e){
+		if(!resizeWatcherFlag) addStopper();
+	}
+
+	function addStopper(){
+		linkListNode.classList.add(CSS_PREFIX+"-stopper");
+	}
+
+	function removeStopper(e){
 		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
+	}
+
+	function hasStopper(){
+		return linkListNode.classList.contains(CSS_PREFIX+"-stopper");
 	}
 
 	function resetLinkListEvents(){
@@ -487,8 +526,7 @@
 	function resetSize(height,width){
 		linkListNodeHeight = height;
 		linkListNodeWidth = width;
-		linkListNode.style.height = height + "px";
-		linkListNode.style.width = width + "px";
+		applyLinkListSize();
 	}
 
 	function zoomLinkList(direction=1){
@@ -499,12 +537,19 @@
 		anchorSize *= 10 ;
 		anchorSize = Math.floor(anchorSize);
 		anchorSize /= 10 ;
+		applyZoomLinkList();
+		return true;
+	}
+
+	function applyZoomLinkList(){
 		let list = linkListNode.querySelectorAll("a."+CSS_PREFIX+"-anchor");
 		for(let i=0; i<list.length; i++){
-			let node = list[i];
-			node.style["font-size"] = anchorSize + "em";
+			setFontSize(list[i], anchorSize);
 		}
-		return true;
+	}
+
+	function setFontSize(node, size){
+		node.style["font-size"] = size + "em";
 	}
 
 	function saveAnchorSize(){
@@ -546,7 +591,7 @@
 
 	function silentError(e){
 		if( e.message.match( SILENT_ERROR_REGEX ) ){
-			console.error(e);
+			console.log(e);
 		}
 		else {
 			throw(e);
