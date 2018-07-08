@@ -23,6 +23,10 @@ case ${1} in
 		cp ${APP_DIR}"manifest.chrome.json" ${APP_DIR}"manifest.json";
 		check ${?};
 		;;
+	"opera") 
+		cp ${APP_DIR}"manifest.opera.json" ${APP_DIR}"manifest.json";
+		check ${?};
+		;;
 	"edge") 
 		cp ${APP_DIR}"manifest.edge.json" ${APP_DIR}"manifest.json";
 		check ${?};

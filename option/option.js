@@ -264,12 +264,18 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 	});
 	labelNode.value = label;
 	labelNode.addEventListener("input", (e)=>{
-		if( !checkLabel(labelNode,labelMessageNode) ) checkNode.removeAttribute("data-checked");
+		if( !checkLabel(labelNode,labelMessageNode) && checkNode.getAttribute("data-checked") ){
+			checkNode.removeAttribute("data-checked");
+			saveOption().catch(onSaveError);
+		}
 	});
 	labelNode.addEventListener("blur", blurBehavior);
 	urlNode.value = url;
 	urlNode.addEventListener("input", (e)=>{
-		if( !checkUrl(urlNode, urlMessageNode) ) checkNode.removeAttribute("data-checked");
+		if( !checkUrl(urlNode, urlMessageNode) && checkNode.getAttribute("data-checked") ){
+			checkNode.removeAttribute("data-checked");
+			saveOption().catch(onSaveError);
+		}
 	});
 	urlNode.addEventListener("blur", blurBehavior);
 	handleNode.addEventListener("mousedown", sortStart);
