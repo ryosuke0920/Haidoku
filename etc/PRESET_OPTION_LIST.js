@@ -46,8 +46,8 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en ja zh",
-		"l": "You Tube (+prononce)",
-		"u": "https://www.youtube.com/results?search_query=prononce+$1"
+		"l": "You Tube (+pronounce)",
+		"u": "https://www.youtube.com/results?search_query=pronounce+$1"
 	},
 	{
 		"la": "en",
