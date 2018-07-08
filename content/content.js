@@ -295,7 +295,7 @@
 	}
 
 	function showLinkList(pageY, pageX, clientY, clientX, selection){
-		if( linkListAction == LINK_LIST_ACTION_MOUSECLICK || linkListAction == LINK_LIST_ACTION_MOUSEOVER ) linkListNode.classList.add(CSS_PREFIX+"-stopper");
+		if( linkListAction == LINK_LIST_ACTION_MOUSECLICK || linkListAction == LINK_LIST_ACTION_MOUSEOVER ) addStopper();
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		linkListNode.classList.remove(CSS_PREFIX+"-hide");
 		applyLinkListSize();
