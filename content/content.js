@@ -193,7 +193,7 @@
 	}
 
 	function mousemoveBehavior(e){
-		if ( isLinkListShown() && mousedownFlag ) resizeWatcher();
+		if ( !hasStopper() && isLinkListShown() && mousedownFlag ) resizeWatcher();
 	}
 
 	function isLinkListNodeUnderMouse(yy,xx){
@@ -457,6 +457,10 @@
 
 	function removeStopper(e){
 		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
+	}
+
+	function hasStopper(){
+		return linkListNode.classList.contains(CSS_PREFIX+"-stopper");
 	}
 
 	function resetLinkListEvents(){
