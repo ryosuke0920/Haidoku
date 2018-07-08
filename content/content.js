@@ -126,7 +126,7 @@
 			let lastRange = selection.getRangeAt(selection.rangeCount-1);
 			let rectList = lastRange.getClientRects();
 			let rect = rectList[rectList.length-1];
-			showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+			showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
 		}
 	}
 
@@ -158,7 +158,7 @@
 			if( !selectioin.isCollapsed ){
 				selectionChangedFlag = false;
 				makeLinkList(selectioin.toString());
-				showLinkList(e.pageY, e.pageX, e.clientY, e.clientX, selectioin);
+				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selectioin);
 			}
 		}
 	}
@@ -187,7 +187,7 @@
 				let rectList = lastRange.getClientRects();
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
-				showLinkList(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
 			}
 		}
 	}
@@ -294,8 +294,17 @@
 		linkListNode.style.width = linkListNodeWidth + "px";
 	}
 
-	function showLinkList(pageY, pageX, clientY, clientX, selection){
+	function showLinkListByClick(pageY, pageX, clientY, clientX, selection){
 		if( linkListAction == LINK_LIST_ACTION_MOUSECLICK || linkListAction == LINK_LIST_ACTION_MOUSEOVER ) addStopper();
+		showLinkList(pageY, pageX, clientY, clientX, selection);
+	}
+
+	function showLinkListByKey(pageY, pageX, clientY, clientX, selection){
+		removeStopper();
+		showLinkList(pageY, pageX, clientY, clientX, selection);
+	}
+
+	function showLinkList(pageY, pageX, clientY, clientX, selection){
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		linkListNode.classList.remove(CSS_PREFIX+"-hide");
 		applyLinkListSize();
