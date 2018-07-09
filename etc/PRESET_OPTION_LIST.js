@@ -41,6 +41,16 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en ja zh",
+		"l": "DuckDuckGo Images",
+		"u": "https://duckduckgo.com/?q=$1&iar=images"
+	},
+	{
+		"la": "en ja zh",
+		"l": "DuckDuckGo videos",
+		"u": "https://duckduckgo.com/?q=$1&iar=videos"
+	},
+	{
+		"la": "en ja zh",
 		"l": "You Tube",
 		"u": "https://www.youtube.com/results?search_query=$1"
 	},
