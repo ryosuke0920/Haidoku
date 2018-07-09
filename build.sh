@@ -60,6 +60,7 @@ case ${1} in
 			${APP_DIR}"opera-artifacts/*" \
 			${APP_DIR}"manifest.firefox.json" \
 			${APP_DIR}"manifest.chrome.json" \
+			${APP_DIR}"manifest.opera.json" \
 			${APP_DIR}"manifest.edge.json" \
 			${APP_DIR}"BUILD.md" \
 			${APP_DIR}"*.sh";
