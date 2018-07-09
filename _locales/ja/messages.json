@@ -108,7 +108,7 @@
 		"description": "Name of the ranking on the side menu."
 	},
 	"htmlOthersName": {
-		"message": "その他",
+		"message": "表示",
 		"description": "Name of the others on the side menu."
 	},
 	"htmlContactName": {
@@ -332,7 +332,7 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionNormal": {
-		"message": "標準",
+		"message": "アイコンなし",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionMouseover": {
