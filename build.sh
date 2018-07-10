@@ -39,18 +39,34 @@ case ${1} in
 			${APP_DIR}"*.sh";
 		check ${?};
 		;;
-	"chrome")
-		cp ${APP_DIR}"manifest.chrome.json" ${APP_DIR}"manifest.json";
+	*)
+		ARTIFACT_DIR="chrome-artifacts/";
+		MANIFEST_FILE="manifest.chrome.json";
+
+		case ${1} in
+			"opera")
+				ARTIFACT_DIR="opera-artifacts/";
+				MANIFEST_FILE="manifest.opera.json";
+				;;
+			"chrome")
+				;;
+			*)
+				echo "error."${1};
+				exit 2;
+				;;
+		esac
+
+		cp ${APP_DIR}${MANIFEST_FILE} ${APP_DIR}"manifest.json";
 		check ${?};
 		version=$( grep "\"version\"" "manifest.json" );
 		check ${?};
 		version=$( echo ${version} | sed -r "s/^\"version\"\s*:\s*\"(.*)\".*/\1/" );
 		check ${?};
-		filename=${APP_DIR}"chrome-artifacts/"${version}".zip";
+		filename=${APP_DIR}${ARTIFACT_DIR}${version}".zip";
 		echo ${filename};
 		if [ -e ${filename} ]; then
 			echo "already exists.";
-			exit 1;
+			exit 3;
 		fi
 		zip -r ${filename} ${APP_DIR} -x \
 			${APP_DIR}".git*" \
