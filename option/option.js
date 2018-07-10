@@ -82,7 +82,7 @@ function initListener(){
 }
 
 function formScrollCancel(e){
-	scrollDestination = window.scrollY;
+	scrollDestination = -1;
 }
 
 function fileChangeBehavior(e, area){
@@ -309,7 +309,7 @@ function smoothScroll(){
 	let body = document.querySelector("body");
 	scrollDestination = body.offsetHeight - window.innerHeight;
 	function animation(){
-		if ( scrollDestination != window.scrollY ) {
+		if ( 0 <= scrollDestination && scrollDestination != window.scrollY ) {
 			let delta = Math.ceil(( scrollDestination - window.scrollY ) * SCROLL_RACIO );
 			window.scrollTo(0,delta+window.scrollY);
 			setTimeout( animation, 80 );
