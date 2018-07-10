@@ -41,13 +41,43 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en ja zh",
+		"l": "DuckDuckGo Images",
+		"u": "https://duckduckgo.com/?q=$1&iar=images"
+	},
+	{
+		"la": "en ja zh",
+		"l": "DuckDuckGo videos",
+		"u": "https://duckduckgo.com/?q=$1&iar=videos"
+	},
+	{
+		"la": "en ja zh",
+		"l": "Ecosia",
+		"u": "https://www.ecosia.org/search?q=$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "Ecosia Images",
+		"u": "https://www.ecosia.org/images?q=$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "Ecosia Videos",
+		"u": "https://www.ecosia.org/videos?q=$1"
+	},
+	{
+		"la": "en ja zh",
 		"l": "You Tube",
 		"u": "https://www.youtube.com/results?search_query=$1"
 	},
 	{
 		"la": "en ja zh",
-		"l": "You Tube (+prononce)",
-		"u": "https://www.youtube.com/results?search_query=prononce+$1"
+		"l": "You Tube (+pronounce)",
+		"u": "https://www.youtube.com/results?search_query=pronounce+$1"
+	},
+	{
+		"la": "en",
+		"l": "wordnik",
+		"u": "https://www.wordnik.com/words/$1"
 	},
 	{
 		"la": "en",
@@ -246,11 +276,6 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "ja",
-		"l": "楽天ウェブ検索",
-		"u": "https://websearch.rakuten.co.jp/WebIS?qt=$1"
-	},
-	{
-		"la": "ja",
 		"l": "Yahoo!JAPAN 辞書",
 		"u": "https://dic.yahoo.co.jp/search/?fr=dic&stype=full&ei=UTF-8&p=$1"
 	},
@@ -323,6 +348,16 @@ const PRESET_OPTION_LIST = [
 		"la": "ja",
 		"l": "英辞郎 on the WEB",
 		"u": "https://eow.alc.co.jp/search?q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "韓国語 辞書 Kpedia",
+		"u": "http://www.kpedia.jp/s/1/$1"
+	},
+	{
+		"la": "ja",
+		"l": "楽天ウェブ検索",
+		"u": "https://websearch.rakuten.co.jp/WebIS?qt=$1"
 	},
 	{
 		"la": "ja",

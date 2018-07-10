@@ -3,6 +3,9 @@ const MAX_LABEL_BYTE = 100;
 const MAX_URL_BYTE = 300;
 const BLANK_REGEX = new RegExp(/^\s*$/);
 const URL_REGEX = new RegExp(/^(?:[hH][tT][tT][pP][sS]?|[fF][tT][pP][sS]?):\/\/\w+/);
+const ADD_FIELD_CLASS = "add";
+const ADD_FIELD_DURATION = 1.5 * 1000;
+const SCROLL_RACIO = 1/2;
 let mainNode = document.querySelector("#main");
 let navNode = document.querySelector("#nav");
 let formNode = document.querySelector("#form");
@@ -17,6 +20,7 @@ let holdedNode;
 let draggedNode;
 let draggable_list = [];
 let dy = 0;
+let scrollDestination = 0;
 
 Promise.resolve().then( initI18n ).then( initField ).then( initListener ).then( showBody ).catch( unexpectedError );
 
@@ -72,6 +76,13 @@ function initListener(){
 	window.addEventListener("mouseup", sortEnd);
 	window.addEventListener("mousemove", sortMove);
 	window.addEventListener("click", hideInputMessage);
+	window.addEventListener("keydown", formScrollCancel);
+	window.addEventListener("mousedown", formScrollCancel);
+	window.addEventListener("wheel", formScrollCancel);
+}
+
+function formScrollCancel(e){
+	scrollDestination = -1;
 }
 
 function fileChangeBehavior(e, area){
@@ -87,7 +98,6 @@ function fileChangeBehavior(e, area){
 	}
 	resetSort();
 }
-
 
 function navBehavior(e){
 	let classList = e.target.classList;
@@ -118,9 +128,10 @@ function formBehavior(e){
 			onCheckFieldLengthError();
 			return ;
 		}
-		addField();
+		addNewField();
 		resetSort();
 		saveOption().catch(onSaveError);
+		smoothScroll();
 	}
 	else if(e.target.closest(".removeField")){
 		e.target.closest(".field").remove();
@@ -222,10 +233,21 @@ function hideInputMessage(e){
 	}
 }
 
+function removeAddAnimation(){
+	this.classList.remove(ADD_FIELD_CLASS);
+}
+
+function addNewField( checked=false, hist=true, label="", url="" ){
+	return addField( checked, hist, label, url, ADD_FIELD_CLASS );
+}
+
 function addField( checked=false, hist=true, label="", url="", cls=null ){
 	let node = inputPrototypeNode.cloneNode(true);
 	node.removeAttribute("id");
-	if(cls) node.classList.add(cls);
+	if(cls) {
+		node.classList.add(cls);
+		setTimeout( removeAddAnimation.bind(node), ADD_FIELD_DURATION );
+	}
 	let checkNode = node.querySelector(".check");
 	let histNode = node.querySelector(".hist");
 	let labelNode = node.querySelector(".label");
@@ -281,6 +303,19 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 	handleNode.addEventListener("mousedown", sortStart);
 	containerNode.appendChild(node);
 	show(node);
+}
+
+function smoothScroll(){
+	let body = document.querySelector("body");
+	scrollDestination = body.offsetHeight - window.innerHeight;
+	function animation(){
+		if ( 0 <= scrollDestination && scrollDestination != window.scrollY ) {
+			let delta = Math.ceil(( scrollDestination - window.scrollY ) * SCROLL_RACIO );
+			window.scrollTo(0,delta+window.scrollY);
+			setTimeout( animation, 80 );
+		}
+	}
+	animation();
 }
 
 function checkLabel(node, messageNode){

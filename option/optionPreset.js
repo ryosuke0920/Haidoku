@@ -105,12 +105,13 @@
 			let checkWrapperNode = node.closest(".checkWrapper");
 			let label = checkWrapperNode.querySelector(".label").innerText;
 			let p = checkWrapperNode.querySelector(".url").innerText;
-			addField(true, true, label, p, "added");
+			addNewField(true, true, label, p);
 		}
 		let promise = saveOption();
 		resetPreset();
 		resetSort();
 		showForm();
+		smoothScroll();
 	}
 
 	function checkPreset(e){

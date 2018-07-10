@@ -108,7 +108,7 @@
 		"description": "Name of the ranking on the side menu."
 	},
 	"htmlOthersName": {
-		"message": "Others",
+		"message": "View",
 		"description": "Name of the others on the side menu."
 	},
 	"htmlContactName": {
@@ -332,7 +332,7 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionNormal": {
-		"message": "Normal",
+		"message": "No icon",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionMouseover": {
