@@ -194,6 +194,15 @@ table thead th, table tbody td {
 	margin-bottom: 1em;
 	padding: 0.5em;
 }
+.field.add {
+	animation-name: add-field;
+	animation-duration: 1.5s;
+}
+@keyframes add-field {
+	from {
+		background-color: DodgerBlue;
+	}
+}
 .gridWrapper {
 	display: grid;
 	grid-template-columns: 1fr;
