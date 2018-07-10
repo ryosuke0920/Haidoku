@@ -31,7 +31,7 @@ URLs and search parameters of the following sites are prepared. If these specifi
 * yahoo 辞書
 * 英辞郎 on the WEB
 
-etc. Total 71 URLs.
+etc. Total 82 URLs.
 
 # License
 This software is released under the MIT License.
