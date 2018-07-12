@@ -1,6 +1,6 @@
 # Search Dictionary Faster
 ## summary
-Every times it's boring to search words with copy and paste. I found out several dictionary site URLs, I made this tool let us to go directly to the dictionary site. And I noticed I always searched same words. So it saves history data to study later.
+Every times it's is boring to input text for search. Especially it's time reading a foreign language site. I made a tool allows us to search by selecting only text. And it saves history data to study later.
 
 ## Description
 ### Link list
