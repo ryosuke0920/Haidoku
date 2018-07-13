@@ -448,7 +448,10 @@
 	}
 
 	function controlStopper(e){
-		if(!resizeWatcherFlag) addStopper();
+		if(!resizeWatcherFlag){
+			addStopper();
+			linkListNode.scrollTop = linkListNode.scrollLeft = 0;
+		}
 	}
 
 	function addStopper(){
