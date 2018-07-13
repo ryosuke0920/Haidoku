@@ -33,8 +33,8 @@ URLs and search parameters of the following sites are prepared. If these specifi
 
 etc. Total 82 URLs.
 
-# Privasy policy
-This tool does not collect or send information, but the setting data are sended and received by the synchronization service provided by the browser. History data is out of the synchronization service.
+# Privacy policy
+This tool does not collect or send information, but the setting data are sent and received by the synchronization service provided by the browser. History data is out of the synchronization service.
 
 # Delivery information such as release information
 https://twitter.com/SearchDictionar
