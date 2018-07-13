@@ -19,6 +19,9 @@ webサイト上でテキストを選択するとリンクリストが表示さ�
 下記サイトの検索クエリ（URL）を予め調べて、選択できるようにしてあります。サイト側で仕様変更があった場合は修正が必要です。追加して欲しいサイトがあればメールで依頼をください。あなた以外にもそれを必要としている人がいるかもしれません。
 
 * Google
+* Bing
+* DuckDuckGo
+* 百度
 * Wikipedia
 * Cambridge Dictionary
 * Oxford Dictionaries
@@ -30,12 +33,15 @@ webサイト上でテキストを選択するとリンクリストが表示さ�
 
 等。計82URL。
 
-# ライセンス
-このソフトウェアはMITライセンスの下で公開されています。
-https://opensource.org/licenses/MIT
+# プライバシーポリシー
+このツールは情報の収集や送信を行いませんが、設定内容はブラウザが提供する同期サービスによって送受信されます。履歴はブラウザの同期サービスの対象外です。
 
 # リリース情報などの配信
 https://twitter.com/SearchDictionar
 
 # お問い合わせ先
 ryosuke.ohta.programmer@gmail.com
+
+# ライセンス
+このソフトウェアはMITライセンスの下で公開されています。
+https://opensource.org/licenses/MIT
