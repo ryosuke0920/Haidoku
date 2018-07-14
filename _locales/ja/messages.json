@@ -191,6 +191,12 @@
 		"message": "追加",
 		"description": "Name of adding button."
 	},
+	"htmlPresetSearchKeyword": {
+		"message": "検索キーワード"
+	},
+	"htmlPresetClearSearchButton": {
+		"message": "クリア"
+	},
 	"htmlHistoryUpdateButton": {
 		"message": "更新",
 		"description": "Name of update button."
