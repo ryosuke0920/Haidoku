@@ -271,6 +271,11 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "ja",
+		"l": "Google 翻訳 自動検出→日本語",
+		"u": "https://translate.google.co.jp/?hl=ja#auto/ja/$1"
+	},
+	{
+		"la": "ja",
 		"l": "Google 翻訳 英語→日本語",
 		"u": "https://translate.google.co.jp/?hl=ja&tab=TT#en/ja/$1"
 	},
