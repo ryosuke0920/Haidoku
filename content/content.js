@@ -18,6 +18,8 @@
 	let linkListNodeLeft = 0;
 	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
+	let linkListScrollTopTmp = 0;
+	let linkListScrollleftTmp = 0;
 	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
 	let coverNode;
 	let optionList = [];
@@ -228,6 +230,7 @@
 	}
 
 	function closeLinkList(){
+		resetScrollTmp();
 		linkListNode.classList.add(CSS_PREFIX+"-hide");
 	}
 
@@ -428,6 +431,7 @@
 
 	function setLinkListAction(res){
 		linkListAction = res;
+		resetScrollTmp();
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseover");
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
 		removeStopper();
@@ -450,6 +454,8 @@
 	function controlStopper(e){
 		if(!resizeWatcherFlag){
 			addStopper();
+			linkListScrollTopTmp = linkListNode.scrollTop;
+			linkListScrollleftTmp = linkListNode.scrollLeft;
 			linkListNode.scrollTop = linkListNode.scrollLeft = 0;
 		}
 	}
@@ -459,11 +465,17 @@
 	}
 
 	function removeStopper(e){
+		linkListNode.scrollTop = linkListScrollTopTmp;
+		linkListNode.scrollLeft = linkListScrollleftTmp;
 		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
 	function hasStopper(){
 		return linkListNode.classList.contains(CSS_PREFIX+"-stopper");
+	}
+
+	function resetScrollTmp(){
+		linkListScrollTopTmp = linkListScrollleftTmp = 0;
 	}
 
 	function resetLinkListEvents(){
