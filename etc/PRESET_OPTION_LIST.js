@@ -30,6 +30,16 @@ const PRESET_OPTION_LIST = [
 		"u": "https://www.bing.com/search?q=$1"
 	},
 	{
+		"la": "en ja zh",
+		"l": "Bing images",
+		"u": "https://www.bing.com/images/search?q=$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "Bing Videos",
+		"u": "https://www.bing.com/videos/search?q=$1"
+	},
+	{
 		"la": "en",
 		"l": "YAHOO!",
 		"u": "https://search.yahoo.com/search?p=$1"
