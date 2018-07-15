@@ -34,6 +34,12 @@
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-cover {
 	display: block;
 }
+#lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-icon {
+	all: initial;
+	user-select: none;
+	-moz-user-select: none;
+	display: inline;
+}
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
 	all: initial;
 	font-family: sans-serif;

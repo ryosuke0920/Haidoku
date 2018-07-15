@@ -41,23 +41,20 @@ function notify(message, sender, sendResponse){
 	let method = message.method;
 	let data = message.data;
 	if( method == "notice" ){
-		sendResponse( notice(data) );
+		return notice(data);
 	}
 	else if( method == "saveHistory" ){
-		sendResponse( saveHistory(data) );
+		return saveHistory(data);
 	}
 	else if( method == "openOptions" ){
-		sendResponse( ponyfill.runtime.openOptionsPage() );
+		return ponyfill.runtime.openOptionsPage();
 	}
 	else if( method == "getFavicons" ){
-		let p = getFavicons(data);
-		console.log(p);
-		return p;
+		return getFavicons(data);
 	}
 	else {
-		sendResponse( save(data) );
+		return save(data);
 	}
-	return true;
 }
 
 function saveAutoViewFlag(flag=true){
@@ -325,6 +322,7 @@ function getFavicons(data){
 	.then( indexeddb.open.bind(indexeddb) )
 	.then( indexeddb.prepareRequest.bind(indexeddb) )
 	.then( getFaviconObjectStore.bind(obj) )
+	.then( convertFavicons )
 }
 
 function getFaviconObjectStore(e){
@@ -346,9 +344,49 @@ function getFavicon(list=[]){
 	return new Promise((resolve, reject)=>{
 		let req = this.objectStore.get(this.url);
 		req.onsuccess = (e)=>{
-			list.push( e.target.result.blob );
-			resolve(list);
+			if( e.target.result ) {
+				list.push( e.target.result.blob );
+				resolve(list);
+			}
+			else {
+				list.push( null );
+				resolve(list);
+			}
 		};
-		req.onerror = (e)=>{ reject(e); };
+		req.onerror = (e)=>{
+			console.error(e);
+			list.push( null );
+			reject(e);
+		};
+	});
+}
+
+function convertFavicons(list){
+	let p = Promise.resolve();
+	for(let i=0; i<list.length; i++){
+		let obj = { "blob": list[i] };
+		p = p.then( convertFavicon.bind(obj) );
+	}
+	return p;
+}
+
+function convertFavicon(list=[]){
+	return new Promise((resolve,reject)=>{
+		let reader = new FileReader();
+		reader.readAsDataURL(this.blob);
+		reader.onloadend = (e)=>{
+			list.push( reader.result );
+			resolve(list);
+		}
+		reader.onerror = (e)=>{
+			console.error(e);
+			list.push( null );
+			reject(e);
+		}
+		reader.onabort = (e)=>{
+			console.error(e);
+			list.push( null );
+			reject(e);
+		}
 	});
 }

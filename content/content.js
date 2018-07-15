@@ -13,6 +13,7 @@
 	const SILENT_ERROR_PREFIX = "[silent]";
 	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
 	const LINK_LIST_CLOSE_TIME = 500;
+	const FAVICON_LENGHT = 16;
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -270,6 +271,8 @@
 		for(let i=0; i<optionList.length; i++){
 			let item = optionList[i];
 			if ( !item["c"] ) continue;
+			let li = document.createElement("li");
+			li.classList.add(CSS_PREFIX+"-list");
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
@@ -282,11 +285,19 @@
 			a.setAttribute( "data-text", text );
 			a.setAttribute( "data-url", item["u"] );
 			a.setAttribute( "data-label", item["l"] );
-			a.innerText = item["l"];
 			a.addEventListener("click", onClickAnchor);
 			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
-			let li = document.createElement("li");
-			li.classList.add(CSS_PREFIX+"-list");
+			if( item["base64"] ){
+				let img = document.createElement("img");
+				img.classList.add("."+CSS_PREFIX+"-icon");
+				img.setAttribute( "width", FAVICON_LENGHT+"px" );
+				img.setAttribute( "height", FAVICON_LENGHT+"px" );
+				img.setAttribute( "src", item["base64"] );
+				a.appendChild(img);
+			}
+			let span = document.createElement("span");
+			span.innerText = " " + item["l"];
+			a.appendChild(span);
 			li.appendChild(a);
 			containerNode.appendChild(li);
 		}
@@ -358,7 +369,7 @@
 		}
 		else if( change["ol"] ) {
 			closeLinkList();
-			setOptionList( change["ol"]["newValue"] );
+			setOptionList( change["ol"]["newValue"] ).catch((e)=>{console.error(e);})
 			resetLinkListEvents();
 		}
 		else if( change["bf"] ){
@@ -398,7 +409,7 @@
 	function setVer( res ){
 		setAnchorSize( res["as"] );
 		setLinkListSize( res["lh"], res["lw"] );
-		setOptionList( res["ol"] );
+		setOptionList( res["ol"] ).catch((e)=>{console.error(e);})
 		setLinkListFlag( res["bf"] );
 		setCtrlKeyFlag( res["ck"] );
 		setShiftKeyFlag( res["sk"] );
@@ -487,14 +498,14 @@
 		optionList = [];
 		for(let i=0; i<res.length; i++){
 			let data = res[i];
-			/* checked == true */
 			if ( data["c"] ) optionList.push(data);
 		}
 		if( optionList.length <= 0) return;
-		return Promise.resolve()
-		.then( getFavicon )
-		.then((e)=>{ console.log(e); })
-		.catch((e)=>{ console.error(e); });
+		let data = {
+			"optionList": optionList
+		};
+		return getFavicon()
+		.then( gotFavicon.bind(data) )
 	}
 
 	function getFavicon(){
@@ -502,12 +513,20 @@
 		for(let i=0; i<optionList.length; i++){
 			data.push(optionList[i].u);
 		}
-		let p = ponyfill.runtime.sendMessage({
+		return ponyfill.runtime.sendMessage({
 			"method": "getFavicons",
 			"data": data
 		});
-		console.log(p);
-		return p
+	}
+
+	function gotFavicon(list){
+		let p = Promise.resolve();
+		if( optionList === this.optionList ){
+			let i = 0;
+			for(let base64 of list){
+				optionList[i++]["base64"] = base64;
+			}
+		}
 	}
 
 	function hasLinkList(){
