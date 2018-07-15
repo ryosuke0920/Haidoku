@@ -216,3 +216,96 @@ function getDefaultOptionList(){
 	}
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
+
+function startIconManager(){
+	return iconManager();
+}
+
+function iconManager(){
+	Promise.resolve().then(()=>{
+		return ponyfill.storage.sync.get({
+			"ol":[]
+		});
+	}).then((res)=>{
+		let p = Promise.resolve();
+		for(let i=0; i<res["ol"].length; i++){
+			let obj = res["ol"][i];
+			if(!obj["c"]) continue;
+			let url = convertFaviconURL(obj["u"]);
+			let data = {
+				"data": {
+					"date": new Date(),
+					"url": url,
+					"blob": null
+				}
+			};
+			p = p.then( queryAjax.bind(data) )
+			.then( responseAjax.bind(data) )
+			.then( indexeddb.open.bind(indexeddb) )
+			.then( indexeddb.prepareRequest.bind(indexeddb) )
+			.then( putImage.bind(data) )
+			.then((e)=>{ console.log(e); })
+			.catch((e)=>{ console.error(e); });
+		}
+		return p;
+	});
+}
+
+function convertFaviconURL(url){
+	url = remainDomainURL(url) + "favicon.ico";
+	return url;
+}
+
+function remainDomainURL(url){
+	let newURL = "";
+	let count = 0;
+	for(let i=0; i<url.length; i++){
+		let str = url.substr(i,1);
+		newURL += str;
+		if(str == "/") count++;
+		if(3 <= count) break;
+	}
+	if(count < 3) newURL += "/";
+	return newURL ;
+}
+
+function queryAjax(){
+	return new Promise((resolve, reject)=>{
+		let xhr = new XMLHttpRequest();
+		xhr.addEventListener("load", (e)=>{
+			resolve(e);
+		});
+		xhr.addEventListener("error", (e)=>{
+			reject(e);
+		});
+		xhr.addEventListener("abort", (e)=>{
+			reject(e);
+		});
+		xhr.open("GET", this.data.url);
+		xhr.responseType = "blob";
+		xhr.send();
+	});
+}
+
+function responseAjax(e){
+	return new Promise((resolve, reject)=>{
+		if(e.target.status == "200"){
+			this.data.blob = e.target.response;
+			resolve(e);
+		}
+		else {
+			reject(e);
+		}
+	});
+}
+
+function putImage(e){
+	return new Promise((resolve, reject)=>{
+		let db = e.target.result;
+		let transaction = db.transaction([FAVICONS], WRITE);
+		let objectStore = transaction.objectStore(FAVICONS);
+		let req = objectStore.put(this.data);
+		req.onsuccess = (e)=>{ resolve(e); };
+		req.onerror = (e)=>{ reject(e); };
+	});
+}

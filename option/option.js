@@ -345,7 +345,7 @@ function checkUrl(node, messageNode){
 		show(messageNode);
 		return false;
 	}
-	else if( !checkURL(node.value) ){
+	else if( !isURL(node.value) ){
 		messageNode.innerText = ponyfill.i18n.getMessage("htmlCheckURLError");
 		show(messageNode);
 		return false;
@@ -381,7 +381,7 @@ function byteLength(text){
 	return count;
 }
 
-function checkURL(text){
+function isURL(text){
 	if( !text.match(URL_REGEX) ) return false;
 	return true;
 }
@@ -490,5 +490,11 @@ function fetchValue(element, selector){
 
 function saveOption(){
 	let data = { "ol": makeOptionList() };
-	return saveW(data).catch(onSaveError);
+	return saveW(data).catch(onSaveError).then(startIconManager);
+}
+
+function startIconManager() {
+	return ponyfill.runtime.getBackgroundPage().then((bg)=>{
+		bg.startIconManager();
+	});
 }
