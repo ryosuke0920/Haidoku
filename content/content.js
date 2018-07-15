@@ -490,6 +490,24 @@
 			/* checked == true */
 			if ( data["c"] ) optionList.push(data);
 		}
+		if( optionList.length <= 0) return;
+		return Promise.resolve()
+		.then( getFavicon )
+		.then((e)=>{ console.log(e); })
+		.catch((e)=>{ console.error(e); });
+	}
+
+	function getFavicon(){
+		let data = [];
+		for(let i=0; i<optionList.length; i++){
+			data.push(optionList[i].u);
+		}
+		let p = ponyfill.runtime.sendMessage({
+			"method": "getFavicons",
+			"data": data
+		});
+		console.log(p);
+		return p
 	}
 
 	function hasLinkList(){

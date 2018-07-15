@@ -49,6 +49,11 @@ function notify(message, sender, sendResponse){
 	else if( method == "openOptions" ){
 		sendResponse( ponyfill.runtime.openOptionsPage() );
 	}
+	else if( method == "getFavicons" ){
+		let p = getFavicons(data);
+		console.log(p);
+		return p;
+	}
 	else {
 		sendResponse( save(data) );
 	}
@@ -244,29 +249,10 @@ function iconManager(){
 			.then( indexeddb.open.bind(indexeddb) )
 			.then( indexeddb.prepareRequest.bind(indexeddb) )
 			.then( putImage.bind(data) )
-			.then((e)=>{ console.log(e); })
 			.catch((e)=>{ console.error(e); });
 		}
 		return p;
 	});
-}
-
-function convertFaviconURL(url){
-	url = remainDomainURL(url) + "favicon.ico";
-	return url;
-}
-
-function remainDomainURL(url){
-	let newURL = "";
-	let count = 0;
-	for(let i=0; i<url.length; i++){
-		let str = url.substr(i,1);
-		newURL += str;
-		if(str == "/") count++;
-		if(3 <= count) break;
-	}
-	if(count < 3) newURL += "/";
-	return newURL ;
 }
 
 function queryAjax(){
@@ -306,6 +292,63 @@ function putImage(e){
 		let objectStore = transaction.objectStore(FAVICONS);
 		let req = objectStore.put(this.data);
 		req.onsuccess = (e)=>{ resolve(e); };
+		req.onerror = (e)=>{ reject(e); };
+	});
+}
+
+function convertFaviconURL(url){
+	url = remainDomainURL(url) + "favicon.ico";
+	return url;
+}
+
+function remainDomainURL(url){
+	let newURL = "";
+	let count = 0;
+	for(let i=0; i<url.length; i++){
+		let str = url.substr(i,1);
+		newURL += str;
+		if(str == "/") count++;
+		if(3 <= count) break;
+	}
+	if(count < 3) newURL += "/";
+	return newURL ;
+}
+
+function getFavicons(data){
+	let list = [];
+	for(let i=0; i<data.length; i++){
+		let url = convertFaviconURL(data[i]);
+		list.push({"url": url});
+	}
+	let obj = {"list": list};
+	return Promise.resolve()
+	.then( indexeddb.open.bind(indexeddb) )
+	.then( indexeddb.prepareRequest.bind(indexeddb) )
+	.then( getFaviconObjectStore.bind(obj) )
+}
+
+function getFaviconObjectStore(e){
+	let p = Promise.resolve();
+	let db = e.target.result;
+	let transaction = db.transaction([FAVICONS], READ);
+	let objectStore = transaction.objectStore(FAVICONS);
+	for (let i=0; i<this.list.length; i++ ){
+		let obj = {
+			"url": this.list[i].url,
+			"objectStore": objectStore
+		}
+		p = p.then( getFavicon.bind(obj) );
+	}
+	return p;
+}
+
+function getFavicon(list=[]){
+	return new Promise((resolve, reject)=>{
+		let req = this.objectStore.get(this.url);
+		req.onsuccess = (e)=>{
+			list.push( e.target.result.blob );
+			resolve(list);
+		};
 		req.onerror = (e)=>{ reject(e); };
 	});
 }
