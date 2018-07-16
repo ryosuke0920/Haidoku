@@ -7,14 +7,14 @@ let ctrlKey = false;
 let options = {};
 let faviconCache = {};
 
-Promise.resolve().then(getSetting).then(initContextMenu).then(initListener).then(getFavicons).catch(unexpectedError);
+Promise.resolve().then(getSetting).then(initContextMenu).then(initListener).then(updateFaviconCache).catch(unexpectedError);
 
 function install(e){
 	if(e.reason == "install"){
 		let data = {
 			"ol": getDefaultOptionList()
 		};
-		return save(data).then(getSetting).then(initContextMenu).catch(onSaveError);
+		return save(data).then(getSetting).then(initContextMenu).then(updateFaviconCache).catch(onSaveError);
 	}
 }
 function initContextMenu(){
@@ -117,7 +117,9 @@ function onStorageChanged(change, area){
 		resetMenu();
 
 	}
-	if(change["ol"]) faviconManager();
+	if(change["ol"]) {
+		Promise.resolve().then( faviconManager ).then( updateFaviconCache );
+	};
 }
 
 function resetMenu(json){
@@ -229,16 +231,13 @@ function getDefaultOptionList(){
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
-let faviconManagerQueue = [];
-
 function faviconManager(){
 	let p = Promise.resolve();
 	for(let i=0; i<optionList.length; i++){
 		let obj = optionList[i];
-		if(!obj["c"]) continue;
-		let url = obj["u"];
-		if(faviconCache.hasOwnProperty(url)) continue;
-		url = convertFaviconURL(obj["u"]);
+		if(!obj.c) continue;
+		if(faviconCache.hasOwnProperty(obj.u)) continue;
+		let url = convertFaviconURL(obj.u);
 		let data = {
 			"data": {
 				"url": url,
@@ -263,9 +262,11 @@ function requestAjaxFavicon(){
 			resolve(e);
 		});
 		xhr.addEventListener("error", (e)=>{
+			console.error(e);
 			reject(e);
 		});
 		xhr.addEventListener("abort", (e)=>{
+			console.error(e);
 			reject(e);
 		});
 		xhr.open("GET", this.data.url);
@@ -281,6 +282,7 @@ function responseAjaxFavicon(e){
 			resolve(e);
 		}
 		else {
+			console.error(e);
 			reject(e);
 		}
 	});
@@ -293,7 +295,10 @@ function putFavicon(e){
 		let objectStore = transaction.objectStore(FAVICONS);
 		let req = objectStore.put(this.data);
 		req.onsuccess = (e)=>{ resolve(e); };
-		req.onerror = (e)=>{ reject(e); };
+		req.onerror = (e)=>{
+			console.error(e);
+			reject(e);
+		};
 	});
 }
 
@@ -314,52 +319,54 @@ function remainDomainURL(url){
 	return newURL;
 }
 
-function getFavicons(){
+function updateFaviconCache(){
+	let p = Promise.resolve();
 	let list = [];
 	for(let i=0; i<optionList.length; i++){
-		let url = convertFaviconURL(optionList[i].u);
-		list.push(url);
-	}
-	let obj = {"list": list, "optionList": optionList};
-	return Promise.resolve()
-	.then( indexeddb.open.bind(indexeddb) )
-	.then( indexeddb.prepareRequest.bind(indexeddb) )
-	.then( prepareFaviconObjectStore )
-	.then( getFaviconLoop.bind(obj) )
-	.then( convertFaviconLoop )
-	.then( setFaviconCache.bind(obj) )
-}
-
-function prepareFaviconObjectStore(e){
-	let db = e.target.result;
-	let transaction = db.transaction([FAVICONS], READ);
-	let objectStore = transaction.objectStore(FAVICONS);
-	return objectStore;
-}
-
-function getFaviconLoop(objectStore){
-	let p = Promise.resolve();
-	for (let i=0; i<this.list.length; i++ ){
+		if(!optionList[i].c) continue;
+		if( faviconCache.hasOwnProperty(optionList[i].u) ) continue;
 		let obj = {
-			"url": this.list[i],
-			"objectStore": objectStore
-		}
-		p = p.then( getFavicon.bind(obj) );
+			"url": optionList[i].u,
+			"faviconURL": convertFaviconURL(optionList[i].u),
+			"blob": null,
+			"base64": null
+		};
+		list.push(obj);
+	}
+	if( list.length <= 0 ) return p;
+	p = p.then( indexeddb.open.bind(indexeddb) )
+	.then( indexeddb.prepareRequest.bind(indexeddb) )
+	.then( getFaviconLoop.bind({"list":list}) );
+	return p;
+}
+
+function getFaviconLoop(e){
+	let p = Promise.resolve();
+	let db = e.target.result;
+	for(let i=0; i<this.list.length; i++){
+		let obj = this.list[i];
+		obj.db = db;
+		p = p.then( getFavicon.bind(obj) )
+		.then( convertFavicon.bind(obj) )
+		.then( setFaviconCache.bind(obj) )
+		.catch( (e)=>{ console.error(e) });
 	}
 	return p;
 }
 
-function getFavicon(list=[]){
+function getFavicon(){
 	return new Promise((resolve, reject)=>{
-		let req = this.objectStore.get(this.url);
+		let transaction = this.db.transaction([FAVICONS], READ);
+		let objectStore = transaction.objectStore(FAVICONS);
+		let req = objectStore.get(this.faviconURL);
 		req.onsuccess = (e)=>{
 			if( e.target.result ) {
-				list.push( e.target.result.blob );
-				resolve(list);
+				this.blob = e.target.result.blob;
+				resolve();
 			}
 			else {
-				list.push( null );
-				resolve(list);
+				this.blob = null;
+				resolve();
 			}
 		};
 		req.onerror = (e)=>{
@@ -369,41 +376,30 @@ function getFavicon(list=[]){
 	});
 }
 
-function convertFaviconLoop(list){
-	let p = Promise.resolve();
-	for(let i=0; i<list.length; i++){
-		let obj = { "blob": list[i] };
-		p = p.then( convertFavicon.bind(obj) );
-	}
-	return p;
-}
-
-function convertFavicon(list=[]){
+function convertFavicon(){
 	return new Promise((resolve,reject)=>{
+		if(this.blob == null){
+			resolve();
+			return;
+		}
 		let reader = new FileReader();
 		reader.readAsDataURL(this.blob);
 		reader.onloadend = (e)=>{
-			list.push( reader.result );
-			resolve(list);
+			this.base64 = reader.result;
+			resolve();
 		}
 		reader.onerror = (e)=>{
 			console.error(e);
-			list.push( null );
 			reject(e);
 		}
 		reader.onabort = (e)=>{
 			console.error(e);
-			list.push( null );
 			reject(e);
 		}
 	});
 }
 
-function setFaviconCache(list){
-	for( let i=0; i<list.length; i++){
-		let obj = this.optionList[i];
-		if ( obj ) {
-			faviconCache[obj.u] = list[i];
-		}
-	}
+function setFaviconCache(){
+	if(this.base64) faviconCache[this.url] = this.base64;
+	return;
 }

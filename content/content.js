@@ -33,7 +33,7 @@
 	let containerNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
-	let faviconHash = {};
+	let faviconCache = {};
 
 	Promise.resolve()
 		.then(init)
@@ -288,12 +288,12 @@
 			a.setAttribute( "data-label", item["l"] );
 			a.addEventListener("click", onClickAnchor);
 			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
-			if( faviconHash.hasOwnProperty(item["u"]) ){
+			if( faviconCache.hasOwnProperty(item["u"]) ){
 				let img = document.createElement("img");
 				img.classList.add("."+CSS_PREFIX+"-icon");
 				img.setAttribute( "width", FAVICON_LENGHT+"px" );
 				img.setAttribute( "height", FAVICON_LENGHT+"px" );
-				img.setAttribute( "src", faviconHash[item["u"]] );
+				img.setAttribute( "src", faviconCache[item["u"]] );
 				a.appendChild(img);
 			}
 			let span = document.createElement("span");
@@ -512,7 +512,7 @@
 	}
 
 	function gotFavicon(e){
-		faviconHash = e;
+		faviconCache = e;
 	}
 
 	function hasLinkList(){
