@@ -490,11 +490,5 @@ function fetchValue(element, selector){
 
 function saveOption(){
 	let data = { "ol": makeOptionList() };
-	return saveW(data).catch(onSaveError).then(startIconManager);
-}
-
-function startIconManager() {
-	return ponyfill.runtime.getBackgroundPage().then((bg)=>{
-		bg.startIconManager();
-	});
+	return saveW(data).catch(onSaveError);
 }

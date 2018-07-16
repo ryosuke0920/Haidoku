@@ -33,6 +33,7 @@
 	let containerNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
+	let faviconHash = {};
 
 	Promise.resolve()
 		.then(init)
@@ -287,12 +288,12 @@
 			a.setAttribute( "data-label", item["l"] );
 			a.addEventListener("click", onClickAnchor);
 			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
-			if( item["base64"] ){
+			if( faviconHash.hasOwnProperty(item["u"]) ){
 				let img = document.createElement("img");
 				img.classList.add("."+CSS_PREFIX+"-icon");
 				img.setAttribute( "width", FAVICON_LENGHT+"px" );
 				img.setAttribute( "height", FAVICON_LENGHT+"px" );
-				img.setAttribute( "src", item["base64"] );
+				img.setAttribute( "src", faviconHash[item["u"]] );
 				a.appendChild(img);
 			}
 			let span = document.createElement("span");
@@ -501,32 +502,17 @@
 			if ( data["c"] ) optionList.push(data);
 		}
 		if( optionList.length <= 0) return;
-		let data = {
-			"optionList": optionList
-		};
-		return getFavicon()
-		.then( gotFavicon.bind(data) )
+		return getFavicon().then( gotFavicon );
 	}
 
 	function getFavicon(){
-		let data = [];
-		for(let i=0; i<optionList.length; i++){
-			data.push(optionList[i].u);
-		}
 		return ponyfill.runtime.sendMessage({
-			"method": "getFavicons",
-			"data": data
+			"method": "getFavicon",
 		});
 	}
 
-	function gotFavicon(list){
-		let p = Promise.resolve();
-		if( optionList === this.optionList ){
-			let i = 0;
-			for(let base64 of list){
-				optionList[i++]["base64"] = base64;
-			}
-		}
+	function gotFavicon(e){
+		faviconHash = e;
 	}
 
 	function hasLinkList(){

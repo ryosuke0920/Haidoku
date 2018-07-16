@@ -1,26 +1,40 @@
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 const DEFAULT_LOCALE = "en";
+let optionList = [];
+let autoViewFlag = true;
+let shiftKey = false;
+let ctrlKey = false;
 let options = {};
+let faviconCache = {};
 
-Promise.resolve().then(initContextMenu).then(initListener).catch(unexpectedError);
+Promise.resolve().then(getSetting).then(initContextMenu).then(initListener).then(getFavicons).catch(unexpectedError);
 
 function install(e){
 	if(e.reason == "install"){
 		let data = {
 			"ol": getDefaultOptionList()
 		};
-		return save(data).then(initContextMenu).catch(onSaveError);
+		return save(data).then(getSetting).then(initContextMenu).catch(onSaveError);
 	}
 }
-
 function initContextMenu(){
-	let getter = ponyfill.storage.sync.get({
+	return getSetting().then(resetMenu, onReadError);
+}
+
+function getSetting() {
+	return ponyfill.storage.sync.get({
 		"ol": [],
 		"bf": true,
 		"sk": false,
 		"ck": false
-	});
-	return getter.then(resetMenu, onReadError);
+	}).then(onGotSetting);
+}
+
+function onGotSetting(json){
+	optionList = json["ol"];
+	autoViewFlag = json["bf"];
+	shiftKey = json["sk"];
+	ctrlKey = json["ck"];
 }
 
 function initListener(){
@@ -49,8 +63,8 @@ function notify(message, sender, sendResponse){
 	else if( method == "openOptions" ){
 		return ponyfill.runtime.openOptionsPage();
 	}
-	else if( method == "getFavicons" ){
-		return getFavicons(data);
+	else if( method == "getFavicon" ){
+		return Promise.resolve(faviconCache);
 	}
 	else {
 		return save(data);
@@ -96,22 +110,18 @@ function saveHistory(data){
 
 function onStorageChanged(change, area){
 	if(change["ol"] || change["bf"] || change["sk"] || change["ck"]) {
-		let getter = ponyfill.storage.sync.get({
-			"ol": [],
-			"bf": true,
-			"sk": false,
-			"ck": false
-		});
-		return getter.then(resetMenu, onReadError);
+		if(change["ol"]) optionList = change["ol"]["newValue"];
+		if(change["bf"]) autoViewFlag = change["bf"]["newValue"];
+		if(change["sk"]) shiftKey = change["sk"]["newValue"];
+		if(change["ck"]) ctrlKey = change["ck"]["newValue"];
+		resetMenu();
+
 	}
+	if(change["ol"]) faviconManager();
 }
 
 function resetMenu(json){
 	ponyfill.contextMenus.removeAll();
-	let optionList = json["ol"];
-	let autoViewFlag = json["bf"];
-	let shiftKey = json["sk"];
-	let ctrlKey = json["ck"];
 	options = {};
 	for(let i=0; i<optionList.length; i++){
 		let data = optionList[i];
@@ -219,40 +229,34 @@ function getDefaultOptionList(){
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
-function startIconManager(){
-	return iconManager();
+let faviconManagerQueue = [];
+
+function faviconManager(){
+	let p = Promise.resolve();
+	for(let i=0; i<optionList.length; i++){
+		let obj = optionList[i];
+		if(!obj["c"]) continue;
+		let url = obj["u"];
+		if(faviconCache.hasOwnProperty(url)) continue;
+		url = convertFaviconURL(obj["u"]);
+		let data = {
+			"data": {
+				"url": url,
+				"date": new Date(),
+				"blob": null
+			}
+		};
+		p = p.then( requestAjaxFavicon.bind(data) )
+		.then( responseAjaxFavicon.bind(data) )
+		.then( indexeddb.open.bind(indexeddb) )
+		.then( indexeddb.prepareRequest.bind(indexeddb) )
+		.then( putFavicon.bind(data) )
+		.catch((e)=>{ console.error(e); });
+	}
+	return p;
 }
 
-function iconManager(){
-	Promise.resolve().then(()=>{
-		return ponyfill.storage.sync.get({
-			"ol":[]
-		});
-	}).then((res)=>{
-		let p = Promise.resolve();
-		for(let i=0; i<res["ol"].length; i++){
-			let obj = res["ol"][i];
-			if(!obj["c"]) continue;
-			let url = convertFaviconURL(obj["u"]);
-			let data = {
-				"data": {
-					"date": new Date(),
-					"url": url,
-					"blob": null
-				}
-			};
-			p = p.then( queryAjax.bind(data) )
-			.then( responseAjax.bind(data) )
-			.then( indexeddb.open.bind(indexeddb) )
-			.then( indexeddb.prepareRequest.bind(indexeddb) )
-			.then( putImage.bind(data) )
-			.catch((e)=>{ console.error(e); });
-		}
-		return p;
-	});
-}
-
-function queryAjax(){
+function requestAjaxFavicon(){
 	return new Promise((resolve, reject)=>{
 		let xhr = new XMLHttpRequest();
 		xhr.addEventListener("load", (e)=>{
@@ -270,7 +274,7 @@ function queryAjax(){
 	});
 }
 
-function responseAjax(e){
+function responseAjaxFavicon(e){
 	return new Promise((resolve, reject)=>{
 		if(e.target.status == "200"){
 			this.data.blob = e.target.response;
@@ -282,7 +286,7 @@ function responseAjax(e){
 	});
 }
 
-function putImage(e){
+function putFavicon(e){
 	return new Promise((resolve, reject)=>{
 		let db = e.target.result;
 		let transaction = db.transaction([FAVICONS], WRITE);
@@ -294,8 +298,7 @@ function putImage(e){
 }
 
 function convertFaviconURL(url){
-	url = remainDomainURL(url) + "favicon.ico";
-	return url;
+	return remainDomainURL(url) + "favicon.ico";
 }
 
 function remainDomainURL(url){
@@ -308,31 +311,37 @@ function remainDomainURL(url){
 		if(3 <= count) break;
 	}
 	if(count < 3) newURL += "/";
-	return newURL ;
+	return newURL;
 }
 
-function getFavicons(data){
+function getFavicons(){
 	let list = [];
-	for(let i=0; i<data.length; i++){
-		let url = convertFaviconURL(data[i]);
-		list.push({"url": url});
+	for(let i=0; i<optionList.length; i++){
+		let url = convertFaviconURL(optionList[i].u);
+		list.push(url);
 	}
-	let obj = {"list": list};
+	let obj = {"list": list, "optionList": optionList};
 	return Promise.resolve()
 	.then( indexeddb.open.bind(indexeddb) )
 	.then( indexeddb.prepareRequest.bind(indexeddb) )
-	.then( getFaviconObjectStore.bind(obj) )
-	.then( convertFavicons )
+	.then( prepareFaviconObjectStore )
+	.then( getFaviconLoop.bind(obj) )
+	.then( convertFaviconLoop )
+	.then( setFaviconCache.bind(obj) )
 }
 
-function getFaviconObjectStore(e){
-	let p = Promise.resolve();
+function prepareFaviconObjectStore(e){
 	let db = e.target.result;
 	let transaction = db.transaction([FAVICONS], READ);
 	let objectStore = transaction.objectStore(FAVICONS);
+	return objectStore;
+}
+
+function getFaviconLoop(objectStore){
+	let p = Promise.resolve();
 	for (let i=0; i<this.list.length; i++ ){
 		let obj = {
-			"url": this.list[i].url,
+			"url": this.list[i],
 			"objectStore": objectStore
 		}
 		p = p.then( getFavicon.bind(obj) );
@@ -355,13 +364,12 @@ function getFavicon(list=[]){
 		};
 		req.onerror = (e)=>{
 			console.error(e);
-			list.push( null );
 			reject(e);
 		};
 	});
 }
 
-function convertFavicons(list){
+function convertFaviconLoop(list){
 	let p = Promise.resolve();
 	for(let i=0; i<list.length; i++){
 		let obj = { "blob": list[i] };
@@ -389,4 +397,13 @@ function convertFavicon(list=[]){
 			reject(e);
 		}
 	});
+}
+
+function setFaviconCache(list){
+	for( let i=0; i<list.length; i++){
+		let obj = this.optionList[i];
+		if ( obj ) {
+			faviconCache[obj.u] = list[i];
+		}
+	}
 }
