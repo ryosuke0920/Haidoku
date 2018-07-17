@@ -11,8 +11,6 @@ Promise.resolve()
 .then(getSetting)
 .then(initContextMenu)
 .then(initListener)
-.then(clearFaviconCache)
-.then(downloadFavicon)
 .then(updateFaviconCache)
 .catch(unexpectedError);
 
@@ -24,7 +22,6 @@ function install(e){
 		return save(data)
 		.then(getSetting)
 		.then(initContextMenu)
-		.then(downloadFavicon)
 		.then(updateFaviconCache)
 		.catch(onSaveError);
 	}
@@ -130,7 +127,7 @@ function onStorageChanged(change, area){
 
 	}
 	if(change["ol"]) {
-		Promise.resolve().then( downloadFavicon ).then( updateFaviconCache );
+		Promise.resolve().then( updateFaviconCache );
 	};
 }
 
@@ -243,82 +240,43 @@ function getDefaultOptionList(){
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
-function clearFaviconCache(){
-	console.log("clearFaviconCache");
-	faviconCache = {};
-	return Promise.resolve()
-	.then( indexeddb.open.bind(indexeddb) )
-	.then( indexeddb.prepareRequest.bind(indexeddb) )
-	.then( clearFavicon );
-}
-
-function clearFavicon(e){
-	return new Promise((resolve, reject)=>{
-		let db = e.target.result;
-		let transaction = db.transaction([FAVICONS], WRITE);
-		let objectStore = transaction.objectStore(FAVICONS);
-		let req = objectStore.clear();
-		req.onsuccess = (e)=>{ resolve(e); };
-		req.onerror = (e)=>{
-			console.error(e);
-			reject(e);
-		};
-	});
-}
-
-function downloadFavicon(){
-	console.log("downloadFavicon");
+function updateFaviconCache(){
+	console.log("updateFaviconCache");
 	let p = Promise.resolve();
 	for(let i=0; i<optionList.length; i++){
 		let obj = optionList[i];
 		if(!obj.c) continue;
 		if(faviconCache.hasOwnProperty(obj.u)) continue;
-		let url = convertFaviconURL(obj.u);
+		let faviconURL = convertFaviconURL(obj.u);
 		let data = {
-			"data": {
-				"url": url,
-				"date": new Date(),
-				"blob": null
-			}
+				"url": obj.u,
+				"faviconURL": faviconURL,
+				"blob": null,
+				"base64": null
 		};
 		p = p.then( requestAjaxFavicon.bind(data) )
 		.then( responseAjaxFavicon.bind(data) )
-		.then( indexeddb.open.bind(indexeddb) )
-		.then( indexeddb.prepareRequest.bind(indexeddb) )
-		.then( putFavicon.bind(data) )
+		.then( convertFavicon.bind(data) )
+		.then( setFaviconCache.bind(data) )
 		.catch((e)=>{ console.error(e); });
 	}
 	return p;
 }
 
 function requestAjaxFavicon(){
-	return promiseAjax("GET", this.data.url, "blob");
+	return promiseAjax("GET", this.faviconURL, "blob");
 }
 
 function responseAjaxFavicon(e){
 	return new Promise((resolve, reject)=>{
 		if(e.target.status == "200"){
-			this.data.blob = e.target.response;
+			this.blob = e.target.response;
 			resolve(e);
 		}
 		else {
 			console.error(e);
 			reject(e);
 		}
-	});
-}
-
-function putFavicon(e){
-	return new Promise((resolve, reject)=>{
-		let db = e.target.result;
-		let transaction = db.transaction([FAVICONS], WRITE);
-		let objectStore = transaction.objectStore(FAVICONS);
-		let req = objectStore.put(this.data);
-		req.onsuccess = (e)=>{ resolve(e); };
-		req.onerror = (e)=>{
-			console.error(e);
-			reject(e);
-		};
 	});
 }
 
@@ -337,64 +295,6 @@ function remainDomainURL(url){
 	}
 	if(count < 3) newURL += "/";
 	return newURL;
-}
-
-function updateFaviconCache(){
-	console.log("updateFaviconCache");
-	let p = Promise.resolve();
-	let list = [];
-	for(let i=0; i<optionList.length; i++){
-		if(!optionList[i].c) continue;
-		if( faviconCache.hasOwnProperty(optionList[i].u) ) continue;
-		let obj = {
-			"url": optionList[i].u,
-			"faviconURL": convertFaviconURL(optionList[i].u),
-			"blob": null,
-			"base64": null
-		};
-		list.push(obj);
-	}
-	if( list.length <= 0 ) return p;
-	p = p.then( indexeddb.open.bind(indexeddb) )
-	.then( indexeddb.prepareRequest.bind(indexeddb) )
-	.then( loopGetFavicon.bind({"list":list}) );
-	return p;
-}
-
-function loopGetFavicon(e){
-	let p = Promise.resolve();
-	let db = e.target.result;
-	for(let i=0; i<this.list.length; i++){
-		let obj = this.list[i];
-		obj.db = db;
-		p = p.then( getFavicon.bind(obj) )
-		.then( convertFavicon.bind(obj) )
-		.then( setFaviconCache.bind(obj) )
-		.catch( (e)=>{ console.error(e) });
-	}
-	return p;
-}
-
-function getFavicon(){
-	return new Promise((resolve, reject)=>{
-		let transaction = this.db.transaction([FAVICONS], READ);
-		let objectStore = transaction.objectStore(FAVICONS);
-		let req = objectStore.get(this.faviconURL);
-		req.onsuccess = (e)=>{
-			if( e.target.result ) {
-				this.blob = e.target.result.blob;
-				resolve();
-			}
-			else {
-				this.blob = null;
-				resolve();
-			}
-		};
-		req.onerror = (e)=>{
-			console.error(e);
-			reject(e);
-		};
-	});
 }
 
 function convertFavicon(){
