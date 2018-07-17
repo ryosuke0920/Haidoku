@@ -240,46 +240,6 @@ function getDefaultOptionList(){
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
-function updateFaviconCache(){
-	console.log("updateFaviconCache");
-	let p = Promise.resolve();
-	for(let i=0; i<optionList.length; i++){
-		let obj = optionList[i];
-		if(!obj.c) continue;
-		if(faviconCache.hasOwnProperty(obj.u)) continue;
-		let faviconURL = convertFaviconURL(obj.u);
-		let data = {
-				"url": obj.u,
-				"faviconURL": faviconURL,
-				"blob": null,
-				"base64": null
-		};
-		p = p.then( requestAjaxFavicon.bind(data) )
-		.then( responseAjaxFavicon.bind(data) )
-		.then( convertFavicon.bind(data) )
-		.then( setFaviconCache.bind(data) )
-		.catch((e)=>{ console.error(e); });
-	}
-	return p;
-}
-
-function requestAjaxFavicon(){
-	return promiseAjax("GET", this.faviconURL, "blob");
-}
-
-function responseAjaxFavicon(e){
-	return new Promise((resolve, reject)=>{
-		if(e.target.status == "200"){
-			this.blob = e.target.response;
-			resolve(e);
-		}
-		else {
-			console.error(e);
-			reject(e);
-		}
-	});
-}
-
 function convertFaviconURL(url){
 	return remainDomainURL(url) + "favicon.ico";
 }
@@ -295,6 +255,72 @@ function remainDomainURL(url){
 	}
 	if(count < 3) newURL += "/";
 	return newURL;
+}
+
+function updateFaviconCache(){
+	let p = Promise.resolve();
+	for(let i=0; i<optionList.length; i++){
+		let obj = optionList[i];
+		if(!obj.c) continue;
+		if(faviconCache.hasOwnProperty(obj.u)) continue;
+		let faviconURL = convertFaviconURL(obj.u);
+		let data = {
+				"url": obj.u,
+				"faviconURL": [faviconURL],
+				"requestIndex": 0,
+				"blob": null,
+				"base64": null,
+				"doc": null
+		};
+		p = p.then( requestAjaxSearchURL.bind(data) )
+		.then( responseAjaxSearchURL.bind(data) )
+		.catch((e)=>{ console.error(e); })
+		.then( decideFaviconURL.bind(data) )
+		.then( requestAjaxFavicon.bind(data) )
+		.then( responseAjaxFavicon.bind(data) )
+		.then( convertFavicon.bind(data) )
+		.then( setFaviconCache.bind(data) )
+		.catch((e)=>{ console.error(e); });
+	}
+	return p;
+}
+
+function requestAjaxSearchURL(){
+	return promiseAjax("GET", this.url, "document");
+}
+
+function responseAjaxSearchURL(e){
+	if( e.target.response ) { // if it's not document, it's null.
+		this.doc = e.target.response;
+		return;
+	}
+	console.log("not found:"+e.target.responseURL);
+}
+
+function decideFaviconURL(e){
+	if(!this.doc) return;
+	let node = this.doc.querySelector("link[rel~=icon]");
+	if(!node) return;
+	let url = node.href;
+	// TODO make fullpath
+	if(!url) return;
+	this.faviconURL.unshift(url);
+}
+
+function requestAjaxFavicon(){
+	return promiseAjax("GET", this.faviconURL[this.requestIndex], "blob");
+}
+
+function responseAjaxFavicon(e){
+	if(e.target.status == "200"){
+		this.blob = e.target.response;
+		return;
+	}
+	console.log("not found:"+e.target.responseURL);
+	if( ++this.requestIndex >= this.faviconURL.length ) return;
+	return Promise.resolve()
+	.then( requestAjaxFavicon.bind(this) )
+	.then( responseAjaxFavicon.bind(this) )
 }
 
 function convertFavicon(){
