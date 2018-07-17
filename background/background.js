@@ -302,7 +302,6 @@ function decideFaviconURL(e){
 	let node = this.doc.querySelector("link[rel~=icon]");
 	if(!node) return;
 	let url = node.href;
-	// TODO make fullpath
 	if(!url) return;
 	this.faviconURL.unshift(url);
 }
