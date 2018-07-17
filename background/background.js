@@ -7,14 +7,26 @@ let ctrlKey = false;
 let options = {};
 let faviconCache = {};
 
-Promise.resolve().then(getSetting).then(initContextMenu).then(initListener).then(updateFaviconCache).catch(unexpectedError);
+Promise.resolve()
+.then(getSetting)
+.then(initContextMenu)
+.then(initListener)
+.then(clearFaviconCache)
+.then(downloadFavicon)
+.then(updateFaviconCache)
+.catch(unexpectedError);
 
 function install(e){
 	if(e.reason == "install"){
 		let data = {
 			"ol": getDefaultOptionList()
 		};
-		return save(data).then(getSetting).then(initContextMenu).then(updateFaviconCache).catch(onSaveError);
+		return save(data)
+		.then(getSetting)
+		.then(initContextMenu)
+		.then(downloadFavicon)
+		.then(updateFaviconCache)
+		.catch(onSaveError);
 	}
 }
 function initContextMenu(){
@@ -118,7 +130,7 @@ function onStorageChanged(change, area){
 
 	}
 	if(change["ol"]) {
-		Promise.resolve().then( faviconManager ).then( updateFaviconCache );
+		Promise.resolve().then( downloadFavicon ).then( updateFaviconCache );
 	};
 }
 
@@ -231,7 +243,31 @@ function getDefaultOptionList(){
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
-function faviconManager(){
+function clearFaviconCache(){
+	console.log("clearFaviconCache");
+	faviconCache = {};
+	return Promise.resolve()
+	.then( indexeddb.open.bind(indexeddb) )
+	.then( indexeddb.prepareRequest.bind(indexeddb) )
+	.then( clearFavicon );
+}
+
+function clearFavicon(e){
+	return new Promise((resolve, reject)=>{
+		let db = e.target.result;
+		let transaction = db.transaction([FAVICONS], WRITE);
+		let objectStore = transaction.objectStore(FAVICONS);
+		let req = objectStore.clear();
+		req.onsuccess = (e)=>{ resolve(e); };
+		req.onerror = (e)=>{
+			console.error(e);
+			reject(e);
+		};
+	});
+}
+
+function downloadFavicon(){
+	console.log("downloadFavicon");
 	let p = Promise.resolve();
 	for(let i=0; i<optionList.length; i++){
 		let obj = optionList[i];
@@ -256,23 +292,7 @@ function faviconManager(){
 }
 
 function requestAjaxFavicon(){
-	return new Promise((resolve, reject)=>{
-		let xhr = new XMLHttpRequest();
-		xhr.addEventListener("load", (e)=>{
-			resolve(e);
-		});
-		xhr.addEventListener("error", (e)=>{
-			console.error(e);
-			reject(e);
-		});
-		xhr.addEventListener("abort", (e)=>{
-			console.error(e);
-			reject(e);
-		});
-		xhr.open("GET", this.data.url);
-		xhr.responseType = "blob";
-		xhr.send();
-	});
+	return promiseAjax("GET", this.data.url, "blob");
 }
 
 function responseAjaxFavicon(e){
@@ -320,6 +340,7 @@ function remainDomainURL(url){
 }
 
 function updateFaviconCache(){
+	console.log("updateFaviconCache");
 	let p = Promise.resolve();
 	let list = [];
 	for(let i=0; i<optionList.length; i++){
@@ -336,11 +357,11 @@ function updateFaviconCache(){
 	if( list.length <= 0 ) return p;
 	p = p.then( indexeddb.open.bind(indexeddb) )
 	.then( indexeddb.prepareRequest.bind(indexeddb) )
-	.then( getFaviconLoop.bind({"list":list}) );
+	.then( loopGetFavicon.bind({"list":list}) );
 	return p;
 }
 
-function getFaviconLoop(e){
+function loopGetFavicon(e){
 	let p = Promise.resolve();
 	let db = e.target.result;
 	for(let i=0; i<this.list.length; i++){
