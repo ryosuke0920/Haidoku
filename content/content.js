@@ -245,18 +245,18 @@
 	}
 
 	function onClickSaveHistory(e){
-		saveHistory(e).catch(onSaveError);
+		saveHistory(e.currentTarget).catch(onSaveError);
 	}
 
-	function saveHistory(e){
+	function saveHistory(node){
 		let data = {
 			"method": "saveHistory",
 			"data": {
-				"text": e.target.getAttribute("data-text"),
+				"text": node.getAttribute("data-text"),
 				"fromURL": window.location.toString(),
 				"fromTitle": document.title.toString(),
-				"toURL": e.target.getAttribute("data-url"),
-				"toTitle": e.target.getAttribute("data-label")
+				"toURL": node.getAttribute("data-url"),
+				"toTitle": node.getAttribute("data-label")
 			}
 		};
 		let res = ponyfill.runtime.sendMessage(data);
