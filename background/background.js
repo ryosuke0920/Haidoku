@@ -348,5 +348,4 @@ function convertFavicon(){
 
 function setFaviconCache(){
 	if(this.base64) faviconCache[this.url] = this.base64;
-	return;
 }
