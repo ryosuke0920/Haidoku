@@ -13,7 +13,6 @@
 	const SILENT_ERROR_PREFIX = "[silent]";
 	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
 	const LINK_LIST_CLOSE_TIME = 500;
-	const FAVICON_LENGHT = 16;
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -288,16 +287,21 @@
 			a.setAttribute( "data-label", item["l"] );
 			a.addEventListener("click", onClickAnchor);
 			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
+			let img = document.createElement("img");
+			img.classList.add(CSS_PREFIX+"-icon");
+			let src;
 			if( faviconCache.hasOwnProperty(item["u"]) ){
-				let img = document.createElement("img");
-				img.classList.add("."+CSS_PREFIX+"-icon");
-				img.setAttribute( "width", FAVICON_LENGHT+"px" );
-				img.setAttribute( "height", FAVICON_LENGHT+"px" );
-				img.setAttribute( "src", faviconCache[item["u"]] );
-				a.appendChild(img);
+				src = faviconCache[item["u"]];
 			}
+			else {
+				src = ponyfill.extension.getURL("/image/favicon.svg");
+			}
+			img.setAttribute( "src", src );
+			img.setAttribute( "title", item["l"] );
+			a.appendChild(img);
 			let span = document.createElement("span");
-			span.innerText = " " + item["l"];
+			span.classList.add(CSS_PREFIX+"-label");
+			span.innerText = item["l"];
 			a.appendChild(span);
 			li.appendChild(a);
 			containerNode.appendChild(li);

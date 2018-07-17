@@ -38,7 +38,9 @@
 	all: initial;
 	user-select: none;
 	-moz-user-select: none;
-	display: inline;
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
 }
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
 	all: initial;
