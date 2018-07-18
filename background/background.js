@@ -10,7 +10,6 @@ let options = {};
 let faviconCache = {};
 
 Promise.resolve()
-.then(getSetting)
 .then(initContextMenu)
 .then(initListener)
 .catch(unexpectedError)
@@ -23,7 +22,6 @@ function install(e){
 			"ol": getDefaultOptionList()
 		};
 		return save(data)
-		.then(getSetting)
 		.then(initContextMenu)
 		.catch(onSaveError)
 		.then(updateFaviconCache)
@@ -279,7 +277,6 @@ function promiseAjax(method="GET", url, responseType){
 			console.error(e);
 			reject(e);
 		});
-		console.log(url);
 		xhr.open(method, url);
 		xhr.timeout = XHR_TIMEOUT;
 		if(responseType) xhr.responseType = responseType;

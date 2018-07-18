@@ -31,7 +31,7 @@ URLs and search parameters of the following sites are prepared. If these specifi
 * yahoo 辞書
 * 英辞郎 on the WEB
 
-etc. Total 82 URLs.
+etc. Total 85 URLs.
 
 # Privacy policy
 This tool does not collect or send information, but the setting data are sent and received by the synchronization service provided by the browser. History data is out of the synchronization service.
