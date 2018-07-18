@@ -34,36 +34,6 @@
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-cover {
 	display: block;
 }
-#lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-icon {
-	all: initial;
-	user-select: none;
-	-moz-user-select: none;
-	width: 16px;
-	height: 16px;
-	margin-right: 0.5em;
-}
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
-	all: initial;
-	font-family: sans-serif;
-	user-select: none;
-	-moz-user-select: none;
-	cursor: pointer;
-	white-space: nowrap;
-	display: block;
-}
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor,
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:link {
-	color: rgb(0, 0, 238);
-}
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:visited {
-	color: #551a8b;
-}
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:hover {
-	text-decoration: underline;
-}
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:active {
-	color: #ee0000;
-}
 #lessLaborGoToDictionary-menu {
 	all: initial;
 	font-family: sans-serif;
@@ -104,6 +74,42 @@
 	user-select: none;
 	-moz-user-select: none;
 	display: block;
+}
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
+	all: initial;
+	font-family: sans-serif;
+	user-select: none;
+	-moz-user-select: none;
+	cursor: pointer;
+	display: inline;
+	white-space: nowrap;
+}
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor,
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:link {
+	color: rgb(0, 0, 238);
+}
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:visited {
+	color: #551a8b;
+}
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:hover {
+	text-decoration: underline;
+}
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:active {
+	color: #ee0000;
+}
+#lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-icon {
+	width: 16px;
+	height: 16px;
+	margin-right: 0.5em;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mini li.lessLaborGoToDictionary-list {
+	display: inline;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mini a.lessLaborGoToDictionary-anchor {
+	white-space: normal;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mini span.lessLaborGoToDictionary-label {
+	display: none;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark {
 	border-top-right-radius: 5px;

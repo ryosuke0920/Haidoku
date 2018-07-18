@@ -203,15 +203,39 @@
 		return false;
 	}
 
+	function getLinkListHeight(){
+		return linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
+	}
+
+	function getLinkListWidth(){
+		return linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
+	}
+
 	function resizeWatcher(){
-		let height = linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
-		let width = linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
+		switchWatchFlag()
+		swithMiniView();
+	}
+
+	function switchWatchFlag(){
+		let height = getLinkListHeight();
+		let width = getLinkListWidth();
 		if ( linkListNodeHeight != height || linkListNodeWidth != width ){
 			resizeWatcherFlag = true;
 			if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
 			if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
 			linkListNodeHeight = height;
 			linkListNodeWidth = width;
+		}
+	}
+
+	function swithMiniView(){
+		let height = getLinkListHeight();
+		let width = getLinkListWidth();
+		if( height <= 100 || width <= 130 ) {
+			linkListNode.classList.add(CSS_PREFIX+"-mini");
+		}
+		else {
+			linkListNode.classList.remove(CSS_PREFIX+"-mini");
 		}
 	}
 
