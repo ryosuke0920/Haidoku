@@ -374,7 +374,7 @@
 		}
 		else if( change["ol"] ) {
 			closeLinkList();
-			setOptionList( change["ol"]["newValue"] ).catch((e)=>{console.error(e);})
+			setOptionList( change["ol"]["newValue"] ).catch(err)
 			resetLinkListEvents();
 		}
 		else if( change["bf"] ){
@@ -414,7 +414,7 @@
 	function setVer( res ){
 		setAnchorSize( res["as"] );
 		setLinkListSize( res["lh"], res["lw"] );
-		setOptionList( res["ol"] ).catch((e)=>{console.error(e);})
+		setOptionList( res["ol"] ).catch(err);
 		setLinkListFlag( res["bf"] );
 		setCtrlKeyFlag( res["ck"] );
 		setShiftKeyFlag( res["sk"] );
