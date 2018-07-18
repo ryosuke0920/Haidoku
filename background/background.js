@@ -1,6 +1,7 @@
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 const DEFAULT_LOCALE = "en";
-let MAX_FAVICON_CONNECTION = 3;
+const XHR_TIMEOUT = 10000;
+const MAX_FAVICON_CONNECTION = 3;
 let optionList = [];
 let autoViewFlag = true;
 let shiftKey = false;
@@ -260,6 +261,32 @@ function remainDomainURL(url){
 	return newURL;
 }
 
+function promiseAjax(method="GET", url, responseType){
+	return new Promise((resolve, reject)=>{
+		let xhr = new XMLHttpRequest();
+		xhr.addEventListener("load", (e)=>{
+			resolve(e);
+		});
+		xhr.addEventListener("error", (e)=>{
+			console.error(e);
+			reject(e);
+		});
+		xhr.addEventListener("abort", (e)=>{
+			console.error(e);
+			reject(e);
+		});
+		xhr.addEventListener("timeout", (e)=>{
+			console.error(e);
+			reject(e);
+		});
+		console.log(url);
+		xhr.open(method, url);
+		xhr.timeout = XHR_TIMEOUT;
+		if(responseType) xhr.responseType = responseType;
+		xhr.send();
+	});
+}
+
 function updateFaviconCache(){
 	return new Promise((resolve)=>{
 		let queue = [];
@@ -267,6 +294,7 @@ function updateFaviconCache(){
 			let obj = optionList[i];
 			if(!obj.c) continue;
 			if(faviconCache.hasOwnProperty(obj.u)) continue;
+			faviconCache[obj.u] = FAVICON_NODATA;
 			let faviconURL = convertFaviconURL(obj.u);
 			let data = {
 					"url": obj.u,
@@ -278,21 +306,27 @@ function updateFaviconCache(){
 			};
 			queue.push(data);
 		}
-		let queue_last_id = queue.length;
-		let promiseList = [];
+		let queue_length = queue.length;
+		let count = (()=>{
+			let i=0;
+			return ()=>{
+				return ++i;
+			}
+		})();
 		for(let i=0; i<MAX_FAVICON_CONNECTION; i++){
 			let data = queue.shift();
 			if(!data) break;
 			let obj = {
-				"connection_id":i,
+				"connection_id": i,
 				"queue_id": queue.length+1,
+				"queue_length": queue_length,
+				"count": count,
 				"callback": resolve,
 				"queue": queue,
 				"promise": Promise.resolve(),
 				"data": data
 			};
 			faviconChain.bind(obj)();
-			promiseList[i] = obj.promise;
 		}
 	});
 }
@@ -343,7 +377,7 @@ function responseAjaxFavicon(e){
 		return;
 	}
 	console.log("not found:"+e.target.responseURL);
-	if( ++this.data.requestIndex >= this.data.faviconURL.length ) return;//TODO
+	if( ++this.data.requestIndex >= this.data.faviconURL.length ) return;
 	return Promise.resolve()
 	.then( requestAjaxFavicon.bind(this) )
 	.then( responseAjaxFavicon.bind(this) )
@@ -351,7 +385,7 @@ function responseAjaxFavicon(e){
 
 function convertFavicon(){
 	return new Promise((resolve,reject)=>{
-		if(this.data.blob == null){
+		if(!this.data.blob){
 			resolve();
 			return;
 		}
@@ -377,10 +411,12 @@ function setFaviconCache(){
 }
 
 function endOfFaviconChain(){
+	let count = this.count();
 	this.data = this.queue.shift();
 	if(!this.data) {
-		if( this.queue_id <= 1 ) this.callback();
-		//TODO
+		if( count >= this.queue_length  ){
+			this.callback();
+		}
 		return;
 	}
 	this.queue_id = this.queue.length + 1;

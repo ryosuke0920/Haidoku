@@ -37,7 +37,7 @@
 	Promise.resolve()
 		.then(init)
 		.then(
-			()=>{ Promise.resolve().then(reload).then(addCommonLinkListEvents); },
+			()=>{ return Promise.resolve().then(reload).then(addCommonLinkListEvents); },
 			silentError
 		).catch(unexpectedError);
 
@@ -139,18 +139,14 @@
 
 	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ){
-			closeLinkList();
-		}
+		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) closeLinkList();
 	}
 
 	function mouseupCommonBehavior(e){
 		mousedownFlag = false;
-		let promise;
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
-			promise = saveLinkListSize();
-			promise.catch(onSaveError);
+			saveLinkListSize().catch(onSaveError);
 		}
 	}
 
@@ -220,14 +216,13 @@
 	}
 
 	function saveLinkListSize(){
-		let res = ponyfill.runtime.sendMessage({
+		return ponyfill.runtime.sendMessage({
 			"method": "saveLinkListSize",
 			"data": {
 				"lh": linkListNodeHeight,
 				"lw": linkListNodeWidth
 			}
 		});
-		return res;
 	}
 
 	function closeLinkList(){
@@ -258,8 +253,7 @@
 				"toTitle": node.getAttribute("data-label")
 			}
 		};
-		let res = ponyfill.runtime.sendMessage(data);
-		return res;
+		return ponyfill.runtime.sendMessage(data);
 	}
 
 	function makeLinkList(text){
@@ -290,7 +284,7 @@
 			let img = document.createElement("img");
 			img.classList.add(CSS_PREFIX+"-icon");
 			let src;
-			if( faviconCache.hasOwnProperty(item["u"]) ){
+			if( faviconCache.hasOwnProperty(item["u"]) && faviconCache[item["u"]] != FAVICON_NODATA ){
 				src = faviconCache[item["u"]];
 			}
 			else {
@@ -525,44 +519,35 @@
 	}
 
 	function menuClickBihavior(e){
-		let promise;
 		let id = e.target.getAttribute("id");
 		if(id == CSS_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ){
-				promise = saveAnchorSize();
-				promise.catch(onSaveError);
+				saveAnchorSize().catch(onSaveError);
 			}
 		}
 		else if(id == CSS_PREFIX+"-zoomDown"){
 			if( zoomLinkList(-1) ){
-				promise = saveAnchorSize();
-				promise.catch(onSaveError);
+				saveAnchorSize().catch(onSaveError);
 			}
 		}
 		else if(id == CSS_PREFIX+"-copy"){
-			promise = copyText();
-			promise.then(closeLinkList);
+			copyText().then(closeLinkList);
 		}
 		else if(id == CSS_PREFIX+"-resize"){
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
-			promise = saveLinkListSize();
-			promise.catch(onSaveError);
+			saveLinkListSize().catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-option"){
-			promise = ponyfill.runtime.sendMessage({
-				"method": "openOptions"
-			});
-			promise.then(closeLinkList);
+			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList);
 		}
 	}
 
 	function copyText(){
 		document.execCommand("copy");
-		let promiss = ponyfill.runtime.sendMessage({
+		return ponyfill.runtime.sendMessage({
 			"method": "notice",
 			"data": ponyfill.i18n.getMessage("notificationCopyed")
 		});
-		return promiss;
 	}
 
 	function resetSize(height,width){
@@ -638,5 +623,9 @@
 		else {
 			throw(e);
 		}
+	}
+
+	function err(e){
+		console.error(e);
 	}
 })();
