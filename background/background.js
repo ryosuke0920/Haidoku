@@ -1,7 +1,7 @@
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 const DEFAULT_LOCALE = "en";
 const XHR_TIMEOUT = 10000;
-const MAX_FAVICON_CONNECTION = 3;
+const MAX_FAVICON_CONNECTION = 5;
 let optionList = [];
 let autoViewFlag = true;
 let shiftKey = false;
