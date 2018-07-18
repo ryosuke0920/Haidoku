@@ -89,7 +89,6 @@
 		optionNode.setAttribute("id",CSS_PREFIX+"-option");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
-		swichMiniView();
 	}
 
 	function addCommonLinkListEvents(){
@@ -346,6 +345,7 @@
 	function showLinkList(pageY, pageX, clientY, clientX, selection){
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		linkListNode.classList.remove(CSS_PREFIX+"-hide");
+		swichMiniView();
 		applyLinkListSize();
 		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
 		if ( 0 < yy || window.innerHeight < linkListNode.offsetHeight ) yy = 0;
