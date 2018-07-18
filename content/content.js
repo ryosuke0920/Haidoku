@@ -587,12 +587,17 @@
 		if ( direction < 0 && anchorSize <= ANCHOR_MIN_SIZE ) return false;
 		if ( 0 < direction && ANCHOR_MAX_SIZE <= anchorSize ) return false;
 		anchorSize += direction * ANCHOR_RESIO;
-		anchorSize += 0.01;
-		anchorSize *= 10 ;
-		anchorSize = Math.floor(anchorSize);
-		anchorSize /= 10 ;
+		anchorSize = truncNumber(anchorSize);
 		applyZoomLinkList();
 		return true;
+	}
+
+	function truncNumber(num){
+		num += 0.01;
+		num *= 10 ;
+		num = Math.floor(num);
+		num /= 10 ;
+		return num
 	}
 
 	function applyZoomLinkList(){
@@ -611,6 +616,7 @@
 	}
 
 	function setFaviconSize(node, size){
+		size = truncNumber(size + (2*ANCHOR_RESIO));
 		node.style["height"] = size + "em";
 		node.style["width"] = size + "em";
 	}
