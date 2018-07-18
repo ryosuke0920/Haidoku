@@ -74,6 +74,7 @@
 	user-select: none;
 	-moz-user-select: none;
 	display: block;
+	padding-left: 5px;
 }
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
 	all: initial;
@@ -81,31 +82,40 @@
 	user-select: none;
 	-moz-user-select: none;
 	cursor: pointer;
-	display: inline;
+	display: block;
 	white-space: nowrap;
 }
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor,
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:link {
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor span.lessLaborGoToDictionary-label,
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:link span.lessLaborGoToDictionary-label {
 	color: rgb(0, 0, 238);
 }
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:visited {
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:visited span.lessLaborGoToDictionary-label {
 	color: #551a8b;
 }
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:hover {
 	text-decoration: underline;
 }
-#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:active {
+#lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:active span.lessLaborGoToDictionary-label {
 	color: #ee0000;
 }
-#lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-icon {
-	width: 16px;
-	height: 16px;
-	margin-right: 0.5em;
+#lessLaborGoToDictionary-viewer img.lessLaborGoToDictionary-favicon {
+	all: initial;
+	display: inline;
+	cursor: pointer;
+	margin: auto;
+}
+#lessLaborGoToDictionary-viewer span.lessLaborGoToDictionary-label {
+	all: initial;
+	display: inline;
+	cursor: pointer;
+	white-space: nowrap;
+	margin-left: 5px;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mini li.lessLaborGoToDictionary-list {
 	display: inline;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mini a.lessLaborGoToDictionary-anchor {
+	display: inline;
 	white-space: normal;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mini span.lessLaborGoToDictionary-label {
@@ -122,17 +132,17 @@
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor {
 	border-top: 2px solid #505050;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor,
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:link {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor span.lessLaborGoToDictionary-label,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:link span.lessLaborGoToDictionary-label {
 	color: white;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:visited {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:visited span.lessLaborGoToDictionary-label{
 	color: #B0B0B0;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:hover {
 	text-decoration: none;
 	background-color:#505050;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:active {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-dark a.lessLaborGoToDictionary-anchor:active span.lessLaborGoToDictionary-label{
 	color: #F07070;
 }

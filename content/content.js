@@ -1,6 +1,8 @@
 (()=>{
 	const LINK_NODE_DEFAULT_HEIGHT = 100;
 	const LINK_NODE_DEFAULT_WIDTH = 200;
+	const LINK_NODE_SWITCH_HEIGHT = 100;
+	const LINK_NODE_SWITCH_WIDTH = 130;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
@@ -87,6 +89,7 @@
 		optionNode.setAttribute("id",CSS_PREFIX+"-option");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
+		swichMiniView();
 	}
 
 	function addCommonLinkListEvents(){
@@ -213,7 +216,7 @@
 
 	function resizeWatcher(){
 		switchWatchFlag()
-		swithMiniView();
+		swichMiniView();
 	}
 
 	function switchWatchFlag(){
@@ -228,10 +231,8 @@
 		}
 	}
 
-	function swithMiniView(){
-		let height = getLinkListHeight();
-		let width = getLinkListWidth();
-		if( height <= 100 || width <= 130 ) {
+	function swichMiniView(){
+		if( linkListNodeHeight < LINK_NODE_SWITCH_HEIGHT || linkListNodeWidth < LINK_NODE_SWITCH_WIDTH ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mini");
 		}
 		else {
@@ -295,7 +296,6 @@
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
 			a.classList.add(CSS_PREFIX+"-anchor");
-			setFontSize(a, anchorSize);
 			a.setAttribute( "href", url );
 			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
@@ -306,7 +306,7 @@
 			a.addEventListener("click", onClickAnchor);
 			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
 			let img = document.createElement("img");
-			img.classList.add(CSS_PREFIX+"-icon");
+			img.classList.add(CSS_PREFIX+"-favicon");
 			let src;
 			if( faviconCache.hasOwnProperty(item["u"]) && faviconCache[item["u"]] != FAVICON_NODATA ){
 				src = faviconCache[item["u"]];
@@ -316,9 +316,11 @@
 			}
 			img.setAttribute( "src", src );
 			img.setAttribute( "title", item["l"] );
+			setFaviconSize(img, anchorSize);
 			a.appendChild(img);
 			let span = document.createElement("span");
 			span.classList.add(CSS_PREFIX+"-label");
+			setFontSize(span, anchorSize);
 			span.innerText = item["l"];
 			a.appendChild(span);
 			li.appendChild(a);
@@ -578,6 +580,7 @@
 		linkListNodeHeight = height;
 		linkListNodeWidth = width;
 		applyLinkListSize();
+		swichMiniView();
 	}
 
 	function zoomLinkList(direction=1){
@@ -593,14 +596,23 @@
 	}
 
 	function applyZoomLinkList(){
-		let list = linkListNode.querySelectorAll("a."+CSS_PREFIX+"-anchor");
+		let list = linkListNode.querySelectorAll("span."+CSS_PREFIX+"-label");
 		for(let i=0; i<list.length; i++){
 			setFontSize(list[i], anchorSize);
+		}
+		list = linkListNode.querySelectorAll("img."+CSS_PREFIX+"-favicon");
+		for(let i=0; i<list.length; i++){
+			setFaviconSize(list[i], anchorSize);
 		}
 	}
 
 	function setFontSize(node, size){
 		node.style["font-size"] = size + "em";
+	}
+
+	function setFaviconSize(node, size){
+		node.style["height"] = size + "em";
+		node.style["width"] = size + "em";
 	}
 
 	function saveAnchorSize(){
