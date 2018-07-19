@@ -99,6 +99,7 @@
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
 		document.addEventListener("mousedown", mousedownCommonBehavior);
+		browser.runtime.onMessage.addListener( notify )
 	}
 
 	function addAutoLinkListEvents(){
@@ -393,7 +394,7 @@
 		}
 		else if( change["ol"] ) {
 			closeLinkList();
-			setOptionList( change["ol"]["newValue"] ).catch(err)
+			setOptionList( change["ol"]["newValue"] ).catch((e)=>{console.error(e)});
 			resetLinkListEvents();
 		}
 		else if( change["bf"] ){
@@ -433,7 +434,7 @@
 	function setVer( res ){
 		setAnchorSize( res["as"] );
 		setLinkListSize( res["lh"], res["lw"] );
-		setOptionList( res["ol"] ).catch(err);
+		setOptionList( res["ol"] ).catch((e)=>{console.error(e)});
 		setLinkListFlag( res["bf"] );
 		setCtrlKeyFlag( res["ck"] );
 		setShiftKeyFlag( res["sk"] );
@@ -666,7 +667,9 @@
 		}
 	}
 
-	function err(e){
-		console.error(e);
+	function notify(e){
+		if(e.method = "updateFaviconCache") {
+			faviconCache = e.data;
+		}
 	}
 })();

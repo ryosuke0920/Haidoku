@@ -1,4 +1,3 @@
-ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 const DEFAULT_LOCALE = "en";
 const XHR_TIMEOUT = 10000;
 const MAX_FAVICON_CONNECTION = 5;
@@ -9,12 +8,15 @@ let ctrlKey = false;
 let options = {};
 let faviconCache = {};
 
+ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
+
 Promise.resolve()
 .then(initContextMenu)
 .then(initListener)
 .catch(unexpectedError)
 .then(updateFaviconCache)
-.catch(err);
+.then(broadcastFaviconCache)
+.catch((e)=>console.error(e));
 
 function install(e){
 	if(e.reason == "install"){
@@ -25,9 +27,11 @@ function install(e){
 		.then(initContextMenu)
 		.catch(onSaveError)
 		.then(updateFaviconCache)
-		.catch(err);
+		.then(broadcastFaviconCache)
+		.catch( (e)=>{console.error(e)} );
 	}
 }
+
 function initContextMenu(){
 	return getSetting().then(resetMenu, onReadError);
 }
@@ -138,7 +142,7 @@ function onStorageChanged(change, area){
 
 	}
 	if(change["ol"]) {
-		updateFaviconCache().catch(err);
+		updateFaviconCache().then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
 }
 
@@ -341,13 +345,13 @@ function faviconChain(){
 	this.promise = this.promise
 	.then( requestAjaxSearchURL.bind(this) )
 	.then( responseAjaxSearchURL.bind(this) )
-	.catch( err )
+	.catch( (e)=>{console.error(e)} )
 	.then( decideFaviconURL.bind(this) )
 	.then( requestAjaxFavicon.bind(this) )
 	.then( responseAjaxFavicon.bind(this) )
 	.then( convertFavicon.bind(this) )
 	.then( setFaviconCache.bind(this) )
-	.catch( err )
+	.catch( (e)=>{console.error(e)} )
 	.finally( endOfFaviconChain.bind(this) );
 	return this.promise;
 }
@@ -427,4 +431,28 @@ function endOfFaviconChain(){
 	}
 	this.queue_id = this.queue.length + 1;
 	faviconChain.bind(this)();
+}
+
+function broadcastFaviconCache(){
+	let p = broadcast({
+		"method": "updateFaviconCach",
+		"data": faviconCache
+	});
+}
+
+function broadcast(data){
+	let obj = {"data": data};
+	return browser.windows.getAll({"populate":true}).then(broadcastWindows.bind(obj));
+}
+
+function broadcastWindows(windows){
+	for(let i=0; i<windows.length; i++){
+		let w = windows[i];
+		let tabs = w.tabs;
+		for(let j=0; j<tabs.length; j++){
+			let t = w.tabs[j];
+			browser.tabs.sendMessage(t.id, this.data)
+			.catch((e)=>{ console.log(e); });
+		}
+	}
 }
