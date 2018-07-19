@@ -296,7 +296,6 @@
 			let a = document.createElement("a");
 			a.classList.add(CSS_PREFIX+"-anchor");
 			a.setAttribute( "href", url );
-			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
 			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "data-text", text );
