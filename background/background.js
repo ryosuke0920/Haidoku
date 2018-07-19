@@ -442,7 +442,7 @@ function broadcastFaviconCache(){
 
 function broadcast(data){
 	let obj = {"data": data};
-	return browser.windows.getAll({"populate":true}).then(broadcastWindows.bind(obj));
+	return ponyfill.windows.getAll({"populate":true}).then(broadcastWindows.bind(obj));
 }
 
 function broadcastWindows(windows){
@@ -451,7 +451,7 @@ function broadcastWindows(windows){
 		let tabs = w.tabs;
 		for(let j=0; j<tabs.length; j++){
 			let t = w.tabs[j];
-			browser.tabs.sendMessage(t.id, this.data)
+			ponyfill.tabs.sendMessage(t.id, this.data)
 			.catch((e)=>{ console.log(e); });
 		}
 	}

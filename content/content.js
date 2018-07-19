@@ -39,7 +39,7 @@
 	Promise.resolve()
 		.then(init)
 		.then(
-			()=>{ return Promise.resolve().then(reload).then(addCommonLinkListEvents); },
+			()=>{ return Promise.resolve().then(loadSetting).then(addCommonLinkListEvents); },
 			silentError
 		).catch(unexpectedError);
 
@@ -99,7 +99,7 @@
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
 		document.addEventListener("mousedown", mousedownCommonBehavior);
-		browser.runtime.onMessage.addListener( notify )
+		ponyfill.runtime.onMessage.addListener( notify )
 	}
 
 	function addAutoLinkListEvents(){
@@ -394,8 +394,9 @@
 		}
 		else if( change["ol"] ) {
 			closeLinkList();
-			setOptionList( change["ol"]["newValue"] ).catch((e)=>{console.error(e)});
+			setOptionList( change["ol"]["newValue"] );
 			resetLinkListEvents();
+			if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 		}
 		else if( change["bf"] ){
 			closeLinkList();
@@ -416,7 +417,7 @@
 		if( isLinkListShown() ) applyLinkListSize();
 	}
 
-	function reload(){
+	function loadSetting(){
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,
@@ -434,13 +435,14 @@
 	function setVer( res ){
 		setAnchorSize( res["as"] );
 		setLinkListSize( res["lh"], res["lw"] );
-		setOptionList( res["ol"] ).catch((e)=>{console.error(e)});
+		setOptionList( res["ol"] );
 		setLinkListFlag( res["bf"] );
 		setCtrlKeyFlag( res["ck"] );
 		setShiftKeyFlag( res["sk"] );
 		setLinkListStyle( res["cl"] );
 		setLinkListAction( res["ca"] );
 		resetLinkListEvents();
+		if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 	}
 
 	function setAnchorSize(res){
@@ -525,8 +527,6 @@
 			let data = res[i];
 			if ( data["c"] ) optionList.push(data);
 		}
-		if( optionList.length <= 0) return;
-		return getFavicon().then( gotFavicon );
 	}
 
 	function getFavicon(){
