@@ -66,19 +66,28 @@ function notify(message, sender, sendResponse){
 	let method = message.method;
 	let data = message.data;
 	if( method == "notice" ){
-		return notice(data);
+		let p = notice(data);
+		sendResponse(p);
+		return p;
 	}
 	else if( method == "saveHistory" ){
-		return saveHistory(data);
+		let p = saveHistory(data);
+		sendResponse(p);
+		return p;
 	}
 	else if( method == "openOptions" ){
-		return ponyfill.runtime.openOptionsPage();
+		let p = ponyfill.runtime.openOptionsPage();
+		sendResponse(p);
+		return p;
 	}
 	else if( method == "getFavicon" ){
-		return Promise.resolve(faviconCache);
+		sendResponse( faviconCache );
+		return Promise.resolve( faviconCache );
 	}
 	else {
-		return save(data);
+		let p = save(data);
+		sendResponse(p);
+		return p;
 	}
 }
 
