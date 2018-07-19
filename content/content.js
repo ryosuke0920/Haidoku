@@ -1,7 +1,7 @@
 (()=>{
 	const LINK_NODE_DEFAULT_HEIGHT = 100;
 	const LINK_NODE_DEFAULT_WIDTH = 200;
-	const LINK_NODE_SWITCH_HEIGHT = 100;
+	const LINK_NODE_SWITCH_HEIGHT = 99;
 	const LINK_NODE_SWITCH_WIDTH = 130;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
@@ -231,7 +231,7 @@
 	}
 
 	function swichMiniView(){
-		if( linkListNodeHeight < LINK_NODE_SWITCH_HEIGHT || linkListNodeWidth < LINK_NODE_SWITCH_WIDTH ) {
+		if( linkListNodeHeight <= LINK_NODE_SWITCH_HEIGHT || linkListNodeWidth <= LINK_NODE_SWITCH_WIDTH ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mini");
 		}
 		else {

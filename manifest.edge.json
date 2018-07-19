@@ -46,6 +46,7 @@
 		"default_title": "__MSG_extensionName__"
 	},
 	"permissions": [
+		"<all_urls>",
 		"activeTab",
 		"contextMenus",
 		"storage",
