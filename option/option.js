@@ -490,5 +490,5 @@ function fetchValue(element, selector){
 
 function saveOption(){
 	let data = { "ol": makeOptionList() };
-	return saveW(data).catch(onSaveError);
+	return saveW(data);
 }
