@@ -4,13 +4,13 @@ Every times it's is boring to input text for search. Especially it's time readin
 
 ## Description
 ### Link list
-When you select a text, Link list is displayed. Link list is list of your favorite dictionary sites. When ESC key is pressed or mouse is clicked outside the area of Link list, Link list is closed. You can change Link list to small icon button, also change display mode to automatic or manual. So I'm careful not to disturb normal browsing.
+When you select a text, Link list is displayed. Link list is list of your favorite dictionary sites. If you click the link, you can move to that site immediately and view the search results, so there is no work of copying or opening the site with new tabs. When ESC key is pressed or mouse is clicked outside the area of Link list, Link list is closed. You can change Link list to small icon button, also change display mode to automatic or manual.
 
 ### Context menu(right click)
 Link list is also displayed in the context menu. So you can use without changing your experience. And you can change display mode to automatic or manual in here.
 
 ### Make Link list
-On the Setting screen you have to make your Link list. And you have to find out URLs and search parameters. But I already found out main site URLs and search parameters. It's prepared in this tool. So you can use this tool immediately.
+On the Setting screen you have to make your Link list. Generaly you have to find out URLs and search parameters, but I already found out major site URLs and search parameters. It's prepared in this tool. So you can use this tool immediately.
 
 ### History
 On the Setting screen you can watch history. A word with a high number of searches is that your understanding is not sufficient although it is used frequently. You should study it intensively. To find the word efficiently, a function is built in to aggregate search counts.
@@ -18,11 +18,12 @@ On the Setting screen you can watch history. A word with a high number of search
 ### About preset URLs
 URLs and search parameters of the following sites are prepared. If these specifications are changed by the site administrator, we need to change too. If you want to add some URLs, please email me. There may be people who need it too.
 
-* Google
-* Bing
-* DuckDuckGo
+* Google (Image, Videos)
+* Bing (Image, Videos)
+* DuckDuckGo (Image, Videos)
+* Ecosia (Image, Videos)
 * 百度
-* Wikipedia
+* Wikipedia, Wiktionary
 * Cambridge Dictionary
 * Oxford Dictionaries
 * Collins
@@ -34,7 +35,7 @@ URLs and search parameters of the following sites are prepared. If these specifi
 etc. Total 85 URLs.
 
 # Privacy policy
-This tool does not collect or send information, but the setting data are sent and received by the synchronization service provided by the browser. History data is out of the synchronization service.
+This tool does not collect or send privacy data. But the setting data are sent and received by the synchronization service provided by the browser. History data is out of the synchronization service.
 
 # Delivery information such as release information
 https://twitter.com/SearchDictionar
@@ -43,5 +44,5 @@ https://twitter.com/SearchDictionar
 ryosuke.ohta.programmer@gmail.com
 
 # License
-This software is released under the MIT License.
+This software is released under the MIT License.  
 https://opensource.org/licenses/MIT
