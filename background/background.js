@@ -437,7 +437,7 @@ function endOfFaviconChain(){
 
 function broadcastFaviconCache(){
 	broadcast({
-		"method": "updateFaviconCach",
+		"method": "updateFaviconCache",
 		"data": faviconCache
 	});
 }

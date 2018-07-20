@@ -99,7 +99,7 @@
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
 		document.addEventListener("mousedown", mousedownCommonBehavior);
-		ponyfill.runtime.onMessage.addListener( notify )
+		ponyfill.runtime.onMessage.addListener( notify );
 	}
 
 	function addAutoLinkListEvents(){
@@ -382,6 +382,7 @@
 			let lw = linkListNodeWidth;
 			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
 			setLinkListSize( lh, lw );
+			swichMiniView();
 		}
 		else if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
@@ -668,7 +669,7 @@
 	}
 
 	function notify(e){
-		if(e.method = "updateFaviconCache") {
+		if(e.method == "updateFaviconCache") {
 			faviconCache = e.data;
 		}
 	}
