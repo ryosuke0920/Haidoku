@@ -62,6 +62,8 @@
 		</div>
 		<div id="preset" class="panel hide">
 			<nav class="controller">
+				<button type="button" class="addPreset">htmlAddPresetButtonName</button>&nbsp;
+				&nbsp;
 				<span class="groupLine">
 					<span class="filterText">htmlFilterText</span>&nbsp;
 					<select id="languageFilter">
@@ -72,12 +74,15 @@
 					</select>
 				</span>
 				&nbsp;
-				<button type="button" class="addPreset">htmlAddPresetButtonName</button>&nbsp;
+				<span class="groupLine">
+					<input type="text" id="presetSearchText" class="presetSearchText" placeholder="htmlSearchKeyword">
+					<button type="buttom" class="presetClearSearchButton">htmlPresetClearSearchButton</button>
+				</span>
 			</nav>
 			<div class="desk">
 				<div class="presetDescription">htmlPresetDescription</div>
 				<div id="table" class="box"></div>
-				<section id="cellPrototype" class="cell hide checkWrapper" data-language="">
+				<section id="cellPrototype" class="hide checkWrapper" data-language="">
 					<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
 					<p class="url">url</p>
 				</section>
@@ -223,13 +228,19 @@
 						</nav>
 						<ul id="lessLaborGoToDictionary-container">
 							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">test1 </a>
+								<a class="lessLaborGoToDictionary-anchor">
+									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test1" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
+								</a>
 							</li>
 							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">test2 test2 </a>
+								<a class="lessLaborGoToDictionary-anchor">
+									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test2 test2" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2 test2</span>
+								</a>
 							</li>
 							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">test3 test3 test3 </a>
+								<a class="lessLaborGoToDictionary-anchor">
+									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test3 test3 test3" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3 test3 test3</span>
+								</a>
 							</li>
 						</ul>
 					</div>

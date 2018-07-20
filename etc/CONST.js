@@ -6,3 +6,5 @@ const LINK_LIST_STYLE_DARK = "d";
 const LINK_LIST_ACTION_NORMAL = "n";
 const LINK_LIST_ACTION_MOUSEOVER = "m";
 const LINK_LIST_ACTION_MOUSECLICK = "c";
+
+const FAVICON_NODATA = "nodata";

@@ -1,6 +1,8 @@
 (()=>{
 	const LINK_NODE_DEFAULT_HEIGHT = 100;
 	const LINK_NODE_DEFAULT_WIDTH = 200;
+	const LINK_NODE_SWITCH_HEIGHT = 99;
+	const LINK_NODE_SWITCH_WIDTH = 130;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
@@ -18,6 +20,8 @@
 	let linkListNodeLeft = 0;
 	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
+	let linkListScrollTopTmp = 0;
+	let linkListScrollleftTmp = 0;
 	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
 	let coverNode;
 	let optionList = [];
@@ -30,11 +34,12 @@
 	let containerNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
+	let faviconCache = {};
 
 	Promise.resolve()
 		.then(init)
 		.then(
-			()=>{ Promise.resolve().then(reload).then(addCommonLinkListEvents); },
+			()=>{ return Promise.resolve().then(loadSetting).then(addCommonLinkListEvents); },
 			silentError
 		).catch(unexpectedError);
 
@@ -94,6 +99,7 @@
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
 		document.addEventListener("mousedown", mousedownCommonBehavior);
+		ponyfill.runtime.onMessage.addListener( notify );
 	}
 
 	function addAutoLinkListEvents(){
@@ -136,18 +142,14 @@
 
 	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ){
-			closeLinkList();
-		}
+		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) closeLinkList();
 	}
 
 	function mouseupCommonBehavior(e){
 		mousedownFlag = false;
-		let promise;
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
-			promise = saveLinkListSize();
-			promise.catch(onSaveError);
+			saveLinkListSize().catch(onSaveError);
 		}
 	}
 
@@ -204,9 +206,22 @@
 		return false;
 	}
 
+	function getLinkListHeight(){
+		return linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
+	}
+
+	function getLinkListWidth(){
+		return linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
+	}
+
 	function resizeWatcher(){
-		let height = linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
-		let width = linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
+		switchWatchFlag()
+		swichMiniView();
+	}
+
+	function switchWatchFlag(){
+		let height = getLinkListHeight();
+		let width = getLinkListWidth();
 		if ( linkListNodeHeight != height || linkListNodeWidth != width ){
 			resizeWatcherFlag = true;
 			if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
@@ -216,18 +231,27 @@
 		}
 	}
 
+	function swichMiniView(){
+		if( linkListNodeHeight <= LINK_NODE_SWITCH_HEIGHT || linkListNodeWidth <= LINK_NODE_SWITCH_WIDTH ) {
+			linkListNode.classList.add(CSS_PREFIX+"-mini");
+		}
+		else {
+			linkListNode.classList.remove(CSS_PREFIX+"-mini");
+		}
+	}
+
 	function saveLinkListSize(){
-		let res = ponyfill.runtime.sendMessage({
+		return ponyfill.runtime.sendMessage({
 			"method": "saveLinkListSize",
 			"data": {
 				"lh": linkListNodeHeight,
 				"lw": linkListNodeWidth
 			}
 		});
-		return res;
 	}
 
 	function closeLinkList(){
+		resetScrollTmp();
 		linkListNode.classList.add(CSS_PREFIX+"-hide");
 	}
 
@@ -240,22 +264,21 @@
 	}
 
 	function onClickSaveHistory(e){
-		saveHistory(e).catch(onSaveError);
+		saveHistory(e.currentTarget).catch(onSaveError);
 	}
 
-	function saveHistory(e){
+	function saveHistory(node){
 		let data = {
 			"method": "saveHistory",
 			"data": {
-				"text": e.target.getAttribute("data-text"),
+				"text": node.getAttribute("data-text"),
 				"fromURL": window.location.toString(),
 				"fromTitle": document.title.toString(),
-				"toURL": e.target.getAttribute("data-url"),
-				"toTitle": e.target.getAttribute("data-label")
+				"toURL": node.getAttribute("data-url"),
+				"toTitle": node.getAttribute("data-label")
 			}
 		};
-		let res = ponyfill.runtime.sendMessage(data);
-		return res;
+		return ponyfill.runtime.sendMessage(data);
 	}
 
 	function makeLinkList(text){
@@ -267,23 +290,38 @@
 		for(let i=0; i<optionList.length; i++){
 			let item = optionList[i];
 			if ( !item["c"] ) continue;
+			let li = document.createElement("li");
+			li.classList.add(CSS_PREFIX+"-list");
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
 			a.classList.add(CSS_PREFIX+"-anchor");
-			setFontSize(a, anchorSize);
 			a.setAttribute( "href", url );
-			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "target", "_blank" );
 			a.setAttribute( "rel", "noreferrer" );
 			a.setAttribute( "data-text", text );
 			a.setAttribute( "data-url", item["u"] );
 			a.setAttribute( "data-label", item["l"] );
-			a.innerText = item["l"];
 			a.addEventListener("click", onClickAnchor);
 			if( item["h"] ) a.addEventListener("click", onClickSaveHistory);
-			let li = document.createElement("li");
-			li.classList.add(CSS_PREFIX+"-list");
+			let img = document.createElement("img");
+			img.classList.add(CSS_PREFIX+"-favicon");
+			let src;
+			if( faviconCache.hasOwnProperty(item["u"]) && faviconCache[item["u"]] != FAVICON_NODATA ){
+				src = faviconCache[item["u"]];
+			}
+			else {
+				src = ponyfill.extension.getURL("/image/favicon.svg");
+			}
+			img.setAttribute( "src", src );
+			img.setAttribute( "title", item["l"] );
+			setFaviconSize(img, anchorSize);
+			a.appendChild(img);
+			let span = document.createElement("span");
+			span.classList.add(CSS_PREFIX+"-label");
+			setFontSize(span, anchorSize);
+			span.innerText = item["l"];
+			a.appendChild(span);
 			li.appendChild(a);
 			containerNode.appendChild(li);
 		}
@@ -307,6 +345,7 @@
 	function showLinkList(pageY, pageX, clientY, clientX, selection){
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		linkListNode.classList.remove(CSS_PREFIX+"-hide");
+		swichMiniView();
 		applyLinkListSize();
 		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
 		if ( 0 < yy || window.innerHeight < linkListNode.offsetHeight ) yy = 0;
@@ -343,6 +382,7 @@
 			let lw = linkListNodeWidth;
 			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
 			setLinkListSize( lh, lw );
+			swichMiniView();
 		}
 		else if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
@@ -357,6 +397,7 @@
 			closeLinkList();
 			setOptionList( change["ol"]["newValue"] );
 			resetLinkListEvents();
+			if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 		}
 		else if( change["bf"] ){
 			closeLinkList();
@@ -377,7 +418,7 @@
 		if( isLinkListShown() ) applyLinkListSize();
 	}
 
-	function reload(){
+	function loadSetting(){
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,
@@ -402,6 +443,7 @@
 		setLinkListStyle( res["cl"] );
 		setLinkListAction( res["ca"] );
 		resetLinkListEvents();
+		if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 	}
 
 	function setAnchorSize(res){
@@ -428,6 +470,7 @@
 
 	function setLinkListAction(res){
 		linkListAction = res;
+		resetScrollTmp();
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseover");
 		linkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
 		removeStopper();
@@ -448,7 +491,12 @@
 	}
 
 	function controlStopper(e){
-		if(!resizeWatcherFlag) addStopper();
+		if(!resizeWatcherFlag){
+			addStopper();
+			linkListScrollTopTmp = linkListNode.scrollTop;
+			linkListScrollleftTmp = linkListNode.scrollLeft;
+			linkListNode.scrollTop = linkListNode.scrollLeft = 0;
+		}
 	}
 
 	function addStopper(){
@@ -456,11 +504,17 @@
 	}
 
 	function removeStopper(e){
+		linkListNode.scrollTop = linkListScrollTopTmp;
+		linkListNode.scrollLeft = linkListScrollleftTmp;
 		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
 	function hasStopper(){
 		return linkListNode.classList.contains(CSS_PREFIX+"-stopper");
+	}
+
+	function resetScrollTmp(){
+		linkListScrollTopTmp = linkListScrollleftTmp = 0;
 	}
 
 	function resetLinkListEvents(){
@@ -472,9 +526,18 @@
 		optionList = [];
 		for(let i=0; i<res.length; i++){
 			let data = res[i];
-			/* checked == true */
 			if ( data["c"] ) optionList.push(data);
 		}
+	}
+
+	function getFavicon(){
+		return ponyfill.runtime.sendMessage({
+			"method": "getFavicon",
+		});
+	}
+
+	function gotFavicon(e){
+		faviconCache = e;
 	}
 
 	function hasLinkList(){
@@ -483,73 +546,80 @@
 	}
 
 	function menuClickBihavior(e){
-		let promise;
 		let id = e.target.getAttribute("id");
 		if(id == CSS_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ){
-				promise = saveAnchorSize();
-				promise.catch(onSaveError);
+				saveAnchorSize().catch(onSaveError);
 			}
 		}
 		else if(id == CSS_PREFIX+"-zoomDown"){
 			if( zoomLinkList(-1) ){
-				promise = saveAnchorSize();
-				promise.catch(onSaveError);
+				saveAnchorSize().catch(onSaveError);
 			}
 		}
 		else if(id == CSS_PREFIX+"-copy"){
-			promise = copyText();
-			promise.then(closeLinkList);
+			copyText().then(closeLinkList);
 		}
 		else if(id == CSS_PREFIX+"-resize"){
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
-			promise = saveLinkListSize();
-			promise.catch(onSaveError);
+			saveLinkListSize().catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-option"){
-			promise = ponyfill.runtime.sendMessage({
-				"method": "openOptions"
-			});
-			promise.then(closeLinkList);
+			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList);
 		}
 	}
 
 	function copyText(){
 		document.execCommand("copy");
-		let promiss = ponyfill.runtime.sendMessage({
+		return ponyfill.runtime.sendMessage({
 			"method": "notice",
 			"data": ponyfill.i18n.getMessage("notificationCopyed")
 		});
-		return promiss;
 	}
 
 	function resetSize(height,width){
 		linkListNodeHeight = height;
 		linkListNodeWidth = width;
 		applyLinkListSize();
+		swichMiniView();
 	}
 
 	function zoomLinkList(direction=1){
 		if ( direction < 0 && anchorSize <= ANCHOR_MIN_SIZE ) return false;
 		if ( 0 < direction && ANCHOR_MAX_SIZE <= anchorSize ) return false;
 		anchorSize += direction * ANCHOR_RESIO;
-		anchorSize += 0.01;
-		anchorSize *= 10 ;
-		anchorSize = Math.floor(anchorSize);
-		anchorSize /= 10 ;
+		anchorSize = truncNumber(anchorSize);
 		applyZoomLinkList();
 		return true;
 	}
 
+	function truncNumber(num){
+		num += 0.01;
+		num *= 10 ;
+		num = Math.floor(num);
+		num /= 10 ;
+		return num
+	}
+
 	function applyZoomLinkList(){
-		let list = linkListNode.querySelectorAll("a."+CSS_PREFIX+"-anchor");
+		let list = linkListNode.querySelectorAll("span."+CSS_PREFIX+"-label");
 		for(let i=0; i<list.length; i++){
 			setFontSize(list[i], anchorSize);
+		}
+		list = linkListNode.querySelectorAll("img."+CSS_PREFIX+"-favicon");
+		for(let i=0; i<list.length; i++){
+			setFaviconSize(list[i], anchorSize);
 		}
 	}
 
 	function setFontSize(node, size){
 		node.style["font-size"] = size + "em";
+	}
+
+	function setFaviconSize(node, size){
+		size = truncNumber(size + (2*ANCHOR_RESIO));
+		node.style["height"] = size + "em";
+		node.style["width"] = size + "em";
 	}
 
 	function saveAnchorSize(){
@@ -595,6 +665,12 @@
 		}
 		else {
 			throw(e);
+		}
+	}
+
+	function notify(e){
+		if(e.method == "updateFaviconCache") {
+			faviconCache = e.data;
 		}
 	}
 })();
