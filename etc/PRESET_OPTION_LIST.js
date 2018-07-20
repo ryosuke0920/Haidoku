@@ -21,6 +21,11 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Google Images(URL)",
+		"u": "https://www.google.com/searchbyimage?image_url=$1"
+	},
+	{
+		"la": "en",
 		"l": "Google Videos",
 		"u": "https://www.google.com/search?q=$1&tbm=vid"
 	},
@@ -266,6 +271,11 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "ja",
+		"l": "Google 画像検索(URL)",
+		"u": "https://www.google.co.jp/searchbyimage?image_url=$1"
+	},
+	{
+		"la": "ja",
 		"l": "Google 動画検索",
 		"u": "https://www.google.co.jp/search?q=$1&tbm=vid"
 	},
@@ -418,6 +428,11 @@ const PRESET_OPTION_LIST = [
 		"la": "zh",
 		"l": "Google Images",
 		"u": "https://www.google.com.hk/search?q=$1&tbm=isch"
+	},
+	{
+		"la": "zh",
+		"l": "Google Images(URL)",
+		"u": "https://www.google.com.hk/searchbyimage?image_url=$1"
 	},
 	{
 		"la": "zh",
