@@ -15,6 +15,7 @@ Promise.resolve()
 .then(initListener)
 .catch(unexpectedError)
 .then(updateFaviconCache)
+.then(resetMenu)
 .then(broadcastFaviconCache)
 .catch((e)=>console.error(e));
 
@@ -27,6 +28,7 @@ function install(e){
 		.then(initContextMenu)
 		.catch(onSaveError)
 		.then(updateFaviconCache)
+		.then(resetMenu)
 		.then(broadcastFaviconCache)
 		.catch( (e)=>{console.error(e)} );
 	}
@@ -139,10 +141,9 @@ function onStorageChanged(change, area){
 		if(change["sk"]) shiftKey = change["sk"]["newValue"];
 		if(change["ck"]) ctrlKey = change["ck"]["newValue"];
 		resetMenu();
-
 	}
 	if(change["ol"]) {
-		updateFaviconCache().then(broadcastFaviconCache).catch((e)=>{console.error(e)});
+		updateFaviconCache().then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
 }
 
@@ -162,6 +163,9 @@ function resetMenu(json){
 				"title": label,
 				"contexts": ["selection"]
 			};
+			if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) &&  faviconCache[url] != FAVICON_NODATA){
+				args["icons"] = { "16": faviconCache[url] };
+			}
 			options[id] = {
 				"hist": hist,
 				"url": url,
@@ -255,7 +259,7 @@ function getDefaultOptionList(){
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
-function convertFaviconURL(url){
+function makeFaviconURL(url){
 	return remainDomainURL(url) + "favicon.ico";
 }
 
@@ -305,14 +309,14 @@ function updateFaviconCache(){
 			if(!obj.c) continue;
 			if(faviconCache.hasOwnProperty(obj.u)) continue;
 			faviconCache[obj.u] = FAVICON_NODATA;
-			let faviconURL = convertFaviconURL(obj.u);
+			let faviconURL = makeFaviconURL(obj.u);
 			let data = {
-					"url": obj.u,
-					"faviconURL": [faviconURL],
-					"requestIndex": 0,
-					"blob": null,
-					"base64": null,
-					"doc": null
+				"url": obj.u,
+				"faviconURL": [faviconURL],
+				"requestIndex": 0,
+				"blob": null,
+				"base64": null,
+				"doc": null
 			};
 			queue.push(data);
 		}
@@ -424,9 +428,7 @@ function endOfFaviconChain(){
 	let count = this.count();
 	this.data = this.queue.shift();
 	if(!this.data) {
-		if( count >= this.queue_length  ){
-			this.callback();
-		}
+		if( count >= this.queue_length ) this.callback();
 		return;
 	}
 	this.queue_id = this.queue.length + 1;
@@ -434,7 +436,7 @@ function endOfFaviconChain(){
 }
 
 function broadcastFaviconCache(){
-	let p = broadcast({
+	broadcast({
 		"method": "updateFaviconCach",
 		"data": faviconCache
 	});
@@ -442,7 +444,7 @@ function broadcastFaviconCache(){
 
 function broadcast(data){
 	let obj = {"data": data};
-	return ponyfill.windows.getAll({"populate":true}).then(broadcastWindows.bind(obj));
+	ponyfill.windows.getAll({"populate":true}).then(broadcastWindows.bind(obj));
 }
 
 function broadcastWindows(windows){
