@@ -116,7 +116,7 @@ table thead th, table tbody td {
 .box {
 	padding: 0.5em;
 }
-.hide {
+.hide, .cell-hide {
 	display: none;
 }
 .groupLine {

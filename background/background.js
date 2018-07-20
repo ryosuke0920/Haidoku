@@ -1,26 +1,57 @@
-ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 const DEFAULT_LOCALE = "en";
+const XHR_TIMEOUT = 10000;
+const MAX_FAVICON_CONNECTION = 5;
+let optionList = [];
+let autoViewFlag = true;
+let shiftKey = false;
+let ctrlKey = false;
 let options = {};
+let faviconCache = {};
 
-Promise.resolve().then(initContextMenu).then(initListener).catch(unexpectedError);
+ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
+
+Promise.resolve()
+.then(initContextMenu)
+.then(initListener)
+.catch(unexpectedError)
+.then(updateFaviconCache)
+.then(resetMenu)
+.then(broadcastFaviconCache)
+.catch((e)=>console.error(e));
 
 function install(e){
 	if(e.reason == "install"){
 		let data = {
 			"ol": getDefaultOptionList()
 		};
-		return save(data).then(initContextMenu).catch(onSaveError);
+		return save(data)
+		.then(initContextMenu)
+		.catch(onSaveError)
+		.then(updateFaviconCache)
+		.then(resetMenu)
+		.then(broadcastFaviconCache)
+		.catch( (e)=>{console.error(e)} );
 	}
 }
 
 function initContextMenu(){
-	let getter = ponyfill.storage.sync.get({
+	return getSetting().then(resetMenu, onReadError);
+}
+
+function getSetting() {
+	return ponyfill.storage.sync.get({
 		"ol": [],
 		"bf": true,
 		"sk": false,
 		"ck": false
-	});
-	return getter.then(resetMenu, onReadError);
+	}).then(onGotSetting);
+}
+
+function onGotSetting(json){
+	optionList = json["ol"];
+	autoViewFlag = json["bf"];
+	shiftKey = json["sk"];
+	ctrlKey = json["ck"];
 }
 
 function initListener(){
@@ -41,18 +72,29 @@ function notify(message, sender, sendResponse){
 	let method = message.method;
 	let data = message.data;
 	if( method == "notice" ){
-		sendResponse( notice(data) );
+		let p = notice(data);
+		sendResponse(p);
+		return p;
 	}
 	else if( method == "saveHistory" ){
-		sendResponse( saveHistory(data) );
+		let p = saveHistory(data);
+		sendResponse(p);
+		return p;
 	}
 	else if( method == "openOptions" ){
-		sendResponse( ponyfill.runtime.openOptionsPage() );
+		let p = ponyfill.runtime.openOptionsPage();
+		sendResponse(p);
+		return p;
+	}
+	else if( method == "getFavicon" ){
+		sendResponse( faviconCache );
+		return Promise.resolve( faviconCache );
 	}
 	else {
-		sendResponse( save(data) );
+		let p = save(data);
+		sendResponse(p);
+		return p;
 	}
-	return true;
 }
 
 function saveAutoViewFlag(flag=true){
@@ -94,22 +136,19 @@ function saveHistory(data){
 
 function onStorageChanged(change, area){
 	if(change["ol"] || change["bf"] || change["sk"] || change["ck"]) {
-		let getter = ponyfill.storage.sync.get({
-			"ol": [],
-			"bf": true,
-			"sk": false,
-			"ck": false
-		});
-		return getter.then(resetMenu, onReadError);
+		if(change["ol"]) optionList = change["ol"]["newValue"];
+		if(change["bf"]) autoViewFlag = change["bf"]["newValue"];
+		if(change["sk"]) shiftKey = change["sk"]["newValue"];
+		if(change["ck"]) ctrlKey = change["ck"]["newValue"];
+		resetMenu();
 	}
+	if(change["ol"]) {
+		updateFaviconCache().then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
+	};
 }
 
 function resetMenu(json){
 	ponyfill.contextMenus.removeAll();
-	let optionList = json["ol"];
-	let autoViewFlag = json["bf"];
-	let shiftKey = json["sk"];
-	let ctrlKey = json["ck"];
 	options = {};
 	for(let i=0; i<optionList.length; i++){
 		let data = optionList[i];
@@ -124,6 +163,9 @@ function resetMenu(json){
 				"title": label,
 				"contexts": ["selection"]
 			};
+			if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) &&  faviconCache[url] != FAVICON_NODATA){
+				args["icons"] = { "16": faviconCache[url] };
+			}
 			options[id] = {
 				"hist": hist,
 				"url": url,
@@ -215,4 +257,204 @@ function getDefaultOptionList(){
 		return DEFAULT_OPTION_LIST[lang];
 	}
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
+}
+
+function makeFaviconURL(url){
+	return remainDomainURL(url) + "favicon.ico";
+}
+
+function remainDomainURL(url){
+	let newURL = "";
+	let count = 0;
+	for(let i=0; i<url.length; i++){
+		let str = url.substr(i,1);
+		newURL += str;
+		if(str == "/") count++;
+		if(3 <= count) break;
+	}
+	if(count < 3) newURL += "/";
+	return newURL;
+}
+
+function promiseAjax(method="GET", url, responseType){
+	return new Promise((resolve, reject)=>{
+		let xhr = new XMLHttpRequest();
+		xhr.addEventListener("load", (e)=>{
+			resolve(e);
+		});
+		xhr.addEventListener("error", (e)=>{
+			console.error(e);
+			reject(e);
+		});
+		xhr.addEventListener("abort", (e)=>{
+			console.error(e);
+			reject(e);
+		});
+		xhr.addEventListener("timeout", (e)=>{
+			console.error(e);
+			reject(e);
+		});
+		xhr.open(method, url);
+		xhr.timeout = XHR_TIMEOUT;
+		if(responseType) xhr.responseType = responseType;
+		xhr.send();
+	});
+}
+
+function updateFaviconCache(){
+	return new Promise((resolve)=>{
+		let queue = [];
+		for(let i=0; i<optionList.length; i++){
+			let obj = optionList[i];
+			if(!obj.c) continue;
+			if(faviconCache.hasOwnProperty(obj.u)) continue;
+			faviconCache[obj.u] = FAVICON_NODATA;
+			let faviconURL = makeFaviconURL(obj.u);
+			let data = {
+				"url": obj.u,
+				"faviconURL": [faviconURL],
+				"requestIndex": 0,
+				"blob": null,
+				"base64": null,
+				"doc": null
+			};
+			queue.push(data);
+		}
+		let queue_length = queue.length;
+		let count = (()=>{
+			let i=0;
+			return ()=>{
+				return ++i;
+			}
+		})();
+		for(let i=0; i<MAX_FAVICON_CONNECTION; i++){
+			let data = queue.shift();
+			if(!data) break;
+			let obj = {
+				"connection_id": i,
+				"queue_id": queue.length+1,
+				"queue_length": queue_length,
+				"count": count,
+				"callback": resolve,
+				"queue": queue,
+				"promise": Promise.resolve(),
+				"data": data
+			};
+			faviconChain.bind(obj)();
+		}
+	});
+}
+
+function faviconChain(){
+	this.promise = this.promise
+	.then( requestAjaxSearchURL.bind(this) )
+	.then( responseAjaxSearchURL.bind(this) )
+	.catch( (e)=>{console.error(e)} )
+	.then( decideFaviconURL.bind(this) )
+	.then( requestAjaxFavicon.bind(this) )
+	.then( responseAjaxFavicon.bind(this) )
+	.then( convertFavicon.bind(this) )
+	.then( setFaviconCache.bind(this) )
+	.catch( (e)=>{console.error(e)} )
+	.finally( endOfFaviconChain.bind(this) );
+	return this.promise;
+}
+
+function requestAjaxSearchURL(){
+	return promiseAjax("GET", this.data.url, "document");
+}
+
+function responseAjaxSearchURL(e){
+	if( e.target.response ) { // if it's not document, it's null.
+		this.data.doc = e.target.response;
+		return;
+	}
+	console.log("not found:"+e.target.responseURL);
+}
+
+function decideFaviconURL(e){
+	if(!this.data.doc) return;
+	let node = this.data.doc.querySelector("link[rel~=icon]");
+	if(!node) return;
+	let url = node.href;
+	if(!url) return;
+	this.data.faviconURL.unshift(url);
+}
+
+function requestAjaxFavicon(){
+	return promiseAjax("GET", this.data.faviconURL[this.data.requestIndex], "blob");
+}
+
+function responseAjaxFavicon(e){
+	if(e.target.status == "200"){
+		this.data.blob = e.target.response;
+		return;
+	}
+	console.log("not found:"+e.target.responseURL);
+	if( ++this.data.requestIndex >= this.data.faviconURL.length ) return;
+	return Promise.resolve()
+	.then( requestAjaxFavicon.bind(this) )
+	.then( responseAjaxFavicon.bind(this) )
+}
+
+function convertFavicon(){
+	return new Promise((resolve,reject)=>{
+		if(!this.data.blob){
+			resolve();
+			return;
+		}
+		let reader = new FileReader();
+		reader.readAsDataURL(this.data.blob);
+		reader.onloadend = (e)=>{
+			this.data.base64 = reader.result;
+			resolve();
+		}
+		reader.onerror = (e)=>{
+			console.error(e);
+			reject(e);
+		}
+		reader.onabort = (e)=>{
+			console.error(e);
+			reject(e);
+		}
+	});
+}
+
+function setFaviconCache(){
+	if(this.data.base64) faviconCache[this.data.url] = this.data.base64;
+}
+
+function endOfFaviconChain(){
+	let count = this.count();
+	this.data = this.queue.shift();
+	if(!this.data) {
+		if( count >= this.queue_length ) this.callback();
+		return;
+	}
+	this.queue_id = this.queue.length + 1;
+	faviconChain.bind(this)();
+}
+
+function broadcastFaviconCache(){
+	broadcast({
+		"method": "updateFaviconCache",
+		"data": faviconCache
+	});
+}
+
+function broadcast(data){
+	let obj = {"data": data};
+	ponyfill.windows.getAll({"populate":true}).then(broadcastWindows.bind(obj));
+}
+
+function broadcastWindows(windows){
+	for(let i=0; i<windows.length; i++){
+		let w = windows[i];
+		let tabs = w.tabs;
+		for(let j=0; j<tabs.length; j++){
+			let t = w.tabs[j];
+			ponyfill.tabs.sendMessage(t.id, this.data)
+			.catch((e)=>{ console.log(e); });
+		}
+	}
 }

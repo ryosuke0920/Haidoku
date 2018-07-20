@@ -191,6 +191,12 @@
 		"message": "Add",
 		"description": "Name of adding button."
 	},
+	"htmlPresetSearchKeyword": {
+		"message": "search keyword"
+	},
+	"htmlPresetClearSearchButton": {
+		"message": "clear"
+	},
 	"htmlHistoryUpdateButton": {
 		"message": "Update",
 		"description": "Name of update button."

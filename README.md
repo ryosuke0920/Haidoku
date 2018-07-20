@@ -19,7 +19,7 @@ On the Setting screen you can watch history. A word with a high number of search
 URLs and search parameters of the following sites are prepared. If these specifications are changed by the site administrator, we need to change too. If you want to add some URLs, please email me. There may be people who need it too.
 
 * Google
-* bing
+* Bing
 * DuckDuckGo
 * 百度
 * Wikipedia
@@ -31,14 +31,17 @@ URLs and search parameters of the following sites are prepared. If these specifi
 * yahoo 辞書
 * 英辞郎 on the WEB
 
-etc. Total 82 URLs.
+etc. Total 85 URLs.
 
-# License
-This software is released under the MIT License.
-https://opensource.org/licenses/MIT
+# Privacy policy
+This tool does not collect or send information, but the setting data are sent and received by the synchronization service provided by the browser. History data is out of the synchronization service.
 
 # Delivery information such as release information
 https://twitter.com/SearchDictionar
 
 # Contact
 ryosuke.ohta.programmer@gmail.com
+
+# License
+This software is released under the MIT License.
+https://opensource.org/licenses/MIT

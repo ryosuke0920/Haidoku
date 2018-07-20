@@ -30,6 +30,16 @@ const PRESET_OPTION_LIST = [
 		"u": "https://www.bing.com/search?q=$1"
 	},
 	{
+		"la": "en ja zh",
+		"l": "Bing images",
+		"u": "https://www.bing.com/images/search?q=$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "Bing Videos",
+		"u": "https://www.bing.com/videos/search?q=$1"
+	},
+	{
 		"la": "en",
 		"l": "YAHOO!",
 		"u": "https://search.yahoo.com/search?p=$1"
@@ -258,6 +268,11 @@ const PRESET_OPTION_LIST = [
 		"la": "ja",
 		"l": "Google 動画検索",
 		"u": "https://www.google.co.jp/search?q=$1&tbm=vid"
+	},
+	{
+		"la": "ja",
+		"l": "Google 翻訳 自動検出→日本語",
+		"u": "https://translate.google.co.jp/?hl=ja#auto/ja/$1"
 	},
 	{
 		"la": "ja",
