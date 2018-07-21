@@ -16,6 +16,11 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Google Translate detect-English",
+		"u": "https://translate.google.com/?hl=en#auto/en/$1"
+	},
+	{
+		"la": "en",
 		"l": "Google Images",
 		"u": "https://www.google.com/search?tbm=isch&q=$1"
 	},
@@ -423,6 +428,11 @@ const PRESET_OPTION_LIST = [
 		"la": "zh",
 		"l": "Google(www.google.com.hk)",
 		"u": "https://www.google.com.hk/search?q=$1"
+	},
+	{
+		"la": "zh",
+		"l": "Google 翻译 检测语言-中文(简体)",
+		"u": "https://translate.google.com.hk/?hl=zh#auto/zh-CN/$1"
 	},
 	{
 		"la": "zh",
