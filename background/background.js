@@ -1,3 +1,5 @@
+const GLOBAL_EXTENSION_NAME = "SearchDictionaryFaster";
+const SUPPORT_EMAIL = "ryosuke.ohta.programmer@gmail.com";
 const DEFAULT_LOCALE = "en";
 const XHR_TIMEOUT = 10000;
 const MAX_FAVICON_CONNECTION = 5;
@@ -90,6 +92,11 @@ function notify(message, sender, sendResponse){
 	else if( method == "getFavicon" ){
 		sendResponse( faviconCache );
 		return Promise.resolve( faviconCache );
+	}
+	else if( method == "apiRequest" ){
+		let p = apiRequest(data);
+		sendResponse( p );
+		return p;
 	}
 	else {
 		let p = save(data);
@@ -291,7 +298,7 @@ function remainDomainURL(url){
 	return newURL;
 }
 
-function promiseAjax(method="GET", url, responseType){
+function promiseAjax(method="GET", url, responseType, header=[]){
 	return new Promise((resolve, reject)=>{
 		let xhr = new XMLHttpRequest();
 		xhr.addEventListener("load", (e)=>{
@@ -312,6 +319,9 @@ function promiseAjax(method="GET", url, responseType){
 		xhr.open(method, url);
 		xhr.timeout = XHR_TIMEOUT;
 		if(responseType) xhr.responseType = responseType;
+		for(let i=0; i<header.length; i++){
+			xhr.setRequestHeader(header[i].key, header[i].value);
+		}
 		xhr.send();
 	});
 }
@@ -472,4 +482,66 @@ function broadcastWindows(windows){
 			.catch((e)=>{ console.log(e); });
 		}
 	}
+}
+
+function apiRequest(data){
+	console.log(data);
+	let param = [
+		{
+			"key"  :"action",
+			"value":"query"
+		},{
+			"key"  :"format",
+			"value":"json"
+		},{
+			"key"  :"prop",
+			"value":"revisions"
+		},{
+			"key"  :"rvprop",
+			"value":"content"
+		},{
+			"key"  :"titles",
+			"value":"$1"
+		}
+	];
+	let url = "https://ja.wiktionary.org/w/api.php?";
+	let list = [];
+	for(let i=0; i<param.length; i++) list.push( param[i].key + "=" + param[i].value );
+	url += list.join("&");
+	url = makeURL(url, data.text);
+	let obj = {
+		"url": url,
+		"status": "init"
+	};
+	return Promise.resolve()
+	.then( requestAjaxApiTitle.bind(obj) )
+	.then( responseAjaxApiTitle.bind(obj) )
+}
+
+function requestAjaxApiTitle(){
+	console.log(this);
+	let manifest = ponyfill.runtime.getManifest();
+	let header = [
+		{
+			"key": "Api-User-Agent",
+			"value": GLOBAL_EXTENSION_NAME+"/"+manifest.version+" ("+SUPPORT_EMAIL+") XMLHttpRequest"
+		}
+	];
+	return promiseAjax("GET", this.url, "json", header);
+}
+
+function responseAjaxApiTitle(e){
+	return new Promise((resolve,reject)=>{
+		console.log(e);
+		if( e.target.status == "200" ) {
+			let json = e.target.response;
+			if(!json.query.pages.hasOwnProperty("-1")){
+				resolve(json.query.pages);
+				return;
+			}
+			reject(json);
+		}
+		console.error(e);
+		reject(e.target.status);
+	});
 }

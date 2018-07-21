@@ -14,6 +14,8 @@
 	const ANCHOR_RESIO = 0.1;
 	const SILENT_ERROR_PREFIX = "[silent]";
 	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
+	const REMOVE_SPACE_REGEX = new RegExp( /(?:\s|\r|\n|\t|\||:)+/, "g" );
+	const API_QUERY_DERAY = 500;
 	const LINK_LIST_CLOSE_TIME = 500;
 	let linkListNode;
 	let linkListNodeTop = 0;
@@ -35,6 +37,7 @@
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 	let faviconCache = {};
+	let apiRequestQueue = [];
 
 	Promise.resolve()
 		.then(init)
@@ -133,6 +136,7 @@
 			let rectList = lastRange.getClientRects();
 			let rect = rectList[rectList.length-1];
 			showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+			apiRequest(selection);
 		}
 	}
 
@@ -156,11 +160,12 @@
 	function mouseupAutoBehavior(e){
 		if( e.button != 0 ) return;
 		if( selectionChangedFlag && !isLinkListNodeUnderMouse(e.pageY,e.pageX) ){
-			let selectioin = window.getSelection();
-			if( !selectioin.isCollapsed ){
+			let selection = window.getSelection();
+			if( !selection.isCollapsed ){
 				selectionChangedFlag = false;
-				makeLinkList(selectioin.toString());
-				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selectioin);
+				makeLinkList(selection.toString());
+				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selection);
+				apiRequest(selection);
 			}
 		}
 	}
@@ -190,6 +195,7 @@
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
 				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+				apiRequest(selection);
 			}
 		}
 	}
@@ -673,4 +679,38 @@
 			faviconCache = e.data;
 		}
 	}
+
+	function apiRequest(selection){
+		apiRequestQueue.push(selection);
+		setTimeout((e)=>{
+			if(apiRequestQueue.length==0) return;
+			let selection = apiRequestQueue.shift();
+			if(apiRequestQueue.length!=0) return;
+			if(selection.isCollapsed) return;
+			let text = selection.toString().replace(REMOVE_SPACE_REGEX," ").trim().toLowerCase();
+			let obj = {
+				"text": text,
+				"selection": selection,
+				"api": "wiktionary"
+			};
+			let data = {
+				"text": text,
+				"api": "wiktionary"
+			};
+			ponyfill.runtime.sendMessage({
+				"method": "apiRequest",
+				"data": data
+			})
+			.then(apiResponse.bind(obj))
+			.catch((e)=>{ console.error(e) });
+		}, API_QUERY_DERAY);
+	}
+
+	function apiResponse(e){
+		console.log(e);
+		console.log(this);
+		if(this.selection.isCollapsed) return;
+		console.log("end of api response");
+	}
+
 })();
