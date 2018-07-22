@@ -18,7 +18,7 @@ On the Setting screen you can watch history. A word with a high number of search
 ### About preset URLs
 URLs and search parameters of the following sites are prepared. If these specifications are changed by the site administrator, we need to change too. If you want to add some URLs, please email me. There may be people who need it too.
 
-* Google (Image, Videos)
+* Google (Image, Videos, Translate)
 * Bing (Image, Videos)
 * DuckDuckGo (Image, Videos)
 * Ecosia (Image, Videos)
