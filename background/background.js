@@ -1,6 +1,7 @@
 const DEFAULT_LOCALE = "en";
 const XHR_TIMEOUT = 10000;
 const MAX_FAVICON_CONNECTION = 5;
+const DATA_URI_REGEX = new RegExp(/^data:.*,/);
 let optionList = [];
 let autoViewFlag = true;
 let shiftKey = false;
@@ -161,7 +162,7 @@ function resetMenu(json){
 			let args = {
 				"id": id,
 				"title": label,
-				"contexts": ["selection"]
+				"contexts": ["image","selection"]
 			};
 			if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) &&  faviconCache[url] != FAVICON_NODATA){
 				args["icons"] = { "16": faviconCache[url] };
@@ -177,7 +178,7 @@ function resetMenu(json){
 	if( 0 < optionList.length ) {
 		ponyfill.contextMenus.create({
 			"type": "separator",
-			"contexts": ["selection"]
+			"contexts": ["image","selection"]
 		});
 	}
 	ponyfill.contextMenus.create({
@@ -185,12 +186,12 @@ function resetMenu(json){
 		"title": ponyfill.i18n.getMessage("extensionOptionAutoView"),
 		"checked": autoViewFlag,
 		"type": "checkbox",
-		"contexts": ["page","selection"]
+		"contexts": ["page","image","selection"]
 	});
 	ponyfill.contextMenus.create({
 		"id": "manualView",
 		"title": ponyfill.i18n.getMessage("extensionOptionManualView"),
-		"contexts": ["page","selection"]
+		"contexts": ["page","image","selection"]
 	});
 	ponyfill.contextMenus.create({
 		"parentId": "manualView",
@@ -198,7 +199,7 @@ function resetMenu(json){
 		"title": ponyfill.i18n.getMessage("extensionOptionManualViewByShiftKey"),
 		"checked": shiftKey,
 		"type": "checkbox",
-		"contexts": ["page","selection"]
+		"contexts": ["page","image","selection"]
 	});
 	ponyfill.contextMenus.create({
 		"parentId": "manualView",
@@ -206,19 +207,18 @@ function resetMenu(json){
 		"title": ponyfill.i18n.getMessage("extensionOptionManualViewByCtrlKey"),
 		"checked": ctrlKey,
 		"type": "checkbox",
-		"contexts": ["page","selection"]
+		"contexts": ["page","image","selection"]
 	});
 	ponyfill.contextMenus.create({
 		"id": "option",
 		"title": ponyfill.i18n.getMessage("extensionOptionName"),
-		"contexts": ["page","selection"]
+		"contexts": ["page","image","selection"]
 	});
 }
 
 function contextMenuBehavior(info, tab){
-	let promise;
 	if ( info.menuItemId == "option" ){
-		promise = ponyfill.runtime.openOptionsPage();
+		ponyfill.runtime.openOptionsPage();
 	}
 	else if ( info.menuItemId == "autoView" ){
 		saveAutoViewFlag(info.checked);
@@ -230,10 +230,21 @@ function contextMenuBehavior(info, tab){
 		saveManualViewCtrlKey(info.checked);
 	}
 	else if ( options.hasOwnProperty( info.menuItemId ) ){
-		openWindow(options[info.menuItemId]["url"], info.selectionText );
+		let text;
+		if( info.hasOwnProperty("mediaType") && info.mediaType == "image" && info.hasOwnProperty("srcUrl") ){
+			text = info.srcUrl;
+			if( text.match(DATA_URI_REGEX) ){
+				onDataUriNotification();
+				return;
+			}
+		}
+		else {
+			text = info.selectionText;
+		}
+		openWindow(options[info.menuItemId]["url"], text );
 		if( options[info.menuItemId]["hist"] ){
 			saveHistory({
-				"text": info.selectionText,
+				"text": text,
 				"fromURL": tab.url.toString(),
 				"fromTitle": tab.title.toString(),
 				"toURL": options[info.menuItemId]["url"],
@@ -241,6 +252,10 @@ function contextMenuBehavior(info, tab){
 			}).catch( onSaveError );
 		}
 	}
+}
+
+function onDataUriNotification(){
+	return notice(ponyfill.i18n.getMessage("notificationDataUriError"));
 }
 
 function getDefaultOptionList(){

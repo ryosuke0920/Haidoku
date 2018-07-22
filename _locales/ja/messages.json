@@ -71,6 +71,9 @@
 			}
 		}
 	},
+	"notificationDataUriError": {
+		"message": "サポートしていない画像形式（Data URI）ですので検索できません。"
+	},
 	"htmlZoomDown": {
 		"message": "縮小",
 		"description": ""
