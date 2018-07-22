@@ -3,7 +3,7 @@ const SUPPORT_EMAIL = "ryosuke.ohta.programmer@gmail.com";
 const DEFAULT_LOCALE = "en";
 const XHR_TIMEOUT = 10000;
 const MAX_FAVICON_CONNECTION = 5;
-const DATA_URI_REGEX = new RegExp(/^data:.+,/);
+const DATA_URI_REGEX = new RegExp(/^data:.*,/);
 let optionList = [];
 let autoViewFlag = true;
 let shiftKey = false;
@@ -238,8 +238,8 @@ function contextMenuBehavior(info, tab){
 	}
 	else if ( options.hasOwnProperty( info.menuItemId ) ){
 		let text;
-		if( info.mediaType && info.mediaType == "image" && info.srcUrl ){
-			text = info["srcUrl"];
+		if( info.hasOwnProperty("mediaType") && info.mediaType == "image" && info.hasOwnProperty("srcUrl") ){
+			text = info.srcUrl;
 			if( text.match(DATA_URI_REGEX) ){
 				onDataUriNotification();
 				return;
