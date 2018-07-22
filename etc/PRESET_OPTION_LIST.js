@@ -16,8 +16,19 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Google Translate detect-English",
+		"u": "https://translate.google.com/?hl=en#auto/en/$1"
+	},
+	{
+		"la": "en",
 		"l": "Google Images",
 		"u": "https://www.google.com/search?tbm=isch&q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Google Images(Image URL)",
+		"u": "https://www.google.com/searchbyimage?image_url=$1",
+		"aside": "Use right click on the image and choose this link. It will be taken image URL instead of some text for searching similar images."
 	},
 	{
 		"la": "en",
@@ -266,6 +277,12 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "ja",
+		"l": "Google 画像検索(URL)",
+		"u": "https://www.google.co.jp/searchbyimage?image_url=$1",
+		"aside": "画像の上で右クリックして、このリンクを選択してください。似ている画像を検索するために、テキストではなく画像のURLが取得されます。"
+	},
+	{
+		"la": "ja",
 		"l": "Google 動画検索",
 		"u": "https://www.google.co.jp/search?q=$1&tbm=vid"
 	},
@@ -416,8 +433,19 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "zh",
+		"l": "Google 翻译 检测语言-中文(简体)",
+		"u": "https://translate.google.com.hk/?hl=zh#auto/zh-CN/$1",
+		"aside": "Use right click on the image and choose this link. It will be taken image URL instead of some text for searching similar images."
+	},
+	{
+		"la": "zh",
 		"l": "Google Images",
 		"u": "https://www.google.com.hk/search?q=$1&tbm=isch"
+	},
+	{
+		"la": "zh",
+		"l": "Google Images(URL)",
+		"u": "https://www.google.com.hk/searchbyimage?image_url=$1"
 	},
 	{
 		"la": "zh",

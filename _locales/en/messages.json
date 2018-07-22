@@ -71,6 +71,9 @@
 			}
 		}
 	},
+	"notificationDataUriError": {
+		"message": "It can not be searched because it's an unsupported image format(Data URI)."
+	},
 	"htmlZoomDown": {
 		"message": "Zoom down",
 		"description": ""

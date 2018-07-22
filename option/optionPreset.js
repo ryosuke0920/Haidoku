@@ -65,6 +65,11 @@
 			node.setAttribute("data-language",option["la"]);
 			node.querySelector(".label").innerText = option["l"];
 			node.querySelector(".url").innerText = option["u"];
+			if(option.hasOwnProperty("aside")) {
+				let aside = node.querySelector(".presetAside");
+				aside.innerText = option["aside"];
+				show(aside);
+			}
 			node.addEventListener("click",checkPreset);
 			tableNode.appendChild(node);
 			languageJson[option["la"]] = true;
