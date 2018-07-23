@@ -71,6 +71,26 @@
 	font-family: sans-serif;
 	display: block;
 }
+#lessLaborGoToDictionary-api {
+	all: initial;
+	user-select: none;
+	-moz-user-select: none;
+	font-family: sans-serif;
+	display: block;
+	border: solid 1px gray;
+	border-radius: 5px;
+	margin:5px;
+	padding:5px;
+}
+#lessLaborGoToDictionary-api ol,
+#lessLaborGoToDictionary-api li {
+	all: initial;
+	font-size: 0.9em
+}
+#lessLaborGoToDictionary-api ol::after{
+	display: block;
+	content:"powered by wiktionary"
+}
 #lessLaborGoToDictionary-viewer li.lessLaborGoToDictionary-list {
 	all: initial;
 	user-select: none;

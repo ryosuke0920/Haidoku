@@ -34,6 +34,7 @@
 	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let menuNode;
 	let containerNode;
+	let apiNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 	let faviconCache = {};
@@ -67,6 +68,9 @@
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
 		linkListNode.appendChild(containerNode);
+		apiNode = document.createElement("div");
+		apiNode.setAttribute("id",CSS_PREFIX+"-api");
+		linkListNode.appendChild(apiNode);
 		let resizeNode = document.createElement("img");
 		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
@@ -707,10 +711,30 @@
 	}
 
 	function apiResponse(e){
-		console.log(e);
-		console.log(this);
 		if(this.selection.isCollapsed) return;
-		console.log("end of api response");
+		while(apiNode.lastChild) apiNode.removeChild(apiNode.lastChild);
+		let content = document.createElement("div");
+		if(!e){
+			content.innerText = "not found.";
+			apiNode.appendChild(content);
+			return;
+		}
+		content.innerHTML = e.html;
+		console.log(content);
+		let ol = content.querySelector("ol");
+		let list;
+		list = ol.querySelectorAll("*[style]");
+		for(let i=0; i<list.length; i++){
+			list[i].removeAttribute("style");
+		}
+		list = ol.querySelectorAll("*[href]:not([href^=http])");
+		for(let i=0; i<list.length; i++){
+			let url = list[i].getAttribute("href");
+			list[i].setAttribute("href", e.service + url);
+			list[i].setAttribute("target", "_brank");
+			list[i].setAttribute("rel", "noreferrer");
+		}
+		apiNode.appendChild(ol);
 	}
 
 })();
