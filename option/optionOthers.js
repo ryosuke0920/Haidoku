@@ -3,6 +3,8 @@
 	let sampleLinkListNode = document.querySelector("#"+CSS_PREFIX+"-viewer");
 	let linkListStyleNodeList = document.querySelectorAll(".linkListStyle");
 	let linkListActionNodeList = document.querySelectorAll(".linkListAction");
+	let linkListApiServiceNode = document.querySelector(".linkListApiService");
+	let linkListApiLangNode = document.querySelector(".linkListApiLang");
 
 	Promise.resolve().then(initOthers).then(initStyle).catch(unexpectedError);
 
@@ -55,6 +57,7 @@
 
 	function initListener(){
 		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
+		linkListApiServiceNode.addEventListener("change", apiServiceBehavior);
 	}
 
 	function fileChangeBehavior(e){
@@ -128,6 +131,21 @@
 
 	function savelinkListAction(value){
 		let data = { "ca": value };
+		return saveW(data).catch(onSaveError);
+	}
+
+	function apiServiceBehavior(e){
+		let apiService = e.target.value;
+		linkListApiLangNode.value="";
+		savelinkListApiService(apiService);
+		if(!apiService) return;
+	}
+
+	function savelinkListApiService(value){
+		let data = {
+			"s": value,
+			"l": ""
+		};
 		return saveW(data).catch(onSaveError);
 	}
 

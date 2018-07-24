@@ -8,3 +8,10 @@ const LINK_LIST_ACTION_MOUSEOVER = "m";
 const LINK_LIST_ACTION_MOUSECLICK = "c";
 
 const FAVICON_NODATA = "nodata";
+
+const DEFAULT_LOCALE = "en";
+
+const API_SERVICE = {
+	"en": "https://en.wiktionary.org",
+	"ja": "https://ja.wiktionary.org"
+};

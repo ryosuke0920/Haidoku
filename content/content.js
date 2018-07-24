@@ -41,6 +41,7 @@
 	let selectionChangedFlag = false;
 	let faviconCache = {};
 	let apiRequestQueue = [];
+	let apiService = "";
 
 	Promise.resolve()
 		.then(init)
@@ -154,7 +155,7 @@
 			let rectList = lastRange.getClientRects();
 			let rect = rectList[rectList.length-1];
 			showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-			apiRequest(selection);
+			if(apiService) apiRequest(selection);
 		}
 	}
 
@@ -183,7 +184,7 @@
 				selectionChangedFlag = false;
 				makeLinkList(selection.toString());
 				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selection);
-				apiRequest(selection);
+				if(apiService) apiRequest(selection);
 			}
 		}
 	}
@@ -213,7 +214,7 @@
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
 				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-				apiRequest(selection);
+				if(apiService) apiRequest(selection);
 			}
 		}
 	}
@@ -435,6 +436,9 @@
 		else if( change["ca"] ){
 			setLinkListAction( change["ca"]["newValue"] );
 		}
+		else if( change["s"] ){
+			setLinkListApiService( change["s"]["newValue"] );
+		}
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
@@ -444,6 +448,8 @@
 	}
 
 	function loadSetting(){
+		let lang = getUiLang();
+		if( !API_SERVICE.hasOwnProperty(lang) ) lang = DEFAULT_LOCALE;
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,
@@ -453,9 +459,19 @@
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE,
 			"cl": LINK_LIST_STYLE_CLASSIC,
-			"ca": LINK_LIST_ACTION_MOUSECLICK
+			"ca": LINK_LIST_ACTION_MOUSECLICK,
+			"s": lang
 		});
 		return getter.then(setVer, onReadError);
+	}
+
+	function getUiLang(){
+		let lang = ponyfill.i18n.getUILanguage();
+		let matcher = lang.match(/^([a-zA-Z0-9]+)\-[a-zA-Z0-9]+$/);
+		if( matcher ){
+			lang = matcher[1];
+		}
+		return lang;
 	}
 
 	function setVer( res ){
@@ -467,6 +483,7 @@
 		setShiftKeyFlag( res["sk"] );
 		setLinkListStyle( res["cl"] );
 		setLinkListAction( res["ca"] );
+		setLinkListApiService( res["s"] );
 		resetLinkListEvents();
 		if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 	}
@@ -486,6 +503,10 @@
 
 	function setCtrlKeyFlag(res){
 		ctrlKeyFlag = res;
+	}
+
+	function setLinkListApiService(res){
+		apiService = res;
 	}
 
 	function setLinkListStyle(res){
@@ -745,7 +766,7 @@
 		doc.innerHTML = e.html;
 		let content;
 		let list;
-		if(false){
+		if(true){
 			content = doc.querySelector("ol");
 			list = content.querySelectorAll("[style]");
 			for(let i=0; i<list.length; i++){

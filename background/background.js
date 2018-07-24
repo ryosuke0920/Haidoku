@@ -1,6 +1,5 @@
 const GLOBAL_EXTENSION_NAME = "SearchDictionaryFaster";
 const SUPPORT_EMAIL = "ryosuke.ohta.programmer@gmail.com";
-const DEFAULT_LOCALE = "en";
 const XHR_TIMEOUT = 10000;
 const MAX_FAVICON_CONNECTION = 5;
 const DATA_URI_REGEX = new RegExp(/^data:.*,/);
@@ -10,6 +9,7 @@ let shiftKey = false;
 let ctrlKey = false;
 let options = {};
 let faviconCache = {};
+let apiService = "";
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 
@@ -42,11 +42,14 @@ function initContextMenu(){
 }
 
 function getSetting() {
+	let lang = getUiLang();
+	if( !API_SERVICE.hasOwnProperty(lang) ) lang = DEFAULT_LOCALE;
 	return ponyfill.storage.sync.get({
 		"ol": [],
 		"bf": true,
 		"sk": false,
-		"ck": false
+		"ck": false,
+		"s": lang
 	}).then(onGotSetting);
 }
 
@@ -55,6 +58,7 @@ function onGotSetting(json){
 	autoViewFlag = json["bf"];
 	shiftKey = json["sk"];
 	ctrlKey = json["ck"];
+	apiService = json["s"];
 }
 
 function initListener(){
@@ -153,6 +157,9 @@ function onStorageChanged(change, area){
 	if(change["ol"]) {
 		updateFaviconCache().then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
+	if(change["s"]) {
+		apiService = change["s"]["newValue"];
+	}
 }
 
 function resetMenu(json){
@@ -265,16 +272,17 @@ function onDataUriNotification(){
 	return notice(ponyfill.i18n.getMessage("notificationDataUriError"));
 }
 
-function getDefaultOptionList(){
+function getUiLang(){
 	let lang = ponyfill.i18n.getUILanguage();
 	let matcher = lang.match(/^([a-zA-Z0-9]+)\-[a-zA-Z0-9]+$/);
 	if( matcher ){
 		lang = matcher[1];
 	}
-	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
-		return DEFAULT_OPTION_LIST[lang];
-	}
-	lang = ponyfill.runtime.getManifest()["default_locale"];
+	return lang;
+}
+
+function getDefaultOptionList(){
+	let lang = getUiLang();
 	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
 		return DEFAULT_OPTION_LIST[lang];
 	}
@@ -497,8 +505,9 @@ function makeApiURL(url, param=[], text){
 
 function apiRequest(data){
 	let manifest = ponyfill.runtime.getManifest();
+	if(!API_SERVICE.hasOwnProperty(apiService)) throw( new Error("service not found. apiService="+apiService) );
 	let obj = {
-		"service": "https://ja.wiktionary.org",
+		"service": API_SERVICE[apiService],
 		"path": "/w/api.php",
 		"header":[
 			{
