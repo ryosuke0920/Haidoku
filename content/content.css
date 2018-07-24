@@ -93,6 +93,13 @@
 	all: initial;
 	font-size: 0.9em
 }
+#lessLaborGoToDictionary-apiBody ol {
+	display: block;
+}
+#lessLaborGoToDictionary-apiBody li {
+	display: list-item;
+	list-style: decimal inside;
+}
 #lessLaborGoToDictionary-viewer li.lessLaborGoToDictionary-list {
 	all: initial;
 	user-select: none;
