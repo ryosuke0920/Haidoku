@@ -34,7 +34,9 @@
 	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let menuNode;
 	let containerNode;
-	let apiNode;
+	let apiContentNode;
+	let apiTitleNode;
+	let apiBodyNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 	let faviconCache = {};
@@ -55,7 +57,7 @@
 		}
 		linkListNode = document.createElement("div");
 		linkListNode.setAttribute("id",CSS_PREFIX+"-viewer");
-		linkListNode.classList.add(CSS_PREFIX+"-hide");
+		hide(linkListNode);
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
 		applyLinkListSize();
 		body.appendChild( linkListNode );
@@ -68,9 +70,21 @@
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
 		linkListNode.appendChild(containerNode);
-		apiNode = document.createElement("div");
-		apiNode.setAttribute("id",CSS_PREFIX+"-api");
-		linkListNode.appendChild(apiNode);
+		apiContentNode = document.createElement("div");
+		apiContentNode.setAttribute("id",CSS_PREFIX+"-apiContent");
+		linkListNode.appendChild(apiContentNode);
+		let apiHeaderNode = document.createElement("div");
+		apiHeaderNode.setAttribute("id",CSS_PREFIX+"-apiHeader");
+		apiContentNode.appendChild(apiHeaderNode);
+		apiTitleNode = document.createElement("a");
+		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
+		apiTitleNode.setAttribute("rel","noreferrer");
+		apiTitleNode.setAttribute("target","_blank");
+		apiHeaderNode.appendChild(apiTitleNode);
+		apiBodyNode = document.createElement("div");
+		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
+		apiContentNode.appendChild(apiBodyNode);
+		clearApiContent();
 		let resizeNode = document.createElement("img");
 		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
@@ -262,7 +276,7 @@
 
 	function closeLinkList(){
 		resetScrollTmp();
-		linkListNode.classList.add(CSS_PREFIX+"-hide");
+		hide(linkListNode);
 	}
 
 	function closeLinkListDelay(){
@@ -297,6 +311,7 @@
 			let node = list[i];
 			containerNode.removeChild(node);
 		}
+		clearApiContent();
 		for(let i=0; i<optionList.length; i++){
 			let item = optionList[i];
 			if ( !item["c"] ) continue;
@@ -354,7 +369,7 @@
 
 	function showLinkList(pageY, pageX, clientY, clientX, selection){
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
-		linkListNode.classList.remove(CSS_PREFIX+"-hide");
+		show(linkListNode);
 		swichMiniView();
 		applyLinkListSize();
 		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
@@ -710,18 +725,25 @@
 		}, API_QUERY_DERAY);
 	}
 
+	function clearApiContent(){
+		while(apiBodyNode.lastChild) apiBodyNode.removeChild(apiBodyNode.lastChild);
+		hide(apiContentNode);
+	}
+
 	function apiResponse(e){
+		console.log(e);
 		if(this.selection.isCollapsed) return;
-		while(apiNode.lastChild) apiNode.removeChild(apiNode.lastChild);
-		let content = document.createElement("div");
+		show(apiContentNode);
 		if(!e){
-			content.innerText = "not found.";
-			apiNode.appendChild(content);
+			apiTitleNode.innerText = "not found.";
+			apiTitleNode.removeAttribute("href");
 			return;
 		}
-		content.innerHTML = e.html;
-		console.log(content);
-		let ol = content.querySelector("ol");
+		apiTitleNode.innerText = e.title;
+		apiTitleNode.setAttribute("href", e.url);
+		let doc = document.createElement("div");
+		doc.innerHTML = e.html;
+		let ol = doc.querySelector("ol");
 		let list;
 		list = ol.querySelectorAll("*[style]");
 		for(let i=0; i<list.length; i++){
@@ -731,10 +753,17 @@
 		for(let i=0; i<list.length; i++){
 			let url = list[i].getAttribute("href");
 			list[i].setAttribute("href", e.service + url);
-			list[i].setAttribute("target", "_brank");
+			list[i].setAttribute("target", "_blank");
 			list[i].setAttribute("rel", "noreferrer");
 		}
-		apiNode.appendChild(ol);
+		apiBodyNode.appendChild(ol);
 	}
 
+	function show(node){
+		node.classList.remove(CSS_PREFIX+"-hide");
+	}
+
+	function hide(node){
+		node.classList.add(CSS_PREFIX+"-hide");
+	}
 })();

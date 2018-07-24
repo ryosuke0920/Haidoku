@@ -516,12 +516,12 @@ function apiRequest(data){
 			"value":"json"
 		},{
 			"key"  :"list",
-			"value":"search"
+			"value":"prefixsearch"
 		},{
-			"key"  :"srlimit",
+			"key"  :"pslimit",
 			"value":"1"
 		},{
-			"key"  :"srsearch",
+			"key"  :"pssearch",
 			"value":"$1"
 		}
 	];
@@ -529,11 +529,10 @@ function apiRequest(data){
 	return Promise.resolve()
 	.then( requestAjaxApiSearch.bind(obj) )
 	.then( responseAjaxApiSearch.bind(obj) )
-	.then( requestAjaxApiSection.bind(obj) )
-	.then( responseAjaxApiSection.bind(obj) )
-	.then( decideSection.bind(obj) )
-	.then( requestAjaxApiPage.bind(obj) )
-	.then( responseAjaxApiPage.bind(obj) )
+	.then( requestAjaxApiInfo.bind(obj) )
+	.then( responseAjaxApiInfo.bind(obj) )
+	.then( requestAjaxApiParse.bind(obj) )
+	.then( responseAjaxApiParse.bind(obj) )
 	.then( fetchHTML.bind(obj) )
 	.catch( (e)=>{console.error(e)} )
 }
@@ -547,9 +546,10 @@ function responseAjaxApiSearch(e){
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response;
-			if(res.query.search.length){
-				this.pageid = res.query.search[0].pageid;
-				this.title = res.query.search[0].title;
+			console.log(res);
+			if(res.query.prefixsearch.length){
+				this.pageid = res.query.prefixsearch[0].pageid;
+				this.title = res.query.prefixsearch[0].title;
 				resolve();
 				return;
 			}
@@ -558,52 +558,46 @@ function responseAjaxApiSearch(e){
 	});
 }
 
-function requestAjaxApiSection(){
+function requestAjaxApiInfo(){
 	if(!this.hasOwnProperty("pageid")) return;
 	let param = [
 		{
 			"key"  :"action",
-			"value":"parse"
+			"value":"query"
 		},{
 			"key"  :"format",
 			"value":"json"
 		},{
-			"key"  :"pageid",
+			"key"  :"pageids",
 			"value":this.pageid
 		},{
 			"key"  :"prop",
-			"value":"sections"
+			"value":"info"
+		},{
+			"key"  :"inprop",
+			"value":"url"
 		}
 	];
-	this.sectionURL = makeApiURL(this.service+this.path, param);
-	return promiseAjax("GET", this.sectionURL, "json", this.header);
+	this.infoURL = makeApiURL(this.service+this.path, param);
+	return promiseAjax("GET", this.infoURL, "json", this.header);
 }
 
-function responseAjaxApiSection(e){
+function responseAjaxApiInfo(e){
 	if(!this.hasOwnProperty("pageid")) return;
 	return new Promise((resolve)=>{
 		this.status = e.target.status;
 		if( this.status == "200" ){
-			let res = e.target.response;
-			this.sections = res.parse.sections;
+			let res = e.target.response
+			console.log(res);
+			this.url = res.query.pages[this.pageid].fullurl;
 			resolve();
 			return;
 		}
 		reject();
 	});
 }
-function decideSection(){
-	if(!this.hasOwnProperty("sections")) return;
-	console.log(this.sections);
-	for(let i=0; i<this.sections.length; i++){
-		let obj = this.sections[i];
-		if( obj.toclevel != "1" || obj.line != "英語" ) continue;
-		this.section = obj.index;
-		break;
-	}
-}
 
-function requestAjaxApiPage(){
+function requestAjaxApiParse(){
 	if(!this.hasOwnProperty("pageid")) return;
 	let param = [
 		{
@@ -626,22 +620,17 @@ function requestAjaxApiPage(){
 			"value":""
 		}
 	];
-/*
-	param.push({
-		"key"  :"section",
-		"value":this.section
-	});
-*/
 	this.pageURL = makeApiURL(this.service+this.path, param);
 	return promiseAjax("GET", this.pageURL, "json", this.header);
 }
 
-function responseAjaxApiPage(e){
+function responseAjaxApiParse(e){
 	if(!this.hasOwnProperty("pageid")) return;
 	return new Promise((resolve)=>{
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response
+			console.log(res);
 			this.html = res.parse.text["*"];
 			resolve();
 			return;
@@ -652,6 +641,5 @@ function responseAjaxApiPage(e){
 
 function fetchHTML(){
 	if(!this.hasOwnProperty("html")) return;
-	console.log(this);
 	return this;
 }
