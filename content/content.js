@@ -743,20 +743,33 @@
 		apiTitleNode.setAttribute("href", e.url);
 		let doc = document.createElement("div");
 		doc.innerHTML = e.html;
-		let ol = doc.querySelector("ol");
+		let content;
 		let list;
-		list = ol.querySelectorAll("*[style]");
-		for(let i=0; i<list.length; i++){
-			list[i].removeAttribute("style");
+		if(false){
+			content = doc.querySelector("ol");
+			list = content.querySelectorAll("[style]");
+			for(let i=0; i<list.length; i++){
+				list[i].removeAttribute("style");
+			}
 		}
-		list = ol.querySelectorAll("*[href]:not([href^=http])");
+		else {
+			content = doc;
+		}
+		list = content.querySelectorAll("a[href]:not([href^=http])");
 		for(let i=0; i<list.length; i++){
 			let url = list[i].getAttribute("href");
 			list[i].setAttribute("href", e.service + url);
+		}
+		list = content.querySelectorAll("a");
+		for(let i=0; i<list.length; i++){
 			list[i].setAttribute("target", "_blank");
 			list[i].setAttribute("rel", "noreferrer");
 		}
-		apiBodyNode.appendChild(ol);
+		list = content.querySelectorAll(".indicator,.noprint");
+		for(let i=0; i<list.length; i++){
+			list[i].parentNode.removeChild(list[i]);
+		}
+		apiBodyNode.appendChild(content);
 	}
 
 	function show(node){
