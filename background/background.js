@@ -531,6 +531,9 @@ function apiRequest(data){
 	.then( responseAjaxApiSearch.bind(obj) )
 	.then( requestAjaxApiInfo.bind(obj) )
 	.then( responseAjaxApiInfo.bind(obj) )
+	.then( requestAjaxApiSection.bind(obj) )
+	.then( responseAjaxApiSection.bind(obj) )
+	.then( decideSection.bind(obj) )
 	.then( requestAjaxApiParse.bind(obj) )
 	.then( responseAjaxApiParse.bind(obj) )
 	.then( fetchHTML.bind(obj) )
@@ -546,7 +549,6 @@ function responseAjaxApiSearch(e){
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response;
-			console.log(res);
 			if(res.query.prefixsearch.length){
 				this.pageid = res.query.prefixsearch[0].pageid;
 				this.title = res.query.prefixsearch[0].title;
@@ -554,12 +556,11 @@ function responseAjaxApiSearch(e){
 				return;
 			}
 		}
-		reject();
+		reject(this);
 	});
 }
 
 function requestAjaxApiInfo(){
-	if(!this.hasOwnProperty("pageid")) return;
 	let param = [
 		{
 			"key"  :"action",
@@ -583,22 +584,62 @@ function requestAjaxApiInfo(){
 }
 
 function responseAjaxApiInfo(e){
-	if(!this.hasOwnProperty("pageid")) return;
 	return new Promise((resolve)=>{
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response
-			console.log(res);
 			this.url = res.query.pages[this.pageid].fullurl;
 			resolve();
 			return;
 		}
-		reject();
+		reject(this);
 	});
 }
 
+function requestAjaxApiSection(){
+	let param = [
+		{
+			"key"  :"action",
+			"value":"parse"
+		},{
+			"key"  :"format",
+			"value":"json"
+		},{
+			"key"  :"pageid",
+			"value":this.pageid
+		},{
+			"key"  :"prop",
+			"value":"sections"
+		}
+	];
+	this.sectionURL = makeApiURL(this.service+this.path, param);
+	return promiseAjax("GET", this.sectionURL, "json", this.header);
+}
+
+function responseAjaxApiSection(e){
+	return new Promise((resolve)=>{
+		this.status = e.target.status;
+		if( this.status == "200" ){
+			let res = e.target.response
+			this.sections = res.parse.sections;
+			resolve();
+			return;
+		}
+		reject(this);
+	});
+}
+
+function decideSection(){
+	for(let i=0; i<this.sections.length; i++){
+		let section = this.sections[i];
+		if( section.line.match(/英語/) ) {
+			this.sectionIndex = section.index;
+			break;
+		}
+	}
+}
+
 function requestAjaxApiParse(){
-	if(!this.hasOwnProperty("pageid")) return;
 	let param = [
 		{
 			"key"  :"action",
@@ -620,26 +661,24 @@ function requestAjaxApiParse(){
 			"value":""
 		}
 	];
+	if( this.sectionIndex )　param.push({"key":"section", "value":this.sectionIndex});
 	this.pageURL = makeApiURL(this.service+this.path, param);
 	return promiseAjax("GET", this.pageURL, "json", this.header);
 }
 
 function responseAjaxApiParse(e){
-	if(!this.hasOwnProperty("pageid")) return;
 	return new Promise((resolve)=>{
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response
-			console.log(res);
 			this.html = res.parse.text["*"];
 			resolve();
 			return;
 		}
-		reject();
+		reject(this);
 	});
 }
 
 function fetchHTML(){
-	if(!this.hasOwnProperty("html")) return;
 	return this;
 }
