@@ -172,21 +172,33 @@
 	}
 
 	function apiLangMakeOption(apiService){
-		if( apiLangCache.hasOwnProperty(apiService) ) return;
 		let service = API_SERVICE[apiService];
-		let obj = { "service": service };
 		let p = Promise.resolve();
 		if(!apiLangCache.hasOwnProperty(apiService)){
-			p = p.then(
+			let obj = { "service": service };
+			apiLangCache[service] = "loading";
+			return p.then(
+				prepareAjaxApiLang.bind(obj)
+			).then(
 				requestAjaxApiLang.bind(obj)
 			).then(
 				responseAjaxApiLang.bind(obj)
+			).then(
+				apiLangAppendOptions
+			).catch(
+				apiLangMakeOptionError.bind(obj)
 			);
 		}
 		return p.then( apiLangAppendOptions );
 	}
 
-	function requestAjaxApiLang(){
+	function apiLangMakeOptionError(e){
+		console.error(e);
+		apiLangCache[this.service] = undefined;
+		//TODO kono error ha user ni oshieru
+	}
+
+	function prepareAjaxApiLang(){
 		let param = [
 			{
 				"key": "action",
@@ -198,6 +210,9 @@
 				"key": "list",
 				"value": "categorymembers"
 			},{
+				"key": "cmprop",
+				"value": "title|sortkeyprefix"
+			},{
 				"key": "cmtitle",
 				"value": API_SERVICE_PROPERTY[this.service].langCat,
 			},{
@@ -208,21 +223,52 @@
 				"value": "500"
 			}
 		];
-		this.url = makeApiURL(this.service+API_SERVICE_PROPERTY[this.service].path, param, "");
-		return promiseAjax("GET", this.url, "json", API_HEADER);
+		this.param = param;
+		this.url = [];
+		this.cat = [];
+	}
+
+	function requestAjaxApiLang(){
+		this.url.push( makeApiURL(this.service+API_SERVICE_PROPERTY[this.service].path, this.param, "") );
+		return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER);
 	}
 
 	function responseAjaxApiLang(e){
-		console.log(this);
-		console.log(e);
+		this.status = e.target.status;
+		if( this.status == "200" ){
+			let res = e.target.response;
+			if (res.hasOwnProperty("error")){
+				return Promise.reject(res.error);
+			}
+			this.cat = this.cat.concat(res.query.categorymembers);
+			if( !res.hasOwnProperty("continue")) {
+				apiLangCache[this.service] = this.cat;
+				return Promise.resolve();
+			}
+			let keys = Object.keys(res.continue);
+			this.param = this.param.filter( obj => !keys.includes(obj.key) );
+			for( let i=0; i<keys.length; i++){
+				let key = keys[i];
+				this.param.push({
+					"key": key,
+					"value": res.continue[key]
+				});
+			}
+			let p = Promise.resolve().then(
+				requestAjaxApiLang.bind(this)
+			).then(
+				responseAjaxApiLang.bind(this)
+			);
+			return p;
+		}
+		return Promise.reject(e.target);
 	}
 
 	function apiLangAppendOptions(){
+		console.log(apiLangCache);
 	}
 
 	function apiCutOutBehavior(e){
-		console.log(e);
-		console.log(e.target.checked);
 		let data = {
 			"co": e.target.checked
 		};

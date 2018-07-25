@@ -447,7 +447,7 @@ function broadcastWindows(windows){
 		for(let j=0; j<tabs.length; j++){
 			let t = w.tabs[j];
 			ponyfill.tabs.sendMessage(t.id, this.data)
-			.catch((e)=>{ console.log(e); });
+			//.catch((e)=>{ console.log(e); });
 		}
 	}
 }
@@ -489,7 +489,7 @@ function apiRequest(data){
 	.then( requestAjaxApiParse.bind(obj) )
 	.then( responseAjaxApiParse.bind(obj) )
 	.then( fetchHTML.bind(obj) )
-	.catch( (e)=>{console.error(e)} )
+	.catch( (e)=>{console.error(e)} )//TODO errorを教える
 }
 
 function requestAjaxApiSearch(){
@@ -501,6 +501,10 @@ function responseAjaxApiSearch(e){
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response;
+			if (res.hasOwnProperty("error")){
+				reject(res.error);
+				return;
+			}
 			if(res.query.prefixsearch.length){
 				this.pageid = res.query.prefixsearch[0].pageid;
 				this.title = res.query.prefixsearch[0].title;
@@ -508,7 +512,7 @@ function responseAjaxApiSearch(e){
 				return;
 			}
 		}
-		reject(this);
+		reject(e.target);
 	});
 }
 
@@ -536,15 +540,19 @@ function requestAjaxApiInfo(){
 }
 
 function responseAjaxApiInfo(e){
-	return new Promise((resolve)=>{
+	return new Promise((resolve, reject)=>{
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response
+			if (res.hasOwnProperty("error")){
+				reject(res.error);
+				return;
+			}
 			this.url = res.query.pages[this.pageid].fullurl;
 			resolve();
 			return;
 		}
-		reject(this);
+		reject(e.target);
 	});
 }
 
@@ -569,15 +577,19 @@ function requestAjaxApiSection(){
 }
 
 function responseAjaxApiSection(e){
-	return new Promise((resolve)=>{
+	return new Promise((resolve,reject)=>{
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response
+			if (res.hasOwnProperty("error")){
+				reject(res.error);
+				return;
+			}
 			this.sections = res.parse.sections;
 			resolve();
 			return;
 		}
-		reject(this);
+		reject(e.target);
 	});
 }
 
@@ -619,15 +631,19 @@ function requestAjaxApiParse(){
 }
 
 function responseAjaxApiParse(e){
-	return new Promise((resolve)=>{
+	return new Promise((resolve,reject)=>{
 		this.status = e.target.status;
 		if( this.status == "200" ){
 			let res = e.target.response
+			if (res.hasOwnProperty("error")){
+				reject(res.error);
+				return;
+			}
 			this.html = res.parse.text["*"];
 			resolve();
 			return;
 		}
-		reject(this);
+		reject(e.target);
 	});
 }
 
