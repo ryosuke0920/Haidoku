@@ -1,6 +1,5 @@
 const GLOBAL_EXTENSION_NAME = "SearchDictionaryFaster";
 const SUPPORT_EMAIL = "ryosuke.ohta.programmer@gmail.com";
-const XHR_TIMEOUT = 10000;
 const MAX_FAVICON_CONNECTION = 5;
 const DATA_URI_REGEX = new RegExp(/^data:.*,/);
 let optionList = [];
@@ -272,15 +271,6 @@ function onDataUriNotification(){
 	return notice(ponyfill.i18n.getMessage("notificationDataUriError"));
 }
 
-function getUiLang(){
-	let lang = ponyfill.i18n.getUILanguage();
-	let matcher = lang.match(/^([a-zA-Z0-9]+)\-[a-zA-Z0-9]+$/);
-	if( matcher ){
-		lang = matcher[1];
-	}
-	return lang;
-}
-
 function getDefaultOptionList(){
 	let lang = getUiLang();
 	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
@@ -304,34 +294,6 @@ function remainDomainURL(url){
 	}
 	if(count < 3) newURL += "/";
 	return newURL;
-}
-
-function promiseAjax(method="GET", url, responseType, header=[]){
-	return new Promise((resolve, reject)=>{
-		let xhr = new XMLHttpRequest();
-		xhr.addEventListener("load", (e)=>{
-			resolve(e);
-		});
-		xhr.addEventListener("error", (e)=>{
-			console.error(e);
-			reject(e);
-		});
-		xhr.addEventListener("abort", (e)=>{
-			console.error(e);
-			reject(e);
-		});
-		xhr.addEventListener("timeout", (e)=>{
-			console.error(e);
-			reject(e);
-		});
-		xhr.open(method, url);
-		xhr.timeout = XHR_TIMEOUT;
-		if(responseType) xhr.responseType = responseType;
-		for(let i=0; i<header.length; i++){
-			xhr.setRequestHeader(header[i].key, header[i].value);
-		}
-		xhr.send();
-	});
 }
 
 function updateFaviconCache(){

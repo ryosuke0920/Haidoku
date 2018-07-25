@@ -5,6 +5,7 @@
 	let linkListActionNodeList = document.querySelectorAll(".linkListAction");
 	let linkListApiServiceNode = document.querySelector(".linkListApiService");
 	let linkListApiLangNode = document.querySelector(".linkListApiLang");
+	let linkListApiCutOutNode = document.querySelector(".linkListApiCutOut");
 
 	Promise.resolve().then(initOthers).then(initStyle).catch(unexpectedError);
 
@@ -44,13 +45,19 @@
 	}
 
 	function initStyle(){
+		let lang = getUiLang();
+		if( !API_SERVICE.hasOwnProperty(lang) ) lang = DEFAULT_LOCALE;
 		let getter = ponyfill.storage.sync.get({
 			"cl": LINK_LIST_STYLE_CLASSIC,
-			"ca": LINK_LIST_ACTION_MOUSECLICK
+			"ca": LINK_LIST_ACTION_MOUSECLICK,
+			"s": lang,
+			"co": true
 		});
 		function onGot(res){
-			setlinkListStyle(res["cl"]);
-			setlinkListAction(res["ca"]);
+			setLinkListStyle(res["cl"]);
+			setLinkListAction(res["ca"]);
+			setlinkListApiService(res["s"]);
+			setlinkListApiCutOut(res["co"]);
 		}
 		return getter.then(onGot);
 	}
@@ -58,25 +65,36 @@
 	function initListener(){
 		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
 		linkListApiServiceNode.addEventListener("change", apiServiceBehavior);
+		linkListApiCutOutNode.addEventListener("change", apiCutOutBehavior);
 	}
 
 	function fileChangeBehavior(e){
 		if( !e.hasOwnProperty("w")) return;
 		if( e["w"]["newValue"] == windowId ) return;
-		if( e.hasOwnProperty("cl") ) setlinkListStyle(e["cl"]["newValue"]);
-		else if( e.hasOwnProperty("ca") ) setlinkListAction(e["ca"]["newValue"]);
+		if( e.hasOwnProperty("cl") ) setLinkListStyle(e["cl"]["newValue"]);
+		else if( e.hasOwnProperty("ca") ) setLinkListAction(e["ca"]["newValue"]);
+		else if( e.hasOwnProperty("s") ) setlinkListApiService(e["s"]["newValue"]);
+		else if( e.hasOwnProperty("co") ) setlinkListApiCutOut(e["co"]["newValue"]);
 	}
 
-	function setlinkListStyle(value){
+	function setLinkListStyle(value){
 		let node = othersNode.querySelector(".linkListStyle[value=\""+value+"\"]");
 		node.checked = true;
 		setSampleLinkListStyle(value);
 	}
 
-	function setlinkListAction(value){
+	function setLinkListAction(value){
 		let node = othersNode.querySelector(".linkListAction[value=\""+value+"\"]");
 		node.checked = true;
 		setSampleLinkListAction(value);
+	}
+
+	function setlinkListApiService(value){
+		linkListApiServiceNode.value = value;
+	}
+
+	function setlinkListApiCutOut(value){
+		linkListApiCutOutNode.checked = value;
 	}
 
 	function linkListStyleBehavior(e){
@@ -145,6 +163,15 @@
 		let data = {
 			"s": value,
 			"l": ""
+		};
+		return saveW(data).catch(onSaveError);
+	}
+
+	function apiCutOutBehavior(e){
+		console.log(e);
+		console.log(e.target.checked);
+		let data = {
+			"co": e.target.checked
 		};
 		return saveW(data).catch(onSaveError);
 	}

@@ -42,6 +42,7 @@
 	let faviconCache = {};
 	let apiRequestQueue = [];
 	let apiService = "";
+	let apiCutOut = true;
 
 	Promise.resolve()
 		.then(init)
@@ -439,6 +440,9 @@
 		else if( change["s"] ){
 			setLinkListApiService( change["s"]["newValue"] );
 		}
+		else if( change["co"] ){
+			setLinkListApiCutOut( change["co"]["newValue"] );
+		}
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
@@ -460,7 +464,8 @@
 			"as": ANCHOR_DEFAULT_SIZE,
 			"cl": LINK_LIST_STYLE_CLASSIC,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
-			"s": lang
+			"s": lang,
+			"co": true
 		});
 		return getter.then(setVer, onReadError);
 	}
@@ -484,6 +489,7 @@
 		setLinkListStyle( res["cl"] );
 		setLinkListAction( res["ca"] );
 		setLinkListApiService( res["s"] );
+		setLinkListApiCutOut( res["co"] );
 		resetLinkListEvents();
 		if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 	}
@@ -507,6 +513,10 @@
 
 	function setLinkListApiService(res){
 		apiService = res;
+	}
+
+	function setLinkListApiCutOut(res){
+		apiCutOut = res;
 	}
 
 	function setLinkListStyle(res){
@@ -752,7 +762,6 @@
 	}
 
 	function apiResponse(e){
-		console.log(e);
 		if(this.selection.isCollapsed) return;
 		show(apiContentNode);
 		if(!e){
@@ -766,7 +775,7 @@
 		doc.innerHTML = e.html;
 		let content;
 		let list;
-		if(true){
+		if(apiCutOut){
 			content = doc.querySelector("ol");
 			list = content.querySelectorAll("[style]");
 			for(let i=0; i<list.length; i++){
