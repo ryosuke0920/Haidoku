@@ -6,6 +6,8 @@
 	let linkListApiServiceNode = document.querySelector(".linkListApiService");
 	let linkListApiLangNode = document.querySelector(".linkListApiLang");
 	let linkListApiCutOutNode = document.querySelector(".linkListApiCutOut");
+	let apiLangCache = {};
+	let apiService = "";
 
 	Promise.resolve().then(initOthers).then(initStyle).catch(unexpectedError);
 
@@ -90,7 +92,7 @@
 	}
 
 	function setlinkListApiService(value){
-		linkListApiServiceNode.value = value;
+		linkListApiServiceNode.value = apiService = value;
 	}
 
 	function setlinkListApiCutOut(value){
@@ -154,9 +156,11 @@
 
 	function apiServiceBehavior(e){
 		let apiService = e.target.value;
+		setlinkListApiService(apiService);
 		linkListApiLangNode.value="";
-		savelinkListApiService(apiService);
-		if(!apiService) return;
+		savelinkListApiService(apiService); /* Async */
+		if(apiService=="") return;
+		apiLangMakeOption(apiService); /* Async */
 	}
 
 	function savelinkListApiService(value){
@@ -165,6 +169,55 @@
 			"l": ""
 		};
 		return saveW(data).catch(onSaveError);
+	}
+
+	function apiLangMakeOption(apiService){
+		if( apiLangCache.hasOwnProperty(apiService) ) return;
+		let service = API_SERVICE[apiService];
+		let obj = { "service": service };
+		let p = Promise.resolve();
+		if(!apiLangCache.hasOwnProperty(apiService)){
+			p = p.then(
+				requestAjaxApiLang.bind(obj)
+			).then(
+				responseAjaxApiLang.bind(obj)
+			);
+		}
+		return p.then( apiLangAppendOptions );
+	}
+
+	function requestAjaxApiLang(){
+		let param = [
+			{
+				"key": "action",
+				"value": "query"
+			},{
+				"key"  :"format",
+				"value":"json"
+			},{
+				"key": "list",
+				"value": "categorymembers"
+			},{
+				"key": "cmtitle",
+				"value": API_SERVICE_PROPERTY[this.service].langCat,
+			},{
+				"key": "cmtype",
+				"value": "subcat"
+			},{
+				"key": "cmlimit",
+				"value": "500"
+			}
+		];
+		this.url = makeApiURL(this.service+API_SERVICE_PROPERTY[this.service].path, param, "");
+		return promiseAjax("GET", this.url, "json", API_HEADER);
+	}
+
+	function responseAjaxApiLang(e){
+		console.log(this);
+		console.log(e);
+	}
+
+	function apiLangAppendOptions(){
 	}
 
 	function apiCutOutBehavior(e){

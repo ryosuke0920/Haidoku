@@ -1,5 +1,3 @@
-const GLOBAL_EXTENSION_NAME = "SearchDictionaryFaster";
-const SUPPORT_EMAIL = "ryosuke.ohta.programmer@gmail.com";
 const MAX_FAVICON_CONNECTION = 5;
 const DATA_URI_REGEX = new RegExp(/^data:.*,/);
 let optionList = [];
@@ -454,29 +452,12 @@ function broadcastWindows(windows){
 	}
 }
 
-function makeApiURL(url, param=[], text){
-	url += "?";
-	let list = [];
-	for(let i=0; i<param.length; i++){
-		list.push( param[i].key + "=" + param[i].value );
-	}
-	url += list.join("&");
-	url = makeURL(url, text);
-	return url;
-}
-
 function apiRequest(data){
-	let manifest = ponyfill.runtime.getManifest();
 	if(!API_SERVICE.hasOwnProperty(apiService)) throw( new Error("service not found. apiService="+apiService) );
+	let service = API_SERVICE[apiService];
 	let obj = {
-		"service": API_SERVICE[apiService],
-		"path": "/w/api.php",
-		"header":[
-			{
-				"key": "Api-User-Agent",
-				"value": GLOBAL_EXTENSION_NAME+"/"+manifest.version+" ("+SUPPORT_EMAIL+") XMLHttpRequest"
-			}
-		]
+		"service": service,
+		"path": API_SERVICE_PROPERTY[service].path
 	};
 	let param = [
 		{
@@ -512,7 +493,7 @@ function apiRequest(data){
 }
 
 function requestAjaxApiSearch(){
-	return promiseAjax("GET", this.searchURL, "json", this.header);
+	return promiseAjax("GET", this.searchURL, "json", API_HEADER);
 }
 
 function responseAjaxApiSearch(e){
@@ -551,7 +532,7 @@ function requestAjaxApiInfo(){
 		}
 	];
 	this.infoURL = makeApiURL(this.service+this.path, param);
-	return promiseAjax("GET", this.infoURL, "json", this.header);
+	return promiseAjax("GET", this.infoURL, "json", API_HEADER);
 }
 
 function responseAjaxApiInfo(e){
@@ -584,7 +565,7 @@ function requestAjaxApiSection(){
 		}
 	];
 	this.sectionURL = makeApiURL(this.service+this.path, param);
-	return promiseAjax("GET", this.sectionURL, "json", this.header);
+	return promiseAjax("GET", this.sectionURL, "json", API_HEADER);
 }
 
 function responseAjaxApiSection(e){
@@ -634,7 +615,7 @@ function requestAjaxApiParse(){
 	];
 	if( this.sectionIndex )　param.push({"key":"section", "value":this.sectionIndex});
 	this.pageURL = makeApiURL(this.service+this.path, param);
-	return promiseAjax("GET", this.pageURL, "json", this.header);
+	return promiseAjax("GET", this.pageURL, "json", API_HEADER);
 }
 
 function responseAjaxApiParse(e){
