@@ -174,7 +174,7 @@
 	function apiLangMakeOption(apiService){
 		let service = API_SERVICE[apiService];
 		let p = Promise.resolve();
-		if(!apiLangCache.hasOwnProperty(apiService)){
+		if(!apiLangCache.hasOwnProperty(service)){
 			let obj = { "service": service };
 			apiLangCache[service] = "loading";
 			return p.then(
@@ -184,12 +184,12 @@
 			).then(
 				responseAjaxApiLang.bind(obj)
 			).then(
-				apiLangAppendOptions
+				()=>{ return apiLangAppendOptions(service) }
 			).catch(
 				apiLangMakeOptionError.bind(obj)
 			);
 		}
-		return p.then( apiLangAppendOptions );
+		return p.then( ()=>{ return apiLangAppendOptions(service) } );
 	}
 
 	function apiLangMakeOptionError(e){
@@ -243,6 +243,7 @@
 			this.cat = this.cat.concat(res.query.categorymembers);
 			if( !res.hasOwnProperty("continue")) {
 				apiLangCache[this.service] = this.cat;
+				console.log(apiLangCache);
 				return Promise.resolve();
 			}
 			let keys = Object.keys(res.continue);
@@ -264,8 +265,27 @@
 		return Promise.reject(e.target);
 	}
 
-	function apiLangAppendOptions(){
-		console.log(apiLangCache);
+	function apiLangAppendOptions(service){
+		console.log("apiLangAppendOptions");
+		let languages = apiLangCache[service];
+		let prefix = {};
+		for(let i=0; i<languages.length; i++){
+			let str = languages[i].sortkeyprefix;
+			if(str==""){
+				str = languages[i].title;
+				str = str.replace( API_SERVICE_PROPERTY[service].namespace+":", "");
+				languages[i].prefix = str;
+			}
+			str = str.substr(0,1);
+			if(str==" "||str=="*") continue;
+			if( prefix.hasOwnProperty(str)){
+				prefix[str]++;
+			}
+			else {
+				prefix[str] = 1;
+			}
+		}
+		console.log(prefix);
 	}
 
 	function apiCutOutBehavior(e){
