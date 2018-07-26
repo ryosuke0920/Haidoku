@@ -233,7 +233,7 @@
 					</p>
 					<p>
 						<label>
-							<input type="checkbox" class="linkListApiCutOut">
+							<input type="checkbox" class="apiCutOut">
 							<span class="linkListApiCutOutDesc">htmlLinkListApiCutOut</span>
 						</label>
 					</p>
@@ -268,17 +268,17 @@
 					</div>
 				</section>
 			</section>
-			<div id="linkListApiLangPane" class="pane">
+			<div id="apiLangPane" class="pane hide">
 				<img src="/image/delete.svg" class="removePane">
 				Please choose language. It will be displayed the language's explanation.<br>
-				<select class="linkListApiLangPrefixt">
-				</select>
-				<div id="linkListApiLangSelector">
+				<div class="paneBody box">
+					<p><select class="apiLangPrefixSelect"></select></p>
+					<div id="apiLanguageContainer"></div>
+					<label id="linkListApiLangInputPrototype" class="hide">
+						<input type="radio" class="languageInputRadio" name="l" value="">
+						<span class="languageInputLabel"></span>
+					</label>
 				</div>
-				<label id="linkListApiLangInputPrototype" class="hide">
-					<input type="radio" class="languageInputRadio" name="l" value="">
-					<span class="languageInputLabel"></span>
-				</label>
 			</div>
 		</div>
 		<div id="contact" class="panel hide">
