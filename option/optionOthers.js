@@ -1,15 +1,17 @@
 ( () => {
+	const API_LANGUAGE_DOWNLOAD = "downloading";
 	let othersNode = document.querySelector("#others");
-	let sampleLinkListNode = document.querySelector("#"+CSS_PREFIX+"-viewer");
-	let linkListStyleNodeList = document.querySelectorAll(".linkListStyle");
-	let linkListActionNodeList = document.querySelectorAll(".linkListAction");
-	let linkListApiServiceNode = document.querySelector(".linkListApiService");
-	let linkListApiLangNode = document.querySelector(".linkListApiLang");
-	let linkListApiCutOutNode = document.querySelector(".linkListApiCutOut");
+	let sampleLinkListNode = othersNode.querySelector("#"+CSS_PREFIX+"-viewer");
+	let linkListStyleNodeList = othersNode.querySelectorAll(".linkListStyle");
+	let linkListActionNodeList = othersNode.querySelectorAll(".linkListAction");
+	let apiServiceCodeNode = othersNode.querySelector(".linkListApiService");
+	let linkListApiLangNode = othersNode.querySelector(".linkListApiLang");
+	let linkListApiCutOutNode = othersNode.querySelector(".linkListApiCutOut");
+	let linkListApiLangPaneNode = document.querySelector("#linkListApiLangPane");
+	let linkListApiLangSelectorNode = linkListApiLangPaneNode.querySelector("#linkListApiLangSelector");
 	let apiLangCache = {};
-	let apiService = "";
 
-	Promise.resolve().then(initOthers).then(initStyle).catch(unexpectedError);
+	Promise.resolve().then(initOthers).then(initStyle).then(initDownloadApiLang).catch(unexpectedError);
 
 	function initOthers(){
 		initI18n();
@@ -58,7 +60,7 @@
 		function onGot(res){
 			setLinkListStyle(res["cl"]);
 			setLinkListAction(res["ca"]);
-			setlinkListApiService(res["s"]);
+			setServiceCode(res["s"]);
 			setlinkListApiCutOut(res["co"]);
 		}
 		return getter.then(onGot);
@@ -66,8 +68,10 @@
 
 	function initListener(){
 		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
-		linkListApiServiceNode.addEventListener("change", apiServiceBehavior);
+		apiServiceCodeNode.addEventListener("change", apiServiceBehavior);
+		linkListApiLangNode.addEventListener("focus", apiLangBehavior);
 		linkListApiCutOutNode.addEventListener("change", apiCutOutBehavior);
+		linkListApiLangPaneNode.addEventListener("click", apiLangPaneBehavior);
 	}
 
 	function fileChangeBehavior(e){
@@ -75,7 +79,7 @@
 		if( e["w"]["newValue"] == windowId ) return;
 		if( e.hasOwnProperty("cl") ) setLinkListStyle(e["cl"]["newValue"]);
 		else if( e.hasOwnProperty("ca") ) setLinkListAction(e["ca"]["newValue"]);
-		else if( e.hasOwnProperty("s") ) setlinkListApiService(e["s"]["newValue"]);
+		else if( e.hasOwnProperty("s") ) setServiceCode(e["s"]["newValue"]);
 		else if( e.hasOwnProperty("co") ) setlinkListApiCutOut(e["co"]["newValue"]);
 	}
 
@@ -91,8 +95,35 @@
 		setSampleLinkListAction(value);
 	}
 
-	function setlinkListApiService(value){
-		linkListApiServiceNode.value = apiService = value;
+	function setServiceCode(value){
+		apiServiceCodeNode.value = value;
+	}
+
+	function getServiceCode(){
+		return apiServiceCodeNode.value;
+	}
+
+	function getApiService(){
+		let code = getServiceCode();
+		if( !API_SERVICE.hasOwnProperty(code) ) return null;
+		return API_SERVICE[code];
+	}
+
+	function hasLangCache(service=getApiService()){
+		if( service == null ) return null;
+		return apiLangCache.hasOwnProperty( service );
+	}
+
+	function getLangCache(service=getApiService()){
+		if( service == null ) return null;
+		if( hasLangCache(service) == null) return null;
+		return apiLangCache[service];
+	}
+
+	function isDownloadingLangage(service=getApiService()){
+		if( service == null ) return false;
+		if( hasLangCache(service) == null) return false;
+		return apiLangCache[service]==API_LANGUAGE_DOWNLOAD;
 	}
 
 	function setlinkListApiCutOut(value){
@@ -154,48 +185,51 @@
 		return saveW(data).catch(onSaveError);
 	}
 
+	function initDownloadApiLang() {
+		let service = getApiService();
+		if( hasLangCache(service) != false ) return;
+		downloadApiLang(service); // Async
+		return;
+	}
+
 	function apiServiceBehavior(e){
-		let apiService = e.target.value;
-		setlinkListApiService(apiService);
+		let serviceCode = e.target.value;
+		setServiceCode(serviceCode);
 		linkListApiLangNode.value="";
-		savelinkListApiService(apiService); /* Async */
-		if(apiService=="") return;
-		apiLangMakeOption(apiService); /* Async */
+		savelinkListApiService(serviceCode); // Async
+		if(serviceCode=="") return;
+		downloadApiLang(API_SERVICE[serviceCode]); // Async
+		return;
 	}
 
 	function savelinkListApiService(value){
 		let data = {
 			"s": value,
-			"l": ""
+			"sl": ""
 		};
 		return saveW(data).catch(onSaveError);
 	}
 
-	function apiLangMakeOption(apiService){
-		let service = API_SERVICE[apiService];
+	function downloadApiLang(service){
+		console.log("service="+service);
 		let p = Promise.resolve();
-		if(!apiLangCache.hasOwnProperty(service)){
-			let obj = { "service": service };
-			apiLangCache[service] = "loading";
-			return p.then(
-				prepareAjaxApiLang.bind(obj)
-			).then(
-				requestAjaxApiLang.bind(obj)
-			).then(
-				responseAjaxApiLang.bind(obj)
-			).then(
-				()=>{ return apiLangAppendOptions(service) }
-			).catch(
-				apiLangMakeOptionError.bind(obj)
-			);
-		}
-		return p.then( ()=>{ return apiLangAppendOptions(service) } );
+		let obj = { "service": service };
+		apiLangCache[service] = API_LANGUAGE_DOWNLOAD;
+		return p.then(
+			prepareAjaxApiLang.bind(obj)
+		).then(
+			requestAjaxApiLang.bind(obj)
+		).then(
+			responseAjaxApiLang.bind(obj)
+		).catch(
+			downloadApiLangError.bind(obj)
+		);
 	}
 
-	function apiLangMakeOptionError(e){
+	function downloadApiLangError(e){
 		console.error(e);
 		apiLangCache[this.service] = undefined;
-		//TODO kono error ha user ni oshieru
+		return notice("faild download languages."); //TODO kono error ha user ni oshieru
 	}
 
 	function prepareAjaxApiLang(){
@@ -265,8 +299,7 @@
 		return Promise.reject(e.target);
 	}
 
-	function apiLangAppendOptions(service){
-		console.log("apiLangAppendOptions");
+	function getLanguagePrefix(service){
 		let languages = apiLangCache[service];
 		let prefix = {};
 		for(let i=0; i<languages.length; i++){
@@ -285,7 +318,65 @@
 				prefix[str] = 1;
 			}
 		}
-		console.log(prefix);
+		return prefix;
+	}
+
+	function apiLangMakeOption(prefix){
+		let linkListApiLangPrefixtNode = linkListApiLangPaneNode.querySelector(".linkListApiLangPrefixt");
+		while(linkListApiLangPrefixtNode.firstChild !==　linkListApiLangPrefixtNode.lastChild) linkListApiLangPrefixtNode.removeChild(linkListApiLangPrefixtNode.lastChild);
+		let prefixList = Object.keys(prefix);
+		for(let i=0; i<prefixList.length; i++){
+			let option = document.createElement("option");
+			option.value = prefixList[i];
+			option.innerText = prefixList[i] + " ("+prefix[prefixList[i]]+")";
+			linkListApiLangPrefixtNode.appendChild(option);
+		}
+	}
+
+	function apiLangMakeSelector(service, pf){
+		while(linkListApiLangSelectorNode.lastChild) linkListApiLangSelectorNode.removeChild(linkListApiLangSelectorNode.lastChild);
+		let prototype = document.querySelector("#linkListApiLangInputPrototype");
+		let languages = getLangCache(service);
+		languages = languages.filter( obj => obj.sortkeyprefix.substr(0,1)==pf );
+		for(let i=0; i<languages.length; i++){
+			let wrapper = prototype.cloneNode(true);
+			wrapper.removeAttribute("id");
+			let radioNode = wrapper.querySelector(".languageInputRadio");
+			radioNode.setAttribute("value", languages[i].title);
+			let labelNode = wrapper.querySelector(".languageInputLabel");
+			labelNode.innerText = languages[i].title;
+			linkListApiLangSelectorNode.appendChild(wrapper);
+			show(wrapper);
+		}
+		return;
+	}
+
+	function apiLangBehavior(e){
+		e.target.blur();
+		let service = getApiService();
+		if(service == null){
+			return notice("please select wiktinary.");//TODO
+		}
+		else if( !hasLangCache(service) ){
+			notice("please wait for downloading laguages.");//TODO
+			return downloadApiLang(service);
+		}
+		else if( isDownloadingLangage(service) ){
+			notice("please wait for downloading laguages.");//TODO
+			return;
+		}
+		let prifix = getLanguagePrefix( service );
+		console.log(prifix);
+		apiLangMakeOption( prifix );
+		apiLangMakeSelector( service, Object.keys(prifix)[0] );
+		show(linkListApiLangPaneNode);
+	}
+
+	function apiLangPaneBehavior(e){
+		let classes = e.target.classList;
+		if( classes.contains("removePane") ){
+			hide(linkListApiLangPaneNode);
+		}
 	}
 
 	function apiCutOutBehavior(e){

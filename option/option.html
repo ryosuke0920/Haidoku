@@ -219,7 +219,7 @@
 				</section>
 				<section class="LinkListProperty box">
 					<h1 class="linkListApi box">htmlLinkListApi</h1>
-					<p class="linkListApiServiceDesc">From wiktionary the explanation is shown bottom of LinkList.</p>
+					<p class="linkListApiServiceDesc">Please choose wiktionary. The explanation is shown bottom of LinkList from wiktionary.</p>
 					<p>
 						<select class="linkListApiService">
 							<option value="">linkListApiNone</option>
@@ -229,11 +229,7 @@
 					</p>
 					<p class="linkListApiLangDesc">These categories belong to the language category. If you choose a category, It's shown except the others.</p>
 					<p>
-						<select class="linkListApiLang">
-							<option value="">htmlLinkListApiLangNone</option>
-							<option value="1">1</option>
-							<option value="2">22</option>
-						</select>
+						<input type="text" class="linkListApiLang" placeholder="htmlLinkListApiLangNone">
 					</p>
 					<p>
 						<label>
@@ -243,7 +239,7 @@
 					</p>
 				</section>
 				<section class="linkListSample box">
-					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px;">
+					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; z-index:auto;">
 						<div id="lessLaborGoToDictionary-cover"></div>
 						<nav id="lessLaborGoToDictionary-menu">
 							<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
@@ -272,6 +268,18 @@
 					</div>
 				</section>
 			</section>
+			<div id="linkListApiLangPane" class="pane">
+				<img src="/image/delete.svg" class="removePane">
+				Please choose language. It will be displayed the language's explanation.<br>
+				<select class="linkListApiLangPrefixt">
+				</select>
+				<div id="linkListApiLangSelector">
+				</div>
+				<label id="linkListApiLangInputPrototype" class="hide">
+					<input type="radio" class="languageInputRadio" name="l" value="">
+					<span class="languageInputLabel"></span>
+				</label>
+			</div>
 		</div>
 		<div id="contact" class="panel hide">
 			<address>
