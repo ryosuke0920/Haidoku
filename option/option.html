@@ -202,14 +202,14 @@
 		</div>
 		<div id="others" class="panel hide">
 			<section class="othersTable box">
-				<section class="LinkListProperty box">
+				<section class="component">
 					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
 					<div>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
 					</div>
 				</section>
-				<section class="LinkListProperty box">
+				<section class="component">
 					<h1 class="linkListAction box">htmlLinkListAction</h1>
 					<div>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
@@ -217,7 +217,7 @@
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="c"> <span class="linkListActionMouseclick">htmlLinkListActionMouseclick</span></label><br>
 					</div>
 				</section>
-				<section class="LinkListProperty box">
+				<section class="component">
 					<h1 class="apiApiService box">htmlApiService</h1>
 					<p class="serviceCodeDescription">Please choose wiktionary. The explanation is shown bottom of LinkList from wiktionary.</p>
 					<p>
@@ -271,11 +271,18 @@
 			</section>
 			<div id="apiLanguageSelectPane" class="pane hide">
 				<img src="/image/delete.svg" class="removePane">
-				Please choose language. It will be displayed the language's explanation.<br>
 				<div id="apiLanguageSelectPaneBody" class="paneBody box">
-					<p><select class="apiLangPrefixSelect"></select></p>
+					<p>
+						Please choose language. It will be displayed the language's explanation.<br>
+						<select class="apiLangPrefixSelect"></select>
+					</p>
 					<div id="apiLanguageContainer"></div>
-					<ol class="apiLanguageBox LinkListProperty box"></ol>
+					<div>
+						<div id="languageSelectList" class="component">
+							<p>htmlLanguageSelectDescription</p>
+							<ol class="apiLanguageBox"></ol>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -308,7 +315,7 @@
 			<img src="/image/delete.svg" class="removeLanguageButtom">
 		</li>
 	</ol>
-	<label id="apiLanguageInputPrototype" class="hide">
+	<label id="apiLanguageInputPrototype">
 		<input type="checkbox" class="apiLanguageCheckbox" name="l" value="">
 		<span class="apiLanguageLabel"></span>
 	</label>

@@ -92,7 +92,9 @@
 	function otherNodeClickBehavior(e){
 		if( e.target.classList.contains("removeLanguageButtom") ){
 			let node = e.target.closest("[data-language]");
-			apiRemoveLanguage(node.getAttribute("data-language"));
+			let language = node.getAttribute("data-language");
+			apiRemoveLanguage(language);
+			apiLanguageCheckboxInactive(language);
 		}
 	}
 
@@ -513,6 +515,12 @@
 		setLanguageList(languageList);
 		saveLanguageList(languageList).catch(onSaveError);
 		makeLanguageListNodes();
+	}
+
+	function apiLanguageCheckboxInactive(language){
+		let node = apiLanguageContainer.querySelector(".apiLanguageCheckbox[value=\""+language+"\"]");
+		if(!node) return;
+		node.checked = false;
 	}
 
 	function saveLanguageList(list){
