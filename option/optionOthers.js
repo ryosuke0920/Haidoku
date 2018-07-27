@@ -1,17 +1,20 @@
 ( () => {
 	const API_LANGUAGE_DOWNLOAD = "downloading";
+	const API_LANGUAGE_MAX = 10;
 	let othersNode = document.querySelector("#others");
 	let sampleLinkListNode = othersNode.querySelector("#"+CSS_PREFIX+"-viewer");
 	let linkListStyleNodeList = othersNode.querySelectorAll(".linkListStyle");
 	let linkListActionNodeList = othersNode.querySelectorAll(".linkListAction");
-	let apiServiceCodeNode = othersNode.querySelector(".linkListApiService");
-	let linkListApiLangNode = othersNode.querySelector(".linkListApiLang");
+	let serviceCodeSelectNode = othersNode.querySelector(".serviceCodeSelect");
+	let addApiLanguageNode = othersNode.querySelector(".addApiLanguage");
 	let apiCutOutNode = othersNode.querySelector(".apiCutOut");
-	let apiLangPaneNode = document.querySelector("#apiLangPane");
-	let apiLanguageContainerNode = apiLangPaneNode.querySelector("#apiLanguageContainer");
-	let apiLangPrefixSelectNode = apiLangPaneNode.querySelector(".apiLangPrefixSelect");
+	let apiLanguageBoxNodes = othersNode.querySelectorAll(".apiLanguageBox");
+	let apiLanguagePaneNode = document.querySelector("#apiLangPane");
+	let apiLanguageContainerNode = apiLanguagePaneNode.querySelector("#apiLanguageContainer");
+	let apiLangPrefixSelectNode = apiLanguagePaneNode.querySelector(".apiLangPrefixSelect");
 	let apiLanguageCache = {};
 	let apiPrefixCache = {};
+	let apiLanguagelist = [];
 
 	Promise.resolve().then(initOthers).then(initStyle).then(initDownloadApiLanguage).catch(unexpectedError);
 
@@ -52,17 +55,25 @@
 
 	function initStyle(){
 		let lang = getUiLang();
-		if( !API_SERVICE.hasOwnProperty(lang) ) lang = DEFAULT_LOCALE;
+		let service = getApiService(lang);
+		if( service == null ){
+			lang = DEFAULT_LOCALE;
+			service = getApiService(lang);
+		}
+		let list = [ API_SERVICE_PROPERTY[service].defaultLanguage ];
 		let getter = ponyfill.storage.sync.get({
 			"cl": LINK_LIST_STYLE_CLASSIC,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
 			"s": lang,
-			"co": true
+			"ll": list,
+			"co": true,
 		});
 		function onGot(res){
 			setLinkListStyle(res["cl"]);
 			setLinkListAction(res["ca"]);
 			setServiceCode(res["s"]);
+			setLanguageList(res["ll"]);
+			makeLanguageListNodes();
 			setApiCutOut(res["co"]);
 		}
 		return getter.then(onGot);
@@ -70,11 +81,19 @@
 
 	function initListener(){
 		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
-		apiServiceCodeNode.addEventListener("change", apiServiceBehavior);
-		linkListApiLangNode.addEventListener("focus", apiLanguageBehavior);
+		serviceCodeSelectNode.addEventListener("change", apiServiceBehavior);
+		addApiLanguageNode.addEventListener("click", apiLanguageBehavior);
 		apiCutOutNode.addEventListener("change", apiCutOutBehavior);
-		apiLangPaneNode.addEventListener("click", apiLangPaneBehavior);
+		apiLanguagePaneNode.addEventListener("click", apiLangPaneBehavior);
 		apiLangPrefixSelectNode.addEventListener("change", apiLangPrefixSelectBehavior);
+		othersNode.addEventListener("click", otherNodeClickBehavior);
+	}
+
+	function otherNodeClickBehavior(e){
+		if( e.target.classList.contains("removeLanguageButtom") ){
+			let node = e.target.closest("[data-language]");
+			apiRemoveLanguage(node.getAttribute("data-language"));
+		}
 	}
 
 	function fileChangeBehavior(e){
@@ -82,7 +101,15 @@
 		if( e["w"]["newValue"] == windowId ) return;
 		if( e.hasOwnProperty("cl") ) setLinkListStyle(e["cl"]["newValue"]);
 		else if( e.hasOwnProperty("ca") ) setLinkListAction(e["ca"]["newValue"]);
-		else if( e.hasOwnProperty("s") ) setServiceCode(e["s"]["newValue"]);
+		else if( e.hasOwnProperty("s") ){
+			setServiceCode(e["s"]["newValue"]);
+			setLanguageList([]);
+			makeLanguageListNodes();
+		}
+		else if( e.hasOwnProperty("ll") ){
+			setLanguageList(e["ll"]["newValue"]);
+			makeLanguageListNodes();
+		}
 		else if( e.hasOwnProperty("co") ) setApiCutOut(e["co"]["newValue"]);
 	}
 
@@ -99,15 +126,46 @@
 	}
 
 	function setServiceCode(value){
-		apiServiceCodeNode.value = value;
+		serviceCodeSelectNode.value = value;
 	}
 
 	function getServiceCode(){
-		return apiServiceCodeNode.value;
+		return serviceCodeSelectNode.value;
 	}
 
-	function getApiService(){
-		let code = getServiceCode();
+	function setLanguageList(value){
+		apiLanguagelist = value;
+	}
+
+	function clearLanguageListNodes(){
+		for(let i=0; i<apiLanguageBoxNodes.length; i++){
+			let node = apiLanguageBoxNodes[i];
+			clearChildren(node);
+		}
+	}
+
+	function makeLanguageListNodes(languages=getLanguageList()){
+		clearLanguageListNodes();
+		let languageListPrototype = document.querySelector("#languageListPrototype");
+		for(let i=0; i<apiLanguageBoxNodes.length; i++){
+			let node = apiLanguageBoxNodes[i];
+			for(let j=0; j<languages.length; j++){
+				let language = languages[j];
+				let li = languageListPrototype.cloneNode(true);
+				li.removeAttribute("id");
+				li.setAttribute("data-language", language);
+				let label = li.querySelector(".languageLabel");
+				label.innerText = language;
+				node.appendChild(li);
+			}
+		}
+	}
+
+	function getLanguageList(){
+		return apiLanguagelist;
+	}
+
+	function getApiService(code=getServiceCode()){
 		if( !API_SERVICE.hasOwnProperty(code) ) return null;
 		return API_SERVICE[code];
 	}
@@ -215,23 +273,23 @@
 	function apiServiceBehavior(e){
 		let serviceCode = e.target.value;
 		setServiceCode(serviceCode);
-		linkListApiLangNode.value="";
-		savelinkListApiService(serviceCode); // Async
+		saveServiceCode(serviceCode); // Async
+		setLanguageList([]);
+		makeLanguageListNodes();
 		if(hasLanguageCache()!=false) return;
 		downloadApiLanguage(getApiService()); // Async
 		return;
 	}
 
-	function savelinkListApiService(value){
+	function saveServiceCode(value){
 		let data = {
 			"s": value,
-			"sl": ""
+			"ll": []
 		};
 		return saveW(data).catch(onSaveError);
 	}
 
 	function downloadApiLanguage(service){
-		console.log("service="+service);
 		let p = Promise.resolve();
 		let obj = { "service": service };
 		apiLanguageCache[service] = API_LANGUAGE_DOWNLOAD;
@@ -249,7 +307,6 @@
 	}
 
 	function downloadApiLanguageError(e){
-		console.error(e);
 		apiLanguageCache[this.service] = undefined;
 		return notice("faild download languages."); //TODO kono error ha user ni oshieru
 	}
@@ -351,7 +408,7 @@
 	}
 
 	function apiLangMakeOption(prefix){
-		while(apiLangPrefixSelectNode.firstChild !==　apiLangPrefixSelectNode.lastChild){
+		while(apiLangPrefixSelectNode.lastChild){
 			apiLangPrefixSelectNode.removeChild(apiLangPrefixSelectNode.lastChild);
 		}
 		let prefixList = Object.keys(prefix);
@@ -367,16 +424,18 @@
 		while(apiLanguageContainerNode.lastChild){
 			apiLanguageContainerNode.removeChild(apiLanguageContainerNode.lastChild);
 		}
-		let prototype = document.querySelector("#linkListApiLangInputPrototype");
+		let prototype = document.querySelector("#apiLanguageInputPrototype");
 		let languages = getLanguageCache(service);
+		let languageList = getLanguageList();
 		languages = languages.filter( obj => obj.sortkeyprefix.substr(0,1)==prefixCode );
 		for(let i=0; i<languages.length; i++){
 			let language = languages[i];
 			let wrapper = prototype.cloneNode(true);
 			wrapper.removeAttribute("id");
-			let radioNode = wrapper.querySelector(".languageInputRadio");
-			radioNode.setAttribute("value", language.title);
-			let labelNode = wrapper.querySelector(".languageInputLabel");
+			let checkboxNode = wrapper.querySelector(".apiLanguageCheckbox");
+			checkboxNode.setAttribute("value", language.title);
+			if( languageList.includes(language.title) ) checkboxNode.checked = true;
+			let labelNode = wrapper.querySelector(".apiLanguageLabel");
 			labelNode.innerText = language.title;
 			apiLanguageContainerNode.appendChild(wrapper);
 			show(wrapper);
@@ -385,7 +444,6 @@
 	}
 
 	function apiLanguageBehavior(e){
-		e.target.blur();
 		let service = getApiService();
 		if(service == null){
 			return notice("please select wiktinary.");//TODO
@@ -401,7 +459,7 @@
 		let prefix = getPrefixCache( service );
 		apiLangMakeOption(prefix);
 		apiLangMakeRadio( service, Object.keys(prefix)[0] );
-		show(apiLangPaneNode);
+		show(apiLanguagePaneNode);
 	}
 
 	function apiLangPrefixSelectBehavior(e){
@@ -412,9 +470,48 @@
 
 	function apiLangPaneBehavior(e){
 		let classes = e.target.classList;
-		if( classes.contains("removePane") || apiLangPaneNode.isEqualNode(e.target) ){
-			hide(apiLangPaneNode);
+		if( classes.contains("removePane") || apiLanguagePaneNode.isEqualNode(e.target) ){
+			hide(apiLanguagePaneNode);
 		}
+		else if(classes.contains("apiLanguageCheckbox")){
+			if( e.target.checked ) {
+				apiAddLanguage(e.target.value);
+			}
+			else{
+				apiRemoveLanguage(e.target.value);
+			}
+		}
+		else if(classes.contains("removeLanguageButtom")){
+			let node = e.target.closest("[data-language]");
+			apiRemoveLanguage(node.getAttribute("data-language"));
+		}
+	}
+
+	function apiAddLanguage(language){
+		if(apiLanguagelist.length >= API_LANGUAGE_MAX) {
+			return notice( "max is " + API_LANGUAGE_MAX ); // TODO
+		}
+		let languageList = getLanguageList();
+		languageList.push(language);
+		languageList.sort();
+		setLanguageList(languageList);
+		saveLanguageList(languageList).catch(onSaveError);
+		makeLanguageListNodes();
+	}
+
+	function apiRemoveLanguage(language){
+		let languageList = getLanguageList();
+		languageList = languageList.filter(str=>str!=language);
+		setLanguageList(languageList);
+		saveLanguageList(languageList).catch(onSaveError);
+		makeLanguageListNodes();
+	}
+
+	function saveLanguageList(list){
+		let data = {
+			"ll": list
+		};
+		return saveW(data).catch(onSaveError);
 	}
 
 	function apiCutOutBehavior(e){
