@@ -60,7 +60,7 @@
 			lang = DEFAULT_LOCALE;
 			service = getApiService(lang);
 		}
-		let list = [ API_SERVICE_PROPERTY[service].defaultLanguage ];
+		let list = API_SERVICE_PROPERTY[service].defaultLanguage;
 		let getter = ponyfill.storage.sync.get({
 			"cl": LINK_LIST_STYLE_CLASSIC,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,

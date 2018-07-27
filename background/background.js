@@ -6,7 +6,8 @@ let shiftKey = false;
 let ctrlKey = false;
 let options = {};
 let faviconCache = {};
-let apiService = "";
+let serviceCode = "";
+let languageList = [];
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 
@@ -39,14 +40,17 @@ function initContextMenu(){
 }
 
 function getSetting() {
-	let lang = getUiLang();
-	if( !API_SERVICE.hasOwnProperty(lang) ) lang = DEFAULT_LOCALE;
+	let serviceCode = getUiLang();
+	if( !API_SERVICE.hasOwnProperty(serviceCode) ) serviceCode = DEFAULT_LOCALE;
+	let service = API_SERVICE[serviceCode];
+	let languageList = API_SERVICE_PROPERTY[service].defaultLanguage;
 	return ponyfill.storage.sync.get({
 		"ol": [],
 		"bf": true,
 		"sk": false,
 		"ck": false,
-		"s": lang
+		"s": serviceCode,
+		"ll": languageList
 	}).then(onGotSetting);
 }
 
@@ -55,7 +59,8 @@ function onGotSetting(json){
 	autoViewFlag = json["bf"];
 	shiftKey = json["sk"];
 	ctrlKey = json["ck"];
-	apiService = json["s"];
+	serviceCode = json["s"];
+	languageList = json["ll"];
 }
 
 function initListener(){
@@ -155,7 +160,10 @@ function onStorageChanged(change, area){
 		updateFaviconCache().then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
 	if(change["s"]) {
-		apiService = change["s"]["newValue"];
+		serviceCode = change["s"]["newValue"];
+	}
+	if(change["ll"]) {
+		languageList = change["ll"]["newValue"];
 	}
 }
 
@@ -453,8 +461,8 @@ function broadcastWindows(windows){
 }
 
 function apiRequest(data){
-	if(!API_SERVICE.hasOwnProperty(apiService)) throw( new Error("service not found. apiService="+apiService) );
-	let service = API_SERVICE[apiService];
+	if(!API_SERVICE.hasOwnProperty(serviceCode)) throw( new Error("service not found. serviceCode="+serviceCode) );
+	let service = API_SERVICE[serviceCode];
 	let obj = {
 		"service": service,
 		"path": API_SERVICE_PROPERTY[service].path
@@ -594,9 +602,16 @@ function responseAjaxApiSection(e){
 }
 
 function decideSection(){
+	let comparisons = [];
+	for(let i=0; i<languageList.length; i++){
+		let str = languageList[i];
+		str = str.replace(/\s+language$/);
+		comparisons.push(str);
+	}
+	console.log(comparisons);
 	for(let i=0; i<this.sections.length; i++){
 		let section = this.sections[i];
-		if( section.line.match(/英語/) ) {
+		if( comparisons.includes(section.line) ) {
 			this.sectionIndex = section.index;
 			break;
 		}
