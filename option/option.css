@@ -10,6 +10,9 @@ body {
 p {
 	margin-bottom: 1em;
 }
+ol li {
+	list-style: decimal inside;
+}
 aside {
 	font-size: 0.8em;
 	background-color: WhiteSmoke;
@@ -378,9 +381,18 @@ table thead th, table tbody td {
 		grid-row-end: 4;
 	}
 }
+#apiLanguageSelectPaneBody {
+	display: grid;
+	grid-template-columns: 1fr 300px;
+}
+#apiLanguageSelectPaneBody>*:nth-child(1) {
+	grid-column-start:1 ;
+	grid-column-end: 3;
+}
 #apiLanguageContainer {
 	display: grid;
 	grid-template-columns: 1fr;
+	grid-row-gap: 0;
 }
 @media (min-width: 802px) {
 	#apiLanguageContainer {

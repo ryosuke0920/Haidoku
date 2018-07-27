@@ -9,9 +9,9 @@
 	let addApiLanguageNode = othersNode.querySelector(".addApiLanguage");
 	let apiCutOutNode = othersNode.querySelector(".apiCutOut");
 	let apiLanguageBoxNodes = othersNode.querySelectorAll(".apiLanguageBox");
-	let apiLanguagePaneNode = document.querySelector("#apiLangPane");
-	let apiLanguageContainerNode = apiLanguagePaneNode.querySelector("#apiLanguageContainer");
-	let apiLangPrefixSelectNode = apiLanguagePaneNode.querySelector(".apiLangPrefixSelect");
+	let apiLanguageSelectPaneNode = document.querySelector("#apiLanguageSelectPane");
+	let apiLanguageContainerNode = apiLanguageSelectPaneNode.querySelector("#apiLanguageContainer");
+	let apiLangPrefixSelectNode = apiLanguageSelectPaneNode.querySelector(".apiLangPrefixSelect");
 	let apiLanguageCache = {};
 	let apiPrefixCache = {};
 	let apiLanguagelist = [];
@@ -84,7 +84,7 @@
 		serviceCodeSelectNode.addEventListener("change", apiServiceBehavior);
 		addApiLanguageNode.addEventListener("click", apiLanguageBehavior);
 		apiCutOutNode.addEventListener("change", apiCutOutBehavior);
-		apiLanguagePaneNode.addEventListener("click", apiLangPaneBehavior);
+		apiLanguageSelectPaneNode.addEventListener("click", apiLangPaneBehavior);
 		apiLangPrefixSelectNode.addEventListener("change", apiLangPrefixSelectBehavior);
 		othersNode.addEventListener("click", otherNodeClickBehavior);
 	}
@@ -459,7 +459,7 @@
 		let prefix = getPrefixCache( service );
 		apiLangMakeOption(prefix);
 		apiLangMakeRadio( service, Object.keys(prefix)[0] );
-		show(apiLanguagePaneNode);
+		show(apiLanguageSelectPaneNode);
 	}
 
 	function apiLangPrefixSelectBehavior(e){
@@ -470,11 +470,16 @@
 
 	function apiLangPaneBehavior(e){
 		let classes = e.target.classList;
-		if( classes.contains("removePane") || apiLanguagePaneNode.isEqualNode(e.target) ){
-			hide(apiLanguagePaneNode);
+		if( classes.contains("removePane") || apiLanguageSelectPaneNode.isEqualNode(e.target) ){
+			hide(apiLanguageSelectPaneNode);
 		}
 		else if(classes.contains("apiLanguageCheckbox")){
 			if( e.target.checked ) {
+				if(!checkLanguageLimit()){
+					e.preventDefault();
+					notice( "max is " + API_LANGUAGE_MAX ); // TODO
+					return;
+				}
 				apiAddLanguage(e.target.value);
 			}
 			else{
@@ -487,10 +492,13 @@
 		}
 	}
 
+	function checkLanguageLimit(){
+		let languageList = getLanguageList();
+		if(languageList.length >= API_LANGUAGE_MAX) return false;
+		return true;
+	}
+
 	function apiAddLanguage(language){
-		if(apiLanguagelist.length >= API_LANGUAGE_MAX) {
-			return notice( "max is " + API_LANGUAGE_MAX ); // TODO
-		}
 		let languageList = getLanguageList();
 		languageList.push(language);
 		languageList.sort();
