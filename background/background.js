@@ -595,6 +595,7 @@ function responseAjaxApiSection(e){
 				reject(res.error);
 				return;
 			}
+			console.log(res.parse);
 			this.sections = res.parse.sections;
 			resolve();
 			return;

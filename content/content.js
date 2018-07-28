@@ -824,7 +824,6 @@
 			doc.innerHTML = e.html[i];
 			let content;
 			let list;
-			console.log(apiCutOut);
 			if(apiCutOut && e.sectionLine.hasOwnProperty(i)){
 				let h1 = document.createElement("h1");
 				h1.innerText = e.sectionLine[i];
@@ -839,6 +838,24 @@
 			}
 			else {
 				content = doc;
+				list = content.querySelectorAll("h3.in-block,h4.in-block,h5.in-block,h6.in-block");
+				let reduceSections = API_SERVICE_PROPERTY[e.service].reduceSection;
+				for(let i=0; i<list.length; i++){
+					let node = list[i];
+					let flag = false;
+					for(let i=0; i<reduceSections.length; i++ ){
+						if(node.innerText.match(reduceSections[i]) ){
+							flag = true;
+							break;
+						}
+					}
+					if( flag ){
+						while(node.nextElementSibling && !node.nextElementSibling.classList.contains("in-block")){
+							node.nextElementSibling.remove();
+						}
+						node.remove();
+					}
+				}
 			}
 			list = content.querySelectorAll("a[href]:not([href^=http])");
 			for(let i=0; i<list.length; i++){

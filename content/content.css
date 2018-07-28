@@ -178,31 +178,51 @@
 #lessLaborGoToDictionary-apiBody * {
 	all: initial;
 	font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
-	font-size: 1em;
+	font-size: 14px;
 	line-height: 1.7em;
 	user-select: none;
 	-moz-user-select: none;
 }
 #lessLaborGoToDictionary-apiBody h1, #lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h3,
-#lessLaborGoToDictionary-apiBody div, #lessLaborGoToDictionary-apiBody p, #lessLaborGoToDictionary-apiBody ol,
-#lessLaborGoToDictionary-apiBody ul, #lessLaborGoToDictionary-apiBody dl, #lessLaborGoToDictionary-apiBody dt,
-#lessLaborGoToDictionary-apiBody dd {
+#lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h5, #lessLaborGoToDictionary-apiBody h6,
+#lessLaborGoToDictionary-apiBody div, #lessLaborGoToDictionary-apiBody p, #lessLaborGoToDictionary-apiBody ol, #lessLaborGoToDictionary-apiBody ul,
+#lessLaborGoToDictionary-apiBody dl, #lessLaborGoToDictionary-apiBody dt, #lessLaborGoToDictionary-apiBody dd {
 	display: block;
-	margin-bottom: 1em;
+	margin-bottom: 0.5em;
 }
 #lessLaborGoToDictionary-apiBody h1, #lessLaborGoToDictionary-apiBody h1 *,
 #lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h2 *,
-#lessLaborGoToDictionary-apiBody h3, #lessLaborGoToDictionary-apiBody h3 * {
+#lessLaborGoToDictionary-apiBody h3, #lessLaborGoToDictionary-apiBody h3 *,
+#lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h4 *,
+#lessLaborGoToDictionary-apiBody h5, #lessLaborGoToDictionary-apiBody h5 *,
+#lessLaborGoToDictionary-apiBody h6, #lessLaborGoToDictionary-apiBody h6 * {
 	font-weight: bold;
+}
+#lessLaborGoToDictionary-apiBody h1 a, #lessLaborGoToDictionary-apiBody h1 a *,
+#lessLaborGoToDictionary-apiBody h2 a, #lessLaborGoToDictionary-apiBody h2 a *,
+#lessLaborGoToDictionary-apiBody h3 a, #lessLaborGoToDictionary-apiBody h3 a *,
+#lessLaborGoToDictionary-apiBody h4 a, #lessLaborGoToDictionary-apiBody h4 a *,
+#lessLaborGoToDictionary-apiBody h5 a, #lessLaborGoToDictionary-apiBody h5 a *,
+#lessLaborGoToDictionary-apiBody h6 a, #lessLaborGoToDictionary-apiBody h6 a * {
+	font-size: 0.8em;
 }
 #lessLaborGoToDictionary-apiBody h1, #lessLaborGoToDictionary-apiBody h1 * {
 	font-size: 1.3em;
 }
 #lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h2 * {
-	font-size: 1.2em;
+	font-size: 1.25em;
 }
 #lessLaborGoToDictionary-apiBody h3, #lessLaborGoToDictionary-apiBody h3 * {
+	font-size: 1.2em;
+}
+#lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h4 * {
+	font-size: 1.15em;
+}
+#lessLaborGoToDictionary-apiBody h5, #lessLaborGoToDictionary-apiBody h5 * {
 	font-size: 1.1em;
+}
+#lessLaborGoToDictionary-apiBody h6, #lessLaborGoToDictionary-apiBody h6 * {
+	font-size: 1.0em;
 }
 #lessLaborGoToDictionary-apiBody table {
 	display: table;
@@ -278,4 +298,7 @@
 }
 #lessLaborGoToDictionary-apiBody h2.in-block {
 	border-bottom: solid 1px #eaecf0;
+}
+#lessLaborGoToDictionary-apiBody *.mw-empty-elt {
+	display: none;
 }
