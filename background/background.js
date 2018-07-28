@@ -614,9 +614,11 @@ function decideSection(){
 	let comparisons = [];
 	for(let i=0; i<languageList.length; i++){
 		let str = languageList[i];
-		str = str.replace(/\s+language$/);
+		str = str.replace(/\s+language$/,"");
 		comparisons.push(str);
 	}
+	console.log(comparisons);
+	console.log(this.sections);
 	for(let i=0; i<this.sections.length; i++){
 		let section = this.sections[i];
 		if( comparisons.includes(section.line) ) {

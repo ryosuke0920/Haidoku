@@ -40,9 +40,11 @@
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 	let faviconCache = {};
-	let apiRequestQueue = [];
+	let apiRequestQueue = {};
+	let fetchRequestID = (()=>{ let id = 0; return ()=>{return ++id}	})();
 	let apiService = "";
 	let apiCutOut = true;
+	let apiDocumentCache = {};
 
 	Promise.resolve()
 		.then(init)
@@ -141,6 +143,7 @@
 
 	function manualSelectionChangeBehavior(e){
 		closeLinkList();
+		abortApiRequestQueue();
 	}
 
 	function selectionChangeAutoBehavior(e){
@@ -149,6 +152,7 @@
 		let selection = window.getSelection();
 		if( selection.isCollapsed ){
 			closeLinkList();
+			abortApiRequestQueue();
 		}
 		else {
 			makeLinkList(selection.toString());
@@ -156,7 +160,10 @@
 			let rectList = lastRange.getClientRects();
 			let rect = rectList[rectList.length-1];
 			showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-			if(apiService) apiRequest(selection);
+			if(apiService){
+				abortApiRequestQueue();
+				apiRequest(selection);
+			}
 		}
 	}
 
@@ -166,7 +173,10 @@
 
 	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) closeLinkList();
+		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) {
+			closeLinkList();
+			abortApiRequestQueue();
+		}
 	}
 
 	function mouseupCommonBehavior(e){
@@ -185,18 +195,23 @@
 				selectionChangedFlag = false;
 				makeLinkList(selection.toString());
 				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selection);
-				if(apiService) apiRequest(selection);
+				if(apiService){
+					abortApiRequestQueue();
+					apiRequest(selection);
+				}
 			}
 		}
 	}
 
 	function resizeBehavior(e){
 		closeLinkList();
+		abortApiRequestQueue();
 	}
 
 	function keydownBehavior(e){
 		if( e.key == "Escape" || e.key == "Esc"){
 			closeLinkList();
+			abortApiRequestQueue();
 		}
 		else if((shiftKeyFlag && e.key == "Shift")||(ctrlKeyFlag && e.key == "Control")){
 			switchLinkList();
@@ -206,6 +221,7 @@
 	function switchLinkList(){
 		if(isLinkListShown() && !hasStopper()){
 			closeLinkList();
+			abortApiRequestQueue();
 		}
 		else if ( hasLinkList() ) {
 			let selection = window.getSelection();
@@ -215,7 +231,10 @@
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
 				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-				if(apiService) apiRequest(selection);
+				if(apiService) {
+					abortApiRequestQueue();
+					apiRequest(selection);
+				}
 			}
 		}
 	}
@@ -287,6 +306,7 @@
 
 	function onClickAnchor(e){
 		closeLinkListDelay();
+		abortApiRequestQueue();
 	}
 
 	function onClickSaveHistory(e){
@@ -422,12 +442,14 @@
 		}
 		else if( change["ol"] ) {
 			closeLinkList();
+			abortApiRequestQueue();
 			setOptionList( change["ol"]["newValue"] );
 			resetLinkListEvents();
 			if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 		}
 		else if( change["bf"] ){
 			closeLinkList();
+			abortApiRequestQueue();
 			setLinkListFlag( change["bf"]["newValue"] );
 			resetLinkListEvents();
 		}
@@ -614,14 +636,14 @@
 			}
 		}
 		else if(id == CSS_PREFIX+"-copy"){
-			copyText().then(closeLinkList);
+			copyText().then(closeLinkList).then(abortApiRequestQueue);
 		}
 		else if(id == CSS_PREFIX+"-resize"){
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
 			saveLinkListSize().catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-option"){
-			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList);
+			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).then(abortApiRequestQueue);
 		}
 	}
 
@@ -731,31 +753,61 @@
 	}
 
 	function apiRequest(selection){
-		apiRequestQueue.push(selection);
+		let id = fetchRequestID();
+		let text = selection.toString().replace(REMOVE_SPACE_REGEX," ").trim();
+		let obj = {
+			"id": id,
+			"abort": false,
+			"data": {
+				"text": text,
+				"api": "wiktionary"
+			}
+		};
+		apiRequestQueue[id] = obj;
+		let keyList = Object.keys(apiRequestQueue);
+		if(keyList.length<=1) {
+			apiRequestStart(obj);
+			return;
+		}
 		setTimeout((e)=>{
-			if(apiRequestQueue.length==0) return;
-			let selection = apiRequestQueue.shift();
-			if(apiRequestQueue.length!=0) return;
-			if(selection.isCollapsed) return;
-			let text = selection.toString().replace(REMOVE_SPACE_REGEX," ").trim().toLowerCase();
-			let obj = {
-				"text": text,
-				"selection": selection,
-				"api": "wiktionary"
-			};
-			let data = {
-				"text": text,
-				"api": "wiktionary"
-			};
-			ponyfill.runtime.sendMessage({
-				"method": "apiRequest",
-				"data": data
-			}).then(
-				apiResponse.bind(obj)
-			).catch(
-				apiResponseError.bind(obj)
-			);
+			if( !isActiveApiRequestQueue(obj) ){
+				dropApiRequestQueue(obj);
+				return;
+			}
+			apiRequestStart(obj);
 		}, API_QUERY_DERAY);
+	}
+
+	function apiRequestStart(obj){
+		ponyfill.runtime.sendMessage({
+			"method": "apiRequest",
+			"data": obj.data
+		}).then(
+			apiResponse.bind(obj)
+		).catch(
+			apiResponseError.bind(obj)
+		).finally(
+			()=>{
+				dropApiRequestQueue(obj)
+			}
+		);
+	}
+
+	function isActiveApiRequestQueue(obj){
+		let keyList = Object.keys(apiRequestQueue);
+		let selection = window.getSelection();
+		return ( apiRequestQueue.hasOwnProperty(obj.id) && !obj.abort );
+	}
+
+	function dropApiRequestQueue(obj){
+		delete apiRequestQueue[obj.id];
+	}
+
+	function abortApiRequestQueue(){
+		let valueList = Object.values(apiRequestQueue);
+		for(let i=0; i<valueList.length; i++){
+			valueList[i].abort = true;
+		}
 	}
 
 	function clearApiContent(){
@@ -764,13 +816,7 @@
 	}
 
 	function apiResponse(e){
-		if(this.selection.isCollapsed) return;
-		show(apiContentNode);
-		if(!e){
-			apiTitleNode.innerText = "not found.";
-			apiTitleNode.removeAttribute("href");
-			return;
-		}
+		if( !isActiveApiRequestQueue(this) ) return;
 		apiTitleNode.innerText = e.title;
 		apiTitleNode.setAttribute("href", e.url);
 		for(let i=0; i<e.html.length; i++){
@@ -778,7 +824,8 @@
 			doc.innerHTML = e.html[i];
 			let content;
 			let list;
-			if(e.sectionLine.hasOwnProperty(i)){
+			console.log(apiCutOut);
+			if(apiCutOut && e.sectionLine.hasOwnProperty(i)){
 				let h1 = document.createElement("h1");
 				h1.innerText = e.sectionLine[i];
 				apiBodyNode.appendChild(h1);
@@ -808,11 +855,14 @@
 				list[i].parentNode.removeChild(list[i]);
 			}
 			apiBodyNode.appendChild(content);
+			show(apiContentNode);
 		}
 	}
 
 	function apiResponseError(e){
 		console.error(e);
+		if(!isActiveApiRequestQueue(this)) return;
+		console.log("todo");//TODO
 	}
 
 	function show(node){
