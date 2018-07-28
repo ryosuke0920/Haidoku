@@ -750,9 +750,11 @@
 			ponyfill.runtime.sendMessage({
 				"method": "apiRequest",
 				"data": data
-			})
-			.then(apiResponse.bind(obj))
-			.catch((e)=>{ console.error(e) });
+			}).then(
+				apiResponse.bind(obj)
+			).catch(
+				apiResponseError.bind(obj)
+			);
 		}, API_QUERY_DERAY);
 	}
 
@@ -771,35 +773,46 @@
 		}
 		apiTitleNode.innerText = e.title;
 		apiTitleNode.setAttribute("href", e.url);
-		let doc = document.createElement("div");
-		doc.innerHTML = e.html;
-		let content;
-		let list;
-		if(apiCutOut){
-			content = doc.querySelector("ol");
-			list = content.querySelectorAll("[style]");
-			for(let i=0; i<list.length; i++){
-				list[i].removeAttribute("style");
+		for(let i=0; i<e.html.length; i++){
+			let doc = document.createElement("div");
+			doc.innerHTML = e.html[i];
+			let content;
+			let list;
+			if(e.sectionLine.hasOwnProperty(i)){
+				let h1 = document.createElement("h1");
+				h1.innerText = e.sectionLine[i];
+				apiBodyNode.appendChild(h1);
 			}
+			if(apiCutOut){
+				content = doc.querySelector("ol");
+				list = content.querySelectorAll("[style]");
+				for(let i=0; i<list.length; i++){
+					list[i].removeAttribute("style");
+				}
+			}
+			else {
+				content = doc;
+			}
+			list = content.querySelectorAll("a[href]:not([href^=http])");
+			for(let i=0; i<list.length; i++){
+				let url = list[i].getAttribute("href");
+				list[i].setAttribute("href", e.service + url);
+			}
+			list = content.querySelectorAll("a");
+			for(let i=0; i<list.length; i++){
+				list[i].setAttribute("target", "_blank");
+				list[i].setAttribute("rel", "noreferrer");
+			}
+			list = content.querySelectorAll(".indicator,.noprint");
+			for(let i=0; i<list.length; i++){
+				list[i].parentNode.removeChild(list[i]);
+			}
+			apiBodyNode.appendChild(content);
 		}
-		else {
-			content = doc;
-		}
-		list = content.querySelectorAll("a[href]:not([href^=http])");
-		for(let i=0; i<list.length; i++){
-			let url = list[i].getAttribute("href");
-			list[i].setAttribute("href", e.service + url);
-		}
-		list = content.querySelectorAll("a");
-		for(let i=0; i<list.length; i++){
-			list[i].setAttribute("target", "_blank");
-			list[i].setAttribute("rel", "noreferrer");
-		}
-		list = content.querySelectorAll(".indicator,.noprint");
-		for(let i=0; i<list.length; i++){
-			list[i].parentNode.removeChild(list[i]);
-		}
-		apiBodyNode.appendChild(content);
+	}
+
+	function apiResponseError(e){
+		console.error(e);
 	}
 
 	function show(node){
@@ -809,4 +822,5 @@
 	function hide(node){
 		node.classList.add(CSS_PREFIX+"-hide");
 	}
+
 })();

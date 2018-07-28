@@ -100,7 +100,7 @@ function notify(message, sender, sendResponse){
 		return Promise.resolve( faviconCache );
 	}
 	else if( method == "apiRequest" ){
-		let p = apiRequest(data).catch( (e)=>{console.error(e)} );
+		let p = apiRequest(data);
 		sendResponse( p );
 		return p;
 	}
@@ -465,7 +465,12 @@ function apiRequest(data){
 	let service = API_SERVICE[serviceCode];
 	let obj = {
 		"service": service,
-		"path": API_SERVICE_PROPERTY[service].path
+		"path": API_SERVICE_PROPERTY[service].path,
+		"pageURL":[],
+		"html": [],
+		"sectionCount": 0,
+		"sectionIndex": [],
+		"sectionLine": []
 	};
 	let param = [
 		{
@@ -494,10 +499,7 @@ function apiRequest(data){
 	.then( requestAjaxApiSection.bind(obj) )
 	.then( responseAjaxApiSection.bind(obj) )
 	.then( decideSection.bind(obj) )
-	.then( requestAjaxApiParse.bind(obj) )
-	.then( responseAjaxApiParse.bind(obj) )
-	.then( fetchHTML.bind(obj) )
-	.catch( (e)=>{console.error(e)} )//TODO errorを教える
+	.then( fetchHTML.bind(obj) );
 }
 
 function requestAjaxApiSearch(){
@@ -602,20 +604,38 @@ function responseAjaxApiSection(e){
 }
 
 function decideSection(){
+	if(languageList.length <= 0) {
+		return Promise.resolve().then(
+			requestAjaxApiParse.bind(this)
+		).then(
+			responseAjaxApiParse.bind(this)
+		);
+	}
 	let comparisons = [];
 	for(let i=0; i<languageList.length; i++){
 		let str = languageList[i];
 		str = str.replace(/\s+language$/);
 		comparisons.push(str);
 	}
-	console.log(comparisons);
 	for(let i=0; i<this.sections.length; i++){
 		let section = this.sections[i];
 		if( comparisons.includes(section.line) ) {
-			this.sectionIndex = section.index;
-			break;
+			this.sectionIndex.push(section.index);
+			this.sectionLine.push(section.line);
 		}
 	}
+	if(this.sectionIndex.length <= 0) {
+		throw( new Error("section not found.") );
+	}
+	let p = Promise.resolve();
+	for( let i=0; i<this.sectionIndex.length; i++ ){
+		p = p.then(
+			requestAjaxApiParse.bind(this)
+		).then(
+			responseAjaxApiParse.bind(this)
+		);
+	}
+	return p;
 }
 
 function requestAjaxApiParse(){
@@ -640,9 +660,16 @@ function requestAjaxApiParse(){
 			"value":""
 		}
 	];
-	if( this.sectionIndex )　param.push({"key":"section", "value":this.sectionIndex});
-	this.pageURL = makeApiURL(this.service+this.path, param);
-	return promiseAjax("GET", this.pageURL, "json", API_HEADER);
+	if( this.sectionIndex.length > 0 ){
+		param.push({
+			"key": "section",
+			"value": this.sectionIndex[this.sectionCount]
+		});
+		this.sectionCount++;
+	}
+	let url = makeApiURL(this.service+this.path, param);
+	this.pageURL.push(url)
+	return promiseAjax("GET", url, "json", API_HEADER);
 }
 
 function responseAjaxApiParse(e){
@@ -654,7 +681,7 @@ function responseAjaxApiParse(e){
 				reject(res.error);
 				return;
 			}
-			this.html = res.parse.text["*"];
+			this.html.push( res.parse.text["*"] );
 			resolve();
 			return;
 		}
