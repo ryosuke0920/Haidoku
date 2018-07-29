@@ -80,7 +80,6 @@
 	display: block;
 	padding-left: 5px;
 }
-#lessLaborGoToDictionary-apiTitle,
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor {
 	all: initial;
 	user-select: none;
@@ -90,20 +89,16 @@
 	display: block;
 	white-space: nowrap;
 }
-#lessLaborGoToDictionary-apiTitle:link,
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor span.lessLaborGoToDictionary-label,
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:link span.lessLaborGoToDictionary-label {
 	color: rgb(0, 0, 238);
 }
-#lessLaborGoToDictionary-apiTitle:visited,
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:visited span.lessLaborGoToDictionary-label {
 	color: #551a8b;
 }
-#lessLaborGoToDictionary-apiTitle:hover,
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:hover {
 	text-decoration: underline;
 }
-#lessLaborGoToDictionary-apiTitle:active,
 #lessLaborGoToDictionary-viewer a.lessLaborGoToDictionary-anchor:active span.lessLaborGoToDictionary-label {
 	color: #ee0000;
 }
@@ -166,22 +161,33 @@
 	font-family: sans-serif;
 	display: block;
 	border: solid 1px gray;
-	border-radius: 5px;
+	border-radius: 10px;
 	margin:5px;
-	padding:10px;
 }
-#lessLaborGoToDictionary-apiHeader,
-#lessLaborGoToDictionary-apiBody {
-	all: initial;
-	display: block;
-}
-#lessLaborGoToDictionary-apiBody * {
+#lessLaborGoToDictionary-apiContent * {
 	all: initial;
 	font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
 	font-size: 14px;
 	line-height: 1.7em;
 	user-select: none;
 	-moz-user-select: none;
+}
+#lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter {
+	display: block;
+	padding:5px 10px;
+	margin:0;
+}
+#lessLaborGoToDictionary-apiHeader {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+#lessLaborGoToDictionary-apiFooter {
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+#lessLaborGoToDictionary-apiHeader, #lessLaborGoToDictionary-apiHeader *,
+#lessLaborGoToDictionary-apiFooter, #lessLaborGoToDictionary-apiFooter *{
+	background-color:#eaecf0
 }
 #lessLaborGoToDictionary-apiBody h1, #lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h3,
 #lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h5, #lessLaborGoToDictionary-apiBody h6,
@@ -198,34 +204,27 @@
 #lessLaborGoToDictionary-apiBody h6, #lessLaborGoToDictionary-apiBody h6 * {
 	font-weight: bold;
 }
-#lessLaborGoToDictionary-apiBody h1 a, #lessLaborGoToDictionary-apiBody h1 a *,
-#lessLaborGoToDictionary-apiBody h2 a, #lessLaborGoToDictionary-apiBody h2 a *,
-#lessLaborGoToDictionary-apiBody h3 a, #lessLaborGoToDictionary-apiBody h3 a *,
-#lessLaborGoToDictionary-apiBody h4 a, #lessLaborGoToDictionary-apiBody h4 a *,
-#lessLaborGoToDictionary-apiBody h5 a, #lessLaborGoToDictionary-apiBody h5 a *,
-#lessLaborGoToDictionary-apiBody h6 a, #lessLaborGoToDictionary-apiBody h6 a * {
-	font-size: 0.8em;
-}
 #lessLaborGoToDictionary-apiBody h1, #lessLaborGoToDictionary-apiBody h1 * {
-	font-size: 1.3em;
-}
-#lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h2 * {
-	font-size: 1.25em;
-}
-#lessLaborGoToDictionary-apiBody h3, #lessLaborGoToDictionary-apiBody h3 * {
-	font-size: 1.2em;
-}
-#lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h4 * {
 	font-size: 1.15em;
 }
+#lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h2 * {
+	font-size: 1.10em;
+}
+#lessLaborGoToDictionary-apiBody h3, #lessLaborGoToDictionary-apiBody h3 * {
+	font-size: 1.05em;
+}
+#lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h4 * {
+	font-size: 1.0em;
+}
 #lessLaborGoToDictionary-apiBody h5, #lessLaborGoToDictionary-apiBody h5 * {
-	font-size: 1.1em;
+	font-size: 0.95em;
 }
 #lessLaborGoToDictionary-apiBody h6, #lessLaborGoToDictionary-apiBody h6 * {
-	font-size: 1.0em;
+	font-size: 0.9em;
 }
 #lessLaborGoToDictionary-apiBody table {
 	display: table;
+	border-collapse: collapse;
 }
 #lessLaborGoToDictionary-apiBody caption {
 	display: table-caption;
@@ -250,16 +249,21 @@
 }
 #lessLaborGoToDictionary-apiBody th, #lessLaborGoToDictionary-apiBody td {
 	display: table-cell;
+	border: 1px solid #eaecf0;
+}
+#lessLaborGoToDictionary-apiBody th {
+	background-color: #f9f9f9;
 }
 #lessLaborGoToDictionary-apiBody th, #lessLaborGoToDictionary-apiBody th * {
 	font-weight: bold;
+	text-align: center;
 }
 #lessLaborGoToDictionary-apiBody ol, #lessLaborGoToDictionary-apiBody ul, #lessLaborGoToDictionary-apiBody dl {
 	margin-left: 1em;
 }
 #lessLaborGoToDictionary-apiBody li {
 	display: list-item;
-	margin-bottom: 0.5em;
+	margin-bottom: 0.1em;
 }
 #lessLaborGoToDictionary-apiBody ol>li {
 	list-style: decimal outside;
@@ -296,9 +300,19 @@
 #lessLaborGoToDictionary-apiBody small, #lessLaborGoToDictionary-apiBody small * {
 	font-size: 0.9em;
 }
-#lessLaborGoToDictionary-apiBody h2.in-block {
+#lessLaborGoToDictionary-apiBody h2.in-block::before {
+	content: "# ";
+}
+#lessLaborGoToDictionary-apiBody h2.in-block, #lessLaborGoToDictionary-apiBody h2.in-block * {
+	font-weight: normal;
+}
+#lessLaborGoToDictionary-apiBody h1.in-block, #lessLaborGoToDictionary-apiBody h2.in-block, #lessLaborGoToDictionary-apiBody h3.in-block,
+#lessLaborGoToDictionary-apiBody h4.in-block, #lessLaborGoToDictionary-apiBody h5.in-block, #lessLaborGoToDictionary-apiBody h6.in-block {
 	border-bottom: solid 1px #eaecf0;
 }
 #lessLaborGoToDictionary-apiBody *.mw-empty-elt {
 	display: none;
+}
+#lessLaborGoToDictionary-apiBody a.new, #lessLaborGoToDictionary-apiBody a.new * {
+	color: #dd3333;
 }

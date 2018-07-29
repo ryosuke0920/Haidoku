@@ -22,22 +22,17 @@ const API_SERVICE_PROPERTY = {
 		"langCat": "Category:All_languages",
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
 		"reduceSection": [
-			new RegExp("^Etymology"),new RegExp("^Synonyms"),new RegExp("^Hyponyms"),
-			new RegExp("^Derived terms"),new RegExp("^Related terms"),new RegExp("^Translations"),
-			new RegExp("^References"),new RegExp("^Further reading"),new RegExp("^Anagrams")
+			new RegExp("^(?:Etymology|Synonyms|Hyponyms|Derived terms|Related terms|Translations|References|Further reading|Anagrams|Compounds|Declension|Conjugation|Inflection|See also)","i")
 		],
 		"path": "/w/api.php"
 	},
 	"https://ja.wiktionary.org":{
-		"defaultLanguage": ["英語"],
+		"defaultLanguage": ["英語","日本語"],
 		"namespace":"カテゴリ",
 		"langCat": "カテゴリ:言語",
 		"followed": null,
 		"reduceSection": [
-			new RegExp("^関連語"),new RegExp("^上位語"),new RegExp("^下位語"),new RegExp("^同族語"),new RegExp("^複合語"),
-			new RegExp("^同系語"),new RegExp("^語源"),new RegExp("^派生語"),new RegExp("^対義語"),new RegExp("^熟語"),
-			new RegExp("^翻訳"),new RegExp("^類義語"),new RegExp("^参照"),new RegExp("^異綴"),new RegExp("^アナグラム"),
-			new RegExp("^異表記"),new RegExp("^訳語"),new RegExp("^同音異義語"),new RegExp("^典拠")
+			new RegExp("^(?:関連語|上位語|下位語|同族語|複合語|同系語|語源|派生語|対義語|熟語|翻訳|類義語|参照|異綴|アナグラム|異表記|訳語|同音異義語|典拠|参考文献|脚注|造語)")
 		],
 		"path": "/w/api.php"
 	}

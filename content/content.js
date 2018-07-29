@@ -17,6 +17,7 @@
 	const REMOVE_SPACE_REGEX = new RegExp( /(?:\s|\r|\n|\t|\||:)+/, "g" );
 	const API_QUERY_DERAY = 500;
 	const LINK_LIST_CLOSE_TIME = 500;
+	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -45,6 +46,7 @@
 	let apiService = "";
 	let apiCutOut = true;
 	let apiDocumentCache = {};
+	let apiFooterNode;
 
 	Promise.resolve()
 		.then(init)
@@ -88,6 +90,10 @@
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
 		apiContentNode.appendChild(apiBodyNode);
+		apiFooterNode = document.createElement("div");
+		apiFooterNode.setAttribute("id",CSS_PREFIX+"-apiFooter");
+		apiFooterNode.innerText = FOOTER_CONTENT;
+		apiContentNode.appendChild(apiFooterNode);
 		clearApiContent();
 		let resizeNode = document.createElement("img");
 		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
@@ -339,6 +345,7 @@
 			if ( !item["c"] ) continue;
 			let li = document.createElement("li");
 			li.classList.add(CSS_PREFIX+"-list");
+			li.setAttribute( "title", item["l"] );
 			let url = item["u"];
 			url = url.replace( "$1", encodeURIComponent(text) );
 			let a = document.createElement("a");
@@ -361,7 +368,6 @@
 				src = ponyfill.extension.getURL("/image/favicon.svg");
 			}
 			img.setAttribute( "src", src );
-			img.setAttribute( "title", item["l"] );
 			setFaviconSize(img, anchorSize);
 			a.appendChild(img);
 			let span = document.createElement("span");
@@ -779,6 +785,8 @@
 	}
 
 	function apiRequestStart(obj){
+		console.log("apiRequestStart");
+		console.log(performance.now());
 		ponyfill.runtime.sendMessage({
 			"method": "apiRequest",
 			"data": obj.data
@@ -816,6 +824,8 @@
 	}
 
 	function apiResponse(e){
+		console.log("apiResponse");
+		console.log(performance.now());
 		if( !isActiveApiRequestQueue(this) ) return;
 		apiTitleNode.innerText = e.title;
 		apiTitleNode.setAttribute("href", e.url);
@@ -824,11 +834,6 @@
 			doc.innerHTML = e.html[i];
 			let content;
 			let list;
-			if(apiCutOut && e.sectionLine.hasOwnProperty(i)){
-				let h1 = document.createElement("h1");
-				h1.innerText = e.sectionLine[i];
-				apiBodyNode.appendChild(h1);
-			}
 			if(apiCutOut){
 				content = doc.querySelector("ol");
 				list = content.querySelectorAll("[style]");
@@ -838,7 +843,7 @@
 			}
 			else {
 				content = doc;
-				list = content.querySelectorAll("h3.in-block,h4.in-block,h5.in-block,h6.in-block");
+				list = content.querySelectorAll("h1.in-block,h2.in-block,h3.in-block,h4.in-block,h5.in-block,h6.in-block");
 				let reduceSections = API_SERVICE_PROPERTY[e.service].reduceSection;
 				for(let i=0; i<list.length; i++){
 					let node = list[i];
@@ -857,7 +862,11 @@
 					}
 				}
 			}
-			list = content.querySelectorAll("a[href]:not([href^=http])");
+			list = content.querySelectorAll("[style]");
+			for(let i=0; i<list.length; i++){
+				list[i].style.float = "none";
+			}
+　　　	list = content.querySelectorAll("a[href]:not([href^=http])");
 			for(let i=0; i<list.length; i++){
 				let url = list[i].getAttribute("href");
 				list[i].setAttribute("href", e.service + url);
@@ -874,6 +883,7 @@
 			apiBodyNode.appendChild(content);
 			show(apiContentNode);
 		}
+		console.log(performance.now());
 	}
 
 	function apiResponseError(e){
