@@ -375,13 +375,24 @@ table thead th, table tbody td {
 	margin-right: 1em;
 	margin-bottom: 1em;
 }
-@media (min-width: 948px) {
+@media (min-width: 1094px) {
 	.othersTable {
-		grid-template-columns: 1fr 1fr ;
+		grid-template-columns: 1fr auto ;
 	}
 	.linkListSample {
 		grid-column-start: 2;
 		grid-column-end: 3;
+		grid-row-start: 1;
+		grid-row-end: 7;
+	}
+}
+@media (min-width: 1372px) {
+	.othersTable {
+		grid-template-columns: 1fr 1fr auto ;
+	}
+	.linkListSample {
+		grid-column-start: 3;
+		grid-column-end: 4;
 		grid-row-start: 1;
 		grid-row-end: 4;
 	}

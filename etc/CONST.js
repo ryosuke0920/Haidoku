@@ -2,6 +2,15 @@ const CSS_PREFIX = "lessLaborGoToDictionary";
 /* cl */
 const LINK_LIST_STYLE_CLASSIC = "c";
 const LINK_LIST_STYLE_DARK = "d";
+/* f */
+const LINK_LIST_FAVICON_NORMAL = "n";
+const LINK_LIST_FAVICON_ONLY = "o";
+/* ld */
+const LINK_LIST_DIRECTION_VERTICAL = "v";
+const LINK_LIST_DIRECTION_HORIZAONTAL = "h";
+/* ls */
+const LINK_LIST_SEPARATOR_VERTICAL = "v";
+const LINK_LIST_SEPARATOR_HORIZAONTAL = "h";
 /* ca */
 const LINK_LIST_ACTION_NORMAL = "n";
 const LINK_LIST_ACTION_MOUSEOVER = "m";

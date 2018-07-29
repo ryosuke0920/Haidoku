@@ -218,6 +218,27 @@
 					</div>
 				</section>
 				<section class="component">
+					<h1 class="faviconDisplayTitle box">htmlFaviconDisplayTitle</h1>
+					<div>
+						<label><input type="radio" class="faviconDisplay" name="faviconDisplay" value="n"> <span class="faviconDisplayNormal">htmlFaviconDisplayNormal</span></label><br>
+						<label><input type="radio" class="faviconDisplay" name="faviconDisplay" value="o"> <span class="faviconDisplayOnly">htmlFaviconDisplayOnly</span></label><br>
+					</div>
+				</section>
+				<section class="component">
+					<h1 class="linkListDirectionTitle box">htmLinkListDirectionTitle</h1>
+					<div>
+						<label><input type="radio" class="linkListDirection" name="linkListDirection" value="v"> <span class="linkListDirectionVertical">htmlLinkListDirectionVertical</span></label><br>
+						<label><input type="radio" class="linkListDirection" name="linkListDirection" value="h"> <span class="linkListDirectionHorizontal">htmlLinkListDirectionHorizontal</span></label><br>
+					</div>
+				</section>
+				<section class="component">
+					<h1 class="linkListSeparatorTitle box">htmlLinkListSeparatorTitle</h1>
+					<div>
+						<label><input type="radio" class="linkListSeparator" name="linkListSeparator" value="h"> <span class="linkListSeparatorHorizontal">htmlLinkListSeparatorHorizontal</span></label><br>
+						<label><input type="radio" class="linkListSeparator" name="linkListSeparator" value="v"> <span class="linkListSeparatorVertical">htmlLinkListSeparatorVertical</span></label><br>
+					</div>
+				</section>
+				<section class="component">
 					<h1 class="apiApiService box">htmlApiService</h1>
 					<p class="serviceCodeDescription">Please choose wiktionary. The explanation is shown bottom of LinkList from wiktionary.</p>
 					<p>
@@ -243,7 +264,7 @@
 					</p>
 				</section>
 				<section class="linkListSample box">
-					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; z-index:auto;">
+					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 300px; width: 450px; z-index:auto;">
 						<div id="lessLaborGoToDictionary-cover"></div>
 						<nav id="lessLaborGoToDictionary-menu">
 							<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
@@ -252,23 +273,46 @@
 							<img id="lessLaborGoToDictionary-copy" src="/image/copy.svg">
 							<img id="lessLaborGoToDictionary-option" src="/image/option.svg">
 						</nav>
-						<ul id="lessLaborGoToDictionary-container">
-							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">
-									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test1" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
-								</a>
-							</li>
-							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">
-									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test2 test2" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2 test2</span>
-								</a>
-							</li>
-							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">
-									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test3 test3 test3" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3 test3 test3</span>
-								</a>
-							</li>
-						</ul>
+						<div id="lessLaborGoToDictionary-grid">
+							<ul id="lessLaborGoToDictionary-container">
+								<li class="lessLaborGoToDictionary-list">
+									<a class="lessLaborGoToDictionary-anchor">
+										<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
+									</a>
+								</li>
+								<li class="lessLaborGoToDictionary-list">
+									<a class="lessLaborGoToDictionary-anchor">
+										<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2</span>
+									</a>
+								</li>
+								<li class="lessLaborGoToDictionary-list">
+									<a class="lessLaborGoToDictionary-anchor">
+										<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3</span>
+									</a>
+								</li>
+							</ul>
+							<div id="lessLaborGoToDictionary-apiContent">
+								<div id="lessLaborGoToDictionary-apiHeader">
+									<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank" href="https://ja.wiktionary.org/wiki/wiki">wiki</a>
+								</div>
+								<div id="lessLaborGoToDictionary-apiBody">
+									<ol>
+										<li>sample sample sample </li>
+										<li><a>sample</a> sample sample
+											<dl>
+												<dt>example</dt>
+											</dl>
+											<ul>
+												<li><b>test</b> test test </li>
+												<li><i>test</i> test test </li>
+											</ul>
+										</li>
+										<li><a class="new">sample</a> sample sample
+									</ol>
+								</div>
+								<div id="lessLaborGoToDictionary-apiFooter">Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0</div>
+							</div>
+						</div>
 					</div>
 				</section>
 			</section>
@@ -322,6 +366,11 @@
 		<input type="checkbox" class="apiLanguageCheckbox" name="l" value="">
 		<span class="apiLanguageLabel"></span>
 	</label>
+	<li class="lessLaborGoToDictionary-list" id="lessLaborGoToDictionary-list-prototype">
+		<a class="lessLaborGoToDictionary-anchor">
+			<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test1" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label" style="font-size:0.8em">test1</span>
+		</a>
+	</li>
 </div>
 <script src="/etc/CONST.js"></script>
 <script src="/etc/PRESET_OPTION_LIST.js"></script>

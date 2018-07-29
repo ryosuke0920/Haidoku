@@ -15,6 +15,10 @@
 #lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
 	display: none;
 }
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
+	display: grid;
+	grid-template-columns: auto auto;
+}
 #lessLaborGoToDictionary-cover {
 	all: initial;
 	user-select: none;
@@ -119,10 +123,10 @@
 	white-space: nowrap;
 	margin-left: 5px;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mini li.lessLaborGoToDictionary-list {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-inline li.lessLaborGoToDictionary-list {
 	display: inline;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-mini a.lessLaborGoToDictionary-anchor {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-inline a.lessLaborGoToDictionary-anchor {
 	display: inline;
 	white-space: normal;
 }
@@ -184,10 +188,14 @@
 #lessLaborGoToDictionary-apiFooter {
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
+	font-size:0.8em;
 }
 #lessLaborGoToDictionary-apiHeader, #lessLaborGoToDictionary-apiHeader *,
 #lessLaborGoToDictionary-apiFooter, #lessLaborGoToDictionary-apiFooter *{
 	background-color:#eaecf0
+}
+#lessLaborGoToDictionary-apiBody {
+	background-color:white;
 }
 #lessLaborGoToDictionary-apiBody h1, #lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h3,
 #lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h5, #lessLaborGoToDictionary-apiBody h6,
@@ -275,17 +283,21 @@
 #lessLaborGoToDictionary-apiBody i, #lessLaborGoToDictionary-apiBody strong {
 	display: inline;
 }
+#lessLaborGoToDictionary-apiTitle:link,
 #lessLaborGoToDictionary-apiBody a, #lessLaborGoToDictionary-apiBody a *,
 #lessLaborGoToDictionary-apiBody a:link, #lessLaborGoToDictionary-apiBody a:link * {
 	cursor: pointer;
 	color: #3366cc;
 }
+#lessLaborGoToDictionary-apiTitle:visited,
 #lessLaborGoToDictionary-apiBody a:visited, #lessLaborGoToDictionary-apiBody a:visited * {
 	color: #551a8b;
 }
+#lessLaborGoToDictionary-apiTitle:hover,
 #lessLaborGoToDictionary-apiBody a:hover, #lessLaborGoToDictionary-apiBody a:hover * {
 	text-decoration: underline;
 }
+#lessLaborGoToDictionary-apiTitle:active,
 #lessLaborGoToDictionary-apiBody a:active, #lessLaborGoToDictionary-apiBody a:active * {
 	color: #ee0000;
 }

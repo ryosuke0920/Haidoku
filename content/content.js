@@ -1,8 +1,6 @@
 (()=>{
 	const LINK_NODE_DEFAULT_HEIGHT = 100;
 	const LINK_NODE_DEFAULT_WIDTH = 200;
-	const LINK_NODE_SWITCH_HEIGHT = 99;
-	const LINK_NODE_SWITCH_WIDTH = 130;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
@@ -73,12 +71,15 @@
 		menuNode = document.createElement("nav");
 		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
 		linkListNode.appendChild(menuNode);
+		let linkListGridNode = document.createElement("div");
+		linkListGridNode.setAttribute("id",CSS_PREFIX+"-grid");
+		linkListNode.appendChild(linkListGridNode);
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
-		linkListNode.appendChild(containerNode);
+		linkListGridNode.appendChild(containerNode);
 		apiContentNode = document.createElement("div");
 		apiContentNode.setAttribute("id",CSS_PREFIX+"-apiContent");
-		linkListNode.appendChild(apiContentNode);
+		linkListGridNode.appendChild(apiContentNode);
 		let apiHeaderNode = document.createElement("div");
 		apiHeaderNode.setAttribute("id",CSS_PREFIX+"-apiHeader");
 		apiContentNode.appendChild(apiHeaderNode);
@@ -267,7 +268,6 @@
 
 	function resizeWatcher(){
 		switchWatchFlag()
-		swichMiniView();
 	}
 
 	function switchWatchFlag(){
@@ -282,12 +282,21 @@
 		}
 	}
 
-	function swichMiniView(){
-		if( linkListNodeHeight <= LINK_NODE_SWITCH_HEIGHT || linkListNodeWidth <= LINK_NODE_SWITCH_WIDTH ) {
+	function applyFaviconDisplay(res){
+		if( res == LINK_LIST_FAVICON_ONLY ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mini");
 		}
 		else {
 			linkListNode.classList.remove(CSS_PREFIX+"-mini");
+		}
+	}
+
+	function applyLinknListDirection(res){
+		if( res == LINK_LIST_DIRECTION_HORIZAONTAL ) {
+			linkListNode.classList.add(CSS_PREFIX+"-inline");
+		}
+		else {
+			linkListNode.classList.remove(CSS_PREFIX+"-inline");
 		}
 	}
 
@@ -398,7 +407,6 @@
 	function showLinkList(pageY, pageX, clientY, clientX, selection){
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		show(linkListNode);
-		swichMiniView();
 		applyLinkListSize();
 		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
 		if ( 0 < yy || window.innerHeight < linkListNode.offsetHeight ) yy = 0;
@@ -435,7 +443,6 @@
 			let lw = linkListNodeWidth;
 			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
 			setLinkListSize( lh, lw );
-			swichMiniView();
 		}
 		else if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
@@ -465,6 +472,12 @@
 		else if( change["ca"] ){
 			setLinkListAction( change["ca"]["newValue"] );
 		}
+		else if( change["f"] ){
+			applyFaviconDisplay( change["f"]["newValue"] );
+		}
+		else if( change["ld"] ){
+			applyLinknListDirection( change["ld"]["newValue"] );
+		}
 		else if( change["s"] ){
 			setLinkListApiService( change["s"]["newValue"] );
 		}
@@ -492,6 +505,8 @@
 			"as": ANCHOR_DEFAULT_SIZE,
 			"cl": LINK_LIST_STYLE_CLASSIC,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
+			"f": LINK_LIST_FAVICON_ONLY,
+			"ld": LINK_LIST_DIRECTION_VERTICAL,
 			"s": lang,
 			"co": true
 		});
@@ -516,6 +531,8 @@
 		setShiftKeyFlag( res["sk"] );
 		setLinkListStyle( res["cl"] );
 		setLinkListAction( res["ca"] );
+		applyFaviconDisplay( res["f"] );
+		applyLinknListDirection( res["ld"] );
 		setLinkListApiService( res["s"] );
 		setLinkListApiCutOut( res["co"] );
 		resetLinkListEvents();
@@ -665,7 +682,6 @@
 		linkListNodeHeight = height;
 		linkListNodeWidth = width;
 		applyLinkListSize();
-		swichMiniView();
 	}
 
 	function zoomLinkList(direction=1){

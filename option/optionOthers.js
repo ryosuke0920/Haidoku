@@ -5,6 +5,9 @@
 	let sampleLinkListNode = othersNode.querySelector("#"+CSS_PREFIX+"-viewer");
 	let linkListStyleNodeList = othersNode.querySelectorAll(".linkListStyle");
 	let linkListActionNodeList = othersNode.querySelectorAll(".linkListAction");
+	let linkListDirectionNodeList = othersNode.querySelectorAll(".linkListDirection");
+	let linkListSeparatorNodeList = othersNode.querySelectorAll(".linkListSeparator");
+	let faviconDisplayNodeList = othersNode.querySelectorAll(".faviconDisplay");
 	let serviceCodeSelectNode = othersNode.querySelector(".serviceCodeSelect");
 	let addApiLanguageNode = othersNode.querySelector(".addApiLanguage");
 	let apiCutOutNode = othersNode.querySelector(".apiCutOut");
@@ -16,12 +19,12 @@
 	let apiPrefixCache = {};
 	let apiLanguagelist = [];
 
-	Promise.resolve().then(initOthers).then(initStyle).then(initDownloadApiLanguage).catch(unexpectedError);
+	initOthers();
+	Promise.resolve().then(initStyle).then(initDownloadApiLanguage).catch(unexpectedError);
 
 	function initOthers(){
 		initI18n();
 		initNode();
-		initListener();
 	}
 
 	function initI18n(){
@@ -51,6 +54,25 @@
 			let node = linkListActionNodeList[i];
 			node.addEventListener("click", linkListActionBehavior);
 		}
+		for(let i=0; i<linkListDirectionNodeList.length; i++) {
+			let node = linkListDirectionNodeList[i];
+			node.addEventListener("click", linkListDirectionClickBehavior);
+		}
+		for(let i=0; i<linkListSeparatorNodeList.length; i++) {
+			let node = linkListSeparatorNodeList[i];
+			node.addEventListener("click", linkListSeparatorClickBehavior);
+		}
+		for(let i=0; i<faviconDisplayNodeList.length; i++) {
+			let node = faviconDisplayNodeList[i];
+			node.addEventListener("click", faviconDisplayClickBehavior);
+		}
+		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
+		serviceCodeSelectNode.addEventListener("change", serviceCodeChangeBehavior);
+		addApiLanguageNode.addEventListener("click", apiLanguageClickBehavior);
+		apiCutOutNode.addEventListener("change", apiCutOutChangeBehavior);
+		apiLanguageSelectPaneNode.addEventListener("click", apiLangPaneClickBehavior);
+		apiLangPrefixSelectNode.addEventListener("change", apiLangPrefixSelectChangeBehavior);
+		othersNode.addEventListener("click", otherNodeClickBehavior);
 	}
 
 	function initStyle(){
@@ -62,31 +84,34 @@
 		}
 		let list = API_SERVICE_PROPERTY[service].defaultLanguage;
 		let getter = ponyfill.storage.sync.get({
+			"ol": [],
 			"cl": LINK_LIST_STYLE_CLASSIC,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
+			"f": LINK_LIST_FAVICON_ONLY,
+			"ld": LINK_LIST_DIRECTION_VERTICAL,
+			"ls": LINK_LIST_SEPARATOR_VERTICAL,
 			"s": lang,
 			"ll": list,
 			"co": true,
 		});
 		function onGot(res){
+			setSampleLinkListAnchor(res["ol"]);
 			setLinkListStyle(res["cl"]);
+			setSampleLinkListStyle(res["cl"]);
 			setLinkListAction(res["ca"]);
+			setSampleLinkListAction(res["ca"]);
+			setFaviconDisplay(res["f"]);
+			setSampleLinkListFaviconDisplay(res["f"]);
+			setLinkListDirection(res["ld"]);
+			setSampleLinkListDirection(res["ld"]);
+			setLinkListSeparator(res["ls"]);
+			setSampleLinkListSeparator(res["ls"]);
 			setServiceCode(res["s"]);
 			setLanguageList(res["ll"]);
 			makeLanguageListNodes();
 			setApiCutOut(res["co"]);
 		}
 		return getter.then(onGot);
-	}
-
-	function initListener(){
-		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
-		serviceCodeSelectNode.addEventListener("change", apiServiceBehavior);
-		addApiLanguageNode.addEventListener("click", apiLanguageBehavior);
-		apiCutOutNode.addEventListener("change", apiCutOutBehavior);
-		apiLanguageSelectPaneNode.addEventListener("click", apiLangPaneBehavior);
-		apiLangPrefixSelectNode.addEventListener("change", apiLangPrefixSelectBehavior);
-		othersNode.addEventListener("click", otherNodeClickBehavior);
 	}
 
 	function otherNodeClickBehavior(e){
@@ -99,10 +124,32 @@
 	}
 
 	function fileChangeBehavior(e){
+		if( e.hasOwnProperty("ol") ){
+			setSampleLinkListAnchor(e["ol"]["newValue"]);
+			return;
+		}
 		if( !e.hasOwnProperty("w")) return;
 		if( e["w"]["newValue"] == windowId ) return;
-		if( e.hasOwnProperty("cl") ) setLinkListStyle(e["cl"]["newValue"]);
-		else if( e.hasOwnProperty("ca") ) setLinkListAction(e["ca"]["newValue"]);
+		if( e.hasOwnProperty("cl") ){
+			setLinkListStyle(e["cl"]["newValue"]);
+			setSampleLinkListStyle(e["cl"]["newValue"]);
+		}
+		else if( e.hasOwnProperty("ca") ){
+			setLinkListAction(e["ca"]["newValue"]);
+			setSampleLinkListAction(e["ca"]["newValue"]);
+		}
+		else if( e.hasOwnProperty("ld") ) {
+			setLinkListDirection(e["ld"]["newValue"]);
+			setSampleLinkListDirection(e["ld"]["newValue"]);
+		}
+		else if( e.hasOwnProperty("ls") ) {
+			setLinkListSeparator(e["ls"]["newValue"]);
+			setSampleLinkListSeparator(e["ls"]["newValue"]);
+		}
+		else if( e.hasOwnProperty("f") ) {
+			setFaviconDisplay(e["f"]["newValue"]);
+			setSampleLinkListFaviconDisplay(e["f"]["newValue"]);
+		}
 		else if( e.hasOwnProperty("s") ){
 			setServiceCode(e["s"]["newValue"]);
 			setLanguageList([]);
@@ -118,13 +165,26 @@
 	function setLinkListStyle(value){
 		let node = othersNode.querySelector(".linkListStyle[value=\""+value+"\"]");
 		node.checked = true;
-		setSampleLinkListStyle(value);
 	}
 
 	function setLinkListAction(value){
 		let node = othersNode.querySelector(".linkListAction[value=\""+value+"\"]");
 		node.checked = true;
-		setSampleLinkListAction(value);
+	}
+
+	function setLinkListDirection(value){
+		let node = othersNode.querySelector(".linkListDirection[value=\""+value+"\"]");
+		node.checked = true;
+	}
+
+	function setLinkListSeparator(value){
+		let node = othersNode.querySelector(".linkListSeparator[value=\""+value+"\"]");
+		node.checked = true;
+	}
+
+	function setFaviconDisplay(value){
+		let node = othersNode.querySelector(".faviconDisplay[value=\""+value+"\"]");
+		node.checked = true;
 	}
 
 	function setServiceCode(value){
@@ -213,13 +273,46 @@
 	function linkListStyleBehavior(e){
 		let value = e.target.value;
 		setSampleLinkListStyle(value);
-		savelinkListStyle(value);
+		saveLinkListStyle(value);
 	}
 
 	function linkListActionBehavior(e){
 		let value = e.target.value;
 		setSampleLinkListAction(value);
-		savelinkListAction(value);
+		saveLinkListAction(value);
+	}
+
+	function linkListDirectionClickBehavior(e){
+		let value = e.target.value;
+		setSampleLinkListDirection(value);
+		saveLinkListDirection(value);
+	}
+
+	function linkListSeparatorClickBehavior(e){
+		let value = e.target.value;
+		setSampleLinkListSeparator(value);
+		saveLinkListSeparator(value);
+	}
+
+	function faviconDisplayClickBehavior(e){
+		let value = e.target.value;
+		setSampleLinkListFaviconDisplay(value);
+		saveFaviconDisplay(value);
+	}
+
+	function setSampleLinkListAnchor(list){
+		let prototype = document.querySelector("#"+CSS_PREFIX+"-list-prototype");
+		let container = othersNode.querySelector("#"+CSS_PREFIX+"-container");
+		clearChildren(container);
+		for(let i=0; i<list.length; i++){
+			let info = list[i];
+			if(!info.c) continue;
+			let node = prototype.cloneNode(true);
+			node.removeAttribute("id");
+			node.setAttribute("title",info.l);
+			node.querySelector("."+CSS_PREFIX+"-label").innerText = info.l;
+			container.appendChild(node);
+		}
 	}
 
 	function setSampleLinkListStyle(value){
@@ -247,21 +340,63 @@
 		}
 	}
 
-	function addStopper(e){
+	function addStopper(){
 		sampleLinkListNode.classList.add(CSS_PREFIX+"-stopper");
 	}
 
-	function removeStopper(e){
+	function removeStopper(){
 		sampleLinkListNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
-	function savelinkListStyle(value){
+	function setSampleLinkListDirection	(value){
+		if(value==LINK_LIST_DIRECTION_VERTICAL){
+			sampleLinkListNode.classList.remove(CSS_PREFIX+"-inline");
+		}
+		else {
+			sampleLinkListNode.classList.add(CSS_PREFIX+"-inline");
+		}
+	}
+
+	function setSampleLinkListSeparator	(value){
+		if(value==LINK_LIST_SEPARATOR_VERTICAL){
+			sampleLinkListNode.classList.add(CSS_PREFIX+"-separator");
+		}
+		else {
+			sampleLinkListNode.classList.remove(CSS_PREFIX+"-separator");
+		}
+	}
+
+	function setSampleLinkListFaviconDisplay(value){
+		if(value==LINK_LIST_FAVICON_NORMAL){
+			sampleLinkListNode.classList.remove(CSS_PREFIX+"-mini");
+		}
+		else {
+			sampleLinkListNode.classList.add(CSS_PREFIX+"-mini");
+		}
+	}
+
+	function saveLinkListStyle(value){
 		let data = { "cl": value };
 		return saveW(data).catch(onSaveError);
 	}
 
-	function savelinkListAction(value){
+	function saveLinkListAction(value){
 		let data = { "ca": value };
+		return saveW(data).catch(onSaveError);
+	}
+
+	function saveLinkListDirection(value){
+		let data = { "ld": value };
+		return saveW(data).catch(onSaveError);
+	}
+
+	function saveLinkListSeparator(value){
+		let data = { "ls": value };
+		return saveW(data).catch(onSaveError);
+	}
+
+	function saveFaviconDisplay(value){
+		let data = { "f": value };
 		return saveW(data).catch(onSaveError);
 	}
 
@@ -272,7 +407,7 @@
 		return;
 	}
 
-	function apiServiceBehavior(e){
+	function serviceCodeChangeBehavior(e){
 		let serviceCode = e.target.value;
 		setServiceCode(serviceCode);
 		saveServiceCode(serviceCode); // Async
@@ -445,7 +580,7 @@
 		return;
 	}
 
-	function apiLanguageBehavior(e){
+	function apiLanguageClickBehavior(e){
 		let service = getApiService();
 		if(service == null){
 			return notice("please select wiktinary.");//TODO
@@ -464,13 +599,13 @@
 		show(apiLanguageSelectPaneNode);
 	}
 
-	function apiLangPrefixSelectBehavior(e){
+	function apiLangPrefixSelectChangeBehavior(e){
 		let service = getApiService();
 		let prefixCode = e.target.value;
 		apiLangMakeRadio(service, prefixCode);
 	}
 
-	function apiLangPaneBehavior(e){
+	function apiLangPaneClickBehavior(e){
 		let classes = e.target.classList;
 		if( classes.contains("removePane") || apiLanguageSelectPaneNode.isEqualNode(e.target) ){
 			hide(apiLanguageSelectPaneNode);
@@ -530,7 +665,7 @@
 		return saveW(data).catch(onSaveError);
 	}
 
-	function apiCutOutBehavior(e){
+	function apiCutOutChangeBehavior(e){
 		let data = {
 			"co": e.target.checked
 		};
