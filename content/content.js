@@ -41,7 +41,7 @@
 	let faviconCache = {};
 	let apiRequestQueue = {};
 	let fetchRequestID = (()=>{ let id = 0; return ()=>{return ++id}	})();
-	let apiService = "";
+	let serviceCode = API_SERVICE_CODE_NONE;
 	let apiCutOut = true;
 	let apiDocumentCache = {};
 	let apiFooterNode;
@@ -167,7 +167,7 @@
 			let rectList = lastRange.getClientRects();
 			let rect = rectList[rectList.length-1];
 			showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-			if(apiService){
+			if(serviceCode != API_SERVICE_CODE_NONE){
 				abortApiRequestQueue();
 				apiRequest(selection);
 			}
@@ -202,7 +202,7 @@
 				selectionChangedFlag = false;
 				makeLinkList(selection.toString());
 				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selection);
-				if(apiService){
+				if(serviceCode != API_SERVICE_CODE_NONE){
 					abortApiRequestQueue();
 					apiRequest(selection);
 				}
@@ -238,7 +238,7 @@
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
 				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-				if(apiService) {
+				if(serviceCode != API_SERVICE_CODE_NONE) {
 					abortApiRequestQueue();
 					apiRequest(selection);
 				}
@@ -297,6 +297,24 @@
 		}
 		else {
 			linkListNode.classList.remove(CSS_PREFIX+"-inline");
+		}
+	}
+
+	function applyLinknListSeparator(res){
+		if( res == LINK_LIST_SEPARATOR_VERTICAL ) {
+			linkListNode.classList.add(CSS_PREFIX+"-separator");
+		}
+		else {
+			linkListNode.classList.remove(CSS_PREFIX+"-separator");
+		}
+	}
+
+	function applyServiceCode(res){
+		if( res == API_SERVICE_CODE_NONE ) {
+			hide(apiContentNode);
+		}
+		else {
+			show(apiContentNode);
 		}
 	}
 
@@ -478,8 +496,12 @@
 		else if( change["ld"] ){
 			applyLinknListDirection( change["ld"]["newValue"] );
 		}
+		else if( change["ls"] ){
+			applyLinknListSeparator( change["ls"]["newValue"] );
+		}
 		else if( change["s"] ){
-			setLinkListApiService( change["s"]["newValue"] );
+			setServiceCode( change["s"]["newValue"] );
+			applyServiceCode( change["s"]["newValue"] );
 		}
 		else if( change["co"] ){
 			setLinkListApiCutOut( change["co"]["newValue"] );
@@ -503,10 +525,11 @@
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE,
-			"cl": LINK_LIST_STYLE_CLASSIC,
+			"cl": LINK_LIST_STYLE_DARK,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
 			"f": LINK_LIST_FAVICON_ONLY,
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
+			"ls": LINK_LIST_SEPARATOR_VERTICAL,
 			"s": lang,
 			"co": true
 		});
@@ -533,7 +556,9 @@
 		setLinkListAction( res["ca"] );
 		applyFaviconDisplay( res["f"] );
 		applyLinknListDirection( res["ld"] );
-		setLinkListApiService( res["s"] );
+		applyLinknListSeparator( res["ls"] );
+		setServiceCode( res["s"] );
+		applyServiceCode( res["s"] );
 		setLinkListApiCutOut( res["co"] );
 		resetLinkListEvents();
 		if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
@@ -556,8 +581,8 @@
 		ctrlKeyFlag = res;
 	}
 
-	function setLinkListApiService(res){
-		apiService = res;
+	function setServiceCode(res){
+		serviceCode = res;
 	}
 
 	function setLinkListApiCutOut(res){
@@ -836,7 +861,7 @@
 
 	function clearApiContent(){
 		while(apiBodyNode.lastChild) apiBodyNode.removeChild(apiBodyNode.lastChild);
-		hide(apiContentNode);
+		// TODO now loading
 	}
 
 	function apiResponse(e){
@@ -897,7 +922,7 @@
 				list[i].parentNode.removeChild(list[i]);
 			}
 			apiBodyNode.appendChild(content);
-			show(apiContentNode);
+			// remove now loading.
 		}
 		console.log(performance.now());
 	}

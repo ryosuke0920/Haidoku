@@ -123,10 +123,9 @@
 	white-space: nowrap;
 	margin-left: 5px;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-inline li.lessLaborGoToDictionary-list {
-	display: inline;
-}
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-inline a.lessLaborGoToDictionary-anchor {
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-inline li.lessLaborGoToDictionary-list,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-inline a.lessLaborGoToDictionary-anchor,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-inline span.lessLaborGoToDictionary-label {
 	display: inline;
 	white-space: normal;
 }

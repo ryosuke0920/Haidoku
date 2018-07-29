@@ -85,7 +85,7 @@
 		let list = API_SERVICE_PROPERTY[service].defaultLanguage;
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
-			"cl": LINK_LIST_STYLE_CLASSIC,
+			"cl": LINK_LIST_STYLE_DARK,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
 			"f": LINK_LIST_FAVICON_ONLY,
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
@@ -107,6 +107,7 @@
 			setLinkListSeparator(res["ls"]);
 			setSampleLinkListSeparator(res["ls"]);
 			setServiceCode(res["s"]);
+			setSampleLinkListServiceCode(res["s"]);
 			setLanguageList(res["ll"]);
 			makeLanguageListNodes();
 			setApiCutOut(res["co"]);
@@ -152,6 +153,7 @@
 		}
 		else if( e.hasOwnProperty("s") ){
 			setServiceCode(e["s"]["newValue"]);
+			setSampleLinkListServiceCode(e["s"]["newValue"]);
 			setLanguageList([]);
 			makeLanguageListNodes();
 		}
@@ -357,7 +359,7 @@
 		}
 	}
 
-	function setSampleLinkListSeparator	(value){
+	function setSampleLinkListSeparator(value){
 		if(value==LINK_LIST_SEPARATOR_VERTICAL){
 			sampleLinkListNode.classList.add(CSS_PREFIX+"-separator");
 		}
@@ -372,6 +374,15 @@
 		}
 		else {
 			sampleLinkListNode.classList.add(CSS_PREFIX+"-mini");
+		}
+	}
+
+	function setSampleLinkListServiceCode(value){
+		if(value!=API_SERVICE_CODE_NONE){
+			sampleLinkListNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.remove(CSS_PREFIX+"-hide");
+		}
+		else {
+			sampleLinkListNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.add(CSS_PREFIX+"-hide");
 		}
 	}
 
@@ -411,6 +422,7 @@
 		let serviceCode = e.target.value;
 		setServiceCode(serviceCode);
 		saveServiceCode(serviceCode); // Async
+		setSampleLinkListServiceCode(serviceCode);
 		setLanguageList([]);
 		makeLanguageListNodes();
 		if(hasLanguageCache()!=false) return;
