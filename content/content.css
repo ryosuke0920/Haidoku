@@ -17,7 +17,7 @@
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
 	display: grid;
-	grid-template-columns: auto auto;
+	grid-template-columns: min-content auto;
 }
 #lessLaborGoToDictionary-cover {
 	all: initial;
@@ -163,7 +163,6 @@
 	-moz-user-select: none;
 	font-family: sans-serif;
 	display: block;
-	border: solid 1px gray;
 	border-radius: 10px;
 	margin:5px;
 }
@@ -175,16 +174,22 @@
 	user-select: none;
 	-moz-user-select: none;
 }
-#lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter {
+#lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiLoading,#lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter {
 	display: block;
-	padding:5px 10px;
 	margin:0;
+	border-right: solid 1px gray;
+	border-left: solid 1px gray;
+}
+#lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter {
+	padding:5px 10px;
 }
 #lessLaborGoToDictionary-apiHeader {
+	border-top: solid 1px gray;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
 }
 #lessLaborGoToDictionary-apiFooter {
+	border-bottom: solid 1px gray;
 	border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 	font-size:0.8em;
@@ -193,8 +198,42 @@
 #lessLaborGoToDictionary-apiFooter, #lessLaborGoToDictionary-apiFooter *{
 	background-color:#eaecf0
 }
-#lessLaborGoToDictionary-apiBody {
-	background-color:white;
+#lessLaborGoToDictionary-loading {
+	display: none;
+}
+#lessLaborGoToDictionary-apiLoading,#lessLaborGoToDictionary-apiBody {
+	background-color: white;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody {
+	display: none;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiLoading {
+	display: block;
+	height: 5em;
+}
+#lessLaborGoToDictionary-apiLoadingContent {
+	display: block;
+	background-image: url("chrome-extension://__MSG_@@extension_id__/image/circle.svg"),url("/image/circle.svg");
+	background-repeat: no-repeat;
+	background-position: center;
+	height:100%;
+	animation: loading 2s ease-out 0s infinite running;
+	background-size: 0%;
+	opacity: 1;
+}
+@keyframes loading {
+	0%{
+		background-size: 0%;
+		opacity: 1;
+	}
+	40%{
+		background-size: 0%;
+		opacity: 1;
+	}
+	100%{
+		background-size: 100%;
+		opacity: 0;
+	}
 }
 #lessLaborGoToDictionary-apiBody h1, #lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h3,
 #lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h5, #lessLaborGoToDictionary-apiBody h6,

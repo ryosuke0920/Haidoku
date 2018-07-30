@@ -1,6 +1,6 @@
 (()=>{
-	const LINK_NODE_DEFAULT_HEIGHT = 100;
-	const LINK_NODE_DEFAULT_WIDTH = 200;
+	const LINK_NODE_DEFAULT_HEIGHT = 200;
+	const LINK_NODE_DEFAULT_WIDTH = 320;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
@@ -88,6 +88,12 @@
 		apiTitleNode.setAttribute("rel","noreferrer");
 		apiTitleNode.setAttribute("target","_blank");
 		apiHeaderNode.appendChild(apiTitleNode);
+		let apiLoadingNode = document.createElement("div");
+		apiLoadingNode.setAttribute("id",CSS_PREFIX+"-apiLoading");
+		apiContentNode.appendChild(apiLoadingNode);
+		let apiLoadingContentNode = document.createElement("div");
+		apiLoadingContentNode.setAttribute("id",CSS_PREFIX+"-apiLoadingContent");
+		apiLoadingNode.appendChild(apiLoadingContentNode);
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
 		apiContentNode.appendChild(apiBodyNode);
@@ -813,6 +819,9 @@
 		apiRequestQueue[id] = obj;
 		let keyList = Object.keys(apiRequestQueue);
 		if(keyList.length<=1) {
+			linkListNode.classList.add(CSS_PREFIX+"-loading");
+			apiTitleNode.innerText = "Now loading"; // TODO
+			apiTitleNode.removeAttribute("href");
 			apiRequestStart(obj);
 			return;
 		}
@@ -837,6 +846,7 @@
 			apiResponseError.bind(obj)
 		).finally(
 			()=>{
+				linkListNode.classList.remove(CSS_PREFIX+"-loading");
 				dropApiRequestQueue(obj)
 			}
 		);
@@ -860,8 +870,13 @@
 	}
 
 	function clearApiContent(){
-		while(apiBodyNode.lastChild) apiBodyNode.removeChild(apiBodyNode.lastChild);
-		// TODO now loading
+		clearChildren(apiBodyNode);
+	}
+
+	function clearChildren(node){
+		while(node.lastChild){
+			node.removeChild(node.lastChild);
+		}
 	}
 
 	function apiResponse(e){
@@ -877,10 +892,6 @@
 			let list;
 			if(apiCutOut){
 				content = doc.querySelector("ol");
-				list = content.querySelectorAll("[style]");
-				for(let i=0; i<list.length; i++){
-					list[i].removeAttribute("style");
-				}
 			}
 			else {
 				content = doc;
@@ -906,6 +917,11 @@
 			list = content.querySelectorAll("[style]");
 			for(let i=0; i<list.length; i++){
 				list[i].style.float = "none";
+				if( list[i].style.width ) list[i].style.width = "auto";
+			}
+			list = content.querySelectorAll("audio");
+			for(let i=0; i<list.length; i++){
+				list[i].style.width = "50px";
 			}
 　　　	list = content.querySelectorAll("a[href]:not([href^=http])");
 			for(let i=0; i<list.length; i++){
@@ -930,7 +946,10 @@
 	function apiResponseError(e){
 		console.error(e);
 		if(!isActiveApiRequestQueue(this)) return;
-		console.log("todo");//TODO
+		apiTitleNode.innerText = "Not Found."; // TODO
+		apiTitleNode.removeAttribute("href");
+		let content = createElement("p");
+		apiBodyNode.appendChild(content);
 	}
 
 	function show(node){
