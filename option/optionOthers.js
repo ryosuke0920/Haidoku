@@ -3,13 +3,7 @@
 	const API_LANGUAGE_MAX = 10;
 	let othersNode = document.querySelector("#others");
 	let sampleLinkListNode = othersNode.querySelector("#"+CSS_PREFIX+"-viewer");
-	let linkListStyleNodeList = othersNode.querySelectorAll(".linkListStyle");
-	let linkListActionNodeList = othersNode.querySelectorAll(".linkListAction");
-	let linkListDirectionNodeList = othersNode.querySelectorAll(".linkListDirection");
-	let linkListSeparatorNodeList = othersNode.querySelectorAll(".linkListSeparator");
-	let faviconDisplayNodeList = othersNode.querySelectorAll(".faviconDisplay");
 	let serviceCodeSelectNode = othersNode.querySelector(".serviceCodeSelect");
-	let addApiLanguageNode = othersNode.querySelector(".addApiLanguage");
 	let apiCutOutNode = othersNode.querySelector(".apiCutOut");
 	let apiLanguageBoxNodes = othersNode.querySelectorAll(".apiLanguageBox");
 	let apiLanguageSelectPaneNode = document.querySelector("#apiLanguageSelectPane");
@@ -49,12 +43,10 @@
 
 	function initNode(){
 		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
-		serviceCodeSelectNode.addEventListener("change", serviceCodeChangeBehavior);
-		addApiLanguageNode.addEventListener("click", apiLanguageClickBehavior);
-		apiCutOutNode.addEventListener("change", apiCutOutChangeBehavior);
 		apiLanguageSelectPaneNode.addEventListener("click", apiLangPaneClickBehavior);
 		apiLangPrefixSelectNode.addEventListener("change", apiLangPrefixSelectChangeBehavior);
 		othersNode.addEventListener("click", otherNodeClickBehavior);
+		othersNode.addEventListener("change", otherNodeChangeBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
 	}
 
@@ -108,6 +100,22 @@
 	}
 
 	function otherNodeClickBehavior(e){
+		if( e.target.classList.contains("linkListLayoutPattern") ){
+			changeLayout(e.target.value);
+			removeStopper();
+		}
+		else if( e.target.classList.contains("addApiLanguage") ){
+			apiLanguageClickBehavior();
+		}
+		else if( e.target.classList.contains("removeLanguageButtom") ){
+			let node = e.target.closest("[data-language]");
+			let language = node.getAttribute("data-language");
+			apiRemoveLanguage(language);
+			apiLanguageCheckboxInactive(language);
+		}
+	}
+
+	function otherNodeChangeBehavior(e){
 		if( e.target.classList.contains("linkListStyle") ){
 			setSampleLinkListStyle(e.target.value);
 			saveLinkListStyle(e.target.value).catch(onSaveError);
@@ -116,10 +124,6 @@
 		else if( e.target.classList.contains("linkListAction") ){
 			setSampleLinkListAction(e.target.value);
 			saveLinkListAction(e.target.value).catch(onSaveError);
-		}
-		else if( e.target.classList.contains("linkListLayoutPattern") ){
-			changeLayout(e.target.value);
-			removeStopper();
 		}
 		else if( e.target.classList.contains("faviconDisplay") ){
 			setSampleLinkListFaviconDisplay(e.target.value);
@@ -133,11 +137,11 @@
 			setSampleLinkListSeparator(e.target.value);
 			saveLinkListSeparator(e.target.value).catch(onSaveError);
 		}
-		else if( e.target.classList.contains("removeLanguageButtom") ){
-			let node = e.target.closest("[data-language]");
-			let language = node.getAttribute("data-language");
-			apiRemoveLanguage(language);
-			apiLanguageCheckboxInactive(language);
+		else if( e.target.classList.contains("serviceCodeSelect") ){
+			serviceCodeChangeBehavior(e.target.value)
+		}
+		else if( e.target.classList.contains("apiCutOut") ){
+			return saveCutOutFlag(e.target.checked).catch(onSaveError);
 		}
 	}
 
@@ -472,8 +476,7 @@
 		return;
 	}
 
-	function serviceCodeChangeBehavior(e){
-		let serviceCode = e.target.value;
+	function serviceCodeChangeBehavior(serviceCode){
 		if(serviceCode != API_SERVICE_CODE_NONE){
 			saveServiceCode(serviceCode).catch(onSaveError);
 		}
@@ -661,7 +664,7 @@
 		return;
 	}
 
-	function apiLanguageClickBehavior(e){
+	function apiLanguageClickBehavior(){
 		let service = getApiService();
 		if(service == null){
 			return notice("please select wiktinary.");//TODO
@@ -744,10 +747,6 @@
 			"ll": list
 		};
 		return saveW(data);
-	}
-
-	function apiCutOutChangeBehavior(e){
-		return saveCutOutFlag(e.target.checked).catch(onSaveError);
 	}
 
 	function saveCutOutFlag(value){
