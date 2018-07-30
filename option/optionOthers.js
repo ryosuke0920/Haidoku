@@ -134,6 +134,9 @@
 			apiRemoveLanguage(language);
 			apiLanguageCheckboxInactive(language);
 		}
+		else if( e.target.classList.contains("linkListLayoutPattern") ){
+			changeLayout(e.target.value);
+		}
 	}
 
 	function fileChangeBehavior(e){
@@ -325,6 +328,45 @@
 		saveFaviconDisplay(value).catch(onSaveError);
 	}
 
+	function changeLayout(value) {
+		if(value=="1"){
+			setFaviconDisplay(LINK_LIST_FAVICON_ONLY);
+			setSampleLinkListFaviconDisplay(LINK_LIST_FAVICON_ONLY);
+			setLinkListDirection(LINK_LIST_DIRECTION_VERTICAL);
+			setSampleLinkListDirection(LINK_LIST_DIRECTION_VERTICAL);
+			setLinkListSeparator(LINK_LIST_SEPARATOR_VERTICAL);
+			setSampleLinkListSeparator(LINK_LIST_SEPARATOR_VERTICAL);
+			saveLinkListLayout(LINK_LIST_FAVICON_ONLY,LINK_LIST_DIRECTION_VERTICAL,LINK_LIST_SEPARATOR_VERTICAL).catch(onSaveError);
+		}
+		else if(value=="2"){
+			setFaviconDisplay(LINK_LIST_FAVICON_ONLY);
+			setSampleLinkListFaviconDisplay(LINK_LIST_FAVICON_ONLY);
+			setLinkListDirection(LINK_LIST_DIRECTION_HORIZAONTAL);
+			setSampleLinkListDirection(LINK_LIST_DIRECTION_HORIZAONTAL);
+			setLinkListSeparator(LINK_LIST_SEPARATOR_HORIZONTAL);
+			setSampleLinkListSeparator(LINK_LIST_DIRECTION_HORIZAONTAL);
+			saveLinkListLayout(LINK_LIST_FAVICON_ONLY,LINK_LIST_DIRECTION_HORIZAONTAL,LINK_LIST_DIRECTION_HORIZAONTAL).catch(onSaveError);
+		}
+		else if(value=="3"){
+			setFaviconDisplay(LINK_LIST_FAVICON_NORMAL);
+			setSampleLinkListFaviconDisplay(LINK_LIST_FAVICON_NORMAL);
+			setLinkListDirection(LINK_LIST_DIRECTION_VERTICAL);
+			setSampleLinkListDirection(LINK_LIST_DIRECTION_VERTICAL);
+			setLinkListSeparator(LINK_LIST_SEPARATOR_HORIZONTAL);
+			setSampleLinkListSeparator(LINK_LIST_DIRECTION_HORIZAONTAL);
+			saveLinkListLayout(LINK_LIST_FAVICON_NORMAL,LINK_LIST_DIRECTION_VERTICAL,LINK_LIST_DIRECTION_HORIZAONTAL).catch(onSaveError);
+		}
+		else if(value=="4"){
+			setFaviconDisplay(LINK_LIST_FAVICON_NORMAL);
+			setSampleLinkListFaviconDisplay(LINK_LIST_FAVICON_NORMAL);
+			setLinkListDirection(LINK_LIST_DIRECTION_VERTICAL);
+			setSampleLinkListDirection(LINK_LIST_DIRECTION_VERTICAL);
+			setLinkListSeparator(LINK_LIST_SEPARATOR_VERTICAL);
+			setSampleLinkListSeparator(LINK_LIST_SEPARATOR_VERTICAL);
+			saveLinkListLayout(LINK_LIST_FAVICON_NORMAL,LINK_LIST_DIRECTION_VERTICAL,LINK_LIST_SEPARATOR_VERTICAL).catch(onSaveError);
+		}
+	}
+
 	function setSampleLinkListAnchor(list){
 		let prototype = document.querySelector("#"+CSS_PREFIX+"-list-prototype");
 		let container = othersNode.querySelector("#"+CSS_PREFIX+"-container");
@@ -439,6 +481,15 @@
 
 	function saveFaviconDisplay(value){
 		let data = { "f": value };
+		return saveW(data);
+	}
+
+	function saveLinkListLayout(value1,value2,value3){
+		let data = {
+			"f": value1,
+			"ld": value2,
+			"ls": value3
+		};
 		return saveW(data);
 	}
 
