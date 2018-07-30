@@ -18,9 +18,11 @@
 	let apiLanguageCache = {};
 	let apiPrefixCache = {};
 	let apiLanguagelist = [];
+	let faviconCache = {};
+	let optionList = [];
 
 	initOthers();
-	Promise.resolve().then(initStyle).then(initDownloadApiLanguage).catch(unexpectedError);
+	Promise.resolve().then(getFavicon).then(gotFavicon).then(initProperties).then(initDownloadApiLanguage).catch(unexpectedError);
 
 	function initOthers(){
 		initI18n();
@@ -73,9 +75,10 @@
 		apiLanguageSelectPaneNode.addEventListener("click", apiLangPaneClickBehavior);
 		apiLangPrefixSelectNode.addEventListener("change", apiLangPrefixSelectChangeBehavior);
 		othersNode.addEventListener("click", otherNodeClickBehavior);
+		ponyfill.runtime.onMessage.addListener( notify );
 	}
 
-	function initStyle(){
+	function initProperties(){
 		let lang = getUiLang();
 		let service = getApiService(lang);
 		if( service == null ){
@@ -94,25 +97,34 @@
 			"ll": list,
 			"co": true,
 		});
-		function onGot(res){
-			setSampleLinkListAnchor(res["ol"]);
-			setLinkListStyle(res["cl"]);
-			setSampleLinkListStyle(res["cl"]);
-			setLinkListAction(res["ca"]);
-			setSampleLinkListAction(res["ca"]);
-			setFaviconDisplay(res["f"]);
-			setSampleLinkListFaviconDisplay(res["f"]);
-			setLinkListDirection(res["ld"]);
-			setSampleLinkListDirection(res["ld"]);
-			setLinkListSeparator(res["ls"]);
-			setSampleLinkListSeparator(res["ls"]);
-			setServiceCode(res["s"]);
-			setSampleLinkListServiceCode(res["s"]);
-			setLanguageList(res["ll"]);
-			makeLanguageListNodes();
-			setApiCutOut(res["co"]);
-		}
 		return getter.then(onGot);
+	}
+
+	function onGot(res){
+		setOptionList(res["ol"]);
+		setSampleLinkListAnchor(res["ol"]);
+		setLinkListStyle(res["cl"]);
+		setSampleLinkListStyle(res["cl"]);
+		setLinkListAction(res["ca"]);
+		setSampleLinkListAction(res["ca"]);
+		setFaviconDisplay(res["f"]);
+		setSampleLinkListFaviconDisplay(res["f"]);
+		setLinkListDirection(res["ld"]);
+		setSampleLinkListDirection(res["ld"]);
+		setLinkListSeparator(res["ls"]);
+		setSampleLinkListSeparator(res["ls"]);
+		setServiceCode(res["s"]);
+		setSampleLinkListServiceCode(res["s"]);
+		setLanguageList(res["ll"]);
+		makeLanguageListNodes();
+		setApiCutOut(res["co"]);
+	}
+
+	function notify(e){
+		if(e.method == "updateFaviconCache") {
+			faviconCache = e.data;
+			setSampleLinkListAnchor(getOptionList());
+		}
 	}
 
 	function otherNodeClickBehavior(e){
@@ -126,6 +138,7 @@
 
 	function fileChangeBehavior(e){
 		if( e.hasOwnProperty("ol") ){
+			setOptionList(e["ol"]["newValue"]);
 			setSampleLinkListAnchor(e["ol"]["newValue"]);
 			return;
 		}
@@ -164,6 +177,14 @@
 		if( e.hasOwnProperty("co") ){
 			setApiCutOut(e["co"]["newValue"]);
 		}
+	}
+
+	function setOptionList(list){
+		optionList = list;
+	}
+
+	function getOptionList(){
+		return optionList;
 	}
 
 	function setLinkListStyle(value){
@@ -309,12 +330,20 @@
 		let container = othersNode.querySelector("#"+CSS_PREFIX+"-container");
 		clearChildren(container);
 		for(let i=0; i<list.length; i++){
-			let info = list[i];
-			if(!info.c) continue;
+			let item = list[i];
+			if(!item.c) continue;
 			let node = prototype.cloneNode(true);
 			node.removeAttribute("id");
-			node.setAttribute("title",info.l);
-			node.querySelector("."+CSS_PREFIX+"-label").innerText = info.l;
+			node.setAttribute("title",item.l);
+			node.querySelector("."+CSS_PREFIX+"-label").innerText = item.l;
+			let src;
+			if( faviconCache.hasOwnProperty(item.u) && faviconCache[item.u] != FAVICON_NODATA ){
+				src = faviconCache[item.u];
+			}
+			else {
+				src = ponyfill.extension.getURL("/image/favicon.svg");
+			}
+			node.querySelector("."+CSS_PREFIX+"-favicon").setAttribute("src", src);
 			container.appendChild(node);
 		}
 	}
@@ -704,4 +733,15 @@
 		};
 		return saveW(data);
 	}
+
+	function getFavicon(){
+		return ponyfill.runtime.sendMessage({
+			"method": "getFavicon",
+		});
+	}
+
+	function gotFavicon(e){
+		faviconCache = e;
+	}
+
 })();
