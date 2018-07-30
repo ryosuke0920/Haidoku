@@ -203,14 +203,14 @@
 		<div id="others" class="panel hide">
 			<section class="othersTable box">
 				<section class="component">
-					<h1 class="linkListStyleTitle box">htmlLinkListStyleTitle</h1>
+					<h1 class="linkListStyleTitle">htmlLinkListStyleTitle</h1>
 					<div>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
 					</div>
 				</section>
 				<section class="component">
-					<h1 class="linkListActionTitle box">htmlLinkListActionTitle</h1>
+					<h1 class="linkListActionTitle">htmlLinkListActionTitle</h1>
 					<div>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="m"> <span class="linkListActionMouseover">htmlLinkListActionMouseover</span></label><br>
@@ -218,30 +218,33 @@
 					</div>
 				</section>
 				<section class="component">
-					<h1 class="linkListLayoutTitle box">htmlLinkListLayoutTitle</h1>
+					<h1 class="linkListLayoutTitle">htmlLinkListLayoutTitle</h1>
 					<p class"linkListLayoutDescription">htmlLinkListLayoutDescription</p>
-					<div>
-						<label><button class="linkListLayoutPattern" value="1">1</button></label>
-						<label><button class="linkListLayoutPattern" value="2">2</button></label>
-						<label><button class="linkListLayoutPattern" value="3">3</button></label>
-						<label><button class="linkListLayoutPattern" value="4">4</button></label>
-					</div>
 					<section class="subComponent">
-						<h1 class="faviconDisplayTitle box">htmlFaviconDisplayTitle</h1>
+						<h1 class="linkListLayoutPatternTitle">htmlLinkListLayoutPatternTitle</h1>
+						<div>
+							<label><button class="linkListLayoutPattern" value="1">1</button></label>
+							<label><button class="linkListLayoutPattern" value="2">2</button></label>
+							<label><button class="linkListLayoutPattern" value="3">3</button></label>
+							<label><button class="linkListLayoutPattern" value="4">4</button></label>
+						</div>
+					</section>
+					<section class="subComponent">
+						<h1 class="faviconDisplayTitle">htmlFaviconDisplayTitle</h1>
 						<div>
 							<label><input type="radio" class="faviconDisplay" name="faviconDisplay" value="n"> <span class="faviconDisplayNormal">htmlFaviconDisplayNormal</span></label><br>
 							<label><input type="radio" class="faviconDisplay" name="faviconDisplay" value="o"> <span class="faviconDisplayOnly">htmlFaviconDisplayOnly</span></label><br>
 						</div>
 					</section>
 					<section class="subComponent">
-						<h1 class="linkListDirectionTitle box">htmLinkListDirectionTitle</h1>
+						<h1 class="linkListDirectionTitle">htmLinkListDirectionTitle</h1>
 						<div>
 							<label><input type="radio" class="linkListDirection" name="linkListDirection" value="h"> <span class="linkListDirectionHorizontal">htmlLinkListDirectionHorizontal</span></label><br>
 							<label><input type="radio" class="linkListDirection" name="linkListDirection" value="v"> <span class="linkListDirectionVertical">htmlLinkListDirectionVertical</span></label><br>
 						</div>
 					</section>
 					<section class="subComponent">
-						<h1 class="linkListSeparatorTitle box">htmlLinkListSeparatorTitle</h1>
+						<h1 class="linkListSeparatorTitle">htmlLinkListSeparatorTitle</h1>
 						<div>
 							<label><input type="radio" class="linkListSeparator" name="linkListSeparator" value="h"> <span class="linkListSeparatorHorizontal">htmlLinkListSeparatorHorizontal</span></label><br>
 							<label><input type="radio" class="linkListSeparator" name="linkListSeparator" value="v"> <span class="linkListSeparatorVertical">htmlLinkListSeparatorVertical</span></label><br>
@@ -249,29 +252,34 @@
 					</section>
 				</section>
 				<section class="component">
-					<h1 class="apiApiService box">htmlApiService</h1>
+					<h1 class="apiApiServiceTitle">htmlApiServiceTitle</h1>
 					<p class="serviceCodeDescription">Please choose wiktionary. The explanation is shown bottom of LinkList from wiktionary.</p>
-					<p>
-						<select class="serviceCodeSelect">
-							<option value="-">serviceCodeNone</option>
-							<option value="en">English (https://en.wiktionary.org/)</option>
-							<option value="ja">日本語 (https://ja.wiktionary.org/)</option>
-						</select>
-					</p>
-					<p class="apiLanguageDescription">These categories belong to the language category. If you choose a category, It's shown except the others.</p>
-					<p>
-						<button class="addApiLanguage">htmlAddApiLanguage</button>
-					</p>
-					<div class="component">
-						<p>aaaaa</p>
-						<ol class="apiLanguageBox"></ol>
-					</div>
-					<p>
-						<label>
-							<input type="checkbox" class="apiCutOut">
-							<span class="apiCutOutDescription">htmlApiCutOutDescription</span>
-						</label>
-					</p>
+					<section class="subComponent">
+						<h1 class="linkListDirectionTitle">htmLinkListDirectionTitle</h1>
+						<div>
+							<select class="serviceCodeSelect">
+								<option value="-">serviceCodeNone</option>
+								<option value="en">English (https://en.wiktionary.org/)</option>
+								<option value="ja">日本語 (https://ja.wiktionary.org/)</option>
+							</select>
+						</div>
+					</section>
+					<section class="subComponent">
+						<h1 class="languageFilterTitle">htmlLanguageFilterTitle</h1>
+						<p class="languageFilterDescription">These categories belong to the language category. If you choose a category, It's shown except the others.</p>
+						<p><button class="addLanguageFilter">htmlAddLanguageFilter</button></p>
+						<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
+						<ul class="languageFilterBox"></ul>
+					</section>
+					<section class="subComponent">
+						<h1 class="apiCutOutTitle">htmlApiCutOutTitle</h1>
+						<div>
+							<label>
+								<input type="checkbox" class="apiCutOut">
+								<span class="apiCutOutDescription">htmlApiCutOutDescription</span>
+							</label>
+						</div>
+					</section>
 				</section>
 				<section class="linkListSample box">
 					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 300px; width: 450px; z-index:auto;">
@@ -326,18 +334,18 @@
 					</div>
 				</section>
 			</section>
-			<div id="apiLanguageSelectPane" class="pane hide">
+			<div id="languageFilterSelectPane" class="pane hide">
 				<img src="/image/delete.svg" class="removePane">
-				<div id="apiLanguageSelectPaneBody" class="paneBody box">
+				<div id="languageFilterSelectPaneBody" class="paneBody box">
 					<p>
 						Please choose language. It will be displayed the language's explanation.<br>
 						<select class="apiLangPrefixSelect"></select>
 					</p>
-					<div id="apiLanguageContainer"></div>
+					<div id="languageFilterContainer"></div>
 					<div>
 						<div id="languageSelectList" class="component">
 							<p>htmlLanguageSelectDescription</p>
-							<ol class="apiLanguageBox"></ol>
+							<ol class="languageFilterBox"></ol>
 						</div>
 					</div>
 				</div>
@@ -372,9 +380,9 @@
 			<img src="/image/delete.svg" class="removeLanguageButtom">
 		</li>
 	</ol>
-	<label id="apiLanguageInputPrototype">
-		<input type="checkbox" class="apiLanguageCheckbox" name="l" value="">
-		<span class="apiLanguageLabel"></span>
+	<label id="languageFilterInputPrototype">
+		<input type="checkbox" class="languageFilterCheckbox" name="l" value="">
+		<span class="languageFilterLabel"></span>
 	</label>
 	<li class="lessLaborGoToDictionary-list" id="lessLaborGoToDictionary-list-prototype">
 		<a class="lessLaborGoToDictionary-anchor">
