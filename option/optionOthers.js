@@ -135,33 +135,35 @@
 			setLinkListStyle(e["cl"]["newValue"]);
 			setSampleLinkListStyle(e["cl"]["newValue"]);
 		}
-		else if( e.hasOwnProperty("ca") ){
+		if( e.hasOwnProperty("ca") ){
 			setLinkListAction(e["ca"]["newValue"]);
 			setSampleLinkListAction(e["ca"]["newValue"]);
 		}
-		else if( e.hasOwnProperty("ld") ) {
+		if( e.hasOwnProperty("ld") ) {
 			setLinkListDirection(e["ld"]["newValue"]);
 			setSampleLinkListDirection(e["ld"]["newValue"]);
 		}
-		else if( e.hasOwnProperty("ls") ) {
+		if( e.hasOwnProperty("ls") ) {
 			setLinkListSeparator(e["ls"]["newValue"]);
 			setSampleLinkListSeparator(e["ls"]["newValue"]);
 		}
-		else if( e.hasOwnProperty("f") ) {
+		if( e.hasOwnProperty("f") ) {
 			setFaviconDisplay(e["f"]["newValue"]);
 			setSampleLinkListFaviconDisplay(e["f"]["newValue"]);
 		}
-		else if( e.hasOwnProperty("s") ){
+		if( e.hasOwnProperty("s") ){
 			setServiceCode(e["s"]["newValue"]);
 			setSampleLinkListServiceCode(e["s"]["newValue"]);
 			setLanguageList([]);
 			makeLanguageListNodes();
 		}
-		else if( e.hasOwnProperty("ll") ){
+		if( e.hasOwnProperty("ll") ){
 			setLanguageList(e["ll"]["newValue"]);
 			makeLanguageListNodes();
 		}
-		else if( e.hasOwnProperty("co") ) setApiCutOut(e["co"]["newValue"]);
+		if( e.hasOwnProperty("co") ){
+			setApiCutOut(e["co"]["newValue"]);
+		}
 	}
 
 	function setLinkListStyle(value){
@@ -275,31 +277,31 @@
 	function linkListStyleBehavior(e){
 		let value = e.target.value;
 		setSampleLinkListStyle(value);
-		saveLinkListStyle(value);
+		saveLinkListStyle(value).catch(onSaveError);
 	}
 
 	function linkListActionBehavior(e){
 		let value = e.target.value;
 		setSampleLinkListAction(value);
-		saveLinkListAction(value);
+		saveLinkListAction(value).catch(onSaveError);
 	}
 
 	function linkListDirectionClickBehavior(e){
 		let value = e.target.value;
 		setSampleLinkListDirection(value);
-		saveLinkListDirection(value);
+		saveLinkListDirection(value).catch(onSaveError);
 	}
 
 	function linkListSeparatorClickBehavior(e){
 		let value = e.target.value;
 		setSampleLinkListSeparator(value);
-		saveLinkListSeparator(value);
+		saveLinkListSeparator(value).catch(onSaveError);
 	}
 
 	function faviconDisplayClickBehavior(e){
 		let value = e.target.value;
 		setSampleLinkListFaviconDisplay(value);
-		saveFaviconDisplay(value);
+		saveFaviconDisplay(value).catch(onSaveError);
 	}
 
 	function setSampleLinkListAnchor(list){
@@ -388,27 +390,27 @@
 
 	function saveLinkListStyle(value){
 		let data = { "cl": value };
-		return saveW(data).catch(onSaveError);
+		return saveW(data);
 	}
 
 	function saveLinkListAction(value){
 		let data = { "ca": value };
-		return saveW(data).catch(onSaveError);
+		return saveW(data);
 	}
 
 	function saveLinkListDirection(value){
 		let data = { "ld": value };
-		return saveW(data).catch(onSaveError);
+		return saveW(data);
 	}
 
 	function saveLinkListSeparator(value){
 		let data = { "ls": value };
-		return saveW(data).catch(onSaveError);
+		return saveW(data);
 	}
 
 	function saveFaviconDisplay(value){
 		let data = { "f": value };
-		return saveW(data).catch(onSaveError);
+		return saveW(data);
 	}
 
 	function initDownloadApiLanguage() {
@@ -420,13 +422,19 @@
 
 	function serviceCodeChangeBehavior(e){
 		let serviceCode = e.target.value;
-		setServiceCode(serviceCode);
-		saveServiceCode(serviceCode); // Async
+		if(serviceCode != API_SERVICE_CODE_NONE){
+			saveServiceCode(serviceCode).catch(onSaveError);
+		}
+		else {
+			saveServiceCodeNone(serviceCode).catch(onSaveError);
+			setLinkListSeparator(LINK_LIST_SEPARATOR_HORIZONTAL);
+			setSampleLinkListSeparator(LINK_LIST_SEPARATOR_HORIZONTAL);
+		}
 		setSampleLinkListServiceCode(serviceCode);
 		setLanguageList([]);
 		makeLanguageListNodes();
 		if(hasLanguageCache()!=false) return;
-		downloadApiLanguage(getApiService()); // Async
+		downloadApiLanguage(getApiService(serviceCode)); // Async
 		return;
 	}
 
@@ -435,7 +443,16 @@
 			"s": value,
 			"ll": []
 		};
-		return saveW(data).catch(onSaveError);
+		return saveW(data);
+	}
+
+	function saveServiceCodeNone(value){
+		let data = {
+			"ls": LINK_LIST_SEPARATOR_HORIZONTAL,
+			"s": value,
+			"ll": []
+		};
+		return saveW(data);
 	}
 
 	function downloadApiLanguage(service){
@@ -674,14 +691,17 @@
 		let data = {
 			"ll": list
 		};
-		return saveW(data).catch(onSaveError);
+		return saveW(data);
 	}
 
 	function apiCutOutChangeBehavior(e){
-		let data = {
-			"co": e.target.checked
-		};
-		return saveW(data).catch(onSaveError);
+		return saveCutOutFlag(e.target.checked).catch(onSaveError);
 	}
 
+	function saveCutOutFlag(value){
+		let data = {
+			"co": value
+		};
+		return saveW(data);
+	}
 })();
