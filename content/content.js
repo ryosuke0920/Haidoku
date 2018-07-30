@@ -1,6 +1,6 @@
 (()=>{
 	const LINK_NODE_DEFAULT_HEIGHT = 200;
-	const LINK_NODE_DEFAULT_WIDTH = 320;
+	const LINK_NODE_DEFAULT_WIDTH = 280;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
@@ -131,7 +131,6 @@
 
 	function addCommonLinkListEvents(){
 		ponyfill.storage.onChanged.addListener( onStorageChanged );
-		window.addEventListener("resize", resizeBehavior);
 		menuNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
@@ -216,11 +215,6 @@
 		}
 	}
 
-	function resizeBehavior(e){
-		closeLinkList();
-		abortApiRequestQueue();
-	}
-
 	function keydownBehavior(e){
 		if( e.key == "Escape" || e.key == "Esc"){
 			closeLinkList();
@@ -236,7 +230,7 @@
 			closeLinkList();
 			abortApiRequestQueue();
 		}
-		else if ( hasLinkList() ) {
+		else if ( hasToShow() ) {
 			let selection = window.getSelection();
 			if( !selection.isCollapsed ){
 				let lastRange = selection.getRangeAt(selection.rangeCount-1);
@@ -375,7 +369,6 @@
 		clearApiContent();
 		for(let i=0; i<optionList.length; i++){
 			let item = optionList[i];
-			if ( !item["c"] ) continue;
 			let li = document.createElement("li");
 			li.classList.add(CSS_PREFIX+"-list");
 			li.setAttribute( "title", item["l"] );
@@ -468,48 +461,51 @@
 			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
 			setLinkListSize( lh, lw );
 		}
-		else if( change["as"] ){
+		if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
 		}
-		else if( change["ck"] ){
+		if( change["ck"] ){
 			setCtrlKeyFlag( change["ck"]["newValue"] );
 		}
-		else if( change["sk"] ){
+		if( change["sk"] ){
 			setShiftKeyFlag( change["sk"]["newValue"] );
 		}
-		else if( change["ol"] ) {
+		if( change["ol"] ) {
 			closeLinkList();
 			abortApiRequestQueue();
 			setOptionList( change["ol"]["newValue"] );
 			resetLinkListEvents();
-			if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
+			if(hasLinkList()) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 		}
-		else if( change["bf"] ){
+		if( change["bf"] ){
 			closeLinkList();
 			abortApiRequestQueue();
 			setLinkListFlag( change["bf"]["newValue"] );
 			resetLinkListEvents();
 		}
-		else if( change["cl"] ){
+		if( change["cl"] ){
 			setLinkListStyle( change["cl"]["newValue"] );
 		}
-		else if( change["ca"] ){
+		if( change["ca"] ){
 			setLinkListAction( change["ca"]["newValue"] );
 		}
-		else if( change["f"] ){
+		if( change["f"] ){
 			applyFaviconDisplay( change["f"]["newValue"] );
 		}
-		else if( change["ld"] ){
+		if( change["ld"] ){
 			applyLinknListDirection( change["ld"]["newValue"] );
 		}
-		else if( change["ls"] ){
+		if( change["ls"] ){
 			applyLinknListSeparator( change["ls"]["newValue"] );
 		}
-		else if( change["s"] ){
+		if( change["s"] ){
+			closeLinkList();
+			abortApiRequestQueue();
 			setServiceCode( change["s"]["newValue"] );
 			applyServiceCode( change["s"]["newValue"] );
+			resetLinkListEvents();
 		}
-		else if( change["co"] ){
+		if( change["co"] ){
 			setLinkListApiCutOut( change["co"]["newValue"] );
 		}
 	}
@@ -567,7 +563,7 @@
 		applyServiceCode( res["s"] );
 		setLinkListApiCutOut( res["co"] );
 		resetLinkListEvents();
-		if( optionList.length > 0) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
+		if(hasLinkList()) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 	}
 
 	function setAnchorSize(res){
@@ -651,7 +647,7 @@
 
 	function resetLinkListEvents(){
 		removeAutoLinkListEvents();
-		if( linkListFlag && hasLinkList() ) addAutoLinkListEvents();
+		if( linkListFlag && hasToShow() ) addAutoLinkListEvents();
 	}
 
 	function setOptionList(res){
@@ -672,9 +668,17 @@
 		faviconCache = e;
 	}
 
+	function hasToShow(){
+		return (hasLinkList() || hasServiceCode());
+	}
+
 	function hasLinkList(){
 		if( optionList.length > 0 ) return true;
 		return false;
+	}
+
+	function hasServiceCode(){
+		return (serviceCode != API_SERVICE_CODE_NONE);
 	}
 
 	function menuClickBihavior(e){
@@ -846,7 +850,6 @@
 			apiResponseError.bind(obj)
 		).finally(
 			()=>{
-				linkListNode.classList.remove(CSS_PREFIX+"-loading");
 				dropApiRequestQueue(obj)
 			}
 		);
@@ -938,8 +941,8 @@
 				list[i].parentNode.removeChild(list[i]);
 			}
 			apiBodyNode.appendChild(content);
-			// remove now loading.
 		}
+		linkListNode.classList.remove(CSS_PREFIX+"-loading");
 		console.log(performance.now());
 	}
 
@@ -950,6 +953,7 @@
 		apiTitleNode.removeAttribute("href");
 		let content = createElement("p");
 		apiBodyNode.appendChild(content);
+		linkListNode.classList.remove(CSS_PREFIX+"-loading");
 	}
 
 	function show(node){
