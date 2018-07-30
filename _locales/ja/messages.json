@@ -324,7 +324,7 @@
 		"message": "結果は0件でした。",
 		"description": "no data message."
 	},
-	"htmlLinkListStyle": {
+	"htmlLinkListStyleTitle": {
 		"message": "リンクリストのスタイル",
 		"description": "Name of the propertie."
 	},
@@ -336,7 +336,7 @@
 		"message": "ダーク",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListAction": {
+	"htmlLinkListActionTitle": {
 		"message": "リンクリストの表示動作",
 		"description": "Name of the propertie."
 	},

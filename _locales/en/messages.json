@@ -324,7 +324,7 @@
 		"message": "Result was 0.",
 		"description": "no data message."
 	},
-	"htmlLinkListStyle": {
+	"htmlLinkListStyleTitle": {
 		"message": "Link list's style",
 		"description": "Name of the propertie."
 	},
@@ -336,7 +336,7 @@
 		"message": "Dark",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListAction": {
+	"htmlLinkListActionTitle": {
 		"message": "Link list's display action",
 		"description": "Name of the propertie."
 	},

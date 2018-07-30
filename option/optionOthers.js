@@ -31,10 +31,10 @@
 
 	function initI18n(){
 		let list = [
-			{ "selector": ".linkListStyle", "property": "innerText", "key": "htmlLinkListStyle" },
+			{ "selector": ".linkListStyleTitle", "property": "innerText", "key": "htmlLinkListStyleTitle" },
 			{ "selector": ".linkListStyleClassic", "property": "innerText", "key": "htmlLinkListStyleClassic" },
 			{ "selector": ".linkListStyleDark", "property": "innerText", "key": "htmlLinkListStyleDark" },
-			{ "selector": ".linkListAction", "property": "innerText", "key": "htmlLinkListAction" },
+			{ "selector": ".linkListActionTitle", "property": "innerText", "key": "htmlLinkListActionTitle" },
 			{ "selector": ".linkListActionNormal", "property": "innerText", "key": "htmlLinkListActionNormal" },
 			{ "selector": ".linkListActionMouseover", "property": "innerText", "key": "htmlLinkListActionMouseover" },
 			{ "selector": ".linkListActionMouseclick", "property": "innerText", "key": "htmlLinkListActionMouseclick" },
@@ -48,26 +48,6 @@
 	}
 
 	function initNode(){
-		for(let i=0; i<linkListStyleNodeList.length; i++) {
-			let node = linkListStyleNodeList[i];
-			node.addEventListener("click", linkListStyleBehavior);
-		}
-		for(let i=0; i<linkListActionNodeList.length; i++) {
-			let node = linkListActionNodeList[i];
-			node.addEventListener("click", linkListActionBehavior);
-		}
-		for(let i=0; i<linkListDirectionNodeList.length; i++) {
-			let node = linkListDirectionNodeList[i];
-			node.addEventListener("click", linkListDirectionClickBehavior);
-		}
-		for(let i=0; i<linkListSeparatorNodeList.length; i++) {
-			let node = linkListSeparatorNodeList[i];
-			node.addEventListener("click", linkListSeparatorClickBehavior);
-		}
-		for(let i=0; i<faviconDisplayNodeList.length; i++) {
-			let node = faviconDisplayNodeList[i];
-			node.addEventListener("click", faviconDisplayClickBehavior);
-		}
 		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
 		serviceCodeSelectNode.addEventListener("change", serviceCodeChangeBehavior);
 		addApiLanguageNode.addEventListener("click", apiLanguageClickBehavior);
@@ -128,14 +108,36 @@
 	}
 
 	function otherNodeClickBehavior(e){
-		if( e.target.classList.contains("removeLanguageButtom") ){
+		if( e.target.classList.contains("linkListStyle") ){
+			setSampleLinkListStyle(e.target.value);
+			saveLinkListStyle(e.target.value).catch(onSaveError);
+			removeStopper();
+		}
+		else if( e.target.classList.contains("linkListAction") ){
+			setSampleLinkListAction(e.target.value);
+			saveLinkListAction(e.target.value).catch(onSaveError);
+		}
+		else if( e.target.classList.contains("linkListLayoutPattern") ){
+			changeLayout(e.target.value);
+			removeStopper();
+		}
+		else if( e.target.classList.contains("faviconDisplay") ){
+			setSampleLinkListFaviconDisplay(e.target.value);
+			saveFaviconDisplay(e.target.value).catch(onSaveError);
+		}
+		else if( e.target.classList.contains("linkListDirection") ){
+			setSampleLinkListDirection(e.target.value);
+			saveLinkListDirection(e.target.value).catch(onSaveError);
+		}
+		else if( e.target.classList.contains("linkListSeparator") ){
+			setSampleLinkListSeparator(e.target.value);
+			saveLinkListSeparator(e.target.value).catch(onSaveError);
+		}
+		else if( e.target.classList.contains("removeLanguageButtom") ){
 			let node = e.target.closest("[data-language]");
 			let language = node.getAttribute("data-language");
 			apiRemoveLanguage(language);
 			apiLanguageCheckboxInactive(language);
-		}
-		else if( e.target.classList.contains("linkListLayoutPattern") ){
-			changeLayout(e.target.value);
 		}
 	}
 
@@ -296,36 +298,6 @@
 
 	function getApiCutOut(){
 		return apiCutOutNode.checked;
-	}
-
-	function linkListStyleBehavior(e){
-		let value = e.target.value;
-		setSampleLinkListStyle(value);
-		saveLinkListStyle(value).catch(onSaveError);
-	}
-
-	function linkListActionBehavior(e){
-		let value = e.target.value;
-		setSampleLinkListAction(value);
-		saveLinkListAction(value).catch(onSaveError);
-	}
-
-	function linkListDirectionClickBehavior(e){
-		let value = e.target.value;
-		setSampleLinkListDirection(value);
-		saveLinkListDirection(value).catch(onSaveError);
-	}
-
-	function linkListSeparatorClickBehavior(e){
-		let value = e.target.value;
-		setSampleLinkListSeparator(value);
-		saveLinkListSeparator(value).catch(onSaveError);
-	}
-
-	function faviconDisplayClickBehavior(e){
-		let value = e.target.value;
-		setSampleLinkListFaviconDisplay(value);
-		saveFaviconDisplay(value).catch(onSaveError);
 	}
 
 	function changeLayout(value) {
