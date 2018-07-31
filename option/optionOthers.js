@@ -59,7 +59,7 @@
 			{ "selector": ".languageFilterDescription", "property": "innerHTML", "key": "htmlLanguageFilterDescription" },
 			{ "selector": ".addLanguageFilter", "property": "innerText", "key": "htmlAddLanguageFilter" },
 			{ "selector": ".languageFilterSelectedDescription", "property": "innerText", "key": "htmlLanguageFilterSelectedDescription" },
-			{ "selector": ".lnguageFilterDownloadMessage", "property": "innerText", "key": "htmlLnguageFilterDownloadMessage" },
+			{ "selector": ".languageFilterDownloadMessage", "property": "innerText", "key": "htmlLanguageFilterDownloadMessage" },
 			{ "selector": ".apiCutOutTitle", "property": "innerText", "key": "htmlApiCutOutTitle" },
 			{ "selector": ".apiCutOutDescription", "property": "innerHTML", "key": "htmlApiCutOutDescription" }
 		];
@@ -281,6 +281,14 @@
 				node.appendChild(li);
 			}
 		}
+		let list = [];
+		if(languages.length > 0){
+			list.push({ "selector": ".languageFilterSelectedDescription", "property": "innerText", "key": "htmlLanguageFilterSelectedDescription" });
+		}
+		else {
+			list.push({ "selector": ".languageFilterSelectedDescription", "property": "innerText", "key": "htmlLanguageFilterNoneSelectedDescription" });
+		}
+		setI18n(list);
 	}
 
 	function getLanguageList(){

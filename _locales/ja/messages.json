@@ -415,7 +415,10 @@
 	"htmlLanguageFilterSelectedDescription": {
 		"message": "選択中の言語フィルターの一覧です。"
 	},
-	"htmlLnguageFilterDownloadMessage": {
+	"htmlLanguageFilterNoneSelectedDescription": {
+		"message": "言語フィルターは選択されていません。"
+	},
+	"htmlLanguageFilterDownloadMessage": {
 		"message": "ウィクショナリーから言語の一覧をダウンロードしています。"
 	},
 	"htmlApiCutOutTitle": {
