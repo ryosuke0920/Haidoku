@@ -48,7 +48,20 @@
 			{ "selector": ".linkListDirectionVertical", "property": "innerText", "key": "htmlLinkListDirectionVertical" },
 			{ "selector": ".linkListSeparatorTitle", "property": "innerText", "key": "htmlLinkListSeparatorTitle" },
 			{ "selector": ".linkListSeparatorHorizontal", "property": "innerText", "key": "htmlLinkListSeparatorHorizontal" },
-			{ "selector": ".linkListSeparatorVertical", "property": "innerText", "key": "htmlLinkListSeparatorVertical" }
+			{ "selector": ".linkListSeparatorVertical", "property": "innerText", "key": "htmlLinkListSeparatorVertical" },
+			{ "selector": ".apiServiceTitle", "property": "innerText", "key": "htmlApiServiceTitle" },
+			{ "selector": ".apiServiceDescription", "property": "innerText", "key": "htmlApiServiceDescription" },
+			{ "selector": ".serviceCodeTitle", "property": "innerText", "key": "htmlServiceCodeTitle" },
+			{ "selector": ".serviceCodeNone", "property": "innerText", "key": "htmlServiceCodeNone" },
+			{ "selector": ".serviceCodeEn", "property": "innerText", "key": "htmlServiceCodeEn" },
+			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
+			{ "selector": ".languageFilterTitle", "property": "innerText", "key": "htmlLanguageFilterTitle" },
+			{ "selector": ".languageFilterDescription", "property": "innerHTML", "key": "htmlLanguageFilterDescription" },
+			{ "selector": ".addLanguageFilter", "property": "innerText", "key": "htmlAddLanguageFilter" },
+			{ "selector": ".languageFilterSelectedDescription", "property": "innerText", "key": "htmlLanguageFilterSelectedDescription" },
+			{ "selector": ".lnguageFilterDownloadMessage", "property": "innerText", "key": "htmlLnguageFilterDownloadMessage" },
+			{ "selector": ".apiCutOutTitle", "property": "innerText", "key": "htmlApiCutOutTitle" },
+			{ "selector": ".apiCutOutDescription", "property": "innerHTML", "key": "htmlApiCutOutDescription" }
 		];
 		setI18n(list);
 	}

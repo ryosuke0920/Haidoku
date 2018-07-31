@@ -385,6 +385,45 @@
 	"htmlLinkListSeparatorVertical":{
 		"message": "垂直に区切る"
 	},
+	"htmlApiServiceTitle": {
+		"message": "ウィクショナリー連携"
+	},
+	"htmlApiServiceDescription": {
+		"message": "ウィクショナリーはボランティアによって作成されている辞書サイトです。ウィクショナリーが提供するAPIを通じて選択したテキストの解説を表示します。"
+	},
+	"htmlServiceCodeTitle": {
+		"message": "ウィクショナリーの選択"
+	},
+	"htmlServiceCodeNone": {
+		"message": "ウィクショナリーを表示しない"
+	},
+	"htmlServiceCodeEn": {
+		"message": "英語 (https://en.wiktionary.org/)"
+	},
+	"htmlServiceCodeJa": {
+		"message": "日本語 (https://ja.wiktionary.org/)"
+	},
+	"htmlLanguageFilterTitle": {
+		"message": "言語フィルター"
+	},
+	"htmlLanguageFilterDescription": {
+		"message": "ウィクショナリーでは様々な言語の意味が解説されています。言語フィルターを適用すると、指定した言語の解説だけが表示されます。<aside>大まかな試験しかできないので、精度に問題があるかもしれません。</aside>"
+	},
+	"htmlAddLanguageFilter": {
+		"message": "言語フィルターを追加する"
+	},
+	"htmlLanguageFilterSelectedDescription": {
+		"message": "選択中の言語フィルターの一覧です。"
+	},
+	"htmlLnguageFilterDownloadMessage": {
+		"message": "ウィクショナリーから言語の一覧をダウンロードしています。"
+	},
+	"htmlApiCutOutTitle": {
+		"message": "解説の切り出し"
+	},
+	"htmlApiCutOutDescription": {
+		"message": "解説を必要最低限に切り出して表示します。<aside>大まかな試験しかできないので、精度に問題があるかもしれません。</aside>"
+	},
 	"htmlContactText": {
 		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
 		"description": "Sentence of contact."

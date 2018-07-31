@@ -22,7 +22,7 @@ ul>li {
 aside {
 	font-size: 0.8em;
 	background-color: WhiteSmoke;
-	padding: 0.1em;
+	padding: 0.2em;
 }
 input[type="text"], input[type="url"], input[type="number"], input[type="date"],
 #preset .checkWrapper, .field, aside {
