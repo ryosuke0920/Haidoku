@@ -37,7 +37,18 @@
 			{ "selector": "."+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
 			{ "selector": "."+CSS_PREFIX+"-copy", "property": "title", "key": "htmlCopy" },
 			{ "selector": "."+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
-			{ "selector": "."+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" }
+			{ "selector": "."+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
+			{ "selector": ".linkListLayoutTitle", "property": "innerText", "key": "htmlLinkListLayoutTitle" },
+			{ "selector": ".linkListLayoutPatternTitle", "property": "innerText", "key": "htmlLinkListLayoutPatternTitle" },
+			{ "selector": ".faviconDisplayTitle", "property": "innerText", "key": "htmlFaviconDisplayTitle" },
+			{ "selector": ".faviconDisplayNormal", "property": "innerText", "key": "htmlFaviconDisplayNormal" },
+			{ "selector": ".faviconDisplayOnly", "property": "innerText", "key": "htmlFaviconDisplayOnly" },
+			{ "selector": ".linkListDirectionTitle", "property": "innerText", "key": "htmLinkListDirectionTitle" },
+			{ "selector": ".linkListDirectionHorizontal", "property": "innerText", "key": "htmlLinkListDirectionHorizontal" },
+			{ "selector": ".linkListDirectionVertical", "property": "innerText", "key": "htmlLinkListDirectionVertical" },
+			{ "selector": ".linkListSeparatorTitle", "property": "innerText", "key": "htmlLinkListSeparatorTitle" },
+			{ "selector": ".linkListSeparatorHorizontal", "property": "innerText", "key": "htmlLinkListSeparatorHorizontal" },
+			{ "selector": ".linkListSeparatorVertical", "property": "innerText", "key": "htmlLinkListSeparatorVertical" }
 		];
 		setI18n(list);
 	}

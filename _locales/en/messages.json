@@ -325,7 +325,7 @@
 		"description": "no data message."
 	},
 	"htmlLinkListStyleTitle": {
-		"message": "Link list's style",
+		"message": "Link list style",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListStyleClassic": {
@@ -337,7 +337,7 @@
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionTitle": {
-		"message": "Link list's display action",
+		"message": "Link list display action",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionNormal": {
@@ -351,6 +351,39 @@
 	"htmlLinkListActionMouseclick": {
 		"message": "Mouse click",
 		"description": "Name of the propertie."
+	},
+	"htmlLinkListLayoutTitle": {
+		"message": "Link list layout"
+	},
+	"htmlLinkListLayoutPatternTitle":{
+		"message": "Link list layout pattern"
+	},
+	"htmlFaviconDisplayTitle":{
+		"message": "Display content of link"
+	},
+	"htmlFaviconDisplayNormal":{
+		"message": "Favicon and site name"
+	},
+	"htmlFaviconDisplayOnly":{
+		"message": "Favicon only"
+	},
+	"htmLinkListDirectionTitle":{
+		"message": "Direction of arranging links"
+	},
+	"htmlLinkListDirectionHorizontal":{
+		"message": "Horizontal"
+	},
+	"htmlLinkListDirectionVertical":{
+		"message": "Vertical"
+	},
+	"htmlLinkListSeparatorTitle":{
+		"message": "Separator between Link list and Wiktionary"
+	},
+	"htmlLinkListSeparatorHorizontal":{
+		"message": "Horizontal"
+	},
+	"htmlLinkListSeparatorVertical":{
+		"message": "Vertical"
 	},
 	"htmlContactText": {
 		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",

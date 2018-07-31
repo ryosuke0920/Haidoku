@@ -352,6 +352,39 @@
 		"message": "マウスクリック",
 		"description": "Name of the propertie."
 	},
+	"htmlLinkListLayoutTitle": {
+		"message": "リンクリストのレイアウト"
+	},
+	"htmlLinkListLayoutPatternTitle":{
+		"message": "リンクリストのレイアウトパターン"
+	},
+	"htmlFaviconDisplayTitle":{
+		"message": "リンクの表示内容"
+	},
+	"htmlFaviconDisplayNormal":{
+		"message": "ファビコンとサイト名"
+	},
+	"htmlFaviconDisplayOnly":{
+		"message": "ファビコンのみ"
+	},
+	"htmLinkListDirectionTitle":{
+		"message": "リンクを並べる方向"
+	},
+	"htmlLinkListDirectionHorizontal":{
+		"message": "水平方向に並べる"
+	},
+	"htmlLinkListDirectionVertical":{
+		"message": "垂直方向に並べる"
+	},
+	"htmlLinkListSeparatorTitle":{
+		"message": "リンクリストとウィクショナリーの区切り"
+	},
+	"htmlLinkListSeparatorHorizontal":{
+		"message": "水平に区切る"
+	},
+	"htmlLinkListSeparatorVertical":{
+		"message": "垂直に区切る"
+	},
 	"htmlContactText": {
 		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
 		"description": "Sentence of contact."
