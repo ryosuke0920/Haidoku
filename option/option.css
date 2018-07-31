@@ -433,3 +433,56 @@ table thead th, table tbody td {
 	position: sticky;
 	top: 0px;
 }
+#languageFileterComponent {
+	position: relative;
+}
+#downloadLanguagePane {
+	position: absolute;
+	top:0;
+	bottom:0;
+	right:0;
+	left:0;
+	background-color: rgba(0,0,0,0.7);
+}
+#downloadLanguagePane>p {
+	text-align: center;
+	height: 100%;
+}
+#downloadLanguagePane>p::before {
+	display:inline-block;
+	height: 100%;
+	vertical-align: middle;
+	content:"";
+}
+#downloadLanguagePane>p>span {
+	color:white;
+	display: inline-block;
+	vertical-align: middle;
+}
+#downloadLanguagePane>div {
+	position: absolute;
+	top:0;
+	bottom:0;
+	right:0;
+	left:0;
+	background-image: url("/image/whiteCircle.svg");
+	background-repeat: no-repeat;
+	background-position: center;
+	animation: loading 2s ease-out 0s infinite running;
+	background-size: 0%;
+	opacity: 1;
+}
+@keyframes loading {
+	0%{
+		background-size: 0%;
+		opacity: 1;
+	}
+	40%{
+		background-size: 0%;
+		opacity: 1;
+	}
+	100%{
+		background-size: 100%;
+		opacity: 0;
+	}
+}

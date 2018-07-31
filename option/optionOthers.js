@@ -5,6 +5,7 @@
 	let sampleLinkListNode = othersNode.querySelector("#"+CSS_PREFIX+"-viewer");
 	let serviceCodeSelectNode = othersNode.querySelector(".serviceCodeSelect");
 	let apiCutOutNode = othersNode.querySelector(".apiCutOut");
+	let downloadLanguagePaneNode = othersNode.querySelector("#downloadLanguagePane");
 	let languageFilterBoxNodes = othersNode.querySelectorAll(".languageFilterBox");
 	let languageFilterSelectPaneNode = document.querySelector("#languageFilterSelectPane");
 	let languageFilterContainerNode = languageFilterSelectPaneNode.querySelector("#languageFilterContainer");
@@ -53,7 +54,7 @@
 	function initProperties(){
 		let lang = getUiLang();
 		let service = getApiService(lang);
-		if( service == null ){
+		if( service == API_SERVICE_NONE ){
 			lang = DEFAULT_LOCALE;
 			service = getApiService(lang);
 		}
@@ -263,17 +264,17 @@
 	}
 
 	function getApiService(code=getServiceCode()){
-		if( !API_SERVICE.hasOwnProperty(code) ) return null;
+		if( !API_SERVICE.hasOwnProperty(code) ) return API_SERVICE_NONE;
 		return API_SERVICE[code];
 	}
 
 	function hasLanguageCache(service=getApiService()){
-		if( service == null ) return null;
+		if( service == API_SERVICE_NONE ) return null;
 		return languageFilterCache.hasOwnProperty( service );
 	}
 
 	function getLanguageCache(service=getApiService()){
-		if( service == null ) return null;
+		if( service == API_SERVICE_NONE ) return null;
 		if( hasLanguageCache(service) == null) return null;
 		return languageFilterCache[service];
 	}
@@ -283,7 +284,7 @@
 	}
 
 	function isDownloadingLangage(service=getApiService()){
-		if( service == null ) return false;
+		if( service == API_SERVICE_NONE ) return false;
 		if( hasLanguageCache(service) == null) return false;
 		return languageFilterCache[service]==API_LANGUAGE_DOWNLOAD;
 	}
@@ -473,7 +474,8 @@
 	function initDownloadLanguageFilter() {
 		let service = getApiService();
 		if( hasLanguageCache(service) != false ) return;
-		downloadLanguageFilter(service); // Async
+		show(downloadLanguagePane)
+		downloadLanguageFilter(service).finally(()=>{hide(downloadLanguagePane)}); // Async
 		return;
 	}
 
@@ -490,7 +492,8 @@
 		setLanguageList([]);
 		makeLanguageListNodes();
 		if(hasLanguageCache()!=false) return;
-		downloadLanguageFilter(getApiService(serviceCode)); // Async
+		show(downloadLanguagePaneNode);
+		downloadLanguageFilter(getApiService(serviceCode)).finally(()=>{hide(downloadLanguagePaneNode);}); // Async
 		return;
 	}
 
@@ -665,12 +668,13 @@
 
 	function addLanguageFilterClickBehavior(){
 		let service = getApiService();
-		if(service == null){
-			return notice("please select wiktinary.");//TODO
+		if(service == API_SERVICE_NONE){
+			notice("please select wiktinary.");//TODO
+			return;
 		}
 		else if( !hasLanguageCache(service) ){
-			notice("please wait for downloading laguages.");//TODO
-			return downloadLanguageFilter(service);
+			notice("please wait for downloading laguages1.");//TODO
+			return;
 		}
 		else if( isDownloadingLangage(service) ){
 			notice("please wait for downloading laguages.");//TODO

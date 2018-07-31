@@ -21,6 +21,7 @@ const FAVICON_NODATA = "nodata";
 const DEFAULT_LOCALE = "en";
 
 const API_SERVICE_CODE_NONE = "-";
+const API_SERVICE_NONE = null;
 const API_SERVICE = {
 	"en": "https://en.wiktionary.org",
 	"ja": "https://ja.wiktionary.org"
