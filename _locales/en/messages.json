@@ -74,6 +74,15 @@
 	"notificationDataUriError": {
 		"message": "It can't be searched because it's an unsupported image format(Data URI)."
 	},
+	"notificationConnectionError": {
+		"message": "Connection error. $ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
 	"htmlZoomDown": {
 		"message": "Zoom down",
 		"description": ""

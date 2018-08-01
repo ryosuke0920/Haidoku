@@ -1,5 +1,4 @@
 ( () => {
-	const API_LANGUAGE_DOWNLOAD = "downloading";
 	const API_LANGUAGE_MAX = 10;
 	let othersNode = document.querySelector("#others");
 	let sampleLinkListNode = othersNode.querySelector("#"+CSS_PREFIX+"-viewer");
@@ -319,6 +318,10 @@
 		languageFilterCache[service] = list;
 	}
 
+	function deleteLanguageCache(service=getApiService()){
+		delete languageFilterCache[service];
+	}
+
 	function setPrefixCache(service=getApiService(), hash){
 		apiPrefixCache[service] = hash;
 	}
@@ -535,7 +538,6 @@
 	function downloadLanguageFilter(service){
 		let p = Promise.resolve();
 		let obj = { "service": service };
-		languageFilterCache[service] = API_LANGUAGE_DOWNLOAD;
 		return p.then(
 			prepareAjaxApiLang.bind(obj)
 		).then(
@@ -543,12 +545,19 @@
 		).then(
 			responseAjaxApiLang.bind(obj)
 		).then(
-			convertResponse.bind(obj)
+			afterAjaxApiLang.bind(obj)
 		);
 	}
 
-	function downloadLanguageFilterError(e){
-		languageFilterCache[this.service] = undefined;
+	function downloadLanguageFilterError(service,e){
+		deleteLanguageCache(service);
+		if( e instanceof ProgressEvent ) {
+			return notice( ponyfill.i18n.getMessage("notificationConnectionError", [e.target.status]));
+		}
+
+
+
+
 		return notice("faild download languages."); //TODO kono error ha user ni oshieru
 	}
 
@@ -588,16 +597,14 @@
 	}
 
 	function responseAjaxApiLang(e){
-		this.status = e.target.status;
-		if( this.status == "200" ){
+		if( e.target.status == "200" ){
 			let res = e.target.response;
 			if (res.hasOwnProperty("error")){
-				return Promise.reject(res.error);
+				return Promise.reject(res);
 			}
 			this.cat = this.cat.concat(res.query.categorymembers);
 			if( !res.hasOwnProperty("continue")) {
-				languageFilterCache[this.service] = this.cat;
-				return Promise.resolve(this.cat);
+				return Promise.resolve();
 			}
 			let keys = Object.keys(res.continue);
 			this.param = this.param.filter( obj => !keys.includes(obj.key) );
@@ -618,22 +625,21 @@
 		return Promise.reject(e.target);
 	}
 
-	function convertResponse(list){
+	function afterAjaxApiLang(list){
 		let removeList = [];
 		let prefix = {};
 		let namespace = API_SERVICE_PROPERTY[this.service].namespace;
 		let namespaceRegex = new RegExp("^" + namespace + ":");
 		let followed = API_SERVICE_PROPERTY[this.service].followed;
 		let followedRegex = new RegExp(followed + "$", "i");
-		let obj;
-		for(let i=0; i<list.length; i++){
-			obj = list[i];
+		for(let i=0; i<this.cat.length; i++){
+			let obj = this.cat[i];
 			obj.title = obj.title.replace( namespaceRegex, "");
 			obj.shortPrefix = obj.sortkeyprefix;
 			if(obj.shortPrefix.length <= 0) obj.shortPrefix = obj.title;
 			obj.shortPrefix = obj.shortPrefix.substr(0,1);
 			if(obj.shortPrefix==" "||obj.shortPrefix=="*"|| (followed && !obj.title.match(followedRegex) ) ) {
-				list.splice(i,1);
+				this.cat.splice(i,1);
 				i--;
 				continue;
 			}
@@ -644,7 +650,7 @@
 				prefix[obj.shortPrefix] = 1;
 			}
 		}
-		setLanguageCache(this.service, list);
+		setLanguageCache(this.service, this.cat);
 		setPrefixCache(this.service, prefix);
 	}
 
@@ -700,7 +706,7 @@
 			}
 		).catch(
 			(e)=>{
-				downloadLanguageFilterError(e);
+				downloadLanguageFilterError(service,e);
 				hide(downloadLanguagePaneNode);
 			}
 		);

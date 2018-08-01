@@ -74,6 +74,15 @@
 	"notificationDataUriError": {
 		"message": "サポートしていない画像形式（Data URI）ですので検索できません。"
 	},
+	"notificationConnectionError": {
+		"message": "通信に失敗しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
 	"htmlZoomDown": {
 		"message": "縮小",
 		"description": ""
