@@ -17,7 +17,7 @@
 	let optionList = [];
 
 	initOthers();
-	Promise.resolve().then(getFavicon).then(gotFavicon).then(initProperties).then(initDownloadLanguageFilter).catch(unexpectedError);
+	Promise.resolve().then(getFavicon).then(gotFavicon).then(initProperties).catch(unexpectedError);
 
 	function initOthers(){
 		initI18n();
@@ -52,6 +52,7 @@
 			{ "selector": ".apiServiceTitle", "property": "innerText", "key": "htmlApiServiceTitle" },
 			{ "selector": ".apiServiceDescription", "property": "innerText", "key": "htmlApiServiceDescription" },
 			{ "selector": ".serviceCodeTitle", "property": "innerText", "key": "htmlServiceCodeTitle" },
+			{ "selector": ".serviceCodeDescription", "property": "innerText", "key": "htmlServiceCodeDescription" },
 			{ "selector": ".serviceCodeNone", "property": "innerText", "key": "htmlServiceCodeNone" },
 			{ "selector": ".serviceCodeEn", "property": "innerText", "key": "htmlServiceCodeEn" },
 			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
@@ -304,24 +305,18 @@
 	}
 
 	function hasLanguageCache(service=getApiService()){
-		if( service == API_SERVICE_NONE ) return null;
+		if( service == API_SERVICE_NONE ) return false;
 		return languageFilterCache.hasOwnProperty( service );
 	}
 
 	function getLanguageCache(service=getApiService()){
-		if( service == API_SERVICE_NONE ) return null;
-		if( hasLanguageCache(service) == null) return null;
+		if( service == API_SERVICE_NONE ) return API_SERVICE_NONE;
+		if(!hasLanguageCache(service)) return API_SERVICE_NONE;
 		return languageFilterCache[service];
 	}
 
 	function setLanguageCache(service=getApiService(), list){
 		languageFilterCache[service] = list;
-	}
-
-	function isDownloadingLangage(service=getApiService()){
-		if( service == API_SERVICE_NONE ) return false;
-		if( hasLanguageCache(service) == null) return false;
-		return languageFilterCache[service]==API_LANGUAGE_DOWNLOAD;
 	}
 
 	function setPrefixCache(service=getApiService(), hash){
@@ -506,14 +501,6 @@
 		return saveW(data);
 	}
 
-	function initDownloadLanguageFilter() {
-		let service = getApiService();
-		if( hasLanguageCache(service) != false ) return;
-		show(downloadLanguagePane)
-		downloadLanguageFilter(service).finally(()=>{hide(downloadLanguagePane)}); // Async
-		return;
-	}
-
 	function serviceCodeChangeBehavior(serviceCode){
 		if(serviceCode != API_SERVICE_CODE_NONE){
 			saveServiceCode(serviceCode).catch(onSaveError);
@@ -525,11 +512,7 @@
 		}
 		setSampleLinkListServiceCode(serviceCode);
 		setLanguageList([]);
-		makeLanguageListNodes();
-		if(hasLanguageCache()!=false) return;
-		show(downloadLanguagePaneNode);
-		downloadLanguageFilter(getApiService(serviceCode)).finally(()=>{hide(downloadLanguagePaneNode);}); // Async
-		return;
+		makeLanguageListNodes([]);
 	}
 
 	function saveServiceCode(value){
@@ -561,8 +544,6 @@
 			responseAjaxApiLang.bind(obj)
 		).then(
 			convertResponse.bind(obj)
-		).catch(
-			downloadLanguageFilterError.bind(obj)
 		);
 	}
 
@@ -707,14 +688,26 @@
 			notice("please select wiktinary.");//TODO
 			return;
 		}
-		else if( !hasLanguageCache(service) ){
-			notice("please wait for downloading laguages1.");//TODO
+		if(hasLanguageCache(service)) {
+			openLanguageFilterSelectPane(service);
 			return;
 		}
-		else if( isDownloadingLangage(service) ){
-			notice("please wait for downloading laguages.");//TODO
-			return;
-		}
+		show(downloadLanguagePaneNode);
+		downloadLanguageFilter(service).then(
+			()=>{
+				hide(downloadLanguagePaneNode);
+				openLanguageFilterSelectPane(service);
+			}
+		).catch(
+			(e)=>{
+				downloadLanguageFilterError(e);
+				hide(downloadLanguagePaneNode);
+			}
+		);
+		return;
+	}
+
+	function openLanguageFilterSelectPane(service){
 		let prefix = getPrefixCache( service );
 		apiLangMakeOption(prefix);
 		apiLangMakeRadio( service, Object.keys(prefix)[0] );

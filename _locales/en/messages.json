@@ -394,14 +394,17 @@
 	"htmlServiceCodeTitle": {
 		"message": "Select Wiktionary"
 	},
+	"htmlServiceCodeDescription": {
+		"message": "The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" is canceled, please reset it."
+	},
 	"htmlServiceCodeNone": {
 		"message": "Disable"
 	},
 	"htmlServiceCodeEn": {
-		"message": "English (https://en.wiktionary.org/)"
+		"message": "https://en.wiktionary.org/ - English"
 	},
 	"htmlServiceCodeJa": {
-		"message": "Japanese (https://ja.wiktionary.org/)"
+		"message": "https://ja.wiktionary.org/ - Japanese"
 	},
 	"htmlLanguageFilterTitle": {
 		"message": "Language filter"
