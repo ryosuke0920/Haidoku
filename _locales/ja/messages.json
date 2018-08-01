@@ -395,7 +395,7 @@
 		"message": "ウィクショナリーの選択"
 	},
 	"htmlServiceCodeNone": {
-		"message": "ウィクショナリーを表示しない"
+		"message": "無効にする"
 	},
 	"htmlServiceCodeEn": {
 		"message": "英語 (https://en.wiktionary.org/)"
@@ -407,7 +407,10 @@
 		"message": "言語フィルター"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "ウィクショナリーでは様々な言語の意味が解説されています。言語フィルターを適用すると、指定した言語の解説だけが表示されます。<aside>大まかな試験しかできないので、精度に問題があるかもしれません。</aside>"
+		"message": "ウィクショナリーでは１つの語彙に対して、全ての言語毎の解説が１つの記事にまとめられています。言語フィルターを適用すると、指定した言語の解説だけが表示されます。例えば、\"four\"は英語で\"4\"を意味しますが、フランス語では\"オーブン・かまど・炉\"を意味します。言語フィルターに\"英語\"を選択すれば、英語の\"4\"の解説だけが表示されます。"
+	},
+	"htmlLanguageFilterAside": {
+		"message": "この機能はウィクショナリーの保持する記事が膨大であるため完全な試験を実施していません。また常に記事の更新が行われていることを鑑みてもその精度は保証できません。"
 	},
 	"htmlAddLanguageFilter": {
 		"message": "言語フィルターを追加する"
@@ -425,7 +428,13 @@
 		"message": "解説の切り出し"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "解説を必要最低限に切り出して表示します。<aside>大まかな試験しかできないので、精度に問題があるかもしれません。</aside>"
+		"message": "解説から\"意味\"の部分を切り出して表示内容を単純化します。"
+	},
+	"htmlApiCutOutAside": {
+		"message": "この機能はウィクショナリーの保持する記事が膨大であるため完全な試験を実施していません。また常に記事の更新が行われていることを鑑みてもその精度は保証できません。"
+	},
+	"htmlApiCutOutLabel": {
+		"message": "有効にする"
 	},
 	"htmlContactText": {
 		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",

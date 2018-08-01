@@ -198,7 +198,7 @@
 #lessLaborGoToDictionary-apiFooter, #lessLaborGoToDictionary-apiFooter *{
 	background-color:#eaecf0
 }
-#lessLaborGoToDictionary-loading {
+#lessLaborGoToDictionary-apiLoading {
 	display: none;
 }
 #lessLaborGoToDictionary-apiLoading,#lessLaborGoToDictionary-apiBody {

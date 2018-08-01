@@ -389,13 +389,13 @@
 		"message": "Use Wiktionary"
 	},
 	"htmlApiServiceDescription": {
-		"message": "Wiktionary is a dictionary site made by volunteers. Description of word you selected is displayed using API provided by Wiktionary."
+		"message": "Wiktionary is a dictionary site made by volunteers. The description of word you selected is displayed using API provided by Wiktionary."
 	},
 	"htmlServiceCodeTitle": {
 		"message": "Select Wiktionary"
 	},
 	"htmlServiceCodeNone": {
-		"message": "Don't display Wiktionary."
+		"message": "Disable"
 	},
 	"htmlServiceCodeEn": {
 		"message": "English (https://en.wiktionary.org/)"
@@ -407,7 +407,10 @@
 		"message": "Language filter"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "Wictionary aims to describe all words of all languages. Using language filter, It's displayed a description of only the language you choose.<aside>Possibly it has problem, Because we couldn't perfectly test.</aside>"
+		"message": "Wiktionary article has description for all words of all languages. Using language filter, it's displayed a description of only the language you want.　For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\".　If you select \"English\" for Language filter, only the English description \"4\" will be displayed."
+	},
+	"htmlLanguageFilterAside": {
+		"message": "This function does not carry out a complete test because the article held by Wiktionary is enormous. In addition, we can not guarantee the accuracy in view of always updating articles."
 	},
 	"htmlAddLanguageFilter": {
 		"message": "Add language filter"
@@ -425,7 +428,13 @@
 		"message": "Cut out description"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "Wiktionary has much description of each word, so the description is cut out shortly. <aside>Possibly it has problem, Because we couldn't perfectly test.</aside>"
+		"message": "From the description, cut out the part of \"meaning\" to simplify the display contents."
+	},
+	"htmlApiCutOutAside": {
+		"message": "This function does not carry out a complete test because the article held by Wiktionary is enormous. In addition, we can not guarantee the accuracy in view of always updating articles."
+	},
+	"htmlApiCutOutLabel": {
+		"message": "Enable"
 	},
 	"htmlContactText": {
 		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
