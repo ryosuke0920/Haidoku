@@ -56,15 +56,16 @@
 			{ "selector": ".serviceCodeEn", "property": "innerText", "key": "htmlServiceCodeEn" },
 			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
 			{ "selector": ".languageFilterTitle", "property": "innerText", "key": "htmlLanguageFilterTitle" },
-			{ "selector": ".languageFilterDescription", "property": "innerHTML", "key": "htmlLanguageFilterDescription" },
-			{ "selector": ".languageFilterAside", "property": "innerHTML", "key": "htmlLanguageFilterAside" },
+			{ "selector": ".languageFilterDescription", "property": "innerText", "key": "htmlLanguageFilterDescription" },
+			{ "selector": ".languageFilterAside", "property": "innerText", "key": "htmlLanguageFilterAside" },
 			{ "selector": ".addLanguageFilter", "property": "innerText", "key": "htmlAddLanguageFilter" },
 			{ "selector": ".languageFilterSelectedDescription", "property": "innerText", "key": "htmlLanguageFilterSelectedDescription" },
 			{ "selector": ".languageFilterDownloadMessage", "property": "innerText", "key": "htmlLanguageFilterDownloadMessage" },
 			{ "selector": ".apiCutOutTitle", "property": "innerText", "key": "htmlApiCutOutTitle" },
-			{ "selector": ".apiCutOutDescription", "property": "innerHTML", "key": "htmlApiCutOutDescription" },
-			{ "selector": ".apiCutOutAside", "property": "innerHTML", "key": "htmlApiCutOutAside" },
-			{ "selector": ".apiCutOutLabel", "property": "innerHTML", "key": "htmlApiCutOutLabel" }
+			{ "selector": ".apiCutOutDescription", "property": "innerText", "key": "htmlApiCutOutDescription" },
+			{ "selector": ".apiCutOutAside", "property": "innerText", "key": "htmlApiCutOutAside" },
+			{ "selector": ".apiCutOutLabel", "property": "innerText", "key": "htmlApiCutOutLabel" },
+			{ "selector": ".linkListSampleTitle", "property": "innerText", "key": "htmlLinkListSampleTitle" }
 		];
 		setI18n(list);
 	}

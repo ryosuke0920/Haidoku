@@ -396,24 +396,34 @@ table thead th, table tbody td {
 }
 @media (min-width: 1094px) {
 	.othersTable {
-		grid-template-columns: 1fr auto ;
+		grid-template-columns: 1fr 1fr ;
 	}
-	.linkListSample {
+	#linkListSample {
+		position: relative;
 		grid-column-start: 2;
 		grid-column-end: 3;
 		grid-row-start: 1;
 		grid-row-end: 7;
 	}
+	#linkListSample>div {
+		position: sticky;
+		top: 0px;
+	}
 }
 @media (min-width: 1372px) {
 	.othersTable {
-		grid-template-columns: 1fr 1fr auto ;
+		grid-template-columns: 1fr 1fr 1fr ;
 	}
-	.linkListSample {
+	#linkListSample {
+		position: relative;
 		grid-column-start: 3;
 		grid-column-end: 4;
 		grid-row-start: 1;
 		grid-row-end: 4;
+	}
+	#linkListSample>div {
+		position: sticky;
+		top: 0px;
 	}
 }
 #languageFilterSelectPaneBody {

@@ -461,6 +461,9 @@
 	"htmlApiCutOutLabel": {
 		"message": "有効にする"
 	},
+	"htmlLinkListSampleTitle": {
+		"message": "リンクリストのサンプル"
+	},
 	"htmlContactText": {
 		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
 		"description": "Sentence of contact."
