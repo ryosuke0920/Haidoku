@@ -1,5 +1,6 @@
 const MAX_FAVICON_CONNECTION = 5;
 const DATA_URI_REGEX = new RegExp(/^data:.*,/);
+const MAX_API_CACHE = 30;
 let optionList = [];
 let autoViewFlag = true;
 let shiftKey = false;
@@ -7,7 +8,7 @@ let ctrlKey = false;
 let options = {};
 let faviconCache = {};
 let serviceCode = "";
-let languageList = [];
+let apiDocumentCache = [];
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 
@@ -42,15 +43,12 @@ function initContextMenu(){
 function getSetting() {
 	let serviceCode = getUiLang();
 	if( !API_SERVICE.hasOwnProperty(serviceCode) ) serviceCode = DEFAULT_LOCALE;
-	let service = API_SERVICE[serviceCode];
-	let languageList = API_SERVICE_PROPERTY[service].defaultLanguage;
 	return ponyfill.storage.sync.get({
 		"ol": [],
 		"bf": true,
 		"sk": false,
 		"ck": false,
-		"s": serviceCode,
-		"ll": languageList
+		"s": serviceCode
 	}).then(onGotSetting);
 }
 
@@ -60,7 +58,6 @@ function onGotSetting(json){
 	shiftKey = json["sk"];
 	ctrlKey = json["ck"];
 	serviceCode = json["s"];
-	languageList = json["ll"];
 }
 
 function initListener(){
@@ -161,9 +158,7 @@ function onStorageChanged(change, area){
 	};
 	if(change["s"]) {
 		serviceCode = change["s"]["newValue"];
-	}
-	if(change["ll"]) {
-		languageList = change["ll"]["newValue"];
+		apiDocumentCache = [];
 	}
 }
 
@@ -454,14 +449,20 @@ function broadcastWindows(windows){
 		let tabs = w.tabs;
 		for(let j=0; j<tabs.length; j++){
 			let t = w.tabs[j];
-			ponyfill.tabs.sendMessage(t.id, this.data)
-			//.catch((e)=>{ console.log(e); });
+			ponyfill.tabs.sendMessage(t.id, this.data).catch(()=>{});// erace error
 		}
 	}
 }
 
 function apiRequest(text){
 	if(!API_SERVICE.hasOwnProperty(serviceCode)) throw( new Error("service not found. serviceCode="+serviceCode) );
+	for(let i=0; i<apiDocumentCache.length; i++){
+		if( text == apiDocumentCache[i].title || text == apiDocumentCache[i].text ){
+			let temp = apiDocumentCache.splice(i,1);
+			apiDocumentCache.push(temp[0]);
+			return temp[0];
+		}
+	}
 	let service = API_SERVICE[serviceCode];
 	let obj = {
 		"text": text,
@@ -477,9 +478,8 @@ function apiRequest(text){
 	return Promise.resolve()
 	.then( requestAjaxApiInfo.bind(obj) )
 	.then( responseAjaxApiInfo.bind(obj) )
-	.then( requestAjaxApiSection.bind(obj) )
-	.then( responseAjaxApiSection.bind(obj) )
-	.then( decideSection.bind(obj) )
+	.then( requestAjaxApiParse.bind(obj) )
+	.then( responseAjaxApiParse.bind(obj) )
 	.then( returnContent.bind(obj) );
 }
 
@@ -633,7 +633,7 @@ function requestAjaxApiSearch(){
 function responseAjaxApiSearch(e){
 	if( e.target.status != "200" ) return Promise.reject(e);
 	if (e.target.response.hasOwnProperty("error")) return Promise.reject(e);
-	if(e.target.response.query.search.length==0) return Promise.reject(new Error("page not found."));
+	if(e.target.response.query.search.length==0) return Promise.reject(new Error(API_PAGE_NOT_FOUND));
 	this.title = e.target.response.query.search[0].title;
 	this.pageid = e.target.response.query.search[0].pageid;
 	return Promise.resolve().then(
@@ -642,7 +642,7 @@ function responseAjaxApiSearch(e){
 		responseAjaxApiInfo2.bind(this)
 	);
 }
-
+/*
 function requestAjaxApiSection(){
 	let param = [
 		{
@@ -711,7 +711,7 @@ function decideSection(){
 	}
 	return p;
 }
-
+*/
 function requestAjaxApiParse(){
 	let param = [
 		{
@@ -761,6 +761,7 @@ function responseAjaxApiParse(e){
 }
 
 function returnContent(){
-	console.log(this);
+	apiDocumentCache.push(this);
+	if(apiDocumentCache.length >= MAX_API_CACHE) apiDocumentCache.shift();
 	return this;
 }

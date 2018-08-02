@@ -226,9 +226,9 @@
 		background-size: 0%;
 		opacity: 1;
 	}
-	40%{
-		background-size: 0%;
-		opacity: 1;
+	50%{
+		background-size: 100%;
+		opacity: 0;
 	}
 	100%{
 		background-size: 100%;

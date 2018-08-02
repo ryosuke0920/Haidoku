@@ -42,8 +42,8 @@
 	let apiRequestQueue = {};
 	let fetchRequestID = (()=>{ let id = 0; return ()=>{return ++id}	})();
 	let serviceCode = API_SERVICE_CODE_NONE;
+	let languageFilter = [];
 	let apiCutOut = true;
-	let apiDocumentCache = {};
 	let apiFooterNode;
 
 	Promise.resolve()
@@ -505,6 +505,9 @@
 			applyServiceCode( change["s"]["newValue"] );
 			resetLinkListEvents();
 		}
+		if( change["ll"] ){
+			setLanguageFilter( change["ll"]["newValue"] );
+		}
 		if( change["co"] ){
 			setLinkListApiCutOut( change["co"]["newValue"] );
 		}
@@ -517,8 +520,10 @@
 	}
 
 	function loadSetting(){
-		let lang = getUiLang();
-		if( !API_SERVICE.hasOwnProperty(lang) ) lang = DEFAULT_LOCALE;
+		let serviceCode = getUiLang();
+		if( !API_SERVICE.hasOwnProperty(serviceCode) ) serviceCode = DEFAULT_LOCALE;
+		let service = API_SERVICE[serviceCode];
+		let languageFilter = API_SERVICE_PROPERTY[service].defaultLanguage;
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,
@@ -532,7 +537,8 @@
 			"f": LINK_LIST_FAVICON_ONLY,
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
 			"ls": LINK_LIST_SEPARATOR_VERTICAL,
-			"s": lang,
+			"s": serviceCode,
+			"ll": languageFilter,
 			"co": true
 		});
 		return getter.then(setVer, onReadError);
@@ -561,6 +567,7 @@
 		applyLinknListSeparator( res["ls"] );
 		setServiceCode( res["s"] );
 		applyServiceCode( res["s"] );
+		setLanguageFilter( res["ll"] );
 		setLinkListApiCutOut( res["co"] );
 		resetLinkListEvents();
 		if(hasLinkList()) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
@@ -585,6 +592,10 @@
 
 	function setServiceCode(res){
 		serviceCode = res;
+	}
+
+	function setLanguageFilter(res){
+		languageFilter = res;
 	}
 
 	function setLinkListApiCutOut(res){
@@ -839,8 +850,6 @@
 	}
 
 	function apiRequestStart(obj){
-		console.log("apiRequestStart");
-		console.log(performance.now());
 		ponyfill.runtime.sendMessage({
 			"method": "apiRequest",
 			"data": obj.data
@@ -883,14 +892,57 @@
 	}
 
 	function apiResponse(e){
-		console.log("apiResponse");
-		console.log(performance.now());
+		console.log(languageFilter);
 		if( !isActiveApiRequestQueue(this) ) return;
 		apiTitleNode.innerText = e.title;
 		apiTitleNode.setAttribute("href", e.fullurl);
-		for(let i=0; i<e.html.length; i++){
-			let doc = document.createElement("div");
-			doc.innerHTML = e.html[i];
+		let sections = [];
+		if(languageFilter.length > 0){
+			for(let i=0; i<e.html.length; i++){
+				let div = document.createElement("div");
+				div.innerHTML = e.html[i];
+				for(let j=0; j<languageFilter.length; j++){
+					let language = languageFilter[j];
+					let followed = API_SERVICE_PROPERTY[e.service].followed;
+					let regex = new RegExp("\\s+"+followed+"$","i");
+					if (followed != null) language = language.replace(regex, "");
+					let list = div.querySelectorAll(".section-heading");
+					console.log(list);
+					for(let k=0; k<list.length; k++){
+						let target = list[k];
+						if(language!=target.innerText) continue;
+						let tagName = target.tagName;
+						let tmp = [];
+						tmp.push(target);
+						while( target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ){
+							tmp.push( target.nextElementSibling );
+							target = target.nextElementSibling;
+						}
+						let content = document.createElement("div");
+						for(let l=0; l<tmp.length; l++ ){
+							content.appendChild(tmp[l]);
+						}
+						sections.push(content);
+						break;
+					}
+				}
+			}
+		}
+		else {
+			for(let i=0; i<e.html.length; i++){
+				let div = document.createElement("div");
+				div.innerHTML = e.html[i];
+				sections.push(div);
+			}
+		}
+		console.log(sections);
+		if(sections.lenght<=0){
+			//TODO
+			console.log("section not found.");
+			return;
+		}
+		for(let i=0; i<sections.length; i++){
+			let doc = sections[i];
 			let content;
 			let list;
 			if(apiCutOut){
@@ -926,7 +978,7 @@
 			for(let i=0; i<list.length; i++){
 				list[i].style.width = "50px";
 			}
-　　　	list = content.querySelectorAll("a[href]:not([href^=http])");
+			list = content.querySelectorAll("a[href]:not([href^=http])");
 			for(let i=0; i<list.length; i++){
 				let url = list[i].getAttribute("href");
 				list[i].setAttribute("href", e.service + url);
@@ -943,12 +995,16 @@
 			apiBodyNode.appendChild(content);
 		}
 		linkListNode.classList.remove(CSS_PREFIX+"-loading");
-		console.log(performance.now());
 	}
 
 	function apiResponseError(e){
 		console.error(e);
 		if(!isActiveApiRequestQueue(this)) return;
+		if(e instanceof Error ) {
+			if(e.message == API_PAGE_NOT_FOUND){
+				//TODO
+			}
+		}
 		apiTitleNode.innerText = "Not Found."; // TODO
 		apiTitleNode.removeAttribute("href");
 		let content = createElement("p");
