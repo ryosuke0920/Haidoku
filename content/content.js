@@ -887,7 +887,7 @@
 		console.log(performance.now());
 		if( !isActiveApiRequestQueue(this) ) return;
 		apiTitleNode.innerText = e.title;
-		apiTitleNode.setAttribute("href", e.url);
+		apiTitleNode.setAttribute("href", e.fullurl);
 		for(let i=0; i<e.html.length; i++){
 			let doc = document.createElement("div");
 			doc.innerHTML = e.html[i];
