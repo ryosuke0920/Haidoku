@@ -550,15 +550,16 @@
 	}
 
 	function downloadLanguageFilterError(service,e){
+		console.error(e);
 		deleteLanguageCache(service);
-		if( e instanceof ProgressEvent ) {
-			return notice( ponyfill.i18n.getMessage("notificationConnectionError", [e.target.status]));
+		if( e.target.status == 200 && e.target.response != null ) {
+			return notice( ponyfill.i18n.getMessage("notificationResponseError", [e.target.response.error.code]));
 		}
-
-
-
-
-		return notice("faild download languages."); //TODO kono error ha user ni oshieru
+		if( e.target.status != 200 ) {
+			return notice( ponyfill.i18n.getMessage("notificationConnectionError", [e.type,e.target.status]));
+		}
+		/* likely invalid json format. */
+		return notice( ponyfill.i18n.getMessage("notificationUnexpectedError"));
 	}
 
 	function prepareAjaxApiLang(){
@@ -599,8 +600,11 @@
 	function responseAjaxApiLang(e){
 		if( e.target.status == "200" ){
 			let res = e.target.response;
+			if (res == null){
+				return Promise.reject(e);
+			}
 			if (res.hasOwnProperty("error")){
-				return Promise.reject(res);
+				return Promise.reject(e);
 			}
 			this.cat = this.cat.concat(res.query.categorymembers);
 			if( !res.hasOwnProperty("continue")) {
@@ -622,7 +626,7 @@
 			);
 			return p;
 		}
-		return Promise.reject(e.target);
+		return Promise.reject(e);
 	}
 
 	function afterAjaxApiLang(list){
