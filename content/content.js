@@ -861,7 +861,7 @@
 			()=>{
 				dropApiRequestQueue(obj)
 			}
-		);
+		).catch((e)=>{ console.error(e) });
 	}
 
 	function isActiveApiRequestQueue(obj){
@@ -892,40 +892,44 @@
 	}
 
 	function apiResponse(e){
-		console.log(languageFilter);
 		if( !isActiveApiRequestQueue(this) ) return;
 		apiTitleNode.innerText = e.title;
 		apiTitleNode.setAttribute("href", e.fullurl);
 		let sections = [];
 		if(languageFilter.length > 0){
+			let followed = API_SERVICE_PROPERTY[e.service].followed;
+			let regex = new RegExp("\\s+"+followed+"$","i");
 			for(let i=0; i<e.html.length; i++){
 				let div = document.createElement("div");
 				div.innerHTML = e.html[i];
 				for(let j=0; j<languageFilter.length; j++){
 					let language = languageFilter[j];
-					let followed = API_SERVICE_PROPERTY[e.service].followed;
-					let regex = new RegExp("\\s+"+followed+"$","i");
 					if (followed != null) language = language.replace(regex, "");
 					let list = div.querySelectorAll(".section-heading");
-					console.log(list);
 					for(let k=0; k<list.length; k++){
 						let target = list[k];
 						if(language!=target.innerText) continue;
-						let tagName = target.tagName;
 						let tmp = [];
 						tmp.push(target);
 						while( target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ){
 							tmp.push( target.nextElementSibling );
 							target = target.nextElementSibling;
 						}
-						let content = document.createElement("div");
+						let div2 = document.createElement("div");
 						for(let l=0; l<tmp.length; l++ ){
-							content.appendChild(tmp[l]);
+							div2.appendChild(tmp[l]);
 						}
-						sections.push(content);
+						sections.push(div2);
 						break;
 					}
 				}
+			}
+			if(sections.length<=0){
+				let content = document.createElement("p");
+				content.innerHTML = ponyfill.i18n.getMessage("htmlSectionNotFound");
+				apiBodyNode.appendChild(content);
+				linkListNode.classList.remove(CSS_PREFIX+"-loading");
+				return;
 			}
 		}
 		else {
@@ -934,12 +938,6 @@
 				div.innerHTML = e.html[i];
 				sections.push(div);
 			}
-		}
-		console.log(sections);
-		if(sections.lenght<=0){
-			//TODO
-			console.log("section not found.");
-			return;
 		}
 		for(let i=0; i<sections.length; i++){
 			let doc = sections[i];
@@ -954,18 +952,13 @@
 				let reduceSections = API_SERVICE_PROPERTY[e.service].reduceSection;
 				for(let i=0; i<list.length; i++){
 					let node = list[i];
-					let flag = false;
 					for(let i=0; i<reduceSections.length; i++ ){
-						if(node.innerText.match(reduceSections[i]) ){
-							flag = true;
-							break;
-						}
-					}
-					if( flag ){
+						if( !node.innerText.match(reduceSections[i]) ) continue;
 						while(node.nextElementSibling && !node.nextElementSibling.classList.contains("in-block")){
 							node.nextElementSibling.remove();
 						}
 						node.remove();
+						break;
 					}
 				}
 			}
@@ -998,16 +991,23 @@
 	}
 
 	function apiResponseError(e){
-		console.error(e);
+		console.log(e);
 		if(!isActiveApiRequestQueue(this)) return;
+		let content = document.createElement("div");
 		if(e instanceof Error ) {
 			if(e.message == API_PAGE_NOT_FOUND){
-				//TODO
+				apiTitleNode.removeAttribute("href");
+				apiTitleNode.innerText = "Page not found";
+				content.innerHTML = ponyfill.i18n.getMessage("htmlPageNotFound");
+			}
+			else {
+				apiTitleNode.innerText = "Error";
+				content.innerHTML = e.message;
 			}
 		}
-		apiTitleNode.innerText = "Not Found."; // TODO
-		apiTitleNode.removeAttribute("href");
-		let content = createElement("p");
+		else {
+			//TODO
+		}
 		apiBodyNode.appendChild(content);
 		linkListNode.classList.remove(CSS_PREFIX+"-loading");
 	}

@@ -96,6 +96,12 @@
 			}
 		}
 	},
+	"htmlPageNotFound": {
+		"message": "The page could not be found."
+	},
+	"htmlSectionNotFound": {
+		"message": "The page was found but there ware no description for the language specified in \"Language filter\"."
+	},
 	"htmlZoomDown": {
 		"message": "Zoom down",
 		"description": ""

@@ -96,6 +96,12 @@
 			}
 		}
 	},
+	"htmlPageNotFound": {
+		"message": "ページは見つかりませんでした。"
+	},
+	"htmlSectionNotFound": {
+		"message": "ページは見つかりましたが、\"言語フィルター\"で指定した言語の解説は見つかりませんでした。"
+	},
 	"htmlZoomDown": {
 		"message": "縮小",
 		"description": ""
