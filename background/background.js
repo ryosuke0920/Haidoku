@@ -455,6 +455,7 @@ function broadcastWindows(windows){
 }
 
 function apiRequest(text){
+	//throw( new Error("this is test error.") );
 	if(!API_SERVICE.hasOwnProperty(serviceCode)) throw( new Error("service not found. serviceCode="+serviceCode) );
 	for(let i=0; i<apiDocumentCache.length; i++){
 		if( text == apiDocumentCache[i].title || text == apiDocumentCache[i].text ){
@@ -480,7 +481,11 @@ function apiRequest(text){
 	.then( responseAjaxApiInfo.bind(obj) )
 	.then( requestAjaxApiParse.bind(obj) )
 	.then( responseAjaxApiParse.bind(obj) )
-	.then( returnContent.bind(obj) );
+	.then( returnContent.bind(obj) )
+	.catch( (e)=>{
+		console.error(e);
+		return Promise.reject(e);
+	} );
 }
 
 function requestAjaxApiInfo(){
@@ -642,76 +647,7 @@ function responseAjaxApiSearch(e){
 		responseAjaxApiInfo2.bind(this)
 	);
 }
-/*
-function requestAjaxApiSection(){
-	let param = [
-		{
-			"key"  :"action",
-			"value":"parse"
-		},{
-			"key"  :"format",
-			"value":"json"
-		},{
-			"key"  :"pageid",
-			"value":this.pageid
-		},{
-			"key"  :"prop",
-			"value":"sections"
-		}
-	];
-	this.url.push( makeApiURL(this.service+this.path, param) );
-	return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER);
-}
 
-function responseAjaxApiSection(e){
-	return new Promise((resolve,reject)=>{
-		if( e.target.status != "200" ){
-			reject(e);
-			return;
-		}
-		if(e.target.response.hasOwnProperty("error")){
-			reject(e);
-			return;
-		}
-		this.sections = e.target.response.parse.sections;
-		resolve();
-	});
-}
-
-function decideSection(){
-	if(languageList.length <= 0) {
-		return Promise.resolve().then(
-			requestAjaxApiParse.bind(this)
-		).then(
-			responseAjaxApiParse.bind(this)
-		);
-	}
-	let comparisons = languageList;
-	if ( API_SERVICE_PROPERTY[this.service].followed != null) {
-		let regex = new RegExp( "\\s+" + API_SERVICE_PROPERTY[this.service].followed + "$" );
-		for(let i=0; i<comparisons.length; i++){
-			 comparisons[i] = comparisons[i].replace(regex, "");
-		}
-	}
-	for(let i=0; i<this.sections.length; i++){
-		let section = this.sections[i];
-		if( comparisons.includes(section.line) ) {
-			this.sectionIndex.push(section.index);
-			this.sectionLine.push(section.line);
-		}
-	}
-	if(this.sectionIndex.length <= 0) return Promise.reject(new Error("section not found."));
-	let p = Promise.resolve();
-	for( let i=0; i<this.sectionIndex.length; i++ ){
-		p = p.then(
-			requestAjaxApiParse.bind(this)
-		).then(
-			responseAjaxApiParse.bind(this)
-		);
-	}
-	return p;
-}
-*/
 function requestAjaxApiParse(){
 	let param = [
 		{
