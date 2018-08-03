@@ -78,33 +78,37 @@ function notify(message, sender, sendResponse){
 	let method = message.method;
 	let data = message.data;
 	if( method == "notice" ){
-		let p = notice(data);
-		sendResponse(p);
-		return p;
+		return notice(data).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e.toString());
+		});
 	}
 	else if( method == "saveHistory" ){
-		let p = saveHistory(data);
-		sendResponse(p);
-		return p;
+		return saveHistory(data).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e.toString());
+		});
 	}
 	else if( method == "openOptions" ){
-		let p = ponyfill.runtime.openOptionsPage();
-		sendResponse(p);
-		return p;
+		return ponyfill.runtime.openOptionsPage().catch((e)=>{
+			console.error(e)
+			return Promise.reject(e.toString());
+		});
 	}
 	else if( method == "getFavicon" ){
-		sendResponse( faviconCache );
-		return Promise.resolve( faviconCache );
+		return Promise.resolve(faviconCache);
 	}
 	else if( method == "apiRequest" ){
-		let p = apiRequest(data.text);
-		sendResponse( p );
-		return p;
+		return apiRequest(data.text).catch((e)=>{
+			console.error(e)
+			return Promise.reject(e.toString());
+		});
 	}
 	else {
-		let p = save(data);
-		sendResponse(p);
-		return p;
+		return save(data).catch((e)=>{
+			console.error(e)
+			return Promise.reject(e.toString());
+		});
 	}
 }
 
