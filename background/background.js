@@ -801,7 +801,6 @@ function responseAjaxApiParse(e){
 }
 
 function returnContent(){
-	console.log(this);
 	apiDocumentCache.push(this);
 	if(apiDocumentCache.length >= MAX_API_CACHE) apiDocumentCache.shift();
 	return this;
