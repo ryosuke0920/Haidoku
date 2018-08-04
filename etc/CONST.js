@@ -53,4 +53,5 @@ const SECTION_NOT_FOUND_ERROR = "section not found";
 const CONNECTION_ERROR = "connection error";
 const SERVER_ERROR = "server error";
 const APPLICATION_ERROR = "application error";
+const HTTP_NG = "0";
 const HTTP_200_OK = "200";

@@ -91,7 +91,7 @@ function notify(message, sender, sendResponse){
 	}
 	else if( method == "openOptions" ){
 		return ponyfill.runtime.openOptionsPage().catch((e)=>{
-			console.error(e)
+			console.error(e);
 			return Promise.reject(e);
 		});
 	}
@@ -100,13 +100,13 @@ function notify(message, sender, sendResponse){
 	}
 	else if( method == "apiRequest" ){
 		return apiRequest(data.text).catch((e)=>{
-			console.error(e)
+			console.error(e);
 			return Promise.reject(e);
 		});
 	}
 	else {
 		return save(data).catch((e)=>{
-			console.error(e)
+			console.error(e);
 			return Promise.reject(e);
 		});
 	}
@@ -510,7 +510,7 @@ function requestAjaxApiInfo(){
 }
 
 function responseAjaxApiInfo(e){
-	if( e.target.status != HTTP_200_OK ){
+	if( e.target.status == HTTP_NG ){
 		let data = {
 			"error": CONNECTION_ERROR,
 			"code": e.target.status,
@@ -519,7 +519,16 @@ function responseAjaxApiInfo(e){
 		};
 		return data;
 	}
-	if (e.target.response.hasOwnProperty("error")){
+	if( e.target.status != HTTP_200_OK ){
+		let data = {
+			"error": SERVER_ERROR,
+			"code": e.target.status,
+			"message": e.target.statusText,
+			"data": this
+		};
+		return data;
+	}
+	if ( e.target.response.hasOwnProperty("error")){
 		let data = {
 			"error": SERVER_ERROR,
 			"code": e.target.response.error.code,
@@ -562,9 +571,18 @@ function requestAjaxApiPrefixSearch(){
 }
 
 function responseAjaxApiPrefixSearch(e){
-	if( e.target.status != HTTP_200_OK ){
+	if( e.target.status == HTTP_NG ){
 		let data = {
 			"error": CONNECTION_ERROR,
+			"code": e.target.status,
+			"message": e.target.statusText,
+			"data": this
+		};
+		return data;
+	}
+	if( e.target.status != HTTP_200_OK ){
+		let data = {
+			"error": SERVER_ERROR,
 			"code": e.target.status,
 			"message": e.target.statusText,
 			"data": this
@@ -616,9 +634,18 @@ function requestAjaxApiInfo2(){
 }
 
 function responseAjaxApiInfo2(e){
-	if( e.target.status != HTTP_200_OK ){
+	if( e.target.status == HTTP_NG ){
 		let data = {
 			"error": CONNECTION_ERROR,
+			"code": e.target.status,
+			"message": e.target.statusText,
+			"data": this
+		};
+		return data;
+	}
+	if( e.target.status != HTTP_200_OK ){
+		let data = {
+			"error": SERVER_ERROR,
 			"code": e.target.status,
 			"message": e.target.statusText,
 			"data": this
@@ -674,9 +701,18 @@ function requestAjaxApiSearch(){
 }
 
 function responseAjaxApiSearch(e){
-	if( e.target.status != HTTP_200_OK ){
+	if( e.target.status == HTTP_NG ){
 		let data = {
 			"error": CONNECTION_ERROR,
+			"code": e.target.status,
+			"message": e.target.statusText,
+			"data": this
+		};
+		return data;
+	}
+	if( e.target.status != HTTP_200_OK ){
+		let data = {
+			"error": SERVER_ERROR,
 			"code": e.target.status,
 			"message": e.target.statusText,
 			"data": this
@@ -733,9 +769,18 @@ function requestAjaxApiParse(){
 }
 
 function responseAjaxApiParse(e){
-	if( e.target.status != HTTP_200_OK ){
+	if( e.target.status == HTTP_NG ){
 		let data = {
 			"error": CONNECTION_ERROR,
+			"code": e.target.status,
+			"message": e.target.statusText,
+			"data": this
+		};
+		return data;
+	}
+	if( e.target.status != HTTP_200_OK ){
+		let data = {
+			"error": SERVER_ERROR,
 			"code": e.target.status,
 			"message": e.target.statusText,
 			"data": this
