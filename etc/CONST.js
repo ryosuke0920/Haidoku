@@ -48,4 +48,9 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	}
 };
-const API_PAGE_NOT_FOUND = "page not found";
+const PAGE_NOT_FOUND_ERROR = "page not found";
+const SECTION_NOT_FOUND_ERROR = "section not found";
+const CONNECTION_ERROR = "connection error";
+const SERVER_ERROR = "server error";
+const APPLICATION_ERROR = "application error";
+const HTTP_200_OK = "200";

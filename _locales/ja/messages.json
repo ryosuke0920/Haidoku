@@ -75,7 +75,7 @@
 		"message": "サポートしていない画像形式（Data URI）ですので検索できません。"
 	},
 	"notificationConnectionError": {
-		"message": "通信に失敗しました。$ERROR1$, $ERROR2$",
+		"message": "サーバーに接続できませんでした。$ERROR1$, $ERROR2$",
 		"placeholders": {
 			"ERROR1": {
 				"content": "$1",
@@ -96,11 +96,47 @@
 			}
 		}
 	},
-	"htmlPageNotFound": {
-		"message": "ページは見つかりませんでした。"
-	},
 	"htmlSectionNotFound": {
-		"message": "ページは見つかりましたが、\"言語フィルター\"で指定した言語の解説は見つかりませんでした。"
+		"message": "ページは見つかりましたが、\"言語フィルター\"で指定している言語の解説は見つかりませんでした。"
+	},
+	"htmlPageNotFound": {
+		"message": "ページが見つかりませんでした。"
+	},
+	"htmlConnectionError": {
+		"message": "サーバーに接続できませんでした。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlServerError": {
+		"message": "サーバーがエラーを返しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlApplicationError": {
+		"message": "アプリケーションがエラーを返しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlUnexpectedError": {
+		"message": "予期せぬエラーが発生しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
 	},
 	"htmlZoomDown": {
 		"message": "縮小",

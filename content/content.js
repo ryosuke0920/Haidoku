@@ -835,7 +835,7 @@
 		let keyList = Object.keys(apiRequestQueue);
 		if(keyList.length<=1) {
 			linkListNode.classList.add(CSS_PREFIX+"-loading");
-			apiTitleNode.innerText = "Now loading"; // TODO
+			apiTitleNode.innerText = "Now loading";
 			apiTitleNode.removeAttribute("href");
 			apiRequestStart(obj);
 			return;
@@ -893,6 +893,7 @@
 
 	function apiResponse(e){
 		if( !isActiveApiRequestQueue(this) ) return;
+		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		apiTitleNode.innerText = e.title;
 		apiTitleNode.setAttribute("href", e.fullurl);
 		let sections = [];
@@ -925,11 +926,13 @@
 				}
 			}
 			if(sections.length<=0){
-				let content = document.createElement("p");
-				content.innerHTML = ponyfill.i18n.getMessage("htmlSectionNotFound");
-				apiBodyNode.appendChild(content);
-				linkListNode.classList.remove(CSS_PREFIX+"-loading");
-				return;
+				let data = {
+					"error":SECTION_NOT_FOUND_ERROR,
+					"code":"",
+					"message":"",
+					"data": e
+				}
+				return apiResponseError.bind(this)(data);
 			}
 		}
 		else {
@@ -991,25 +994,54 @@
 	}
 
 	function apiResponseError(e){
-		console.log(e);
 		if(!isActiveApiRequestQueue(this)) return;
+		function after(content){
+			apiBodyNode.appendChild(content);
+			linkListNode.classList.remove(CSS_PREFIX+"-loading");
+		}
 		let content = document.createElement("div");
-		if(e instanceof Error ) {
-			if(e.message == API_PAGE_NOT_FOUND){
+		if(e && ( e instanceof Object) && e.hasOwnProperty("error")){
+			if( e.error == SECTION_NOT_FOUND_ERROR ){
+				apiTitleNode.setAttribute("href", e.data.fullurl);
+				apiTitleNode.innerText = e.data.title;
+				content.innerHTML = ponyfill.i18n.getMessage("htmlSectionNotFound");
+				after(content);
+				return;
+			}
+			if( e.error == PAGE_NOT_FOUND_ERROR ){
 				apiTitleNode.removeAttribute("href");
 				apiTitleNode.innerText = "Page not found";
-				content.innerHTML = ponyfill.i18n.getMessage("htmlPageNotFound");
+				content.innerText = ponyfill.i18n.getMessage("htmlPageNotFound");
+				after(content);
+				return;
 			}
-			else {
-				apiTitleNode.innerText = "Error";
-				content.innerHTML = e.message;
+			else if( e.error == CONNECTION_ERROR ){
+				apiTitleNode.removeAttribute("href");
+				apiTitleNode.innerText = "Connection error";
+				content.innerText = ponyfill.i18n.getMessage("htmlConnectionError",[e.code]);
+				after(content);
+				return;
+			}
+			else if( e.error == SERVER_ERROR ){
+				apiTitleNode.removeAttribute("href");
+				apiTitleNode.innerText = "Server error";
+				content.innerText = ponyfill.i18n.getMessage("htmlServerError",[e.code]);
+				after(content);
+				return;
+			}
+			else if( e.error == APPLICATION_ERROR ){
+				apiTitleNode.removeAttribute("href");
+				apiTitleNode.innerText = "Application error";
+				content.innerText = ponyfill.i18n.getMessage("htmlApplicationError",[e.code]);
+				after(content);
+				return;
 			}
 		}
-		else {
-			//TODO
-		}
-		apiBodyNode.appendChild(content);
-		linkListNode.classList.remove(CSS_PREFIX+"-loading");
+		apiTitleNode.removeAttribute("href");
+		apiTitleNode.innerText = "Unexpected error";
+		content.innerText = ponyfill.i18n.getMessage("htmlUnexpectedError",[e.toString()]);
+		after(content);
+		return;
 	}
 
 	function show(node){
