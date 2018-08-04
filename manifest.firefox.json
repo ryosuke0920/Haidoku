@@ -37,6 +37,7 @@
 			"js": [
 				"etc/CONST.js",
 				"lib/ponyfill.js",
+				"lib/check.js",
 				"content/content.js"
 			]
 		}

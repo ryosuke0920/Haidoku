@@ -16,6 +16,9 @@
 	const API_QUERY_DERAY = 500;
 	const LINK_LIST_CLOSE_TIME = 500;
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
+	const API_TEXT_MAX_LENGTH = 255;
+	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
+
 	let linkListNode;
 	let linkListNodeTop = 0;
 	let linkListNodeLeft = 0;
@@ -821,22 +824,25 @@
 	}
 
 	function apiRequest(selection){
-		let id = fetchRequestID();
 		let text = selection.toString().replace(REMOVE_SPACE_REGEX," ").trim();
+		let id = fetchRequestID();
 		let obj = {
 			"id": id,
-			"abort": false,
 			"data": {
 				"text": text,
 				"api": "wiktionary"
 			}
 		};
 		apiRequestQueue[id] = obj;
+		if( !checkByte(text, API_TEXT_MAX_LENGTH) ){
+			let data = {
+				"error":API_TEXT_MAX_LENGTH_ERROR
+			};
+			return apiResponseError.bind(obj)(data);
+		}
 		let keyList = Object.keys(apiRequestQueue);
 		if(keyList.length<=1) {
-			linkListNode.classList.add(CSS_PREFIX+"-loading");
-			apiTitleNode.innerText = "Now loading";
-			apiTitleNode.removeAttribute("href");
+			clearApiContent();
 			apiRequestStart(obj);
 			return;
 		}
@@ -882,6 +888,9 @@
 	}
 
 	function clearApiContent(){
+		linkListNode.classList.add(CSS_PREFIX+"-loading");
+		apiTitleNode.innerText = "Now loading";
+		apiTitleNode.removeAttribute("href");
 		clearChildren(apiBodyNode);
 	}
 
@@ -928,8 +937,6 @@
 			if(sections.length<=0){
 				let data = {
 					"error":SECTION_NOT_FOUND_ERROR,
-					"code":"",
-					"message":"",
 					"data": e
 				}
 				return apiResponseError.bind(this)(data);
@@ -1001,6 +1008,13 @@
 		}
 		let content = document.createElement("div");
 		if(e && ( e instanceof Object) && e.hasOwnProperty("error")){
+			if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
+				apiTitleNode.removeAttribute("href");
+				apiTitleNode.innerText = "Max length error";//Selected text too long
+				content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthError",[API_TEXT_MAX_LENGTH]);
+				after(content);
+				return;
+			}
 			if( e.error == SECTION_NOT_FOUND_ERROR ){
 				apiTitleNode.setAttribute("href", e.data.fullurl);
 				apiTitleNode.innerText = e.data.title;

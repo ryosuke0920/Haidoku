@@ -96,6 +96,15 @@
 			}
 		}
 	},
+	"htmlMaxLengthError": {
+		"message": "$ERROR$バイト以内で検索します。",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "255"
+			}
+		}
+	},
 	"htmlSectionNotFound": {
 		"message": "ページは見つかりましたが、\"言語フィルター\"で指定している言語の解説は見つかりませんでした。"
 	},
