@@ -580,5 +580,14 @@
 	"htmlDateInputError": {
 		"message": "日付を正しく入力して下さい。",
 		"description": ""
+	},
+	"htmlCheckLanguageFilterLengthError": {
+		"message": "言語フィルターの追加は最大で$MAX$個までです。",
+		"placeholders": {
+			"MAX": {
+				"content": "$1",
+				"example": "10"
+			}
+		}
 	}
 }

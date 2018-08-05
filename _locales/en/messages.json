@@ -580,5 +580,14 @@
 	"htmlDateInputError": {
 		"message": "Please enter a date correctly.",
 		"description": ""
+	},
+	"htmlCheckLanguageFilterLengthError": {
+		"message": "The number of \"Language filter\" can be set up to $MAX$",
+		"placeholders": {
+			"MAX": {
+				"content": "$1",
+				"example": "10"
+			}
+		}
 	}
 }

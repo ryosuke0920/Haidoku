@@ -744,7 +744,7 @@
 			if( e.target.checked ) {
 				if(!checkLanguageLimit()){
 					e.preventDefault();
-					notice( "max is " + API_LANGUAGE_MAX ); // TODO
+					notice( ponyfill.i18n.getMessage("htmlCheckLanguageFilterLengthError", [API_LANGUAGE_MAX]) );
 					return;
 				}
 				apiAddLanguage(e.target.value);
