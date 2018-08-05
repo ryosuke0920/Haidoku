@@ -479,6 +479,9 @@
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - 日本語"
 	},
+	"htmlServiceCodeSelectMessage": {
+		"message": "ウィクショナリーを選択してください。"
+	},
 	"htmlLanguageFilterTitle": {
 		"message": "言語フィルター"
 	},
@@ -529,7 +532,7 @@
 		"description": ""
 	},
 	"htmlCheckByteLengthError": {
-		"message": "テキストを$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイトです）。",
+		"message": "$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイト）。",
 		"description": "",
 		"placeholders": {
 			"MAX_LENGTH": {

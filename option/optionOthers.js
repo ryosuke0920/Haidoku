@@ -55,6 +55,7 @@
 			{ "selector": ".serviceCodeNone", "property": "innerText", "key": "htmlServiceCodeNone" },
 			{ "selector": ".serviceCodeEn", "property": "innerText", "key": "htmlServiceCodeEn" },
 			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
+			{ "selector": ".serviceCodeSelectMessage", "property": "innerText", "key": "htmlServiceCodeSelectMessage" },
 			{ "selector": ".languageFilterTitle", "property": "innerText", "key": "htmlLanguageFilterTitle" },
 			{ "selector": ".languageFilterDescription", "property": "innerText", "key": "htmlLanguageFilterDescription" },
 			{ "selector": ".languageFilterAside", "property": "innerText", "key": "htmlLanguageFilterAside" },
@@ -70,12 +71,21 @@
 	}
 
 	function initNode(){
+		window.addEventListener("click", hideInputMessage);
 		ponyfill.storage.onChanged.addListener(fileChangeBehavior);
 		languageFilterSelectPaneNode.addEventListener("click", apiLangPaneClickBehavior);
 		apiLangPrefixSelectNode.addEventListener("change", apiLangPrefixSelectChangeBehavior);
 		othersNode.addEventListener("click", otherNodeClickBehavior);
 		othersNode.addEventListener("change", otherNodeChangeBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
+	}
+
+	function hideInputMessage(e){
+		if(e.target.closest(".addLanguageFilter")) return;
+		let list = othersNode.querySelectorAll(".inputMessage:not(.hide)");
+		for(let i=0; i<list.length; i++){
+			hide(list[i]);
+		}
 	}
 
 	function initProperties(){
@@ -690,7 +700,7 @@
 	function addLanguageFilterClickBehavior(){
 		let service = getApiService();
 		if(service == API_SERVICE_NONE){
-			notice("please select wiktinary.");//TODO
+			show(othersNode.querySelector(".serviceCodeSelectMessage"));
 			return;
 		}
 		if(hasLanguageCache(service)) {

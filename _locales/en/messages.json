@@ -479,6 +479,9 @@
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - Japanese"
 	},
+	"htmlServiceCodeSelectMessage": {
+		"message": "Please select a Wiktionary."
+	},
 	"htmlLanguageFilterTitle": {
 		"message": "Language filter"
 	},
