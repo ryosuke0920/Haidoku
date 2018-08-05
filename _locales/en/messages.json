@@ -462,16 +462,13 @@
 		"message": "Use Wiktionary"
 	},
 	"htmlApiServiceDescription": {
-		"message": "Wiktionary is a dictionary site made by volunteers. The description of word you selected is displayed using API provided by Wiktionary."
-	},
-	"htmlApiServiceAside": {
-		"message": "This function does not carry out a complete test because the article held by Wiktionary is enormous. In addition, we can not guarantee the accuracy in view of always updating articles."
+		"message": "Wiktionary is a dictionary site made by volunteers. The description of word you selected is displayed using Wiktionary."
 	},
 	"htmlServiceCodeTitle": {
 		"message": "Select Wiktionary"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" is canceled, please reset it."
+		"message": "The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" need additional setting."
 	},
 	"htmlServiceCodeNone": {
 		"message": "Disable"
@@ -486,7 +483,10 @@
 		"message": "Language filter"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "Wiktionary article has description for all words of all languages. Using language filter, it's displayed a description of only the language you want.　For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\".　If you select \"English\" for Language filter, only the English description \"4\" will be displayed."
+		"message": "Wiktionary article has description for all words of all languages. Using language filter, it's displayed a description of only the language you want."
+	},
+	"htmlLanguageFilterAside": {
+		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\".　If you select \"English\" for Language filter, only the English description \"4\" will be displayed."
 	},
 	"htmlAddLanguageFilter": {
 		"message": "Add language filter"
@@ -504,7 +504,7 @@
 		"message": "Cut out description"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "From the description, cut out the part of \"meaning\" to simplify the display contents."
+		"message": "From the description, cut out the part of \"meaning\" and display it."
 	},
 	"htmlApiCutOutLabel": {
 		"message": "Enable"

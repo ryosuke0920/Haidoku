@@ -50,7 +50,6 @@
 			{ "selector": ".linkListSeparatorVertical", "property": "innerText", "key": "htmlLinkListSeparatorVertical" },
 			{ "selector": ".apiServiceTitle", "property": "innerText", "key": "htmlApiServiceTitle" },
 			{ "selector": ".apiServiceDescription", "property": "innerText", "key": "htmlApiServiceDescription" },
-			{ "selector": ".apiServiceAside", "property": "innerText", "key": "htmlApiServiceAside" },
 			{ "selector": ".serviceCodeTitle", "property": "innerText", "key": "htmlServiceCodeTitle" },
 			{ "selector": ".serviceCodeDescription", "property": "innerText", "key": "htmlServiceCodeDescription" },
 			{ "selector": ".serviceCodeNone", "property": "innerText", "key": "htmlServiceCodeNone" },
@@ -58,6 +57,7 @@
 			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
 			{ "selector": ".languageFilterTitle", "property": "innerText", "key": "htmlLanguageFilterTitle" },
 			{ "selector": ".languageFilterDescription", "property": "innerText", "key": "htmlLanguageFilterDescription" },
+			{ "selector": ".languageFilterAside", "property": "innerText", "key": "htmlLanguageFilterAside" },
 			{ "selector": ".addLanguageFilter", "property": "innerText", "key": "htmlAddLanguageFilter" },
 			{ "selector": ".languageFilterSelectedDescription", "property": "innerText", "key": "htmlLanguageFilterSelectedDescription" },
 			{ "selector": ".languageFilterDownloadMessage", "property": "innerText", "key": "htmlLanguageFilterDownloadMessage" },
@@ -204,7 +204,6 @@
 		if( e.hasOwnProperty("s") ){
 			setServiceCode(e["s"]["newValue"]);
 			setSampleLinkListServiceCode(e["s"]["newValue"]);
-			setLanguageList([]);
 			makeLanguageListNodes();
 		}
 		if( e.hasOwnProperty("ll") ){
@@ -514,14 +513,11 @@
 			setSampleLinkListSeparator(LINK_LIST_SEPARATOR_HORIZONTAL);
 		}
 		setSampleLinkListServiceCode(serviceCode);
-		setLanguageList([]);
-		makeLanguageListNodes([]);
 	}
 
 	function saveServiceCode(value){
 		let data = {
-			"s": value,
-			"ll": []
+			"s": value
 		};
 		return saveW(data);
 	}
@@ -529,8 +525,7 @@
 	function saveServiceCodeNone(value){
 		let data = {
 			"ls": LINK_LIST_SEPARATOR_HORIZONTAL,
-			"s": value,
-			"ll": []
+			"s": value
 		};
 		return saveW(data);
 	}
