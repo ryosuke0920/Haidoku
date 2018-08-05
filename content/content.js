@@ -18,6 +18,8 @@
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 	const API_TEXT_MAX_LENGTH = 255;
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
+	const API_SWITCH_DISABLED = "";
+	const API_SWITCH_ENABLED = "1";
 
 	let linkListNode;
 	let linkListNodeTop = 0;
@@ -48,11 +50,12 @@
 	let languageFilter = [];
 	let apiCutOut = true;
 	let apiFooterNode;
+	let apiSwitcheNode;
 
 	Promise.resolve()
 		.then(init)
 		.then(
-			()=>{ return Promise.resolve().then(loadSetting).then(addCommonLinkListEvents); },
+			()=>{ return Promise.resolve().then(loadSetting).then(addCommonLinkListEvents) },
 			silentError
 		).catch(unexpectedError);
 
@@ -86,6 +89,13 @@
 		let apiHeaderNode = document.createElement("div");
 		apiHeaderNode.setAttribute("id",CSS_PREFIX+"-apiHeader");
 		apiContentNode.appendChild(apiHeaderNode);
+		apiSwitcheNode = document.createElement("span");
+		apiSwitcheNode.setAttribute("id",CSS_PREFIX+"-apiSwitch");
+		apiSwitcheNode.classList.add(CSS_PREFIX+"-checkboxButton");
+		apiHeaderNode.appendChild(apiSwitcheNode);
+		let apiSwitcheCircleNode = document.createElement("span");
+		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
+		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
 		apiTitleNode = document.createElement("a");
 		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
 		apiTitleNode.setAttribute("rel","noreferrer");
@@ -140,6 +150,7 @@
 		document.addEventListener("mouseup", mouseupCommonBehavior);
 		document.addEventListener("mousedown", mousedownCommonBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
+		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
 	}
 
 	function addAutoLinkListEvents(){
@@ -175,7 +186,7 @@
 			let rectList = lastRange.getClientRects();
 			let rect = rectList[rectList.length-1];
 			showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-			if(serviceCode != API_SERVICE_CODE_NONE){
+			if(isEnableApi()){
 				abortApiRequestQueue();
 				apiRequest(selection);
 			}
@@ -210,7 +221,7 @@
 				selectionChangedFlag = false;
 				makeLinkList(selection.toString());
 				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selection);
-				if(serviceCode != API_SERVICE_CODE_NONE){
+				if(isEnableApi()){
 					abortApiRequestQueue();
 					apiRequest(selection);
 				}
@@ -241,7 +252,7 @@
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
 				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-				if(serviceCode != API_SERVICE_CODE_NONE) {
+				if(isEnableApi()) {
 					abortApiRequestQueue();
 					apiRequest(selection);
 				}
@@ -514,6 +525,9 @@
 		if( change["co"] ){
 			setLinkListApiCutOut( change["co"]["newValue"] );
 		}
+		if( change["sw"] ){
+			setApiSwitch( change["sw"]["newValue"] );
+		}
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
@@ -540,6 +554,7 @@
 			"f": LINK_LIST_FAVICON_ONLY,
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
 			"ls": LINK_LIST_SEPARATOR_VERTICAL,
+			"sw": API_SWITCH_DISABLED,
 			"s": serviceCode,
 			"ll": languageFilter,
 			"co": true
@@ -568,6 +583,7 @@
 		applyFaviconDisplay( res["f"] );
 		applyLinknListDirection( res["ld"] );
 		applyLinknListSeparator( res["ls"] );
+		setApiSwitch( res["sw"] );
 		setServiceCode( res["s"] );
 		applyServiceCode( res["s"] );
 		setLanguageFilter( res["ll"] );
@@ -1064,6 +1080,43 @@
 
 	function hide(node){
 		node.classList.add(CSS_PREFIX+"-hide");
+	}
+
+	function apiSwitchBehavior(e){
+		if(apiSwitcheNode.getAttribute("data-checked") != API_SWITCH_ENABLED){
+			setApiSwitch(API_SWITCH_ENABLED);
+			saveApiSwitch(API_SWITCH_ENABLED).catch( onSaveError );
+		}
+		else {
+			setApiSwitch(API_SWITCH_DISABLED);
+			saveApiSwitch(API_SWITCH_DISABLED).catch( onSaveError );
+		}
+	}
+
+	function setApiSwitch(value){
+		if(value != API_SWITCH_ENABLED){
+			apiSwitcheNode.removeAttribute("data-checked");
+		}
+		else {
+			apiSwitcheNode.setAttribute("data-checked", API_SWITCH_ENABLED);
+		}
+	}
+
+	function isApiSwitchOn(){
+		return ( apiSwitcheNode.getAttribute("data-checked") == API_SWITCH_ENABLED );
+	}
+
+	function saveApiSwitch(value){
+		return ponyfill.runtime.sendMessage({
+			"method": "saveApiSwitch",
+			"data": {
+				"sw": value,
+			}
+		});
+	}
+
+	function isEnableApi(){
+		return ( hasServiceCode() && isApiSwitchOn() );
 	}
 
 })();

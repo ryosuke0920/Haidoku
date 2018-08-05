@@ -184,6 +184,7 @@
 	padding:5px 10px;
 }
 #lessLaborGoToDictionary-apiHeader {
+	position: relative;
 	border-top: solid 1px gray;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
@@ -197,6 +198,34 @@
 #lessLaborGoToDictionary-apiHeader, #lessLaborGoToDictionary-apiHeader *,
 #lessLaborGoToDictionary-apiFooter, #lessLaborGoToDictionary-apiFooter *{
 	background-color:#eaecf0
+}
+#lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-checkboxButton {
+	position: absolute;
+	background-color: gray;
+	display: inline-block;
+	height: 20px;
+	width: 30px;
+	border-radius: 15px;
+	right: 0.5em;
+	cursor: pointer;
+}
+#lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-circle {
+	position: absolute;
+	background: linear-gradient(to bottom, #FFFFFF, #F0F0F0 );
+	display: inline-block;
+	border-radius: 8px;
+	height: 16px;
+	width: 16px;
+	top: 2px;
+	left: 2px;
+	cursor: pointer;
+}
+#lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-checkboxButton[data-checked="1"] {
+	background-color: #5bd94d;
+}
+#lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-checkboxButton[data-checked="1"] span.lessLaborGoToDictionary-circle {
+	left: unset;
+	right: 2px;
 }
 #lessLaborGoToDictionary-apiLoading {
 	display: none;
