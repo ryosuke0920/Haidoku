@@ -174,13 +174,15 @@
 	user-select: none;
 	-moz-user-select: none;
 }
-#lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiLoading,#lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter {
+#lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiLoading,#lessLaborGoToDictionary-apiOff,
+#lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter {
 	display: block;
 	margin:0;
 	border-right: solid 1px gray;
 	border-left: solid 1px gray;
 }
-#lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter {
+#lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter,
+#lessLaborGoToDictionary-apiOff {
 	padding:5px 10px;
 }
 #lessLaborGoToDictionary-apiHeader {
@@ -198,6 +200,12 @@
 #lessLaborGoToDictionary-apiHeader, #lessLaborGoToDictionary-apiHeader *,
 #lessLaborGoToDictionary-apiFooter, #lessLaborGoToDictionary-apiFooter *{
 	background-color:#eaecf0
+}
+#lessLaborGoToDictionary-nowLoadingMsg {
+	display: none;
+}
+#lessLaborGoToDictionary-apiOffMsg {
+	display: none;
 }
 #lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-checkboxButton {
 	position: absolute;
@@ -227,18 +235,14 @@
 	left: unset;
 	right: 2px;
 }
+#lessLaborGoToDictionary-apiLoading, #lessLaborGoToDictionary-apiOff {
+	display: none;
+}
 #lessLaborGoToDictionary-apiLoading {
-	display: none;
-}
-#lessLaborGoToDictionary-apiLoading,#lessLaborGoToDictionary-apiBody {
-	background-color: white;
-}
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody {
-	display: none;
-}
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiLoading {
-	display: block;
 	height: 5em;
+}
+#lessLaborGoToDictionary-apiLoading, #lessLaborGoToDictionary-apiBody, #lessLaborGoToDictionary-apiLoading, #lessLaborGoToDictionary-apiOff {
+	background-color: white;
 }
 #lessLaborGoToDictionary-apiLoadingContent {
 	display: block;
@@ -263,6 +267,10 @@
 		background-size: 100%;
 		opacity: 0;
 	}
+}
+#lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-warning {
+	color: red;
+	font-weight: bold;
 }
 #lessLaborGoToDictionary-apiBody h1, #lessLaborGoToDictionary-apiBody h2, #lessLaborGoToDictionary-apiBody h3,
 #lessLaborGoToDictionary-apiBody h4, #lessLaborGoToDictionary-apiBody h5, #lessLaborGoToDictionary-apiBody h6,
@@ -394,4 +402,26 @@
 }
 #lessLaborGoToDictionary-apiBody a.new, #lessLaborGoToDictionary-apiBody a.new * {
 	color: #dd3333;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitle,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody {
+	display: none;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiLoading {
+	display: block;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-nowLoadingMsg {
+	display: inline;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOffMsg {
+	display: inline;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOff {
+	display: block;
+}
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiTitle,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-nowLoadingMsg,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiBody,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiLoading {
+	display: none;
 }

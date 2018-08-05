@@ -535,7 +535,8 @@
 	function saveServiceCodeNone(value){
 		let data = {
 			"ls": LINK_LIST_SEPARATOR_HORIZONTAL,
-			"s": value
+			"s": value,
+			"sw": API_SWITCH_DISABLED
 		};
 		return saveW(data);
 	}

@@ -1,6 +1,6 @@
 (()=>{
 	const LINK_NODE_DEFAULT_HEIGHT = 200;
-	const LINK_NODE_DEFAULT_WIDTH = 280;
+	const LINK_NODE_DEFAULT_WIDTH = 320;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
@@ -18,8 +18,6 @@
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 	const API_TEXT_MAX_LENGTH = 255;
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
-	const API_SWITCH_DISABLED = "";
-	const API_SWITCH_ENABLED = "1";
 
 	let linkListNode;
 	let linkListNodeTop = 0;
@@ -96,14 +94,32 @@
 		let apiSwitcheCircleNode = document.createElement("span");
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
 		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
+
 		apiTitleNode = document.createElement("a");
 		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
 		apiTitleNode.setAttribute("rel","noreferrer");
 		apiTitleNode.setAttribute("target","_blank");
 		apiHeaderNode.appendChild(apiTitleNode);
+
+		let apiNowLoadingMsgNode = document.createElement("span");
+		apiNowLoadingMsgNode.setAttribute("id",CSS_PREFIX+"-nowLoadingMsg");
+		apiNowLoadingMsgNode.innerText = ponyfill.i18n.getMessage("htmlNowSearching");
+		apiHeaderNode.appendChild(apiNowLoadingMsgNode);
+
+		let apiOffMsgNode = document.createElement("span");
+		apiOffMsgNode.setAttribute("id",CSS_PREFIX+"-apiOffMsg");
+		apiOffMsgNode.innerText = ponyfill.i18n.getMessage("htmlLinkageDisabled");
+		apiHeaderNode.appendChild(apiOffMsgNode);
+
 		let apiLoadingNode = document.createElement("div");
 		apiLoadingNode.setAttribute("id",CSS_PREFIX+"-apiLoading");
 		apiContentNode.appendChild(apiLoadingNode);
+
+		let apiOffNode = document.createElement("div");
+		apiOffNode.setAttribute("id",CSS_PREFIX+"-apiOff");
+		apiOffNode.innerHTML = ponyfill.i18n.getMessage("htmlLinkageMessage");
+		apiContentNode.appendChild(apiOffNode);
+
 		let apiLoadingContentNode = document.createElement("div");
 		apiLoadingContentNode.setAttribute("id",CSS_PREFIX+"-apiLoadingContent");
 		apiLoadingNode.appendChild(apiLoadingContentNode);
@@ -905,8 +921,6 @@
 
 	function clearApiContent(){
 		linkListNode.classList.add(CSS_PREFIX+"-loading");
-		apiTitleNode.innerText = "Now loading";
-		apiTitleNode.removeAttribute("href");
 		clearChildren(apiBodyNode);
 	}
 
@@ -1086,6 +1100,7 @@
 		if(apiSwitcheNode.getAttribute("data-checked") != API_SWITCH_ENABLED){
 			setApiSwitch(API_SWITCH_ENABLED);
 			saveApiSwitch(API_SWITCH_ENABLED).catch( onSaveError );
+			apiRequest(window.getSelection());
 		}
 		else {
 			setApiSwitch(API_SWITCH_DISABLED);
@@ -1096,9 +1111,11 @@
 	function setApiSwitch(value){
 		if(value != API_SWITCH_ENABLED){
 			apiSwitcheNode.removeAttribute("data-checked");
+			linkListNode.classList.add(CSS_PREFIX+"-apiDisabled");
 		}
 		else {
 			apiSwitcheNode.setAttribute("data-checked", API_SWITCH_ENABLED);
+			linkListNode.classList.remove(CSS_PREFIX+"-apiDisabled");
 		}
 	}
 

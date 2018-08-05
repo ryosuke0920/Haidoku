@@ -20,6 +20,8 @@ const FAVICON_NODATA = "nodata";
 
 const DEFAULT_LOCALE = "en";
 
+const API_SWITCH_DISABLED = "";
+const API_SWITCH_ENABLED = "1";
 const API_SERVICE_CODE_NONE = "-";
 const API_SERVICE_NONE = null;
 const API_SERVICE = {

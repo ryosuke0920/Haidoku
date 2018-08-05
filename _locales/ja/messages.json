@@ -105,6 +105,15 @@
 			}
 		}
 	},
+	"htmlLinkageDisabled": {
+		"message": "ウィクショナリー連携は無効です。"
+	},
+	"htmlLinkageMessage": {
+		"message": "右上のボタンを押すとウィクショナリー連携が有効になります。あなたが意図しいるかどうかに関わらず、<span class=\"lessLaborGoToDictionary-warning\">テキストを選択すれば検索するために自動的にウィクショナリーに送信されます。それがパスワードのようなプライバシー情報であってもです。</span>このことを理解して注意して使用してください。必要のないときは無効にしておくことをお勧めします。"
+	},
+	"htmlNowSearching": {
+		"message": "検索中です。"
+	},
 	"htmlSectionNotFound": {
 		"message": "ページは見つかりましたが、\"言語フィルター\"で指定している言語の解説は見つかりませんでした。"
 	},
