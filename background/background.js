@@ -453,7 +453,7 @@ function broadcastWindows(windows){
 		let tabs = w.tabs;
 		for(let j=0; j<tabs.length; j++){
 			let t = w.tabs[j];
-			ponyfill.tabs.sendMessage(t.id, this.data).catch(()=>{});// erace error
+			ponyfill.tabs.sendMessage(t.id, this.data);
 		}
 	}
 }
