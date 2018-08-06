@@ -50,6 +50,7 @@
 	let apiCutOut = true;
 	let apiFooterNode;
 	let apiSwitcheNode;
+	let windowId = Math.random();
 
 	Promise.resolve()
 		.then(init)
@@ -534,7 +535,6 @@
 			abortApiRequestQueue();
 			setServiceCode( change["s"]["newValue"] );
 			applyServiceCode( change["s"]["newValue"] );
-			resetLinkListEvents();
 		}
 		if( change["ll"] ){
 			setLanguageFilter( change["ll"]["newValue"] );
@@ -542,7 +542,11 @@
 		if( change["co"] ){
 			setLinkListApiCutOut( change["co"]["newValue"] );
 		}
+		if(!change.hasOwnProperty("w")) return;
+		if(change["w"]["newValue"] == windowId) return;
 		if( change["sw"] ){
+			closeLinkList();
+			abortApiRequestQueue();
 			setApiSwitch( change["sw"]["newValue"] );
 		}
 	}
@@ -1140,10 +1144,12 @@
 	}
 
 	function saveApiSwitch(value){
+		windowId = Math.random();
 		return ponyfill.runtime.sendMessage({
 			"method": "saveApiSwitch",
 			"data": {
-				"sw": value,
+				"w": windowId,
+				"sw": value
 			}
 		});
 	}
