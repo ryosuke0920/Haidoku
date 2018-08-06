@@ -190,6 +190,7 @@
 	border-top: solid 1px gray;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
+	padding-right: 40px;
 }
 #lessLaborGoToDictionary-apiFooter {
 	border-bottom: solid 1px gray;
@@ -201,10 +202,7 @@
 #lessLaborGoToDictionary-apiFooter, #lessLaborGoToDictionary-apiFooter *{
 	background-color:#eaecf0
 }
-#lessLaborGoToDictionary-nowLoadingMsg {
-	display: none;
-}
-#lessLaborGoToDictionary-apiOffMsg {
+#lessLaborGoToDictionary-apiOffMsg,#lessLaborGoToDictionary-nowLoadingMsg {
 	display: none;
 }
 #lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-checkboxButton {
@@ -358,7 +356,7 @@
 #lessLaborGoToDictionary-apiBody i, #lessLaborGoToDictionary-apiBody strong {
 	display: inline;
 }
-#lessLaborGoToDictionary-apiTitle:link,
+#lessLaborGoToDictionary-apiTitle,#lessLaborGoToDictionary-apiTitle:link,
 #lessLaborGoToDictionary-apiBody a, #lessLaborGoToDictionary-apiBody a *,
 #lessLaborGoToDictionary-apiBody a:link, #lessLaborGoToDictionary-apiBody a:link * {
 	cursor: pointer;
