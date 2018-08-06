@@ -18,6 +18,7 @@
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 	const API_TEXT_MAX_LENGTH = 255;
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
+	const API_WHITE_SPACE_ERROR = "white space error";
 
 	let linkListNode;
 	let linkListNodeTop = 0;
@@ -866,6 +867,10 @@
 			}
 		};
 		apiRequestQueue[id] = obj;
+		if( !checkBlank(text) ){
+			obj.data.error = API_WHITE_SPACE_ERROR;
+			return apiResponseError.bind(obj)(obj.data);
+		}
 		if( !checkByte(text, API_TEXT_MAX_LENGTH) ){
 			obj.data.error = API_TEXT_MAX_LENGTH_ERROR;
 			return apiResponseError.bind(obj)(obj.data);
@@ -1031,16 +1036,25 @@
 
 	function apiResponseError(e){
 		if(!isActiveApiRequestQueue(this)) return;
+
 		function after(content){
 			apiBodyNode.appendChild(content);
 			linkListNode.classList.remove(CSS_PREFIX+"-loading");
 		}
+
 		let content = document.createElement("div");
 		if(e && ( e instanceof Object) && e.hasOwnProperty("error")){
+			if( e.error == API_WHITE_SPACE_ERROR ){
+				apiTitleNode.removeAttribute("href");
+				apiTitleNode.innerText = "White space limitation";
+				content.innerText = ponyfill.i18n.getMessage("htmlWhiteSpaceLimitation");
+				after(content);
+				return;
+			}
 			if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
 				apiTitleNode.removeAttribute("href");
-				apiTitleNode.innerText = "Max length error";//Selected text too long
-				content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthError",[API_TEXT_MAX_LENGTH]);
+				apiTitleNode.innerText = "Max length limitation";
+				content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthLimitation",[API_TEXT_MAX_LENGTH]);
 				after(content);
 				return;
 			}

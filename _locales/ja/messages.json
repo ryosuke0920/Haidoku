@@ -96,15 +96,6 @@
 			}
 		}
 	},
-	"htmlMaxLengthError": {
-		"message": "$ERROR$バイト以内で検索します。",
-		"placeholders": {
-			"ERROR": {
-				"content": "$1",
-				"example": "255"
-			}
-		}
-	},
 	"htmlLinkageDisabled": {
 		"message": "ウィクショナリー連携は無効です。"
 	},
@@ -113,6 +104,18 @@
 	},
 	"htmlNowSearching": {
 		"message": "検索中です。"
+	},
+	"htmlWhiteSpaceLimitation": {
+		"message": "空白文字は検索しません。"
+	},
+	"htmlMaxLengthLimitation": {
+		"message": "$ERROR$バイト以内で検索します。",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "255"
+			}
+		}
 	},
 	"htmlMeaningNotFound": {
 		"message": "ページは見つかりましたが、\"解説の切り出し\"に失敗しました。"

@@ -96,15 +96,6 @@
 			}
 		}
 	},
-	"htmlMaxLengthError": {
-		"message": "Search within $ERROR$ bytes.",
-		"placeholders": {
-			"ERROR": {
-				"content": "$1",
-				"example": "255"
-			}
-		}
-	},
 	"htmlLinkageDisabled": {
 		"message": "Wiktionary linkage is Disabled."
 	},
@@ -113,6 +104,18 @@
 	},
 	"htmlNowSearching": {
 		"message": "Now searching."
+	},
+	"htmlWhiteSpaceLimitation": {
+		"message": "Don't search for spaces."
+	},
+	"htmlMaxLengthLimitation": {
+		"message": "Search within $ERROR$ bytes.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "255"
+			}
+		}
 	},
 	"htmlMeaningNotFound": {
 		"message": "The page was found but \"Cut out description\" was failed."
