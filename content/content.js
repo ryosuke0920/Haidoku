@@ -226,7 +226,7 @@
 		mousedownFlag = false;
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
-			saveLinkListSize().catch(onSaveError);
+			Promise.resolve().then(saveLinkListSize).catch(onSaveError);
 		}
 	}
 
@@ -374,18 +374,18 @@
 	}
 
 	function onClickSaveHistory(e){
-		saveHistory(e.currentTarget).catch(onSaveError);
+		saveHistory(e.currentTarget.getAttribute("data-text"), window.location.toString(), document.title.toString(), e.currentTarget.getAttribute("data-url"), e.currentTarget.getAttribute("data-label")).catch(onSaveError);
 	}
 
-	function saveHistory(node){
+	function saveHistory(text,fromURL,fromTitle,toURL,toTitle){
 		let data = {
 			"method": "saveHistory",
 			"data": {
-				"text": node.getAttribute("data-text"),
-				"fromURL": window.location.toString(),
-				"fromTitle": document.title.toString(),
-				"toURL": node.getAttribute("data-url"),
-				"toTitle": node.getAttribute("data-label")
+				"text": text,
+				"fromURL": fromURL,
+				"fromTitle": fromTitle,
+				"toURL": toURL,
+				"toTitle": toTitle
 			}
 		};
 		return ponyfill.runtime.sendMessage(data);
@@ -731,24 +731,20 @@
 	function menuClickBihavior(e){
 		let id = e.target.getAttribute("id");
 		if(id == CSS_PREFIX+"-zoomUp"){
-			if( zoomLinkList(1) ){
-				saveAnchorSize().catch(onSaveError);
-			}
+			if( zoomLinkList(1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-zoomDown"){
-			if( zoomLinkList(-1) ){
-				saveAnchorSize().catch(onSaveError);
-			}
+			if( zoomLinkList(-1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-copy"){
-			copyText().then(closeLinkList).then(abortApiRequestQueue);
+			Promise.resolve().then(copyText).then(closeLinkList).then(abortApiRequestQueue).catch(unexpectedError);
 		}
 		else if(id == CSS_PREFIX+"-resize"){
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
-			saveLinkListSize().catch(onSaveError);
+			Promise.resolve().then(saveLinkListSize).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-option"){
-			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).then(abortApiRequestQueue);
+			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).then(abortApiRequestQueue).catch(unexpectedError);
 		}
 	}
 
