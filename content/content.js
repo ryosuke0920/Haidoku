@@ -867,10 +867,8 @@
 		};
 		apiRequestQueue[id] = obj;
 		if( !checkByte(text, API_TEXT_MAX_LENGTH) ){
-			let data = {
-				"error":API_TEXT_MAX_LENGTH_ERROR
-			};
-			return apiResponseError.bind(obj)(data);
+			obj.data.error = API_TEXT_MAX_LENGTH_ERROR;
+			return apiResponseError.bind(obj)(obj.data);
 		}
 		let keyList = Object.keys(apiRequestQueue);
 		if(keyList.length<=1) {
@@ -965,11 +963,8 @@
 				}
 			}
 			if(sections.length<=0){
-				let data = {
-					"error":SECTION_NOT_FOUND_ERROR,
-					"data": e
-				}
-				return apiResponseError.bind(this)(data);
+				e.error = SECTION_NOT_FOUND_ERROR;
+				return apiResponseError.bind(this)(e);
 			}
 		}
 		else {
@@ -985,6 +980,10 @@
 			let list;
 			if(apiCutOut){
 				content = doc.querySelector("ol");
+				if(!content){
+					e.error = MEANING_NOT_FOUND_ERROR;
+					return apiResponseError.bind(this)(e);
+				}
 			}
 			else {
 				content = doc;
@@ -1045,9 +1044,16 @@
 				after(content);
 				return;
 			}
+			if( e.error == MEANING_NOT_FOUND_ERROR ){
+				apiTitleNode.setAttribute("href", e.fullurl);
+				apiTitleNode.innerText = e.title;
+				content.innerHTML = ponyfill.i18n.getMessage("htmlMeaningNotFound");
+				after(content);
+				return;
+			}
 			if( e.error == SECTION_NOT_FOUND_ERROR ){
-				apiTitleNode.setAttribute("href", e.data.fullurl);
-				apiTitleNode.innerText = e.data.title;
+				apiTitleNode.setAttribute("href", e.fullurl);
+				apiTitleNode.innerText = e.title;
 				content.innerHTML = ponyfill.i18n.getMessage("htmlSectionNotFound");
 				after(content);
 				return;

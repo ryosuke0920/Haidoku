@@ -459,14 +459,12 @@ function broadcastWindows(windows){
 }
 
 function apiRequest(text){
+	let obj = {"text": text};
 	if(!API_SERVICE.hasOwnProperty(serviceCode)){
-		let data = {
-			"error": APPLICATION_ERROR,
-			"code": serviceCode,
-			"message": "service not found.",
-			"data": {"text":text}
-		};
-		return Promise.resolve(data);
+		obj.error = APPLICATION_ERROR;
+		obj.code = serviceCode;
+		obj.message = "service not found.";
+		return Promise.resolve(obj);
 	}
 	for(let i=0; i<apiDocumentCache.length; i++){
 		if( text == apiDocumentCache[i].title || text == apiDocumentCache[i].text ){
@@ -476,13 +474,10 @@ function apiRequest(text){
 		}
 	}
 	let service = API_SERVICE[serviceCode];
-	let obj = {
-		"text": text,
-		"service": service,
-		"path": API_SERVICE_PROPERTY[service].path,
-		"url":[],
-		"html": []
-	};
+	obj.service = service;
+	obj.path = API_SERVICE_PROPERTY[service].path;
+	obj.url = [];
+	obj.html = [];
 	return Promise.resolve().then( requestAjaxApiInfo.bind(obj) ).then( responseAjaxApiInfo.bind(obj) );
 }
 
@@ -511,31 +506,22 @@ function requestAjaxApiInfo(){
 
 function responseAjaxApiInfo(e){
 	if( e.target.status == HTTP_NG ){
-		let data = {
-			"error": CONNECTION_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = CONNECTION_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if( e.target.status != HTTP_200_OK ){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if ( e.target.response.hasOwnProperty("error")){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.response.error.code,
-			"message": e.target.response.error.info,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
 	}
 	if (e.target.response.query.pages.hasOwnProperty("-1")){
 		return Promise.resolve().then( requestAjaxApiPrefixSearch.bind(this) ).then( responseAjaxApiPrefixSearch.bind(this) );
@@ -572,31 +558,22 @@ function requestAjaxApiPrefixSearch(){
 
 function responseAjaxApiPrefixSearch(e){
 	if( e.target.status == HTTP_NG ){
-		let data = {
-			"error": CONNECTION_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = CONNECTION_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if( e.target.status != HTTP_200_OK ){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.response.error.code,
-			"message": e.target.response.error.info,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
 	}
 	if(e.target.response.query.prefixsearch.length==0){
 		return Promise.resolve().then( requestAjaxApiSearch.bind(this) ).then( responseAjaxApiSearch.bind(this) );
@@ -635,40 +612,27 @@ function requestAjaxApiInfo2(){
 
 function responseAjaxApiInfo2(e){
 	if( e.target.status == HTTP_NG ){
-		let data = {
-			"error": CONNECTION_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = CONNECTION_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if( e.target.status != HTTP_200_OK ){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.response.error.code,
-			"message": e.target.response.error.info,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
 	}
 	if (e.target.response.query.pages.hasOwnProperty("-1")){
-		let data = {
-			"error": PAGE_NOT_FOUND_ERROR,
-			"code": "",
-			"message": "",
-			"data": this
-		};
-		return data;
+		this.error = PAGE_NOT_FOUND_ERROR;
+		addApiDocumentCache(this);
+		return this;
 	}
 	let page = Object.values(e.target.response.query.pages);
 	this.title = page[0].title;
@@ -702,40 +666,27 @@ function requestAjaxApiSearch(){
 
 function responseAjaxApiSearch(e){
 	if( e.target.status == HTTP_NG ){
-		let data = {
-			"error": CONNECTION_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = CONNECTION_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if( e.target.status != HTTP_200_OK ){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.response.error.code,
-			"message": e.target.response.error.info,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
 	}
 	if(e.target.response.query.search.length==0){
-		let data = {
-			"error": PAGE_NOT_FOUND_ERROR,
-			"code": "",
-			"message": "",
-			"data": this
-		};
-		return data;
+		this.error = PAGE_NOT_FOUND_ERROR;
+		addApiDocumentCache(this);
+		return this;
 	}
 	this.title = e.target.response.query.search[0].title;
 	this.pageid = e.target.response.query.search[0].pageid;
@@ -770,38 +721,34 @@ function requestAjaxApiParse(){
 
 function responseAjaxApiParse(e){
 	if( e.target.status == HTTP_NG ){
-		let data = {
-			"error": CONNECTION_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = CONNECTION_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if( e.target.status != HTTP_200_OK ){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.status,
-			"message": e.target.statusText,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		let data = {
-			"error": SERVER_ERROR,
-			"code": e.target.response.error.code,
-			"message": e.target.response.error.info,
-			"data": this
-		};
-		return data;
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
 	}
+	// TODO PAGE NOT FOUND
 	this.html.push( e.target.response.parse.text["*"] );
 	return Promise.resolve().then( returnContent.bind(this) );
 }
 
 function returnContent(){
-	apiDocumentCache.push(this);
-	if(apiDocumentCache.length >= MAX_API_CACHE) apiDocumentCache.shift();
+	addApiDocumentCache(this);
 	return this;
+}
+
+function addApiDocumentCache(obj){
+	apiDocumentCache.push(obj);
+	if(apiDocumentCache.length >= MAX_API_CACHE) apiDocumentCache.shift();
 }

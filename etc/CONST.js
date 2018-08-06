@@ -52,6 +52,7 @@ const API_SERVICE_PROPERTY = {
 };
 const PAGE_NOT_FOUND_ERROR = "page not found";
 const SECTION_NOT_FOUND_ERROR = "section not found";
+const MEANING_NOT_FOUND_ERROR = "meaning not found";
 const CONNECTION_ERROR = "connection error";
 const SERVER_ERROR = "server error";
 const APPLICATION_ERROR = "application error";
