@@ -876,6 +876,7 @@
 		let id = fetchRequestID();
 		let obj = {
 			"id": id,
+			"abort": false,
 			"data": {
 				"text": text,
 				"api": "wiktionary"
@@ -921,8 +922,6 @@
 	}
 
 	function isActiveApiRequestQueue(obj){
-		let keyList = Object.keys(apiRequestQueue);
-		let selection = window.getSelection();
 		return ( apiRequestQueue.hasOwnProperty(obj.id) && !obj.abort );
 	}
 
