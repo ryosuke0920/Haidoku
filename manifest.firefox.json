@@ -18,11 +18,11 @@
 			"etc/PRESET_OPTION_LIST.js",
 			"lib/ponyfill.js",
 			"lib/indexeddb.js",
+			"lib/share.js",
 			"lib/common.js",
 			"background/background.js"
 		]
 	},
-
 	"options_ui": {
 		"page": "option/option.html",
 		"open_in_tab": true,
@@ -37,7 +37,7 @@
 			"js": [
 				"etc/CONST.js",
 				"lib/ponyfill.js",
-				"lib/check.js",
+				"lib/share.js",
 				"content/content.js"
 			]
 		}

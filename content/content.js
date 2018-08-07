@@ -573,10 +573,8 @@
 	}
 
 	function loadSetting(){
-		let serviceCode = getUiLang();
-		if( !API_SERVICE.hasOwnProperty(serviceCode) ) serviceCode = DEFAULT_LOCALE;
-		let service = API_SERVICE[serviceCode];
-		let languageFilter = API_SERVICE_PROPERTY[service].defaultLanguage;
+		let serviceCode = getDefaultServiceCode();
+		let languageFilter = getDefaultLanguageFilter();
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"bf": true,
@@ -596,15 +594,6 @@
 			"co": true
 		});
 		return getter.then(setVer, onReadError);
-	}
-
-	function getUiLang(){
-		let lang = ponyfill.i18n.getUILanguage();
-		let matcher = lang.match(/^([a-zA-Z0-9]+)\-[a-zA-Z0-9]+$/);
-		if( matcher ){
-			lang = matcher[1];
-		}
-		return lang;
 	}
 
 	function setVer( res ){

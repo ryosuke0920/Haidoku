@@ -41,8 +41,7 @@ function initContextMenu(){
 }
 
 function getSetting() {
-	let serviceCode = getUiLang();
-	if( !API_SERVICE.hasOwnProperty(serviceCode) ) serviceCode = DEFAULT_LOCALE;
+	let serviceCode = getDefaultServiceCode();
 	return ponyfill.storage.sync.get({
 		"ol": [],
 		"bf": true,

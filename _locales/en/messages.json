@@ -100,7 +100,7 @@
 		"message": "Wiktionary linkage is Disabled."
 	},
 	"htmlLinkageMessage": {
-		"message": "When clicked Upper Right Button, Wiktionary linkage is enabled. Regardless whether you intent or not, <span class=\"lessLaborGoToDictionary-warning\">if you select text, it will be automatically sent to Wiktionary to search, even if it's your privacy information like a password.</span>Please understand it and use carefully. We recommend that you disable it when you don't need it."
+		"message": "When clicked Upper Right Button, Wiktionary linkage is enabled. Regardless whether you intent or not, <span class=\"lessLaborGoToDictionary-warning\">if you select text, it will be automatically sent to Wiktionary to search, even if it's your privacy information like a password.</span> Please understand it and use carefully. We recommend that you disable it when you don't need it."
 	},
 	"htmlNowSearching": {
 		"message": "Now searching."

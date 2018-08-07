@@ -89,13 +89,8 @@
 	}
 
 	function initProperties(){
-		let lang = getUiLang();
-		let service = getApiService(lang);
-		if( service == API_SERVICE_NONE ){
-			lang = DEFAULT_LOCALE;
-			service = getApiService(lang);
-		}
-		let list = API_SERVICE_PROPERTY[service].defaultLanguage;
+		let serviceCode = getDefaultServiceCode();
+		let languageFilter = getDefaultLanguageFilter();
 		let getter = ponyfill.storage.sync.get({
 			"ol": [],
 			"cl": LINK_LIST_STYLE_DARK,
@@ -103,8 +98,8 @@
 			"f": LINK_LIST_FAVICON_ONLY,
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
 			"ls": LINK_LIST_SEPARATOR_VERTICAL,
-			"s": lang,
-			"ll": list,
+			"s": serviceCode,
+			"ll": languageFilter,
 			"co": true,
 		});
 		return getter.then(onGot);

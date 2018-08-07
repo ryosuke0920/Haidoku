@@ -18,6 +18,7 @@
 			"etc/PRESET_OPTION_LIST.js",
 			"lib/ponyfill.js",
 			"lib/indexeddb.js",
+			"lib/share.js",
 			"lib/common.js",
 			"background/background.js"
 		]
@@ -36,7 +37,7 @@
 			"js": [
 				"etc/CONST.js",
 				"lib/ponyfill.js",
-				"lib/check.js",
+				"lib/share.js",
 				"content/content.js"
 			]
 		}
