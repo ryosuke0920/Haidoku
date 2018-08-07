@@ -12,8 +12,8 @@
 	const ANCHOR_RESIO = 0.1;
 	const SILENT_ERROR_PREFIX = "[silent]";
 	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
-	const REMOVE_SPACE_REGEX = new RegExp( /(?:\s|\r|\n|\t|\||:)+/, "g" );
-	const API_QUERY_DERAY = 500;
+	const REMOVE_SPACE_REGEX = new RegExp( /(?:\s|\|)+/, "g" );
+	const API_QUERY_DERAY = 1000;
 	const LINK_LIST_CLOSE_TIME = 500;
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 	const API_TEXT_MAX_LENGTH = 255;
@@ -44,7 +44,7 @@
 	let selectionChangedFlag = false;
 	let faviconCache = {};
 	let apiRequestQueue = {};
-	let fetchRequestID = (()=>{ let id = 0; return ()=>{return ++id}	})();
+	let fetchRequestID = (()=>{ let id = 0; return ()=>{return ++id} })();
 	let serviceCode = API_SERVICE_CODE_NONE;
 	let languageFilter = [];
 	let apiCutOut = true;
@@ -55,7 +55,7 @@
 	Promise.resolve()
 		.then(init)
 		.then(
-			()=>{ return Promise.resolve().then(loadSetting).then(addCommonLinkListEvents) },
+			()=>{ return Promise.resolve().then(loadSetting).then(addCommonLinkListEvents); },
 			silentError
 		).catch(unexpectedError);
 
@@ -71,28 +71,36 @@
 		linkListNode.style.padding = LINK_NODE_PADDING + "px";
 		applyLinkListSize();
 		body.appendChild( linkListNode );
+
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
 		linkListNode.appendChild(coverNode);
+
 		menuNode = document.createElement("nav");
 		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
 		linkListNode.appendChild(menuNode);
+
 		let linkListGridNode = document.createElement("div");
 		linkListGridNode.setAttribute("id",CSS_PREFIX+"-grid");
 		linkListNode.appendChild(linkListGridNode);
+
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
 		linkListGridNode.appendChild(containerNode);
+
 		apiContentNode = document.createElement("div");
 		apiContentNode.setAttribute("id",CSS_PREFIX+"-apiContent");
 		linkListGridNode.appendChild(apiContentNode);
+
 		let apiHeaderNode = document.createElement("div");
 		apiHeaderNode.setAttribute("id",CSS_PREFIX+"-apiHeader");
 		apiContentNode.appendChild(apiHeaderNode);
+
 		apiSwitcheNode = document.createElement("span");
 		apiSwitcheNode.setAttribute("id",CSS_PREFIX+"-apiSwitch");
 		apiSwitcheNode.classList.add(CSS_PREFIX+"-checkboxButton");
 		apiHeaderNode.appendChild(apiSwitcheNode);
+
 		let apiSwitcheCircleNode = document.createElement("span");
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
 		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
@@ -125,34 +133,41 @@
 		let apiLoadingContentNode = document.createElement("div");
 		apiLoadingContentNode.setAttribute("id",CSS_PREFIX+"-apiLoadingContent");
 		apiLoadingNode.appendChild(apiLoadingContentNode);
+
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
 		apiContentNode.appendChild(apiBodyNode);
+
 		apiFooterNode = document.createElement("div");
 		apiFooterNode.setAttribute("id",CSS_PREFIX+"-apiFooter");
 		apiFooterNode.innerText = FOOTER_CONTENT;
 		apiContentNode.appendChild(apiFooterNode);
 		clearApiContent();
+
 		let resizeNode = document.createElement("img");
 		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
 		resizeNode.title = ponyfill.i18n.getMessage("htmlResize");
 		menuNode.appendChild(resizeNode);
+
 		let zoomDownNode = document.createElement("img");
 		zoomDownNode.src = ponyfill.extension.getURL("/image/minus.svg");
 		zoomDownNode.setAttribute("id",CSS_PREFIX+"-zoomDown");
 		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
+
 		let zoomUpNode = document.createElement("img");
 		zoomUpNode.src = ponyfill.extension.getURL("/image/plus.svg");
 		zoomUpNode.setAttribute("id",CSS_PREFIX+"-zoomUp");
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
+
 		let copyNode = document.createElement("img");
 		copyNode.src = ponyfill.extension.getURL("/image/copy.svg");
 		copyNode.setAttribute("id",CSS_PREFIX+"-copy");
 		copyNode.title = ponyfill.i18n.getMessage("htmlCopy");
 		menuNode.appendChild(copyNode);
+
 		let optionNode = document.createElement("img");
 		optionNode.src = ponyfill.extension.getURL("/image/option.svg");
 		optionNode.setAttribute("id",CSS_PREFIX+"-option");
