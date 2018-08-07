@@ -478,7 +478,21 @@ function apiRequest(text){
 	obj.path = API_SERVICE_PROPERTY[service].path;
 	obj.url = [];
 	obj.html = [];
-	return Promise.resolve().then( requestAjaxApiInfo.bind(obj) ).then( responseAjaxApiInfo.bind(obj) );
+	return Promise.resolve().then( requestAjaxApiInfo.bind(obj) ).then( responseAjaxApiInfo.bind(obj) ).catch( detectAjaxApiConnectError.bind(obj) );
+}
+
+function detectAjaxApiConnectError(e){
+	try{
+		if( e.target.status == HTTP_NG ){
+			console.log(e);
+			this.error = CONNECTION_ERROR;
+			this.code = e.target.status;
+			this.message = e.target.statusText;
+			return this;
+		}
+	}
+	catch{}
+	return Promise.reject(e);
 }
 
 function requestAjaxApiInfo(){
@@ -505,12 +519,6 @@ function requestAjaxApiInfo(){
 }
 
 function responseAjaxApiInfo(e){
-	if( e.target.status == HTTP_NG ){
-		this.error = CONNECTION_ERROR;
-		this.code = e.target.status;
-		this.message = e.target.statusText;
-		return this;
-	}
 	if( e.target.status != HTTP_200_OK ){
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
@@ -557,12 +565,6 @@ function requestAjaxApiPrefixSearch(){
 }
 
 function responseAjaxApiPrefixSearch(e){
-	if( e.target.status == HTTP_NG ){
-		this.error = CONNECTION_ERROR;
-		this.code = e.target.status;
-		this.message = e.target.statusText;
-		return this;
-	}
 	if( e.target.status != HTTP_200_OK ){
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
@@ -611,12 +613,6 @@ function requestAjaxApiInfo2(){
 }
 
 function responseAjaxApiInfo2(e){
-	if( e.target.status == HTTP_NG ){
-		this.error = CONNECTION_ERROR;
-		this.code = e.target.status;
-		this.message = e.target.statusText;
-		return this;
-	}
 	if( e.target.status != HTTP_200_OK ){
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
@@ -665,12 +661,6 @@ function requestAjaxApiSearch(){
 }
 
 function responseAjaxApiSearch(e){
-	if( e.target.status == HTTP_NG ){
-		this.error = CONNECTION_ERROR;
-		this.code = e.target.status;
-		this.message = e.target.statusText;
-		return this;
-	}
 	if( e.target.status != HTTP_200_OK ){
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
@@ -720,12 +710,6 @@ function requestAjaxApiParse(){
 }
 
 function responseAjaxApiParse(e){
-	if( e.target.status == HTTP_NG ){
-		this.error = CONNECTION_ERROR;
-		this.code = e.target.status;
-		this.message = e.target.statusText;
-		return this;
-	}
 	if( e.target.status != HTTP_200_OK ){
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
