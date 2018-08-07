@@ -519,8 +519,6 @@
 		}
 		else {
 			saveServiceCodeNone(serviceCode).catch(onSaveError);
-			setLinkListSeparator(LINK_LIST_SEPARATOR_HORIZONTAL);
-			setSampleLinkListSeparator(LINK_LIST_SEPARATOR_HORIZONTAL);
 		}
 		setSampleLinkListServiceCode(serviceCode);
 	}
@@ -534,7 +532,6 @@
 
 	function saveServiceCodeNone(value){
 		let data = {
-			"ls": LINK_LIST_SEPARATOR_HORIZONTAL,
 			"s": value,
 			"sw": API_SWITCH_DISABLED
 		};
