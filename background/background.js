@@ -7,7 +7,7 @@ let shiftKey = false;
 let ctrlKey = false;
 let options = {};
 let faviconCache = {};
-let serviceCode = "";
+let serviceCode = API_SERVICE_CODE_NONE;
 let apiDocumentCache = [];
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/

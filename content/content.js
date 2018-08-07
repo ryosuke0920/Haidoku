@@ -999,8 +999,8 @@
 				let reduceSections = API_SERVICE_PROPERTY[e.service].reduceSection;
 				for(let i=0; i<list.length; i++){
 					let node = list[i];
-					for(let i=0; i<reduceSections.length; i++ ){
-						if( !node.innerText.match(reduceSections[i]) ) continue;
+					for(let j=0; j<reduceSections.length; j++ ){
+						if( !node.innerText.match(reduceSections[j]) ) continue;
 						while(node.nextElementSibling && !node.nextElementSibling.classList.contains("in-block")){
 							node.nextElementSibling.remove();
 						}
@@ -1008,6 +1008,10 @@
 						break;
 					}
 				}
+			}
+			list = content.querySelectorAll(".indicator,.noprint");
+			for(let i=0; i<list.length; i++){
+				list[i].parentNode.removeChild(list[i]);
 			}
 			list = content.querySelectorAll("[style]");
 			for(let i=0; i<list.length; i++){
@@ -1027,10 +1031,6 @@
 			for(let i=0; i<list.length; i++){
 				list[i].setAttribute("target", "_blank");
 				list[i].setAttribute("rel", "noreferrer");
-			}
-			list = content.querySelectorAll(".indicator,.noprint");
-			for(let i=0; i<list.length; i++){
-				list[i].parentNode.removeChild(list[i]);
 			}
 			apiBodyNode.appendChild(content);
 		}
