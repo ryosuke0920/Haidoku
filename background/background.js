@@ -466,13 +466,8 @@ function apiRequest(text){
 		obj.message = "service not found.";
 		return Promise.resolve(obj);
 	}
-	for(let i=0; i<apiDocumentCache.length; i++){
-		if( text == apiDocumentCache[i].title || text == apiDocumentCache[i].text ){
-			let temp = apiDocumentCache.splice(i,1);
-			apiDocumentCache.push(temp[0]);
-			return Promise.resolve(temp[0]);
-		}
-	}
+	let cache = fetchApiDocumentCache(text);
+	if(cache) return Promise.resolve(cache);
 	let service = API_SERVICE[serviceCode];
 	obj.service = service;
 	obj.path = API_SERVICE_PROPERTY[service].path;
@@ -625,7 +620,7 @@ function responseAjaxApiInfo2(e){
 		this.message = e.target.response.error.info;
 		return this;
 	}
-	if (e.target.response.query.pages.hasOwnProperty("-1")){
+	if (e.target.response.query.pages.hasOwnProperty("0")){
 		this.error = PAGE_NOT_FOUND_ERROR;
 		addApiDocumentCache(this);
 		return this;
@@ -722,7 +717,6 @@ function responseAjaxApiParse(e){
 		this.message = e.target.response.error.info;
 		return this;
 	}
-	// TODO PAGE NOT FOUND
 	this.html.push( e.target.response.parse.text["*"] );
 	return Promise.resolve().then( returnContent.bind(this) );
 }
@@ -733,6 +727,18 @@ function returnContent(){
 }
 
 function addApiDocumentCache(obj){
+	if(fetchApiDocumentCache(obj.text)) return;
 	apiDocumentCache.push(obj);
-	if(apiDocumentCache.length >= MAX_API_CACHE) apiDocumentCache.shift();
+	if(apiDocumentCache.length > MAX_API_CACHE) apiDocumentCache.shift();
+}
+
+function fetchApiDocumentCache(text){
+	for(let i=0; i<apiDocumentCache.length; i++){
+		if( text == apiDocumentCache[i].title || text == apiDocumentCache[i].text ){
+			let temp = apiDocumentCache.splice(i,1);
+			apiDocumentCache.push(temp[0]);
+			return temp[0];
+		}
+	}
+	return false;
 }
