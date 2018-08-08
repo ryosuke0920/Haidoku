@@ -1020,7 +1020,17 @@
 			}
 			list = content.querySelectorAll("audio");
 			for(let i=0; i<list.length; i++){
-				list[i].style.width = "50px";
+				let audio = list[i];
+				audio.style.display = "none";
+				let playButton = document.createElement("span");
+				playButton.classList.add(CSS_PREFIX+"-play");
+				if(audio.nextElementSibling){
+					audio.nextElementSiblin.insertBefore(playButton);
+				}
+				else{
+					audio.parentNode.appendChild(playButton);
+				}
+				playButton.addEventListener("click",(e)=>{ audio.play(); });
 			}
 			list = content.querySelectorAll("a[href]:not([href^=http])");
 			for(let i=0; i<list.length; i++){

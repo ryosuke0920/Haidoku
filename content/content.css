@@ -401,6 +401,19 @@
 #lessLaborGoToDictionary-apiBody a.new, #lessLaborGoToDictionary-apiBody a.new * {
 	color: #dd3333;
 }
+#lessLaborGoToDictionary-apiBody span.lessLaborGoToDictionary-play {
+	display: inline-block;
+	background: transparent;
+	box-sizing: border-box;
+	width: 0;
+	height: 20px;
+	border-color: transparent transparent transparent #202020;
+	border-style: solid;
+	border-width: 10px 0px 10px 20px;
+	cursor: pointer;
+	vertical-align: middle;
+	margin: 2px;
+}
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitle,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody {
 	display: none;
