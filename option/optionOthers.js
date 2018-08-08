@@ -120,8 +120,8 @@
 		setSampleLinkListSeparator(res["ls"]);
 		setServiceCode(res["s"]);
 		setSampleLinkListServiceCode(res["s"]);
-		setLanguageList(res["ll"]);
-		makeLanguageListNodes();
+		setLanguageFilterList(res["ll"]);
+		makeLanguageFilterListNodes();
 		setApiCutOut(res["co"]);
 	}
 
@@ -209,11 +209,11 @@
 		if( e.hasOwnProperty("s") ){
 			setServiceCode(e["s"]["newValue"]);
 			setSampleLinkListServiceCode(e["s"]["newValue"]);
-			makeLanguageListNodes();
+			makeLanguageFilterListNodes();
 		}
 		if( e.hasOwnProperty("ll") ){
-			setLanguageList(e["ll"]["newValue"]);
-			makeLanguageListNodes();
+			setLanguageFilterList(e["ll"]["newValue"]);
+			makeLanguageFilterListNodes();
 			updateLanguageFilterSelectPane(e["ll"]["newValue"]);
 		}
 		if( e.hasOwnProperty("co") ){
@@ -262,10 +262,6 @@
 		return serviceCodeSelectNode.value;
 	}
 
-	function setLanguageList(value){
-		languageFilterlist = value;
-	}
-
 	function clearLanguageListNodes(){
 		for(let i=0; i<languageFilterBoxNodes.length; i++){
 			let node = languageFilterBoxNodes[i];
@@ -273,7 +269,7 @@
 		}
 	}
 
-	function makeLanguageListNodes(languages=getLanguageList()){
+	function makeLanguageFilterListNodes(languages=getLanguageFilterList()){
 		clearLanguageListNodes();
 		let languageListPrototype = document.querySelector("#languageListPrototype");
 		for(let i=0; i<languageFilterBoxNodes.length; i++){
@@ -298,7 +294,11 @@
 		setI18n(list);
 	}
 
-	function getLanguageList(){
+	function setLanguageFilterList(value){
+		languageFilterlist = value;
+	}
+
+	function getLanguageFilterList(){
 		return languageFilterlist;
 	}
 
@@ -307,30 +307,30 @@
 		return API_SERVICE[code];
 	}
 
-	function hasLanguageCache(service=getApiService()){
+	function hasLanguageFilterCache(service){
 		if( service == API_SERVICE_NONE ) return false;
 		return languageFilterCache.hasOwnProperty( service );
 	}
 
-	function getLanguageCache(service=getApiService()){
+	function getLanguageFilterCache(service){
 		if( service == API_SERVICE_NONE ) return API_SERVICE_NONE;
-		if(!hasLanguageCache(service)) return API_SERVICE_NONE;
+		if(!hasLanguageFilterCache(service)) return API_SERVICE_NONE;
 		return languageFilterCache[service];
 	}
 
-	function setLanguageCache(service=getApiService(), list){
+	function setLanguageFilterCache(service, list){
 		languageFilterCache[service] = list;
 	}
 
-	function deleteLanguageCache(service=getApiService()){
+	function deleteLanguageFilterCache(service){
 		delete languageFilterCache[service];
 	}
 
-	function setPrefixCache(service=getApiService(), hash){
+	function setPrefixCache(service, hash){
 		apiPrefixCache[service] = hash;
 	}
 
-	function getPrefixCache(service=getApiService()){
+	function getPrefixCache(service){
 		if( !apiPrefixCache.hasOwnProperty(service) ) return null;
 		return apiPrefixCache[service];
 	}
@@ -438,7 +438,7 @@
 		sampleLinkListNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
-	function setSampleLinkListDirection	(value){
+	function setSampleLinkListDirection(value){
 		if(value==LINK_LIST_DIRECTION_VERTICAL){
 			sampleLinkListNode.classList.remove(CSS_PREFIX+"-inline");
 		}
@@ -633,7 +633,7 @@
 				prefix[obj.shortPrefix] = 1;
 			}
 		}
-		setLanguageCache(this.service, this.cat);
+		setLanguageFilterCache(this.service, this.cat);
 		setPrefixCache(this.service, prefix);
 	}
 
@@ -653,8 +653,8 @@
 	function apiLangMakeRadio(service, prefixCode){
 		clearChildren(languageFilterContainerNode);
 		let prototype = document.querySelector("#languageFilterInputPrototype");
-		let languages = getLanguageCache(service);
-		let languageList = getLanguageList();
+		let languages = getLanguageFilterCache(service);
+		let languageList = getLanguageFilterList();
 		languages = languages.filter( obj => obj.sortkeyprefix.substr(0,1)==prefixCode );
 		for(let i=0; i<languages.length; i++){
 			let language = languages[i];
@@ -677,7 +677,7 @@
 			show(othersNode.querySelector(".serviceCodeSelectMessage"));
 			return;
 		}
-		if(hasLanguageCache(service)) {
+		if(hasLanguageFilterCache(service)) {
 			openLanguageFilterSelectPane(service);
 			return;
 		}
@@ -688,7 +688,7 @@
 			openLanguageFilterSelectPane(service);
 		}).catch( (e)=>{
 			console.error(e);
-			deleteLanguageCache(service);
+			deleteLanguageFilterCache(service);
 			notice( ponyfill.i18n.getMessage("notificationDownloadLanguageError"));
 			return Promise.reject();
 		}).finally( ()=>{
@@ -699,7 +699,7 @@
 	}
 
 	function openLanguageFilterSelectPane(service){
-		let prefix = getPrefixCache( service );
+		let prefix = getPrefixCache(service);
 		apiLangMakeOption(prefix);
 		apiLangMakeRadio( service, Object.keys(prefix)[0] );
 		show(languageFilterSelectPaneNode);
@@ -736,26 +736,26 @@
 	}
 
 	function checkLanguageLimit(){
-		let languageList = getLanguageList();
+		let languageList = getLanguageFilterList();
 		if(languageList.length >= API_LANGUAGE_MAX) return false;
 		return true;
 	}
 
 	function apiAddLanguage(language){
-		let languageList = getLanguageList();
+		let languageList = getLanguageFilterList();
 		languageList.push(language);
 		languageList.sort();
-		setLanguageList(languageList);
-		saveLanguageList(languageList).catch(onSaveError);
-		makeLanguageListNodes();
+		setLanguageFilterList(languageList);
+		saveLanguageFilterList(languageList).catch(onSaveError);
+		makeLanguageFilterListNodes();
 	}
 
 	function apiRemoveLanguage(language){
-		let languageList = getLanguageList();
+		let languageList = getLanguageFilterList();
 		languageList = languageList.filter(str=>str!=language);
-		setLanguageList(languageList);
-		saveLanguageList(languageList).catch(onSaveError);
-		makeLanguageListNodes();
+		setLanguageFilterList(languageList);
+		saveLanguageFilterList(languageList).catch(onSaveError);
+		makeLanguageFilterListNodes();
 	}
 
 	function languageFilterCheckboxInactive(language){
@@ -776,7 +776,7 @@
 		}
 	}
 
-	function saveLanguageList(list){
+	function saveLanguageFilterList(list){
 		let data = {
 			"ll": list
 		};
