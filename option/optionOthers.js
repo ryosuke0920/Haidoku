@@ -182,7 +182,6 @@
 		if( e.hasOwnProperty("ol") ){
 			setOptionList(e["ol"]["newValue"]);
 			setSampleLinkListAnchor(e["ol"]["newValue"]);
-			return;
 		}
 		if( !e.hasOwnProperty("w")) return;
 		if( e["w"]["newValue"] == windowId ) return;
