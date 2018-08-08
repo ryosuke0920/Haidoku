@@ -74,27 +74,8 @@
 	"notificationDataUriError": {
 		"message": "It can't be searched because it's an unsupported image format(Data URI)."
 	},
-	"notificationConnectionError": {
-		"message": "Connection error. $ERROR1$, $ERROR2$",
-		"placeholders": {
-			"ERROR1": {
-				"content": "$1",
-				"example": "abort"
-			},
-			"ERROR2": {
-				"content": "$2",
-				"example": "0"
-			}
-		}
-	},
-	"notificationResponseError": {
-		"message": "Response error. $ERROR$",
-		"placeholders": {
-			"ERROR": {
-				"content": "$1",
-				"example": "0"
-			}
-		}
+	"notificationDownloadLanguageError": {
+		"message": "Failed to download list of language."
 	},
 	"htmlLinkageDisabled": {
 		"message": "Wiktionary linkage is Disabled."

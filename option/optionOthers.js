@@ -540,24 +540,7 @@
 			prepareAjaxApiLang.bind(obj)
 		).then(
 			requestAjaxApiLang.bind(obj)
-		).then(
-			responseAjaxApiLang.bind(obj)
-		).then(
-			afterAjaxApiLang.bind(obj)
 		);
-	}
-
-	function downloadLanguageFilterError(service,e){
-		console.error(e);
-		deleteLanguageCache(service);
-		if( e.target.status == 200 && e.target.response != null ) {
-			return notice( ponyfill.i18n.getMessage("notificationResponseError", [e.target.response.error.code]));
-		}
-		if( e.target.status != 200 ) {
-			return notice( ponyfill.i18n.getMessage("notificationConnectionError", [e.type,e.target.status]));
-		}
-		/* likely invalid json format. */
-		return notice( ponyfill.i18n.getMessage("notificationUnexpectedError"));
 	}
 
 	function prepareAjaxApiLang(){
@@ -592,21 +575,23 @@
 
 	function requestAjaxApiLang(){
 		this.url.push( makeApiURL(this.service+API_SERVICE_PROPERTY[this.service].path, this.param, "") );
-		return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER);
+		return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER).then( responseAjaxApiLang.bind(this) );
 	}
 
 	function responseAjaxApiLang(e){
 		if( e.target.status == "200" ){
 			let res = e.target.response;
 			if (res == null){
+				console.error(e);
 				return Promise.reject(e);
 			}
 			if (res.hasOwnProperty("error")){
+				console.error(e);
 				return Promise.reject(e);
 			}
 			this.cat = this.cat.concat(res.query.categorymembers);
 			if( !res.hasOwnProperty("continue")) {
-				return Promise.resolve();
+				return Promise.resolve().then( afterAjaxApiLang.bind(this) );
 			}
 			let keys = Object.keys(res.continue);
 			this.param = this.param.filter( obj => !keys.includes(obj.key) );
@@ -617,13 +602,9 @@
 					"value": res.continue[key]
 				});
 			}
-			let p = Promise.resolve().then(
-				requestAjaxApiLang.bind(this)
-			).then(
-				responseAjaxApiLang.bind(this)
-			);
-			return p;
+			return Promise.resolve().then( requestAjaxApiLang.bind(this) );
 		}
+		console.error(e);
 		return Promise.reject(e);
 	}
 
@@ -704,9 +685,12 @@
 		let button = othersNode.querySelector(".addLanguageFilter");
 		button.disabled = true;
 		downloadLanguageFilter(service).then( ()=>{
-				openLanguageFilterSelectPane(service);
+			openLanguageFilterSelectPane(service);
 		}).catch( (e)=>{
-				downloadLanguageFilterError(service,e);
+			console.error(e);
+			deleteLanguageCache(service);
+			notice( ponyfill.i18n.getMessage("notificationDownloadLanguageError"));
+			return Promise.reject();
 		}).finally( ()=>{
 			hide(downloadLanguagePaneNode);
 			button.disabled = false;

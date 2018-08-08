@@ -74,27 +74,8 @@
 	"notificationDataUriError": {
 		"message": "サポートしていない画像形式（Data URI）ですので検索できません。"
 	},
-	"notificationConnectionError": {
-		"message": "サーバーに接続できませんでした。$ERROR1$, $ERROR2$",
-		"placeholders": {
-			"ERROR1": {
-				"content": "$1",
-				"example": "abort"
-			},
-			"ERROR2": {
-				"content": "$2",
-				"example": "0"
-			}
-		}
-	},
-	"notificationResponseError": {
-		"message": "接続先がエラーを返しました。$ERROR$",
-		"placeholders": {
-			"ERROR": {
-				"content": "$1",
-				"example": "0"
-			}
-		}
+	"notificationDownloadLanguageError": {
+		"message": "言語の一覧のダウンロードに失敗しました。"
 	},
 	"htmlLinkageDisabled": {
 		"message": "ウィクショナリー連携は無効です。"
