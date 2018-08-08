@@ -701,17 +701,16 @@
 			return;
 		}
 		show(downloadLanguagePaneNode);
-		downloadLanguageFilter(service).then(
-			()=>{
-				hide(downloadLanguagePaneNode);
+		let button = othersNode.querySelector(".addLanguageFilter");
+		button.disabled = true;
+		downloadLanguageFilter(service).then( ()=>{
 				openLanguageFilterSelectPane(service);
-			}
-		).catch(
-			(e)=>{
+		}).catch( (e)=>{
 				downloadLanguageFilterError(service,e);
-				hide(downloadLanguagePaneNode);
-			}
-		);
+		}).finally( ()=>{
+			hide(downloadLanguagePaneNode);
+			button.disabled = false;
+		});
 		return;
 	}
 
