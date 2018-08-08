@@ -687,6 +687,7 @@
 	}
 
 	function removeStopper(e){
+		if(!hasStopper())return;
 		linkListNode.scrollTop = linkListScrollTopTmp;
 		linkListNode.scrollLeft = linkListScrollleftTmp;
 		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
