@@ -484,6 +484,7 @@ function detectAjaxApiConnectError(e){
 		}
 	}
 	catch{}
+	console.error(e);
 	return Promise.reject(e);
 }
 
@@ -512,12 +513,14 @@ function requestAjaxApiInfo(){
 
 function responseAjaxApiInfo(e){
 	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if ( e.target.response.hasOwnProperty("error")){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -558,12 +561,14 @@ function requestAjaxApiPrefixSearch(){
 
 function responseAjaxApiPrefixSearch(e){
 	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -606,12 +611,14 @@ function requestAjaxApiInfo2(){
 
 function responseAjaxApiInfo2(e){
 	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -654,12 +661,14 @@ function requestAjaxApiSearch(){
 
 function responseAjaxApiSearch(e){
 	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -703,12 +712,14 @@ function requestAjaxApiParse(){
 
 function responseAjaxApiParse(e){
 	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
