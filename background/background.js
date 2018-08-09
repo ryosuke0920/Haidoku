@@ -449,10 +449,8 @@ function broadcast(data){
 function broadcastWindows(windows){
 	for(let i=0; i<windows.length; i++){
 		let w = windows[i];
-		let tabs = w.tabs;
-		for(let j=0; j<tabs.length; j++){
-			let t = w.tabs[j];
-			ponyfill.tabs.sendMessage(t.id, this.data);
+		for(let j=0; j<w.tabs.length; j++){
+			ponyfill.tabs.sendMessage(w.tabs[j].id, this.data).catch((e)=>{console.log(e)});
 		}
 	}
 }
