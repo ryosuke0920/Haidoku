@@ -1,6 +1,6 @@
 # Search Dictionary Faster
 ## summary
-Every times it's is boring to input text for search. Especially it's time reading a foreign language site. I made a tool allows us to search by selecting only text. And it saves history data to study later.
+When I read a foreign language web site, it's boring to search  word I don't know. I made this tool to search smoothly. Select text, it's displayed that the meaning and some links to search the text. There is also a function to support word review.
 
 ## Description
 ### Link list
@@ -8,6 +8,9 @@ When you select a text, Link list is displayed. Link list is list of your favori
 
 ### Context menu(right click)
 Link list is also displayed in the context menu. So you can use without changing your experience. And you can change display mode to automatic or manual in here.
+
+### Wiktionary linkage
+Wiktionary is a dictionary site made by volunteer. When you select a text, The text is searched by Wiktinary and the description is displayed.
 
 ### Make Link list
 On the Setting screen you have to make your Link list. Generaly you have to find out URLs and search parameters, but I already found out major site URLs and search parameters. It's prepared in this tool. So you can use this tool immediately.
@@ -46,3 +49,6 @@ ryosuke.ohta.programmer@gmail.com
 # License
 This software is released under the MIT License.  
 https://opensource.org/licenses/MIT
+
+# Sorce code
+https://github.com/ryosuke0920/Search-Dictionary-Faster
