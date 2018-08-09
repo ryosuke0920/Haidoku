@@ -35,7 +35,7 @@ const API_SERVICE_PROPERTY = {
 		"langCat": "Category:All_languages",
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
 		"reduceSection": [
-			new RegExp("^(?:Etymology|Synonyms|Hyponyms|Derived terms|Related terms|Translations|References|Further reading|Anagrams|Compounds|Declension|Conjugation|Inflection|See also|Antonyms|Descendants)","i")
+			new RegExp("^(?:Etymology|Synonyms|Hyponyms|Derived terms|Related terms|Translations|References|Further reading|Anagrams|Compounds|Declension|Conjugation|Inflection|See also|Antonyms|Descendants|Usage notes|quotation|coordinate term)","i")
 		],
 		"path": "/w/api.php"
 	},

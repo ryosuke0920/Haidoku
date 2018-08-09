@@ -1010,7 +1010,7 @@
 					}
 				}
 			}
-			list = content.querySelectorAll(".indicator,.noprint");
+			list = content.querySelectorAll(".indicator,.noprint,.NavFrame,ol>li>dl,ol>li>ul");
 			for(let i=0; i<list.length; i++){
 				list[i].parentNode.removeChild(list[i]);
 			}
