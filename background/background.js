@@ -483,7 +483,7 @@ function detectAjaxApiConnectError(e){
 			return this;
 		}
 	}
-	catch{}
+	catch(e){};
 	console.error(e);
 	return Promise.reject(e);
 }
