@@ -74,6 +74,75 @@
 	"notificationDataUriError": {
 		"message": "サポートしていない画像形式（Data URI）ですので検索できません。"
 	},
+	"notificationDownloadLanguageError": {
+		"message": "言語の一覧のダウンロードに失敗しました。"
+	},
+	"htmlLinkageDisabled": {
+		"message": "ウィクショナリー連携は無効です。"
+	},
+	"htmlLinkageMessage": {
+		"message": "右上のボタンをクリックすると\"ウィクショナリー連携\"が有効になります。この機能はあなたが意図していなくても、<span class=\"lessLaborGoToDictionary-warning\">テキストを選択すると検索するためにそのテキストを自動的にウィクショナリーに送信します。それがパスワードのようなプライバシー情報であってもです。</span>この仕様を理解し、注意して使用してください。必要のないときは無効にしておくことをお勧めします。"
+	},
+	"htmlNowSearching": {
+		"message": "検索中です。"
+	},
+	"htmlWhiteSpaceLimitation": {
+		"message": "空白文字は検索しません。"
+	},
+	"htmlMaxLengthLimitation": {
+		"message": "$ERROR$バイト以内で検索します。",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "255"
+			}
+		}
+	},
+	"htmlMeaningNotFound": {
+		"message": "ページは見つかりましたが、\"解説の切り出し\"に失敗しました。"
+	},
+	"htmlSectionNotFound": {
+		"message": "ページは見つかりましたが、\"言語フィルター\"で指定している言語の解説は見つかりませんでした。"
+	},
+	"htmlPageNotFound": {
+		"message": "ページが見つかりませんでした。"
+	},
+	"htmlConnectionError": {
+		"message": "サーバーに接続できませんでした。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlServerError": {
+		"message": "サーバーがエラーを返しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlApplicationError": {
+		"message": "アプリケーションがエラーを返しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlUnexpectedError": {
+		"message": "予期せぬエラーが発生しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
 	"htmlZoomDown": {
 		"message": "縮小",
 		"description": ""
@@ -324,7 +393,7 @@
 		"message": "結果は0件でした。",
 		"description": "no data message."
 	},
-	"htmlLinkListStyle": {
+	"htmlLinkListStyleTitle": {
 		"message": "リンクリストのスタイル",
 		"description": "Name of the propertie."
 	},
@@ -336,7 +405,7 @@
 		"message": "ダーク",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListAction": {
+	"htmlLinkListActionTitle": {
 		"message": "リンクリストの表示動作",
 		"description": "Name of the propertie."
 	},
@@ -351,6 +420,96 @@
 	"htmlLinkListActionMouseclick": {
 		"message": "マウスクリック",
 		"description": "Name of the propertie."
+	},
+	"htmlLinkListLayoutTitle": {
+		"message": "リンクリストのレイアウト"
+	},
+	"htmlLinkListLayoutPatternTitle":{
+		"message": "リンクリストのレイアウトパターン"
+	},
+	"htmlFaviconDisplayTitle":{
+		"message": "リンクの表示内容"
+	},
+	"htmlFaviconDisplayNormal":{
+		"message": "ファビコンとサイト名"
+	},
+	"htmlFaviconDisplayOnly":{
+		"message": "ファビコンのみ"
+	},
+	"htmLinkListDirectionTitle":{
+		"message": "リンクを並べる方向"
+	},
+	"htmlLinkListDirectionHorizontal":{
+		"message": "水平方向に並べる"
+	},
+	"htmlLinkListDirectionVertical":{
+		"message": "垂直方向に並べる"
+	},
+	"htmlLinkListSeparatorTitle":{
+		"message": "リンクリストとウィクショナリーの区切り"
+	},
+	"htmlLinkListSeparatorHorizontal":{
+		"message": "水平に区切る"
+	},
+	"htmlLinkListSeparatorVertical":{
+		"message": "垂直に区切る"
+	},
+	"htmlApiServiceTitle": {
+		"message": "ウィクショナリー連携"
+	},
+	"htmlApiServiceDescription": {
+		"message": "ウィクショナリーはボランティアによって作成されている辞書サイトです。ウィクショナリーを使用して選択したテキストの解説を表示します。"
+	},
+	"htmlServiceCodeTitle": {
+		"message": "ウィクショナリーの選択"
+	},
+	"htmlServiceCodeDescription": {
+		"message": "連携するウィクショナリーを選択してください。サイトによって表示上用いられている言語が異なります。情報の質や規模も異なります。変更すると\"言語フィルター\"も追加設定が必要になります。"
+	},
+	"htmlServiceCodeNone": {
+		"message": "無効にする"
+	},
+	"htmlServiceCodeEn": {
+		"message": "https://en.wiktionary.org/ - 英語"
+	},
+	"htmlServiceCodeJa": {
+		"message": "https://ja.wiktionary.org/ - 日本語"
+	},
+	"htmlServiceCodeSelectMessage": {
+		"message": "ウィクショナリーを選択してください。"
+	},
+	"htmlLanguageFilterTitle": {
+		"message": "言語フィルター"
+	},
+	"htmlLanguageFilterDescription": {
+		"message": "ウィクショナリーでは１つの単語に対して、全ての言語毎の解説が１つの記事にまとめられています。言語フィルターを適用すると、指定した言語の解説だけが表示されます。"
+	},
+	"htmlLanguageFilterAside": {
+		"message": "例えば、\"four\"は英語で\"4\"を意味しますが、フランス語では\"オーブン・かまど・炉\"を意味します。言語フィルターに\"英語\"を選択すれば、英語の\"4\"の解説だけが表示されます。"
+	},
+	"htmlAddLanguageFilter": {
+		"message": "言語フィルターを追加する"
+	},
+	"htmlLanguageFilterSelectedDescription": {
+		"message": "選択中の言語フィルターの一覧です。"
+	},
+	"htmlLanguageFilterNoneSelectedDescription": {
+		"message": "言語フィルターは選択されていません。"
+	},
+	"htmlLanguageFilterDownloadMessage": {
+		"message": "ウィクショナリーから言語の一覧をダウンロードしています。"
+	},
+	"htmlApiCutOutTitle": {
+		"message": "解説の切り出し"
+	},
+	"htmlApiCutOutDescription": {
+		"message": "解説から\"意味\"の部分を切り出して表示します。"
+	},
+	"htmlApiCutOutLabel": {
+		"message": "有効にする"
+	},
+	"htmlLinkListSampleTitle": {
+		"message": "リンクリストのサンプル"
 	},
 	"htmlContactText": {
 		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
@@ -369,7 +528,7 @@
 		"description": ""
 	},
 	"htmlCheckByteLengthError": {
-		"message": "テキストを$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイトです）。",
+		"message": "$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイト）。",
 		"description": "",
 		"placeholders": {
 			"MAX_LENGTH": {
@@ -417,5 +576,14 @@
 	"htmlDateInputError": {
 		"message": "日付を正しく入力して下さい。",
 		"description": ""
+	},
+	"htmlCheckLanguageFilterLengthError": {
+		"message": "言語フィルターの追加は最大で$MAX$個までです。",
+		"placeholders": {
+			"MAX": {
+				"content": "$1",
+				"example": "10"
+			}
+		}
 	}
 }

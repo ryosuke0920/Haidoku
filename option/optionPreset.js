@@ -129,7 +129,7 @@
 
 	function presetSearchInput(){
 		let tmp = reduceSpace(presetSearchNode.value);
-		if ( tmp.lenght == 0 ) {
+		if ( tmp.length == 0 ) {
 			presetRemoveCellHide();
 			return;
 		}
