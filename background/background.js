@@ -1,13 +1,14 @@
-const DEFAULT_LOCALE = "en";
-const XHR_TIMEOUT = 10000;
 const MAX_FAVICON_CONNECTION = 5;
 const DATA_URI_REGEX = new RegExp(/^data:.*,/);
+const MAX_API_CACHE = 30;
 let optionList = [];
 let autoViewFlag = true;
 let shiftKey = false;
 let ctrlKey = false;
 let options = {};
 let faviconCache = {};
+let serviceCode = API_SERVICE_CODE_NONE;
+let apiDocumentCache = [];
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
 
@@ -40,11 +41,13 @@ function initContextMenu(){
 }
 
 function getSetting() {
+	let serviceCode = getDefaultServiceCode();
 	return ponyfill.storage.sync.get({
 		"ol": [],
 		"bf": true,
 		"sk": false,
-		"ck": false
+		"ck": false,
+		"s": serviceCode
 	}).then(onGotSetting);
 }
 
@@ -53,6 +56,7 @@ function onGotSetting(json){
 	autoViewFlag = json["bf"];
 	shiftKey = json["sk"];
 	ctrlKey = json["ck"];
+	serviceCode = json["s"];
 }
 
 function initListener(){
@@ -73,28 +77,37 @@ function notify(message, sender, sendResponse){
 	let method = message.method;
 	let data = message.data;
 	if( method == "notice" ){
-		let p = notice(data);
-		sendResponse(p);
-		return p;
+		return notice(data).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
 	}
 	else if( method == "saveHistory" ){
-		let p = saveHistory(data);
-		sendResponse(p);
-		return p;
+		return saveHistory(data).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
 	}
 	else if( method == "openOptions" ){
-		let p = ponyfill.runtime.openOptionsPage();
-		sendResponse(p);
-		return p;
+		return ponyfill.runtime.openOptionsPage().catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
 	}
 	else if( method == "getFavicon" ){
-		sendResponse( faviconCache );
-		return Promise.resolve( faviconCache );
+		return Promise.resolve(faviconCache);
+	}
+	else if( method == "apiRequest" ){
+		return apiRequest(data.text).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
 	}
 	else {
-		let p = save(data);
-		sendResponse(p);
-		return p;
+		return save(data).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
 	}
 }
 
@@ -146,6 +159,10 @@ function onStorageChanged(change, area){
 	if(change["ol"]) {
 		updateFaviconCache().then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
+	if(change["s"]) {
+		serviceCode = change["s"]["newValue"];
+		apiDocumentCache = [];
+	}
 }
 
 function resetMenu(json){
@@ -259,15 +276,7 @@ function onDataUriNotification(){
 }
 
 function getDefaultOptionList(){
-	let lang = ponyfill.i18n.getUILanguage();
-	let matcher = lang.match(/^([a-zA-Z0-9]+)\-[a-zA-Z0-9]+$/);
-	if( matcher ){
-		lang = matcher[1];
-	}
-	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
-		return DEFAULT_OPTION_LIST[lang];
-	}
-	lang = ponyfill.runtime.getManifest()["default_locale"];
+	let lang = getUiLang();
 	if ( lang && DEFAULT_OPTION_LIST[lang] ) {
 		return DEFAULT_OPTION_LIST[lang];
 	}
@@ -289,31 +298,6 @@ function remainDomainURL(url){
 	}
 	if(count < 3) newURL += "/";
 	return newURL;
-}
-
-function promiseAjax(method="GET", url, responseType){
-	return new Promise((resolve, reject)=>{
-		let xhr = new XMLHttpRequest();
-		xhr.addEventListener("load", (e)=>{
-			resolve(e);
-		});
-		xhr.addEventListener("error", (e)=>{
-			console.error(e);
-			reject(e);
-		});
-		xhr.addEventListener("abort", (e)=>{
-			console.error(e);
-			reject(e);
-		});
-		xhr.addEventListener("timeout", (e)=>{
-			console.error(e);
-			reject(e);
-		});
-		xhr.open(method, url);
-		xhr.timeout = XHR_TIMEOUT;
-		if(responseType) xhr.responseType = responseType;
-		xhr.send();
-	});
 }
 
 function updateFaviconCache(){
@@ -401,7 +385,7 @@ function requestAjaxFavicon(){
 }
 
 function responseAjaxFavicon(e){
-	if(e.target.status == "200"){
+	if(e.target.status == HTTP_200_OK){
 		this.data.blob = e.target.response;
 		return;
 	}
@@ -465,11 +449,304 @@ function broadcast(data){
 function broadcastWindows(windows){
 	for(let i=0; i<windows.length; i++){
 		let w = windows[i];
-		let tabs = w.tabs;
-		for(let j=0; j<tabs.length; j++){
-			let t = w.tabs[j];
-			ponyfill.tabs.sendMessage(t.id, this.data)
-			.catch((e)=>{ console.log(e); });
+		for(let j=0; j<w.tabs.length; j++){
+			ponyfill.tabs.sendMessage(w.tabs[j].id, this.data).catch((e)=>{console.log(e)});
 		}
 	}
+}
+
+function apiRequest(text){
+	let obj = {"text": text};
+	if(!API_SERVICE.hasOwnProperty(serviceCode)){
+		obj.error = APPLICATION_ERROR;
+		obj.code = serviceCode;
+		obj.message = "service not found.";
+		return Promise.resolve(obj);
+	}
+	let cache = fetchApiDocumentCache(text);
+	if(cache) return Promise.resolve(cache);
+	let service = API_SERVICE[serviceCode];
+	obj.service = service;
+	obj.path = API_SERVICE_PROPERTY[service].path;
+	obj.url = [];
+	obj.html = [];
+	return Promise.resolve().then( requestAjaxApiInfo.bind(obj) ).then( responseAjaxApiInfo.bind(obj) ).catch( detectAjaxApiConnectError.bind(obj) );
+}
+
+function detectAjaxApiConnectError(e){
+	try{
+		if( e.target.status == HTTP_NG ){
+			console.log(e);
+			this.error = CONNECTION_ERROR;
+			this.code = e.target.status;
+			this.message = e.target.statusText;
+			return this;
+		}
+	}
+	catch(e){};
+	console.error(e);
+	return Promise.reject(e);
+}
+
+function requestAjaxApiInfo(){
+	let param = [
+		{
+			"key"  :"action",
+			"value":"query"
+		},{
+			"key"  :"format",
+			"value":"json"
+		},{
+			"key"  :"titles",
+			"value":this.text
+		},{
+			"key"  :"prop",
+			"value":"info"
+		},{
+			"key"  :"inprop",
+			"value":"url"
+		}
+	];
+	this.url.push( makeApiURL(this.service+this.path, param) );
+	return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER);
+}
+
+function responseAjaxApiInfo(e){
+	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
+	}
+	if ( e.target.response.hasOwnProperty("error")){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
+	}
+	if (e.target.response.query.pages.hasOwnProperty("-1")){
+		return Promise.resolve().then( requestAjaxApiPrefixSearch.bind(this) ).then( responseAjaxApiPrefixSearch.bind(this) );
+	}
+	let page = Object.values(e.target.response.query.pages);
+	this.title = page[0].title;
+	this.pageid = page[0].pageid;
+	this.fullurl = page[0].fullurl;
+	return Promise.resolve().then( requestAjaxApiParse.bind(this) ).then( responseAjaxApiParse.bind(this) );
+}
+
+function requestAjaxApiPrefixSearch(){
+	let param = [
+		{
+			"key"  :"action",
+			"value":"query"
+		},{
+			"key"  :"format",
+			"value":"json"
+		},{
+			"key"  :"list",
+			"value":"prefixsearch"
+		},{
+			"key"  :"pslimit",
+			"value":"1"
+		},{
+			"key"  :"pssearch",
+			"value":"$1"
+		}
+	];
+	this.url.push( makeApiURL(this.service+this.path, param, this.text));
+	return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER);
+}
+
+function responseAjaxApiPrefixSearch(e){
+	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
+	}
+	if (e.target.response.hasOwnProperty("error")){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
+	}
+	if(e.target.response.query.prefixsearch.length==0){
+		return Promise.resolve().then( requestAjaxApiSearch.bind(this) ).then( responseAjaxApiSearch.bind(this) );
+	}
+	let title = e.target.response.query.prefixsearch[0].title;
+	if(title.toLowerCase() != this.text.toLowerCase()){
+		return Promise.resolve().then( requestAjaxApiSearch.bind(this) ).then( responseAjaxApiSearch.bind(this) );
+	}
+	this.title = title;
+	this.pageid = e.target.response.query.prefixsearch[0].pageid;
+	return Promise.resolve().then( requestAjaxApiInfo2.bind(this) ).then( responseAjaxApiInfo2.bind(this) );
+}
+
+function requestAjaxApiInfo2(){
+	let param = [
+		{
+			"key"  :"action",
+			"value":"query"
+		},{
+			"key"  :"format",
+			"value":"json"
+		},{
+			"key"  :"pageids",
+			"value":this.pageid
+		},{
+			"key"  :"prop",
+			"value":"info"
+		},{
+			"key"  :"inprop",
+			"value":"url"
+		}
+	];
+	this.url.push( makeApiURL(this.service+this.path, param) );
+	return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER);
+}
+
+function responseAjaxApiInfo2(e){
+	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
+	}
+	if (e.target.response.hasOwnProperty("error")){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
+	}
+	if (e.target.response.query.pages.hasOwnProperty("0")){
+		this.error = PAGE_NOT_FOUND_ERROR;
+		addApiDocumentCache(this);
+		return this;
+	}
+	let page = Object.values(e.target.response.query.pages);
+	this.title = page[0].title;
+	this.pageid = page[0].pageid;
+	this.fullurl = page[0].fullurl;
+	return Promise.resolve().then( requestAjaxApiParse.bind(this) ).then( responseAjaxApiParse.bind(this) );
+}
+
+function requestAjaxApiSearch(){
+	let param = [
+		{
+			"key"  :"action",
+			"value":"query"
+		},{
+			"key"  :"format",
+			"value":"json"
+		},{
+			"key"  :"list",
+			"value":"search"
+		},{
+			"key"  :"srlimit",
+			"value":"1"
+		},{
+			"key"  :"srsearch",
+			"value":"$1"
+		}
+	];
+	this.url.push( makeApiURL(this.service+this.path, param, this.text));
+	return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER);
+}
+
+function responseAjaxApiSearch(e){
+	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
+	}
+	if (e.target.response.hasOwnProperty("error")){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
+	}
+	if(e.target.response.query.search.length==0){
+		this.error = PAGE_NOT_FOUND_ERROR;
+		addApiDocumentCache(this);
+		return this;
+	}
+	this.title = e.target.response.query.search[0].title;
+	this.pageid = e.target.response.query.search[0].pageid;
+	return Promise.resolve().then( requestAjaxApiInfo2.bind(this) ).then( responseAjaxApiInfo2.bind(this) );
+}
+
+function requestAjaxApiParse(){
+	let param = [
+		{
+			"key"  :"action",
+			"value":"parse"
+		},{
+			"key"  :"format",
+			"value":"json"
+		},{
+			"key"  :"pageid",
+			"value":this.pageid
+		},{
+			"key"  :"prop",
+			"value":"text"
+		},{
+			"key"  :"mobileformat",
+			"value":""
+		},{
+			"key"  :"disableeditsection",
+			"value":""
+		}
+	];
+	this.url.push(makeApiURL(this.service+this.path, param))
+	return promiseAjax("GET", this.url[this.url.length-1], "json", API_HEADER);
+}
+
+function responseAjaxApiParse(e){
+	if( e.target.status != HTTP_200_OK ){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.status;
+		this.message = e.target.statusText;
+		return this;
+	}
+	if (e.target.response.hasOwnProperty("error")){
+		console.error(e);
+		this.error = SERVER_ERROR;
+		this.code = e.target.response.error.code;
+		this.message = e.target.response.error.info;
+		return this;
+	}
+	this.html.push( e.target.response.parse.text["*"] );
+	return Promise.resolve().then( returnContent.bind(this) );
+}
+
+function returnContent(){
+	addApiDocumentCache(this);
+	return this;
+}
+
+function addApiDocumentCache(obj){
+	if(fetchApiDocumentCache(obj.text)) return;
+	apiDocumentCache.push(obj);
+	if(apiDocumentCache.length > MAX_API_CACHE) apiDocumentCache.shift();
+}
+
+function fetchApiDocumentCache(text){
+	for(let i=0; i<apiDocumentCache.length; i++){
+		if( text == apiDocumentCache[i].title || text == apiDocumentCache[i].text ){
+			let temp = apiDocumentCache.splice(i,1);
+			apiDocumentCache.push(temp[0]);
+			return temp[0];
+		}
+	}
+	return false;
 }

@@ -202,51 +202,166 @@
 		</div>
 		<div id="others" class="panel hide">
 			<section class="othersTable box">
-				<section class="LinkListProperty box">
-					<h1 class="linkListStyle box">htmlLinkListStyle</h1>
+				<section class="component">
+					<h1 class="linkListStyleTitle">htmlLinkListStyleTitle</h1>
 					<div>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
 					</div>
 				</section>
-				<section class="LinkListProperty box">
-					<h1 class="linkListAction box">htmlLinkListAction</h1>
+				<section class="component">
+					<h1 class="linkListActionTitle">htmlLinkListActionTitle</h1>
 					<div>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="m"> <span class="linkListActionMouseover">htmlLinkListActionMouseover</span></label><br>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="c"> <span class="linkListActionMouseclick">htmlLinkListActionMouseclick</span></label><br>
 					</div>
 				</section>
-				<section class="linkListSample box">
-					<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 150px; width: 300px; resize: none;">
-						<div id="lessLaborGoToDictionary-cover"></div>
-						<nav id="lessLaborGoToDictionary-menu">
-							<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
-							<img id="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
-							<img id="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
-							<img id="lessLaborGoToDictionary-copy" src="/image/copy.svg">
-							<img id="lessLaborGoToDictionary-option" src="/image/option.svg">
-						</nav>
-						<ul id="lessLaborGoToDictionary-container">
-							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">
-									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test1" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
-								</a>
-							</li>
-							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">
-									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test2 test2" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2 test2</span>
-								</a>
-							</li>
-							<li class="lessLaborGoToDictionary-list">
-								<a class="lessLaborGoToDictionary-anchor">
-									<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" title="test3 test3 test3" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3 test3 test3</span>
-								</a>
-							</li>
-						</ul>
+				<section class="component">
+					<h1 class="linkListLayoutTitle">htmlLinkListLayoutTitle</h1>
+					<section class="subComponent">
+						<h1 class="linkListLayoutPatternTitle">htmlLinkListLayoutPatternTitle</h1>
+						<div>
+							<label><button class="linkListLayoutPattern" value="1">1</button></label>
+							<label><button class="linkListLayoutPattern" value="2">2</button></label>
+							<label><button class="linkListLayoutPattern" value="3">3</button></label>
+							<label><button class="linkListLayoutPattern" value="4">4</button></label>
+						</div>
+					</section>
+					<section class="subComponent">
+						<h1 class="faviconDisplayTitle">htmlFaviconDisplayTitle</h1>
+						<div>
+							<label><input type="radio" class="faviconDisplay" name="faviconDisplay" value="n"> <span class="faviconDisplayNormal">htmlFaviconDisplayNormal</span></label><br>
+							<label><input type="radio" class="faviconDisplay" name="faviconDisplay" value="o"> <span class="faviconDisplayOnly">htmlFaviconDisplayOnly</span></label><br>
+						</div>
+					</section>
+					<section class="subComponent">
+						<h1 class="linkListDirectionTitle">htmLinkListDirectionTitle</h1>
+						<div>
+							<label><input type="radio" class="linkListDirection" name="linkListDirection" value="h"> <span class="linkListDirectionHorizontal">htmlLinkListDirectionHorizontal</span></label><br>
+							<label><input type="radio" class="linkListDirection" name="linkListDirection" value="v"> <span class="linkListDirectionVertical">htmlLinkListDirectionVertical</span></label><br>
+						</div>
+					</section>
+					<section class="subComponent">
+						<h1 class="linkListSeparatorTitle">htmlLinkListSeparatorTitle</h1>
+						<div>
+							<label><input type="radio" class="linkListSeparator" name="linkListSeparator" value="h"> <span class="linkListSeparatorHorizontal">htmlLinkListSeparatorHorizontal</span></label><br>
+							<label><input type="radio" class="linkListSeparator" name="linkListSeparator" value="v"> <span class="linkListSeparatorVertical">htmlLinkListSeparatorVertical</span></label><br>
+						</div>
+					</section>
+				</section>
+				<section class="component">
+					<h1 class="apiServiceTitle">htmlApiServiceTitle</h1>
+					<p class="apiServiceDescription">htmlApiServiceDescription</p>
+					<section class="subComponent">
+						<h1 class="serviceCodeTitle">htmlServiceCodeTitle</h1>
+						<p class="serviceCodeDescription">htmlServiceCodeDescription</p>
+						<p>
+							<span class="inputWrapper">
+								<select class="serviceCodeSelect">
+									<option class="serviceCodeNone" value="-">htmlServiceCodeNone</option>
+									<option class="serviceCodeEn" value="en">htmlServiceCodeEn</option>
+									<option class="serviceCodeJa" value="ja">htmlServiceCodeJa</option>
+								</select>
+								<span class="inputMessage serviceCodeSelectMessage hide">htmlServiceCodeSelectMessage</span>
+							</span>
+						</p>
+					</section>
+					<section class="subComponent" id="languageFileterComponent">
+						<h1 class="languageFilterTitle">htmlLanguageFilterTitle</h1>
+						<p class="languageFilterDescription">htmlLanguageFilterDescription</p>
+						<aside class="languageFilterAside">htmlLanguageFilterAside</aside>
+						<p><button class="addLanguageFilter">htmlAddLanguageFilter</button></p>
+						<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
+						<ul class="languageFilterBox"></ul>
+						<div id="downloadLanguagePane" class="hide">
+							<div></div>
+							<p><span class="languageFilterDownloadMessage">htmlLanguageFilterDownloadMessage</span></p>
+						</div>
+					</section>
+					<section class="subComponent">
+						<h1 class="apiCutOutTitle">htmlApiCutOutTitle</h1>
+						<p class="apiCutOutDescription">htmlApiCutOutDescription</p>
+						<div>
+							<label>
+								<input type="checkbox" class="apiCutOut">
+								<span class="apiCutOutLabel">htmlApiCutOutLabel</span>
+							</label>
+						</div>
+					</section>
+				</section>
+				<section id="linkListSample" class="component box">
+					<h1 class="linkListSampleTitle">htmlLinkListSampleTitle</h1>
+					<div class="box">
+						<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 300px; width: 450px; z-index:auto;">
+							<div id="lessLaborGoToDictionary-cover"></div>
+							<nav id="lessLaborGoToDictionary-menu">
+								<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
+								<img id="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
+								<img id="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
+								<img id="lessLaborGoToDictionary-copy" src="/image/copy.svg">
+								<img id="lessLaborGoToDictionary-option" src="/image/option.svg">
+							</nav>
+							<div id="lessLaborGoToDictionary-grid">
+								<ul id="lessLaborGoToDictionary-container">
+									<li class="lessLaborGoToDictionary-list">
+										<a class="lessLaborGoToDictionary-anchor">
+											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
+										</a>
+									</li>
+									<li class="lessLaborGoToDictionary-list">
+										<a class="lessLaborGoToDictionary-anchor">
+											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2</span>
+										</a>
+									</li>
+									<li class="lessLaborGoToDictionary-list">
+										<a class="lessLaborGoToDictionary-anchor">
+											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3</span>
+										</a>
+									</li>
+								</ul>
+								<div id="lessLaborGoToDictionary-apiContent">
+									<div id="lessLaborGoToDictionary-apiHeader">
+									<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
+									<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank" href="https://ja.wiktionary.org/wiki/wiki">wiki</a>
+									</div>
+									<div id="lessLaborGoToDictionary-apiBody">
+										<ol>
+											<li>sample sample sample </li>
+											<li><a>sample</a> sample sample
+												<dl>
+													<dt>example</dt>
+												</dl>
+												<ul>
+													<li><b>test</b> test test </li>
+													<li><i>test</i> test test </li>
+												</ul>
+											</li>
+											<li><a class="new">sample</a> sample sample
+										</ol>
+									</div>
+									<div id="lessLaborGoToDictionary-apiFooter">Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</section>
 			</section>
+			<div id="languageFilterSelectPane" class="pane hide">
+				<img src="/image/delete.svg" class="removePane">
+				<div id="languageFilterSelectPaneBody" class="paneBody box">
+					<p>
+						<select class="apiLangPrefixSelect"></select>
+					</p>
+					<div id="languageFilterContainer"></div>
+					<div>
+						<div id="languageSelectList" class="component">
+							<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
+							<ol class="languageFilterBox"></ol>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div id="contact" class="panel hide">
 			<address>
@@ -270,10 +385,28 @@
 		</nav>
 	</div>
 </div>
+<div class="hide">
+	<ol>
+		<li id="languageListPrototype">
+			<span class="languageLabel"></span>&nbsp;
+			<img src="/image/delete.svg" class="removeLanguageButtom">
+		</li>
+	</ol>
+	<label id="languageFilterInputPrototype">
+		<input type="checkbox" class="languageFilterCheckbox" name="l" value="">
+		<span class="languageFilterLabel"></span>
+	</label>
+	<li class="lessLaborGoToDictionary-list" id="lessLaborGoToDictionary-list-prototype">
+		<a class="lessLaborGoToDictionary-anchor">
+			<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label" style="font-size:0.8em">test1</span>
+		</a>
+	</li>
+</div>
 <script src="/etc/CONST.js"></script>
 <script src="/etc/PRESET_OPTION_LIST.js"></script>
 <script src="/lib/ponyfill.js"></script>
 <script src="/lib/indexeddb.js"></script>
+<script src="/lib/share.js"></script>
 <script src="/lib/common.js"></script>
 <script src="option.js"></script>
 <script src="optionPreset.js"></script>

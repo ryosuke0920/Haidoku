@@ -74,6 +74,75 @@
 	"notificationDataUriError": {
 		"message": "It can't be searched because it's an unsupported image format(Data URI)."
 	},
+	"notificationDownloadLanguageError": {
+		"message": "Failed to download list of language."
+	},
+	"htmlLinkageDisabled": {
+		"message": "Wiktionary linkage is Disabled."
+	},
+	"htmlLinkageMessage": {
+		"message": "When clicked Upper Right Button, Wiktionary linkage is enabled. Regardless whether you intent or not, <span class=\"lessLaborGoToDictionary-warning\">if you select text, it will be automatically sent to Wiktionary to search, even if it's your privacy information like a password.</span> Please understand it and use carefully. We recommend that you disable it when you don't need it."
+	},
+	"htmlNowSearching": {
+		"message": "Now searching."
+	},
+	"htmlWhiteSpaceLimitation": {
+		"message": "Don't search for spaces."
+	},
+	"htmlMaxLengthLimitation": {
+		"message": "Search within $ERROR$ bytes.",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "255"
+			}
+		}
+	},
+	"htmlMeaningNotFound": {
+		"message": "The page was found but \"Cut out description\" was failed."
+	},
+	"htmlSectionNotFound": {
+		"message": "The page was found but there ware no description for the language specified in \"Language filter\"."
+	},
+	"htmlPageNotFound": {
+		"message": "The page could not be found."
+	},
+	"htmlConnectionError": {
+		"message": "Could not connect to the server. $ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlServerError": {
+		"message": "The server returned an error. $ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlApplicationError": {
+		"message": "The application returned an error. $ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
+	"htmlUnexpectedError": {
+		"message": "An unexpected error occurred. $ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1",
+				"example": "0"
+			}
+		}
+	},
 	"htmlZoomDown": {
 		"message": "Zoom down",
 		"description": ""
@@ -324,8 +393,8 @@
 		"message": "Result was 0.",
 		"description": "no data message."
 	},
-	"htmlLinkListStyle": {
-		"message": "Link list's style",
+	"htmlLinkListStyleTitle": {
+		"message": "Link list style",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListStyleClassic": {
@@ -336,8 +405,8 @@
 		"message": "Dark",
 		"description": "Name of the propertie."
 	},
-	"htmlLinkListAction": {
-		"message": "Link list's display action",
+	"htmlLinkListActionTitle": {
+		"message": "Link list display action",
 		"description": "Name of the propertie."
 	},
 	"htmlLinkListActionNormal": {
@@ -351,6 +420,96 @@
 	"htmlLinkListActionMouseclick": {
 		"message": "Mouse click",
 		"description": "Name of the propertie."
+	},
+	"htmlLinkListLayoutTitle": {
+		"message": "Link list layout"
+	},
+	"htmlLinkListLayoutPatternTitle":{
+		"message": "Link list layout pattern"
+	},
+	"htmlFaviconDisplayTitle":{
+		"message": "Display content of link"
+	},
+	"htmlFaviconDisplayNormal":{
+		"message": "Favicon and site name"
+	},
+	"htmlFaviconDisplayOnly":{
+		"message": "Favicon only"
+	},
+	"htmLinkListDirectionTitle":{
+		"message": "Direction of arranging links"
+	},
+	"htmlLinkListDirectionHorizontal":{
+		"message": "Horizontal"
+	},
+	"htmlLinkListDirectionVertical":{
+		"message": "Vertical"
+	},
+	"htmlLinkListSeparatorTitle":{
+		"message": "Separator between Link list and Wiktionary"
+	},
+	"htmlLinkListSeparatorHorizontal":{
+		"message": "Horizontal"
+	},
+	"htmlLinkListSeparatorVertical":{
+		"message": "Vertical"
+	},
+	"htmlApiServiceTitle": {
+		"message": "Wiktionary linkage"
+	},
+	"htmlApiServiceDescription": {
+		"message": "Wiktionary is a dictionary site made by volunteers. The description of word you selected is displayed using Wiktionary."
+	},
+	"htmlServiceCodeTitle": {
+		"message": "Select Wiktionary"
+	},
+	"htmlServiceCodeDescription": {
+		"message": "The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" need additional setting."
+	},
+	"htmlServiceCodeNone": {
+		"message": "Disable"
+	},
+	"htmlServiceCodeEn": {
+		"message": "https://en.wiktionary.org/ - English"
+	},
+	"htmlServiceCodeJa": {
+		"message": "https://ja.wiktionary.org/ - Japanese"
+	},
+	"htmlServiceCodeSelectMessage": {
+		"message": "Please select a Wiktionary."
+	},
+	"htmlLanguageFilterTitle": {
+		"message": "Language filter"
+	},
+	"htmlLanguageFilterDescription": {
+		"message": "Wiktionary article has description for all words of all languages. Using language filter, it's displayed a description of only the language you want."
+	},
+	"htmlLanguageFilterAside": {
+		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\".　If you select \"English\" for Language filter, only the English description \"4\" will be displayed."
+	},
+	"htmlAddLanguageFilter": {
+		"message": "Add language filter"
+	},
+	"htmlLanguageFilterSelectedDescription": {
+		"message": "List of language filter selected."
+	},
+	"htmlLanguageFilterNoneSelectedDescription": {
+		"message": "Language filter is not selected."
+	},
+	"htmlLanguageFilterDownloadMessage": {
+		"message": "It's downloading list of language from Wiktionary"
+	},
+	"htmlApiCutOutTitle": {
+		"message": "Cut out description"
+	},
+	"htmlApiCutOutDescription": {
+		"message": "From the description, cut out the part of \"meaning\" and display it."
+	},
+	"htmlApiCutOutLabel": {
+		"message": "Enable"
+	},
+	"htmlLinkListSampleTitle": {
+		"message": "Link list sample"
 	},
 	"htmlContactText": {
 		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
@@ -417,5 +576,14 @@
 	"htmlDateInputError": {
 		"message": "Please enter a date correctly.",
 		"description": ""
+	},
+	"htmlCheckLanguageFilterLengthError": {
+		"message": "The number of \"Language filter\" can be set up to $MAX$",
+		"placeholders": {
+			"MAX": {
+				"content": "$1",
+				"example": "10"
+			}
+		}
 	}
 }
