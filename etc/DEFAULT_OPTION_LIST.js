@@ -3,13 +3,13 @@ const DEFAULT_OPTION_LIST = {
 		{
 			"c": true,
 			"h": true,
-			"l": "Wiktionary (en.wiktionary.org)",
+			"l": "Wiktionary (en)",
 			"u": "https://en.wiktionary.org/wiki/Special:Search?search=$1&go=Look+up"
 		},
 		{
 			"c": true,
 			"h": true,
-			"l": "Wikipedia (en.wikipedia.org)",
+			"l": "Wikipedia (en)",
 			"u": "https://en.wikipedia.org/w/index.php?search=$1&title=Special:Search&go=Go"
 		},
 		{
@@ -27,7 +27,7 @@ const DEFAULT_OPTION_LIST = {
 		{
 			"c": true,
 			"h": true,
-			"l": "Google (google.com)",
+			"l": "Google",
 			"u": "https://www.google.com/search?q=$1"
 		}
 	],
@@ -41,7 +41,7 @@ const DEFAULT_OPTION_LIST = {
 		{
 			"c": true,
 			"h": true,
-			"l": "Wikipedia (ja.wikipedia.org)",
+			"l": "Wikipedia (ja)",
 			"u": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
 		},
 		{
@@ -59,7 +59,7 @@ const DEFAULT_OPTION_LIST = {
 		{
 			"c": true,
 			"h": true,
-			"l": "Google (google.co.jp)",
+			"l": "Google (jp)",
 			"u": "https://www.google.co.jp/search?q=$1"
 		}
 	]
