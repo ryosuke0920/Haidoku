@@ -1,4 +1,10 @@
 # Search Dictionary Faster
+## Public distribution
+### Firefox Add-ons
+https://addons.mozilla.org/en-US/firefox/addon/lesslaborgotodictionary/
+### chrome web store
+https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
+
 ## summary
 When I read a foreign language web site, it's boring to search  word I don't know. I made this tool to search smoothly. Select text, it's displayed that the meaning and some links to search the text. There is also a function to support word review.
 
@@ -34,21 +40,22 @@ URLs and search parameters of the following sites are prepared. If these specifi
 * goo 辞書
 * yahoo 辞書
 * 英辞郎 on the WEB
+* You Tube, Dailymotion
 
-etc. Total 85 URLs.
+etc. Total 90 URLs.
 
-# Privacy policy
+## Privacy policy
 This tool does not collect or send privacy data. But the setting data are sent and received by the synchronization service provided by the browser. History data is out of the synchronization service.
 
-# Delivery information such as release information
+## Delivery information such as release information
 https://twitter.com/SearchDictionar
 
-# Contact
+## Contact
 ryosuke.ohta.programmer@gmail.com
 
-# License
+## License
 This software is released under the MIT License.  
 https://opensource.org/licenses/MIT
 
-# Source code
+## Source code
 https://github.com/ryosuke0920/Search-Dictionary-Faster
