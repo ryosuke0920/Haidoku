@@ -50,5 +50,5 @@ ryosuke.ohta.programmer@gmail.com
 This software is released under the MIT License.  
 https://opensource.org/licenses/MIT
 
-# Sorce code
+# Source code
 https://github.com/ryosuke0920/Search-Dictionary-Faster

@@ -212,17 +212,22 @@
 		if( selection.isCollapsed ){
 			closeLinkList();
 			abortApiRequestQueue();
+			return;
 		}
-		else {
-			makeLinkList(selection.toString());
-			let lastRange = selection.getRangeAt(selection.rangeCount-1);
-			let rectList = lastRange.getClientRects();
-			let rect = rectList[rectList.length-1];
-			showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
-			if(isEnableApi()){
-				abortApiRequestQueue();
-				apiRequest(selection);
-			}
+		let text = selection.toString();
+		if( !checkBlank(text) ) {
+			closeLinkList();
+			abortApiRequestQueue();
+			return;
+		};
+		makeLinkList(text);
+		let lastRange = selection.getRangeAt(selection.rangeCount-1);
+		let rectList = lastRange.getClientRects();
+		let rect = rectList[rectList.length-1];
+		showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+		if(isEnableApi()){
+			abortApiRequestQueue();
+			apiRequest(selection);
 		}
 	}
 
@@ -252,7 +257,9 @@
 			let selection = window.getSelection();
 			if( !selection.isCollapsed ){
 				selectionChangedFlag = false;
-				makeLinkList(selection.toString());
+				let text = selection.toString();
+				if( !checkBlank(text) ) return;
+				makeLinkList(text);
 				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selection);
 				if(isEnableApi()){
 					abortApiRequestQueue();
@@ -280,6 +287,8 @@
 		else if ( hasToShow() ) {
 			let selection = window.getSelection();
 			if( !selection.isCollapsed ){
+				let text = selection.toString();
+				if( !checkBlank(text) ) return;
 				let lastRange = selection.getRangeAt(selection.rangeCount-1);
 				let rectList = lastRange.getClientRects();
 				let rect = rectList[rectList.length-1];

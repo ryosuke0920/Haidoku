@@ -1,17 +1,17 @@
 const PRESET_OPTION_LIST = [
 	{
 		"la": "en",
-		"l": "Wikipedia (en.wikipedia.org)",
+		"l": "Wikipedia (en)",
 		"u": "https://en.wikipedia.org/w/index.php?search=$1&title=Special:Search&go=Go"
 	},
 	{
 		"la": "en",
-		"l": "Wiktionary (en.wiktionary.org)",
+		"l": "Wiktionary (en)",
 		"u": "https://en.wiktionary.org/wiki/Special:Search?search=$1&go=Look+up"
 	},
 	{
 		"la": "en",
-		"l": "Google (www.google.com)",
+		"l": "Google",
 		"u": "https://www.google.com/search?q=$1"
 	},
 	{
@@ -94,6 +94,21 @@ const PRESET_OPTION_LIST = [
 		"la": "en ja zh",
 		"l": "You Tube (+pronounce)",
 		"u": "https://www.youtube.com/results?search_query=pronounce+$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "Dailymotion",
+		"u": "https://www.dailymotion.com/search/$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "Dailymotion (+pronounce)",
+		"u": "https://www.dailymotion.com/search/pronounce $1"
+	},
+	{
+		"la": "en",
+		"l": "engVid",
+		"u": "https://www.engvid.com/search/?q=$1"
 	},
 	{
 		"la": "en",
@@ -256,18 +271,23 @@ const PRESET_OPTION_LIST = [
 		"u": "http://www.yourdictionary.com/$1?direct_search_result=yes"
 	},
 	{
+		"la": "en",
+		"l": "Quora",
+		"u": "https://www.quora.com/search?q=$1"
+	},
+	{
 		"la": "ja",
-		"l": "Wikipedia (ja.wikipedia.org)",
+		"l": "Wikipedia (ja)",
 		"u": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
 	},
 	{
 		"la": "ja",
-		"l": "Wiktionary (ja.wiktionary.org)",
+		"l": "Wiktionary (ja)",
 		"u": "https://ja.wiktionary.org/wiki/?search=$1"
 	},
 	{
 		"la": "ja",
-		"l": "Google (www.google.co.jp)",
+		"l": "Google (jp)",
 		"u": "https://www.google.co.jp/search?q=$1"
 	},
 	{
@@ -388,6 +408,11 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "ja",
+		"l": "Quora (ja)",
+		"u": "https://ja.quora.com/search?q=$1"
+	},
+	{
+		"la": "ja",
 		"l": "楽天ウェブ検索",
 		"u": "https://websearch.rakuten.co.jp/WebIS?qt=$1"
 	},
@@ -408,12 +433,12 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "zh",
-		"l": "维基百科 (zh.wikipedia.org)",
+		"l": "维基百科 (zh)",
 		"u": "https://zh.wikipedia.org/w/index.php?search=$1"
 	},
 	{
 		"la": "zh",
-		"l": "维基词典 (zh.wiktionary.org)",
+		"l": "维基词典 (zh)",
 		"u": "https://zh.wiktionary.org/w/index.php?search=$1"
 	},
 	{
@@ -423,12 +448,12 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "zh",
-		"l": "YAHOO! (hk.yahoo.com)",
+		"l": "YAHOO! (hk)",
 		"u": "https://hk.search.yahoo.com/search?p=$1"
 	},
 	{
 		"la": "zh",
-		"l": "Google(www.google.com.hk)",
+		"l": "Google(hk)",
 		"u": "https://www.google.com.hk/search?q=$1"
 	},
 	{
