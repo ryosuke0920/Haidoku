@@ -5,7 +5,7 @@ https://addons.mozilla.org/en-US/firefox/addon/lesslaborgotodictionary/
 ### chrome web store
 https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
 
-## summary
+## Summary
 When I read a foreign language web site, it's boring to search  word I don't know. I made this tool to search smoothly. Select text, it's displayed that the meaning and some links to search the text. There is also a function to support word review.
 
 ## Description
