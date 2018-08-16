@@ -1,4 +1,10 @@
 # 手間なし 辞書検索
+## 配信サイト
+### Firefox Add-ons
+https://addons.mozilla.org/ja/firefox/addon/lesslaborgotodictionary/
+### chrome web store
+https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
+
 ## 概要
 英語サイトを読む時に分からない単語を調べるのは面倒な作業です。スムーズに調べられるツールを作成しました。テキストを選択するとその意味やそのテキストを検索するリンクを表示します。単語の復習を支援する機能もあります。
 
@@ -34,22 +40,22 @@ Wiktionaryはボランティアに作成されている辞書サイトです。�
 * goo 辞書
 * yahoo 辞書
 * 英辞郎 on the WEB
-* You Tube
+* You Tube, Dailymotion
 
-等。計85URL。
+等。計90URL。
 
-# プライバシーポリシー
+## プライバシーポリシー
 このツールはプライバシーデータの収集や送信を行いません。ただし、設定内容はブラウザが提供する同期サービスによって送受信されます。履歴はブラウザの同期サービスの対象外です。
 
-# リリース情報などの配信
+## リリース情報などの配信
 https://twitter.com/SearchDictionar
 
-# お問い合わせ先
+## お問い合わせ先
 ryosuke.ohta.programmer@gmail.com
 
-# ライセンス
+## ライセンス
 このソフトウェアはMITライセンスの下で公開されています。  
 https://opensource.org/licenses/MIT
 
-# ソースコード
+## ソースコード
 https://github.com/ryosuke0920/Search-Dictionary-Faster
