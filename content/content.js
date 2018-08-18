@@ -1088,14 +1088,12 @@
 			}
 			if( e.error == MEANING_NOT_FOUND_ERROR ){
 				apiTitleNode.setAttribute("href", e.fullurl);
-				apiTitleNode.innerText = e.title;
 				content.innerText = ponyfill.i18n.getMessage("htmlMeaningNotFound");
 				after(content);
 				return;
 			}
 			if( e.error == SECTION_NOT_FOUND_ERROR ){
 				apiTitleNode.setAttribute("href", e.fullurl);
-				apiTitleNode.innerText = e.title;
 				content.innerText = ponyfill.i18n.getMessage("htmlSectionNotFound");
 				after(content);
 				return;
