@@ -125,7 +125,7 @@ function saveManualViewCtrlKey(flag=false){
 
 function addHistory(e){
 	let db = e.target.result;
-	let transaction = db.transaction(["historys"], WRITE);
+	let transaction = db.transaction([HISTORYS], WRITE);
 	let promise = new Promise((resolve,reject)=>{
 		let historys = transaction.objectStore(HISTORYS);
 		let req = historys.add(this.data);
@@ -353,6 +353,7 @@ function faviconChain(){
 	.then( responseAjaxFavicon.bind(this) )
 	.then( convertFavicon.bind(this) )
 	.then( setFaviconCache.bind(this) )
+	.then( saveFaviconProcess.bind(this) )
 	.catch( (e)=>{console.error(e)} )
 	.finally( endOfFaviconChain.bind(this) );
 	return this.promise;
@@ -420,6 +421,35 @@ function convertFavicon(){
 
 function setFaviconCache(){
 	if(this.data.base64) faviconCache[this.data.url] = this.data.base64;
+}
+
+function saveFaviconProcess() {
+	if(!this.data.blob) return;
+	return Promise.resolve()
+	.then( indexeddb.open.bind(indexeddb) )
+	.then( indexeddb.prepareRequest.bind(indexeddb) )
+	.then( saveFavicon.bind(this) );
+}
+
+function saveFavicon(e) {
+	return new Promise((resolve, reject)=>{
+		let db = e.target.result;
+		let transaction = db.transaction([FAVICONS], WRITE);
+		let favicons = transaction.objectStore(FAVICONS);
+		let data = {
+			"url": this.data.url,
+			"favicon": this.data.faviconURL[this.data.requestIndex],
+			"blob": this.data.blob,
+			"date": new Date()
+		};
+		let req = favicons.put(data);
+		req.onsuccess = (e)=>{
+			resolve(e);
+		};
+		req.onerror = (e)=>{
+			reject(e);
+		};
+	});
 }
 
 function endOfFaviconChain(){
