@@ -181,7 +181,7 @@ function resetMenu(json){
 				"title": label,
 				"contexts": ["image","selection"]
 			};
-			if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) &&  faviconCache[url] != FAVICON_NODATA){
+			if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) ){
 				args["icons"] = { "16": faviconCache[url] };
 			}
 			options[id] = {
@@ -306,8 +306,7 @@ function updateFaviconCache(){
 		for(let i=0; i<optionList.length; i++){
 			let obj = optionList[i];
 			if(!obj.c) continue;
-			if(faviconCache.hasOwnProperty(obj.u)) continue;
-			faviconCache[obj.u] = FAVICON_NODATA;
+			if(faviconCache.hasOwnProperty(obj.u)) continue; //TODO
 			let faviconURL = makeFaviconURL(obj.u);
 			let data = {
 				"url": obj.u,

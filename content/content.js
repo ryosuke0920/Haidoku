@@ -443,7 +443,7 @@
 			let img = document.createElement("img");
 			img.classList.add(CSS_PREFIX+"-favicon");
 			let src;
-			if( faviconCache.hasOwnProperty(item["u"]) && faviconCache[item["u"]] != FAVICON_NODATA ){
+			if( faviconCache.hasOwnProperty(item["u"]) ){
 				src = faviconCache[item["u"]];
 			}
 			else {
