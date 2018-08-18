@@ -949,7 +949,12 @@
 	function apiResponse(e){
 		if( !isActiveApiRequestQueue(this) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
-		apiTitleNode.innerText = e.title;
+		if( e.text.toLowerCase() != e.title.toLowerCase() ) {
+			apiTitleNode.innerText = ponyfill.i18n.getMessage("htmlMaybeTitle",[e.title]);
+		}
+		else {
+			apiTitleNode.innerText = e.title;
+		}
 		apiTitleNode.setAttribute("href", e.fullurl);
 		let sections = [];
 		if(languageFilter.length > 0){

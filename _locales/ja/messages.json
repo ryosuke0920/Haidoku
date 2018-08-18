@@ -1,73 +1,57 @@
 {
 	"extensionName": {
-		"message": "手間なし 辞書検索",
-		"description": "Name of the extension."
+		"message": "手間なし 辞書検索"
 	},
 	"extensionDescription": {
-		"message": "面倒なコピペの手間をなくし、効率よく素早く検索するツールです。",
-		"description": "Description of the extension."
+		"message": "面倒なコピペの手間をなくし、効率よく素早く検索するツールです。"
 	},
 	"extensionOptionAutoView": {
-		"message": "自動リンクリスト表示",
-		"description": "Name of link list option."
+		"message": "自動リンクリスト表示"
 	},
 	"extensionOptionManualView": {
-		"message": "手動リンクリスト表示",
-		"description": "Name of link list option."
+		"message": "手動リンクリスト表示"
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "shiftボタンで表示",
-		"description": "Name of link list option."
+		"message": "shiftボタンで表示"
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "ctrlボタンで表示",
-		"description": "Name of link list option."
+		"message": "ctrlボタンで表示"
 	},
 	"extensionOptionName": {
-		"message": "設定",
-		"description": "Name of link list option."
+		"message": "設定"
 	},
 	"notificationCopyed": {
-		"message": "選択範囲をコピーしました。",
-		"description": "copyed notification."
+		"message": "選択範囲をコピーしました。"
 	},
 	"notificationUnexpectedError": {
 		"message": "予期せぬエラーが発生しました。$ERROR$",
-		"description": "unexpected error notification.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "An error has occurred."
+				"content": "$1"
 			}
 		}
 	},
 	"notificationReadOptionError": {
 		"message": "設定の読み込みに失敗しました。$ERROR$",
-		"description": "save option error notification.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "An error has occurred."
+				"content": "$1"
 			}
 		}
 	},
 	"notificationSaveOptionError": {
 		"message": "設定の保存に失敗しました。$ERROR$",
-		"description": "save option error notification.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "An error has occurred."
+				"content": "$1"
 			}
 		}
 	},
 	"notificationOpenWindowError": {
 		"message": "新しい画面を開けませんでした。$ERROR$",
-		"description": "open window error notification.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "An error has occurred."
+				"content": "$1"
 			}
 		}
 	},
@@ -76,6 +60,14 @@
 	},
 	"notificationDownloadLanguageError": {
 		"message": "言語の一覧のダウンロードに失敗しました。"
+	},
+	"htmlMaybeTitle" :{
+		"message": "もしかして、$WORD$",
+		"placeholders": {
+			"WORD": {
+				"content": "$1"
+			}
+		}
 	},
 	"htmlLinkageDisabled": {
 		"message": "ウィクショナリー連携は無効です。"
@@ -93,8 +85,7 @@
 		"message": "$ERROR$バイト以内で検索します。",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "255"
+				"content": "$1"
 			}
 		}
 	},
@@ -111,8 +102,7 @@
 		"message": "サーバーに接続できませんでした。$ERROR$",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
@@ -120,8 +110,7 @@
 		"message": "サーバーがエラーを返しました。$ERROR$",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
@@ -129,8 +118,7 @@
 		"message": "アプリケーションがエラーを返しました。$ERROR$",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
@@ -138,130 +126,99 @@
 		"message": "予期せぬエラーが発生しました。$ERROR$",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
 	"htmlZoomDown": {
-		"message": "縮小",
-		"description": ""
+		"message": "縮小"
 	},
 	"htmlZoomUp": {
-		"message": "拡大",
-		"description": ""
+		"message": "拡大"
 	},
 	"htmlCopy": {
-		"message": "コピー",
-		"description": ""
+		"message": "コピー"
 	},
 	"htmlResize": {
-		"message": "サイズをリセット",
-		"description": ""
+		"message": "サイズをリセット"
 	},
 	"htmlOption": {
-		"message": "設定",
-		"description": ""
+		"message": "設定"
 	},
 	"htmlFormName": {
-		"message": "リンクリスト",
-		"description": "Name of the form on the side menu."
+		"message": "リンクリスト"
 	},
 	"htmlPresetName": {
-		"message": "検索サイト追加",
-		"description": "Name of the preset on the side menu."
+		"message": "検索サイト追加"
 	},
 	"htmlHistoryName": {
-		"message": "履歴",
-		"description": "Name of the history on the side menu."
+		"message": "履歴"
 	},
 	"htmlRankingName": {
-		"message": "苦手を発見",
-		"description": "Name of the ranking on the side menu."
+		"message": "苦手を発見"
 	},
 	"htmlOthersName": {
-		"message": "表示",
-		"description": "Name of the others on the side menu."
+		"message": "表示"
 	},
 	"htmlContactName": {
-		"message": "お問い合わせ",
-		"description": "Name of the contact on the side menu."
+		"message": "お問い合わせ"
 	},
 	"htmlFormDescription": {
-		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。URLに$$1を入力すると、それは選択したテキストに置き換えられます。",
-		"description": "Description of the extension option."
+		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。URLに$$1を入力すると、それは選択したテキストに置き換えられます。"
 	},
 	"htmlUsageOrder" : {
-		"message": "並び順を変更する。",
-		"description": "Description of button."
+		"message": "並び順を変更する。"
 	},
 	"htmlUsageCheck" : {
-		"message": "リンクリストに表示する。",
-		"description": "Description of button."
+		"message": "リンクリストに表示する。"
 	},
 	"htmlUsageHist" : {
-		"message": "履歴を保存する。",
-		"description": "Description of button."
+		"message": "履歴を保存する。"
 	},
 	"htmlUsageDelete" : {
-		"message": "削除する。",
-		"description": "Description of button."
+		"message": "削除する。"
 	},
 	"htmlPresetDescription": {
-		"message": "サイトを選択してから「追加」ボタンを押すとリンクリストに追加されます。",
-		"description": "Description of the preset option."
+		"message": "サイトを選択してから「追加」ボタンを押すとリンクリストに追加されます。"
 	},
 	"htmlAddBlankFieldButtonName": {
-		"message": "入力欄のみ追加",
-		"description": "Name of add blank field button."
+		"message": "入力欄のみ追加"
 	},
 	"htmlHandle": {
-		"message": "並び順",
-		"description": "title of sort."
+		"message": "並び順"
 	},
 	"htmlLabelText": {
-		"message": "サイト名",
-		"description": "Name of site."
+		"message": "サイト名"
 	},
 	"htmlUrlText": {
-		"message": "URL",
-		"description": "Name of url."
+		"message": "URL"
 	},
 	"htmlRemoveButtonName": {
-		"message": "削除",
-		"description": "Name of remove."
+		"message": "削除"
 	},
 	"htmlLabelDescription": {
-		"message": "URLの代わりにリンクリストやコンテキストメニュー（右クリック）に表示されます。",
-		"description": "title of label description."
+		"message": "URLの代わりにリンクリストやコンテキストメニュー（右クリック）に表示されます。"
 	},
 	"htmlUrlDescription": {
-		"message": "リンク先のURLです。\"$$1\"は選択した文字に置き換えられます。",
-		"description": "title of url description."
+		"message": "リンク先のURLです。\"$$1\"は選択した文字に置き換えられます。"
 	},
 	"htmlFilterText": {
-		"message": "フィルタ",
-		"description": "Name of filter select box."
+		"message": "フィルタ"
 	},
 	"htmlLanguageAll": {
-		"message": "すべて",
-		"description": "Name of all."
+		"message": "すべて"
 	},
 	"htmlLanguageEn": {
-		"message": "英語",
-		"description": "Name of en."
+		"message": "英語"
 	},
 	"htmlLanguageJa": {
-		"message": "日本語",
-		"description": "Name of ja."
+		"message": "日本語"
 	},
 	"htmlLanguageZh": {
-		"message": "中国語",
-		"description": "Name of zh."
+		"message": "中国語"
 	},
 	"htmlAddPresetButtonName": {
-		"message": "追加",
-		"description": "Name of adding button."
+		"message": "追加"
 	},
 	"htmlPresetSearchKeyword": {
 		"message": "検索キーワード"
@@ -270,156 +227,118 @@
 		"message": "クリア"
 	},
 	"htmlHistoryUpdateButton": {
-		"message": "更新",
-		"description": "Name of update button."
+		"message": "更新"
 	},
 	"htmlHistoryPageText": {
-		"message": "ページ",
-		"description": "Name of page."
+		"message": "ページ"
 	},
 	"htmlHistoryRowSizeText": {
-		"message": "行数",
-		"description": "Name of row size."
+		"message": "行数"
 	},
 	"htmlHistoryRowSizeAllText": {
-		"message": "全行を表示",
-		"description": "Name of all rows."
+		"message": "全行を表示"
 	},
 	"htmlHistoryOrderDesc": {
-		"message": "新->古",
-		"description": "Name of desc."
+		"message": "新->古"
 	},
 	"htmlHistoryOrderAsc": {
-		"message": "古->新",
-		"description": "Name of asc."
+		"message": "古->新"
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "チェックした履歴を削除",
-		"description": "Name of delete."
+		"message": "チェックした履歴を削除"
 	},
 	"htmlHistoryAllDelete": {
-		"message": "全ての履歴を削除",
-		"description": "Name of delete."
+		"message": "全ての履歴を削除"
 	},
 	"alertHistoryAllDelete": {
-		"message": "全ての履歴を削除します。表に表示されていない履歴も削除されます。",
-		"description": "alert of delete all."
+		"message": "全ての履歴を削除します。表に表示されていない履歴も削除されます。"
 	},
 	"htmlHistoryDescription": {
-		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの同期サービスの対象ではありません。履歴の保存は「リンクリスト」メニューで設定してください。",
-		"description": "Description of history."
+		"message": "履歴を参照できます。履歴はあなたがよく調べる単語が何かを知るのに役立ちます。履歴はパソコンに保存されます。ブラウザの同期サービスの対象ではありません。履歴の保存は「リンクリスト」メニューで設定してください。"
 	},
 	"htmlHistoryZeroRowMessage": {
-		"message": "結果は0件でした。",
-		"description": "no data message."
+		"message": "結果は0件でした。"
 	},
 	"htmlHistoryDate": {
-		"message": "日時",
-		"description": "Name of date."
+		"message": "日時"
 	},
 	"htmlHistoryText": {
-		"message": "選択テキスト",
-		"description": "Name of selected text."
+		"message": "選択テキスト"
 	},
 	"htmlHistoryFromSite": {
-		"message": "元サイト",
-		"description": "Name of base site."
+		"message": "元サイト"
 	},
 	"htmlHistoryToSite": {
-		"message": "選択したリンク",
-		"description": "Name of destination site."
+		"message": "選択したリンク"
 	},
 	"htmlPageFirst": {
-		"message": "最初",
-		"description": "Name of first."
+		"message": "最初"
 	},
 	"htmlPagePrev": {
-		"message": "戻る",
-		"description": "Name of preview."
+		"message": "戻る"
 	},
 	"htmlPageNext": {
-		"message": "次へ",
-		"description": "Name of next."
+		"message": "次へ"
 	},
 	"htmlPageLast": {
-		"message": "最後",
-		"description": "Name of end."
+		"message": "最後"
 	},
 	"htmlRankingDescription": {
-		"message": "履歴から選択テキストの検索回数を集計します。日付範囲を指定して集計ボタンを押して下さい。履歴を削除すると集計結果も減少します。あなたの苦手な単語を見つけて効率よく学習しましょう。",
-		"description": "Name of button."
+		"message": "履歴から選択テキストの検索回数を集計します。日付範囲を指定して集計ボタンを押して下さい。履歴を削除すると集計結果も減少します。あなたの苦手な単語を見つけて効率よく学習しましょう。"
 	},
 	"htmlRankingAggregateButton": {
-		"message": "集計",
-		"description": "Name of button."
+		"message": "集計"
 	},
 	"htmlRankingOneMonth": {
-		"message": "過去１ヶ月",
-		"description": "Value of range."
+		"message": "過去１ヶ月"
 	},
 	"htmlRankingThreeMonth": {
-		"message": "過去３ヶ月",
-		"description": "Value of range."
+		"message": "過去３ヶ月"
 	},
 	"htmlRankingSixMonth": {
-		"message": "過去半年",
-		"description": "Value of range."
+		"message": "過去半年"
 	},
 	"htmlRankingOneYear": {
-		"message": "過去１年",
-		"description": "Value of range."
+		"message": "過去１年"
 	},
 	"htmlRankingAllRange": {
-		"message": "すべて",
-		"description": "Value of range."
+		"message": "すべて"
 	},
 	"htmlRankingCustomRange": {
-		"message": "日付範囲を指定",
-		"description": "Value of range."
+		"message": "日付範囲を指定"
 	},
 	"htmlRankingText": {
-		"message": "選択テキスト",
-		"description": "Name of table header."
+		"message": "選択テキスト"
 	},
 	"htmlRankingCount": {
-		"message": "検索回数",
-		"description": "Name of table header."
+		"message": "検索回数"
 	},
 	"htmlRankingGraph": {
-		"message": "グラフ",
-		"description": "Name of table header."
+		"message": "グラフ"
 	},
 	"htmlRankingZeroRowMessage": {
-		"message": "結果は0件でした。",
-		"description": "no data message."
+		"message": "結果は0件でした。"
 	},
 	"htmlLinkListStyleTitle": {
-		"message": "リンクリストのスタイル",
-		"description": "Name of the propertie."
+		"message": "リンクリストのスタイル"
 	},
 	"htmlLinkListStyleClassic": {
-		"message": "クラシック",
-		"description": "Name of the propertie."
+		"message": "クラシック"
 	},
 	"htmlLinkListStyleDark": {
-		"message": "ダーク",
-		"description": "Name of the propertie."
+		"message": "ダーク"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "リンクリストの表示動作",
-		"description": "Name of the propertie."
+		"message": "リンクリストの表示動作"
 	},
 	"htmlLinkListActionNormal": {
-		"message": "アイコンなし",
-		"description": "Name of the propertie."
+		"message": "アイコンなし"
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "マウスオーバ",
-		"description": "Name of the propertie."
+		"message": "マウスオーバ"
 	},
 	"htmlLinkListActionMouseclick": {
-		"message": "マウスクリック",
-		"description": "Name of the propertie."
+		"message": "マウスクリック"
 	},
 	"htmlLinkListLayoutTitle": {
 		"message": "リンクリストのレイアウト"
@@ -512,77 +431,61 @@
 		"message": "リンクリストのサンプル"
 	},
 	"htmlContactText": {
-		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
-		"description": "Sentence of contact."
+		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>"
 	},
 	"htmlMyself": {
-		"message": "フリーランス プログラマ<br>太田亮介",
-		"description": "Sentence of myself."
+		"message": "フリーランス プログラマ<br>太田亮介"
 	},
 	"htmlCheckBlankError": {
-		"message": "このフィールドは入力必須です。",
-		"description": ""
+		"message": "このフィールドは入力必須です。"
 	},
 	"htmlCheckURLError": {
-		"message": "URLを入力して下さい。",
-		"description": ""
+		"message": "URLを入力して下さい。"
 	},
 	"htmlCheckByteLengthError": {
 		"message": "$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイト）。",
-		"description": "",
 		"placeholders": {
 			"MAX_LENGTH": {
-				"content": "$1",
-				"example": "1"
+				"content": "$1"
 			},
 			"LENGTH": {
-				"content": "$2",
-				"example": "2"
+				"content": "$2"
 			}
 		}
 	},
 	"htmlCheckFieldLengthError": {
 		"message": "サイトの追加は最大で$MAX_FIELDS$個までです。",
-		"description": "",
 		"placeholders": {
 			"MAX_FIELDS": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
 	"htmlCheckPresetLengthError": {
 		"message": "サイトの追加は最大で$MAX_FIELDS$個までです。設定済みは$SUM$個です。現在$CHECKED$個選択しています。追加できるのでは$REMAINING$個です。",
-		"description": "",
 		"placeholders": {
 			"MAX_FIELDS": {
-				"content": "$1",
-				"example": "1"
+				"content": "$1"
 			},
 			"SUM": {
-				"content": "$2",
-				"example": "22"
+				"content": "$2"
 			},
 			"CHECKED": {
-				"content": "$3",
-				"example": "333"
+				"content": "$3"
 			},
 			"REMAINING": {
-				"content": "$4",
-				"example": "4444"
+				"content": "$4"
 			}
 		}
 	},
 	"htmlDateInputError": {
-		"message": "日付を正しく入力して下さい。",
-		"description": ""
+		"message": "日付を正しく入力して下さい。"
 	},
 	"htmlCheckLanguageFilterLengthError": {
 		"message": "言語フィルターの追加は最大で$MAX$個までです。",
 		"placeholders": {
 			"MAX": {
-				"content": "$1",
-				"example": "10"
+				"content": "$1"
 			}
 		}
 	}
