@@ -1,73 +1,57 @@
 {
 	"extensionName": {
-		"message": "Search Dictionary Faster",
-		"description": "Name of the extension."
+		"message": "Search Dictionary Faster"
 	},
 	"extensionDescription": {
-		"message": "This is a tool to eliminate troublesome copying and pasting to search efficiently and quickly.",
-		"description": "Description of the extension."
+		"message": "This is a tool to eliminate troublesome copying and pasting to search efficiently and quickly."
 	},
 	"extensionOptionAutoView": {
-		"message": "Automatically display link list",
-		"description": "Name of link list option."
+		"message": "Automatically display link list"
 	},
 	"extensionOptionManualView": {
-		"message": "Manually display link list",
-		"description": "Name of link list option."
+		"message": "Manually display link list"
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "Display link list with shift key",
-		"description": "Name of link list option."
+		"message": "Display link list with shift key"
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "Display link list with ctrl key",
-		"description": "Name of link list option."
+		"message": "Display link list with ctrl key"
 	},
 	"extensionOptionName": {
-		"message": "Options",
-		"description": "Name of link list option."
+		"message": "Options"
 	},
 	"notificationCopyed": {
-		"message": "The selected area was copied.",
-		"description": "copyed notification."
+		"message": "The selected area was copied."
 	},
 	"notificationUnexpectedError": {
 		"message": "Unexpected error. $ERROR$",
-		"description": "unexpected error notification.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "An error has occurred."
+				"content": "$1"
 			}
 		}
 	},
 	"notificationReadOptionError": {
 		"message": "Failed to read your configuration. $ERROR$",
-		"description": "save option error notification.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "An error has occurred."
+				"content": "$1"
 			}
 		}
 	},
 	"notificationSaveOptionError": {
 		"message": "Failed to save your configuration. $ERROR$",
-		"description": "save option error notification.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "An error has occurred."
+				"content": "$1"
 			}
 		}
 	},
 	"notificationOpenWindowError": {
 		"message": "Failed to open new window. $ERROR$",
-		"description": "open window error notification.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "An error has occurred."
+				"content": "$1"
 			}
 		}
 	},
@@ -76,6 +60,14 @@
 	},
 	"notificationDownloadLanguageError": {
 		"message": "Failed to download list of language."
+	},
+	"htmlMaybeTitle" :{
+		"message": "Did you mean: $WORD$",
+		"placeholders": {
+			"WORD": {
+				"content": "$1"
+			}
+		}
 	},
 	"htmlLinkageDisabled": {
 		"message": "Wiktionary linkage is Disabled."
@@ -93,8 +85,7 @@
 		"message": "Search within $ERROR$ bytes.",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "255"
+				"content": "$1"
 			}
 		}
 	},
@@ -111,8 +102,7 @@
 		"message": "Could not connect to the server. $ERROR$",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
@@ -120,8 +110,7 @@
 		"message": "The server returned an error. $ERROR$",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
@@ -129,8 +118,7 @@
 		"message": "The application returned an error. $ERROR$",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
@@ -138,130 +126,99 @@
 		"message": "An unexpected error occurred. $ERROR$",
 		"placeholders": {
 			"ERROR": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
 	"htmlZoomDown": {
-		"message": "Zoom down",
-		"description": ""
+		"message": "Zoom down"
 	},
 	"htmlZoomUp": {
-		"message": "Zoom up",
-		"description": ""
+		"message": "Zoom up"
 	},
 	"htmlCopy": {
-		"message": "Copy",
-		"description": ""
+		"message": "Copy"
 	},
 	"htmlResize": {
-		"message": "Reset size",
-		"description": ""
+		"message": "Reset size"
 	},
 	"htmlOption": {
-		"message": "Option",
-		"description": ""
+		"message": "Option"
 	},
 	"htmlFormName": {
-		"message": "Link list",
-		"description": "Name of the form on the side menu."
+		"message": "Link list"
 	},
 	"htmlPresetName": {
-		"message": "Add search site",
-		"description": "Name of the preset on the side menu."
+		"message": "Add search site"
 	},
 	"htmlHistoryName": {
-		"message": "History",
-		"description": "Name of the history on the side menu."
+		"message": "History"
 	},
 	"htmlRankingName": {
-		"message": "Find weak point",
-		"description": "Name of the ranking on the side menu."
+		"message": "Find weak point"
 	},
 	"htmlOthersName": {
-		"message": "View",
-		"description": "Name of the others on the side menu."
+		"message": "View"
 	},
 	"htmlContactName": {
-		"message": "Contact",
-		"description": "Name of the contact on the side menu."
+		"message": "Contact"
 	},
 	"htmlFormDescription": {
-		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected.",
-		"description": "Description of the extension option."
+		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected."
 	},
 	"htmlUsageOrder" : {
-		"message": "Sort.",
-		"description": "Description of button."
+		"message": "Sort."
 	},
 	"htmlUsageCheck" : {
-		"message": "Display in link list.",
-		"description": "Description of button."
+		"message": "Display in link list."
 	},
 	"htmlUsageHist" : {
-		"message": "Save history.",
-		"description": "Description of button."
+		"message": "Save history."
 	},
 	"htmlUsageDelete" : {
-		"message": "Delete.",
-		"description": "Description of button."
+		"message": "Delete."
 	},
 	"htmlPresetDescription": {
-		"message": "Select some sites and press \"Add\" button. Then it's added to link list.",
-		"description": "Description of the preset option."
+		"message": "Select some sites and press \"Add\" button. Then it's added to link list."
 	},
 	"htmlAddBlankFieldButtonName": {
-		"message": "Add blank field",
-		"description": "Name of add blank field button."
+		"message": "Add blank field"
 	},
 	"htmlHandle": {
-		"message": "Changing the order.",
-		"description": "title of sort."
+		"message": "Changing the order."
 	},
 	"htmlLabelText": {
-		"message": "Site name",
-		"description": "Name of site."
+		"message": "Site name"
 	},
 	"htmlUrlText": {
-		"message": "URL",
-		"description": "Name of url."
+		"message": "URL"
 	},
 	"htmlRemoveButtonName": {
-		"message": "Delete",
-		"description": "Name of remove."
+		"message": "Delete"
 	},
 	"htmlLabelDescription": {
-		"message": "This will be displayed in the link list or context menu(right click) instead of URL.",
-		"description": "title of label description."
+		"message": "This will be displayed in the link list or context menu(right click) instead of URL."
 	},
 	"htmlUrlDescription": {
-		"message": "A URL to link. \"$$1\" will be replaced to the text you selected.",
-		"description": "title of url description."
+		"message": "A URL to link. \"$$1\" will be replaced to the text you selected."
 	},
 	"htmlFilterText": {
-		"message": "Filter",
-		"description": "Name of filter select box."
+		"message": "Filter"
 	},
 	"htmlLanguageAll": {
-		"message": "All",
-		"description": "Name of all."
+		"message": "All"
 	},
 	"htmlLanguageEn": {
-		"message": "English",
-		"description": "Name of en."
+		"message": "English"
 	},
 	"htmlLanguageJa": {
-		"message": "Japanese",
-		"description": "Name of ja."
+		"message": "Japanese"
 	},
 	"htmlLanguageZh": {
-		"message": "Chinese",
-		"description": "Name of zh."
+		"message": "Chinese"
 	},
 	"htmlAddPresetButtonName": {
-		"message": "Add",
-		"description": "Name of adding button."
+		"message": "Add"
 	},
 	"htmlPresetSearchKeyword": {
 		"message": "search keyword"
@@ -270,156 +227,118 @@
 		"message": "clear"
 	},
 	"htmlHistoryUpdateButton": {
-		"message": "Update",
-		"description": "Name of update button."
+		"message": "Update"
 	},
 	"htmlHistoryPageText": {
-		"message": "Page",
-		"description": "Name of page."
+		"message": "Page"
 	},
 	"htmlHistoryRowSizeText": {
-		"message": "Row size",
-		"description": "Name of row size."
+		"message": "Row size"
 	},
 	"htmlHistoryRowSizeAllText": {
-		"message": "Display all rows",
-		"description": "Name of all rows."
+		"message": "Display all rows"
 	},
 	"htmlHistoryOrderDesc": {
-		"message": "New->Old",
-		"description": "Name of desc."
+		"message": "New->Old"
 	},
 	"htmlHistoryOrderAsc": {
-		"message": "Old->New",
-		"description": "Name of asc."
+		"message": "Old->New"
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "Delete checked history",
-		"description": "Name of delete."
+		"message": "Delete checked history"
 	},
 	"htmlHistoryAllDelete": {
-		"message": "Delete all history",
-		"description": "Name of delete."
+		"message": "Delete all history"
 	},
 	"alertHistoryAllDelete": {
-			"message": "All history will be deleted. It contains the records that isn't displayed on the table.",
-		"description": "alert of delete all."
+		"message": "All history will be deleted. It contains the records that isn't displayed on the table."
 	},
 	"htmlHistoryDescription": {
-		"message": "You can refer to history. It's useful to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not from \"Link list\" menu.",
-		"description": "Description of history."
+		"message": "You can refer to history. It's useful to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not from \"Link list\" menu."
 	},
 	"htmlHistoryZeroRowMessage": {
-		"message": "Result was 0.",
-		"description": "no data message."
+		"message": "Result was 0."
 	},
 	"htmlHistoryDate": {
-		"message": "Date",
-		"description": "Name of date."
+		"message": "Date"
 	},
 	"htmlHistoryText": {
-		"message": "Text selected",
-		"description": "Name of selected text."
+		"message": "Text selected"
 	},
 	"htmlHistoryFromSite": {
-		"message": "Source site",
-		"description": "Name of base site."
+		"message": "Source site"
 	},
 	"htmlHistoryToSite": {
-		"message": "Link selected",
-		"description": "Name of destination site."
+		"message": "Link selected"
 	},
 	"htmlPageFirst": {
-		"message": "First",
-		"description": "Name of first."
+		"message": "First"
 	},
 	"htmlPagePrev": {
-		"message": "Prev",
-		"description": "Name of preview."
+		"message": "Prev"
 	},
 	"htmlPageNext": {
-		"message": "Next",
-		"description": "Name of next."
+		"message": "Next"
 	},
 	"htmlPageLast": {
-		"message": "Last",
-		"description": "Name of end."
+		"message": "Last"
 	},
 	"htmlRankingDescription": {
-		"message": "Search count is aggregated from history. Please select date range and click \"Aggregate\" button. If you delete some of history, Search count decreases too. Let's find your weakness and study efficiently.",
-		"description": "Name of button."
+		"message": "Search count is aggregated from history. Please select date range and click \"Aggregate\" button. If you delete some of history, Search count decreases too. Let's find your weakness and study efficiently."
 	},
 	"htmlRankingAggregateButton": {
-		"message": "Aggregate",
-		"description": "Name of button."
+		"message": "Aggregate"
 	},
 	"htmlRankingOneMonth": {
-		"message": "Past 1 month",
-		"description": "Value of range."
+		"message": "Past 1 month"
 	},
 	"htmlRankingThreeMonth": {
-		"message": "Past 3 months",
-		"description": "Value of range."
+		"message": "Past 3 months"
 	},
 	"htmlRankingSixMonth": {
-		"message": "Past 6 months",
-		"description": "Value of range."
+		"message": "Past 6 months"
 	},
 	"htmlRankingOneYear": {
-		"message": "Past 1 year",
-		"description": "Value of range."
+		"message": "Past 1 year"
 	},
 	"htmlRankingAllRange": {
-		"message": "All",
-		"description": "Value of range."
+		"message": "All"
 	},
 	"htmlRankingCustomRange": {
-		"message": "Specify date range",
-		"description": "Value of range."
+		"message": "Specify date range"
 	},
 	"htmlRankingText": {
-		"message": "Text selected",
-		"description": "Name of table header."
+		"message": "Text selected"
 	},
 	"htmlRankingCount": {
-		"message": "Search count",
-		"description": "Name of table header."
+		"message": "Search count"
 	},
 	"htmlRankingGraph": {
-		"message": "Graph",
-		"description": "Name of table header."
+		"message": "Graph"
 	},
 	"htmlRankingZeroRowMessage": {
-		"message": "Result was 0.",
-		"description": "no data message."
+		"message": "Result was 0."
 	},
 	"htmlLinkListStyleTitle": {
-		"message": "Link list style",
-		"description": "Name of the propertie."
+		"message": "Link list style"
 	},
 	"htmlLinkListStyleClassic": {
-		"message": "Classic",
-		"description": "Name of the propertie."
+		"message": "Classic"
 	},
 	"htmlLinkListStyleDark": {
-		"message": "Dark",
-		"description": "Name of the propertie."
+		"message": "Dark"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "Link list display action",
-		"description": "Name of the propertie."
+		"message": "Link list display action"
 	},
 	"htmlLinkListActionNormal": {
-		"message": "No icon",
-		"description": "Name of the propertie."
+		"message": "No icon"
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "Mouse over",
-		"description": "Name of the propertie."
+		"message": "Mouse over"
 	},
 	"htmlLinkListActionMouseclick": {
-		"message": "Mouse click",
-		"description": "Name of the propertie."
+		"message": "Mouse click"
 	},
 	"htmlLinkListLayoutTitle": {
 		"message": "Link list layout"
@@ -512,77 +431,61 @@
 		"message": "Link list sample"
 	},
 	"htmlContactText": {
-		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>",
-		"description": "Sentence of contact."
+		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>"
 	},
 	"htmlMyself": {
-		"message": "Freelance programmer<br>Tokyo Japan<br>Ryosuke Ohta",
-		"description": "Sentence of myself."
+		"message": "Freelance programmer<br>Tokyo Japan<br>Ryosuke Ohta"
 	},
 	"htmlCheckBlankError": {
-		"message": "Please fill out this fields.",
-		"description": ""
+		"message": "Please fill out this fields."
 	},
 	"htmlCheckURLError": {
-		"message": "Please enter a URL.",
-		"description": ""
+		"message": "Please enter a URL."
 	},
 	"htmlCheckByteLengthError": {
 		"message": "Please shorten to $MAX_LENGTH$ byte or less (Currently $LENGTH$ bytes).",
-		"description": "",
 		"placeholders": {
 			"MAX_LENGTH": {
-				"content": "$1",
-				"example": "1"
+				"content": "$1"
 			},
 			"LENGTH": {
-				"content": "$2",
-				"example": "2"
+				"content": "$2"
 			}
 		}
 	},
 	"htmlCheckFieldLengthError": {
 		"message": "You can add up to $MAX_FIELDS$ items at maximum.",
-		"description": "",
 		"placeholders": {
 			"MAX_FIELDS": {
-				"content": "$1",
-				"example": "0"
+				"content": "$1"
 			}
 		}
 	},
 	"htmlCheckPresetLengthError": {
 		"message": "Up to $MAX_FIELDS$ sites can be added. It is set to $SUM$ pieces. Currently $CHECKED$ items are selected. You can add $REMAINING$ more.",
-		"description": "",
 		"placeholders": {
 			"MAX_FIELDS": {
-				"content": "$1",
-				"example": "1"
+				"content": "$1"
 			},
 			"SUM": {
-				"content": "$2",
-				"example": "22"
+				"content": "$2"
 			},
 			"CHECKED": {
-				"content": "$3",
-				"example": "333"
+				"content": "$3"
 			},
 			"REMAINING": {
-				"content": "$4",
-				"example": "4444"
+				"content": "$4"
 			}
 		}
 	},
 	"htmlDateInputError": {
-		"message": "Please enter a date correctly.",
-		"description": ""
+		"message": "Please enter a date correctly."
 	},
 	"htmlCheckLanguageFilterLengthError": {
 		"message": "The number of \"Language filter\" can be set up to $MAX$",
 		"placeholders": {
 			"MAX": {
-				"content": "$1",
-				"example": "10"
+				"content": "$1"
 			}
 		}
 	}
