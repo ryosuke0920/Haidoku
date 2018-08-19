@@ -431,15 +431,11 @@ function getFaviconBlob(db, url){
 		let transaction = db.transaction([FAVICONS], READ);
 		let objectStore = transaction.objectStore(FAVICONS);
 		let req = objectStore.get(url);
-		console.log(url);
 		req.onsuccess = (e)=>{
-			console.log(e);
 			if( e.target.result ){
-				console.log("blob exists.");
 				resolve( e.target.result.blob );
 			}
 			else {
-				console.log("blob not exists.");
 				resolve();
 			}
 		}
