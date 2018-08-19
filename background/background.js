@@ -157,7 +157,7 @@ function onStorageChanged(change, area){
 		resetMenu();
 	}
 	if(change["ol"]) {
-		updateFaviconCache().then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
+		updateFaviconCache(false).then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
 	if(change["s"]) {
 		serviceCode = change["s"]["newValue"];
@@ -300,13 +300,13 @@ function remainDomainURL(url){
 	return newURL;
 }
 
-function updateFaviconCache(){
+function updateFaviconCache(updateAll=true){
 	return new Promise((resolve)=>{
 		let queue = [];
 		for(let i=0; i<optionList.length; i++){
 			let obj = optionList[i];
 			if(!obj.c) continue;
-			if(faviconCache.hasOwnProperty(obj.u)) continue; //TODO
+			if(!updateAll && faviconCache.hasOwnProperty(obj.u)) continue;
 			let faviconURL = makeFaviconURL(obj.u);
 			let data = {
 				"url": obj.u,
