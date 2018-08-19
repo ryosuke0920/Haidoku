@@ -37,7 +37,7 @@ function install(e){
 }
 
 function initContextMenu(){
-	return getSetting().then(resetMenu, onReadError);
+	return getSetting().then(getFaviconCache).then(resetMenu).catch( onReadError );
 }
 
 function getSetting() {
@@ -397,30 +397,80 @@ function responseAjaxFavicon(e){
 }
 
 function convertFavicon(){
-	return new Promise((resolve,reject)=>{
-		if(!this.data.blob){
-			resolve();
-			return;
-		}
-		let reader = new FileReader();
-		reader.readAsDataURL(this.data.blob);
-		reader.onloadend = (e)=>{
-			this.data.base64 = reader.result;
-			resolve();
-		}
-		reader.onerror = (e)=>{
-			console.error(e);
-			reject(e);
-		}
-		reader.onabort = (e)=>{
-			console.error(e);
-			reject(e);
-		}
+	if(!this.data.blob) return;
+	return blob2Base64(this.data.blob).then( (base64)=>{
+		this.data.base64 = base64;
 	});
 }
 
 function setFaviconCache(){
 	if(this.data.base64) faviconCache[this.data.url] = this.data.base64;
+}
+
+function getFaviconCache(){
+	return Promise.resolve()
+	.then( indexeddb.open.bind(indexeddb) )
+	.then( indexeddb.prepareRequest.bind(indexeddb) )
+	.then( getFaviconLoop.bind(this) );
+}
+
+function getFaviconLoop(e){
+	let p = Promise.resolve();
+	for(let i=0; i<optionList.length; i++) {
+		if(!optionList[i].c) continue;
+		let url = optionList[i].u;
+		p = p.then( ()=>{ return getFaviconBlob(e.target.result, url) })
+		.then( convertFaviconBlob )
+		.then( (base64)=>{
+			if(!base64) return;
+			faviconCache[url] = base64;
+		});
+	}
+	return p;
+}
+
+function getFaviconBlob(db, url){
+	return new Promise((resolve, reject)=>{
+		let transaction = db.transaction([FAVICONS], READ);
+		let objectStore = transaction.objectStore(FAVICONS);
+		let req = objectStore.get(url);
+		req.onsuccess = (e)=>{
+			if( e.target.hasOwnProperty("result") ){
+				resolve( e.target.result.blob );
+			}
+			else {
+				resolve();
+			}
+		}
+		req.onerror = (e)=>{
+			reject(e);
+		}
+	});
+}
+
+function convertFaviconBlob(blob){
+	if(!blob) return;
+	return blob2Base64(blob);
+}
+
+function blob2Base64(blob){
+	return new Promise((resolve,reject)=>{
+		if(!blob){
+			reject(new Error("Blob not found."));
+			return;
+		}
+		let reader = new FileReader();
+		reader.readAsDataURL(blob);
+		reader.onloadend = (e)=>{
+			resolve(reader.result);
+		}
+		reader.onerror = (e)=>{
+			reject(e);
+		}
+		reader.onabort = (e)=>{
+			reject(e);
+		}
+	});
 }
 
 function saveFaviconProcess() {
