@@ -37,7 +37,7 @@ function install(e){
 }
 
 function initContextMenu(){
-	return getSetting().then(resetMenu, onReadError);
+	return getSetting().then(getFaviconCache).then(resetMenu).catch( onReadError );
 }
 
 function getSetting() {
@@ -125,7 +125,7 @@ function saveManualViewCtrlKey(flag=false){
 
 function addHistory(e){
 	let db = e.target.result;
-	let transaction = db.transaction(["historys"], WRITE);
+	let transaction = db.transaction([HISTORYS], WRITE);
 	let promise = new Promise((resolve,reject)=>{
 		let historys = transaction.objectStore(HISTORYS);
 		let req = historys.add(this.data);
@@ -157,7 +157,7 @@ function onStorageChanged(change, area){
 		resetMenu();
 	}
 	if(change["ol"]) {
-		updateFaviconCache().then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
+		updateFaviconCache(false).then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
 	if(change["s"]) {
 		serviceCode = change["s"]["newValue"];
@@ -181,7 +181,7 @@ function resetMenu(json){
 				"title": label,
 				"contexts": ["image","selection"]
 			};
-			if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) &&  faviconCache[url] != FAVICON_NODATA){
+			if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) ){
 				args["icons"] = { "16": faviconCache[url] };
 			}
 			options[id] = {
@@ -300,14 +300,13 @@ function remainDomainURL(url){
 	return newURL;
 }
 
-function updateFaviconCache(){
+function updateFaviconCache(updateAll=true){
 	return new Promise((resolve)=>{
 		let queue = [];
 		for(let i=0; i<optionList.length; i++){
 			let obj = optionList[i];
 			if(!obj.c) continue;
-			if(faviconCache.hasOwnProperty(obj.u)) continue;
-			faviconCache[obj.u] = FAVICON_NODATA;
+			if(!updateAll && faviconCache.hasOwnProperty(obj.u)) continue;
 			let faviconURL = makeFaviconURL(obj.u);
 			let data = {
 				"url": obj.u,
@@ -354,6 +353,7 @@ function faviconChain(){
 	.then( responseAjaxFavicon.bind(this) )
 	.then( convertFavicon.bind(this) )
 	.then( setFaviconCache.bind(this) )
+	.then( saveFaviconProcess.bind(this) )
 	.catch( (e)=>{console.error(e)} )
 	.finally( endOfFaviconChain.bind(this) );
 	return this.promise;
@@ -397,30 +397,111 @@ function responseAjaxFavicon(e){
 }
 
 function convertFavicon(){
-	return new Promise((resolve,reject)=>{
-		if(!this.data.blob){
-			resolve();
-			return;
-		}
-		let reader = new FileReader();
-		reader.readAsDataURL(this.data.blob);
-		reader.onloadend = (e)=>{
-			this.data.base64 = reader.result;
-			resolve();
-		}
-		reader.onerror = (e)=>{
-			console.error(e);
-			reject(e);
-		}
-		reader.onabort = (e)=>{
-			console.error(e);
-			reject(e);
-		}
+	if(!this.data.blob) return;
+	return blob2Base64(this.data.blob).then( (base64)=>{
+		this.data.base64 = base64;
 	});
 }
 
 function setFaviconCache(){
 	if(this.data.base64) faviconCache[this.data.url] = this.data.base64;
+}
+
+function getFaviconCache(){
+	return Promise.resolve()
+	.then( indexeddb.open.bind(indexeddb) )
+	.then( indexeddb.prepareRequest.bind(indexeddb) )
+	.then( getFaviconLoop.bind(this) );
+}
+
+function getFaviconLoop(e){
+	let p = Promise.resolve();
+	for(let i=0; i<optionList.length; i++) {
+		if(!optionList[i].c) continue;
+		let url = optionList[i].u;
+		p = p.then( ()=>{ return getFaviconBlob(e.target.result, url) })
+		.then( convertFaviconBlob )
+		.then( (base64)=>{initSetFaviconCache(url, base64)} );
+	}
+	return p;
+}
+
+function getFaviconBlob(db, url){
+	return new Promise((resolve, reject)=>{
+		let transaction = db.transaction([FAVICONS], READ);
+		let objectStore = transaction.objectStore(FAVICONS);
+		let req = objectStore.get(url);
+		req.onsuccess = (e)=>{
+			if( e.target.result ){
+				resolve( e.target.result.blob );
+			}
+			else {
+				resolve();
+			}
+		}
+		req.onerror = (e)=>{
+			reject(e);
+		}
+	});
+}
+
+function convertFaviconBlob(blob){
+	if(!blob) return;
+	return blob2Base64(blob);
+}
+
+function blob2Base64(blob){
+	return new Promise((resolve,reject)=>{
+		if(!blob){
+			reject(new Error("Blob not found."));
+			return;
+		}
+		let reader = new FileReader();
+		reader.readAsDataURL(blob);
+		reader.onloadend = (e)=>{
+			resolve(reader.result);
+		}
+		reader.onerror = (e)=>{
+			reject(e);
+		}
+		reader.onabort = (e)=>{
+			reject(e);
+		}
+	});
+}
+
+function initSetFaviconCache(url, base64) {
+	if(!base64) return;
+	faviconCache[url] = base64;
+}
+
+function saveFaviconProcess() {
+	if(!this.data.blob) return;
+	return Promise.resolve()
+	.then( indexeddb.open.bind(indexeddb) )
+	.then( indexeddb.prepareRequest.bind(indexeddb) )
+	.then( saveFavicon.bind(this) );
+}
+
+function saveFavicon(e) {
+	return new Promise((resolve, reject)=>{
+		let db = e.target.result;
+		let transaction = db.transaction([FAVICONS], WRITE);
+		let favicons = transaction.objectStore(FAVICONS);
+		let data = {
+			"url": this.data.url,
+			"favicon": this.data.faviconURL[this.data.requestIndex],
+			"blob": this.data.blob,
+			"date": new Date()
+		};
+		let req = favicons.put(data);
+		req.onsuccess = (e)=>{
+			resolve(e);
+		};
+		req.onerror = (e)=>{
+			reject(e);
+		};
+	});
 }
 
 function endOfFaviconChain(){

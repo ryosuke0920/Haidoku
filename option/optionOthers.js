@@ -393,7 +393,7 @@
 			node.setAttribute("title",item.l);
 			node.querySelector("."+CSS_PREFIX+"-label").innerText = item.l;
 			let src;
-			if( faviconCache.hasOwnProperty(item.u) && faviconCache[item.u] != FAVICON_NODATA ){
+			if( faviconCache.hasOwnProperty(item.u) ){
 				src = faviconCache[item.u];
 			}
 			else {
