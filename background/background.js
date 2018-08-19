@@ -421,10 +421,7 @@ function getFaviconLoop(e){
 		let url = optionList[i].u;
 		p = p.then( ()=>{ return getFaviconBlob(e.target.result, url) })
 		.then( convertFaviconBlob )
-		.then( (base64)=>{
-			if(!base64) return;
-			faviconCache[url] = base64;
-		});
+		.then( (base64)=>{initSetFaviconCache(url, base64)} );
 	}
 	return p;
 }
@@ -434,11 +431,15 @@ function getFaviconBlob(db, url){
 		let transaction = db.transaction([FAVICONS], READ);
 		let objectStore = transaction.objectStore(FAVICONS);
 		let req = objectStore.get(url);
+		console.log(url);
 		req.onsuccess = (e)=>{
-			if( e.target.hasOwnProperty("result") ){
+			console.log(e);
+			if( e.target.result.blob){
+				console.log("blob exists.");
 				resolve( e.target.result.blob );
 			}
 			else {
+				console.log("blob not found.");
 				resolve();
 			}
 		}
@@ -471,6 +472,11 @@ function blob2Base64(blob){
 			reject(e);
 		}
 	});
+}
+
+function initSetFaviconCache(url, base64) {
+	if(!base64) return;
+	faviconCache[url] = base64;
 }
 
 function saveFaviconProcess() {
