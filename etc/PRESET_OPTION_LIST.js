@@ -87,6 +87,16 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en ja zh",
+		"l": "Facebook",
+		"u": "https://www.facebook.com/search/top/?q=$1"
+	},
+	{
+		"la": "en ja zh",
+		"l": "Twitter",
+		"u": "https://twitter.com/search/?q=$1"
+	},
+	{
+		"la": "en ja zh",
 		"l": "You Tube",
 		"u": "https://www.youtube.com/results?search_query=$1"
 	},
