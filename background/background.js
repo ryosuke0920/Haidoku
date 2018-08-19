@@ -434,12 +434,12 @@ function getFaviconBlob(db, url){
 		console.log(url);
 		req.onsuccess = (e)=>{
 			console.log(e);
-			if( e.target.result.blob){
+			if( e.target.result ){
 				console.log("blob exists.");
 				resolve( e.target.result.blob );
 			}
 			else {
-				console.log("blob not found.");
+				console.log("blob not exists.");
 				resolve();
 			}
 		}
