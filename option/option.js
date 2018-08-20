@@ -5,6 +5,7 @@ const URL_REGEX = new RegExp(/^(?:[hH][tT][tT][pP][sS]?|[fF][tT][pP][sS]?):\/\/\
 const ADD_FIELD_CLASS = "add";
 const ADD_FIELD_DURATION = 1.5 * 1000;
 const SCROLL_RACIO = 1/2;
+const CELL_TEXT_MAX_LENGTH = 31 /* Archaiomelesidonophrunicherata */
 let mainNode = document.querySelector("#main");
 let navNode = document.querySelector("#nav");
 let formNode = document.querySelector("#form");

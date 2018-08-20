@@ -136,15 +136,19 @@
 					<tbody id="historyContainer"></tbody>
 				</table>
 				<p class="historyMessage message hide">htmlHistoryMessage</p>
-				<table class="hide">
-					<tr id="rowPrototype" class="historyRow">
+				<template id="rowPrototype">
+					<tr class="historyRow">
 						<td class="historyID"><input class="historyCheckbox" type="checkbox" value="ID"></td>
 						<td class="historyDate" title="historyDate">historyDate</td>
-						<td class="historyText" title="historyText">historyText</td>
+						<td class="erasticTextComponent">
+							<span class="historyText erasticText">historyText</span>
+							<img class="excludeImage" src="/image/exclude.svg">
+							<img class="includeImage" src="/image/include.svg">
+						</td>
 						<td class="historyFromSite" title="historyFromSite"><a target="_blank" rel="noreferrer">historyFromSite</a></td>
 						<td class="historyToSite" title="historyToSite"><a target="_blank" rel="noreferrer">historyToSite</a></td>
 					</tr>
-				</table>
+				</template>
 			</div>
 		</div>
 		<div id="ranking" class="panel hide">

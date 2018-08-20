@@ -325,16 +325,23 @@
 	}
 
 	function historyMakeRow(id,date,text,fromURL,fromTitle,toURL,toTitle){
-		let node = rowlPrototypeNode.cloneNode(true);
-		node.removeAttribute("id");
+		let node = document.importNode(rowlPrototypeNode.content, true);
 		let historyCheckbox = node.querySelector(".historyCheckbox");
 		historyCheckbox.value = id;
 		let historyDate = node.querySelector(".historyDate");
 		historyDate.innerText = date.toLocaleDateString();
 		historyDate.title = date.toLocaleString();
 		let historyText = node.querySelector(".historyText");
-		historyText.innerText = text;
 		historyText.title = text;
+		let short = shortText(text, CELL_TEXT_MAX_LENGTH);
+		if( short != text ){
+			historyText.setAttribute("data-short-text", short);
+			historyText.setAttribute("data-long-text", text);
+			shortErasticText(node.querySelector(".erasticTextComponent"));
+		}
+		else {
+			historyText.innerText = text;
+		}
 		let historyFromSite = node.querySelector(".historyFromSite");
 		historyFromSite.title = fromURL;
 		let historyFromSiteAnchor = historyFromSite.querySelector("a");

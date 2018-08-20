@@ -2,7 +2,6 @@
 	const FLAT_REGEX = new RegExp(/[,."']+/, "g");
 	const LINE_BREAK_REGEX = new RegExp(/(:?\r?\n)+/, "g");
 	const WHITE_SPACE_REGEX = new RegExp(/\s+/, "g");
-	const CELL_TEXT_MAX_LENGTH = 31 /* Archaiomelesidonophrunicherata */
 	let rankingNode = document.querySelector("#ranking");
 	let rankingContainerNode = rankingNode.querySelector("#rankingContainer");
 	let rankingPrototypeNode = rankingNode.querySelector("#rankingRowPrototype");
