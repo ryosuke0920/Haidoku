@@ -55,9 +55,6 @@
 		if(cassList.contains("rankingAggregateButton")){
 			rankingAggregate();
 		}
-		else if(cassList.contains("rankingText")){
-			rankingSwitchText(e.target);
-		}
 	}
 
 	function rankingDateChangeBehavior(e){
@@ -83,10 +80,6 @@
 
 	function rankingEndDateBlurBehavior(e){
 		if( !checkDate(rankingEndDateNode.value) ) show(rankingEndDateMessageNode);
-	}
-
-	function rankingSwitchText(node){
-		if(node.title != node.innerText) node.innerText = node.title;
 	}
 
 	function rankingHideDate() {
@@ -255,11 +248,18 @@
 	}
 
 	function rankingMakeRow(text, count, max){
-		let node = rankingPrototypeNode.cloneNode(true);
-		node.removeAttribute("id");
+		let node = document.importNode( rankingPrototypeNode.content, true );
 		let rankingText = node.querySelector(".rankingText");
 		rankingText.title = text;
-		rankingText.innerText = shortText(text,CELL_TEXT_MAX_LENGTH);
+		let short = shortText(text, CELL_TEXT_MAX_LENGTH);
+		if( short != text ){
+			rankingText.setAttribute("data-short-text", short);
+			rankingText.setAttribute("data-long-text", text);
+			shortErasticText(node.querySelector(".erasticTextComponent"));
+		}
+		else {
+			rankingText.innerText = text;
+		}
 		let rankingCount = node.querySelector(".rankingCount");
 		rankingCount.innerText = count;
 		let percentage = Math.trunc( count / max * 100 ) + "%";

@@ -384,8 +384,22 @@ table thead th, table tbody td {
 
 /* ranking */
 
-.rankingCount{
+.rankingCount {
 	text-align: right;
+}
+.excludeImage,.includeImage {
+	display: none;
+	cursor: pointer;
+	vertical-align: bottom;
+}
+.erasticTextComponent.short .erasticText::after {
+	content: "...";
+}
+.erasticTextComponent.short .includeImage {
+	display: inline;
+}
+.erasticTextComponent.long .excludeImage {
+	display: inline;
 }
 
 /* others menu */

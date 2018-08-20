@@ -78,6 +78,7 @@ function initListener(){
 	window.addEventListener("keydown", formScrollCancel);
 	window.addEventListener("mousedown", formScrollCancel);
 	window.addEventListener("wheel", formScrollCancel);
+	window.addEventListener("click", clickComponent );
 }
 
 function formScrollCancel(e){
@@ -462,4 +463,29 @@ function fetchValue(element, selector){
 function saveOption(){
 	let data = { "ol": makeOptionList() };
 	return saveW(data);
+}
+
+function clickComponent(e){
+	if(e.target.classList.contains("excludeImage")){
+		let node = e.target.closest(".erasticTextComponent");
+		shortErasticText(node);
+	}
+	else if(e.target.classList.contains("includeImage")){
+		let node = e.target.closest(".erasticTextComponent");
+		longErasticText(node);
+	}
+}
+
+function shortErasticText(node){
+	node.classList.add("short");
+	node.classList.remove("long");
+	let textNode = node.querySelector(".erasticText");
+	textNode.innerText = textNode.getAttribute("data-short-text");
+}
+
+function longErasticText(node){
+	node.classList.remove("short");
+	node.classList.add("long");
+	let textNode = node.querySelector(".erasticText");
+	textNode.innerText = textNode.getAttribute("data-long-text");
 }
