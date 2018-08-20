@@ -41,8 +41,9 @@ URLs and search parameters of the following sites are prepared. If these specifi
 * yahoo 辞書
 * 英辞郎 on the WEB
 * You Tube, Dailymotion
+* Facebook, Twitter
 
-etc. Total 90 URLs.
+etc. Total 97 URLs.
 
 ## Privacy policy
 This tool does not collect or send privacy data. But the setting data are sent and received by the synchronization service provided by the browser. History data is out of the synchronization service.

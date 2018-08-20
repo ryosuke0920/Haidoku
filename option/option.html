@@ -136,15 +136,31 @@
 					<tbody id="historyContainer"></tbody>
 				</table>
 				<p class="historyMessage message hide">htmlHistoryMessage</p>
-				<table class="hide">
-					<tr id="rowPrototype" class="historyRow">
+				<template id="rowPrototype">
+					<tr class="historyRow">
 						<td class="historyID"><input class="historyCheckbox" type="checkbox" value="ID"></td>
 						<td class="historyDate" title="historyDate">historyDate</td>
-						<td class="historyText" title="historyText">historyText</td>
-						<td class="historyFromSite" title="historyFromSite"><a target="_blank" rel="noreferrer">historyFromSite</a></td>
-						<td class="historyToSite" title="historyToSite"><a target="_blank" rel="noreferrer">historyToSite</a></td>
+						<td class="erasticTextComponent historyTextCell">
+							<span class="historyText erasticText">historyText</span>
+							<img class="excludeImage" src="/image/exclude.svg">
+							<img class="includeImage" src="/image/include.svg">
+						</td>
+						<td class="erasticTextComponent historyFromSiteCell">
+							<a target="_blank" rel="noreferrer" class="historyFromSiteAnchor">
+								<span class="historyFromSite erasticText">historyFromSite</span>
+							</a>
+							<img class="excludeImage" src="/image/exclude.svg">
+							<img class="includeImage" src="/image/include.svg">
+						</td>
+						<td class="erasticTextComponent historyToSiteCell">
+							<a target="_blank" rel="noreferrer" class="historyToSiteAnchor">
+								<span class="historyToSite erasticText">historyToSite</span>
+							</a>
+							<img class="excludeImage" src="/image/exclude.svg">
+							<img class="includeImage" src="/image/include.svg">
+						</td>
 					</tr>
-				</table>
+				</template>
 			</div>
 		</div>
 		<div id="ranking" class="panel hide">
@@ -182,9 +198,15 @@
 					<tbody id="rankingContainer"></tbody>
 				</table>
 				<p class="rankingMessage message hide">htmlRankingMessage</p>
-				<table class="hide">
-					<tr id="rankingRowPrototype" class="rankingRow">
-						<td class="rankingText" title="rankingText">rankingText</td>
+				<template id="rankingRowPrototype">
+					<tr class="rankingRow">
+						<td class="rankingTextCell">
+							<span class="erasticTextComponent">
+								<span class="rankingText erasticText" >rankingText</span>
+								<img class="excludeImage" src="/image/exclude.svg">
+								<img class="includeImage" src="/image/include.svg">
+							</span>
+						</td>
 						<td class="rankingCount">rankingCount</td>
 						<td class="rankingGraph" title="rankingGraph">
 							<svg class="rankingGraphSVG" version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="5">
@@ -197,7 +219,7 @@
 							</svg>
 						</td>
 					</tr>
-				</table>
+				</template>
 			</div>
 		</div>
 		<div id="others" class="panel hide">
@@ -337,7 +359,7 @@
 													<li><i>test</i> test test </li>
 												</ul>
 											</li>
-											<li><a class="new">sample</a> sample sample
+											<li><a class="new">sample</a> sample sample</li>
 										</ol>
 									</div>
 									<div id="lessLaborGoToDictionary-apiFooter">Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0</div>
