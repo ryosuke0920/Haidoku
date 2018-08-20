@@ -140,13 +140,28 @@
 					<tr class="historyRow">
 						<td class="historyID"><input class="historyCheckbox" type="checkbox" value="ID"></td>
 						<td class="historyDate" title="historyDate">historyDate</td>
-						<td class="erasticTextComponent">
+						<td class="erasticTextComponent historyTextCell">
 							<span class="historyText erasticText">historyText</span>
+							&nbsp;
 							<img class="excludeImage" src="/image/exclude.svg">
 							<img class="includeImage" src="/image/include.svg">
 						</td>
-						<td class="historyFromSite" title="historyFromSite"><a target="_blank" rel="noreferrer">historyFromSite</a></td>
-						<td class="historyToSite" title="historyToSite"><a target="_blank" rel="noreferrer">historyToSite</a></td>
+						<td class="erasticTextComponent historyFromSiteCell">
+							<a target="_blank" rel="noreferrer" class="historyFromSiteAnchor">
+								<span class="historyFromSite erasticText">historyFromSite</span>
+							</a>
+							&nbsp;
+							<img class="excludeImage" src="/image/exclude.svg">
+							<img class="includeImage" src="/image/include.svg">
+						</td>
+						<td class="erasticTextComponent historyToSiteCell">
+							<a target="_blank" rel="noreferrer" class="historyToSiteAnchor">
+								<span class="historyToSite erasticText">historyToSite</span>
+							</a>
+							&nbsp;
+							<img class="excludeImage" src="/image/exclude.svg">
+							<img class="includeImage" src="/image/include.svg">
+						</td>
 					</tr>
 				</template>
 			</div>
@@ -191,6 +206,7 @@
 						<td class="rankingTextCell">
 							<span class="erasticTextComponent">
 								<span class="rankingText erasticText" >rankingText</span>
+								&nbsp;
 								<img class="excludeImage" src="/image/exclude.svg">
 								<img class="includeImage" src="/image/include.svg">
 							</span>
