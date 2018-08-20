@@ -58,12 +58,14 @@ table thead th {
 	background-color: WhiteSmoke;
 	color: black;
 	font-weight:bold;
+	text-align: left;
 }
 table tbody tr:nth-child(2n) {
 	background-color: WhiteSmoke;
 }
 table thead th, table tbody td {
 	padding: 2px 5px;
+	border: 1px solid #ccc;
 }
 #menu {
 	position: fixed;
@@ -384,7 +386,7 @@ table thead th, table tbody td {
 
 /* ranking */
 
-.rankingCount{
+.rankingCount {
 	text-align: right;
 }
 
@@ -502,4 +504,20 @@ table thead th, table tbody td {
 		background-size: 100%;
 		opacity: 0;
 	}
+}
+
+/* component */
+.excludeImage,.includeImage {
+	display: none;
+	cursor: pointer;
+	vertical-align: bottom;
+}
+.erasticTextComponent.short .erasticText::after {
+	content: " ...";
+}
+.erasticTextComponent.short .includeImage {
+	display: inline;
+}
+.erasticTextComponent.long .excludeImage {
+	display: inline;
 }

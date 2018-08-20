@@ -325,27 +325,50 @@
 	}
 
 	function historyMakeRow(id,date,text,fromURL,fromTitle,toURL,toTitle){
-		let node = rowlPrototypeNode.cloneNode(true);
-		node.removeAttribute("id");
+		let node = document.importNode(rowlPrototypeNode.content, true);
 		let historyCheckbox = node.querySelector(".historyCheckbox");
 		historyCheckbox.value = id;
 		let historyDate = node.querySelector(".historyDate");
 		historyDate.innerText = date.toLocaleDateString();
 		historyDate.title = date.toLocaleString();
 		let historyText = node.querySelector(".historyText");
-		historyText.innerText = text;
 		historyText.title = text;
+		let short = shortText(text, CELL_TEXT_MAX_LENGTH);
+		if( short != text ){
+			historyText.setAttribute("data-short-text", short);
+			historyText.setAttribute("data-long-text", text);
+			shortErasticText(node.querySelector(".historyTextCell"));
+		}
+		else {
+			historyText.innerText = text;
+		}
+		let historyFromSiteAnchor = node.querySelector(".historyFromSiteAnchor");
+		historyFromSiteAnchor.href = fromURL;
 		let historyFromSite = node.querySelector(".historyFromSite");
 		historyFromSite.title = fromURL;
-		let historyFromSiteAnchor = historyFromSite.querySelector("a");
-		historyFromSiteAnchor.href = fromURL;
-		historyFromSiteAnchor.innerText = fromTitle;
-		let historyToSite = node.querySelector(".historyToSite");
+		let shortFromTitle = shortText(fromTitle, CELL_TEXT_MAX_LENGTH) ;
+		if(shortFromTitle != fromTitle){
+			historyFromSite.setAttribute("data-short-text", shortFromTitle);
+			historyFromSite.setAttribute("data-long-text", fromTitle);
+			shortErasticText(node.querySelector(".historyFromSiteCell"));
+		}
+		else {
+			historyFromSite.innerText = fromTitle;
+		}
+		let historyToSiteAnchor = node.querySelector(".historyToSiteAnchor");
 		let url = makeURL(toURL,text);
-		historyToSite.title = url
-		let historyToSiteAnchor = historyToSite.querySelector("a");
 		historyToSiteAnchor.href = url;
-		historyToSiteAnchor.innerText = toTitle;
+		let historyToSite = node.querySelector(".historyToSite");
+		historyToSite.title = url
+		let shortToTitle = shortText(toTitle, CELL_TEXT_MAX_LENGTH) ;
+		if(shortToTitle != toTitle){
+			historyToSite.setAttribute("data-short-text", shortToTitle);
+			historyToSite.setAttribute("data-long-text", toTitle);
+			shortErasticText(node.querySelector(".historyToSiteCell"));
+		}
+		else {
+			historyToSite.innerText = toTitle;
+		}
 		historyContainerNode.appendChild(node);
 	}
 

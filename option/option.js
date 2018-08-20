@@ -5,6 +5,7 @@ const URL_REGEX = new RegExp(/^(?:[hH][tT][tT][pP][sS]?|[fF][tT][pP][sS]?):\/\/\
 const ADD_FIELD_CLASS = "add";
 const ADD_FIELD_DURATION = 1.5 * 1000;
 const SCROLL_RACIO = 1/2;
+const CELL_TEXT_MAX_LENGTH = 31 /* Archaiomelesidonophrunicherata */
 let mainNode = document.querySelector("#main");
 let navNode = document.querySelector("#nav");
 let formNode = document.querySelector("#form");
@@ -78,6 +79,7 @@ function initListener(){
 	window.addEventListener("keydown", formScrollCancel);
 	window.addEventListener("mousedown", formScrollCancel);
 	window.addEventListener("wheel", formScrollCancel);
+	window.addEventListener("click", clickComponent );
 }
 
 function formScrollCancel(e){
@@ -462,4 +464,29 @@ function fetchValue(element, selector){
 function saveOption(){
 	let data = { "ol": makeOptionList() };
 	return saveW(data);
+}
+
+function clickComponent(e){
+	if(e.target.classList.contains("excludeImage")){
+		let node = e.target.closest(".erasticTextComponent");
+		shortErasticText(node);
+	}
+	else if(e.target.classList.contains("includeImage")){
+		let node = e.target.closest(".erasticTextComponent");
+		longErasticText(node);
+	}
+}
+
+function shortErasticText(node){
+	node.classList.add("short");
+	node.classList.remove("long");
+	let textNode = node.querySelector(".erasticText");
+	textNode.innerText = textNode.getAttribute("data-short-text");
+}
+
+function longErasticText(node){
+	node.classList.remove("short");
+	node.classList.add("long");
+	let textNode = node.querySelector(".erasticText");
+	textNode.innerText = textNode.getAttribute("data-long-text");
 }
