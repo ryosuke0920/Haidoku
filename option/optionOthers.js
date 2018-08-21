@@ -382,25 +382,24 @@
 	}
 
 	function setSampleLinkListAnchor(list){
-		let prototype = document.querySelector("#"+CSS_PREFIX+"-list-prototype");
+		let prototype = othersNode.querySelector("#"+CSS_PREFIX+"-list-prototype");
 		let container = othersNode.querySelector("#"+CSS_PREFIX+"-container");
 		clearChildren(container);
 		for(let i=0; i<list.length; i++){
 			let item = list[i];
 			if(!item.c) continue;
-			let node = prototype.cloneNode(true);
-			node.removeAttribute("id");
-			node.setAttribute("title",item.l);
-			node.querySelector("."+CSS_PREFIX+"-label").innerText = item.l;
-			let src;
+			let clone = document.importNode(prototype.content, true);
+			let li = clone.querySelector("li");
+			li.setAttribute("title",item.l);
+			li.querySelector("."+CSS_PREFIX+"-label").innerText = item.l;
+			let img = li.querySelector("."+CSS_PREFIX+"-favicon");
 			if( faviconCache.hasOwnProperty(item.u) ){
-				src = faviconCache[item.u];
+				img.setAttribute("src", faviconCache[item.u]);
 			}
 			else {
-				src = ponyfill.extension.getURL("/image/favicon.svg");
+				img.setAttribute("src", ponyfill.extension.getURL("/image/favicon.svg"));
 			}
-			node.querySelector("."+CSS_PREFIX+"-favicon").setAttribute("src", src);
-			container.appendChild(node);
+			container.appendChild(clone);
 		}
 	}
 
