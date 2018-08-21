@@ -270,17 +270,17 @@
 
 	function makeLanguageFilterListNodes(languages=getLanguageFilterList()){
 		clearLanguageListNodes();
-		let languageListPrototype = document.querySelector("#languageListPrototype");
+		let languageListPrototype = othersNode.querySelector("#languageListPrototype");
 		for(let i=0; i<languageFilterBoxNodes.length; i++){
 			let node = languageFilterBoxNodes[i];
 			for(let j=0; j<languages.length; j++){
 				let language = languages[j];
-				let li = languageListPrototype.cloneNode(true);
-				li.removeAttribute("id");
+				let clone = document.importNode(languageListPrototype.content, true);
+				let li = clone.querySelector("li");
 				li.setAttribute("data-language", language);
 				let label = li.querySelector(".languageLabel");
 				label.innerText = language;
-				node.appendChild(li);
+				node.appendChild(clone);
 			}
 		}
 		let list = [];
