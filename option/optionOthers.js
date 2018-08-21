@@ -657,15 +657,13 @@
 		languages = languages.filter( obj => obj.sortkeyprefix.substr(0,1)==prefixCode );
 		for(let i=0; i<languages.length; i++){
 			let language = languages[i];
-			let wrapper = prototype.cloneNode(true);
-			wrapper.removeAttribute("id");
+			let wrapper = document.importNode(prototype.content, true);
 			let checkboxNode = wrapper.querySelector(".languageFilterCheckbox");
 			checkboxNode.setAttribute("value", language.title);
 			if( languageList.includes(language.title) ) checkboxNode.checked = true;
 			let labelNode = wrapper.querySelector(".languageFilterLabel");
 			labelNode.innerText = language.title;
 			languageFilterContainerNode.appendChild(wrapper);
-			show(wrapper);
 		}
 		return;
 	}
