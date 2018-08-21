@@ -125,7 +125,7 @@ table thead th, table tbody td {
 	z-index:20;
 	line-height: 10px;
 }
-.pane {
+.panelComponent {
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -138,16 +138,21 @@ table thead th, table tbody td {
 	overflow: scroll;
 	min-width: 620px;
 }
-.pane .removePane {
+.panelComponent .removePane {
 	position: absolute;
 	top: 0.5em;
 	right: 0.5em;
 	cursor: pointer;
 }
-.pane .paneBody {
+.panelComponent .panelBody {
 	color: black;
 	background-color: white;
 	border-radius: 5px;
+}
+.panelComponent .panelBody header {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background-color: #404040;
 }
 .desk {
 	margin-top: 4em;

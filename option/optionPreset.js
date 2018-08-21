@@ -48,6 +48,7 @@
 			{ "selector": "#languageFilter option[value=ja]", "property": "innerText", "key": "htmlLanguageJa" },
 			{ "selector": "#languageFilter option[value=zh]", "property": "innerText", "key": "htmlLanguageZh" },
 			{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
+			{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
 			{ "selector": ".presetSearchText", "property": "placeholder", "key": "htmlPresetSearchKeyword" },
 			{ "selector": ".presetClearSearchButton", "property": "innerText", "key": "htmlPresetClearSearchButton" }
 		];

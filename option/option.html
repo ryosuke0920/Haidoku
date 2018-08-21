@@ -13,6 +13,8 @@
 	<main id="main">
 		<div id="form" class="panel">
 			<nav class="controller">
+				<button type="button" class="showPreset">htmlPresetName</button>
+				&nbsp;
 				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
 			</nav>
 			<div class="desk">
@@ -60,9 +62,9 @@
 				</div>
 			</div>
 
-			<div id="presetSelectPane" class="pane hide">
+			<div id="presetSelectPane" class="panelComponent hide">
 				<img src="/image/delete.svg" class="removePane">
-				<div id="presetSelectPaneBody" class="paneBody box">
+				<div id="presetSelectPaneBody" class="panelBody box">
 					<p>
 						テストあいうえお
 						テストあいうえお
@@ -385,17 +387,21 @@
 					</div>
 				</section>
 			</section>
-			<div id="languageFilterSelectPane" class="pane hide">
+			<div id="languageFilterSelectPane" class="panelComponent hide">
 				<img src="/image/delete.svg" class="removePane">
-				<div id="languageFilterSelectPaneBody" class="paneBody box">
-					<p>
-						<select class="apiLangPrefixSelect"></select>
-					</p>
-					<div id="languageFilterContainer"></div>
-					<div>
-						<div id="languageSelectList" class="component">
-							<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
-							<ol class="languageFilterBox"></ol>
+				<div id="languageFilterSelectPaneBody" class="panelBody">
+					<header class="box">
+						<p>
+							<select class="apiLangPrefixSelect"></select>
+						</p>
+					</header>
+					<div class="box">
+						<div id="languageFilterContainer"></div>
+						<div>
+							<div id="languageSelectList" class="component">
+								<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
+								<ol class="languageFilterBox"></ol>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -434,7 +440,6 @@
 		</header>
 		<nav id="nav">
 			<div class="box navi showForm active">htmlFormName</div>
-			<div class="box navi showPreset">htmlPresetName</div>
 			<div class="box navi showHistory">htmlHistoryName</div>
 			<div class="box navi showRanking">htmlRankingName</div>
 			<div class="box navi showOthers">htmlOthersName</div>

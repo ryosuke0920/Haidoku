@@ -9,7 +9,6 @@ const CELL_TEXT_MAX_LENGTH = 31 /* Archaiomelesidonophrunicherata */
 let mainNode = document.querySelector("#main");
 let navNode = document.querySelector("#nav");
 let formNode = document.querySelector("#form");
-let presetNode = document.querySelector("#preset");
 let rankingNode = document.querySelector("#ranking");
 let othersNode = document.querySelector("#others");
 let historyNode = document.querySelector("#history");
@@ -33,9 +32,7 @@ function initI18n(){
 		{ "selector": ".usageCheck", "property": "innerText", "key": "htmlUsageCheck" },
 		{ "selector": ".usageHist", "property": "innerText", "key": "htmlUsageHist" },
 		{ "selector": ".usageDelete", "property": "innerText", "key": "htmlUsageDelete" },
-		{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
 		{ "selector": ".showForm", "property": "innerText", "key": "htmlFormName" },
-		{ "selector": ".showPreset", "property": "innerText", "key": "htmlPresetName" },
 		{ "selector": ".showHistory", "property": "innerText", "key": "htmlHistoryName" },
 		{ "selector": ".showRanking", "property": "innerText", "key": "htmlRankingName" },
 		{ "selector": ".showOthers", "property": "innerText", "key": "htmlOthersName" },
@@ -105,9 +102,6 @@ function navBehavior(e){
 	if(classList.contains("showForm")){
 		showForm();
 	}
-	else if(classList.contains("showPreset")){
-		showPreset();
-	}
 	else if(classList.contains("showContact")){
 		showContact();
 	}
@@ -150,13 +144,6 @@ function showForm(){
 	addActive("showForm");
 	hideAllPanels();
 	show(formNode);
-}
-
-function showPreset(){
-	removeActive();
-	addActive("showPreset");
-	hideAllPanels();
-	show(presetNode)
 }
 
 function showContact(){
