@@ -2,10 +2,14 @@
 * {
 	margin: 0;
 	padding: 0;
-	font: 16px sans-serif;
 }
 body {
 	background-color: white;
+	font: 16px sans-serif;
+}
+h1 {
+	font-size: 1em;
+	font-weight: normal;
 }
 p {
 	margin-bottom: 1em;
@@ -24,6 +28,13 @@ aside {
 	background-color: WhiteSmoke;
 	padding: 0.2em;
 }
+input[type="text"], input[type="url"], input[type="number"], input[type="date"] {
+	height: 27px;
+	font-size: 1em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
 input[type="text"], input[type="url"], input[type="number"], input[type="date"],
 #preset .checkWrapper, .field, aside {
 	border-radius: 5px;
@@ -343,7 +354,7 @@ table thead th, table tbody td {
 	border: solid 1px black;
 }
 #preset .url {
-	font-size:70%
+	font-size: 0.8em;
 }
 #preset .checkWrapper {
 	cursor: pointer;

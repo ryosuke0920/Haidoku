@@ -151,6 +151,7 @@ function initListener(){
 	window.addEventListener("mousedown", formScrollCancel);
 	window.addEventListener("wheel", formScrollCancel);
 	window.addEventListener("click", clickComponent );
+
 	presetNode.addEventListener("click", presetBehavior);
 	presetNode.querySelector("#languageFilter").addEventListener("change", languageFilterBehavior);
 	presetSearchNode.addEventListener("input", presetSearchInput);
@@ -546,7 +547,7 @@ function clickComponent(e){
 		hide(e.target);
 	}
 	else if( e.target.classList.contains("removePanelComponent") ){
-		hide(e.target.closest("panelComponent"));
+		hide(e.target.closest(".panelComponent"));
 	}
 }
 
@@ -688,7 +689,7 @@ function addPreset(e){
 	let promise = saveOption();
 	resetPreset();
 	resetSort();
-	showForm();
+	hide(preset);
 	smoothScroll();
 }
 
