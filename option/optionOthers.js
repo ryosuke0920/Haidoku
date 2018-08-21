@@ -709,10 +709,7 @@
 
 	function apiLangPaneClickBehavior(e){
 		let classes = e.target.classList;
-		if( classes.contains("removePane") || languageFilterSelectPaneNode.isEqualNode(e.target) ){
-			hide(languageFilterSelectPaneNode);
-		}
-		else if(classes.contains("languageFilterCheckbox")){
+		if(classes.contains("languageFilterCheckbox")){
 			if( e.target.checked ) {
 				if(!checkLanguageLimit()){
 					e.preventDefault();

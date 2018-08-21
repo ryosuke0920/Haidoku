@@ -39,6 +39,7 @@ function initI18n(){
 		{ "selector": ".showContact", "property": "innerText", "key": "htmlContactName" },
 		{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
 		{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" },
+		{ "selector": ".addFromPreset", "property": "innerText", "key": "htmlAddFromPreset" },
 		{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
 		{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
 		{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
@@ -132,6 +133,9 @@ function formBehavior(e){
 		e.target.closest(".field").remove();
 		resetSort();
 		saveOption().catch(onSaveError);
+	}
+	else if(classList.contains("addFromPreset")){
+		show(formNode.querySelector("#presetSelectPane"));
 	}
 }
 
@@ -461,6 +465,12 @@ function clickComponent(e){
 	else if(e.target.classList.contains("includeImage")){
 		let node = e.target.closest(".erasticTextComponent");
 		longErasticText(node);
+	}
+	else if( e.target.classList.contains("panelComponent") ){
+		hide(e.target);
+	}
+	else if( e.target.classList.contains("removePanelComponent") ){
+		hide(e.target.closest("panelComponent"));
 	}
 }
 

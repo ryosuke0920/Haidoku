@@ -138,7 +138,7 @@ table thead th, table tbody td {
 	overflow: scroll;
 	min-width: 620px;
 }
-.panelComponent .removePane {
+.panelComponent .removePanelComponent {
 	position: absolute;
 	top: 0.5em;
 	right: 0.5em;
@@ -150,6 +150,8 @@ table thead th, table tbody td {
 	border-radius: 5px;
 }
 .panelComponent .panelBody header {
+	padding-top: 1em;
+	padding-left: 0.5em;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	background-color: #404040;
@@ -160,15 +162,15 @@ table thead th, table tbody td {
 .box{
 	padding: 0.5em;
 }
-.component {
+.borderComponent {
 	border-radius: 5px;
 	border: solid 1px #ccc;
 	padding: 0.5em;
 }
-.component aside {
+.borderComponent aside {
 	margin-bottom: 1em;
 }
-.component>h1 {
+.borderComponent>h1 {
 	border-radius: 5px;
 	background-color: WhiteSmoke;
 	padding: 0.5em;
@@ -194,6 +196,7 @@ table thead th, table tbody td {
 	border-radius: 5px;
 	color: black;
 }
+.panelComponent .panelBody header .groupLine,
 .controller .groupLine {
 	padding:10px;
 }
@@ -440,10 +443,6 @@ table thead th, table tbody td {
 #languageFilterSelectPaneBody {
 	display: grid;
 	grid-template-columns: 1fr 300px;
-}
-#languageFilterSelectPaneBody>*:nth-child(1) {
-	grid-column-start:1 ;
-	grid-column-end: 3;
 }
 #languageFilterContainer {
 	display: inline;

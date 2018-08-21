@@ -13,9 +13,10 @@
 	<main id="main">
 		<div id="form" class="panel">
 			<nav class="controller">
-				<button type="button" class="showPreset">htmlPresetName</button>
-				&nbsp;
-				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
+				<span class="groupLine">
+					<button type="button" class="addFromPreset">htmlAddFromPreset</button>
+					<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
+				</span>
 			</nav>
 			<div class="desk">
 				<p>
@@ -63,17 +64,16 @@
 			</div>
 
 			<div id="presetSelectPane" class="panelComponent hide">
-				<img src="/image/delete.svg" class="removePane">
+				<img src="/image/delete.svg" class="removePanelComponent">
 				<div id="presetSelectPaneBody" class="panelBody box">
 					<p>
 						テストあいうえお
 						テストあいうえお
 						テストあいうえお
 					</p>
-					<div id="languageFilterContainer"></div>
+					<div></div>
 				</div>
 			</div>
-
 
 		</div>
 		<div id="preset" class="panel hide">
@@ -242,14 +242,14 @@
 		</div>
 		<div id="others" class="panel hide">
 			<section class="othersTable box">
-				<section class="component">
+				<section class="borderComponent">
 					<h1 class="linkListStyleTitle">htmlLinkListStyleTitle</h1>
 					<div>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
 					</div>
 				</section>
-				<section class="component">
+				<section class="borderComponent">
 					<h1 class="linkListActionTitle">htmlLinkListActionTitle</h1>
 					<div>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
@@ -257,7 +257,7 @@
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="c"> <span class="linkListActionMouseclick">htmlLinkListActionMouseclick</span></label><br>
 					</div>
 				</section>
-				<section class="component">
+				<section class="borderComponent">
 					<h1 class="linkListLayoutTitle">htmlLinkListLayoutTitle</h1>
 					<section class="subComponent">
 						<h1 class="linkListLayoutPatternTitle">htmlLinkListLayoutPatternTitle</h1>
@@ -290,7 +290,7 @@
 						</div>
 					</section>
 				</section>
-				<section class="component">
+				<section class="borderComponent">
 					<h1 class="apiServiceTitle">htmlApiServiceTitle</h1>
 					<p class="apiServiceDescription">htmlApiServiceDescription</p>
 					<section class="subComponent">
@@ -330,7 +330,7 @@
 						</div>
 					</section>
 				</section>
-				<section id="linkListSample" class="component box">
+				<section id="linkListSample" class="borderComponent box">
 					<h1 class="linkListSampleTitle">htmlLinkListSampleTitle</h1>
 					<div class="box">
 						<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 300px; width: 450px; z-index:auto;">
@@ -388,17 +388,17 @@
 				</section>
 			</section>
 			<div id="languageFilterSelectPane" class="panelComponent hide">
-				<img src="/image/delete.svg" class="removePane">
-				<div id="languageFilterSelectPaneBody" class="panelBody">
+				<img src="/image/delete.svg" class="removePanelComponent">
+				<div class="panelBody">
 					<header class="box">
 						<p>
-							<select class="apiLangPrefixSelect"></select>
+							<span class="groupLine"><select class="apiLangPrefixSelect"></select></span>
 						</p>
 					</header>
-					<div class="box">
+					<div id="languageFilterSelectPaneBody" class="box">
 						<div id="languageFilterContainer"></div>
 						<div>
-							<div id="languageSelectList" class="component">
+							<div id="languageSelectList" class="borderComponent">
 								<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
 								<ol class="languageFilterBox"></ol>
 							</div>

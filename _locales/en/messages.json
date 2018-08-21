@@ -148,9 +148,6 @@
 	"htmlFormName": {
 		"message": "Edit link"
 	},
-	"htmlPresetName": {
-		"message": "Add search site"
-	},
 	"htmlHistoryName": {
 		"message": "History"
 	},
@@ -180,6 +177,9 @@
 	},
 	"htmlPresetDescription": {
 		"message": "Select some sites and press \"Add\" button. Then it's added to link list."
+	},
+	"htmlAddFromPreset": {
+		"message": "Add search site"
 	},
 	"htmlAddBlankFieldButtonName": {
 		"message": "Add blank field"

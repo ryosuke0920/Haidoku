@@ -148,9 +148,6 @@
 	"htmlFormName": {
 		"message": "リンク編集"
 	},
-	"htmlPresetName": {
-		"message": "検索サイト追加"
-	},
 	"htmlHistoryName": {
 		"message": "履歴"
 	},
@@ -180,6 +177,9 @@
 	},
 	"htmlPresetDescription": {
 		"message": "サイトを選択してから「追加」ボタンを押すとリンクリストに追加されます。"
+	},
+	"htmlAddFromPreset": {
+		"message": "検索サイト追加"
 	},
 	"htmlAddBlankFieldButtonName": {
 		"message": "入力欄のみ追加"
