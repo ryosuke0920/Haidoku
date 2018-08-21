@@ -150,11 +150,10 @@ table thead th, table tbody td {
 	border-radius: 5px;
 }
 .panelComponent .panelBody header {
-	padding-top: 1em;
-	padding-left: 0.5em;
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
+	padding: 0.5em;
+	border-radius: 5px;
 	background-color: #404040;
+	margin-bottom: 1em;
 }
 .desk {
 	margin-top: 4em;
