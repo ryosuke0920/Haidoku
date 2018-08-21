@@ -10,7 +10,7 @@
 </head>
 <body class="hide">
 <div>
-	<div id="main">
+	<main id="main">
 		<div id="form" class="panel">
 			<nav class="controller">
 				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
@@ -59,6 +59,20 @@
 					</div>
 				</div>
 			</div>
+
+			<div id="presetSelectPane" class="pane hide">
+				<img src="/image/delete.svg" class="removePane">
+				<div id="presetSelectPaneBody" class="paneBody box">
+					<p>
+						テストあいうえお
+						テストあいうえお
+						テストあいうえお
+					</p>
+					<div id="languageFilterContainer"></div>
+				</div>
+			</div>
+
+
 		</div>
 		<div id="preset" class="panel hide">
 			<nav class="controller">
@@ -82,12 +96,14 @@
 			<div class="desk">
 				<div class="presetDescription">htmlPresetDescription</div>
 				<div id="table" class="box"></div>
-				<section id="cellPrototype" class="hide checkWrapper" data-language="">
-					<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
-					<p class="url">url</p>
+			</div>
+			<template id="cellPrototype">
+				<section class="hide checkWrapper" data-language="">
+					<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label"></span></h1>
+					<p class="url"></p>
 					<aside class="presetAside hide"></aside>
 				</section>
-			</div>
+			</template>
 		</div>
 		<div id="history" class="panel hide">
 			<nav class="controller">
@@ -410,7 +426,7 @@
 				<p class="myself">htmlMyself</p>
 			</address>
 		</div>
-	</div>
+	</main>
 	<div id="menu">
 		<header id="header">
 			<div class="logo"><img src="/image/icon128.png"></div>

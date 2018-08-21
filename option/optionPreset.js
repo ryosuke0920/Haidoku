@@ -60,8 +60,8 @@
 		if ( matcher ) language = matcher[1];
 		for(let i=0; i<PRESET_OPTION_LIST.length; i++){
 			let option = PRESET_OPTION_LIST[i];
-			let node = cellPrototypeNode.cloneNode(true);
-			node.removeAttribute("id");
+			let clone = document.importNode(cellPrototypeNode.content, true);
+			let node = clone.querySelector("section");
 			node.setAttribute("data-language",option["la"]);
 			node.querySelector(".label").innerText = option["l"];
 			node.querySelector(".url").innerText = option["u"];
@@ -71,7 +71,7 @@
 				show(aside);
 			}
 			node.addEventListener("click",checkPreset);
-			tableNode.appendChild(node);
+			tableNode.appendChild(clone);
 			languageJson[option["la"]] = true;
 		}
 		if(languageJson.hasOwnProperty(language)){
