@@ -9,10 +9,14 @@ body {
 	font-family: Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
 }
 .sentence {
-	font-family: "Times New Roman", "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "メイリオ", Meiryo, serif;
+	font-size: 1.1em;
+	font-family: Georgia, "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "メイリオ", Meiryo, serif;
+}
+aside.sentence {
+	font-size: 0.9em;
 }
 h1 {
-	font-size: 1em;
+	font-size: 20px;
 	font-weight: normal;
 }
 p {
@@ -47,13 +51,14 @@ input[type="text"]:focus, input[type="url"]:focus, input[type="number"]:focus, i
 	border-color: rgb(165, 200, 238);
 	box-shadow: rgba(165, 200, 238, 0.32) 0px 3px 3px 0px, rgba(165, 200, 238, 0.32) 0px 0px 0px 2px;
 }
-button,select {
+button, select {
+	min-height: 26px;
 	padding: 3px 0.5em;
-	border: none;
+	border: solid 1px WhiteSmoke;
 	border-radius: 5px;
 	cursor: pointer;
 	background: linear-gradient(to bottom, #FFFFFF, #EEE);
-	box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 2px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
 button:hover,select:hover {
 	background: linear-gradient(to bottom, #EEEEEE, #DDD);
@@ -107,6 +112,7 @@ address{
 	padding-top: 10px;
 }
 #header h1 {
+	font-size: 16px;
 	padding-left: 10px;
 }
 #nav div{
@@ -202,7 +208,6 @@ address{
 	border-bottom: solid 2px #ccc;
 	margin-bottom: 1em;
 	font-weight: bold;
-	font-size: 1.1em;
 }
 .hide, .cell-hide {
 	display: none;
@@ -359,16 +364,14 @@ nav .groupLine {
 
 /* preset menu */
 
-#preset section {
-	padding:0.5em;
-	margin:0.5em;
-}
-#preset .checkWrapper {
-	cursor: pointer;
-}
 #table {
 	display: grid;
 	grid-template-columns: 1fr;
+	grid-gap: 1em;
+}
+#table .checkWrapper {
+	padding:0.5em;
+	cursor: pointer;
 }
 @media (min-width: 802px) {
 	#table {
