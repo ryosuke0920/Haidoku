@@ -5,7 +5,11 @@
 }
 body {
 	background-color: white;
-	font: 16px sans-serif;
+	font-size: 16px;
+	font-family: Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+}
+.sentence {
+	font-family: "Times New Roman", "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "メイリオ", Meiryo, serif;
 }
 h1 {
 	font-size: 1em;
@@ -24,7 +28,6 @@ ul>li {
 	list-style: decimal outside;
 }
 aside {
-	font-size: 0.8em;
 	background-color: WhiteSmoke;
 	padding: 0.2em;
 }
@@ -359,9 +362,6 @@ nav .groupLine {
 #preset section {
 	padding:0.5em;
 	margin:0.5em;
-}
-#preset .url {
-	font-size: 0.8em;
 }
 #preset .checkWrapper {
 	cursor: pointer;
