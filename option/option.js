@@ -311,8 +311,8 @@ function addNewField( checked=false, hist=true, label="", url="" ){
 }
 
 function addField( checked=false, hist=true, label="", url="", cls=null ){
-	let node = inputPrototypeNode.cloneNode(true);
-	node.removeAttribute("id");
+	let clone = document.importNode(inputPrototypeNode.content, true);
+	let node = clone.querySelector(".field");
 	if(cls) {
 		node.classList.add(cls);
 		setTimeout( removeAddAnimation.bind(node), ADD_FIELD_DURATION );
@@ -370,7 +370,7 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 	});
 	urlNode.addEventListener("blur", blurBehavior);
 	handleNode.addEventListener("mousedown", sortStart);
-	containerNode.appendChild(node);
+	containerNode.appendChild(clone);
 	show(node);
 }
 
