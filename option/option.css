@@ -58,6 +58,9 @@ button:hover,select:hover {
 select {
 	cursor: pointer;
 }
+option {
+	background-color: white;
+}
 table {
 	width: 100%;
 	border-collapse: collapse;
@@ -76,6 +79,9 @@ table tbody tr:nth-child(2n) {
 table thead th, table tbody td {
 	padding: 2px 5px;
 	border: 2px solid #ccc;
+}
+address{
+	font-style: normal;
 }
 #menu {
 	position: fixed;
@@ -208,6 +214,9 @@ table thead th, table tbody td {
 .panelComponent .panelBody nav .groupLine,
 .controller .groupLine {
 	padding:10px;
+}
+nav .groupLine {
+	border: none;
 }
 
 /* link list menu */
@@ -467,8 +476,26 @@ table thead th, table tbody td {
 #languageFileterComponent {
 	position: relative;
 }
-.removeLanguageButtom{
-	cursor: pointer;	
+.removeLanguageButtom {
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+}
+.languageFilterBox>li {
+	border-radius: 5px;
+}
+.languageFilterBox>li:hover {
+	background-color: Gainsboro;
+}
+.languageFilterBox>li>div {
+	display:flex;
+}
+.languageLabel {
+	width: 90%;
+}
+.removeLanguageBox {
+	margin-left: 1em;
+	width: 2em;
 }
 #downloadLanguagePane {
 	position: absolute;
