@@ -417,6 +417,12 @@ nav .groupLine {
 .rankingCount {
 	text-align: right;
 }
+#rankingTable th:nth-child(1), #rankingTable th:nth-child(2) {
+	width: 25%;
+}
+#rankingTable th:nth-child(3) {
+	width: auto;
+}
 
 /* others menu */
 
