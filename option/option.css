@@ -35,14 +35,13 @@ input[type="text"], input[type="url"], input[type="number"], input[type="date"] 
 	padding-right: 0.5em;
 }
 
-input[type="text"], input[type="url"], input[type="number"], input[type="date"],
-#preset .checkWrapper, .field, aside {
+input[type="text"], input[type="url"], input[type="number"], input[type="date"], aside {
 	border-radius: 5px;
 	border: solid 1px #ccc;
 }
 input[type="text"]:focus, input[type="url"]:focus, input[type="number"]:focus, input[type="date"]:focus,
-#preset .checkWrapper:hover {
-	border: solid 1px rgb(165, 200, 238);
+.checkWrapper:hover {
+	border-color: rgb(165, 200, 238);
 	box-shadow: rgba(165, 200, 238, 0.32) 0px 3px 3px 0px, rgba(165, 200, 238, 0.32) 0px 0px 0px 2px;
 }
 button,select {
@@ -62,7 +61,7 @@ select {
 table {
 	width: 100%;
 	border-collapse: collapse;
-	border: 1px solid #ccc;
+	border: 2px solid #ccc;
 	margin-bottom: 1em;
 }
 table thead th {
@@ -76,7 +75,7 @@ table tbody tr:nth-child(2n) {
 }
 table thead th, table tbody td {
 	padding: 2px 5px;
-	border: 1px solid #ccc;
+	border: 2px solid #ccc;
 }
 #menu {
 	position: fixed;
@@ -84,7 +83,7 @@ table thead th, table tbody td {
 	width: 160px;
 	height: 100%;
 	z-index:20;
-	border-right: solid 1px rgb(222, 226, 230);
+	border-right: solid 2px #C0C0C0;
 	box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
 	background-color: white;
 }
@@ -127,9 +126,7 @@ table thead th, table tbody td {
 	top: 0;
 	left: 160px;
 	right: 0;
-	padding-top: 1em;
-	padding-left: 0.5em;
-	height: 3em;
+	padding: 1em 0.5em;
 	white-space: nowrap;
 	background-color: rgba(0,0,0,0.7);
 	color: white;
@@ -160,8 +157,8 @@ table thead th, table tbody td {
 	background-color: white;
 	border-radius: 5px;
 }
-.panelComponent .panelBody header {
-	padding: 0.5em;
+.panelComponent .panelBody nav {
+	padding: 1em 0.5em;
 	border-radius: 5px;
 	background-color: #404040;
 	margin-bottom: 1em;
@@ -174,7 +171,7 @@ table thead th, table tbody td {
 }
 .borderComponent {
 	border-radius: 5px;
-	border: solid 1px #ccc;
+	border: solid 2px #C0C0C0;
 	padding: 0.5em;
 }
 .borderComponent aside {
@@ -182,19 +179,21 @@ table thead th, table tbody td {
 }
 .borderComponent>h1 {
 	border-radius: 5px;
-	background-color: WhiteSmoke;
+	background-color: #404040;
+	color: white;
 	padding: 0.5em;
 	font-weight: bold;
 	margin-bottom: 0.5em;
 }
 .subComponent {
 	margin-top: 1.5em;
-	margin-bottom: 1.5em;
+	margin-bottom: 2em;
 }
 .subComponent>h1 {
-	border-bottom: solid 1px #ccc;
+	border-bottom: solid 2px #ccc;
 	margin-bottom: 1em;
 	font-weight: bold;
+	font-size: 1.1em;
 }
 .hide, .cell-hide {
 	display: none;
@@ -202,11 +201,11 @@ table thead th, table tbody td {
 .groupLine {
 	padding:3px;
 	background-color: WhiteSmoke;
-	border: solid 1px rgb(222, 226, 230);
+	border: solid 2px #C0C0C0;
 	border-radius: 5px;
 	color: black;
 }
-.panelComponent .panelBody header .groupLine,
+.panelComponent .panelBody nav .groupLine,
 .controller .groupLine {
 	padding:10px;
 }
@@ -351,7 +350,6 @@ table thead th, table tbody td {
 #preset section {
 	padding:0.5em;
 	margin:0.5em;
-	border: solid 1px black;
 }
 #preset .url {
 	font-size: 0.8em;
@@ -468,6 +466,9 @@ table thead th, table tbody td {
 }
 #languageFileterComponent {
 	position: relative;
+}
+.removeLanguageButtom{
+	cursor: pointer;	
 }
 #downloadLanguagePane {
 	position: absolute;

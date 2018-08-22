@@ -32,7 +32,7 @@
 					<span class="groupLine"><img src="/image/delete.svg" draggable="false"> <span class="usageDelete">htmlUsageDelete</span></span>
 				</p>
 				<div id="container" class="box"></div>
-				<div id="inputPrototype" class="field draggable hide">
+				<div id="inputPrototype" class="borderComponent field draggable hide">
 					<div class="removeField" title="htmlRemoveButtonName"><img src="/image/delete.svg"></div>
 					<div class="gridWrapper">
 						<div class="fieldController">
@@ -69,33 +69,31 @@
 			<div id="preset" class="panelComponent hide">
 				<img src="/image/delete.svg" class="removePanelComponent">
 				<div class="panelBody box">
-					<header class="box">
-						<p>
-							<span class="groupLine">
-								<button type="button" class="addPreset">htmlAddPresetButtonName</button>&nbsp;
-							</span>
-							&nbsp;
-							<span class="groupLine">
-								<span class="filterText">htmlFilterText</span>&nbsp;
-								<select id="languageFilter">
-									<option value="">htmlLanguageAll</option>
-									<option value="en">htmlLanguageEn</option>
-									<option value="ja">htmlLanguageJa</option>
-									<option value="zh">htmlLanguageZh</option>
-								</select>
-							</span>
-							&nbsp;
-							<span class="groupLine">
-								<input type="text" id="presetSearchText" class="presetSearchText" placeholder="htmlSearchKeyword">
-								<button type="buttom" class="presetClearSearchButton">htmlPresetClearSearchButton</button>
-							</span>
-						</p>
-					</header>
+					<nav class="box">
+						<span class="groupLine">
+							<button type="button" class="addPreset">htmlAddPresetButtonName</button>&nbsp;
+						</span>
+						&nbsp;
+						<span class="groupLine">
+							<span class="filterText">htmlFilterText</span>&nbsp;
+							<select id="languageFilter">
+								<option value="">htmlLanguageAll</option>
+								<option value="en">htmlLanguageEn</option>
+								<option value="ja">htmlLanguageJa</option>
+								<option value="zh">htmlLanguageZh</option>
+							</select>
+						</span>
+						&nbsp;
+						<span class="groupLine">
+							<input type="text" id="presetSearchText" class="presetSearchText" placeholder="htmlSearchKeyword">
+							<button type="buttom" class="presetClearSearchButton">htmlPresetClearSearchButton</button>
+						</span>
+					</nav>
 					<div>
 						<div class="presetDescription">htmlPresetDescription</div>
 						<div id="table" class="box"></div>
 						<template id="cellPrototype">
-							<section class="hide checkWrapper" data-language="">
+							<section class="hide checkWrapper borderComponent" data-language="">
 								<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label"></span></h1>
 								<p class="url"></p>
 								<aside class="presetAside hide"></aside>
@@ -391,11 +389,9 @@
 			<div id="languageFilterSelectPane" class="panelComponent hide">
 				<img src="/image/delete.svg" class="removePanelComponent">
 				<div class="panelBody box">
-					<header>
-						<p>
-							<span class="groupLine"><select class="apiLangPrefixSelect"></select></span>
-						</p>
-					</header>
+					<nav>
+						<span class="groupLine"><select class="apiLangPrefixSelect"></select></span>
+					</nav>
 					<div id="languageFilterSelectPaneBody">
 						<div id="languageFilterContainer"></div>
 						<div>
