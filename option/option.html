@@ -13,16 +13,16 @@
 	<main id="main">
 		<div id="form" class="panel">
 			<nav class="controller">
-				<span class="groupLine"><button type="button" class="addFromPreset">htmlAddFromPreset</button></span>
+				<button type="button" class="addFromPreset">htmlAddFromPreset</button>
 				&nbsp;
-				<span class="groupLine"><button type="button" class="addBlank">htmlAddBlankFieldButtonName</button></span>
+				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
 			</nav>
 			<div class="desk">
 				<p class="sentence formDescription">htmlFormDescription</p>
 				<p>
-					<span class="groupLine"><img src="/image/hold.svg" draggable="false"> <span class="usageOrder">htmlUsageOrder</span></span>&nbsp;
-					<span class="groupLine"><span class="check checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span></span>&nbsp;
-					<span class="groupLine"><span class="hist checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span></span>&nbsp;
+					<span class="groupLine"><img class="holdImage" src="/image/hold.svg" draggable="false"> <span class="usageOrder">htmlUsageOrder</span></span>
+					<span class="groupLine"><span class="check checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span></span>
+					<span class="groupLine"><span class="hist checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span></span>
 					<span class="groupLine"><img src="/image/delete.svg" draggable="false"> <span class="usageDelete">htmlUsageDelete</span></span>
 				</p>
 				<div id="container"></div>
@@ -32,7 +32,7 @@
 					<div class="removeField" title="htmlRemoveButtonName"><img src="/image/delete.svg"></div>
 					<div class="gridWrapper">
 						<div class="fieldController">
-							<span class="handle"><img src="/image/hold.svg" draggable="false"></span>&nbsp;
+							<img class="handle holdImage" src="/image/hold.svg" draggable="false">&nbsp;
 							<span class="check checkboxButton">
 								<span class="circle"></span>
 							</span>
@@ -127,9 +127,16 @@
 			<div class="desk">
 				<p class="sentence historyDescription">htmlHistoryDescription</p>
 				<p>
-					<span class="groupLine pageInfo"><span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span></span>
-					<span class="groupLine pageInfo"><span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span></span>
-					<button type="button" class="historyDeleteButton">htmlHistoryCheckDelete</button>
+					<span class="groupLine pageInfo">
+						<span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;
+						<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;
+						<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;
+						<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span>
+					</span>
+					<span class="groupLine pageInfo">
+						<span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span>
+					</span>
+					<button type="button" class="historyDeleteButton">htmlHistoryCheckDelete</button>&nbsp;
 					<button type="button" class="historyDeleteAllButton">htmlHistoryAllDelete</button>
 				</p>
 				<table id="historyTable">
@@ -175,7 +182,7 @@
 		<div id="ranking" class="panel hide">
 			<nav class="controller">
 				<span class="groupLine">
-					<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>
+					<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>&nbsp;
 					<select class="rankingDateRange">
 						<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
 						<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
@@ -253,9 +260,9 @@
 					<section class="subComponent">
 						<h1 class="linkListLayoutPatternTitle">htmlLinkListLayoutPatternTitle</h1>
 						<div>
-							<label><button class="linkListLayoutPattern" value="1">1</button></label>
-							<label><button class="linkListLayoutPattern" value="2">2</button></label>
-							<label><button class="linkListLayoutPattern" value="3">3</button></label>
+							<label><button class="linkListLayoutPattern" value="1">1</button></label>&nbsp;
+							<label><button class="linkListLayoutPattern" value="2">2</button></label>&nbsp;
+							<label><button class="linkListLayoutPattern" value="3">3</button></label>&nbsp;
 							<label><button class="linkListLayoutPattern" value="4">4</button></label>
 						</div>
 					</section>
@@ -354,7 +361,7 @@
 								<div id="lessLaborGoToDictionary-apiContent">
 									<div id="lessLaborGoToDictionary-apiHeader">
 									<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
-									<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank" href="https://ja.wiktionary.org/wiki/wiki">wiki</a>
+									<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank" href="">wiki</a>
 									</div>
 									<div id="lessLaborGoToDictionary-apiBody">
 										<ol>
@@ -382,7 +389,10 @@
 				<img src="/image/delete.svg" class="removePanelComponent">
 				<div class="panelBody box">
 					<nav>
-						<span class="groupLine"><select class="apiLangPrefixSelect"></select></span>
+						<span class="groupLine">
+							<span class="filterText">htmlFilterText</span>&nbsp;
+							<select class="apiLangPrefixSelect"></select>
+						</span>
 					</nav>
 					<div id="languageFilterSelectPaneBody">
 						<div id="languageFilterContainer"></div>

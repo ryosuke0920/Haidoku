@@ -147,12 +147,13 @@ a:hover {
 	top: 0;
 	left: 160px;
 	right: 0;
-	padding: 1em 2em;
+	padding: 0.5em 2em;
 	white-space: nowrap;
 	background-color: rgba(0,0,0,0.7);
 	color: white;
 	z-index:20;
 	line-height: 10px;
+	min-height: 45px;
 }
 .panelComponent {
 	position: fixed;
@@ -179,7 +180,7 @@ a:hover {
 	border-radius: 5px;
 }
 .panelComponent .panelBody nav {
-	padding: 1em 0.5em;
+	padding: 0.5em;
 	border-radius: 5px;
 	background-color: #404040;
 	margin-bottom: 1em;
@@ -219,15 +220,21 @@ a:hover {
 	display: none;
 }
 .groupLine {
+	display: inline-block;
+	margin-right: 0.5em;
 	padding:3px;
 	background-color: WhiteSmoke;
 	border: solid 2px #C0C0C0;
 	border-radius: 5px;
 	color: black;
+	min-height: 20px;
 }
 .panelComponent .panelBody nav .groupLine,
 .controller .groupLine {
-	padding:10px;
+	padding:5px 10px;
+}
+.controller>button {
+	margin-top: 5px;
 }
 nav .groupLine {
 	border: none;
@@ -267,11 +274,12 @@ nav .groupLine {
 	position:relative;
 	background-color: gray;
 	display: inline-block;
+	vertical-align: text-top;
 	height: 20px;
 	width: 30px;
 	border-radius: 15px;
 	cursor: pointer;
-	top: 2px;
+	font-size: 20px;
 }
 .checkboxButton .circle {
 	position: absolute;
@@ -347,7 +355,8 @@ nav .groupLine {
 .handle {
 	cursor: grab;
 }
-.handle img {
+.holdImage {
+	vertical-align: middle;
 	width: 13px;
 	height: 16px;
 }
