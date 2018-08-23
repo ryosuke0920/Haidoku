@@ -91,6 +91,12 @@ table thead th, table tbody td {
 address{
 	font-style: normal;
 }
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
 #menu {
 	position: fixed;
 	top:0;
@@ -134,14 +140,14 @@ address{
 #main {
 	position: relative;
 	margin-left: 160px;
-	padding: 0.5em;
+	padding: 2em;
 }
 .controller {
 	position: fixed;
 	top: 0;
 	left: 160px;
 	right: 0;
-	padding: 1em 0.5em;
+	padding: 1em 2em;
 	white-space: nowrap;
 	background-color: rgba(0,0,0,0.7);
 	color: white;
@@ -179,7 +185,7 @@ address{
 	margin-bottom: 1em;
 }
 .desk {
-	margin-top: 4em;
+	margin-top: 3em;
 }
 .box{
 	padding: 0.5em;
