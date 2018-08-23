@@ -74,16 +74,10 @@ function initI18n(){
 		{ "selector": ".showRanking", "property": "innerText", "key": "htmlRankingName" },
 		{ "selector": ".showOthers", "property": "innerText", "key": "htmlOthersName" },
 		{ "selector": ".showContact", "property": "innerText", "key": "htmlContactName" },
-		{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
-		{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" },
 		{ "selector": ".addFromPreset", "property": "innerText", "key": "htmlAddFromPreset" },
 		{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
-		{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
-		{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
-		{ "selector": ".removeField", "property": "title", "key": "htmlRemoveButtonName" },
 		{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
 		{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" },
-
 		{ "selector": ".filterText", "property": "innerText", "key": "htmlFilterText" },
 		{ "selector": "#languageFilter option[value=\"\"]", "property": "innerText", "key": "htmlLanguageAll" },
 		{ "selector": "#languageFilter option[value=en]", "property": "innerText", "key": "htmlLanguageEn" },
@@ -312,6 +306,14 @@ function addNewField( checked=false, hist=true, label="", url="" ){
 
 function addField( checked=false, hist=true, label="", url="", cls=null ){
 	let clone = document.importNode(inputPrototypeNode.content, true);
+	let i18nList = [
+		{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
+		{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
+		{ "selector": ".removeField", "property": "title", "key": "htmlRemoveButtonName" },
+		{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
+		{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" }
+	];
+	setI18n(i18nList, clone);
 	let node = clone.querySelector(".field");
 	if(cls) {
 		node.classList.add(cls);
