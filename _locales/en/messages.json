@@ -161,7 +161,7 @@
 		"message": "Contact"
 	},
 	"htmlFormDescription": {
-		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected."
+		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text selected."
 	},
 	"htmlUsageOrder" : {
 		"message": "Sort."
@@ -197,10 +197,10 @@
 		"message": "Delete"
 	},
 	"htmlLabelDescription": {
-		"message": "This will be displayed in the link list or context menu(right click) instead of URL."
+		"message": "Site name is displayed instead of URL."
 	},
 	"htmlUrlDescription": {
-		"message": "A URL to link. \"$$1\" will be replaced to the text you selected."
+		"message": "A URL to link. \"$$1\" will be replaced to the text selected."
 	},
 	"htmlFilterText": {
 		"message": "Filter"
@@ -254,7 +254,7 @@
 		"message": "All history will be deleted. It contains the records that isn't displayed on the table."
 	},
 	"htmlHistoryDescription": {
-		"message": "You can refer to history. It's useful to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not from \"Link list\" menu."
+		"message": "History data is used by \"Find weak point\" function. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not in \"Link edit\" menu."
 	},
 	"htmlHistoryZeroRowMessage": {
 		"message": "Result was 0."
@@ -383,7 +383,7 @@
 		"message": "Select Wiktionary"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" need additional setting."
+		"message": "Please choose Wiktionary. The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" need additional setting."
 	},
 	"htmlServiceCodeNone": {
 		"message": "Disable"
