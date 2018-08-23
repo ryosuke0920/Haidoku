@@ -15,10 +15,6 @@ body {
 aside.sentence {
 	font-size: 0.9em;
 }
-h1 {
-	font-size: 20px;
-	font-weight: normal;
-}
 p {
 	margin-bottom: 1em;
 }
@@ -199,11 +195,13 @@ a:hover {
 .borderComponent aside {
 	margin-bottom: 1em;
 }
+#contact h1,
 .borderComponent>h1 {
+	font-size: 20px;
 	border-radius: 5px;
 	background-color: #404040;
 	color: white;
-	padding: 0.5em;
+	padding: 0.2em 0.5em;
 	font-weight: bold;
 	margin-bottom: 0.5em;
 }
@@ -214,7 +212,7 @@ a:hover {
 .subComponent>h1 {
 	border-bottom: solid 2px #ccc;
 	margin-bottom: 1em;
-	font-weight: bold;
+	font-size: 18px;
 }
 .hide, .cell-hide {
 	display: none;
@@ -577,6 +575,11 @@ nav .groupLine {
 		background-size: 100%;
 		opacity: 0;
 	}
+}
+
+/* contact */
+#contact>section {
+	margin-bottom: 3em;
 }
 
 /* component */
