@@ -348,6 +348,9 @@ nav .groupLine {
 	.label,.url {
 		width: 80%;
 	}
+	.gridWrapper div.fieldController {
+		margin-top: 5px;
+	}
 }
 .textbox {
 	white-space: nowrap;
@@ -367,8 +370,8 @@ nav .groupLine {
 }
 .removeField {
 	position: absolute;
-	top:5px;
-	right:5px;
+	top:10px;
+	right:10px;
 	width:16px;
 	height:16px;
 	cursor: pointer;
@@ -379,6 +382,9 @@ nav .groupLine {
 
 /* preset menu */
 
+#languageFilter {
+	width: 8em;
+}
 #table {
 	display: grid;
 	grid-template-columns: 1fr;
@@ -501,6 +507,7 @@ nav .groupLine {
 	position: relative;
 }
 .removeLanguageButtom {
+	vertical-align: text-bottom;
 	cursor: pointer;
 	width: 16px;
 	height: 16px;
