@@ -164,7 +164,7 @@ a:hover {
 	z-index:30;
 	padding: 2em 5em;
 	overflow: scroll;
-	min-width: 620px;
+	min-width: 680px;
 }
 .panelComponent .removePanelComponent {
 	position: absolute;
@@ -176,12 +176,14 @@ a:hover {
 	color: black;
 	background-color: white;
 	border-radius: 5px;
+	min-width: 680px;
 }
 .panelComponent .panelBody nav {
 	padding: 0.5em;
 	border-radius: 5px;
 	background-color: #404040;
 	margin-bottom: 1em;
+	white-space: nowrap;
 }
 .desk {
 	margin-top: 3em;
@@ -240,7 +242,7 @@ nav .groupLine {
 	border: none;
 }
 
-/* link list menu */
+/* edit link menu */
 
 .inputWrapper {
 	position: relative;
@@ -400,17 +402,17 @@ nav .groupLine {
 	padding:0.5em;
 	cursor: pointer;
 }
-@media (min-width: 802px) {
+@media (min-width: 902px) {
 	#table {
 		grid-template-columns: 1fr 1fr;
 	}
 }
-@media (min-width: 1094px) {
+@media (min-width: 1194px) {
 	#table {
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 }
-@media (min-width: 1372px) {
+@media (min-width: 1472px) {
 	#table {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
