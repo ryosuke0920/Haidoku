@@ -45,22 +45,27 @@ URLs and search parameters of the following sites are prepared. If these specifi
 
 etc. Total 97 URLs.
 
-## About how data used
-* Setting data are sent by the synchronization service provided by the browser.
-* History data is out of the synchronization service.
-* When click a link or execute wiktionary linkage, it sends basic information for internet like IP address and the text selected. HTTP REFER (an information what website come from) is excluded.
-* As needed download favicon images and save it.
-* Any other data is not collected and sent.
+## Release note
+Release note is posted on GitHub.  
+https://github.com/ryosuke0920/Search-Dictionary-Faster/releases  
 
-## Delivery information such as release information
+Release is announced on Twitter.  
 https://twitter.com/SearchDictionar
 
+## About how data used.
+Setting data is sent by the synchronization service provided by the browser. History data is out of the synchronization service.  
+When click a link or execute wiktionary linkage, it sends basic internet information (IP address, Cookie, etc) and the text selected. HTTP REFER (Information on which site it came from) is excluded.  
+As needed download favicon images and save it.  
+Any other data are not collected and not sent.  
+
 ## Contact
-ryosuke.ohta.programmer@gmail.com
+Please use GitHub Issues to report a bug, to request, to contact, etc. Writing is open to the public.  
+https://github.com/ryosuke0920/Search-Dictionary-Faster/issues  
+
+Also receive by email.  
+ryosuke.ohta.programmer@gmail.com  
+Freelance programmer, Ryosuke Ohta  
 
 ## License
 This software is released under the MIT License.  
 https://opensource.org/licenses/MIT
-
-## Source code
-https://github.com/ryosuke0920/Search-Dictionary-Faster

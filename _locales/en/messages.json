@@ -434,49 +434,46 @@
 		"message": "Link list sample"
 	},
 	"htmlRleaseNoteTitle": {
-		"message": "リリースノート"
+		"message": "Release note"
 	},
 	"htmlReleaseNoteDescription1": {
-		"message": "リリースノートはGitHubに掲載しております。"
+		"message": "Release note is posted on GitHub."
 	},
 	"htmlReleaseNoteDescription2": {
-		"message": "リリースはTwitterで告知しております。"
+		"message": "Release is announced on Twitter."
 	},
 	"htmlAboutDataTitle": {
-		"message": "データの取扱について"
+		"message": "About how data used."
 	},
 	"htmlAboutDataDescription1": {
-		"message": "設定内容はブラウザが提供する同期サービスで送受信されます。"
+		"message": "Setting data is sent by the synchronization service provided by the browser. History data is out of the synchronization service."
 	},
 	"htmlAboutDataDescription2": {
-		"message": "履歴データはブラウザの同期サービスの対象外です。"
+		"message": "When click a link or execute wiktionary linkage, it sends basic internet information (IP address, Cookie, etc) and the text selected. HTTP REFER (Information on which site it came from) is excluded."
 	},
 	"htmlAboutDataDescription3": {
-		"message": "リンクをクリックしたりウィクショナリー連携が起動すると、IPアドレスなどのインターネットの基本的な情報と選択したテキストが送信されます。HTTPリファラ（どのサイトから訪れたかを示す情報）は除外しています。"
+		"message": "As needed download favicon images and save it."
 	},
 	"htmlAboutDataDescription4": {
-		"message": "必要に応じて、ファビコンをインターネットからダウンロードして保存します。"
-	},
-	"htmlAboutDataDescription5": {
-		"message": "その他の情報を収集および送信しません。"
+		"message": "Any other data are not collected and not sent."
 	},
 	"htmlContactTitle": {
-		"message": "お問い合わせ"
+		"message": "Contact"
 	},
 	"htmlIssueDescription": {
-		"message": "バグ報告、要望、お問い合わせ等は、GitHubのissuesを使用してください。書き込みは一般に公開されます。"
+		"message": "Please use GitHub Issues to report a bug, to request, to contact, etc. Writing is open to the public."
 	},
 	"htmlMailDescription": {
-		"message": "メールでも受け付けています。"
+		"message": "Also receive by email."
 	},
 	"htmlIam": {
-		"message": "フリーランス プログラマー 太田亮介"
+		"message": "Freelance programmer, Ryosuke Ohta"
 	},
 	"htmlLicenseTitle": {
-		"message": "ライセンス"
+		"message": "License"
 	},
 	"htmlLicenseDescription": {
-		"message": "このソフトウェアはMITライセンスの下で公開されています。"
+		"message": "This software is released under the MIT License."
 	},
 	"htmlCheckBlankError": {
 		"message": "Please fill out this fields."

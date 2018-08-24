@@ -446,18 +446,15 @@
 		"message": "データの取扱について"
 	},
 	"htmlAboutDataDescription1": {
-		"message": "設定内容はブラウザが提供する同期サービスで送受信されます。"
+		"message": "設定内容はブラウザが提供する同期サービスで送受信されます。履歴データはブラウザの同期サービスの対象外です。"
 	},
 	"htmlAboutDataDescription2": {
-		"message": "履歴データはブラウザの同期サービスの対象外です。"
+		"message": "リンクをクリックしたりウィクショナリー連携が起動すると、インターネットの基本的な情報（IPアドレス、Cookieなど）と選択したテキストが送信されます。HTTPリファラ（どのサイトから訪れたかを示す情報）は除外しています。"
 	},
 	"htmlAboutDataDescription3": {
-		"message": "リンクをクリックしたりウィクショナリー連携が起動すると、IPアドレスなどのインターネットの基本的な情報と選択したテキストが送信されます。HTTPリファラ（どのサイトから訪れたかを示す情報）は除外しています。"
-	},
-	"htmlAboutDataDescription4": {
 		"message": "必要に応じて、ファビコンをインターネットからダウンロードして保存します。"
 	},
-	"htmlAboutDataDescription5": {
+	"htmlAboutDataDescription4": {
 		"message": "その他の情報を収集および送信しません。"
 	},
 	"htmlContactTitle": {
