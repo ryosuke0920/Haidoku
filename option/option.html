@@ -431,9 +431,42 @@
 		</div>
 		<div id="contact" class="panel hide">
 			<section>
-				<h1>ライセンス</h1>
+				<h1 class="releaseNoteTitle">htmlRleaseNoteTitle</h1>
 				<p class="sentence">
-					このソフトウェアはMITライセンスの下で公開されています。<br>
+					<span class="releaseNoteDescription1">htmlReleaseNoteDescription1</span><br>
+					<a href="https://github.com/ryosuke0920/Search-Dictionary-Faster/releases" target="_blank">https://github.com/ryosuke0920/Search-Dictionary-Faster/releases</a>
+				</p>
+				<p class="sentence">
+					<span class="releaseNoteDescription2">htmlReleaseNoteDescription2</span>
+					<a href="https://twitter.com/SearchDictionar" target="_blank">@SearchDictionar</a>
+				</p>
+			</section>
+			<section>
+				<h1 class="aboutDataTitle">htmlAboutDataTitle</h1>
+				<ul class="sentence">
+					<li class="aboutDataDescription1">htmlReleaseNoteDescription1</li>
+					<li class="aboutDataDescription2">htmlReleaseNoteDescription2</li>
+					<li class="aboutDataDescription3">htmlReleaseNoteDescription3</li>
+					<li class="aboutDataDescription4">htmlReleaseNoteDescription4</li>
+					<li class="aboutDataDescription5">htmlReleaseNoteDescription5</li>
+				</ul>
+			</section>
+			<section>
+				<h1 class="contactTitle">htmlContactTitle</h1>
+				<p class="sentence">
+					<span class="issueDescription">htmlIssueDescription</span><br>
+					<a href="https://github.com/ryosuke0920/Search-Dictionary-Faster/issues" target="_blank">https://github.com/ryosuke0920/Search-Dictionary-Faster/issues</a>
+				</p>
+				<p　class="sentence">
+					<span class="mailDescription">htmlMailDescription</span><br>
+					<a href="mailto:ryosuke.ohta.programmer@gmail.com">ryosuke.ohta.programmer@gmail.com</a><br>
+					<span class="iam">htmlIam</span>
+				</p>
+			</section>
+			<section>
+				<h1 class="licenseTitle">htmlLicenseTitle</h1>
+				<p class="sentence">
+					<span class="licenseDescription">htmlLicenseDescription</span><br>
 					<a href="https://opensource.org/licenses/MIT" target="_blank">https://opensource.org/licenses/MIT</a>
 				</p>
 				<p class="sentence">Copyright (c) 2018 Ryosuke Ohta</p>
@@ -441,26 +474,9 @@
 				<p class="sentence">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 				<p class="sentence">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 			</section>
-			<section>
-				<h1>リリースノート</h1>
-				<p class="sentence">
-					リリースノートは下記GitHubに掲載しております。<br>
-					<a href="https://github.com/ryosuke0920/Search-Dictionary-Faster/releases" target="_blank">https://github.com/ryosuke0920/Search-Dictionary-Faster/releases</a>
-				</p>
-				<p class="sentence">リリースはTwitterで告知しております。<a href="https://twitter.com/SearchDictionar" target="_blank">@SearchDictionar</a></p>
-			</section>
-			<section>
-				<h1>プライバシーポリシー</h1>
-				<p class="sentence">
-					手間なし辞書検索を使用すると、選択したテキスト、及びインターネットで使用される一般的な情報（IPアドレスやCookie等）がサイトに送信されます。リファラ（遷移元のサイトURL）は送信されません。
-				</p>
-				<p class="sentence">
-					手間なし辞書検索の設定内容はブラウザが提供する同期サービスによって送受信されます。履歴データはブラウザの同期サービスの対象ではありません。
-				</p>
-				<p class="sentence">
-					手間なし辞書検索は上記以外のデータの収集や送受信を行いません。
-				</p>
-			</section>
+		</div>
+		<div id="donation" class="panel hide">
+			donation
 		</div>
 	</main>
 	<div id="menu">
@@ -469,11 +485,12 @@
 			<h1><span class="title">extensionName</span></h1>
 		</header>
 		<nav id="nav">
-			<div class="box navi showForm active">htmlFormName</div>
-			<div class="box navi showHistory">htmlHistoryName</div>
-			<div class="box navi showRanking">htmlRankingName</div>
-			<div class="box navi showOthers">htmlOthersName</div>
-			<div class="box navi showContact">htmlContactName</div>
+			<div class="navi active" data-navi-name="form">htmlFormName</div>
+			<div class="navi" data-navi-name="history">htmlHistoryName</div>
+			<div class="navi" data-navi-name="ranking">htmlRankingName</div>
+			<div class="navi" data-navi-name="others">htmlOthersName</div>
+			<div class="navi" data-navi-name="contact">htmlContactName</div>
+			<div class="navi" data-navi-name="donation">htmlDonationName</div>
 		</nav>
 	</div>
 </div>

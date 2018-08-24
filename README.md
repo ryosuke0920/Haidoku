@@ -45,8 +45,12 @@ URLs and search parameters of the following sites are prepared. If these specifi
 
 etc. Total 97 URLs.
 
-## Privacy policy
-This tool does not collect or send privacy data. But the setting data are sent and received by the synchronization service provided by the browser. History data is out of the synchronization service.
+## About how data used
+* Setting data are sent by the synchronization service provided by the browser.
+* History data is out of the synchronization service.
+* When click a link or execute wiktionary linkage, it sends basic information for internet like IP address and the text selected. HTTP REFER (an information what website come from) is excluded.
+* As needed download favicon images and save it.
+* Any other data is not collected and sent.
 
 ## Delivery information such as release information
 https://twitter.com/SearchDictionar

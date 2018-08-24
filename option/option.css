@@ -25,7 +25,7 @@ ol>li {
 	list-style: decimal outside;
 }
 ul>li {
-	list-style: decimal outside;
+	list-style: disc outside;
 }
 aside {
 	background-color: WhiteSmoke;
@@ -117,20 +117,21 @@ a:hover {
 	font-size: 16px;
 	padding-left: 10px;
 }
-#nav div{
+#nav .navi {
 	color: black;
 	border-radius: 5px;
 	background-color: white;
 	margin: 3px;
+	padding: 0.5em;
 }
-#nav div:hover {
+#nav .navi:hover {
 	background-color: Gainsboro;
 	cursor: pointer;
 }
-#nav div.active {
+#nav .navi.active {
 	color: DodgerBlue;
 }
-#nav div.active:hover {
+#nav .navi.active:hover {
 	cursor: default;
 }
 #main {

@@ -40,6 +40,7 @@ let rankingNode = document.querySelector("#ranking");
 let othersNode = document.querySelector("#others");
 let historyNode = document.querySelector("#history");
 let contactNode = document.querySelector("#contact");
+let donationNode = document.querySelector("#donation");
 let containerNode = document.querySelector("#container");
 let inputPrototypeNode = document.querySelector("#inputPrototype");
 let holdedNode;
@@ -69,15 +70,16 @@ function initI18n(){
 		{ "selector": ".usageCheck", "property": "innerText", "key": "htmlUsageCheck" },
 		{ "selector": ".usageHist", "property": "innerText", "key": "htmlUsageHist" },
 		{ "selector": ".usageDelete", "property": "innerText", "key": "htmlUsageDelete" },
-		{ "selector": ".showForm", "property": "innerText", "key": "htmlFormName" },
-		{ "selector": ".showHistory", "property": "innerText", "key": "htmlHistoryName" },
-		{ "selector": ".showRanking", "property": "innerText", "key": "htmlRankingName" },
-		{ "selector": ".showOthers", "property": "innerText", "key": "htmlOthersName" },
-		{ "selector": ".showContact", "property": "innerText", "key": "htmlContactName" },
+
+		{ "selector": ".navi[data-navi-name=form]", "property": "innerText", "key": "htmlFormName" },
+		{ "selector": ".navi[data-navi-name=history]", "property": "innerText", "key": "htmlHistoryName" },
+		{ "selector": ".navi[data-navi-name=ranking]", "property": "innerText", "key": "htmlRankingName" },
+		{ "selector": ".navi[data-navi-name=others]", "property": "innerText", "key": "htmlOthersName" },
+		{ "selector": ".navi[data-navi-name=contact]", "property": "innerText", "key": "htmlContactName" },
+		{ "selector": ".navi[data-navi-name=donation]", "property": "innerText", "key": "htmlDonationName" },
+
 		{ "selector": ".addFromPreset", "property": "innerText", "key": "htmlAddFromPreset" },
 		{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
-		{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
-		{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" },
 		{ "selector": ".filterText", "property": "innerText", "key": "htmlFilterText" },
 		{ "selector": "#languageFilter option[value=\"\"]", "property": "innerText", "key": "htmlLanguageAll" },
 		{ "selector": "#languageFilter option[value=en]", "property": "innerText", "key": "htmlLanguageEn" },
@@ -169,25 +171,6 @@ function fileChangeBehavior(e, area){
 	resetSort();
 }
 
-function navBehavior(e){
-	let classList = e.target.classList;
-	if(classList.contains("showForm")){
-		showForm();
-	}
-	else if(classList.contains("showContact")){
-		showContact();
-	}
-	else if(classList.contains("showHistory")){
-		showHistory();
-	}
-	else if(classList.contains("showRanking")){
-		showRanking();
-	}
-	else if(classList.contains("showOthers")){
-		showOthers();
-	}
-}
-
 function formBehavior(e){
 	let classList = e.target.classList;
 	if(classList.contains("addBlank")){
@@ -214,42 +197,6 @@ function showBody(){
 	show( document.querySelector("body") );
 }
 
-function showForm(){
-	removeActive();
-	addActive("showForm");
-	hideAllPanels();
-	show(formNode);
-}
-
-function showContact(){
-	removeActive();
-	addActive("showContact");
-	hideAllPanels();
-	show(contactNode);
-}
-
-
-function showHistory(){
-	removeActive();
-	addActive("showHistory");
-	hideAllPanels();
-	show(historyNode);
-}
-
-function showRanking(){
-	removeActive();
-	addActive("showRanking");
-	hideAllPanels();
-	show(rankingNode);
-}
-
-function showOthers(){
-	removeActive();
-	addActive("showOthers");
-	hideAllPanels();
-	show(othersNode);
-}
-
 function hideAllPanels(){
 	let list = mainNode.querySelectorAll(".panel");
 	for(let i=0; i<list.length; i++){
@@ -258,13 +205,23 @@ function hideAllPanels(){
 	}
 }
 
+function navBehavior(e){
+	if(e.target.classList.contains("navi")) {
+		let id = e.target.getAttribute("data-navi-name");
+		removeActive();
+		addActive(e.target.getAttribute("data-navi-name"));
+		hideAllPanels();
+		show( document.querySelector("#"+id) );
+	}
+}
+
 function removeActive(){
 	let node = navNode.querySelector(".navi.active");
 	if( node ) node.classList.remove("active");
 }
 
-function addActive(className){
-	let node = navNode.querySelector(".navi."+className);
+function addActive(name){
+	let node = navNode.querySelector(".navi[data-navi-name=\""+name+"\"]");
 	if( node ) node.classList.add("active");
 }
 

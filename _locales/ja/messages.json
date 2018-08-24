@@ -158,7 +158,10 @@
 		"message": "表示"
 	},
 	"htmlContactName": {
-		"message": "お問い合わせ"
+		"message": "情報"
+	},
+	"htmlDonationName": {
+		"message": "寄付のお願い"
 	},
 	"htmlFormDescription": {
 		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。URLに$$1を入力すると、$$1は選択したテキストに置き換えられます。"
@@ -430,11 +433,50 @@
 	"htmlLinkListSampleTitle": {
 		"message": "リンクリストのサンプル"
 	},
-	"htmlContactText": {
-		"message": "Twitterで更新履歴を配信しております。<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>ご意見・ご感想・バグなどのお問い合わせは下記メールアドレスにて承ります。<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>"
+	"htmlRleaseNoteTitle": {
+		"message": "リリースノート"
 	},
-	"htmlMyself": {
-		"message": "フリーランス プログラマ<br>太田亮介"
+	"htmlReleaseNoteDescription1": {
+		"message": "リリースノートはGitHubに掲載しております。"
+	},
+	"htmlReleaseNoteDescription2": {
+		"message": "リリースはTwitterで告知しております。"
+	},
+	"htmlAboutDataTitle": {
+		"message": "データの取扱について"
+	},
+	"htmlAboutDataDescription1": {
+		"message": "設定内容はブラウザが提供する同期サービスで送受信されます。"
+	},
+	"htmlAboutDataDescription2": {
+		"message": "履歴データはブラウザの同期サービスの対象外です。"
+	},
+	"htmlAboutDataDescription3": {
+		"message": "リンクをクリックしたりウィクショナリー連携が起動すると、IPアドレスなどのインターネットの基本的な情報と選択したテキストが送信されます。HTTPリファラ（どのサイトから訪れたかを示す情報）は除外しています。"
+	},
+	"htmlAboutDataDescription4": {
+		"message": "必要に応じて、ファビコンをインターネットからダウンロードして保存します。"
+	},
+	"htmlAboutDataDescription5": {
+		"message": "その他の情報を収集および送信しません。"
+	},
+	"htmlContactTitle": {
+		"message": "お問い合わせ"
+	},
+	"htmlIssueDescription": {
+		"message": "バグ報告、要望、お問い合わせ等、GitHubのissuesを使用してください。書き込みは一般に公開されます。"
+	},
+	"htmlMailDescription": {
+		"message": "メールでも受け付けています。"
+	},
+	"htmlIam": {
+		"message": "フリーランス プログラマー 太田亮介"
+	},
+	"htmlLicenseTitle": {
+		"message": "ライセンス"
+	},
+	"htmlLicenseDescription": {
+		"message": "このソフトウェアはMITライセンスの下で公開されています。"
 	},
 	"htmlCheckBlankError": {
 		"message": "このフィールドは入力必須です。"

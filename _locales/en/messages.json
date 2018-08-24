@@ -158,7 +158,10 @@
 		"message": "View"
 	},
 	"htmlContactName": {
-		"message": "Contact"
+		"message": "Info"
+	},
+	"htmlDonationName": {
+		"message": "Donate"
 	},
 	"htmlFormDescription": {
 		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text selected."
@@ -430,11 +433,50 @@
 	"htmlLinkListSampleTitle": {
 		"message": "Link list sample"
 	},
-	"htmlContactText": {
-		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>"
+	"htmlRleaseNoteTitle": {
+		"message": "リリースノート"
 	},
-	"htmlMyself": {
-		"message": "Freelance programmer<br>Tokyo Japan<br>Ryosuke Ohta"
+	"htmlReleaseNoteDescription1": {
+		"message": "リリースノートはGitHubに掲載しております。"
+	},
+	"htmlReleaseNoteDescription2": {
+		"message": "リリースはTwitterで告知しております。"
+	},
+	"htmlAboutDataTitle": {
+		"message": "データの取扱について"
+	},
+	"htmlAboutDataDescription1": {
+		"message": "設定内容はブラウザが提供する同期サービスで送受信されます。"
+	},
+	"htmlAboutDataDescription2": {
+		"message": "履歴データはブラウザの同期サービスの対象外です。"
+	},
+	"htmlAboutDataDescription3": {
+		"message": "リンクをクリックしたりウィクショナリー連携が起動すると、IPアドレスなどのインターネットの基本的な情報と選択したテキストが送信されます。HTTPリファラ（どのサイトから訪れたかを示す情報）は除外しています。"
+	},
+	"htmlAboutDataDescription4": {
+		"message": "必要に応じて、ファビコンをインターネットからダウンロードして保存します。"
+	},
+	"htmlAboutDataDescription5": {
+		"message": "その他の情報を収集および送信しません。"
+	},
+	"htmlContactTitle": {
+		"message": "お問い合わせ"
+	},
+	"htmlIssueDescription": {
+		"message": "バグ報告、要望、お問い合わせ等は、GitHubのissuesを使用してください。書き込みは一般に公開されます。"
+	},
+	"htmlMailDescription": {
+		"message": "メールでも受け付けています。"
+	},
+	"htmlIam": {
+		"message": "フリーランス プログラマー 太田亮介"
+	},
+	"htmlLicenseTitle": {
+		"message": "ライセンス"
+	},
+	"htmlLicenseDescription": {
+		"message": "このソフトウェアはMITライセンスの下で公開されています。"
 	},
 	"htmlCheckBlankError": {
 		"message": "Please fill out this fields."
