@@ -6,11 +6,11 @@
 body {
 	background-color: white;
 	font-size: 16px;
-	font-family: Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+	font-family: Verdana, Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
 }
 .sentence {
 	font-size: 1em;
-	font-family: Georgia, "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "メイリオ", Meiryo, serif;
+	font-family: Georgia, "Times New Roman", "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "メイリオ", Meiryo, serif;
 }
 aside.sentence {
 	font-size: 0.9em;
@@ -115,6 +115,7 @@ a:hover {
 }
 #header h1 {
 	font-size: 16px;
+	font-weight: normal;
 	padding-left: 10px;
 }
 #nav .navi {
@@ -324,6 +325,9 @@ nav .groupLine {
 .label,.url {
 	width: 95%;
 }
+.fieldController {
+	white-space: nowrap;
+}
 @media (min-width: 802px) {
 	.gridWrapper {
 		grid-template-columns: 1fr 1fr;
@@ -358,9 +362,12 @@ nav .groupLine {
 	cursor: grab;
 }
 .holdImage {
-	vertical-align: middle;
+	vertical-align: text-top;
 	width: 13px;
 	height: 16px;
+}
+.groupLine .holdImage {
+	vertical-align: baseline;
 }
 .hold {
 	opacity:0.5;

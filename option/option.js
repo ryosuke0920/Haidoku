@@ -71,12 +71,12 @@ function initI18n(){
 		{ "selector": ".usageHist", "property": "innerText", "key": "htmlUsageHist" },
 		{ "selector": ".usageDelete", "property": "innerText", "key": "htmlUsageDelete" },
 
-		{ "selector": ".navi[data-navi-name=form]", "property": "innerText", "key": "htmlFormName" },
-		{ "selector": ".navi[data-navi-name=history]", "property": "innerText", "key": "htmlHistoryName" },
-		{ "selector": ".navi[data-navi-name=ranking]", "property": "innerText", "key": "htmlRankingName" },
-		{ "selector": ".navi[data-navi-name=others]", "property": "innerText", "key": "htmlOthersName" },
-		{ "selector": ".navi[data-navi-name=contact]", "property": "innerText", "key": "htmlContactName" },
-		{ "selector": ".navi[data-navi-name=donation]", "property": "innerText", "key": "htmlDonationName" },
+		{ "selector": ".navi[data-navi-name=\"form\"]", "property": "innerText", "key": "htmlFormName" },
+		{ "selector": ".navi[data-navi-name=\"history\"]", "property": "innerText", "key": "htmlHistoryName" },
+		{ "selector": ".navi[data-navi-name=\"ranking\"]", "property": "innerText", "key": "htmlRankingName" },
+		{ "selector": ".navi[data-navi-name=\"others\"]", "property": "innerText", "key": "htmlOthersName" },
+		{ "selector": ".navi[data-navi-name=\"contact\"]", "property": "innerText", "key": "htmlContactName" },
+		{ "selector": ".navi[data-navi-name=\"donation\"]", "property": "innerText", "key": "htmlDonationName" },
 
 		{ "selector": ".addFromPreset", "property": "innerText", "key": "htmlAddFromPreset" },
 		{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
@@ -88,7 +88,23 @@ function initI18n(){
 		{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
 		{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
 		{ "selector": ".presetSearchText", "property": "placeholder", "key": "htmlPresetSearchKeyword" },
-		{ "selector": ".presetClearSearchButton", "property": "innerText", "key": "htmlPresetClearSearchButton" }
+		{ "selector": ".presetClearSearchButton", "property": "innerText", "key": "htmlPresetClearSearchButton" },
+
+		{ "selector": ".releaseNoteTitle", "property": "innerText", "key": "htmlRleaseNoteTitle" },
+		{ "selector": ".releaseNoteDescription1", "property": "innerText", "key": "htmlReleaseNoteDescription1" },
+		{ "selector": ".releaseNoteDescription2", "property": "innerText", "key": "htmlReleaseNoteDescription2" },
+		{ "selector": ".aboutDataTitle", "property": "innerText", "key": "htmlAboutDataTitle" },
+		{ "selector": ".aboutDataDescription1", "property": "innerText", "key": "htmlAboutDataDescription1" },
+		{ "selector": ".aboutDataDescription2", "property": "innerText", "key": "htmlAboutDataDescription2" },
+		{ "selector": ".aboutDataDescription3", "property": "innerText", "key": "htmlAboutDataDescription3" },
+		{ "selector": ".aboutDataDescription4", "property": "innerText", "key": "htmlAboutDataDescription4" },
+		{ "selector": ".aboutDataDescription5", "property": "innerText", "key": "htmlAboutDataDescription5" },
+		{ "selector": ".contactTitle", "property": "innerText", "key": "htmlContactTitle" },
+		{ "selector": ".issueDescription", "property": "innerText", "key": "htmlIssueDescription" },
+		{ "selector": ".mailDescription", "property": "innerText", "key": "htmlMailDescription" },
+		{ "selector": ".iam", "property": "innerText", "key": "htmlIam" },
+		{ "selector": ".licenseTitle", "property": "innerText", "key": "htmlLicenseTitle" },
+		{ "selector": ".licenseDescription", "property": "innerText", "key": "htmlLicenseDescription" }
 	];
 	setI18n(list);
 }

@@ -248,7 +248,7 @@
 		"message": "Old->New"
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "Delete checked history"
+		"message": "Delete history checked"
 	},
 	"htmlHistoryAllDelete": {
 		"message": "Delete all history"
