@@ -104,7 +104,8 @@ function initI18n(){
 		{ "selector": ".mailDescription", "property": "innerText", "key": "htmlMailDescription" },
 		{ "selector": ".iam", "property": "innerText", "key": "htmlIam" },
 		{ "selector": ".licenseTitle", "property": "innerText", "key": "htmlLicenseTitle" },
-		{ "selector": ".licenseDescription", "property": "innerText", "key": "htmlLicenseDescription" }
+		{ "selector": ".licenseDescription", "property": "innerText", "key": "htmlLicenseDescription" },
+		{ "selector": ".donationTitle", "property": "innerText", "key": "htmlDonationName" }
 	];
 	setI18n(list);
 }
