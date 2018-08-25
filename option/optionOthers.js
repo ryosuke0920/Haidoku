@@ -389,10 +389,10 @@
 			let item = list[i];
 			if(!item.c) continue;
 			let clone = document.importNode(prototype.content, true);
-			let li = clone.querySelector("li");
-			li.setAttribute("title",item.l);
-			li.querySelector("."+CSS_PREFIX+"-label").innerText = item.l;
-			let img = li.querySelector("."+CSS_PREFIX+"-favicon");
+			let node = clone.querySelector("li");
+			node.setAttribute("title",item.l);
+			node.querySelector("."+CSS_PREFIX+"-label").innerText = item.l;
+			let img = node.querySelector("."+CSS_PREFIX+"-favicon");
 			if( faviconCache.hasOwnProperty(item.u) ){
 				img.setAttribute("src", faviconCache[item.u]);
 			}

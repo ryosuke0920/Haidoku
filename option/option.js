@@ -53,7 +53,6 @@ let presetNode = document.querySelector("#preset");
 let tableNode = document.querySelector("#table");
 let cellPrototypeNode = document.querySelector("#cellPrototype");
 let presetSearchNode = document.querySelector("#presetSearchText");
-let language;
 let languageJson = {};
 let presetSearchQueue = [];
 
@@ -111,7 +110,7 @@ function initI18n(){
 }
 
 function initNode(){
-	language = ponyfill.i18n.getUILanguage();
+	let language = ponyfill.i18n.getUILanguage();
 	let matcher = language.match("^(.+?)-");
 	if ( matcher ) language = matcher[1];
 	for(let i=0; i<PRESET_OPTION_LIST.length; i++){
@@ -621,16 +620,16 @@ function languageFilterBehavior(e){
 	presetSearch(presetSearchNode.value);
 }
 
-function languageFilter(language){
+function languageFilter(str){
 	let list = tableNode.querySelectorAll(".checkWrapper");
 	for(let i=0; i<list.length; i++){
 		let node = list[i];
 		show(node);
 	}
-	if ( !language || !languageJson.hasOwnProperty(language) ) {
+	if ( !str || !languageJson.hasOwnProperty(str) ) {
 		return;
 	}
-	list = tableNode.querySelectorAll(".checkWrapper:not([data-language~=\""+language+"\"])");
+	list = tableNode.querySelectorAll(".checkWrapper:not([data-language~=\""+str+"\"])");
 	for(let i=0; i<list.length; i++){
 		let node = list[i];
 		hide(node);
