@@ -47,7 +47,7 @@ input[type="text"]:focus, input[type="url"]:focus, input[type="number"]:focus, i
 	border-color: rgb(165, 200, 238);
 	box-shadow: rgba(165, 200, 238, 0.32) 0px 3px 3px 0px, rgba(165, 200, 238, 0.32) 0px 0px 0px 2px;
 }
-button, select {
+button, .select {
 	min-height: 26px;
 	padding: 3px 0.5em;
 	border: solid 1px WhiteSmoke;
@@ -56,31 +56,31 @@ button, select {
 	background: linear-gradient(to bottom, #FFFFFF, #EEE);
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
-button:hover,select:hover {
+button:hover,.select:hover {
 	background: linear-gradient(to bottom, #EEEEEE, #DDD);
 }
-select {
+.select {
 	cursor: pointer;
 }
 option {
 	background-color: white;
 }
-table {
+.table {
 	width: 100%;
 	border-collapse: collapse;
 	border: 2px solid #ccc;
 	margin-bottom: 1em;
 }
-table thead th {
+.table thead th {
 	background-color: WhiteSmoke;
 	color: black;
 	font-weight:bold;
 	text-align: left;
 }
-table tbody tr:nth-child(2n) {
+.table tbody tr:nth-child(2n) {
 	background-color: WhiteSmoke;
 }
-table thead th, table tbody td {
+.table thead th, .table tbody td {
 	padding: 2px 5px;
 	border: 2px solid #ccc;
 }

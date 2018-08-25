@@ -69,7 +69,7 @@
 						&nbsp;
 						<span class="groupLine">
 							<span class="filterText">htmlFilterText</span>&nbsp;
-							<select id="languageFilter">
+							<select id="languageFilter" class="select">
 								<option value="">htmlLanguageAll</option>
 								<option value="en">htmlLanguageEn</option>
 								<option value="ja">htmlLanguageJa</option>
@@ -103,7 +103,7 @@
 				<span class="groupLine">
 					<button type="button" class="historyUpdateButton">htmlHistoryUpdateButton</button>
 					&nbsp;
-					<select class="historyOrder">
+					<select class="select historyOrder">
 						<option class="historyOrderDesc" value="prev">htmlHistoryOrderDesc</option>
 						<option class="historyOrderAsc" value="next">htmlHistoryOrderAsc</option>
 					</select>
@@ -139,7 +139,7 @@
 					<button type="button" class="historyDeleteButton">htmlHistoryCheckDelete</button>&nbsp;
 					<button type="button" class="historyDeleteAllButton">htmlHistoryAllDelete</button>
 				</p>
-				<table id="historyTable">
+				<table id="historyTable" class="table">
 					<thead>
 						<tr>
 							<th class="headHistoryID"><input type="checkbox" class="historyCheckAllRows"></th>
@@ -183,7 +183,7 @@
 			<nav class="controller">
 				<span class="groupLine">
 					<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>&nbsp;
-					<select class="rankingDateRange">
+					<select class="select rankingDateRange">
 						<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
 						<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
 						<option value="6" class="rankingSixMonth">htmlRankingSixMonth</option>
@@ -203,7 +203,7 @@
 			</nav>
 			<div class="desk">
 				<p class="sentence rankingDescription">htmlRankingDescription</p>
-				<table id="rankingTable">
+				<table id="rankingTable" class="table">
 					<thead>
 						<tr>
 							<th class="headRankingText">htmlRankingText</th>
@@ -296,7 +296,7 @@
 						<p class="sentence serviceCodeDescription">htmlServiceCodeDescription</p>
 						<p>
 							<span class="inputWrapper">
-								<select class="serviceCodeSelect">
+								<select class="select serviceCodeSelect">
 									<option class="serviceCodeNone" value="-">htmlServiceCodeNone</option>
 									<option class="serviceCodeEn" value="en">htmlServiceCodeEn</option>
 									<option class="serviceCodeJa" value="ja">htmlServiceCodeJa</option>
@@ -391,7 +391,7 @@
 					<nav>
 						<span class="groupLine">
 							<span class="filterText">htmlFilterText</span>&nbsp;
-							<select class="apiLangPrefixSelect"></select>
+							<select class="select apiLangPrefixSelect"></select>
 						</span>
 					</nav>
 					<div id="languageFilterSelectPaneBody">
@@ -474,10 +474,28 @@
 		</div>
 		<div id="donation" class="panel hide">
 			<h1 class="donationTitle">htmlDonationName</h1>
-			<p>
-				継続的にメンテナンスを実施するために収入を必要としており、ここでは寄付を募集しております。
-				当方からの領収書の発行はございません。寄付金控除もございません。
+			<p class="sentence">
+				継続的なメンテナンスを実施するために収入を必要としており、寄付を募集しております。ご協力頂けますと幸いです。
+				当方からの領収書の発行はございませんので、PayPaから取得なさってください。寄付金控除はございません。
 			</p>
+			<div>
+				<form action="https://www.paypal.com/cgi-bin/webscr" method="get" target="_blank">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="X3H5MV9874KXA">
+					<table>
+					<tr><td><input type="hidden" name="on0" value="金額">金額</td></tr><tr><td><select name="os0">
+						<option value="A">A ¥300 JPY</option>
+						<option value="B">B ¥1,000 JPY</option>
+						<option value="C">C ¥3,000 JPY</option>
+						<option value="D">D ¥5,000 JPY</option>
+						<option value="E">E ¥10,000 JPY</option>
+					</select> </td></tr>
+					</table>
+					<input type="hidden" name="currency_code" value="JPY">
+					<input type="image" src="https://www.paypalobjects.com/ja_JP/JP/i/btn/btn_paynowCC_LG.gif" border="0" name="submit" alt="PayPal - オンラインでより安全・簡単にお支払い">
+					<img alt="" border="0" src="https://www.paypalobjects.com/ja_JP/i/scr/pixel.gif" width="1" height="1">
+				</form>
+			</div>
 		</div>
 	</main>
 	<div id="menu">
