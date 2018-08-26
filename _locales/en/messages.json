@@ -3,19 +3,19 @@
 		"message": "Search Dictionary Faster"
 	},
 	"extensionDescription": {
-		"message": "This is a tool to eliminate troublesome copying and pasting to search efficiently and quickly."
+		"message": "Support to search words"
 	},
 	"extensionOptionAutoView": {
-		"message": "Automatically display link list"
+		"message": "Automatically display"
 	},
 	"extensionOptionManualView": {
-		"message": "Manually display link list"
+		"message": "Manually display"
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "Display link list with shift key"
+		"message": "Display with shift key"
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "Display link list with ctrl key"
+		"message": "Display with ctrl key"
 	},
 	"extensionOptionName": {
 		"message": "Options"
@@ -170,7 +170,7 @@
 		"message": "Sort."
 	},
 	"htmlUsageCheck" : {
-		"message": "Display in link list."
+		"message": "Display in Widget."
 	},
 	"htmlUsageHist" : {
 		"message": "Save history."
@@ -179,7 +179,7 @@
 		"message": "Delete."
 	},
 	"htmlPresetDescription": {
-		"message": "Select some sites and press \"Add\" button. Then it's added to link list."
+		"message": "Select some sites and press \"Add\" button. Then it's added to Widget."
 	},
 	"htmlAddFromPreset": {
 		"message": "Add search site"
@@ -323,7 +323,7 @@
 		"message": "Result was 0."
 	},
 	"htmlLinkListStyleTitle": {
-		"message": "Link list style"
+		"message": "Widget style"
 	},
 	"htmlLinkListStyleClassic": {
 		"message": "Classic"
@@ -332,7 +332,7 @@
 		"message": "Dark"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "Link list display action"
+		"message": "Widget display action"
 	},
 	"htmlLinkListActionNormal": {
 		"message": "No icon"
@@ -344,10 +344,10 @@
 		"message": "Mouse click"
 	},
 	"htmlLinkListLayoutTitle": {
-		"message": "Link list layout"
+		"message": "Widget layout"
 	},
 	"htmlLinkListLayoutPatternTitle":{
-		"message": "Link list layout pattern"
+		"message": "Widget layout pattern"
 	},
 	"htmlFaviconDisplayTitle":{
 		"message": "Display content of link"
@@ -368,7 +368,7 @@
 		"message": "Vertical"
 	},
 	"htmlLinkListSeparatorTitle":{
-		"message": "Separator between Link list and Wiktionary"
+		"message": "Separator between links and Wiktionary"
 	},
 	"htmlLinkListSeparatorHorizontal":{
 		"message": "Horizontal"
@@ -431,7 +431,7 @@
 		"message": "Enable"
 	},
 	"htmlLinkListSampleTitle": {
-		"message": "Link list sample"
+		"message": "Widget sample"
 	},
 	"htmlRleaseNoteTitle": {
 		"message": "Release note"

@@ -6,26 +6,23 @@ https://addons.mozilla.org/en-US/firefox/addon/lesslaborgotodictionary/
 https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
 
 ## Summary
-When I read a foreign language web site, it's boring to search  word I don't know. I made this tool to search smoothly. Select text, it's displayed that the meaning and some links to search the text. There is also a function to support word review.
+When you read a foreign language website, this supports to search words. When you select a word, Widget is displayed that show the meaning of the word and show some links to search the word. There is also a function to save history and support word review.
 
 ## Description
-### Link list
-When you select a text, Link list is displayed. Link list is list of your favorite dictionary sites. If you click the link, you can move to that site immediately and view the search results, so there is no work of copying or opening the site with new tabs. When ESC key is pressed or mouse is clicked outside the area of Link list, Link list is closed. You can change Link list to small icon button, also change display mode to automatic or manual.
+### Widget
+When you select some words on the website, Widget is displayed. When ESC key is pressed or mouse is clicked outside the area of Widget, it closes Widget. On the setting screen, you can change small icon button instead of Widget, and also change Widget layout. On context menu(right click), you can change display way either automatic or manual.
 
-### Context menu(right click)
-Link list is also displayed in the context menu. So you can use without changing your experience. And you can change display mode to automatic or manual in here.
+### Links
+When click a link in Widget, it opens the website to search the word selected. You can customize these links to your favorite website. The links are also displayed on context menu(right click).
 
 ### Wiktionary linkage
-Wiktionary is a dictionary site made by volunteer. When you select a text, The text is searched by Wiktinary and the description is displayed.
+Wiktionary is a dictionary website made by volunteers. When you select some word, it's sent to Wiktinary for search and the description is displayed.
 
-### Make Link list
-On the Setting screen you have to make your Link list. Generaly you have to find out URLs and search parameters, but I already found out major site URLs and search parameters. It's prepared in this tool. So you can use this tool immediately.
+### History, Find weak point
+On the setting screen you can view history. The word with a high number of searches is that used frequently, and you don't remember well. To find the word efficiently, there is a function(Find weak point) to aggregate search counts.
 
-### History
-On the Setting screen you can watch history. A word with a high number of searches is that your understanding is not sufficient although it is used frequently. You should study it intensively. To find the word efficiently, a function is built in to aggregate search counts.
-
-### About preset URLs
-URLs and search parameters of the following sites are prepared. If these specifications are changed by the site administrator, we need to change too. If you want to add some URLs, please email me. There may be people who need it too.
+### About link edit
+Generally you have to find out URLs and search parameters, but I already found out major website URLs and search parameters. So immediately you can use it, if you are not familiar with internet technology. If these specifications are changed by the website administrator, we also need to change. If you want to add some URLs, please request me. There is probably another people who need it too.
 
 * Google (Image, Videos, Translate)
 * Bing (Image, Videos)
@@ -54,8 +51,11 @@ https://twitter.com/SearchDictionar
 
 ## About how data used.
 Setting data is sent by the synchronization service provided by the browser. History data is out of the synchronization service.  
+
 When click a link or execute wiktionary linkage, it sends basic internet information (IP address, Cookie, etc) and the text selected. HTTP REFER (Information on which site it came from) is excluded.  
+
 As needed download favicon images and save it.  
+
 Any other data are not collected and not sent.  
 
 ## Contact

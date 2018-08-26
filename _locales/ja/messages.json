@@ -3,13 +3,13 @@
 		"message": "手間なし 辞書検索"
 	},
 	"extensionDescription": {
-		"message": "面倒なコピペの手間をなくし、効率よく素早く検索するツールです。"
+		"message": "単語検索を支援します。"
 	},
 	"extensionOptionAutoView": {
-		"message": "自動リンクリスト表示"
+		"message": "自動表示"
 	},
 	"extensionOptionManualView": {
-		"message": "手動リンクリスト表示"
+		"message": "手動表示"
 	},
 	"extensionOptionManualViewByShiftKey": {
 		"message": "shiftボタンで表示"
@@ -170,7 +170,7 @@
 		"message": "並び順を変更する。"
 	},
 	"htmlUsageCheck" : {
-		"message": "リンクリストに表示する。"
+		"message": "ウィジェットに表示する。"
 	},
 	"htmlUsageHist" : {
 		"message": "履歴を保存する。"
@@ -179,7 +179,7 @@
 		"message": "削除する。"
 	},
 	"htmlPresetDescription": {
-		"message": "サイトを選択してから「追加」ボタンを押すとリンクリストに追加されます。"
+		"message": "サイトを選択してから「追加」ボタンを押すと追加されます。"
 	},
 	"htmlAddFromPreset": {
 		"message": "検索サイト追加"
@@ -323,7 +323,7 @@
 		"message": "結果は0件でした。"
 	},
 	"htmlLinkListStyleTitle": {
-		"message": "リンクリストのスタイル"
+		"message": "ウィジェットのスタイル"
 	},
 	"htmlLinkListStyleClassic": {
 		"message": "クラシック"
@@ -332,7 +332,7 @@
 		"message": "ダーク"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "リンクリストの表示動作"
+		"message": "ウィジェットの表示方法"
 	},
 	"htmlLinkListActionNormal": {
 		"message": "アイコンなし"
@@ -344,10 +344,10 @@
 		"message": "マウスクリック"
 	},
 	"htmlLinkListLayoutTitle": {
-		"message": "リンクリストのレイアウト"
+		"message": "ウィジェットのレイアウト"
 	},
 	"htmlLinkListLayoutPatternTitle":{
-		"message": "リンクリストのレイアウトパターン"
+		"message": "ウィジェットのレイアウトパターン"
 	},
 	"htmlFaviconDisplayTitle":{
 		"message": "リンクの表示内容"
@@ -368,7 +368,7 @@
 		"message": "垂直方向に並べる"
 	},
 	"htmlLinkListSeparatorTitle":{
-		"message": "リンクリストとウィクショナリーの区切り"
+		"message": "リンクとウィクショナリーの区切り"
 	},
 	"htmlLinkListSeparatorHorizontal":{
 		"message": "水平に区切る"
@@ -386,7 +386,7 @@
 		"message": "ウィクショナリーの選択"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "連携するウィクショナリーを選択してください。サイトによって表示される言語が異なります。情報の質や規模も異なります。変更すると\"言語フィルター\"も追加設定が必要になります。"
+		"message": "連携するウィクショナリーを選択してください。サイトによって表示される言語が異なります。情報の質や規模も異なります。変更すると\"言語フィルター\"も追加設定が必要になります。無効を選択すると表示領域が非表示になります。"
 	},
 	"htmlServiceCodeNone": {
 		"message": "無効にする"
@@ -431,7 +431,7 @@
 		"message": "有効にする"
 	},
 	"htmlLinkListSampleTitle": {
-		"message": "リンクリストのサンプル"
+		"message": "ウィジェットのサンプル"
 	},
 	"htmlRleaseNoteTitle": {
 		"message": "リリースノート"
@@ -461,7 +461,7 @@
 		"message": "お問い合わせ"
 	},
 	"htmlIssueDescription": {
-		"message": "バグ報告、要望、お問い合わせ等、GitHubのissuesを使用してください。書き込みは一般に公開されます。"
+		"message": "バグ報告、要望、お問い合わせ等はGitHubのIssuesを使用してください。書き込みは一般に公開されます。"
 	},
 	"htmlMailDescription": {
 		"message": "メールでも受け付けています。"
