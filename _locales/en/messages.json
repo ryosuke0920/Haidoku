@@ -467,13 +467,16 @@
 		"message": "Also receive by email."
 	},
 	"htmlIam": {
-		"message": "Freelance programmer, Ryosuke Ohta"
+		"message": "Freelance programmer, Ryosuke Ohta (太田亮介)"
 	},
 	"htmlLicenseTitle": {
 		"message": "License"
 	},
 	"htmlLicenseDescription": {
 		"message": "This software is released under the MIT License."
+	},
+	"htmlDonationDescription": {
+		"message": "I need income to action sustainably, so I'm looking for donation. I appreciate your cooperation. There is no issue of receipt. Please print the details with PayPal and replace it with a receipt. There is no tax deduction. Personal information obtained through PayPal will not be transffered, sold, or disclosed to third parties, but it's not based on laws and ordinances.\nSincerely,\n"
 	},
 	"htmlCheckBlankError": {
 		"message": "Please fill out this fields."

@@ -104,7 +104,8 @@ function initI18n(){
 		{ "selector": ".iam", "property": "innerText", "key": "htmlIam" },
 		{ "selector": ".licenseTitle", "property": "innerText", "key": "htmlLicenseTitle" },
 		{ "selector": ".licenseDescription", "property": "innerText", "key": "htmlLicenseDescription" },
-		{ "selector": ".donationTitle", "property": "innerText", "key": "htmlDonationName" }
+		{ "selector": ".donationTitle", "property": "innerText", "key": "htmlDonationName" },
+		{ "selector": ".donationDescription", "property": "innerText", "key": "htmlDonationDescription" }
 	];
 	setI18n(list);
 }

@@ -15,7 +15,8 @@ body {
 aside.sentence {
 	font-size: 0.9em;
 }
-p {
+p, .paragraph {
+	white-space: normal;
 	margin-bottom: 1em;
 }
 ol, ul {
