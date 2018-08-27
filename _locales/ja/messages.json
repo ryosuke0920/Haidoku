@@ -160,9 +160,6 @@
 	"htmlContactName": {
 		"message": "情報"
 	},
-	"htmlDonationName": {
-		"message": "寄付のお願い"
-	},
 	"htmlFormDescription": {
 		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。URLに$$1を入力すると、$$1は選択したテキストに置き換えられます。"
 	},
@@ -471,9 +468,6 @@
 	},
 	"htmlLicenseDescription": {
 		"message": "このソフトウェアはMITライセンスの下で公開されています。"
-	},
-	"htmlDonationDescription": {
-		"message": "継続的なメンテナンスを実施するために収入を必要としており、寄付を募集しております。ご協力頂けますと幸いです。当方からの領収書の発行はございません。PayPalで詳細を印刷して領収書に代えてください。寄付金控除はございません。PayPalを通じて得た個人情報は、譲渡、売却、第三者への開示などは行いません。ただし、法令に基づく場合を除きます。\n"
 	},
 	"htmlCheckBlankError": {
 		"message": "このフィールドは入力必須です。"
