@@ -331,7 +331,7 @@ nav .groupLine {
 .fieldController {
 	white-space: nowrap;
 }
-@media (min-width: 802px) {
+@media (min-width: 994px) {
 	.gridWrapper {
 		grid-template-columns: 1fr 1fr;
 	}
@@ -340,7 +340,7 @@ nav .groupLine {
 		grid-column-end: 3;
 	}
 }
-@media (min-width: 1094px) {
+@media (min-width: 1194px) {
 	.gridWrapper {
 		grid-template-columns: 100px 1fr 1fr;
 	}
@@ -403,17 +403,17 @@ nav .groupLine {
 	padding:0.5em;
 	cursor: pointer;
 }
-@media (min-width: 902px) {
+@media (min-width: 1194px) {
 	#table {
 		grid-template-columns: 1fr 1fr;
 	}
 }
-@media (min-width: 1194px) {
+@media (min-width: 1572px) {
 	#table {
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 }
-@media (min-width: 1472px) {
+@media (min-width: 2050px) {
 	#table {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
