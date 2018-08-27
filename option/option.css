@@ -178,14 +178,18 @@ a:hover {
 	background-color: white;
 	border-radius: 5px;
 	min-width: 680px;
+	padding: 0.5em;
 }
-.panelComponent .panelBody nav {
+.panelComponent .panelBody .panelNavi {
 	padding: 0.5em;
 	border-radius: 5px;
 	background-color: #404040;
 	margin-bottom: 1em;
 	white-space: nowrap;
+	position: sticky;
+	top: -2em;
 }
+
 .desk {
 	margin-top: 3em;
 }
@@ -390,7 +394,6 @@ nav .groupLine {
 }
 
 /* preset menu */
-
 #languageFilter {
 	width: 8em;
 }
@@ -510,7 +513,7 @@ nav .groupLine {
 }
 #languageSelectList {
 	position: sticky;
-	top: 0px;
+	top: 3em;
 }
 #languageFileterComponent {
 	position: relative;
