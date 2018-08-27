@@ -40,7 +40,7 @@ Generally you have to find out URLs and search parameters, but I already found o
 * You Tube, Dailymotion
 * Facebook, Twitter
 
-etc. Total 97 URLs.
+etc. Total 103 URLs.
 
 ## Release note
 Release note is posted on GitHub.  

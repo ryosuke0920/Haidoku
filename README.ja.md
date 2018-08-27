@@ -40,7 +40,7 @@ webサイト上でテキストを選択するとウィジェットが表示さ�
 * You Tube, Dailymotion
 * Facebook, Twitter
 
-等。計97URL。
+等。計103URL。
 
 ## リースノート
 リリースノートはGitHubに掲載しております。  
