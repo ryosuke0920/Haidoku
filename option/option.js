@@ -40,7 +40,6 @@ let rankingNode = document.querySelector("#ranking");
 let othersNode = document.querySelector("#others");
 let historyNode = document.querySelector("#history");
 let contactNode = document.querySelector("#contact");
-let donationNode = document.querySelector("#donation");
 let containerNode = document.querySelector("#container");
 let inputPrototypeNode = document.querySelector("#inputPrototype");
 let holdedNode;
@@ -75,7 +74,6 @@ function initI18n(){
 		{ "selector": ".navi[data-navi-name=\"ranking\"]", "property": "innerText", "key": "htmlRankingName" },
 		{ "selector": ".navi[data-navi-name=\"others\"]", "property": "innerText", "key": "htmlOthersName" },
 		{ "selector": ".navi[data-navi-name=\"contact\"]", "property": "innerText", "key": "htmlContactName" },
-		{ "selector": ".navi[data-navi-name=\"donation\"]", "property": "innerText", "key": "htmlDonationName" },
 
 		{ "selector": ".addFromPreset", "property": "innerText", "key": "htmlAddFromPreset" },
 		{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
@@ -102,8 +100,6 @@ function initI18n(){
 		{ "selector": ".iam", "property": "innerText", "key": "htmlIam" },
 		{ "selector": ".licenseTitle", "property": "innerText", "key": "htmlLicenseTitle" },
 		{ "selector": ".licenseDescription", "property": "innerText", "key": "htmlLicenseDescription" },
-		{ "selector": ".donationTitle", "property": "innerText", "key": "htmlDonationName" },
-		{ "selector": ".donationDescription", "property": "innerText", "key": "htmlDonationDescription" }
 	];
 	setI18n(list);
 }
