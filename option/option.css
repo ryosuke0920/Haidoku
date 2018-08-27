@@ -2,12 +2,21 @@
 * {
 	margin: 0;
 	padding: 0;
-	font: 16px sans-serif;
 }
 body {
 	background-color: white;
+	font-size: 16px;
+	font-family: Verdana, Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
 }
-p {
+.sentence {
+	font-size: 1em;
+	font-family: Georgia, "Times New Roman", "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "メイリオ", Meiryo, serif;
+}
+aside.sentence {
+	font-size: 0.9em;
+}
+p, .paragraph {
+	white-space: normal;
 	margin-bottom: 1em;
 }
 ol, ul {
@@ -17,55 +26,73 @@ ol>li {
 	list-style: decimal outside;
 }
 ul>li {
-	list-style: decimal outside;
+	list-style: disc outside;
 }
 aside {
-	font-size: 0.8em;
 	background-color: WhiteSmoke;
 	padding: 0.2em;
 }
-input[type="text"], input[type="url"], input[type="number"], input[type="date"],
-#preset .checkWrapper, .field, aside {
+input[type="text"], input[type="url"], input[type="number"], input[type="date"] {
+	height: 27px;
+	font-size: 1em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+
+input[type="text"], input[type="url"], input[type="number"], input[type="date"], aside {
 	border-radius: 5px;
 	border: solid 1px #ccc;
 }
 input[type="text"]:focus, input[type="url"]:focus, input[type="number"]:focus, input[type="date"]:focus,
-#preset .checkWrapper:hover {
-	border: solid 1px rgb(165, 200, 238);
+.checkWrapper:hover {
+	border-color: rgb(165, 200, 238);
 	box-shadow: rgba(165, 200, 238, 0.32) 0px 3px 3px 0px, rgba(165, 200, 238, 0.32) 0px 0px 0px 2px;
 }
-button,select {
+button, .select {
+	min-height: 26px;
 	padding: 3px 0.5em;
-	border: none;
+	border: solid 1px WhiteSmoke;
 	border-radius: 5px;
 	cursor: pointer;
 	background: linear-gradient(to bottom, #FFFFFF, #EEE);
-	box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 2px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
-button:hover,select:hover {
+button:hover,.select:hover {
 	background: linear-gradient(to bottom, #EEEEEE, #DDD);
 }
-select {
+.select {
 	cursor: pointer;
 }
-table {
+option {
+	background-color: white;
+}
+.table {
 	width: 100%;
 	border-collapse: collapse;
-	border: 1px solid #ccc;
+	border: 2px solid #ccc;
 	margin-bottom: 1em;
 }
-table thead th {
+.table thead th {
 	background-color: WhiteSmoke;
 	color: black;
 	font-weight:bold;
 	text-align: left;
 }
-table tbody tr:nth-child(2n) {
+.table tbody tr:nth-child(2n) {
 	background-color: WhiteSmoke;
 }
-table thead th, table tbody td {
+.table thead th, .table tbody td {
 	padding: 2px 5px;
-	border: 1px solid #ccc;
+	border: 2px solid #ccc;
+}
+address{
+	font-style: normal;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
 }
 #menu {
 	position: fixed;
@@ -73,7 +100,7 @@ table thead th, table tbody td {
 	width: 160px;
 	height: 100%;
 	z-index:20;
-	border-right: solid 1px rgb(222, 226, 230);
+	border-right: solid 2px #C0C0C0;
 	box-shadow: rgba(0, 0, 0, 0.05) 0px 4px 12px 0px;
 	background-color: white;
 }
@@ -88,44 +115,46 @@ table thead th, table tbody td {
 	padding-top: 10px;
 }
 #header h1 {
+	font-size: 16px;
+	font-weight: normal;
 	padding-left: 10px;
 }
-#nav div{
+#nav .navi {
 	color: black;
 	border-radius: 5px;
 	background-color: white;
 	margin: 3px;
+	padding: 0.5em;
 }
-#nav div:hover {
+#nav .navi:hover {
 	background-color: Gainsboro;
 	cursor: pointer;
 }
-#nav div.active {
+#nav .navi.active {
 	color: DodgerBlue;
 }
-#nav div.active:hover {
+#nav .navi.active:hover {
 	cursor: default;
 }
 #main {
 	position: relative;
 	margin-left: 160px;
-	padding: 0.5em;
+	padding: 2em;
 }
 .controller {
 	position: fixed;
 	top: 0;
 	left: 160px;
 	right: 0;
-	padding-top: 1em;
-	padding-left: 0.5em;
-	height: 3em;
+	padding: 0.5em 2em;
 	white-space: nowrap;
 	background-color: rgba(0,0,0,0.7);
 	color: white;
 	z-index:20;
 	line-height: 10px;
+	min-height: 45px;
 }
-.pane {
+.panelComponent {
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -136,64 +165,89 @@ table thead th, table tbody td {
 	z-index:30;
 	padding: 2em 5em;
 	overflow: scroll;
-	min-width: 620px;
+	min-width: 680px;
 }
-.pane .removePane {
+.panelComponent .removePanelComponent {
 	position: absolute;
 	top: 0.5em;
 	right: 0.5em;
 	cursor: pointer;
 }
-.pane .paneBody {
+.panelComponent .panelBody {
 	color: black;
 	background-color: white;
 	border-radius: 5px;
+	min-width: 680px;
+	padding: 0.5em;
 }
+.panelComponent .panelBody .panelNavi {
+	padding: 0.5em;
+	border-radius: 5px;
+	background-color: #404040;
+	margin-bottom: 1em;
+	white-space: nowrap;
+	position: sticky;
+	top: -2em;
+}
+
 .desk {
-	margin-top: 4em;
+	margin-top: 3em;
 }
 .box{
 	padding: 0.5em;
 }
-.component {
+.borderComponent {
 	border-radius: 5px;
-	border: solid 1px #ccc;
+	border: solid 2px #C0C0C0;
 	padding: 0.5em;
 }
-.component aside {
+.borderComponent aside {
 	margin-bottom: 1em;
 }
-.component>h1 {
+#contact h1,
+.borderComponent>h1 {
+	font-size: 20px;
 	border-radius: 5px;
-	background-color: WhiteSmoke;
-	padding: 0.5em;
+	background-color: #404040;
+	color: white;
+	padding: 0.2em 0.5em;
 	font-weight: bold;
 	margin-bottom: 0.5em;
 }
 .subComponent {
 	margin-top: 1.5em;
-	margin-bottom: 1.5em;
+	margin-bottom: 2em;
 }
 .subComponent>h1 {
-	border-bottom: solid 1px #ccc;
+	border-bottom: solid 2px #ccc;
 	margin-bottom: 1em;
-	font-weight: bold;
+	font-size: 20px;
 }
 .hide, .cell-hide {
 	display: none;
 }
 .groupLine {
+	display: inline-block;
+	margin-right: 0.5em;
 	padding:3px;
 	background-color: WhiteSmoke;
-	border: solid 1px rgb(222, 226, 230);
+	border: solid 2px #C0C0C0;
 	border-radius: 5px;
 	color: black;
+	min-height: 20px;
 }
+.panelComponent .panelBody nav .groupLine,
 .controller .groupLine {
-	padding:10px;
+	padding:5px 10px;
+}
+.controller>button {
+	margin-top: 5px;
+}
+nav .groupLine {
+	border: none;
 }
 
-/* link list menu */
+/* edit link menu */
 
 .inputWrapper {
 	position: relative;
@@ -227,11 +281,12 @@ table thead th, table tbody td {
 	position:relative;
 	background-color: gray;
 	display: inline-block;
+	vertical-align: text-top;
 	height: 20px;
 	width: 30px;
 	border-radius: 15px;
 	cursor: pointer;
-	top: 2px;
+	font-size: 20px;
 }
 .checkboxButton .circle {
 	position: absolute;
@@ -277,7 +332,10 @@ table thead th, table tbody td {
 .label,.url {
 	width: 95%;
 }
-@media (min-width: 802px) {
+.fieldController {
+	white-space: nowrap;
+}
+@media (min-width: 994px) {
 	.gridWrapper {
 		grid-template-columns: 1fr 1fr;
 	}
@@ -286,7 +344,7 @@ table thead th, table tbody td {
 		grid-column-end: 3;
 	}
 }
-@media (min-width: 1094px) {
+@media (min-width: 1300px) {
 	.gridWrapper {
 		grid-template-columns: 100px 1fr 1fr;
 	}
@@ -300,6 +358,9 @@ table thead th, table tbody td {
 	.label,.url {
 		width: 80%;
 	}
+	.gridWrapper div.fieldController {
+		margin-top: 5px;
+	}
 }
 .textbox {
 	white-space: nowrap;
@@ -307,9 +368,13 @@ table thead th, table tbody td {
 .handle {
 	cursor: grab;
 }
-.handle img {
+.holdImage {
+	vertical-align: text-top;
 	width: 13px;
 	height: 16px;
+}
+.groupLine .holdImage {
+	vertical-align: baseline;
 }
 .hold {
 	opacity:0.5;
@@ -318,8 +383,8 @@ table thead th, table tbody td {
 }
 .removeField {
 	position: absolute;
-	top:5px;
-	right:5px;
+	top:10px;
+	right:10px;
 	width:16px;
 	height:16px;
 	cursor: pointer;
@@ -329,33 +394,29 @@ table thead th, table tbody td {
 }
 
 /* preset menu */
-
-#preset section {
-	padding:0.5em;
-	margin:0.5em;
-	border: solid 1px black;
-}
-#preset .url {
-	font-size:70%
-}
-#preset .checkWrapper {
-	cursor: pointer;
+#languageFilter {
+	width: 8em;
 }
 #table {
 	display: grid;
 	grid-template-columns: 1fr;
+	grid-gap: 1em;
 }
-@media (min-width: 802px) {
+#table .checkWrapper {
+	padding:0.5em;
+	cursor: pointer;
+}
+@media (min-width: 1194px) {
 	#table {
 		grid-template-columns: 1fr 1fr;
 	}
 }
-@media (min-width: 1094px) {
+@media (min-width: 1572px) {
 	#table {
 		grid-template-columns: 1fr 1fr 1fr;
 	}
 }
-@media (min-width: 1372px) {
+@media (min-width: 2050px) {
 	#table {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
@@ -388,6 +449,12 @@ table thead th, table tbody td {
 
 .rankingCount {
 	text-align: right;
+}
+#rankingTable th:nth-child(1), #rankingTable th:nth-child(2) {
+	width: 25%;
+}
+#rankingTable th:nth-child(3) {
+	width: auto;
 }
 
 /* others menu */
@@ -436,10 +503,6 @@ table thead th, table tbody td {
 	display: grid;
 	grid-template-columns: 1fr 300px;
 }
-#languageFilterSelectPaneBody>*:nth-child(1) {
-	grid-column-start:1 ;
-	grid-column-end: 3;
-}
 #languageFilterContainer {
 	display: inline;
 }
@@ -450,10 +513,32 @@ table thead th, table tbody td {
 }
 #languageSelectList {
 	position: sticky;
-	top: 0px;
+	top: 3em;
 }
 #languageFileterComponent {
 	position: relative;
+}
+.removeLanguageButtom {
+	vertical-align: text-bottom;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
+}
+.languageFilterBox>li {
+	border-radius: 5px;
+}
+.languageFilterBox>li:hover {
+	background-color: Gainsboro;
+}
+.languageFilterBox>li>div {
+	display:flex;
+}
+.languageLabel {
+	width: 90%;
+}
+.removeLanguageBox {
+	margin-left: 1em;
+	width: 2em;
 }
 #downloadLanguagePane {
 	position: absolute;
@@ -504,6 +589,11 @@ table thead th, table tbody td {
 		background-size: 100%;
 		opacity: 0;
 	}
+}
+
+/* contact */
+#contact>section {
+	margin-bottom: 3em;
 }
 
 /* component */

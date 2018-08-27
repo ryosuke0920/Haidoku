@@ -10,27 +10,29 @@
 </head>
 <body class="hide">
 <div>
-	<div id="main">
+	<main id="main">
 		<div id="form" class="panel">
 			<nav class="controller">
+				<button type="button" class="addFromPreset">htmlAddFromPreset</button>
+				&nbsp;
 				<button type="button" class="addBlank">htmlAddBlankFieldButtonName</button>
 			</nav>
 			<div class="desk">
+				<p class="sentence formDescription">htmlFormDescription</p>
 				<p>
-					<span class="formDescription">htmlFormDescription</span>
-				</p>
-				<p>
-					<span class="groupLine"><img src="/image/hold.svg" draggable="false"> <span class="usageOrder">htmlUsageOrder</span></span>&nbsp;
-					<span class="groupLine"><span class="check checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span></span>&nbsp;
-					<span class="groupLine"><span class="hist checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span></span>&nbsp;
+					<span class="groupLine"><img class="holdImage" src="/image/hold.svg" draggable="false"> <span class="usageOrder">htmlUsageOrder</span></span>
+					<span class="groupLine"><span class="check checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageCheck">htmlUsageCheck</span></span>
+					<span class="groupLine"><span class="hist checkboxButton" data-checked="1" style="cursor:auto;"><span class="circle"></span></span> <span class="usageHist">htmlUsageHist</span></span>
 					<span class="groupLine"><img src="/image/delete.svg" draggable="false"> <span class="usageDelete">htmlUsageDelete</span></span>
 				</p>
-				<div id="container" class="box"></div>
-				<div id="inputPrototype" class="field draggable hide">
+				<div id="container"></div>
+			</div>
+			<template id="inputPrototype">
+				<div class="borderComponent field draggable hide">
 					<div class="removeField" title="htmlRemoveButtonName"><img src="/image/delete.svg"></div>
 					<div class="gridWrapper">
 						<div class="fieldController">
-							<span class="handle"><img src="/image/hold.svg" draggable="false"></span>&nbsp;
+							<img class="handle holdImage" src="/image/hold.svg" draggable="false">
 							<span class="check checkboxButton">
 								<span class="circle"></span>
 							</span>
@@ -45,7 +47,7 @@
 									<input type="text" class="label" placeholder="example.com" required maxlength="100">
 									<span class="inputMessage labelMessage hide">message1</span>
 								</span>
-							</label>&nbsp;
+							</label>
 						</div>
 						<div>
 							<label class="textbox">
@@ -54,39 +56,44 @@
 									<input type="URL" class="url" placeholder="https://www.example.com/?q=$1" required maxlength="300">
 									<span class="inputMessage urlMessage hide">message2</span>
 								</span>
-							</label>&nbsp;
+							</label>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<div id="preset" class="panel hide">
-			<nav class="controller">
-				<button type="button" class="addPreset">htmlAddPresetButtonName</button>&nbsp;
-				&nbsp;
-				<span class="groupLine">
-					<span class="filterText">htmlFilterText</span>&nbsp;
-					<select id="languageFilter">
-						<option value="">htmlLanguageAll</option>
-						<option value="en">htmlLanguageEn</option>
-						<option value="ja">htmlLanguageJa</option>
-						<option value="zh">htmlLanguageZh</option>
-					</select>
-				</span>
-				&nbsp;
-				<span class="groupLine">
-					<input type="text" id="presetSearchText" class="presetSearchText" placeholder="htmlSearchKeyword">
-					<button type="buttom" class="presetClearSearchButton">htmlPresetClearSearchButton</button>
-				</span>
-			</nav>
-			<div class="desk">
-				<div class="presetDescription">htmlPresetDescription</div>
-				<div id="table" class="box"></div>
-				<section id="cellPrototype" class="hide checkWrapper" data-language="">
-					<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label">label</span></h1>
-					<p class="url">url</p>
-					<aside class="presetAside hide"></aside>
-				</section>
+			</template>
+			<div id="preset" class="panelComponent hide">
+				<img src="/image/delete.svg" class="removePanelComponent">
+				<div class="panelBody">
+					<nav class="panelNavi">
+						<button type="button" class="addPreset">htmlAddPresetButtonName</button>
+						&nbsp;
+						<span class="groupLine">
+							<span class="filterText">htmlFilterText</span>&nbsp;
+							<select id="languageFilter" class="select">
+								<option value="">htmlLanguageAll</option>
+								<option value="en">htmlLanguageEn</option>
+								<option value="ja">htmlLanguageJa</option>
+								<option value="zh">htmlLanguageZh</option>
+							</select>
+						</span>
+						&nbsp;
+						<span class="groupLine">
+							<input type="text" id="presetSearchText" class="presetSearchText" placeholder="htmlSearchKeyword">
+							<button type="buttom" class="presetClearSearchButton">htmlPresetClearSearchButton</button>
+						</span>
+					</nav>
+					<div>
+						<p class="sentence presetDescription">htmlPresetDescription</p>
+						<div id="table"></div>
+						<template id="cellPrototype">
+							<section class="hide checkWrapper borderComponent" data-language="">
+								<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label"></span></h1>
+								<p class="url"></p>
+								<aside class="sentence presetAside hide"></aside>
+							</section>
+						</template>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="history" class="panel hide">
@@ -94,7 +101,7 @@
 				<span class="groupLine">
 					<button type="button" class="historyUpdateButton">htmlHistoryUpdateButton</button>
 					&nbsp;
-					<select class="historyOrder">
+					<select class="select historyOrder">
 						<option class="historyOrderDesc" value="prev">htmlHistoryOrderDesc</option>
 						<option class="historyOrderAsc" value="next">htmlHistoryOrderAsc</option>
 					</select>
@@ -116,14 +123,21 @@
 				</span>
 			</nav>
 			<div class="desk">
-				<p class="historyDescription">htmlHistoryDescription</p>
+				<p class="sentence historyDescription">htmlHistoryDescription</p>
 				<p>
-					<span class="groupLine"><span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span></span>
-					<span class="groupLine"><span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span></span>
-					<button type="button" class="historyDeleteButton">htmlHistoryCheckDelete</button>
+					<span class="groupLine pageInfo">
+						<span class="pagination">|&lt;<span class="historyPageFirst">htmlPageFirst</span></span>&nbsp;
+						<span class="pagination">&lt;<span class="historyPagePrev">htmlPagePrev</span></span>&nbsp;
+						<span class="pagination"><span class="historyPageNext">htmlPageNext</span>&gt;</span>&nbsp;
+						<span class="pagination"><span class="historyPageLast">htmlPageLast</span>&gt;|</span>
+					</span>
+					<span class="groupLine pageInfo">
+						<span class="historyStartRow">1</span>-<span class="historyEndRow">1</span>/<span class="historyCountRow">1</span>
+					</span>
+					<button type="button" class="historyDeleteButton">htmlHistoryCheckDelete</button>&nbsp;
 					<button type="button" class="historyDeleteAllButton">htmlHistoryAllDelete</button>
 				</p>
-				<table id="historyTable">
+				<table id="historyTable" class="table">
 					<thead>
 						<tr>
 							<th class="headHistoryID"><input type="checkbox" class="historyCheckAllRows"></th>
@@ -166,8 +180,8 @@
 		<div id="ranking" class="panel hide">
 			<nav class="controller">
 				<span class="groupLine">
-					<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>
-					<select class="rankingDateRange">
+					<button type="button" class="rankingAggregateButton">htmlRankingAggregateButton</button>&nbsp;
+					<select class="select rankingDateRange">
 						<option value="1" class="rankingOneMonth">htmlRankingOneMonth</option>
 						<option value="3" class="rankingThreeMonth">htmlRankingThreeMonth</option>
 						<option value="6" class="rankingSixMonth">htmlRankingSixMonth</option>
@@ -186,8 +200,8 @@
 				</span>
 			</nav>
 			<div class="desk">
-				<p class="rankingDescription">htmlRankingDescription</p>
-				<table id="rankingTable">
+				<p class="sentence rankingDescription">htmlRankingDescription</p>
+				<table id="rankingTable" class="table">
 					<thead>
 						<tr>
 							<th class="headRankingText">htmlRankingText</th>
@@ -223,15 +237,15 @@
 			</div>
 		</div>
 		<div id="others" class="panel hide">
-			<section class="othersTable box">
-				<section class="component">
+			<div class="othersTable">
+				<section class="borderComponent">
 					<h1 class="linkListStyleTitle">htmlLinkListStyleTitle</h1>
 					<div>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="c"> <span class="linkListStyleClassic">htmlLinkListStyleClassic</span></label><br>
 						<label><input type="radio" class="linkListStyle" name="linkListStyle" value="d"> <span class="linkListStyleDark">htmlLinkListStyleDark</span></label><br>
 					</div>
 				</section>
-				<section class="component">
+				<section class="borderComponent">
 					<h1 class="linkListActionTitle">htmlLinkListActionTitle</h1>
 					<div>
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="n"> <span class="linkListActionNormal">htmlLinkListActionNormal</span></label><br>
@@ -239,7 +253,7 @@
 						<label><input type="radio" class="linkListAction" name="linkListAction" value="c"> <span class="linkListActionMouseclick">htmlLinkListActionMouseclick</span></label><br>
 					</div>
 				</section>
-				<section class="component">
+				<section class="borderComponent">
 					<h1 class="linkListLayoutTitle">htmlLinkListLayoutTitle</h1>
 					<section class="subComponent">
 						<h1 class="linkListLayoutPatternTitle">htmlLinkListLayoutPatternTitle</h1>
@@ -272,15 +286,15 @@
 						</div>
 					</section>
 				</section>
-				<section class="component">
+				<section class="borderComponent">
 					<h1 class="apiServiceTitle">htmlApiServiceTitle</h1>
-					<p class="apiServiceDescription">htmlApiServiceDescription</p>
+					<p class="sentence apiServiceDescription">htmlApiServiceDescription</p>
 					<section class="subComponent">
 						<h1 class="serviceCodeTitle">htmlServiceCodeTitle</h1>
-						<p class="serviceCodeDescription">htmlServiceCodeDescription</p>
+						<p class="sentence serviceCodeDescription">htmlServiceCodeDescription</p>
 						<p>
 							<span class="inputWrapper">
-								<select class="serviceCodeSelect">
+								<select class="select serviceCodeSelect">
 									<option class="serviceCodeNone" value="-">htmlServiceCodeNone</option>
 									<option class="serviceCodeEn" value="en">htmlServiceCodeEn</option>
 									<option class="serviceCodeJa" value="ja">htmlServiceCodeJa</option>
@@ -291,10 +305,10 @@
 					</section>
 					<section class="subComponent" id="languageFileterComponent">
 						<h1 class="languageFilterTitle">htmlLanguageFilterTitle</h1>
-						<p class="languageFilterDescription">htmlLanguageFilterDescription</p>
-						<aside class="languageFilterAside">htmlLanguageFilterAside</aside>
+						<p class="sentence languageFilterDescription">htmlLanguageFilterDescription</p>
+						<aside class="sentence languageFilterAside">htmlLanguageFilterAside</aside>
 						<p><button class="addLanguageFilter">htmlAddLanguageFilter</button></p>
-						<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
+						<p class="sentence languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
 						<ul class="languageFilterBox"></ul>
 						<div id="downloadLanguagePane" class="hide">
 							<div></div>
@@ -303,7 +317,7 @@
 					</section>
 					<section class="subComponent">
 						<h1 class="apiCutOutTitle">htmlApiCutOutTitle</h1>
-						<p class="apiCutOutDescription">htmlApiCutOutDescription</p>
+						<p class="sentence apiCutOutDescription">htmlApiCutOutDescription</p>
 						<div>
 							<label>
 								<input type="checkbox" class="apiCutOut">
@@ -312,7 +326,7 @@
 						</div>
 					</section>
 				</section>
-				<section id="linkListSample" class="component box">
+				<section id="linkListSample" class="borderComponent">
 					<h1 class="linkListSampleTitle">htmlLinkListSampleTitle</h1>
 					<div class="box">
 						<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 300px; width: 450px; z-index:auto;">
@@ -345,7 +359,7 @@
 								<div id="lessLaborGoToDictionary-apiContent">
 									<div id="lessLaborGoToDictionary-apiHeader">
 									<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
-									<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank" href="https://ja.wiktionary.org/wiki/wiki">wiki</a>
+									<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank" href="">wiki</a>
 									</div>
 									<div id="lessLaborGoToDictionary-apiBody">
 										<ol>
@@ -368,61 +382,107 @@
 						</div>
 					</div>
 				</section>
-			</section>
-			<div id="languageFilterSelectPane" class="pane hide">
-				<img src="/image/delete.svg" class="removePane">
-				<div id="languageFilterSelectPaneBody" class="paneBody box">
-					<p>
-						<select class="apiLangPrefixSelect"></select>
-					</p>
-					<div id="languageFilterContainer"></div>
-					<div>
-						<div id="languageSelectList" class="component">
-							<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
-							<ol class="languageFilterBox"></ol>
+			</div>
+			<div id="languageFilterSelectPane" class="panelComponent hide">
+				<img src="/image/delete.svg" class="removePanelComponent">
+				<div class="panelBody">
+					<nav class="panelNavi">
+						<span class="groupLine">
+							<span class="filterText">htmlFilterText</span>&nbsp;
+							<select class="select apiLangPrefixSelect"></select>
+						</span>
+					</nav>
+					<div id="languageFilterSelectPaneBody">
+						<div id="languageFilterContainer"></div>
+						<div>
+							<div id="languageSelectList" class="borderComponent">
+								<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
+								<ol class="languageFilterBox"></ol>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<template id="languageListPrototype">
+				<li>
+					<div>
+						<span class="languageLabel"></span>
+						<span class="removeLanguageBox">
+							<img src="/image/delete.svg" class="removeLanguageButtom">
+						</span>
+					</div>
+				</li>
+			</template>
+			<template id="languageFilterInputPrototype">
+				<label>
+					<input type="checkbox" class="languageFilterCheckbox" name="l">
+					<span class="languageFilterLabel"></span>
+				</label>
+			</template>
+			<template id="lessLaborGoToDictionary-list-prototype">
+				<li class="lessLaborGoToDictionary-list">
+					<a class="lessLaborGoToDictionary-anchor">
+						<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label" style="font-size:0.8em">test1</span>
+					</a>
+				</li>
+			</template>
 		</div>
 		<div id="contact" class="panel hide">
-			<address>
-				<p class="contactText">htmlContactText</p>
-				<p class="myself">htmlMyself</p>
-			</address>
+			<section>
+				<h1 class="releaseNoteTitle">htmlRleaseNoteTitle</h1>
+				<p class="sentence">
+					<span class="releaseNoteDescription1">htmlReleaseNoteDescription1</span><br>
+					<a href="https://github.com/ryosuke0920/Search-Dictionary-Faster/releases" target="_blank">https://github.com/ryosuke0920/Search-Dictionary-Faster/releases</a>
+				</p>
+				<p class="sentence">
+					<span class="releaseNoteDescription2">htmlReleaseNoteDescription2</span><br>
+					<a href="https://twitter.com/SearchDictionar" target="_blank">https://twitter.com/SearchDictionar</a>
+				</p>
+			</section>
+			<section>
+				<h1 class="aboutDataTitle">htmlAboutDataTitle</h1>
+				<p class="sentence aboutDataDescription1">htmlAboutDataDescription1</p>
+				<p class="sentence aboutDataDescription2">htmlAboutDataDescription2</p>
+				<p class="sentence aboutDataDescription3">htmlAboutDataDescription3</p>
+			</section>
+			<section>
+				<h1 class="contactTitle">htmlContactTitle</h1>
+				<p class="sentence">
+					<span class="issueDescription">htmlIssueDescription</span><br>
+					<a href="https://github.com/ryosuke0920/Search-Dictionary-Faster/issues" target="_blank">https://github.com/ryosuke0920/Search-Dictionary-Faster/issues</a>
+				</p>
+				<p class="sentence">
+					<span class="mailDescription">htmlMailDescription</span><br>
+					<a href="mailto:ryosuke.ohta.programmer@gmail.com">ryosuke.ohta.programmer@gmail.com</a><br>
+					<span class="iam">htmlIam</span>
+				</p>
+			</section>
+			<section>
+				<h1 class="licenseTitle">htmlLicenseTitle</h1>
+				<p class="sentence">
+					<span class="licenseDescription">htmlLicenseDescription</span><br>
+					<a href="https://opensource.org/licenses/MIT" target="_blank">https://opensource.org/licenses/MIT</a>
+				</p>
+				<p class="sentence">Copyright (c) 2018 Ryosuke Ohta</p>
+				<p class="sentence">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+				<p class="sentence">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+				<p class="sentence">THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+			</section>
 		</div>
-	</div>
+	</main>
 	<div id="menu">
 		<header id="header">
 			<div class="logo"><img src="/image/icon128.png"></div>
 			<h1><span class="title">extensionName</span></h1>
 		</header>
 		<nav id="nav">
-			<div class="box navi showForm active">htmlFormName</div>
-			<div class="box navi showPreset">htmlPresetName</div>
-			<div class="box navi showHistory">htmlHistoryName</div>
-			<div class="box navi showRanking">htmlRankingName</div>
-			<div class="box navi showOthers">htmlOthersName</div>
-			<div class="box navi showContact">htmlContactName</div>
+			<div class="navi active" data-navi-name="form">htmlFormName</div>
+			<div class="navi" data-navi-name="history">htmlHistoryName</div>
+			<div class="navi" data-navi-name="ranking">htmlRankingName</div>
+			<div class="navi" data-navi-name="others">htmlOthersName</div>
+			<div class="navi" data-navi-name="contact">htmlContactName</div>
 		</nav>
 	</div>
-</div>
-<div class="hide">
-	<ol>
-		<li id="languageListPrototype">
-			<span class="languageLabel"></span>&nbsp;
-			<img src="/image/delete.svg" class="removeLanguageButtom">
-		</li>
-	</ol>
-	<label id="languageFilterInputPrototype">
-		<input type="checkbox" class="languageFilterCheckbox" name="l" value="">
-		<span class="languageFilterLabel"></span>
-	</label>
-	<li class="lessLaborGoToDictionary-list" id="lessLaborGoToDictionary-list-prototype">
-		<a class="lessLaborGoToDictionary-anchor">
-			<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label" style="font-size:0.8em">test1</span>
-		</a>
-	</li>
 </div>
 <script src="/etc/CONST.js"></script>
 <script src="/etc/PRESET_OPTION_LIST.js"></script>
@@ -431,7 +491,6 @@
 <script src="/lib/share.js"></script>
 <script src="/lib/common.js"></script>
 <script src="option.js"></script>
-<script src="optionPreset.js"></script>
 <script src="optionHistory.js"></script>
 <script src="optionRanking.js"></script>
 <script src="optionOthers.js"></script>

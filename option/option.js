@@ -6,10 +6,36 @@ const ADD_FIELD_CLASS = "add";
 const ADD_FIELD_DURATION = 1.5 * 1000;
 const SCROLL_RACIO = 1/2;
 const CELL_TEXT_MAX_LENGTH = 31 /* Archaiomelesidonophrunicherata */
+
+const JP_FROM = [
+	"０","１","２","３","４","５","６","７","８","９",
+	"Ａ","Ｂ","Ｃ","Ｄ","Ｅ","Ｆ","Ｇ","Ｈ","Ｉ","Ｊ","Ｋ","Ｌ","Ｍ","Ｎ","Ｏ","Ｐ","Ｑ","Ｒ","Ｓ","Ｔ","Ｕ","Ｖ","Ｗ","Ｘ","Ｙ","Ｚ",
+	"ａ","ｂ","ｃ","ｄ","ｅ","ｆ","ｇ","ｈ","ｉ","ｊ","ｋ","ｌ","ｍ","ｎ","ｏ","ｐ","ｑ","ｒ","ｓ","ｔ","ｕ","ｖ","ｗ","ｘ","ｙ","ｚ",
+	"ｶﾞ","ｷﾞ","ｸﾞ","ｹﾞ","ｺﾞ","ｻﾞ","ｼﾞ","ｽﾞ","ｾﾞ","ｿﾞ","ﾀﾞ","ﾁﾞ","ﾂﾞ","ﾃﾞ","ﾄﾞ","ﾊﾞ","ﾋﾞ","ﾌﾞ","ﾍﾞ","ﾎﾞ","ﾊﾟ","ﾋﾟ","ﾌﾟ","ﾍﾟ","ﾎﾟ",
+	"ｱ","ｲ","ｳ","ｴ","ｵ","ｶ","ｷ","ｸ","ｹ","ｺ","ｻ","ｼ","ｽ","ｾ","ｿ","ﾀ","ﾁ","ﾂ","ﾃ","ﾄ","ﾅ","ﾆ","ﾇ","ﾈ","ﾉ",
+	"ﾊ","ﾋ","ﾌ","ﾍ","ﾎ","ﾏ","ﾐ","ﾑ","ﾒ","ﾓ","ﾔ","ﾕ","ﾖ","ﾗ","ﾘ","ﾙ","ﾚ","ﾛ","ﾜ","ｦ","ﾝ",
+	"ｧ","ｨ","ｩ","ｪ","ｫ","ｯ","ｬ","ｭ","ｮ","｡","｢","｣","､","･","ｰ",
+	"！","”","＃","＄","％","＆","’","（","）","＊","＋","，","−","．","／",
+	"：","；","＜","＝","＞","？","＠","［","￥","＼","］","＾","＿","｀","｛","｜","｝","〜"
+];
+const JP_TO = [
+	"0","1","2","3","4","5","6","7","8","9",
+	"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z",
+	"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",
+	"ガ","ギ","グ","ゲ","ゴ","ザ","ジ","ズ","セ","ゾ","ダ","ヂ","ヅ","デ","ド","バ","ビ","ブ","ベ","ボ","パ","ピ","プ","ペ","ポ",
+	"ア","イ","ウ","エ","オ","カ","キ","ク","ケ","コ","サ","シ","ス","セ","ソ","タ","チ","ツ","テ","ト","ナ","ニ","ヌ","ネ","ノ",
+	"ハ","ヒ","フ","ヘ","ホ","マ","ミ","ム","メ","モ","ヤ","ユ","ヨ","ラ","リ","ル","レ","ロ","ワ","ヲ","ン",
+	"ァ","ィ","ゥ","ェ","ォ","ッ","ャ","ュ","ョ","。","「","」","、","・","ー",
+	"!","\"","#","$","%","&","'","(",")","*","+",",","-",".","/",
+	":",";","<","=",">","?","@","[","\\","\\","]","^","_","`","{","|","}","~"
+];
+const SPACE_REGEX = new RegExp(/\s+/,"g");
+const SINGLE_SPACE = " ";
+const PRESET_SEARCH_DELAY = 500;
+
 let mainNode = document.querySelector("#main");
 let navNode = document.querySelector("#nav");
 let formNode = document.querySelector("#form");
-let presetNode = document.querySelector("#preset");
 let rankingNode = document.querySelector("#ranking");
 let othersNode = document.querySelector("#others");
 let historyNode = document.querySelector("#history");
@@ -22,7 +48,16 @@ let draggable_list = [];
 let dy = 0;
 let scrollDestination = 0;
 
-Promise.resolve().then( initI18n ).then( initField ).then( initListener ).then( showBody ).catch( unexpectedError );
+let presetNode = document.querySelector("#preset");
+let tableNode = document.querySelector("#table");
+let cellPrototypeNode = document.querySelector("#cellPrototype");
+let presetSearchNode = document.querySelector("#presetSearchText");
+let languageJson = {};
+let presetSearchQueue = [];
+
+initI18n();
+initNode();
+Promise.resolve().then( initField ).then( initListener ).then( showBody ).catch( unexpectedError );
 
 function initI18n(){
 	let list = [
@@ -33,23 +68,66 @@ function initI18n(){
 		{ "selector": ".usageCheck", "property": "innerText", "key": "htmlUsageCheck" },
 		{ "selector": ".usageHist", "property": "innerText", "key": "htmlUsageHist" },
 		{ "selector": ".usageDelete", "property": "innerText", "key": "htmlUsageDelete" },
-		{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
-		{ "selector": ".showForm", "property": "innerText", "key": "htmlFormName" },
-		{ "selector": ".showPreset", "property": "innerText", "key": "htmlPresetName" },
-		{ "selector": ".showHistory", "property": "innerText", "key": "htmlHistoryName" },
-		{ "selector": ".showRanking", "property": "innerText", "key": "htmlRankingName" },
-		{ "selector": ".showOthers", "property": "innerText", "key": "htmlOthersName" },
-		{ "selector": ".showContact", "property": "innerText", "key": "htmlContactName" },
-		{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
-		{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" },
+
+		{ "selector": ".navi[data-navi-name=\"form\"]", "property": "innerText", "key": "htmlFormName" },
+		{ "selector": ".navi[data-navi-name=\"history\"]", "property": "innerText", "key": "htmlHistoryName" },
+		{ "selector": ".navi[data-navi-name=\"ranking\"]", "property": "innerText", "key": "htmlRankingName" },
+		{ "selector": ".navi[data-navi-name=\"others\"]", "property": "innerText", "key": "htmlOthersName" },
+		{ "selector": ".navi[data-navi-name=\"contact\"]", "property": "innerText", "key": "htmlContactName" },
+
+		{ "selector": ".addFromPreset", "property": "innerText", "key": "htmlAddFromPreset" },
 		{ "selector": ".addBlank", "property": "innerText", "key": "htmlAddBlankFieldButtonName" },
-		{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
-		{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
-		{ "selector": ".removeField", "property": "title", "key": "htmlRemoveButtonName" },
-		{ "selector": ".contactText", "property": "innerHTML", "key": "htmlContactText" },
-		{ "selector": ".myself", "property": "innerHTML", "key": "htmlMyself" }
+		{ "selector": ".filterText", "property": "innerText", "key": "htmlFilterText" },
+		{ "selector": "#languageFilter option[value=\"\"]", "property": "innerText", "key": "htmlLanguageAll" },
+		{ "selector": "#languageFilter option[value=en]", "property": "innerText", "key": "htmlLanguageEn" },
+		{ "selector": "#languageFilter option[value=ja]", "property": "innerText", "key": "htmlLanguageJa" },
+		{ "selector": "#languageFilter option[value=zh]", "property": "innerText", "key": "htmlLanguageZh" },
+		{ "selector": ".addPreset", "property": "innerText", "key": "htmlAddPresetButtonName" },
+		{ "selector": ".presetDescription", "property": "innerText", "key": "htmlPresetDescription" },
+		{ "selector": ".presetSearchText", "property": "placeholder", "key": "htmlPresetSearchKeyword" },
+		{ "selector": ".presetClearSearchButton", "property": "innerText", "key": "htmlPresetClearSearchButton" },
+
+		{ "selector": ".releaseNoteTitle", "property": "innerText", "key": "htmlRleaseNoteTitle" },
+		{ "selector": ".releaseNoteDescription1", "property": "innerText", "key": "htmlReleaseNoteDescription1" },
+		{ "selector": ".releaseNoteDescription2", "property": "innerText", "key": "htmlReleaseNoteDescription2" },
+		{ "selector": ".aboutDataTitle", "property": "innerText", "key": "htmlAboutDataTitle" },
+		{ "selector": ".aboutDataDescription1", "property": "innerText", "key": "htmlAboutDataDescription1" },
+		{ "selector": ".aboutDataDescription2", "property": "innerText", "key": "htmlAboutDataDescription2" },
+		{ "selector": ".aboutDataDescription3", "property": "innerText", "key": "htmlAboutDataDescription3" },
+		{ "selector": ".contactTitle", "property": "innerText", "key": "htmlContactTitle" },
+		{ "selector": ".issueDescription", "property": "innerText", "key": "htmlIssueDescription" },
+		{ "selector": ".mailDescription", "property": "innerText", "key": "htmlMailDescription" },
+		{ "selector": ".iam", "property": "innerText", "key": "htmlIam" },
+		{ "selector": ".licenseTitle", "property": "innerText", "key": "htmlLicenseTitle" },
+		{ "selector": ".licenseDescription", "property": "innerText", "key": "htmlLicenseDescription" },
 	];
 	setI18n(list);
+}
+
+function initNode(){
+	let language = ponyfill.i18n.getUILanguage();
+	let matcher = language.match("^(.+?)-");
+	if ( matcher ) language = matcher[1];
+	for(let i=0; i<PRESET_OPTION_LIST.length; i++){
+		let option = PRESET_OPTION_LIST[i];
+		let clone = document.importNode(cellPrototypeNode.content, true);
+		let node = clone.querySelector("section");
+		node.setAttribute("data-language",option["la"]);
+		node.querySelector(".label").innerText = option["l"];
+		node.querySelector(".url").innerText = option["u"];
+		if(option.hasOwnProperty("aside")) {
+			let aside = node.querySelector(".presetAside");
+			aside.innerText = option["aside"];
+			show(aside);
+		}
+		node.addEventListener("click",checkPreset);
+		tableNode.appendChild(clone);
+		languageJson[option["la"]] = true;
+	}
+	if(languageJson.hasOwnProperty(language)){
+		presetNode.querySelector("#languageFilter").value = language;
+	}
+	languageFilter(language);
 }
 
 function initField(){
@@ -80,6 +158,10 @@ function initListener(){
 	window.addEventListener("mousedown", formScrollCancel);
 	window.addEventListener("wheel", formScrollCancel);
 	window.addEventListener("click", clickComponent );
+
+	presetNode.addEventListener("click", presetBehavior);
+	presetNode.querySelector("#languageFilter").addEventListener("change", languageFilterBehavior);
+	presetSearchNode.addEventListener("input", presetSearchInput);
 }
 
 function formScrollCancel(e){
@@ -100,28 +182,6 @@ function fileChangeBehavior(e, area){
 	resetSort();
 }
 
-function navBehavior(e){
-	let classList = e.target.classList;
-	if(classList.contains("showForm")){
-		showForm();
-	}
-	else if(classList.contains("showPreset")){
-		showPreset();
-	}
-	else if(classList.contains("showContact")){
-		showContact();
-	}
-	else if(classList.contains("showHistory")){
-		showHistory();
-	}
-	else if(classList.contains("showRanking")){
-		showRanking();
-	}
-	else if(classList.contains("showOthers")){
-		showOthers();
-	}
-}
-
 function formBehavior(e){
 	let classList = e.target.classList;
 	if(classList.contains("addBlank")){
@@ -139,53 +199,13 @@ function formBehavior(e){
 		resetSort();
 		saveOption().catch(onSaveError);
 	}
+	else if(classList.contains("addFromPreset")){
+		show(formNode.querySelector("#preset"));
+	}
 }
 
 function showBody(){
 	show( document.querySelector("body") );
-}
-
-function showForm(){
-	removeActive();
-	addActive("showForm");
-	hideAllPanels();
-	show(formNode);
-}
-
-function showPreset(){
-	removeActive();
-	addActive("showPreset");
-	hideAllPanels();
-	show(presetNode)
-}
-
-function showContact(){
-	removeActive();
-	addActive("showContact");
-	hideAllPanels();
-	show(contactNode);
-}
-
-
-function showHistory(){
-	removeActive();
-	addActive("showHistory");
-	hideAllPanels();
-	show(historyNode);
-}
-
-function showRanking(){
-	removeActive();
-	addActive("showRanking");
-	hideAllPanels();
-	show(rankingNode);
-}
-
-function showOthers(){
-	removeActive();
-	addActive("showOthers");
-	hideAllPanels();
-	show(othersNode);
 }
 
 function hideAllPanels(){
@@ -196,13 +216,23 @@ function hideAllPanels(){
 	}
 }
 
+function navBehavior(e){
+	if(e.target.classList.contains("navi")) {
+		let id = e.target.getAttribute("data-navi-name");
+		removeActive();
+		addActive(e.target.getAttribute("data-navi-name"));
+		hideAllPanels();
+		show( document.querySelector("#"+id) );
+	}
+}
+
 function removeActive(){
 	let node = navNode.querySelector(".navi.active");
 	if( node ) node.classList.remove("active");
 }
 
-function addActive(className){
-	let node = navNode.querySelector(".navi."+className);
+function addActive(name){
+	let node = navNode.querySelector(".navi[data-navi-name=\""+name+"\"]");
 	if( node ) node.classList.add("active");
 }
 
@@ -243,8 +273,16 @@ function addNewField( checked=false, hist=true, label="", url="" ){
 }
 
 function addField( checked=false, hist=true, label="", url="", cls=null ){
-	let node = inputPrototypeNode.cloneNode(true);
-	node.removeAttribute("id");
+	let clone = document.importNode(inputPrototypeNode.content, true);
+	let i18nList = [
+		{ "selector": ".labelText", "property": "innerText", "key": "htmlLabelText" },
+		{ "selector": ".urlText", "property": "innerText", "key": "htmlUrlText" },
+		{ "selector": ".removeField", "property": "title", "key": "htmlRemoveButtonName" },
+		{ "selector": "input.label", "property": "title", "key": "htmlLabelDescription" },
+		{ "selector": "input.url", "property": "title", "key": "htmlUrlDescription" }
+	];
+	setI18n(i18nList, clone);
+	let node = clone.querySelector(".field");
 	if(cls) {
 		node.classList.add(cls);
 		setTimeout( removeAddAnimation.bind(node), ADD_FIELD_DURATION );
@@ -302,7 +340,7 @@ function addField( checked=false, hist=true, label="", url="", cls=null ){
 	});
 	urlNode.addEventListener("blur", blurBehavior);
 	handleNode.addEventListener("mousedown", sortStart);
-	containerNode.appendChild(node);
+	containerNode.appendChild(clone);
 	show(node);
 }
 
@@ -475,6 +513,12 @@ function clickComponent(e){
 		let node = e.target.closest(".erasticTextComponent");
 		longErasticText(node);
 	}
+	else if( e.target.classList.contains("panelComponent") ){
+		hide(e.target);
+	}
+	else if( e.target.classList.contains("removePanelComponent") ){
+		hide(e.target.closest(".panelComponent"));
+	}
 }
 
 function shortErasticText(node){
@@ -489,4 +533,149 @@ function longErasticText(node){
 	node.classList.add("long");
 	let textNode = node.querySelector(".erasticText");
 	textNode.innerText = textNode.getAttribute("data-long-text");
+}
+
+function presetBehavior(e){
+	let cassList = e.target.classList;
+	if(cassList.contains("addPreset")){
+		if ( !checkPrestLength() ) {
+			onCheckPresetLengthError();
+			return ;
+		}
+		addPreset();
+	}
+	else if(cassList.contains("presetClearSearchButton")){
+		presetClearSearch();
+	}
+}
+
+function presetClearSearch(){
+	presetSearchNode.value = "";
+	presetSearchQueue = [];
+	presetRemoveCellHide();
+}
+
+function presetRemoveCellHide(){
+	let list = tableNode.querySelectorAll(".checkWrapper.cell-hide");
+	for(let i=0; i<list.length; i++){
+		list[i].classList.remove("cell-hide");
+	}
+}
+
+function reduceSpace(text){
+	return text.replace(SPACE_REGEX, SINGLE_SPACE).trim();
+}
+
+function commonize(text){
+	for( let i=0; i<JP_FROM.length; i++ ){
+		while(-1 < text.indexOf(JP_FROM[i])){
+			text = text.replace(JP_FROM[i], JP_TO[i]);
+		}
+	}
+	text = text.toLowerCase();
+	return text;
+}
+
+function presetSearchInput(){
+	let tmp = reduceSpace(presetSearchNode.value);
+	if ( tmp.length == 0 ) {
+		presetRemoveCellHide();
+		return;
+	}
+	presetSearchQueue.push(presetSearchNode.value);
+	setTimeout(()=>{
+		if( presetSearchQueue.length <= 0 ) return;
+		let text = presetSearchQueue.shift();
+		if( presetSearchQueue.length <= 0 ) {
+			presetRemoveCellHide();
+			presetSearch(text);
+		}
+	},PRESET_SEARCH_DELAY);
+}
+
+function presetSearch(text){
+	text = commonize(reduceSpace(text));
+	let texts = text.split(SINGLE_SPACE);
+	let nodes = tableNode.querySelectorAll(".checkWrapper:not(.hide)");
+	for(let i=0; i<nodes.length; i++){
+		let node = nodes[i];
+		let content = commonize(node.innerText);
+		for( let j=0; j<texts.length; j++){
+			let word = texts[j];
+			if ( content.indexOf(word) <= -1 ){
+				node.classList.add("cell-hide");
+				break;
+			}
+		}
+	}
+}
+
+function languageFilterBehavior(e){
+	languageFilter(e.target.value);
+	presetSearch(presetSearchNode.value);
+}
+
+function languageFilter(str){
+	let list = tableNode.querySelectorAll(".checkWrapper");
+	for(let i=0; i<list.length; i++){
+		let node = list[i];
+		show(node);
+	}
+	if ( !str || !languageJson.hasOwnProperty(str) ) {
+		return;
+	}
+	list = tableNode.querySelectorAll(".checkWrapper:not([data-language~=\""+str+"\"])");
+	for(let i=0; i<list.length; i++){
+		let node = list[i];
+		hide(node);
+	}
+}
+
+function checkPrestLength(){
+	let list = tableNode.querySelectorAll(".checkbox:checked");
+	return checkFieldLength(list.length);
+}
+
+function onCheckPresetLengthError(){
+	let sum = ""+0;
+	let list = containerNode.querySelectorAll(".field");
+	if( list ) sum = list.length;
+	let remaining = MAX_FIELD - sum;
+	let list2 = tableNode.querySelectorAll(".checkbox:checked");
+	let sum2 = 0;
+	if( list2 ) sum2 = list2.length;
+	return notice( ponyfill.i18n.getMessage("htmlCheckPresetLengthError", [ MAX_FIELD, sum, sum2, remaining ] ));
+}
+
+function addPreset(e){
+	let list = tableNode.querySelectorAll(".checkbox:checked");
+	for(let i=0; i<list.length; i++){
+		let node = list[i];
+		let checkWrapperNode = node.closest(".checkWrapper");
+		let label = checkWrapperNode.querySelector(".label").innerText;
+		let p = checkWrapperNode.querySelector(".url").innerText;
+		addNewField(true, true, label, p);
+	}
+	let promise = saveOption();
+	resetPreset();
+	resetSort();
+	hide(preset);
+	smoothScroll();
+}
+
+function checkPreset(e){
+	if( e.target.tagName == "INPUT" ) {
+		/* input type="checkbox" */
+		return;
+	}
+	let checkboxNode = this.querySelector(".checkbox");
+	checkboxNode.checked = !checkboxNode.checked;
+}
+
+function resetPreset(){
+	let list = tableNode.querySelectorAll(".checkbox:checked");
+	for(let i=0; i<list.length; i++){
+		let node = list[i];
+		node.checked = false;
+	}
 }
