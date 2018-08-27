@@ -4,7 +4,7 @@
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
-	const SPACE = 10;
+	const SPACE = 22;
 	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
@@ -237,6 +237,8 @@
 
 	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
+		if( document.documentElement.offsetWidth <= e.pageX ) return; // on the scroll bar
+		if( document.documentElement.offsetHeight <= e.pageY ) return; // on the scroll bar
 		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) {
 			closeLinkList();
 			abortApiRequestQueue();
@@ -481,24 +483,30 @@
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		show(linkListNode);
 		applyLinkListSize();
-		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
-		if ( 0 < yy || window.innerHeight < linkListNode.offsetHeight ) yy = 0;
-		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH;
-		if ( 0 < xx || window.innerWidth < linkListNode.offsetWidth ) xx = 0;
-		linkListNodeTop = pageY + yy + SPACE;
-		linkListNodeLeft = pageX + xx + SPACE;
-		/*
-		let lastRange = selection.getRangeAt(selection.rangeCount-1);
-		let rectList = lastRange.getClientRects();
-		let rect = rectList[rectList.length-1];
-		if ( window.scrollY + rect.top < linkListNodeTop + linkListNode.offsetHeight && linkListNodeTop < window.scrollY + rect.bottom ){
-			if ( window.scrollX + rect.left < linkListNodeLeft + linkListNode.offsetWidth && linkListNodeLeft < window.scrollX + rect.right ){
-				linkListNodeTop = window.scrollY + rect.top - linkListNode.offsetHeight - SPACE;
-			}
-		}
-		*/
-		if ( linkListNodeTop < window.scrollY ) linkListNodeTop = window.scrollY;
+
+		// The xx is a part of widget X point from pageX.
+		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH - SPACE;
+		// If xx is minus, xx is a part of widget width that is not appered. It's outside viewport.
+		if ( 0 < xx ) xx = SPACE;
+		linkListNodeLeft = pageX + xx;
+		// Widget width is longer than viewport width
 		if ( linkListNodeLeft < window.scrollX ) linkListNodeLeft = window.scrollX;
+
+		// The yy is a part of widget Y point from pageY.
+		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH - SPACE;
+		// If yy is minus, yy is a part of widget height that is not appered. It's outside viewport.
+		if ( 0 < yy ) yy = SPACE;
+		linkListNodeTop = pageY + yy;
+		console.log(linkListNodeTop);
+		// ウィジェットの上の部分が欠けた場合
+		if ( linkListNodeTop < pageY ) linkListNodeTop = pageY - linkListNode.offsetHeight - SPACE;
+		console.log(linkListNodeTop);
+		if (linkListNodeTop < 0) linkListNodeTop = pageY + SPACE;
+		console.log(linkListNodeTop);
+
+		// Widget height is longer than viewport height
+		//if ( linkListNodeTop < window.scrollY ) linkListNodeTop = window.scrollY;
+
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
 		linkListNode.scrollTop = 0;
