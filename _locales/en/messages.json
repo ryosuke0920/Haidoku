@@ -160,9 +160,6 @@
 	"htmlContactName": {
 		"message": "Info"
 	},
-	"htmlDonationName": {
-		"message": "Donate"
-	},
 	"htmlFormDescription": {
 		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text selected."
 	},
@@ -471,9 +468,6 @@
 	},
 	"htmlLicenseDescription": {
 		"message": "This software is released under the MIT License."
-	},
-	"htmlDonationDescription": {
-		"message": "I need income to action sustainably, so I'm looking for donation. I appreciate your cooperation. There is no issue of receipt. Please print the details with PayPal and replace it with a receipt. There is no tax deduction. Personal information obtained through PayPal will not be transffered, sold, or disclosed to third parties, but it's not based on laws and ordinances.\nSincerely,\n"
 	},
 	"htmlCheckBlankError": {
 		"message": "Please fill out this fields."
