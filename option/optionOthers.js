@@ -32,11 +32,11 @@
 			{ "selector": ".linkListActionNormal", "property": "innerText", "key": "htmlLinkListActionNormal" },
 			{ "selector": ".linkListActionMouseover", "property": "innerText", "key": "htmlLinkListActionMouseover" },
 			{ "selector": ".linkListActionMouseclick", "property": "innerText", "key": "htmlLinkListActionMouseclick" },
-			{ "selector": "."+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
-			{ "selector": "."+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
-			{ "selector": "."+CSS_PREFIX+"-copy", "property": "title", "key": "htmlCopy" },
-			{ "selector": "."+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
-			{ "selector": "."+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
+			{ "selector": "#"+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
+			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
+			{ "selector": "#"+CSS_PREFIX+"-copy", "property": "title", "key": "htmlCopy" },
+			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
+			{ "selector": "#"+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
 			{ "selector": ".linkListLayoutTitle", "property": "innerText", "key": "htmlLinkListLayoutTitle" },
 			{ "selector": ".linkListLayoutPatternTitle", "property": "innerText", "key": "htmlLinkListLayoutPatternTitle" },
 			{ "selector": ".faviconDisplayTitle", "property": "innerText", "key": "htmlFaviconDisplayTitle" },
@@ -270,17 +270,17 @@
 
 	function makeLanguageFilterListNodes(languages=getLanguageFilterList()){
 		clearLanguageListNodes();
-		let languageListPrototype = document.querySelector("#languageListPrototype");
+		let languageListPrototype = othersNode.querySelector("#languageListPrototype");
 		for(let i=0; i<languageFilterBoxNodes.length; i++){
 			let node = languageFilterBoxNodes[i];
 			for(let j=0; j<languages.length; j++){
 				let language = languages[j];
-				let li = languageListPrototype.cloneNode(true);
-				li.removeAttribute("id");
+				let clone = document.importNode(languageListPrototype.content, true);
+				let li = clone.querySelector("li");
 				li.setAttribute("data-language", language);
 				let label = li.querySelector(".languageLabel");
 				label.innerText = language;
-				node.appendChild(li);
+				node.appendChild(clone);
 			}
 		}
 		let list = [];
@@ -382,25 +382,24 @@
 	}
 
 	function setSampleLinkListAnchor(list){
-		let prototype = document.querySelector("#"+CSS_PREFIX+"-list-prototype");
+		let prototype = othersNode.querySelector("#"+CSS_PREFIX+"-list-prototype");
 		let container = othersNode.querySelector("#"+CSS_PREFIX+"-container");
 		clearChildren(container);
 		for(let i=0; i<list.length; i++){
 			let item = list[i];
 			if(!item.c) continue;
-			let node = prototype.cloneNode(true);
-			node.removeAttribute("id");
+			let clone = document.importNode(prototype.content, true);
+			let node = clone.querySelector("li");
 			node.setAttribute("title",item.l);
 			node.querySelector("."+CSS_PREFIX+"-label").innerText = item.l;
-			let src;
+			let img = node.querySelector("."+CSS_PREFIX+"-favicon");
 			if( faviconCache.hasOwnProperty(item.u) ){
-				src = faviconCache[item.u];
+				img.setAttribute("src", faviconCache[item.u]);
 			}
 			else {
-				src = ponyfill.extension.getURL("/image/favicon.svg");
+				img.setAttribute("src", ponyfill.extension.getURL("/image/favicon.svg"));
 			}
-			node.querySelector("."+CSS_PREFIX+"-favicon").setAttribute("src", src);
-			container.appendChild(node);
+			container.appendChild(clone);
 		}
 	}
 
@@ -657,15 +656,13 @@
 		languages = languages.filter( obj => obj.sortkeyprefix.substr(0,1)==prefixCode );
 		for(let i=0; i<languages.length; i++){
 			let language = languages[i];
-			let wrapper = prototype.cloneNode(true);
-			wrapper.removeAttribute("id");
+			let wrapper = document.importNode(prototype.content, true);
 			let checkboxNode = wrapper.querySelector(".languageFilterCheckbox");
 			checkboxNode.setAttribute("value", language.title);
 			if( languageList.includes(language.title) ) checkboxNode.checked = true;
 			let labelNode = wrapper.querySelector(".languageFilterLabel");
 			labelNode.innerText = language.title;
 			languageFilterContainerNode.appendChild(wrapper);
-			show(wrapper);
 		}
 		return;
 	}
@@ -712,10 +709,7 @@
 
 	function apiLangPaneClickBehavior(e){
 		let classes = e.target.classList;
-		if( classes.contains("removePane") || languageFilterSelectPaneNode.isEqualNode(e.target) ){
-			hide(languageFilterSelectPaneNode);
-		}
-		else if(classes.contains("languageFilterCheckbox")){
+		if(classes.contains("languageFilterCheckbox")){
 			if( e.target.checked ) {
 				if(!checkLanguageLimit()){
 					e.preventDefault();

@@ -3,19 +3,19 @@
 		"message": "Search Dictionary Faster"
 	},
 	"extensionDescription": {
-		"message": "This is a tool to eliminate troublesome copying and pasting to search efficiently and quickly."
+		"message": "Support to search words"
 	},
 	"extensionOptionAutoView": {
-		"message": "Automatically display link list"
+		"message": "Automatically display"
 	},
 	"extensionOptionManualView": {
-		"message": "Manually display link list"
+		"message": "Manually display"
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "Display link list with shift key"
+		"message": "Display with shift key"
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "Display link list with ctrl key"
+		"message": "Display with ctrl key"
 	},
 	"extensionOptionName": {
 		"message": "Options"
@@ -146,10 +146,7 @@
 		"message": "Option"
 	},
 	"htmlFormName": {
-		"message": "Link list"
-	},
-	"htmlPresetName": {
-		"message": "Add search site"
+		"message": "Edit link"
 	},
 	"htmlHistoryName": {
 		"message": "History"
@@ -161,16 +158,19 @@
 		"message": "View"
 	},
 	"htmlContactName": {
-		"message": "Contact"
+		"message": "Info"
+	},
+	"htmlDonationName": {
+		"message": "Donate"
 	},
 	"htmlFormDescription": {
-		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text you selected."
+		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text selected."
 	},
 	"htmlUsageOrder" : {
 		"message": "Sort."
 	},
 	"htmlUsageCheck" : {
-		"message": "Display in link list."
+		"message": "Display in Widget."
 	},
 	"htmlUsageHist" : {
 		"message": "Save history."
@@ -179,7 +179,10 @@
 		"message": "Delete."
 	},
 	"htmlPresetDescription": {
-		"message": "Select some sites and press \"Add\" button. Then it's added to link list."
+		"message": "Select some sites and press \"Add\" button. Then it's added to Widget."
+	},
+	"htmlAddFromPreset": {
+		"message": "Add search site"
 	},
 	"htmlAddBlankFieldButtonName": {
 		"message": "Add blank field"
@@ -197,10 +200,10 @@
 		"message": "Delete"
 	},
 	"htmlLabelDescription": {
-		"message": "This will be displayed in the link list or context menu(right click) instead of URL."
+		"message": "Site name is displayed instead of URL."
 	},
 	"htmlUrlDescription": {
-		"message": "A URL to link. \"$$1\" will be replaced to the text you selected."
+		"message": "A URL to link. \"$$1\" will be replaced to the text selected."
 	},
 	"htmlFilterText": {
 		"message": "Filter"
@@ -245,7 +248,7 @@
 		"message": "Old->New"
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "Delete checked history"
+		"message": "Delete history checked"
 	},
 	"htmlHistoryAllDelete": {
 		"message": "Delete all history"
@@ -254,7 +257,7 @@
 		"message": "All history will be deleted. It contains the records that isn't displayed on the table."
 	},
 	"htmlHistoryDescription": {
-		"message": "You can refer to history. It's useful to know the words which you frequently searched. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not from \"Link list\" menu."
+		"message": "History data is used by \"Find weak point\" function. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not in \"Link edit\" menu."
 	},
 	"htmlHistoryZeroRowMessage": {
 		"message": "Result was 0."
@@ -320,7 +323,7 @@
 		"message": "Result was 0."
 	},
 	"htmlLinkListStyleTitle": {
-		"message": "Link list style"
+		"message": "Widget style"
 	},
 	"htmlLinkListStyleClassic": {
 		"message": "Classic"
@@ -329,7 +332,7 @@
 		"message": "Dark"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "Link list display action"
+		"message": "Widget display action"
 	},
 	"htmlLinkListActionNormal": {
 		"message": "No icon"
@@ -341,10 +344,10 @@
 		"message": "Mouse click"
 	},
 	"htmlLinkListLayoutTitle": {
-		"message": "Link list layout"
+		"message": "Widget layout"
 	},
 	"htmlLinkListLayoutPatternTitle":{
-		"message": "Link list layout pattern"
+		"message": "Widget layout pattern"
 	},
 	"htmlFaviconDisplayTitle":{
 		"message": "Display content of link"
@@ -365,7 +368,7 @@
 		"message": "Vertical"
 	},
 	"htmlLinkListSeparatorTitle":{
-		"message": "Separator between Link list and Wiktionary"
+		"message": "Separator between links and Wiktionary"
 	},
 	"htmlLinkListSeparatorHorizontal":{
 		"message": "Horizontal"
@@ -383,7 +386,7 @@
 		"message": "Select Wiktionary"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" need additional setting."
+		"message": "Please choose Wiktionary. The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" need additional setting."
 	},
 	"htmlServiceCodeNone": {
 		"message": "Disable"
@@ -428,13 +431,49 @@
 		"message": "Enable"
 	},
 	"htmlLinkListSampleTitle": {
-		"message": "Link list sample"
+		"message": "Widget sample"
 	},
-	"htmlContactText": {
-		"message": "Update history is distributed on Twitter.<br><a href=\"https://twitter.com/SearchDictionar\" target=\"_blank\">@SearchDictionar</a><br><br>Inquiries about comments, impressions, bugs etc. are received at the following e-mail address.<br><a href=\"mailto:ryosuke.ohta.programmer@gmail.com\">ryosuke.ohta.programmer@gmail.com</a>"
+	"htmlRleaseNoteTitle": {
+		"message": "Release note"
 	},
-	"htmlMyself": {
-		"message": "Freelance programmer<br>Tokyo Japan<br>Ryosuke Ohta"
+	"htmlReleaseNoteDescription1": {
+		"message": "Release note is posted on GitHub."
+	},
+	"htmlReleaseNoteDescription2": {
+		"message": "Release is announced on Twitter."
+	},
+	"htmlAboutDataTitle": {
+		"message": "About how data used."
+	},
+	"htmlAboutDataDescription1": {
+		"message": "Setting data is sent by the synchronization service provided by the browser. History data is out of the synchronization service."
+	},
+	"htmlAboutDataDescription2": {
+		"message": "When click a link or execute wiktionary linkage, it sends basic internet information (IP address, Cookie, etc) and the text selected. HTTP REFER (Information on which site it came from) is excluded."
+	},
+	"htmlAboutDataDescription3": {
+		"message": "As needed download favicon images and save it."
+	},
+	"htmlContactTitle": {
+		"message": "Contact"
+	},
+	"htmlIssueDescription": {
+		"message": "Please use GitHub Issues to report a bug, to request, to contact, etc. Writing is open to the public."
+	},
+	"htmlMailDescription": {
+		"message": "Also receive by email."
+	},
+	"htmlIam": {
+		"message": "Freelance programmer, Ryosuke Ohta (太田亮介)"
+	},
+	"htmlLicenseTitle": {
+		"message": "License"
+	},
+	"htmlLicenseDescription": {
+		"message": "This software is released under the MIT License."
+	},
+	"htmlDonationDescription": {
+		"message": "I need income to action sustainably, so I'm looking for donation. I appreciate your cooperation. There is no issue of receipt. Please print the details with PayPal and replace it with a receipt. There is no tax deduction. Personal information obtained through PayPal will not be transffered, sold, or disclosed to third parties, but it's not based on laws and ordinances.\nSincerely,\n"
 	},
 	"htmlCheckBlankError": {
 		"message": "Please fill out this fields."

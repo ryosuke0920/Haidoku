@@ -286,6 +286,16 @@ const PRESET_OPTION_LIST = [
 		"u": "https://www.quora.com/search?q=$1"
 	},
 	{
+		"la": "en",
+		"l": "developer.mozilla.org (en-US)",
+		"u": "https://developer.mozilla.org/en-US/search?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "developer.mozilla.org (en-US) by Google",
+		"u": "https://www.google.com/search?q=site:developer.mozilla.org/en-US/ $1"
+	},
+	{
 		"la": "ja",
 		"l": "Wikipedia (ja)",
 		"u": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
@@ -442,6 +452,16 @@ const PRESET_OPTION_LIST = [
 		"u": "http://e-words.jp/?q=$1"
 	},
 	{
+		"la": "en",
+		"l": "developer.mozilla.org (ja)",
+		"u": "https://developer.mozilla.org/ja/search?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "developer.mozilla.org (ja) by Google",
+		"u": "https://www.google.co.jp/search?q=site:developer.mozilla.org/ja/ $1"
+	},
+	{
 		"la": "zh",
 		"l": "维基百科 (zh)",
 		"u": "https://zh.wikipedia.org/w/index.php?search=$1"
@@ -486,5 +506,15 @@ const PRESET_OPTION_LIST = [
 		"la": "zh",
 		"l": "Google Videos",
 		"u": "https://www.google.com.hk/search?q=$1&tbm=vid"
+	},
+	{
+		"la": "zh",
+		"l": "developer.mozilla.org (zh-CN)",
+		"u": "https://developer.mozilla.org/zh-CN/search?q=$1"
+	},
+	{
+		"la": "zh",
+		"l": "developer.mozilla.org (zh-CN) by Google",
+		"u": "https://www.google.com.hk/search?q=site:developer.mozilla.org/zh-CN/ $1"
 	}
 ];
