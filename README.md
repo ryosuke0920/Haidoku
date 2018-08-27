@@ -56,8 +56,6 @@ When click a link or execute wiktionary linkage, it sends basic internet informa
 
 As needed download favicon images and save it.  
 
-Any other data are not collected and not sent.  
-
 ## Contact
 Please use GitHub Issues to report a bug, to request, to contact, etc. Writing is open to the public.  
 https://github.com/ryosuke0920/Search-Dictionary-Faster/issues  

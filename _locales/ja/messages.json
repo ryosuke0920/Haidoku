@@ -454,9 +454,6 @@
 	"htmlAboutDataDescription3": {
 		"message": "必要に応じて、ファビコンをインターネットからダウンロードして保存します。"
 	},
-	"htmlAboutDataDescription4": {
-		"message": "その他の情報を収集および送信しません。"
-	},
 	"htmlContactTitle": {
 		"message": "お問い合わせ"
 	},

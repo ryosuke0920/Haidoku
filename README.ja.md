@@ -56,8 +56,6 @@ https://twitter.com/SearchDictionar
 
 必要に応じて、ファビコンをインターネットからダウンロードして保存します。  
 
-その他の情報を収集および送信しません。  
-
 ## お問い合わせ
 バグ報告、要望、お問い合わせ等はGitHubのIssuesを使用してください。この書き込みは一般に公開されます。  
 https://github.com/ryosuke0920/Search-Dictionary-Faster/issues  

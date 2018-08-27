@@ -96,8 +96,6 @@ function initI18n(){
 		{ "selector": ".aboutDataDescription1", "property": "innerText", "key": "htmlAboutDataDescription1" },
 		{ "selector": ".aboutDataDescription2", "property": "innerText", "key": "htmlAboutDataDescription2" },
 		{ "selector": ".aboutDataDescription3", "property": "innerText", "key": "htmlAboutDataDescription3" },
-		{ "selector": ".aboutDataDescription4", "property": "innerText", "key": "htmlAboutDataDescription4" },
-		{ "selector": ".aboutDataDescription5", "property": "innerText", "key": "htmlAboutDataDescription5" },
 		{ "selector": ".contactTitle", "property": "innerText", "key": "htmlContactTitle" },
 		{ "selector": ".issueDescription", "property": "innerText", "key": "htmlIssueDescription" },
 		{ "selector": ".mailDescription", "property": "innerText", "key": "htmlMailDescription" },
