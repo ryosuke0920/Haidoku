@@ -452,12 +452,12 @@ const PRESET_OPTION_LIST = [
 		"u": "http://e-words.jp/?q=$1"
 	},
 	{
-		"la": "en",
+		"la": "ja",
 		"l": "developer.mozilla.org (ja)",
 		"u": "https://developer.mozilla.org/ja/search?q=$1"
 	},
 	{
-		"la": "en",
+		"la": "ja",
 		"l": "developer.mozilla.org (ja) by Google",
 		"u": "https://www.google.co.jp/search?q=site:developer.mozilla.org/ja/ $1"
 	},
