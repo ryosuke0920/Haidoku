@@ -340,7 +340,7 @@ nav .groupLine {
 		grid-column-end: 3;
 	}
 }
-@media (min-width: 1194px) {
+@media (min-width: 1300px) {
 	.gridWrapper {
 		grid-template-columns: 100px 1fr 1fr;
 	}
