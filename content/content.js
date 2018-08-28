@@ -1036,7 +1036,17 @@
 			let content;
 			let list;
 			if(apiCutOut){
-				content = doc.querySelector("ol");
+				let olList = doc.querySelectorAll("ol");
+				if (olList.length<=0) {
+					e.error = MEANING_NOT_FOUND_ERROR;
+					return apiResponseError.bind(this)(e);
+				}
+				for(let i=0; i<olList.length; i++){
+					if( checkBlank(olList[i].innerText) ) {
+						content = olList[i];
+						continue;
+					}
+				}
 				if(!content){
 					e.error = MEANING_NOT_FOUND_ERROR;
 					return apiResponseError.bind(this)(e);
