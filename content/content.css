@@ -334,7 +334,8 @@
 }
 #lessLaborGoToDictionary-apiBody th, #lessLaborGoToDictionary-apiBody td {
 	display: table-cell;
-	border: 1px solid #eaecf0;
+	border: 1px solid black;
+	padding: 3px;
 }
 #lessLaborGoToDictionary-apiBody th {
 	background-color: #f9f9f9;
@@ -401,13 +402,17 @@
 }
 #lessLaborGoToDictionary-apiBody h1.in-block, #lessLaborGoToDictionary-apiBody h2.in-block, #lessLaborGoToDictionary-apiBody h3.in-block,
 #lessLaborGoToDictionary-apiBody h4.in-block, #lessLaborGoToDictionary-apiBody h5.in-block, #lessLaborGoToDictionary-apiBody h6.in-block {
-	border-bottom: solid 1px #eaecf0;
+	border-bottom: solid 2px black;
 }
 #lessLaborGoToDictionary-apiBody *.mw-empty-elt {
 	display: none;
 }
 #lessLaborGoToDictionary-apiBody a.new, #lessLaborGoToDictionary-apiBody a.new * {
 	color: #dd3333;
+}
+#lessLaborGoToDictionary-apiBody table.audiotable td,
+#lessLaborGoToDictionary-apiBody table.audiotable th {
+	border: none;
 }
 #lessLaborGoToDictionary-apiBody span.lessLaborGoToDictionary-play {
 	display: inline-block;

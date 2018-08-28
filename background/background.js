@@ -103,6 +103,12 @@ function notify(message, sender, sendResponse){
 			return Promise.reject(e);
 		});
 	}
+	else if( method == "downloadAsBaase64" ){
+		return downloadAsBaase64(data.url).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
+	}
 	else {
 		return save(data).catch((e)=>{
 			console.error(e);
@@ -830,4 +836,8 @@ function fetchApiDocumentCache(text){
 		}
 	}
 	return false;
+}
+
+function downloadAsBaase64(url){
+	
 }

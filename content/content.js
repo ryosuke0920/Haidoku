@@ -1068,7 +1068,7 @@
 					}
 				}
 			}
-			list = content.querySelectorAll(".indicator,.noprint,.NavFrame,ol>li>dl,ol>li>ul");
+			list = content.querySelectorAll(".indicator,.noprint,.NavFrame,ol>li>dl,ol>li>ul,hr");
 			for(let i=0; i<list.length; i++){
 				list[i].parentNode.removeChild(list[i]);
 			}
@@ -1089,7 +1089,33 @@
 				else{
 					audio.parentNode.appendChild(playButton);
 				}
-				playButton.addEventListener("click",(e)=>{ audio.play(); });
+				playButton.addEventListener("click",(e)=>{
+					audio.addEventListener("stalled",(e)=>{console.error(e);});
+					audio.addEventListener("abort",(e)=>{console.error(e);});
+					audio.addEventListener("error",(e)=>{console.error(e);});
+					console.log(audio);
+					console.log(audio.currentSrc);
+					let p = ponyfill.runtime.sendMessage({
+						"method": "downloadAsBaase64",
+						"data": {
+							"url": audio.currentSrc
+						}
+					});
+					p.then( (e)=>{
+						console.log(e);
+						let list = audio.querySelectorAll("source");
+						for(let i=0; i<list.length; i++){
+							list[i].remove();
+						}
+						let src = document.createElement("source");
+						src.src = e;
+						audio.appendChild(src);
+						audio.load();
+						return audio.play();
+					}).catch( (e)=>{
+						console.error(e);
+					});
+				});
 			}
 			list = content.querySelectorAll("a[href]:not([href^=http])");
 			for(let i=0; i<list.length; i++){
