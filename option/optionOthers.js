@@ -32,6 +32,7 @@
 			{ "selector": ".linkListActionNormal", "property": "innerText", "key": "htmlLinkListActionNormal" },
 			{ "selector": ".linkListActionMouseover", "property": "innerText", "key": "htmlLinkListActionMouseover" },
 			{ "selector": ".linkListActionMouseclick", "property": "innerText", "key": "htmlLinkListActionMouseclick" },
+			{ "selector": "#"+CSS_PREFIX+"-move", "property": "title", "key": "htmlMove" },
 			{ "selector": "#"+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
 			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
 			{ "selector": "#"+CSS_PREFIX+"-copy", "property": "title", "key": "htmlCopy" },
