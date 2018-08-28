@@ -144,6 +144,12 @@
 		apiContentNode.appendChild(apiFooterNode);
 		clearApiContent();
 
+		let arrowNode = document.createElement("img");
+		arrowNode.src = ponyfill.extension.getURL("/image/arrow.svg");
+		arrowNode.setAttribute("id",CSS_PREFIX+"-move");
+		arrowNode.title = ponyfill.i18n.getMessage("htmlMove");
+		menuNode.appendChild(arrowNode);
+
 		let resizeNode = document.createElement("img");
 		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");

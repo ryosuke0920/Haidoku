@@ -139,6 +139,9 @@
 	"htmlCopy": {
 		"message": "Copy"
 	},
+	"htmlMove": {
+		"message": "move"
+	},
 	"htmlResize": {
 		"message": "Reset size"
 	},

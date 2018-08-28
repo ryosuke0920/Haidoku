@@ -58,6 +58,7 @@
 #lessLaborGoToDictionary-zoomUp,
 #lessLaborGoToDictionary-copy,
 #lessLaborGoToDictionary-resize,
+#lessLaborGoToDictionary-move,
 #lessLaborGoToDictionary-option {
 	all: initial;
 	user-select: none;
@@ -69,6 +70,10 @@
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 	margin-right: 5px;
 }
+#lessLaborGoToDictionary-move {
+	cursor: move;
+}
+
 #lessLaborGoToDictionary-container {
 	all: initial;
 	user-select: none;
