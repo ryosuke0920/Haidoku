@@ -56,3 +56,4 @@ const SERVER_ERROR = "server error";
 const APPLICATION_ERROR = "application error";
 const HTTP_NG = "0";
 const HTTP_200_OK = "200";
+const HTTP_206_PARTIAL = "206";

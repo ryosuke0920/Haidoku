@@ -839,5 +839,16 @@ function fetchApiDocumentCache(text){
 }
 
 function downloadAsBaase64(url){
-	
+	return promiseAjax("GET", url, "blob").then( onDownloadAsBase64 );
+}
+
+function onDownloadAsBase64(e){
+	console.log(e);
+	if(e.target.status == HTTP_200_OK){
+		return blob2Base64(e.target.response);
+	}
+	if(e.target.status == HTTP_206_PARTIAL){
+		return blob2Base64(e.target.response);
+	}
+	return Promise.reject( new Error(CONNECTION_ERROR) );
 }
