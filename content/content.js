@@ -484,28 +484,32 @@
 		show(linkListNode);
 		applyLinkListSize();
 
-		// The xx is a part of widget X point from pageX.
-		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH - SPACE;
-		// If xx is minus, xx is a part of widget width that is not appered. It's outside viewport.
-		if ( 0 < xx ) xx = SPACE;
-		linkListNodeLeft = pageX + xx;
-		// Widget width is longer than viewport width
-		if ( linkListNodeLeft < window.scrollX ) linkListNodeLeft = window.scrollX;
+		if ( document.documentElement.offsetWidth < linkListNode.offsetWidth ){
+			linkListNodeLeft = window.scrollX;
+		}
+		else {
+			let xx = document.documentElement.offsetWidth - clientX - linkListNode.offsetWidth - SPACE;
+			if ( 0 < xx ){
+				linkListNodeLeft = pageX + SPACE;
+			}
+			else {
+				linkListNodeLeft = window.scrollX + document.documentElement.offsetWidth - linkListNode.offsetWidth;
+			}
+		}
 
-		// The yy is a part of widget Y point from pageY.
-		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH - SPACE;
-		// If yy is minus, yy is a part of widget height that is not appered. It's outside viewport.
-		if ( 0 < yy ) yy = SPACE;
-		linkListNodeTop = pageY + yy;
-		console.log(linkListNodeTop);
-		// ウィジェットの上の部分が欠けた場合
-		if ( linkListNodeTop < pageY ) linkListNodeTop = pageY - linkListNode.offsetHeight - SPACE;
-		console.log(linkListNodeTop);
-		if (linkListNodeTop < 0) linkListNodeTop = pageY + SPACE;
-		console.log(linkListNodeTop);
-
-		// Widget height is longer than viewport height
-		//if ( linkListNodeTop < window.scrollY ) linkListNodeTop = window.scrollY;
+		let yy = document.documentElement.offsetHeight - clientY - linkListNode.offsetHeight - SPACE;
+		if ( 0 < yy ){
+			linkListNodeTop = pageY + SPACE;
+		}
+		else {
+			yy = pageY - linkListNode.offsetHeight - SPACE;
+			if (window.scrollY <= yy) {
+				linkListNodeTop = yy;
+			}
+			else {
+				linkListNodeTop = pageY + SPACE;
+			}
+		}
 
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
