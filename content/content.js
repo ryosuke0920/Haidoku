@@ -4,7 +4,7 @@
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
-	const SPACE = 22;
+	const SPACE = 18;
 	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
@@ -237,8 +237,8 @@
 
 	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( document.documentElement.offsetWidth <= e.pageX ) return; // on the scroll bar
-		if( document.documentElement.offsetHeight <= e.pageY ) return; // on the scroll bar
+		if( document.documentElement.offsetWidth <= e.clientX ) return; // on the scroll bar
+		if( document.documentElement.offsetHeight <= e.clientY ) return; // on the scroll bar
 		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) {
 			closeLinkList();
 			abortApiRequestQueue();
