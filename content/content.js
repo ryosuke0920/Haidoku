@@ -51,6 +51,8 @@
 	let apiFooterNode;
 	let apiSwitcheNode;
 	let windowId = Math.random();
+	let arrowNode;
+	let moveObj;
 
 	Promise.resolve()
 		.then(init)
@@ -74,6 +76,7 @@
 
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
+		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/rect30.png")+")";
 		linkListNode.appendChild(coverNode);
 
 		menuNode = document.createElement("nav");
@@ -132,6 +135,7 @@
 
 		let apiLoadingContentNode = document.createElement("div");
 		apiLoadingContentNode.setAttribute("id",CSS_PREFIX+"-apiLoadingContent");
+		apiLoadingContentNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/circle.svg")+")";
 		apiLoadingNode.appendChild(apiLoadingContentNode);
 
 		apiBodyNode = document.createElement("div");
@@ -144,38 +148,38 @@
 		apiContentNode.appendChild(apiFooterNode);
 		clearApiContent();
 
-		let arrowNode = document.createElement("img");
-		arrowNode.src = ponyfill.extension.getURL("/image/arrow.svg");
-		arrowNode.setAttribute("id",CSS_PREFIX+"-move");
+		arrowNode = document.createElement("div");
+		arrowNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/arrow.svg")+")";
+		arrowNode.setAttribute("id", CSS_PREFIX+"-move");
 		arrowNode.title = ponyfill.i18n.getMessage("htmlMove");
 		menuNode.appendChild(arrowNode);
 
-		let resizeNode = document.createElement("img");
-		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
+		let resizeNode = document.createElement("div");
+		resizeNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/resize.svg")+")";
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
 		resizeNode.title = ponyfill.i18n.getMessage("htmlResize");
 		menuNode.appendChild(resizeNode);
 
-		let zoomDownNode = document.createElement("img");
-		zoomDownNode.src = ponyfill.extension.getURL("/image/minus.svg");
+		let zoomDownNode = document.createElement("div");
+		zoomDownNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/minus.svg")+")";
 		zoomDownNode.setAttribute("id",CSS_PREFIX+"-zoomDown");
 		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 
-		let zoomUpNode = document.createElement("img");
-		zoomUpNode.src = ponyfill.extension.getURL("/image/plus.svg");
+		let zoomUpNode = document.createElement("div");
+		zoomUpNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/plus.svg")+")";
 		zoomUpNode.setAttribute("id",CSS_PREFIX+"-zoomUp");
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 
-		let copyNode = document.createElement("img");
-		copyNode.src = ponyfill.extension.getURL("/image/copy.svg");
+		let copyNode = document.createElement("div");
+		copyNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/copy.svg")+")";
 		copyNode.setAttribute("id",CSS_PREFIX+"-copy");
 		copyNode.title = ponyfill.i18n.getMessage("htmlCopy");
 		menuNode.appendChild(copyNode);
 
-		let optionNode = document.createElement("img");
-		optionNode.src = ponyfill.extension.getURL("/image/option.svg");
+		let optionNode = document.createElement("div");
+		optionNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/option.svg")+")";
 		optionNode.setAttribute("id",CSS_PREFIX+"-option");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
@@ -238,6 +242,14 @@
 	}
 
 	function mousedownCommonBehavior(e){
+		if( e.button != 0 ) return;
+		if ( e.target == arrowNode ) {
+			moveObj = {
+				"dy": e.pageY - linkListNodeTop,
+				"dx": e.pageX - linkListNodeLeft
+			};
+			return;
+		}
 		if ( e.target != coverNode ) mousedownFlag = true;
 	}
 
@@ -252,6 +264,7 @@
 	}
 
 	function mouseupCommonBehavior(e){
+		moveObj = undefined;
 		mousedownFlag = false;
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
@@ -311,6 +324,10 @@
 	}
 
 	function mousemoveBehavior(e){
+		if ( moveObj ) {
+			moveWidgetMousePonit(e);
+			return;
+		}
 		if ( !hasStopper() && isLinkListShown() && mousedownFlag ) resizeWatcher();
 	}
 
@@ -517,8 +534,7 @@
 			}
 		}
 
-		linkListNode.style.top = linkListNodeTop+"px";
-		linkListNode.style.left = linkListNodeLeft+"px";
+		moveWidget();
 		linkListNode.scrollTop = 0;
 		linkListNode.scrollLeft = 0;
 	}
@@ -1200,6 +1216,17 @@
 
 	function isEnableApi(){
 		return ( hasServiceCode() && isApiSwitchOn() );
+	}
+
+	function moveWidgetMousePonit(e){
+		linkListNodeTop = e.pageY - moveObj.dy;
+		linkListNodeLeft = e.pageX - moveObj.dx;
+		moveWidget();
+	}
+
+	function moveWidget(){
+		linkListNode.style.top = linkListNodeTop+"px";
+		linkListNode.style.left = linkListNodeLeft+"px";
 	}
 
 })();

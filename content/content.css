@@ -30,7 +30,6 @@
 	right: 0;
 	bottom: 0;
 	cursor: pointer;
-	background-image: url("chrome-extension://__MSG_@@extension_id__/image/rect30.png"),url("/image/rect30.png");
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-stopper {
 	width: 30px !important;
@@ -61,9 +60,7 @@
 #lessLaborGoToDictionary-move,
 #lessLaborGoToDictionary-option {
 	all: initial;
-	user-select: none;
-	-moz-user-select: none;
-	font-family: sans-serif;
+	display: inline-block;
 	height: 16px;
 	width: 16px;
 	cursor: pointer;
@@ -73,7 +70,6 @@
 #lessLaborGoToDictionary-move {
 	cursor: move;
 }
-
 #lessLaborGoToDictionary-container {
 	all: initial;
 	user-select: none;
@@ -252,7 +248,6 @@
 }
 #lessLaborGoToDictionary-apiLoadingContent {
 	display: block;
-	background-image: url("chrome-extension://__MSG_@@extension_id__/image/circle.svg"),url("/image/circle.svg");
 	background-repeat: no-repeat;
 	background-position: center;
 	height:100%;
