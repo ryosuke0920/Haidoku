@@ -433,7 +433,7 @@
 		saveHistory(e.currentTarget.getAttribute("data-text"), window.location.toString(), document.title.toString(), e.currentTarget.getAttribute("data-url"), e.currentTarget.getAttribute("data-label")).catch(onSaveError);
 	}
 
-	function saveHistory(text,fromURL,fromTitle,toURL,toTitle){
+	function saveHistory(text,fromURL,fromTitle,toURL,toTitle,asIs=false){
 		let data = {
 			"method": "saveHistory",
 			"data": {
@@ -441,7 +441,8 @@
 				"fromURL": fromURL,
 				"fromTitle": fromTitle,
 				"toURL": toURL,
-				"toTitle": toTitle
+				"toTitle": toTitle,
+				"asIs": asIs
 			}
 		};
 		return ponyfill.runtime.sendMessage(data);
@@ -1281,7 +1282,14 @@
 	}
 
 	function saveHistoryWiktionarLinkage(){
-		return saveHistory(apiTitleNode.getAttribute("data-text"),window.location.toString(),document.title.toString(),apiTitleNode.href,apiTitleNode.getAttribute("data-title")).catch(onSaveError);
+		return saveHistory(
+			apiTitleNode.getAttribute("data-text"),
+			window.location.toString(),
+			document.title.toString(),
+			apiTitleNode.href,
+			apiTitleNode.getAttribute("data-title"),
+			true
+		).catch(onSaveError);
 	}
 
 })();
