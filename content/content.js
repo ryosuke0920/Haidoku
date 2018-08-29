@@ -889,6 +889,15 @@
 		return res;
 	}
 
+	function onAudioPlayError(e){
+		console.error(e);
+		let res = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": ponyfill.i18n.getMessage("notificationAudioPlayError", [e.message])
+		});
+		return res;
+	}
+
 	function silentError(e){
 		if( e.message.match( SILENT_ERROR_REGEX ) ){
 			console.log(e);
@@ -1090,19 +1099,14 @@
 					audio.parentNode.appendChild(playButton);
 				}
 				playButton.addEventListener("click",(e)=>{
-					audio.addEventListener("stalled",(e)=>{console.error(e);});
-					audio.addEventListener("abort",(e)=>{console.error(e);});
 					audio.addEventListener("error",(e)=>{console.error(e);});
-					console.log(audio);
-					console.log(audio.currentSrc);
 					let p = ponyfill.runtime.sendMessage({
 						"method": "downloadAsBaase64",
 						"data": {
 							"url": audio.currentSrc
 						}
 					});
-					p.then( (e)=>{
-						console.log(e);
+					p.then((e)=>{
 						let list = audio.querySelectorAll("source");
 						for(let i=0; i<list.length; i++){
 							list[i].remove();
@@ -1113,7 +1117,7 @@
 						audio.load();
 						return audio.play();
 					}).catch( (e)=>{
-						console.error(e);
+						return onAudioPlayError(e);
 					});
 				});
 			}

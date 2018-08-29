@@ -843,7 +843,6 @@ function downloadAsBaase64(url){
 }
 
 function onDownloadAsBase64(e){
-	console.log(e);
 	if(e.target.status == HTTP_200_OK){
 		return blob2Base64(e.target.response);
 	}

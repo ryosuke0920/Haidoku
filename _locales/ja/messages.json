@@ -61,6 +61,14 @@
 	"notificationDownloadLanguageError": {
 		"message": "言語の一覧のダウンロードに失敗しました。"
 	},
+	"notificationAudioPlayError": {
+		"message": "オーディオの再生に失敗しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1"
+			}
+		}
+	},
 	"htmlMaybeTitle" :{
 		"message": "もしかして、$WORD$",
 		"placeholders": {

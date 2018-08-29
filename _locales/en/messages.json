@@ -61,6 +61,14 @@
 	"notificationDownloadLanguageError": {
 		"message": "Failed to download list of language."
 	},
+	"notificationAudioPlayError": {
+		"message": "Audio playback failed. $ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1"
+			}
+		}
+	},
 	"htmlMaybeTitle" :{
 		"message": "Did you mean: $WORD$",
 		"placeholders": {
