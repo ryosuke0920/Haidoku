@@ -843,10 +843,7 @@ function downloadAsBaase64(url){
 }
 
 function onDownloadAsBase64(e){
-	if(e.target.status == HTTP_200_OK){
-		return blob2Base64(e.target.response);
-	}
-	if(e.target.status == HTTP_206_PARTIAL){
+	if(e.target.status == HTTP_206_PARTIAL || e.target.status == HTTP_200_OK){
 		return blob2Base64(e.target.response);
 	}
 	return Promise.reject( new Error(CONNECTION_ERROR) );
