@@ -159,6 +159,9 @@
 	"htmlSaveHistory": {
 		"message": "Save history"
 	},
+	"htmlSaveHistoryDone": {
+		"message": "Saved history"
+	},
 	"htmlFormName": {
 		"message": "Edit link"
 	},

@@ -159,6 +159,9 @@
 	"htmlSaveHistory": {
 		"message": "履歴を保存"
 	},
+	"htmlSaveHistoryDone": {
+		"message": "履歴を保存済み"
+	},
 	"htmlFormName": {
 		"message": "リンク編集"
 	},

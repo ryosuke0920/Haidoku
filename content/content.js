@@ -54,6 +54,7 @@
 	let arrowNode;
 	let moveObj;
 	let historyButtoneNode;
+	let historyDoneButtoneNode;
 
 	Promise.resolve()
 		.then(init)
@@ -118,6 +119,12 @@
 		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
 		apiTitleWrapper.appendChild(historyButtoneNode);
+
+		historyDoneButtoneNode = document.createElement("div");
+		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
+		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
+		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
+		apiTitleWrapper.appendChild(historyDoneButtoneNode);
 
 		apiTitleNode = document.createElement("a");
 		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
@@ -795,6 +802,8 @@
 	function menuClickBihavior(e){
 		let id = e.target.getAttribute("id");
 		if(id == CSS_PREFIX+"-history"){
+			hide(historyButtoneNode);
+			show(historyDoneButtoneNode);
 			Promise.resolve().then(saveHistoryWiktionarLinkage).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-zoomUp"){
@@ -996,6 +1005,7 @@
 	function clearApiContent(){
 		linkListNode.classList.add(CSS_PREFIX+"-loading");
 		hide(historyButtoneNode);
+		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
 	}
 
