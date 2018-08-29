@@ -53,6 +53,7 @@
 	let windowId = Math.random();
 	let arrowNode;
 	let moveObj;
+	let historyButtoneNode;
 
 	Promise.resolve()
 		.then(init)
@@ -108,17 +109,21 @@
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
 		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
 
-		let historyButtoneNode = document.createElement("div");
+		let apiTitleWrapper = document.createElement("div");
+		apiTitleWrapper.setAttribute("id",CSS_PREFIX+"-apiTitleWrapper");
+		apiHeaderNode.appendChild(apiTitleWrapper);
+
+		historyButtoneNode = document.createElement("div");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
 		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
-		apiHeaderNode.appendChild(historyButtoneNode);
+		apiTitleWrapper.appendChild(historyButtoneNode);
 
 		apiTitleNode = document.createElement("a");
 		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
 		apiTitleNode.setAttribute("rel","noreferrer");
 		apiTitleNode.setAttribute("target","_blank");
-		apiHeaderNode.appendChild(apiTitleNode);
+		apiTitleWrapper.appendChild(apiTitleNode);
 
 		let apiNowLoadingMsgNode = document.createElement("span");
 		apiNowLoadingMsgNode.setAttribute("id",CSS_PREFIX+"-nowLoadingMsg");
@@ -990,6 +995,7 @@
 
 	function clearApiContent(){
 		linkListNode.classList.add(CSS_PREFIX+"-loading");
+		hide(historyButtoneNode);
 		clearChildren(apiBodyNode);
 	}
 
@@ -1145,6 +1151,7 @@
 			}
 			apiBodyNode.appendChild(content);
 		}
+		show(historyButtoneNode);
 		linkListNode.classList.remove(CSS_PREFIX+"-loading");
 	}
 

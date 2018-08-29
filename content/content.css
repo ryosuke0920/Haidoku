@@ -12,7 +12,8 @@
 	resize: both;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-hide,
-#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
+#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide,
+#lessLaborGoToDictionary-history.lessLaborGoToDictionary-hide {
 	display: none;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
@@ -437,7 +438,7 @@
 	vertical-align: middle;
 	margin: 2px;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitle,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitleWrapper,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody {
 	display: none;
 }
@@ -453,7 +454,7 @@
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOff {
 	display: block;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiTitle,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiTitleWrapper,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-nowLoadingMsg,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiBody,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiLoading {
