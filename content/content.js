@@ -252,7 +252,7 @@
 		let lastRange = selection.getRangeAt(selection.rangeCount-1);
 		let rectList = lastRange.getClientRects();
 		let rect = rectList[rectList.length-1];
-		showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+		showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX);
 		if(isEnableApi()){
 			abortApiRequestQueue();
 			apiRequest(selection);
@@ -299,7 +299,12 @@
 				let text = selection.toString();
 				if( !checkBlank(text) ) return;
 				makeLinkList(text);
-				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selection);
+
+				let lastRange = selection.getRangeAt(selection.rangeCount-1);
+				let rectList = lastRange.getClientRects();
+				let rect = rectList[rectList.length-1];
+				showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX);
+
 				if(isEnableApi()){
 					abortApiRequestQueue();
 					apiRequest(selection);
@@ -332,7 +337,7 @@
 				let rectList = lastRange.getClientRects();
 				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
-				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX);
 				if(isEnableApi()) {
 					abortApiRequestQueue();
 					apiRequest(selection);
@@ -511,51 +516,67 @@
 		linkListNode.style.width = linkListNodeWidth + "px";
 	}
 
-	function showLinkListByClick(pageY, pageX, clientY, clientX, selection){
+	function showLinkListByClick(pageY, pageX){
 		if( linkListAction == LINK_LIST_ACTION_MOUSECLICK || linkListAction == LINK_LIST_ACTION_MOUSEOVER ) addStopper();
-		showLinkList(pageY, pageX, clientY, clientX, selection);
+		showLinkList(pageY, pageX);
 	}
 
-	function showLinkListByKey(pageY, pageX, clientY, clientX, selection){
+	function showLinkListByKey(pageY, pageX){
 		removeStopper();
-		showLinkList(pageY, pageX, clientY, clientX, selection);
+		showLinkList(pageY, pageX);
 	}
 
-	function showLinkList(pageY, pageX, clientY, clientX, selection){
+	function showLinkList(pageY, pageX){
 		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		show(linkListNode);
 		applyLinkListSize();
 
-		if ( document.documentElement.offsetWidth < linkListNode.offsetWidth ){
-			linkListNodeLeft = window.scrollX;
-		}
-		else {
-			let xx = document.documentElement.offsetWidth - clientX - linkListNode.offsetWidth - SPACE;
-			if ( 0 < xx ){
-				linkListNodeLeft = pageX + SPACE;
-			}
-			else {
-				linkListNodeLeft = window.scrollX + document.documentElement.offsetWidth - linkListNode.offsetWidth;
-			}
-		}
-
-		let yy = document.documentElement.offsetHeight - clientY - linkListNode.offsetHeight - SPACE;
-		if ( 0 < yy ){
-			linkListNodeTop = pageY + SPACE;
-		}
-		else {
-			yy = pageY - linkListNode.offsetHeight - SPACE;
-			if (window.scrollY <= yy) {
-				linkListNodeTop = yy;
-			}
-			else {
-				linkListNodeTop = pageY + SPACE;
-			}
-		}
-
+		linkListNodeLeft = makeWidgetPointX(pageX);
+		linkListNodeTop = makeWidgetPointY(pageY);
 		moveWidget();
+
 		linkListNode.scrollTop = 0;
 		linkListNode.scrollLeft = 0;
+	}
+
+	function makeWidgetPointX(pageX){
+		console.log("pageX="+pageX);
+		console.log("document.documentElement.offsetWidth="+document.documentElement.offsetWidth );
+		console.log("linkListNode.offsetWidth="+linkListNode.offsetWidth );
+		let clientX = pageX - window.scrollX;
+		if ( document.documentElement.offsetWidth < linkListNode.offsetWidth ){
+			console.log("a");
+			return window.scrollX;
+		}
+		let xx = window.scrollX + document.documentElement.offsetWidth - pageX - linkListNode.offsetWidth - SPACE;
+		if ( 0 < xx ){
+			console.log("b");
+			return pageX + SPACE;
+		}
+		console.log("c");
+		return window.scrollX + document.documentElement.offsetWidth - linkListNode.offsetWidth;
+	}
+
+	function makeWidgetPointY(pageY){
+		console.log("pageY="+pageY);
+		let clientY = pageY - window.scrollY;
+		console.log("document.documentElement.offsetHeight="+document.documentElement.offsetHeight);
+		console.log("linkListNode.offsetHeight="+linkListNode.offsetHeight);
+		console.log("pageY="+pageY);
+		console.log("clientY="+clientY);
+		let yy = window.scrollY + document.documentElement.offsetHeight - pageY - linkListNode.offsetHeight - SPACE;
+		console.log("yy="+yy);
+		if ( 0 < yy ){
+			console.log(111);
+			return pageY + SPACE;
+		}
+		yy = pageY - linkListNode.offsetHeight - SPACE;
+		if (window.scrollY <= yy) {
+			console.log(222);
+			return yy;
+		}
+		console.log(333);
+		return window.scrollY;
 	}
 
 	function isLinkListShown(){
@@ -721,7 +742,7 @@
 		removeStopper();
 		linkListNode.removeEventListener("mouseenter", removeStopper);
 		linkListNode.removeEventListener("mouseleave", controlStopper);
-		linkListNode.removeEventListener("click", removeStopper);
+		linkListNode.removeEventListener("click", widgetActionMouseclick);
 		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
 			linkListNode.classList.add(CSS_PREFIX+"-mouseover");
 			addStopper();
@@ -731,8 +752,16 @@
 		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
 			addStopper();
-			linkListNode.addEventListener("click", removeStopper);
+			linkListNode.addEventListener("click", widgetActionMouseclick);
 		}
+	}
+
+	function widgetActionMouseclick(e){
+		removeStopper();
+		console.log(1);
+		linkListNodeLeft = makeWidgetPointX(linkListNodeLeft, linkListNodeLeft - window.scrollX);
+		linkListNodeTop = makeWidgetPointY(linkListNodeTop, linkListNodeTop - window.scrollY);
+		moveWidget();
 	}
 
 	function controlStopper(e){
