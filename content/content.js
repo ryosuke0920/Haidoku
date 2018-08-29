@@ -193,7 +193,7 @@
 
 	function addCommonLinkListEvents(){
 		ponyfill.storage.onChanged.addListener( onStorageChanged );
-		menuNode.addEventListener("click", menuClickBihavior);
+		linkListNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
@@ -788,7 +788,10 @@
 
 	function menuClickBihavior(e){
 		let id = e.target.getAttribute("id");
-		if(id == CSS_PREFIX+"-zoomUp"){
+		if(id == CSS_PREFIX+"-history"){
+			Promise.resolve().then(saveHistoryWiktionarLinkage).catch(onSaveError);
+		}
+		else if(id == CSS_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-zoomDown"){
@@ -1004,6 +1007,8 @@
 		else {
 			apiTitleNode.innerText = e.title;
 		}
+		apiTitleNode.setAttribute("data-text", e.text);
+		apiTitleNode.setAttribute("data-title", e.title);
 		apiTitleNode.setAttribute("href", e.fullurl);
 		let sections = [];
 		if(languageFilter.length > 0){
@@ -1273,6 +1278,10 @@
 	function moveWidget(){
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
+	}
+
+	function saveHistoryWiktionarLinkage(){
+		return saveHistory(apiTitleNode.getAttribute("data-text"),window.location.toString(),document.title.toString(),apiTitleNode.href,apiTitleNode.getAttribute("data-title")).catch(onSaveError);
 	}
 
 })();
