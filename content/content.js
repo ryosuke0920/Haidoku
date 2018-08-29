@@ -108,6 +108,12 @@
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
 		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
 
+		let historyButtoneNode = document.createElement("div");
+		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
+		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
+		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
+		apiHeaderNode.appendChild(historyButtoneNode);
+
 		apiTitleNode = document.createElement("a");
 		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
 		apiTitleNode.setAttribute("rel","noreferrer");

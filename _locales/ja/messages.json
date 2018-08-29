@@ -156,6 +156,9 @@
 	"htmlOption": {
 		"message": "設定"
 	},
+	"htmlSaveHistory": {
+		"message": "履歴を保存"
+	},
 	"htmlFormName": {
 		"message": "リンク編集"
 	},
