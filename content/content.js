@@ -1146,11 +1146,6 @@
 				}
 				audio.addEventListener("error",(e)=>{console.error(e);});
 				playButton.addEventListener("click",(e)=>{
-					if( audio.getAttribute("data-loading") == "1" ) return;
-					if( audio.currentSrc.match("^data") ){
-						audio.play().catch( (e)=>{return onAudioPlayError(e)} );
-						return;
-					}
 					let url = audio.currentSrc;
 					let list = audio.querySelectorAll("source");
 					if(!url){
@@ -1161,27 +1156,13 @@
 					}
 					if(!url) return onAudioPlayError( new Error("Audio source notfound.") );
 					url = fullSSLURL(url);
-					audio.setAttribute("data-loading","1");
 					let p = ponyfill.runtime.sendMessage({
 						"method": "downloadAsBaase64",
 						"data": {
 							"url": url
 						}
 					});
-					for(let i=0; i<list.length; i++){
-						list[i].remove();
-					}
-					p.then((e)=>{
-						let src = document.createElement("source");
-						src.src = e;
-						audio.appendChild(src);
-						audio.load();
-						return audio.play();
-					}).catch( (e)=>{
-						return onAudioPlayError(e);
-					}).finally( (e)=>{
-						audio.removeAttribute("data-loading");
-					});
+					p.catch( (e)=>{ return onAudioPlayError(e); });
 				});
 			}
 			list = content.querySelectorAll("a[href]:not([href^=http])");
