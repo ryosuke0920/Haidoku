@@ -726,7 +726,7 @@
 		removeStopper();
 		linkListNode.removeEventListener("mouseenter", removeStopper);
 		linkListNode.removeEventListener("mouseleave", controlStopper);
-		linkListNode.removeEventListener("click", widgetActionMouseclick);
+		coverNode.removeEventListener("click", widgetActionMouseclick);
 		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
 			linkListNode.classList.add(CSS_PREFIX+"-mouseover");
 			addStopper();
@@ -736,7 +736,7 @@
 		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
 			addStopper();
-			linkListNode.addEventListener("click", widgetActionMouseclick);
+			coverNode.addEventListener("click", widgetActionMouseclick);
 		}
 	}
 
@@ -1307,7 +1307,6 @@
 	}
 
 	function moveWidget(){
-		console.log("?");//TODO
 		linkListNode.style.top = linkListNodeTop+"px";
 		linkListNode.style.left = linkListNodeLeft+"px";
 	}
