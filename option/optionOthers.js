@@ -112,7 +112,6 @@
 		setLinkListStyle(res["cl"]);
 		setSampleLinkListStyle(res["cl"]);
 		setLinkListAction(res["ca"]);
-		setSampleLinkListAction(res["ca"]);
 		setFaviconDisplay(res["f"]);
 		setSampleLinkListFaviconDisplay(res["f"]);
 		setLinkListDirection(res["ld"]);
@@ -136,7 +135,6 @@
 	function otherNodeClickBehavior(e){
 		if( e.target.classList.contains("linkListLayoutPattern") ){
 			changeLayout(e.target.value);
-			removeStopper();
 		}
 		else if( e.target.classList.contains("addLanguageFilter") ){
 			addLanguageFilterClickBehavior();
@@ -153,10 +151,8 @@
 		if( e.target.classList.contains("linkListStyle") ){
 			setSampleLinkListStyle(e.target.value);
 			saveLinkListStyle(e.target.value).catch(onSaveError);
-			removeStopper();
 		}
 		else if( e.target.classList.contains("linkListAction") ){
-			setSampleLinkListAction(e.target.value);
 			saveLinkListAction(e.target.value).catch(onSaveError);
 		}
 		else if( e.target.classList.contains("faviconDisplay") ){
@@ -192,7 +188,6 @@
 		}
 		if( e.hasOwnProperty("ca") ){
 			setLinkListAction(e["ca"]["newValue"]);
-			setSampleLinkListAction(e["ca"]["newValue"]);
 		}
 		if( e.hasOwnProperty("ld") ) {
 			setLinkListDirection(e["ld"]["newValue"]);
@@ -407,34 +402,6 @@
 	function setSampleLinkListStyle(value){
 		sampleLinkListNode.classList.remove(CSS_PREFIX+"-dark");
 		if( value == LINK_LIST_STYLE_DARK ) sampleLinkListNode.classList.add(CSS_PREFIX+"-dark");
-	}
-
-	function setSampleLinkListAction(value){
-		sampleLinkListNode.classList.remove(CSS_PREFIX+"-mouseover");
-		sampleLinkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
-		removeStopper();
-		sampleLinkListNode.removeEventListener("click",removeStopper);
-		sampleLinkListNode.removeEventListener("mouseenter", removeStopper);
-		sampleLinkListNode.removeEventListener("mouseleave", addStopper);
-		if( value == LINK_LIST_ACTION_MOUSEOVER ){
-			sampleLinkListNode.classList.add(CSS_PREFIX+"-mouseover");
-			addStopper();
-			sampleLinkListNode.addEventListener("mouseenter", removeStopper);
-			sampleLinkListNode.addEventListener("mouseleave", addStopper);
-		}
-		else if( value == LINK_LIST_ACTION_MOUSECLICK ){
-			sampleLinkListNode.classList.add(CSS_PREFIX+"-mouseclick");
-			addStopper();
-			sampleLinkListNode.addEventListener("click",removeStopper);
-		}
-	}
-
-	function addStopper(){
-		sampleLinkListNode.classList.add(CSS_PREFIX+"-stopper");
-	}
-
-	function removeStopper(){
-		sampleLinkListNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
 	function setSampleLinkListDirection(value){
