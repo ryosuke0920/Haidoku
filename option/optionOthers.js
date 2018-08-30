@@ -38,6 +38,7 @@
 			{ "selector": "#"+CSS_PREFIX+"-copy", "property": "title", "key": "htmlCopy" },
 			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
 			{ "selector": "#"+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
+			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" },
 			{ "selector": ".linkListLayoutTitle", "property": "innerText", "key": "htmlLinkListLayoutTitle" },
 			{ "selector": ".linkListLayoutPatternTitle", "property": "innerText", "key": "htmlLinkListLayoutPatternTitle" },
 			{ "selector": ".faviconDisplayTitle", "property": "innerText", "key": "htmlFaviconDisplayTitle" },
