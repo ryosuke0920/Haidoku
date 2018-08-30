@@ -358,7 +358,7 @@
 		}
 		let historyToSiteAnchor = node.querySelector(".historyToSiteAnchor");
 		let url = toURL;
-		if(asIs) makeURL(toURL,text);
+		if(!asIs) url = makeURL(toURL,text);
 		historyToSiteAnchor.href = url;
 		let historyToSite = node.querySelector(".historyToSite");
 		historyToSite.title = url

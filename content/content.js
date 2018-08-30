@@ -271,8 +271,6 @@
 
 	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( document.documentElement.offsetWidth <= e.clientX ) return; // on the scroll bar
-		if( document.documentElement.offsetHeight <= e.clientY ) return; // on the scroll bar
 		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) {
 			closeLinkList();
 			abortApiRequestQueue();
@@ -525,15 +523,12 @@
 	}
 
 	function showLinkList(){
-		/* when display equals none, offsetHeight and offsetWidth return undefined. */
 		show(linkListNode);
 		applyLinkListSize();
-
 		let rect = getSelectionRect();
 		linkListNodeLeft = makeWidgetPointX(rect);
 		linkListNodeTop = makeWidgetPointY(rect);
 		moveWidget();
-
 		linkListNode.scrollTop = 0;
 		linkListNode.scrollLeft = 0;
 	}
@@ -822,7 +817,7 @@
 		if(id == CSS_PREFIX+"-history"){
 			hide(historyButtoneNode);
 			show(historyDoneButtoneNode);
-			Promise.resolve().then(saveHistoryWiktionarLinkage).catch(onSaveError);
+			Promise.resolve().then(saveHistoryWiktionaryLinkage).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
@@ -1099,7 +1094,7 @@
 				for(let i=0; i<olList.length; i++){
 					if( checkBlank(olList[i].innerText) ) {
 						content = olList[i];
-						continue;
+						break;
 					}
 				}
 				if(!content){
@@ -1144,17 +1139,16 @@
 				else{
 					audio.parentNode.appendChild(playButton);
 				}
-				audio.addEventListener("error",(e)=>{console.error(e);});
 				playButton.addEventListener("click",(e)=>{
 					let url = audio.currentSrc;
-					let list = audio.querySelectorAll("source");
 					if(!url){
+						let list = audio.querySelectorAll("source");
 						for(let i=list.length-1; 0<=i; i--){
 							url = list[i].src;
 							if( url.match("ogg$") ) break;
 						}
 					}
-					if(!url) return onAudioPlayError( new Error("Audio source notfound.") );
+					if(!url) return onAudioPlayError( new Error("Audio source not found.") );
 					url = fullSSLURL(url);
 					let p = ponyfill.runtime.sendMessage({
 						"method": "downloadAsBaase64",
@@ -1327,7 +1321,7 @@
 		linkListNode.style.left = linkListNodeLeft+"px";
 	}
 
-	function saveHistoryWiktionarLinkage(){
+	function saveHistoryWiktionaryLinkage(){
 		return saveHistory(
 			apiTitleNode.getAttribute("data-text"),
 			window.location.toString(),
