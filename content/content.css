@@ -390,9 +390,11 @@
 	display: inline-block;
 	height: 16px;
 	width: 16px;
-	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 	margin-right: 5px;
+}
+#lessLaborGoToDictionary-history {
+	cursor: pointer;
 }
 
 #lessLaborGoToDictionary-apiBody b, #lessLaborGoToDictionary-apiBody b *,

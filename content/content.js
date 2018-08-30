@@ -4,7 +4,8 @@
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
-	const SPACE = 0;
+	const SCROLL_SPACE = 17;
+	const RECT_SPACE = 3;
 	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
@@ -540,27 +541,31 @@
 	function makeWidgetPointX(rect){
 		let clientX = rect.right;
 		let pageX = window.scrollX + clientX;
-		if ( document.documentElement.offsetWidth < linkListNode.offsetWidth ){
+		let viewPortWidth = window.innerWidth - SCROLL_SPACE;
+		if ( viewPortWidth < linkListNode.offsetWidth ){
 			return window.scrollX;
 		}
-		if ( clientX + linkListNode.offsetWidth + SPACE <= document.documentElement.offsetWidth){
-			return pageX + SPACE;
+		if ( (clientX + linkListNode.offsetWidth + RECT_SPACE) <= viewPortWidth){
+			return pageX + RECT_SPACE;
 		}
-		return window.scrollX + document.documentElement.offsetWidth - linkListNode.offsetWidth;
+		return window.scrollX + viewPortWidth - linkListNode.offsetWidth;
 	}
 
 	function makeWidgetPointY(rect){
 		let clientY = rect.bottom;
 		let pageY = window.scrollY + clientY;
-		let yy = document.documentElement.offsetHeight - clientY - linkListNode.offsetHeight - SPACE;
-		if ( 0 <= yy ){
-			return pageY + SPACE;
+		let viewPortHeight = window.innerHeight - SCROLL_SPACE;
+		if ( viewPortHeight < linkListNode.offsetHeight ){
+			return pageY + RECT_SPACE;
 		}
-		yy = rect.top - linkListNode.offsetHeight - SPACE;
+		if ( (clientY + RECT_SPACE + linkListNode.offsetHeight) <=  viewPortHeight ){
+			return pageY + RECT_SPACE;
+		}
+		yy = rect.top - linkListNode.offsetHeight - RECT_SPACE;
 		if ( 0 <= yy) {
 			return window.scrollY + yy;
 		}
-		return window.scrollY;
+		return pageY + RECT_SPACE;
 	}
 
 	function isLinkListShown(){
