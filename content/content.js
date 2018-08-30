@@ -1144,19 +1144,34 @@
 				else{
 					audio.parentNode.appendChild(playButton);
 				}
+				audio.addEventListener("error",(e)=>{console.error(e);});
 				playButton.addEventListener("click",(e)=>{
-					audio.addEventListener("error",(e)=>{console.error(e);});
+					if( audio.getAttribute("data-loading") == "1" ) return;
+					if( audio.currentSrc.match("^data") ){
+						audio.play().catch( (e)=>{return onAudioPlayError(e)} );
+						return;
+					}
+					let url = audio.currentSrc;
+					let list = audio.querySelectorAll("source");
+					if(!url){
+						for(let i=list.length-1; 0<=i; i--){
+							url = list[i].src;
+							if( url.match("ogg$") ) break;
+						}
+					}
+					if(!url) return onAudioPlayError( new Error("Audio source notfound.") );
+					url = fullSSLURL(url);
+					audio.setAttribute("data-loading","1");
 					let p = ponyfill.runtime.sendMessage({
 						"method": "downloadAsBaase64",
 						"data": {
-							"url": audio.currentSrc
+							"url": url
 						}
 					});
+					for(let i=0; i<list.length; i++){
+						list[i].remove();
+					}
 					p.then((e)=>{
-						let list = audio.querySelectorAll("source");
-						for(let i=0; i<list.length; i++){
-							list[i].remove();
-						}
 						let src = document.createElement("source");
 						src.src = e;
 						audio.appendChild(src);
@@ -1164,6 +1179,8 @@
 						return audio.play();
 					}).catch( (e)=>{
 						return onAudioPlayError(e);
+					}).finally( (e)=>{
+						audio.removeAttribute("data-loading");
 					});
 				});
 			}
@@ -1181,6 +1198,19 @@
 		}
 		show(historyButtoneNode);
 		linkListNode.classList.remove(CSS_PREFIX+"-loading");
+	}
+
+	function fullSSLURL(url){
+		if( url.match("^//") ){
+			return "https:" + url;
+		}
+		if( url.match(/^http:/) ){
+			return url.replace(/^http:/, "https:");
+		}
+		if( url.match("^/") ){
+			return "https:/" + url;
+		}
+		return url;
 	}
 
 	function apiResponseError(e){
