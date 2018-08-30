@@ -846,7 +846,7 @@ function onDownloadAsBase64(e){
 	if(e.target.status == HTTP_206_PARTIAL || e.target.status == HTTP_200_OK){
 		return blob2Base64(e.target.response).then( audioPlay );
 	}
-	return Promise.reject( new Error(CONNECTION_ERROR) );
+	return Promise.reject( new Error(e.target.status) );
 }
 
 function audioPlay(base64){
