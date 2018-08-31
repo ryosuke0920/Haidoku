@@ -61,6 +61,14 @@
 	"notificationDownloadLanguageError": {
 		"message": "言語の一覧のダウンロードに失敗しました。"
 	},
+	"notificationAudioPlayError": {
+		"message": "オーディオの再生に失敗しました。$ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1"
+			}
+		}
+	},
 	"htmlMaybeTitle" :{
 		"message": "もしかして、$WORD$",
 		"placeholders": {
@@ -139,11 +147,20 @@
 	"htmlCopy": {
 		"message": "コピー"
 	},
+	"htmlMove": {
+		"message": "移動"
+	},
 	"htmlResize": {
 		"message": "サイズをリセット"
 	},
 	"htmlOption": {
 		"message": "設定"
+	},
+	"htmlSaveHistory": {
+		"message": "履歴を保存"
+	},
+	"htmlSaveHistoryDone": {
+		"message": "履歴を保存済み"
 	},
 	"htmlFormName": {
 		"message": "リンク編集"
@@ -269,7 +286,7 @@
 		"message": "元サイト"
 	},
 	"htmlHistoryToSite": {
-		"message": "選択したリンク"
+		"message": "リンク先"
 	},
 	"htmlPageFirst": {
 		"message": "最初"
@@ -383,7 +400,7 @@
 		"message": "ウィクショナリーの選択"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "連携するウィクショナリーを選択してください。サイトによって表示される言語が異なります。情報の質や規模も異なります。変更すると\"言語フィルター\"も追加設定が必要になります。無効を選択すると表示領域が非表示になります。"
+		"message": "連携するウィクショナリーを選択してください。サイトによって表示される言語が異なります。情報の質や量も異なります。変更すると\"言語フィルター\"も追加設定が必要になります。無効を選択すると表示領域が非表示になります。"
 	},
 	"htmlServiceCodeNone": {
 		"message": "無効にする"

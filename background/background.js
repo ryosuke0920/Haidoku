@@ -103,6 +103,12 @@ function notify(message, sender, sendResponse){
 			return Promise.reject(e);
 		});
 	}
+	else if( method == "downloadAsBaase64" ){
+		return downloadAsBaase64(data.url).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
+	}
 	else {
 		return save(data).catch((e)=>{
 			console.error(e);
@@ -830,4 +836,23 @@ function fetchApiDocumentCache(text){
 		}
 	}
 	return false;
+}
+
+function downloadAsBaase64(url){
+	return promiseAjax("GET", url, "blob").then( onDownloadAsBase64 );
+}
+
+function onDownloadAsBase64(e){
+	if(e.target.status == HTTP_206_PARTIAL || e.target.status == HTTP_200_OK){
+		return blob2Base64(e.target.response).then( audioPlay );
+	}
+	return Promise.reject( new Error(e.target.status) );
+}
+
+function audioPlay(base64){
+	let audio = document.createElement("audio");
+	let source = document.createElement("source");
+	source.src = base64;
+	audio.appendChild(source);
+	return audio.play();
 }

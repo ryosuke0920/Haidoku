@@ -314,7 +314,8 @@
 						cursor.value.fromURL,
 						cursor.value.fromTitle,
 						cursor.value.toURL,
-						cursor.value.toTitle
+						cursor.value.toTitle,
+						cursor.value.hasOwnProperty("asIs") ? cursor.value.asIs : false
 					);
 				}
 				i++;
@@ -324,7 +325,7 @@
 		});
 	}
 
-	function historyMakeRow(id,date,text,fromURL,fromTitle,toURL,toTitle){
+	function historyMakeRow(id,date,text,fromURL,fromTitle,toURL,toTitle,asIs){
 		let node = document.importNode(rowlPrototypeNode.content, true);
 		let historyCheckbox = node.querySelector(".historyCheckbox");
 		historyCheckbox.value = id;
@@ -356,7 +357,8 @@
 			historyFromSite.innerText = fromTitle;
 		}
 		let historyToSiteAnchor = node.querySelector(".historyToSiteAnchor");
-		let url = makeURL(toURL,text);
+		let url = toURL;
+		if(!asIs) url = makeURL(toURL,text);
 		historyToSiteAnchor.href = url;
 		let historyToSite = node.querySelector(".historyToSite");
 		historyToSite.title = url
