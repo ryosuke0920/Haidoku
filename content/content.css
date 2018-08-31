@@ -12,7 +12,9 @@
 	resize: both;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-hide,
-#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
+#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide,
+#lessLaborGoToDictionary-history.lessLaborGoToDictionary-hide,
+#lessLaborGoToDictionary-historyDone.lessLaborGoToDictionary-hide {
 	display: none;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
@@ -30,7 +32,6 @@
 	right: 0;
 	bottom: 0;
 	cursor: pointer;
-	background-image: url("chrome-extension://__MSG_@@extension_id__/image/rect30.png"),url("/image/rect30.png");
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-stopper {
 	width: 30px !important;
@@ -58,16 +59,18 @@
 #lessLaborGoToDictionary-zoomUp,
 #lessLaborGoToDictionary-copy,
 #lessLaborGoToDictionary-resize,
+#lessLaborGoToDictionary-move,
 #lessLaborGoToDictionary-option {
 	all: initial;
-	user-select: none;
-	-moz-user-select: none;
-	font-family: sans-serif;
+	display: inline-block;
 	height: 16px;
 	width: 16px;
 	cursor: pointer;
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 	margin-right: 5px;
+}
+#lessLaborGoToDictionary-move {
+	cursor: move;
 }
 #lessLaborGoToDictionary-container {
 	all: initial;
@@ -247,7 +250,6 @@
 }
 #lessLaborGoToDictionary-apiLoadingContent {
 	display: block;
-	background-image: url("chrome-extension://__MSG_@@extension_id__/image/circle.svg"),url("/image/circle.svg");
 	background-repeat: no-repeat;
 	background-position: center;
 	height:100%;
@@ -334,7 +336,8 @@
 }
 #lessLaborGoToDictionary-apiBody th, #lessLaborGoToDictionary-apiBody td {
 	display: table-cell;
-	border: 1px solid #eaecf0;
+	border: 1px solid black;
+	padding: 3px;
 }
 #lessLaborGoToDictionary-apiBody th {
 	background-color: #f9f9f9;
@@ -382,6 +385,18 @@
 #lessLaborGoToDictionary-apiBody a:active, #lessLaborGoToDictionary-apiBody a:active * {
 	color: #ee0000;
 }
+#lessLaborGoToDictionary-history,
+#lessLaborGoToDictionary-historyDone {
+	display: inline-block;
+	height: 16px;
+	width: 16px;
+	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+	margin-right: 5px;
+}
+#lessLaborGoToDictionary-history {
+	cursor: pointer;
+}
+
 #lessLaborGoToDictionary-apiBody b, #lessLaborGoToDictionary-apiBody b *,
 #lessLaborGoToDictionary-apiBody strong, #lessLaborGoToDictionary-apiBody strong *,
 #lessLaborGoToDictionary-apiBody dt, #lessLaborGoToDictionary-apiBody dt * {
@@ -401,13 +416,17 @@
 }
 #lessLaborGoToDictionary-apiBody h1.in-block, #lessLaborGoToDictionary-apiBody h2.in-block, #lessLaborGoToDictionary-apiBody h3.in-block,
 #lessLaborGoToDictionary-apiBody h4.in-block, #lessLaborGoToDictionary-apiBody h5.in-block, #lessLaborGoToDictionary-apiBody h6.in-block {
-	border-bottom: solid 1px #eaecf0;
+	border-bottom: solid 2px black;
 }
 #lessLaborGoToDictionary-apiBody *.mw-empty-elt {
 	display: none;
 }
 #lessLaborGoToDictionary-apiBody a.new, #lessLaborGoToDictionary-apiBody a.new * {
 	color: #dd3333;
+}
+#lessLaborGoToDictionary-apiBody table.audiotable td,
+#lessLaborGoToDictionary-apiBody table.audiotable th {
+	border: none;
 }
 #lessLaborGoToDictionary-apiBody span.lessLaborGoToDictionary-play {
 	display: inline-block;
@@ -422,7 +441,7 @@
 	vertical-align: middle;
 	margin: 2px;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitle,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitleWrapper,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody {
 	display: none;
 }
@@ -438,7 +457,7 @@
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOff {
 	display: block;
 }
-#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiTitle,
+#lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiTitleWrapper,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-nowLoadingMsg,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiBody,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiLoading {

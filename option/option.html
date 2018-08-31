@@ -310,7 +310,7 @@
 						<p><button class="addLanguageFilter">htmlAddLanguageFilter</button></p>
 						<p class="sentence languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
 						<ul class="languageFilterBox"></ul>
-						<div id="downloadLanguagePane" class="hide">
+						<div id="downloadLanguagePane" class="box hide">
 							<div></div>
 							<p><span class="languageFilterDownloadMessage">htmlLanguageFilterDownloadMessage</span></p>
 						</div>
@@ -330,13 +330,14 @@
 					<h1 class="linkListSampleTitle">htmlLinkListSampleTitle</h1>
 					<div class="box">
 						<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 300px; width: 450px; z-index:auto;">
-							<div id="lessLaborGoToDictionary-cover"></div>
+							<div id="lessLaborGoToDictionary-cover" style="background-image:url(/image/rect30.png)"></div>
 							<nav id="lessLaborGoToDictionary-menu">
-								<img id="lessLaborGoToDictionary-resize" src="/image/resize.svg">
-								<img id="lessLaborGoToDictionary-zoomDown" src="/image/minus.svg">
-								<img id="lessLaborGoToDictionary-zoomUp" src="/image/plus.svg">
-								<img id="lessLaborGoToDictionary-copy" src="/image/copy.svg">
-								<img id="lessLaborGoToDictionary-option" src="/image/option.svg">
+								<div id="lessLaborGoToDictionary-move" style="background-image:url(/image/arrow.svg)"></div>
+								<div id="lessLaborGoToDictionary-resize" style="background-image:url(/image/resize.svg)"></div>
+								<div id="lessLaborGoToDictionary-zoomDown" style="background-image:url(/image/minus.svg)"></div>
+								<div id="lessLaborGoToDictionary-zoomUp" style="background-image:url(/image/plus.svg)"></div>
+								<div id="lessLaborGoToDictionary-copy" style="background-image:url(/image/copy.svg)"></div>
+								<div id="lessLaborGoToDictionary-option" style="background-image:url(/image/option.svg)"></div>
 							</nav>
 							<div id="lessLaborGoToDictionary-grid">
 								<ul id="lessLaborGoToDictionary-container">
@@ -358,9 +359,16 @@
 								</ul>
 								<div id="lessLaborGoToDictionary-apiContent">
 									<div id="lessLaborGoToDictionary-apiHeader">
-									<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
-									<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank" href="">wiki</a>
+										<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
+										<div id="lessLaborGoToDictionary-apiTitleWrapper">
+											<div id="lessLaborGoToDictionary-history" style="background-image: url(/image/history.svg);" ></div>
+											<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank">Wiktionary</a>
+										</div>
 									</div>
+									<div id="lessLaborGoToDictionary-apiLoading">
+										<div id="lessLaborGoToDictionary-apiLoadingContent" style="background-image:url(/image/circle.svg)"></div>
+									</div>
+									<div id="lessLaborGoToDictionary-apiOff"></div>
 									<div id="lessLaborGoToDictionary-apiBody">
 										<ol>
 											<li>sample sample sample </li>

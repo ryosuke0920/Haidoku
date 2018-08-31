@@ -4,7 +4,8 @@
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const LINK_NODE_PADDING = 3;
-	const SPACE = 10;
+	const SCROLL_SPACE = 17;
+	const RECT_SPACE = 3;
 	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
@@ -51,6 +52,10 @@
 	let apiFooterNode;
 	let apiSwitcheNode;
 	let windowId = Math.random();
+	let arrowNode;
+	let moveObj;
+	let historyButtoneNode;
+	let historyDoneButtoneNode;
 
 	Promise.resolve()
 		.then(init)
@@ -74,6 +79,7 @@
 
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
+		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/rect30.png")+")";
 		linkListNode.appendChild(coverNode);
 
 		menuNode = document.createElement("nav");
@@ -105,11 +111,27 @@
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
 		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
 
+		let apiTitleWrapper = document.createElement("div");
+		apiTitleWrapper.setAttribute("id",CSS_PREFIX+"-apiTitleWrapper");
+		apiHeaderNode.appendChild(apiTitleWrapper);
+
+		historyButtoneNode = document.createElement("div");
+		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
+		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
+		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
+		apiTitleWrapper.appendChild(historyButtoneNode);
+
+		historyDoneButtoneNode = document.createElement("div");
+		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
+		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
+		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
+		apiTitleWrapper.appendChild(historyDoneButtoneNode);
+
 		apiTitleNode = document.createElement("a");
 		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
 		apiTitleNode.setAttribute("rel","noreferrer");
 		apiTitleNode.setAttribute("target","_blank");
-		apiHeaderNode.appendChild(apiTitleNode);
+		apiTitleWrapper.appendChild(apiTitleNode);
 
 		let apiNowLoadingMsgNode = document.createElement("span");
 		apiNowLoadingMsgNode.setAttribute("id",CSS_PREFIX+"-nowLoadingMsg");
@@ -132,6 +154,7 @@
 
 		let apiLoadingContentNode = document.createElement("div");
 		apiLoadingContentNode.setAttribute("id",CSS_PREFIX+"-apiLoadingContent");
+		apiLoadingContentNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/circle.svg")+")";
 		apiLoadingNode.appendChild(apiLoadingContentNode);
 
 		apiBodyNode = document.createElement("div");
@@ -144,32 +167,38 @@
 		apiContentNode.appendChild(apiFooterNode);
 		clearApiContent();
 
-		let resizeNode = document.createElement("img");
-		resizeNode.src = ponyfill.extension.getURL("/image/resize.svg");
+		arrowNode = document.createElement("div");
+		arrowNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/arrow.svg")+")";
+		arrowNode.setAttribute("id", CSS_PREFIX+"-move");
+		arrowNode.title = ponyfill.i18n.getMessage("htmlMove");
+		menuNode.appendChild(arrowNode);
+
+		let resizeNode = document.createElement("div");
+		resizeNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/resize.svg")+")";
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
 		resizeNode.title = ponyfill.i18n.getMessage("htmlResize");
 		menuNode.appendChild(resizeNode);
 
-		let zoomDownNode = document.createElement("img");
-		zoomDownNode.src = ponyfill.extension.getURL("/image/minus.svg");
+		let zoomDownNode = document.createElement("div");
+		zoomDownNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/minus.svg")+")";
 		zoomDownNode.setAttribute("id",CSS_PREFIX+"-zoomDown");
 		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 
-		let zoomUpNode = document.createElement("img");
-		zoomUpNode.src = ponyfill.extension.getURL("/image/plus.svg");
+		let zoomUpNode = document.createElement("div");
+		zoomUpNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/plus.svg")+")";
 		zoomUpNode.setAttribute("id",CSS_PREFIX+"-zoomUp");
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 
-		let copyNode = document.createElement("img");
-		copyNode.src = ponyfill.extension.getURL("/image/copy.svg");
+		let copyNode = document.createElement("div");
+		copyNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/copy.svg")+")";
 		copyNode.setAttribute("id",CSS_PREFIX+"-copy");
 		copyNode.title = ponyfill.i18n.getMessage("htmlCopy");
 		menuNode.appendChild(copyNode);
 
-		let optionNode = document.createElement("img");
-		optionNode.src = ponyfill.extension.getURL("/image/option.svg");
+		let optionNode = document.createElement("div");
+		optionNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/option.svg")+")";
 		optionNode.setAttribute("id",CSS_PREFIX+"-option");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
@@ -177,7 +206,7 @@
 
 	function addCommonLinkListEvents(){
 		ponyfill.storage.onChanged.addListener( onStorageChanged );
-		menuNode.addEventListener("click", menuClickBihavior);
+		linkListNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
@@ -221,10 +250,7 @@
 			return;
 		};
 		makeLinkList(text);
-		let lastRange = selection.getRangeAt(selection.rangeCount-1);
-		let rectList = lastRange.getClientRects();
-		let rect = rectList[rectList.length-1];
-		showLinkListByClick(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+		showLinkListByClick();
 		if(isEnableApi()){
 			abortApiRequestQueue();
 			apiRequest(selection);
@@ -232,6 +258,14 @@
 	}
 
 	function mousedownCommonBehavior(e){
+		if( e.button != 0 ) return;
+		if ( e.target == arrowNode ) {
+			moveObj = {
+				"dy": e.pageY - linkListNodeTop,
+				"dx": e.pageX - linkListNodeLeft
+			};
+			return;
+		}
 		if ( e.target != coverNode ) mousedownFlag = true;
 	}
 
@@ -244,6 +278,7 @@
 	}
 
 	function mouseupCommonBehavior(e){
+		moveObj = undefined;
 		mousedownFlag = false;
 		if ( resizeWatcherFlag ) {
 			resizeWatcherFlag = false;
@@ -260,7 +295,7 @@
 				let text = selection.toString();
 				if( !checkBlank(text) ) return;
 				makeLinkList(text);
-				showLinkListByClick(e.pageY, e.pageX, e.clientY, e.clientX, selection);
+				showLinkListByClick();
 				if(isEnableApi()){
 					abortApiRequestQueue();
 					apiRequest(selection);
@@ -289,11 +324,8 @@
 			if( !selection.isCollapsed ){
 				let text = selection.toString();
 				if( !checkBlank(text) ) return;
-				let lastRange = selection.getRangeAt(selection.rangeCount-1);
-				let rectList = lastRange.getClientRects();
-				let rect = rectList[rectList.length-1];
 				makeLinkList(selection.toString());
-				showLinkListByKey(rect.bottom+window.scrollY, rect.right+window.scrollX, rect.bottom, rect.right, selection);
+				showLinkListByKey();
 				if(isEnableApi()) {
 					abortApiRequestQueue();
 					apiRequest(selection);
@@ -303,6 +335,10 @@
 	}
 
 	function mousemoveBehavior(e){
+		if ( moveObj ) {
+			moveWidgetMousePonit(e);
+			return;
+		}
 		if ( !hasStopper() && isLinkListShown() && mousedownFlag ) resizeWatcher();
 	}
 
@@ -402,7 +438,7 @@
 		saveHistory(e.currentTarget.getAttribute("data-text"), window.location.toString(), document.title.toString(), e.currentTarget.getAttribute("data-url"), e.currentTarget.getAttribute("data-label")).catch(onSaveError);
 	}
 
-	function saveHistory(text,fromURL,fromTitle,toURL,toTitle){
+	function saveHistory(text,fromURL,fromTitle,toURL,toTitle,asIs=false){
 		let data = {
 			"method": "saveHistory",
 			"data": {
@@ -410,7 +446,8 @@
 				"fromURL": fromURL,
 				"fromTitle": fromTitle,
 				"toURL": toURL,
-				"toTitle": toTitle
+				"toTitle": toTitle,
+				"asIs": asIs
 			}
 		};
 		return ponyfill.runtime.sendMessage(data);
@@ -467,42 +504,63 @@
 		linkListNode.style.width = linkListNodeWidth + "px";
 	}
 
-	function showLinkListByClick(pageY, pageX, clientY, clientX, selection){
+	function showLinkListByClick(){
 		if( linkListAction == LINK_LIST_ACTION_MOUSECLICK || linkListAction == LINK_LIST_ACTION_MOUSEOVER ) addStopper();
-		showLinkList(pageY, pageX, clientY, clientX, selection);
+		showLinkList();
 	}
 
-	function showLinkListByKey(pageY, pageX, clientY, clientX, selection){
+	function showLinkListByKey(){
 		removeStopper();
-		showLinkList(pageY, pageX, clientY, clientX, selection);
+		showLinkList();
 	}
 
-	function showLinkList(pageY, pageX, clientY, clientX, selection){
-		/* when display equals none, offsetHeight and offsetWidth return undefined. */
-		show(linkListNode);
-		applyLinkListSize();
-		let yy = window.innerHeight - clientY - linkListNode.offsetHeight - SCROLL_BAR_WIDTH;
-		if ( 0 < yy || window.innerHeight < linkListNode.offsetHeight ) yy = 0;
-		let xx = window.innerWidth - clientX - linkListNode.offsetWidth - SCROLL_BAR_WIDTH;
-		if ( 0 < xx || window.innerWidth < linkListNode.offsetWidth ) xx = 0;
-		linkListNodeTop = pageY + yy + SPACE;
-		linkListNodeLeft = pageX + xx + SPACE;
-		/*
+	function getSelectionRect(){
+		let selection = window.getSelection();
 		let lastRange = selection.getRangeAt(selection.rangeCount-1);
 		let rectList = lastRange.getClientRects();
 		let rect = rectList[rectList.length-1];
-		if ( window.scrollY + rect.top < linkListNodeTop + linkListNode.offsetHeight && linkListNodeTop < window.scrollY + rect.bottom ){
-			if ( window.scrollX + rect.left < linkListNodeLeft + linkListNode.offsetWidth && linkListNodeLeft < window.scrollX + rect.right ){
-				linkListNodeTop = window.scrollY + rect.top - linkListNode.offsetHeight - SPACE;
-			}
-		}
-		*/
-		if ( linkListNodeTop < window.scrollY ) linkListNodeTop = window.scrollY;
-		if ( linkListNodeLeft < window.scrollX ) linkListNodeLeft = window.scrollX;
-		linkListNode.style.top = linkListNodeTop+"px";
-		linkListNode.style.left = linkListNodeLeft+"px";
+		return rect;
+	}
+
+	function showLinkList(){
+		show(linkListNode);
+		applyLinkListSize();
+		let rect = getSelectionRect();
+		linkListNodeLeft = makeWidgetPointX(rect);
+		linkListNodeTop = makeWidgetPointY(rect);
+		moveWidget();
 		linkListNode.scrollTop = 0;
 		linkListNode.scrollLeft = 0;
+	}
+
+	function makeWidgetPointX(rect){
+		let clientX = rect.right;
+		let pageX = window.scrollX + clientX;
+		let viewPortWidth = window.innerWidth - SCROLL_SPACE;
+		if ( viewPortWidth < linkListNode.offsetWidth ){
+			return window.scrollX;
+		}
+		if ( (clientX + linkListNode.offsetWidth + RECT_SPACE) <= viewPortWidth){
+			return pageX + RECT_SPACE;
+		}
+		return window.scrollX + viewPortWidth - linkListNode.offsetWidth;
+	}
+
+	function makeWidgetPointY(rect){
+		let clientY = rect.bottom;
+		let pageY = window.scrollY + clientY;
+		let viewPortHeight = window.innerHeight - SCROLL_SPACE;
+		if ( viewPortHeight < linkListNode.offsetHeight ){
+			return pageY + RECT_SPACE;
+		}
+		if ( (clientY + RECT_SPACE + linkListNode.offsetHeight) <=  viewPortHeight ){
+			return pageY + RECT_SPACE;
+		}
+		yy = rect.top - linkListNode.offsetHeight - RECT_SPACE;
+		if ( 0 <= yy) {
+			return window.scrollY + yy;
+		}
+		return pageY + RECT_SPACE;
 	}
 
 	function isLinkListShown(){
@@ -668,7 +726,7 @@
 		removeStopper();
 		linkListNode.removeEventListener("mouseenter", removeStopper);
 		linkListNode.removeEventListener("mouseleave", controlStopper);
-		linkListNode.removeEventListener("click", removeStopper);
+		coverNode.removeEventListener("click", widgetActionMouseclick);
 		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
 			linkListNode.classList.add(CSS_PREFIX+"-mouseover");
 			addStopper();
@@ -678,8 +736,16 @@
 		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
 			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
 			addStopper();
-			linkListNode.addEventListener("click", removeStopper);
+			coverNode.addEventListener("click", widgetActionMouseclick);
 		}
+	}
+
+	function widgetActionMouseclick(e){
+		removeStopper();
+		let rect = getSelectionRect();
+		linkListNodeLeft = makeWidgetPointX(rect);
+		linkListNodeTop = makeWidgetPointY(rect);
+		moveWidget();
 	}
 
 	function controlStopper(e){
@@ -748,7 +814,12 @@
 
 	function menuClickBihavior(e){
 		let id = e.target.getAttribute("id");
-		if(id == CSS_PREFIX+"-zoomUp"){
+		if(id == CSS_PREFIX+"-history"){
+			hide(historyButtoneNode);
+			show(historyDoneButtoneNode);
+			Promise.resolve().then(saveHistoryWiktionaryLinkage).catch(onSaveError);
+		}
+		else if(id == CSS_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-zoomDown"){
@@ -855,6 +926,15 @@
 		return res;
 	}
 
+	function onAudioPlayError(e){
+		console.error(e);
+		let res = ponyfill.runtime.sendMessage({
+			"method": "notice",
+			"data": ponyfill.i18n.getMessage("notificationAudioPlayError", [e.message])
+		});
+		return res;
+	}
+
 	function silentError(e){
 		if( e.message.match( SILENT_ERROR_REGEX ) ){
 			console.log(e);
@@ -937,6 +1017,8 @@
 
 	function clearApiContent(){
 		linkListNode.classList.add(CSS_PREFIX+"-loading");
+		hide(historyButtoneNode);
+		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
 	}
 
@@ -955,6 +1037,8 @@
 		else {
 			apiTitleNode.innerText = e.title;
 		}
+		apiTitleNode.setAttribute("data-text", e.text);
+		apiTitleNode.setAttribute("data-title", e.title);
 		apiTitleNode.setAttribute("href", e.fullurl);
 		let sections = [];
 		if(languageFilter.length > 0){
@@ -1002,7 +1086,17 @@
 			let content;
 			let list;
 			if(apiCutOut){
-				content = doc.querySelector("ol");
+				let olList = doc.querySelectorAll("ol");
+				if (olList.length<=0) {
+					e.error = MEANING_NOT_FOUND_ERROR;
+					return apiResponseError.bind(this)(e);
+				}
+				for(let i=0; i<olList.length; i++){
+					if( checkBlank(olList[i].innerText) ) {
+						content = olList[i];
+						break;
+					}
+				}
 				if(!content){
 					e.error = MEANING_NOT_FOUND_ERROR;
 					return apiResponseError.bind(this)(e);
@@ -1024,7 +1118,7 @@
 					}
 				}
 			}
-			list = content.querySelectorAll(".indicator,.noprint,.NavFrame,ol>li>dl,ol>li>ul");
+			list = content.querySelectorAll(".indicator,.noprint,.NavFrame,ol>li>dl,ol>li>ul,hr");
 			for(let i=0; i<list.length; i++){
 				list[i].parentNode.removeChild(list[i]);
 			}
@@ -1045,7 +1139,25 @@
 				else{
 					audio.parentNode.appendChild(playButton);
 				}
-				playButton.addEventListener("click",(e)=>{ audio.play(); });
+				playButton.addEventListener("click",(e)=>{
+					let url = audio.currentSrc;
+					if(!url){
+						let list = audio.querySelectorAll("source");
+						for(let i=list.length-1; 0<=i; i--){
+							url = list[i].src;
+							if( url.match("ogg$") ) break;
+						}
+					}
+					if(!url) return onAudioPlayError( new Error("Audio source not found.") );
+					url = fullSSLURL(url);
+					let p = ponyfill.runtime.sendMessage({
+						"method": "downloadAsBaase64",
+						"data": {
+							"url": url
+						}
+					});
+					p.catch( (e)=>{ return onAudioPlayError(e); });
+				});
 			}
 			list = content.querySelectorAll("a[href]:not([href^=http])");
 			for(let i=0; i<list.length; i++){
@@ -1059,7 +1171,21 @@
 			}
 			apiBodyNode.appendChild(content);
 		}
+		show(historyButtoneNode);
 		linkListNode.classList.remove(CSS_PREFIX+"-loading");
+	}
+
+	function fullSSLURL(url){
+		if( url.match("^//") ){
+			return "https:" + url;
+		}
+		if( url.match(/^http:/) ){
+			return url.replace(/^http:/, "https:");
+		}
+		if( url.match("^/") ){
+			return "https:/" + url;
+		}
+		return url;
 	}
 
 	function apiResponseError(e){
@@ -1182,6 +1308,28 @@
 
 	function isEnableApi(){
 		return ( hasServiceCode() && isApiSwitchOn() );
+	}
+
+	function moveWidgetMousePonit(e){
+		linkListNodeTop = e.pageY - moveObj.dy;
+		linkListNodeLeft = e.pageX - moveObj.dx;
+		moveWidget();
+	}
+
+	function moveWidget(){
+		linkListNode.style.top = linkListNodeTop+"px";
+		linkListNode.style.left = linkListNodeLeft+"px";
+	}
+
+	function saveHistoryWiktionaryLinkage(){
+		return saveHistory(
+			apiTitleNode.getAttribute("data-text"),
+			window.location.toString(),
+			document.title.toString(),
+			apiTitleNode.href,
+			apiTitleNode.getAttribute("data-title"),
+			true
+		).catch(onSaveError);
 	}
 
 })();

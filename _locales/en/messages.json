@@ -61,6 +61,14 @@
 	"notificationDownloadLanguageError": {
 		"message": "Failed to download list of language."
 	},
+	"notificationAudioPlayError": {
+		"message": "Audio playback failed. $ERROR$",
+		"placeholders": {
+			"ERROR": {
+				"content": "$1"
+			}
+		}
+	},
 	"htmlMaybeTitle" :{
 		"message": "Did you mean: $WORD$",
 		"placeholders": {
@@ -139,11 +147,20 @@
 	"htmlCopy": {
 		"message": "Copy"
 	},
+	"htmlMove": {
+		"message": "move"
+	},
 	"htmlResize": {
 		"message": "Reset size"
 	},
 	"htmlOption": {
 		"message": "Option"
+	},
+	"htmlSaveHistory": {
+		"message": "Save history"
+	},
+	"htmlSaveHistoryDone": {
+		"message": "Saved history"
 	},
 	"htmlFormName": {
 		"message": "Edit link"
@@ -269,7 +286,7 @@
 		"message": "Source site"
 	},
 	"htmlHistoryToSite": {
-		"message": "Link selected"
+		"message": "Link destination"
 	},
 	"htmlPageFirst": {
 		"message": "First"
