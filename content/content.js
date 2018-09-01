@@ -574,7 +574,8 @@
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
-		document.addEventListener("mousedown", mousedownCommonBehavior);
+		linkListNode.addEventListener("mousedown", mousedownCommonBehavior);
+		widgetNode.addEventListener("mousedown", mousedownOuterBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
 		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
 	}
@@ -621,6 +622,13 @@
 		}
 	}
 
+	function mousedownOuterBehavior(e){
+		if( e.button != 0 ) return;
+		if ( e.target == widgetNode && !hasStopper() ) {
+			mousedownFlag = true;
+		}
+	}
+
 	function mousedownCommonBehavior(e){
 		if( e.button != 0 ) return;
 		if ( e.target == arrowNode ) {
@@ -630,7 +638,6 @@
 			};
 			return;
 		}
-		if ( e.target != coverNode ) mousedownFlag = true;
 	}
 
 	function mousedownAutoBehavior(e){
