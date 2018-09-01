@@ -21,9 +21,11 @@
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
 	const API_WHITE_SPACE_ERROR = "white space error";
 
+	let widgetNode;
+	let widgetNodeTop = 0;
+	let widgetNodeLeft = 0;
+
 	let linkListNode;
-	let linkListNodeTop = 0;
-	let linkListNodeLeft = 0;
 	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
 	let linkListScrollTopTmp = 0;
@@ -70,12 +72,366 @@
 			/* break promise chain, but not need notification. */
 			throw( new Error( SILENT_ERROR_PREFIX + " not found body") );
 		}
+
+		widgetNode = document.createElement("div");
+		widgetNode.style.padding = LINK_NODE_PADDING + "px";
+		widgetNode.setAttribute("id",CSS_PREFIX+"-widget");
+		hide(widgetNode);
+		body.appendChild( widgetNode );
+
+		let shadow = widgetNode.attachShadow({"mode": "open"});
+
+		let style = document.createElement("style");
+		style.textContent = `
+		* {
+			padding: 0;
+			margin: 0;
+			user-select: none;
+			-moz-user-select: none;
+		}
+		#lessLaborGoToDictionary-viewer {
+			position: relative;
+			font-family: sans-serif;
+			font-size: 1em;
+		}
+		#lessLaborGoToDictionary-cover {
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			cursor: pointer;
+		}
+		.lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-cover {
+			display: block;
+		}
+		#lessLaborGoToDictionary-menu {
+			height: 22px;
+			line-height: 0;
+			white-space: nowrap;
+			padding-top: 5px;
+			padding-left: 5px;
+		}
+		.lessLaborGoToDictionary-buttonIcon {
+			display: inline-block;
+			height: 16px;
+			width: 16px;
+			cursor: pointer;
+			box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+			margin-right: 5px;
+		}
+		#lessLaborGoToDictionary-move {
+			cursor: move;
+		}
+		.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
+			display: grid;
+			grid-template-columns: min-content auto;
+		}
+		.lessLaborGoToDictionary-list {
+			display: block;
+			padding-left: 5px;
+			white-space: nowrap;
+		}
+		.lessLaborGoToDictionary-inline .lessLaborGoToDictionary-list {
+			display: inline;
+			white-space: normal;
+		}
+		.lessLaborGoToDictionary-dark .lessLaborGoToDictionary-list {
+			color: white;
+			border-top: 2px solid #505050;
+		}
+		.lessLaborGoToDictionary-dark .lessLaborGoToDictionary-list:hover {
+			background-color:#505050;
+		}
+		.lessLaborGoToDictionary-anchor,
+		.lessLaborGoToDictionary-anchor:link {
+			text-decoration: none;
+		}
+		.lessLaborGoToDictionary-anchor:hover {
+			text-decoration: underline;
+		}
+		.lessLaborGoToDictionary-dark .lessLaborGoToDictionary-anchor,
+		.lessLaborGoToDictionary-dark .lessLaborGoToDictionary-anchor:link {
+			color: white;
+			text-decoration: none;
+		}
+		.lessLaborGoToDictionary-dark .lessLaborGoToDictionary-anchor:visited {
+			color: #B0B0B0;
+		}
+		.lessLaborGoToDictionary-dark .lessLaborGoToDictionary-anchor:hover {
+			text-decoration: none;
+		}
+		.lessLaborGoToDictionary-dark .lessLaborGoToDictionary-anchor:active {
+			color: #F07070;
+		}
+		.lessLaborGoToDictionary-favicon {
+			margin: auto;
+		}
+		.lessLaborGoToDictionary-label {
+			cursor: pointer;
+			margin-left: 5px;
+		}
+		.lessLaborGoToDictionary-mini .lessLaborGoToDictionary-label {
+			display: none;
+		}
+		#lessLaborGoToDictionary-apiContent {
+			border-radius: 10px;
+			margin:5px;
+			font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
+			font-size: 14px;
+			line-height: 1.7em;
+		}
+		#lessLaborGoToDictionary-apiContent a {
+			color: #3366cc;
+				 text-decoration: none;
+		}
+		#lessLaborGoToDictionary-apiContent a:visited {
+			color: #551a8b;
+		}
+		#lessLaborGoToDictionary-apiContent a:hover {
+			text-decoration: underline;
+		}
+		#lessLaborGoToDictionary-apiContent a:active {
+			color: #ee0000;
+		}
+		#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
+			display: none;
+		}
+		#lessLaborGoToDictionary-apiContent > *{
+			border-right: solid 1px gray;
+			border-left: solid 1px gray;
+			background-color: white;
+			padding:5px 10px;
+		}
+		#lessLaborGoToDictionary-apiHeader {
+			position: relative;
+			border-top: solid 1px gray;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+			padding-right: 40px;
+			background-color:#eaecf0;
+		}
+		#lessLaborGoToDictionary-apiFooter {
+			border-bottom: solid 1px gray;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+			font-size:0.9em;
+			background-color:#eaecf0;
+		}
+		.lessLaborGoToDictionary-checkboxButton {
+			position: absolute;
+			background-color: gray;
+			display: inline-block;
+			height: 20px;
+			width: 30px;
+			border-radius: 15px;
+			right: 0.5em;
+			cursor: pointer;
+		}
+		.lessLaborGoToDictionary-circle {
+			position: absolute;
+			background: linear-gradient(to bottom, #FFFFFF, #F0F0F0 );
+			display: inline-block;
+			border-radius: 8px;
+			height: 16px;
+			width: 16px;
+			top: 2px;
+			left: 2px;
+			cursor: pointer;
+		}
+		.lessLaborGoToDictionary-checkboxButton[data-checked="1"] {
+			background-color: #5bd94d;
+		}
+		.lessLaborGoToDictionary-checkboxButton[data-checked="1"] .lessLaborGoToDictionary-circle {
+			left: unset;
+			right: 2px;
+		}
+		#lessLaborGoToDictionary-history.lessLaborGoToDictionary-hide,
+		#lessLaborGoToDictionary-historyDone.lessLaborGoToDictionary-hide {
+			display: none;
+		}
+		#lessLaborGoToDictionary-historyDone {
+			cursor: auto;
+		}
+		.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiTitleWrapper,
+		.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitleWrapper {
+			display: none;
+		}
+		#lessLaborGoToDictionary-apiTitle {
+			font-size: 1.1em;
+			font-weight: bold;
+			cursor: pointer;
+			color: #3366cc;
+		}
+		#lessLaborGoToDictionary-apiTitle:visited {
+			color: #551a8b;
+		}
+		#lessLaborGoToDictionary-apiTitle:hover {
+			text-decoration: underline;
+		}
+		#lessLaborGoToDictionary-apiTitle:active {
+			color: #ee0000;
+		}
+		#lessLaborGoToDictionary-nowLoadingMsg {
+			display: none;
+		}
+		.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-nowLoadingMsg {
+			display: inline;
+		}
+		.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-nowLoadingMsg {
+			display: none;
+		}
+		#lessLaborGoToDictionary-apiOffMsg {
+			display: none;
+		}
+		.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOffMsg {
+			display: inline;
+		}
+		#lessLaborGoToDictionary-apiLoading {
+			display: none;
+			height: 5em;
+		}
+		.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiLoading {
+			display: block;
+		}
+		.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiLoading {
+			display: none;
+		}
+		#lessLaborGoToDictionary-apiLoadingContent {
+			background-repeat: no-repeat;
+			background-position: center;
+			height:100%;
+			animation: loading 2s ease-out 0s infinite running;
+			background-size: 0%;
+			opacity: 1;
+		}
+		@keyframes loading {
+			0%{
+				background-size: 0%;
+				opacity: 1;
+			}
+			50%{
+				background-size: 100%;
+				opacity: 0;
+			}
+			100%{
+				background-size: 100%;
+				opacity: 0;
+			}
+		}
+		#lessLaborGoToDictionary-apiOff {
+			display: none;
+			font-size: 0.9em;
+		}
+		.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOff {
+			display: block;
+		}
+		.lessLaborGoToDictionary-warning {
+			color: red;
+			font-weight: bold;
+		}
+		.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody,
+		.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiBody {
+			display: none;
+		}
+		#lessLaborGoToDictionary-apiBody h1,
+		#lessLaborGoToDictionary-apiBody h2,
+		#lessLaborGoToDictionary-apiBody h3,
+		#lessLaborGoToDictionary-apiBody h4,
+		#lessLaborGoToDictionary-apiBody h5,
+		#lessLaborGoToDictionary-apiBody h6,
+		#lessLaborGoToDictionary-apiBody div,
+		#lessLaborGoToDictionary-apiBody p,
+		#lessLaborGoToDictionary-apiBody ol,
+		#lessLaborGoToDictionary-apiBody ul,
+		#lessLaborGoToDictionary-apiBody dl,
+		#lessLaborGoToDictionary-apiBody dt,
+		#lessLaborGoToDictionary-apiBody dd,
+		#lessLaborGoToDictionary-apiBody table {
+			margin-bottom: 0.5em;
+		}
+		#lessLaborGoToDictionary-apiBody h1 {
+			font-size: 1.30em;
+		}
+		#lessLaborGoToDictionary-apiBody h2 {
+			font-size: 1.25em;
+		}
+		#lessLaborGoToDictionary-apiBody h3 {
+			font-size: 1.20em;
+		}
+		#lessLaborGoToDictionary-apiBody h4 {
+			font-size: 1.15em;
+		}
+		#lessLaborGoToDictionary-apiBody h5 {
+			font-size: 1.10em;
+		}
+		#lessLaborGoToDictionary-apiBody h6 {
+			font-size: 1.05em;
+		}
+		#lessLaborGoToDictionary-apiBody ul,
+		#lessLaborGoToDictionary-apiBody ol {
+			margin-left: 1em;
+		}
+		#lessLaborGoToDictionary-apiBody table {
+			border-collapse: collapse;
+		}
+		#lessLaborGoToDictionary-apiBody caption {
+			text-align: left;
+		}
+		#lessLaborGoToDictionary-apiBody th, #lessLaborGoToDictionary-apiBody td {
+			border: 1px solid black;
+			padding: 5px;
+			text-align: left;
+		}
+		#lessLaborGoToDictionary-apiBody th {
+			background-color: #f9f9f9;
+			font-weight: bold;
+		}
+		#lessLaborGoToDictionary-apiBody h1.in-block,
+		#lessLaborGoToDictionary-apiBody h2.in-block,
+		#lessLaborGoToDictionary-apiBody h3.in-block,
+		#lessLaborGoToDictionary-apiBody h4.in-block,
+		#lessLaborGoToDictionary-apiBody h5.in-block,
+		#lessLaborGoToDictionary-apiBody h6.in-block {
+			border-bottom: solid 2px black;
+		}
+		#lessLaborGoToDictionary-apiBody h2.in-block {
+			font-weight: normal;
+		}
+		#lessLaborGoToDictionary-apiBody h2.in-block::before {
+			content: "# ";
+		}
+		#lessLaborGoToDictionary-apiBody .mw-empty-elt {
+			display: none;
+		}
+		#lessLaborGoToDictionary-apiBody a.new {
+			color: #dd3333;
+		}
+		#lessLaborGoToDictionary-apiBody table.audiotable td,
+		#lessLaborGoToDictionary-apiBody table.audiotable th {
+			border: none;
+		}
+		#lessLaborGoToDictionary-apiBody .lessLaborGoToDictionary-play {
+			display: inline-block;
+			background: transparent;
+			box-sizing: border-box;
+			width: 0;
+			height: 20px;
+			border-color: transparent transparent transparent #202020;
+			border-style: solid;
+			border-width: 10px 0px 10px 20px;
+			cursor: pointer;
+			vertical-align: middle;
+			margin: 2px;
+		}
+`;
+		shadow.appendChild(style)
+
 		linkListNode = document.createElement("div");
 		linkListNode.setAttribute("id",CSS_PREFIX+"-viewer");
-		hide(linkListNode);
-		linkListNode.style.padding = LINK_NODE_PADDING + "px";
+		shadow.appendChild(linkListNode);
 		applyLinkListSize();
-		body.appendChild( linkListNode );
 
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
@@ -117,12 +473,14 @@
 
 		historyButtoneNode = document.createElement("div");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
+		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
 		apiTitleWrapper.appendChild(historyButtoneNode);
 
 		historyDoneButtoneNode = document.createElement("div");
 		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
+		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
 		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
 		apiTitleWrapper.appendChild(historyDoneButtoneNode);
@@ -170,36 +528,42 @@
 		arrowNode = document.createElement("div");
 		arrowNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/arrow.svg")+")";
 		arrowNode.setAttribute("id", CSS_PREFIX+"-move");
+		arrowNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		arrowNode.title = ponyfill.i18n.getMessage("htmlMove");
 		menuNode.appendChild(arrowNode);
 
 		let resizeNode = document.createElement("div");
 		resizeNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/resize.svg")+")";
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
+		resizeNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		resizeNode.title = ponyfill.i18n.getMessage("htmlResize");
 		menuNode.appendChild(resizeNode);
 
 		let zoomDownNode = document.createElement("div");
 		zoomDownNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/minus.svg")+")";
 		zoomDownNode.setAttribute("id",CSS_PREFIX+"-zoomDown");
+		zoomDownNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 
 		let zoomUpNode = document.createElement("div");
 		zoomUpNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/plus.svg")+")";
 		zoomUpNode.setAttribute("id",CSS_PREFIX+"-zoomUp");
+		zoomUpNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 
 		let copyNode = document.createElement("div");
 		copyNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/copy.svg")+")";
 		copyNode.setAttribute("id",CSS_PREFIX+"-copy");
+		copyNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		copyNode.title = ponyfill.i18n.getMessage("htmlCopy");
 		menuNode.appendChild(copyNode);
 
 		let optionNode = document.createElement("div");
 		optionNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/option.svg")+")";
 		optionNode.setAttribute("id",CSS_PREFIX+"-option");
+		optionNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
 	}
@@ -261,8 +625,8 @@
 		if( e.button != 0 ) return;
 		if ( e.target == arrowNode ) {
 			moveObj = {
-				"dy": e.pageY - linkListNodeTop,
-				"dx": e.pageX - linkListNodeLeft
+				"dy": e.pageY - widgetNodeTop,
+				"dx": e.pageX - widgetNodeLeft
 			};
 			return;
 		}
@@ -271,7 +635,7 @@
 
 	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) {
+		if( !isOnWidget(e.pageY, e.pageX) ) {
 			closeLinkList();
 			abortApiRequestQueue();
 		}
@@ -288,7 +652,7 @@
 
 	function mouseupAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( selectionChangedFlag && !isLinkListNodeUnderMouse(e.pageY,e.pageX) ){
+		if( selectionChangedFlag && !isOnWidget(e.pageY,e.pageX) ){
 			let selection = window.getSelection();
 			if( !selection.isCollapsed ){
 				selectionChangedFlag = false;
@@ -342,20 +706,20 @@
 		if ( !hasStopper() && isLinkListShown() && mousedownFlag ) resizeWatcher();
 	}
 
-	function isLinkListNodeUnderMouse(yy,xx){
-		if( linkListNodeTop <= yy && yy < ( linkListNodeTop + linkListNode.offsetHeight )
-		&& linkListNodeLeft <= xx && xx < ( linkListNodeLeft + linkListNode.offsetWidth ) ){
+	function isOnWidget(yy,xx){
+		if( widgetNodeTop <= yy && yy < ( widgetNodeTop + widgetNode.offsetHeight )
+		&& widgetNodeLeft <= xx && xx < ( widgetNodeLeft + widgetNode.offsetWidth ) ){
 			return true;
 		}
 		return false;
 	}
 
 	function getLinkListHeight(){
-		return linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
+		return widgetNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
 	}
 
 	function getLinkListWidth(){
-		return linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
+		return widgetNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
 	}
 
 	function resizeWatcher(){
@@ -422,7 +786,7 @@
 
 	function closeLinkList(){
 		resetScrollTmp();
-		hide(linkListNode);
+		hide(widgetNode);
 	}
 
 	function closeLinkListDelay(){
@@ -500,8 +864,12 @@
 	}
 
 	function applyLinkListSize(){
-		linkListNode.style.height = linkListNodeHeight + "px";
-		linkListNode.style.width = linkListNodeWidth + "px";
+		resizeWidget(linkListNodeHeight, linkListNodeWidth)
+	}
+
+	function resizeWidget(height, width){
+		widgetNode.style.height = height + "px";
+		widgetNode.style.width = width + "px";
 	}
 
 	function showLinkListByClick(){
@@ -523,11 +891,11 @@
 	}
 
 	function showLinkList(){
-		show(linkListNode);
+		show(widgetNode);
 		applyLinkListSize();
 		let rect = getSelectionRect();
-		linkListNodeLeft = makeWidgetPointX(rect);
-		linkListNodeTop = makeWidgetPointY(rect);
+		widgetNodeLeft = makeWidgetPointX(rect);
+		widgetNodeTop = makeWidgetPointY(rect);
 		moveWidget();
 		linkListNode.scrollTop = 0;
 		linkListNode.scrollLeft = 0;
@@ -714,8 +1082,12 @@
 	}
 
 	function setLinkListStyle(res){
+		widgetNode.classList.remove(CSS_PREFIX+"-dark");
 		linkListNode.classList.remove(CSS_PREFIX+"-dark");
-		if( res == LINK_LIST_STYLE_DARK ) linkListNode.classList.add(CSS_PREFIX+"-dark");
+		if( res == LINK_LIST_STYLE_DARK ) {
+			widgetNode.classList.add(CSS_PREFIX+"-dark");
+			linkListNode.classList.add(CSS_PREFIX+"-dark");
+		}
 	}
 
 	function setLinkListAction(res){
@@ -743,8 +1115,8 @@
 	function widgetActionMouseclick(e){
 		removeStopper();
 		let rect = getSelectionRect();
-		linkListNodeLeft = makeWidgetPointX(rect);
-		linkListNodeTop = makeWidgetPointY(rect);
+		widgetNodeLeft = makeWidgetPointX(rect);
+		widgetNodeTop = makeWidgetPointY(rect);
 		moveWidget();
 	}
 
@@ -758,6 +1130,7 @@
 	}
 
 	function addStopper(){
+		widgetNode.classList.add(CSS_PREFIX+"-stopper");
 		linkListNode.classList.add(CSS_PREFIX+"-stopper");
 	}
 
@@ -766,6 +1139,7 @@
 		linkListNode.scrollTop = linkListScrollTopTmp;
 		linkListNode.scrollLeft = linkListScrollleftTmp;
 		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
+		widgetNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
 	function hasStopper(){
@@ -1311,14 +1685,14 @@
 	}
 
 	function moveWidgetMousePonit(e){
-		linkListNodeTop = e.pageY - moveObj.dy;
-		linkListNodeLeft = e.pageX - moveObj.dx;
+		widgetNodeTop = e.pageY - moveObj.dy;
+		widgetNodeLeft = e.pageX - moveObj.dx;
 		moveWidget();
 	}
 
 	function moveWidget(){
-		linkListNode.style.top = linkListNodeTop+"px";
-		linkListNode.style.left = linkListNodeLeft+"px";
+		widgetNode.style.top = widgetNodeTop+"px";
+		widgetNode.style.left = widgetNodeLeft+"px";
 	}
 
 	function saveHistoryWiktionaryLinkage(){
