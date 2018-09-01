@@ -28,8 +28,8 @@
 	let linkListNode;
 	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
 	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
-	let linkListScrollTopTmp = 0;
-	let linkListScrollleftTmp = 0;
+	let widgetScrollTopTmp = 0;
+	let widgetScrollleftTmp = 0;
 	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
 	let coverNode;
 	let optionList = [];
@@ -575,7 +575,7 @@
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
 		linkListNode.addEventListener("mousedown", mousedownCommonBehavior);
-		widgetNode.addEventListener("mousedown", mousedownOuterBehavior);
+		document.addEventListener("mousedown", mousedownOuterBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
 		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
 	}
@@ -624,7 +624,7 @@
 
 	function mousedownOuterBehavior(e){
 		if( e.button != 0 ) return;
-		if ( e.target == widgetNode && !hasStopper() ) {
+		if ( !( e.target == widgetNode && hasStpper() ) ) {
 			mousedownFlag = true;
 		}
 	}
@@ -904,8 +904,7 @@
 		widgetNodeLeft = makeWidgetPointX(rect);
 		widgetNodeTop = makeWidgetPointY(rect);
 		moveWidget();
-		linkListNode.scrollTop = 0;
-		linkListNode.scrollLeft = 0;
+		scrollWidget(0,0);
 	}
 
 	function makeWidgetPointX(rect){
@@ -1130,9 +1129,9 @@
 	function controlStopper(e){
 		if(!resizeWatcherFlag){
 			addStopper();
-			linkListScrollTopTmp = linkListNode.scrollTop;
-			linkListScrollleftTmp = linkListNode.scrollLeft;
-			linkListNode.scrollTop = linkListNode.scrollLeft = 0;
+			widgetScrollTopTmp = widgetNode.scrollTop;
+			widgetScrollleftTmp = widgetNode.scrollLeft;
+			scrollWidget(0,0);
 		}
 	}
 
@@ -1143,8 +1142,7 @@
 
 	function removeStopper(e){
 		if(!hasStopper())return;
-		linkListNode.scrollTop = linkListScrollTopTmp;
-		linkListNode.scrollLeft = linkListScrollleftTmp;
+		scrollWidget(widgetScrollTopTmp, widgetScrollleftTmp);
 		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
 		widgetNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
@@ -1154,7 +1152,7 @@
 	}
 
 	function resetScrollTmp(){
-		linkListScrollTopTmp = linkListScrollleftTmp = 0;
+		widgetScrollTopTmp = widgetScrollleftTmp = 0;
 	}
 
 	function resetLinkListEvents(){
@@ -1700,6 +1698,11 @@
 	function moveWidget(){
 		widgetNode.style.top = widgetNodeTop+"px";
 		widgetNode.style.left = widgetNodeLeft+"px";
+	}
+
+	function scrollWidget(top, left){
+		widgetNode.scrollTop = top;
+		widgetNode.scrollLeft = left;
 	}
 
 	function saveHistoryWiktionaryLinkage(){
