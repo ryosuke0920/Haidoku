@@ -23,24 +23,40 @@ const API_SWITCH_ENABLED = "1";
 const API_SERVICE_CODE_NONE = "-";
 const API_SERVICE_NONE = null;
 const API_SERVICE = {
+	"de": "https://de.wiktionary.org",
 	"en": "https://en.wiktionary.org",
 	"fr": "https://fr.wiktionary.org",
 	"ja": "https://ja.wiktionary.org"
 };
 const API_SERVICE_PROPERTY = {
+	"https://de.wiktionary.org":{
+		"defaultLanguage": ["Deutsch","Englisch"],
+		"namespace":"Kategorie",
+		"langCat": "Kategorie:Sprachen",
+		"followed": null,
+		"languageTopRegex":".+\\(",
+		"languageBottomRegex":"\\)$",
+		"reduceSection": [],
+		"cutOut": "Bedeutungen:",
+		"path": "/w/api.php"
+	},
 	"https://en.wiktionary.org":{
 		"defaultLanguage": ["English"],
 		"namespace":"Category",
 		"langCat": "Category:All_languages",
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
 		"reduceSection": [],
 		"path": "/w/api.php"
 	},
 	"https://fr.wiktionary.org":{
-		"defaultLanguage": ["français","Anglais"],
+		"defaultLanguage": ["français","anglais"],
 		"namespace":"Catégorie",
 		"langCat": "Catégorie:Langues",
 		"followed": null,
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
 		"reduceSection": [],
 		"path": "/w/api.php"
 	},
@@ -49,6 +65,8 @@ const API_SERVICE_PROPERTY = {
 		"namespace":"カテゴリ",
 		"langCat": "カテゴリ:言語",
 		"followed": null,
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
 		"reduceSection": [],
 		"path": "/w/api.php"
 	}

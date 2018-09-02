@@ -1041,20 +1041,23 @@
 		apiTitleNode.setAttribute("data-title", e.title);
 		apiTitleNode.setAttribute("href", e.fullurl);
 		let sections = [];
+		let languageNodeList = [];
+		let property = API_SERVICE_PROPERTY[e.service];
 		if(languageFilter.length > 0){
-			let followed = API_SERVICE_PROPERTY[e.service].followed;
-			let regex = new RegExp("\\s+"+followed+"$","i");
+			let regex;
+			if(property.followed) regex = new RegExp("\\s+"+property.followed+"$","i");
 			for(let i=0; i<e.html.length; i++){
 				let div = document.createElement("div");
 				div.innerHTML = e.html[i];
 				for(let j=0; j<languageFilter.length; j++){
 					let language = languageFilter[j];
-					if (followed != null) language = language.replace(regex, "");
-					let languageMatcher = new RegExp("^"+language+"$", "i");
+					if (property.followed != null) language = language.replace(regex, "");
+					let languageMatcher = new RegExp( property.languageTopRegex + language + property.languageBottomRegex, "i");
 					let list = div.querySelectorAll(".section-heading");
 					for(let k=0; k<list.length; k++){
 						let target = list[k];
 						if(!target.innerText.match(languageMatcher)) continue;
+						languageNodeList.push(target);
 						let tmp = [];
 						tmp.push(target);
 						while( target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ){
@@ -1082,39 +1085,53 @@
 				sections.push(div);
 			}
 		}
+		let regexURL1 = /^\/\//;
+		let regexURL2 = /^http/;
 		for(let i=0; i<sections.length; i++){
 			let doc = sections[i];
 			let content;
-			let list;
 			if(apiCutOut){
-				let olList = doc.querySelectorAll("ol");
-				if (olList.length<=0) {
-					e.error = MEANING_NOT_FOUND_ERROR;
-					return apiResponseError.bind(this)(e);
+				let meaningNode;
+				if(property.cutOut){
+					let list = doc.querySelectorAll("p");
+					for(let j=0; j<list.length; j++){
+						if(list[j].innerText == property.cutOut) {
+							meaningNode = list[j].nextElementSibling;
+							break;
+						}
+					}
+
 				}
-				for(let i=0; i<olList.length; i++){
-					if( checkBlank(olList[i].innerText) ) {
-						content = olList[i];
-						break;
+				else {
+					let olList = doc.querySelectorAll("ol");
+					for(let j=0; j<olList.length; j++){
+						if( checkBlank(olList[j].innerText) ) {
+							meaningNode = olList[j];
+							break;
+						}
+					}
+					if(meaningNode) {
+						let list = meaningNode.querySelectorAll("ol>li>dl,ol>li>ul");
+						for(let j=0; j<list.length; j++){
+							list[i].parentNode.removeChild(list[j]);
+						}
 					}
 				}
-				if(!content){
+				if(!meaningNode){
 					e.error = MEANING_NOT_FOUND_ERROR;
 					return apiResponseError.bind(this)(e);
 				}
-				list = content.querySelectorAll("ol>li>dl,ol>li>ul");
-				for(let i=0; i<list.length; i++){
-					list[i].parentNode.removeChild(list[i]);
-				}
+				content = document.createElement("div")
+				content.appendChild(languageNodeList[i]);
+				content.appendChild(meaningNode);
 			}
 			else {
 				content = doc;
 				list = content.querySelectorAll("h1.in-block,h2.in-block,h3.in-block,h4.in-block,h5.in-block,h6.in-block");
-				let reduceSections = API_SERVICE_PROPERTY[e.service].reduceSection;
 				for(let i=0; i<list.length; i++){
 					let node = list[i];
-					for(let j=0; j<reduceSections.length; j++ ){
-						if( !node.innerText.match(reduceSections[j]) ) continue;
+					for(let j=0; j<property.reduceSection.length; j++ ){
+						if( !node.innerText.match(property.reduceSection[j]) ) continue;
 						while(node.nextElementSibling && !node.nextElementSibling.classList.contains("in-block")){
 							node.nextElementSibling.remove();
 						}
@@ -1139,7 +1156,7 @@
 				let playButton = document.createElement("span");
 				playButton.classList.add(CSS_PREFIX+"-play");
 				if(audio.nextElementSibling){
-					audio.nextElementSiblin.insertBefore(playButton);
+					audio.nextElementSibling.insertBefore(playButton);
 				}
 				else{
 					audio.parentNode.appendChild(playButton);
@@ -1164,13 +1181,15 @@
 					p.catch( (e)=>{ return onAudioPlayError(e); });
 				});
 			}
-			list = content.querySelectorAll("a[href]:not([href^=http])");
-			for(let i=0; i<list.length; i++){
-				let url = list[i].getAttribute("href");
-				list[i].setAttribute("href", e.service + url);
-			}
 			list = content.querySelectorAll("a");
 			for(let i=0; i<list.length; i++){
+				let url = list[i].getAttribute("href");
+				if( url.match(regexURL1) ){
+					list[i].setAttribute("href", fullSSLURL(url));
+				}
+				else if( !url.match(regexURL2) ){
+					list[i].setAttribute("href", e.service + url);
+				}
 				list[i].setAttribute("target", "_blank");
 				list[i].setAttribute("rel", "noreferrer");
 			}

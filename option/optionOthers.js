@@ -55,6 +55,7 @@
 			{ "selector": ".serviceCodeTitle", "property": "innerText", "key": "htmlServiceCodeTitle" },
 			{ "selector": ".serviceCodeDescription", "property": "innerText", "key": "htmlServiceCodeDescription" },
 			{ "selector": ".serviceCodeNone", "property": "innerText", "key": "htmlServiceCodeNone" },
+			{ "selector": ".serviceCodeDe", "property": "innerText", "key": "htmlServiceCodeDe" },
 			{ "selector": ".serviceCodeEn", "property": "innerText", "key": "htmlServiceCodeEn" },
 			{ "selector": ".serviceCodeFr", "property": "innerText", "key": "htmlServiceCodeFr" },
 			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
@@ -589,7 +590,7 @@
 			obj.shortPrefix = obj.sortkeyprefix;
 			if(obj.shortPrefix.length <= 0) obj.shortPrefix = obj.title;
 			obj.shortPrefix = obj.shortPrefix.substr(0,1).toLowerCase();
-			if(obj.shortPrefix==" "||obj.shortPrefix=="*"||obj.shortPrefix=="!"|| (followed && !obj.title.match(followedRegex) ) ) {
+			if(obj.shortPrefix==" "||obj.shortPrefix=="*"||obj.shortPrefix=="!"||obj.shortPrefix=="#"|| (followed && !obj.title.match(followedRegex) ) ) {
 				this.cat.splice(i,1);
 				i--;
 				continue;

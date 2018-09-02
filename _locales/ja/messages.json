@@ -405,6 +405,9 @@
 	"htmlServiceCodeNone": {
 		"message": "無効にする"
 	},
+	"htmlServiceCodeDe": {
+		"message": "https://de.wiktionary.org/ - ドイツ語"
+	},
 	"htmlServiceCodeEn": {
 		"message": "https://en.wiktionary.org/ - 英語"
 	},
