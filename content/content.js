@@ -1050,10 +1050,11 @@
 				for(let j=0; j<languageFilter.length; j++){
 					let language = languageFilter[j];
 					if (followed != null) language = language.replace(regex, "");
+					let languageMatcher = new RegExp("^"+language+"$", "i");
 					let list = div.querySelectorAll(".section-heading");
 					for(let k=0; k<list.length; k++){
 						let target = list[k];
-						if(language!=target.innerText) continue;
+						if(!target.innerText.match(languageMatcher)) continue;
 						let tmp = [];
 						tmp.push(target);
 						while( target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ){
@@ -1257,6 +1258,7 @@
 				return;
 			}
 		}
+		console.error(e);
 		apiTitleNode.removeAttribute("href");
 		apiTitleNode.innerText = "Unexpected error";
 		content.innerText = ponyfill.i18n.getMessage("htmlUnexpectedError",[e.toString()]);

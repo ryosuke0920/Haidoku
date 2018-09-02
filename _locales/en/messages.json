@@ -408,6 +408,9 @@
 	"htmlServiceCodeEn": {
 		"message": "https://en.wiktionary.org/ - English"
 	},
+	"htmlServiceCodeFr": {
+		"message": "https://fr.wiktionary.org/ - French"
+	},
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - Japanese"
 	},

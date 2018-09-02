@@ -56,6 +56,7 @@
 			{ "selector": ".serviceCodeDescription", "property": "innerText", "key": "htmlServiceCodeDescription" },
 			{ "selector": ".serviceCodeNone", "property": "innerText", "key": "htmlServiceCodeNone" },
 			{ "selector": ".serviceCodeEn", "property": "innerText", "key": "htmlServiceCodeEn" },
+			{ "selector": ".serviceCodeFr", "property": "innerText", "key": "htmlServiceCodeFr" },
 			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
 			{ "selector": ".serviceCodeSelectMessage", "property": "innerText", "key": "htmlServiceCodeSelectMessage" },
 			{ "selector": ".languageFilterTitle", "property": "innerText", "key": "htmlLanguageFilterTitle" },
@@ -587,8 +588,8 @@
 			obj.title = obj.title.replace( namespaceRegex, "");
 			obj.shortPrefix = obj.sortkeyprefix;
 			if(obj.shortPrefix.length <= 0) obj.shortPrefix = obj.title;
-			obj.shortPrefix = obj.shortPrefix.substr(0,1);
-			if(obj.shortPrefix==" "||obj.shortPrefix=="*"|| (followed && !obj.title.match(followedRegex) ) ) {
+			obj.shortPrefix = obj.shortPrefix.substr(0,1).toLowerCase();
+			if(obj.shortPrefix==" "||obj.shortPrefix=="*"||obj.shortPrefix=="!"|| (followed && !obj.title.match(followedRegex) ) ) {
 				this.cat.splice(i,1);
 				i--;
 				continue;
@@ -622,7 +623,7 @@
 		let prototype = document.querySelector("#languageFilterInputPrototype");
 		let languages = getLanguageFilterCache(service);
 		let languageList = getLanguageFilterList();
-		languages = languages.filter( obj => obj.sortkeyprefix.substr(0,1)==prefixCode );
+		languages = languages.filter( obj => obj.shortPrefix == prefixCode );
 		for(let i=0; i<languages.length; i++){
 			let language = languages[i];
 			let wrapper = document.importNode(prototype.content, true);

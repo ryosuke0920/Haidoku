@@ -24,6 +24,7 @@ const API_SERVICE_CODE_NONE = "-";
 const API_SERVICE_NONE = null;
 const API_SERVICE = {
 	"en": "https://en.wiktionary.org",
+	"fr": "https://fr.wiktionary.org",
 	"ja": "https://ja.wiktionary.org"
 };
 const API_SERVICE_PROPERTY = {
@@ -32,6 +33,14 @@ const API_SERVICE_PROPERTY = {
 		"namespace":"Category",
 		"langCat": "Category:All_languages",
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
+		"reduceSection": [],
+		"path": "/w/api.php"
+	},
+	"https://fr.wiktionary.org":{
+		"defaultLanguage": ["français","Anglais"],
+		"namespace":"Catégorie",
+		"langCat": "Catégorie:Langues",
+		"followed": null,
 		"reduceSection": [],
 		"path": "/w/api.php"
 	},
