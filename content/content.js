@@ -348,7 +348,8 @@
 		#lessLaborGoToDictionary-apiBody dt,
 		#lessLaborGoToDictionary-apiBody dd,
 		#lessLaborGoToDictionary-apiBody table {
-			margin-bottom: 0.5em;
+			margin-top: 1em;
+			margin-bottom: 1em;
 		}
 		#lessLaborGoToDictionary-apiBody h1 {
 			font-size: 1.30em;
@@ -378,13 +379,17 @@
 		#lessLaborGoToDictionary-apiBody caption {
 			text-align: left;
 		}
-		#lessLaborGoToDictionary-apiBody th, #lessLaborGoToDictionary-apiBody td {
-			border: 1px solid black;
+		#lessLaborGoToDictionary-apiBody table.wikitable > tr > th,
+		#lessLaborGoToDictionary-apiBody table.wikitable > * > tr > th,
+		#lessLaborGoToDictionary-apiBody table.wikitable > tr > td,
+		#lessLaborGoToDictionary-apiBody table.wikitable > * > tr > td {
+			border: 1px solid rgba(84,89,93,0.3);
 			padding: 5px;
 			text-align: left;
 		}
-		#lessLaborGoToDictionary-apiBody th {
-			background-color: #f9f9f9;
+		#lessLaborGoToDictionary-apiBody table.wikitable > tr > th,
+		#lessLaborGoToDictionary-apiBody table.wikitable > * > tr > th {
+			background-color: #eaecf0;
 			font-weight: bold;
 		}
 		#lessLaborGoToDictionary-apiBody h1.in-block,
@@ -409,10 +414,6 @@
 		}
 		#lessLaborGoToDictionary-apiBody table.wikitable {
 			border: 1px solid black;
-		}
-		#lessLaborGoToDictionary-apiBody table.wikitable td,
-		#lessLaborGoToDictionary-apiBody table.wikitable th {
-			border: none;
 		}
 		#lessLaborGoToDictionary-apiBody table.audiotable td,
 		#lessLaborGoToDictionary-apiBody table.audiotable th {
