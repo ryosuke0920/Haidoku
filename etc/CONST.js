@@ -32,9 +32,7 @@ const API_SERVICE_PROPERTY = {
 		"namespace":"Category",
 		"langCat": "Category:All_languages",
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
-		"reduceSection": [
-			new RegExp("^(?:Etymology|Synonyms|Hyponyms|Derived terms|Related terms|Translations|References|Further reading|Anagrams|Compounds|Declension|Conjugation|Inflection|See also|Antonyms|Descendants|Usage notes|quotation|coordinate term|Alternative forms)","i")
-		],
+		"reduceSection": [],
 		"path": "/w/api.php"
 	},
 	"https://ja.wiktionary.org":{
@@ -42,9 +40,7 @@ const API_SERVICE_PROPERTY = {
 		"namespace":"カテゴリ",
 		"langCat": "カテゴリ:言語",
 		"followed": null,
-		"reduceSection": [
-			new RegExp("^(?:関連語|上位語|下位語|同族語|複合語|同系語|語源|派生語|対義語|熟語|翻訳|類義語|参照|異綴|アナグラム|異表記|訳語|同音異義語|典拠|参考文献|脚注|造語|出典|字典番号)")
-		],
+		"reduceSection": [],
 		"path": "/w/api.php"
 	}
 };

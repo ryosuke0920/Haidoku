@@ -1101,6 +1101,10 @@
 					e.error = MEANING_NOT_FOUND_ERROR;
 					return apiResponseError.bind(this)(e);
 				}
+				list = content.querySelectorAll("ol>li>dl,ol>li>ul");
+				for(let i=0; i<list.length; i++){
+					list[i].parentNode.removeChild(list[i]);
+				}
 			}
 			else {
 				content = doc;
@@ -1118,7 +1122,7 @@
 					}
 				}
 			}
-			list = content.querySelectorAll(".indicator,.noprint,.NavFrame,ol>li>dl,ol>li>ul,hr");
+			list = content.querySelectorAll(".indicator,.noprint");
 			for(let i=0; i<list.length; i++){
 				list[i].parentNode.removeChild(list[i]);
 			}

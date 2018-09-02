@@ -336,7 +336,6 @@
 }
 #lessLaborGoToDictionary-apiBody th, #lessLaborGoToDictionary-apiBody td {
 	display: table-cell;
-	border: 1px solid black;
 	padding: 3px;
 }
 #lessLaborGoToDictionary-apiBody th {
@@ -423,6 +422,12 @@
 }
 #lessLaborGoToDictionary-apiBody a.new, #lessLaborGoToDictionary-apiBody a.new * {
 	color: #dd3333;
+}
+#lessLaborGoToDictionary-apiBody table.wikitable > tr > th,
+#lessLaborGoToDictionary-apiBody table.wikitable > * > tr > th,
+#lessLaborGoToDictionary-apiBody table.wikitable > tr > td,
+#lessLaborGoToDictionary-apiBody table.wikitable > * > tr > td {
+	border: 1px solid #eaecf0;
 }
 #lessLaborGoToDictionary-apiBody table.audiotable td,
 #lessLaborGoToDictionary-apiBody table.audiotable th {
