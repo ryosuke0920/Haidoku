@@ -180,7 +180,6 @@
 			margin:5px;
 			font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
 			font-size: 14px;
-			line-height: 1.7em;
 		}
 		#lessLaborGoToDictionary-apiContent a {
 			color: #3366cc;
@@ -408,6 +407,13 @@
 		#lessLaborGoToDictionary-apiBody a.new {
 			color: #dd3333;
 		}
+		#lessLaborGoToDictionary-apiBody table.wikitable {
+			border: 1px solid black;
+		}
+		#lessLaborGoToDictionary-apiBody table.wikitable td,
+		#lessLaborGoToDictionary-apiBody table.wikitable th {
+			border: none;
+		}
 		#lessLaborGoToDictionary-apiBody table.audiotable td,
 		#lessLaborGoToDictionary-apiBody table.audiotable th {
 			border: none;
@@ -624,9 +630,7 @@
 
 	function mousedownOuterBehavior(e){
 		if( e.button != 0 ) return;
-		if ( !( e.target == widgetNode && hasStpper() ) ) {
-			mousedownFlag = true;
-		}
+		mousedownFlag = true;
 	}
 
 	function mousedownCommonBehavior(e){
