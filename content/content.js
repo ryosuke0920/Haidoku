@@ -1184,14 +1184,17 @@
 			list = content.querySelectorAll("a");
 			for(let i=0; i<list.length; i++){
 				let url = list[i].getAttribute("href");
-				if( url.match(regexURL1) ){
-					list[i].setAttribute("href", fullSSLURL(url));
-				}
-				else if( !url.match(regexURL2) ){
-					list[i].setAttribute("href", e.service + url);
+				if( url != undefined ){
+					if( url.match(regexURL1) ){
+						list[i].setAttribute("href", fullSSLURL(url));
+					}
+					else if( !url.match(regexURL2) ){
+						list[i].setAttribute("href", e.service + url);
+					}
 				}
 				list[i].setAttribute("target", "_blank");
 				list[i].setAttribute("rel", "noreferrer");
+				list[i].addEventListener("click", onClickAnchor);
 			}
 			apiBodyNode.appendChild(content);
 		}
