@@ -56,8 +56,8 @@
 	let moveObj;
 	let historyButtoneNode;
 	let historyDoneButtoneNode;
-	let mouseonFlag = false;
 	let selectedText = "";
+	let innerSelectionFlag = false;
 
 	Promise.resolve()
 		.then(init)
@@ -209,8 +209,6 @@
 		document.addEventListener("mousedown", mousedownCommonBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
 		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
-		linkListNode.addEventListener("mouseenter", (e)=>{ mouseonFlag=true; });
-		linkListNode.addEventListener("mouseleave", (e)=>{ mouseonFlag=false; });
 	}
 
 	function addAutoLinkListEvents(){
@@ -227,15 +225,22 @@
 		document.removeEventListener("mousedown", mousedownAutoBehavior);
 	}
 
+	function updateInnerSelectionFlag(){
+		let selection = window.getSelection();
+		innerSelectionFlag = selection.containsNode(linkListNode, true);
+	}
+
 	function manualSelectionChangeBehavior(e){
+		updateInnerSelectionFlag();
+		if(innerSelectionFlag) return;
 		closeLinkList();
 		abortApiRequestQueue();
 	}
 
 	function selectionChangeAutoBehavior(e){
+		updateInnerSelectionFlag();
 		selectionChangedFlag = true;
-		if(mousedownFlag) return;
-		if(mouseonFlag) return;
+		if(mousedownFlag || innerSelectionFlag) return;
 		let selection = window.getSelection();
 		if( selection.isCollapsed ){
 			closeLinkList();
@@ -258,12 +263,6 @@
 	}
 
 	function mousedownCommonBehavior(e){
-		if( isLinkListNodeUnderMouse(e.pageY, e.pageX)){
-			mouseonFlag = true;
-		}
-		else {
-			mouseonFlag = false;
-		}
 		if( e.button != 0 ) return;
 		if ( e.target == arrowNode ) {
 			moveObj = {
