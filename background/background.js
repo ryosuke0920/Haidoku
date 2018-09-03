@@ -366,7 +366,7 @@ function faviconChain(){
 }
 
 function requestAjaxSearchURL(){
-	return promiseAjax("GET", this.data.url, "document");
+	return promiseAjax("GET", makeURL(this.data.url,""), "document");
 }
 
 function responseAjaxSearchURL(e){
