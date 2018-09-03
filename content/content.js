@@ -293,7 +293,7 @@
 
 	function mouseupAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( selectionChangedFlag && !isLinkListNodeUnderMouse(e.pageY,e.pageX) ){
+		if( selectionChangedFlag && !innerSelectionFlag ){
 			let selection = window.getSelection();
 			if( !selection.isCollapsed ){
 				selectionChangedFlag = false;
