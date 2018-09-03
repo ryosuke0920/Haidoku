@@ -479,6 +479,11 @@ const PRESET_OPTION_LIST = [
 	{
 		"la": "ja",
 		"l": "dTV",
+		"u": "https://pc.video.dmkt-sp.jp/search/increment?words=$1"
+	},
+	{
+		"la": "ja",
+		"l": "dTVチャンネル",
 		"u": "https://dch.dmkt-sp.jp/word/$1"
 	},
 	{
