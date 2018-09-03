@@ -962,16 +962,13 @@
 
 	function apiRequest(text){
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
-		let id = fetchRequestID();
 		let obj = {
-			"id": id,
 			"abort": false,
 			"data": {
 				"text": text,
 				"api": "wiktionary"
 			}
 		};
-		apiRequestQueue[id] = obj;
 		if( !checkBlank(text) ){
 			obj.data.error = API_WHITE_SPACE_ERROR;
 			return apiResponseError.bind(obj)(obj.data);
@@ -980,6 +977,8 @@
 			obj.data.error = API_TEXT_MAX_LENGTH_ERROR;
 			return apiResponseError.bind(obj)(obj.data);
 		}
+		obj.id = fetchRequestID();
+		apiRequestQueue[obj.id] = obj;
 		let keyList = Object.keys(apiRequestQueue);
 		if(keyList.length<=1) {
 			clearApiContent();
@@ -1019,7 +1018,7 @@
 	}
 
 	function abortApiRequestQueue(){
-		let valueList = Object.values(apiRequestQueue);
+			let valueList = Object.values(apiRequestQueue);
 		for(let i=0; i<valueList.length; i++){
 			valueList[i].abort = true;
 		}
@@ -1226,6 +1225,21 @@
 	}
 
 	function apiResponseError(e){
+		let content = document.createElement("div");
+		if( e.error == API_WHITE_SPACE_ERROR ){
+			apiTitleNode.removeAttribute("href");
+			apiTitleNode.innerText = "White space limitation";
+			content.innerText = ponyfill.i18n.getMessage("htmlWhiteSpaceLimitation");
+			after(content);
+			return;
+		}
+		if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
+			apiTitleNode.removeAttribute("href");
+			apiTitleNode.innerText = "Max length limitation";
+			content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthLimitation",[API_TEXT_MAX_LENGTH]);
+			after(content);
+			return;
+		}
 		if(!isActiveApiRequestQueue(this)) return;
 
 		function after(content){
@@ -1233,22 +1247,7 @@
 			linkListNode.classList.remove(CSS_PREFIX+"-loading");
 		}
 
-		let content = document.createElement("div");
 		if(e && ( e instanceof Object) && e.hasOwnProperty("error")){
-			if( e.error == API_WHITE_SPACE_ERROR ){
-				apiTitleNode.removeAttribute("href");
-				apiTitleNode.innerText = "White space limitation";
-				content.innerText = ponyfill.i18n.getMessage("htmlWhiteSpaceLimitation");
-				after(content);
-				return;
-			}
-			if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
-				apiTitleNode.removeAttribute("href");
-				apiTitleNode.innerText = "Max length limitation";
-				content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthLimitation",[API_TEXT_MAX_LENGTH]);
-				after(content);
-				return;
-			}
 			if( e.error == MEANING_NOT_FOUND_ERROR ){
 				apiTitleNode.setAttribute("href", e.fullurl);
 				content.innerText = ponyfill.i18n.getMessage("htmlMeaningNotFound");
