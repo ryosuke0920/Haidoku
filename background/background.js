@@ -68,8 +68,8 @@ function initListener(){
 	});
 }
 
-function openWindow( url, text){
-	let promise = ponyfill.tabs.create({"url": makeURL(url,text)});
+function openWindow( url ){
+	let promise = ponyfill.tabs.create({"url": url});
 	return promise.catch(onOpenWindowError);
 }
 
@@ -178,27 +178,57 @@ function resetMenu(json){
 		let data = optionList[i];
 		let checked = data["c"];
 		let hist = data["h"];
-		if ( checked ) {
-			let id = (i+1).toString();
+		if ( !checked ) continue;
+		let id = (i+1).toString();
+		let label = data["l"];
+		let url = data["u"];
+		let args = {
+			"id": id,
+			"title": label,
+			"contexts": ["image","selection"]
+		};
+		if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) ){
+			args["icons"] = { "16": faviconCache[url] };
+		}
+		options[id] = {
+			"hist": hist,
+			"url": url,
+			"label": label,
+			"origin": false
+		}
+		ponyfill.contextMenus.create(args);
+	}
+	if( 0 < optionList.length ) {
+		ponyfill.contextMenus.create({
+			"id": "origin",
+			"title": "origin",
+			"contexts": ["page","image","selection"]
+		});
+		for( let i=0; i<optionList.length; i++){
+			let data = optionList[i];
+			let checked = data["c"];
+			let hist = data["h"];
+			if ( !checked ) continue;
+			let id = (i+1+optionList.length).toString();
 			let label = data["l"];
 			let url = data["u"];
+			let origin = new URL(url).origin;
 			let args = {
+				"parentId": "origin",
 				"id": id,
-				"title": label,
-				"contexts": ["image","selection"]
+				"title": origin,
+				"contexts": ["page","image","selection"]
 			};
 			if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) ){
 				args["icons"] = { "16": faviconCache[url] };
 			}
-			options[id] = {
-				"hist": hist,
-				"url": url,
-				"label": label
-			}
 			ponyfill.contextMenus.create(args);
+			options[id] = {
+				"url": origin,
+				"label": label,
+				"origin": true
+			}
 		}
-	}
-	if( 0 < optionList.length ) {
 		ponyfill.contextMenus.create({
 			"type": "separator",
 			"contexts": ["image","selection"]
@@ -254,6 +284,10 @@ function contextMenuBehavior(info, tab){
 	}
 	else if ( options.hasOwnProperty( info.menuItemId ) ){
 		let text;
+		if(options[info.menuItemId].origin) {
+			openWindow( options[info.menuItemId]["url"] );
+			return;
+		}
 		if( info.hasOwnProperty("mediaType") && info.mediaType == "image" && info.hasOwnProperty("srcUrl") ){
 			text = info.srcUrl;
 			if( text.match(DATA_URI_REGEX) ){
@@ -264,7 +298,7 @@ function contextMenuBehavior(info, tab){
 		else {
 			text = info.selectionText;
 		}
-		openWindow(options[info.menuItemId]["url"], text );
+		openWindow( makeURL(options[info.menuItemId]["url"], text ) );
 		if( options[info.menuItemId]["hist"] ){
 			saveHistory({
 				"text": text,
