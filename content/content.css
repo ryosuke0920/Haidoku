@@ -174,8 +174,8 @@
 	font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
 	font-size: 14px;
 	line-height: 1.7em;
-	user-select: none;
-	-moz-user-select: none;
+	user-select: text;
+	-moz-user-select: text;
 }
 #lessLaborGoToDictionary-apiHeader,#lessLaborGoToDictionary-apiLoading,#lessLaborGoToDictionary-apiOff,
 #lessLaborGoToDictionary-apiBody,#lessLaborGoToDictionary-apiFooter {

@@ -56,6 +56,8 @@
 	let moveObj;
 	let historyButtoneNode;
 	let historyDoneButtoneNode;
+	let mouseonFlag = false;
+	let selectedText = "";
 
 	Promise.resolve()
 		.then(init)
@@ -191,12 +193,6 @@
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 
-		let copyNode = document.createElement("div");
-		copyNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/copy.svg")+")";
-		copyNode.setAttribute("id",CSS_PREFIX+"-copy");
-		copyNode.title = ponyfill.i18n.getMessage("htmlCopy");
-		menuNode.appendChild(copyNode);
-
 		let optionNode = document.createElement("div");
 		optionNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/option.svg")+")";
 		optionNode.setAttribute("id",CSS_PREFIX+"-option");
@@ -213,6 +209,8 @@
 		document.addEventListener("mousedown", mousedownCommonBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
 		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
+		linkListNode.addEventListener("mouseenter", (e)=>{ mouseonFlag=true; });
+		linkListNode.addEventListener("mouseleave", (e)=>{ mouseonFlag=false; });
 	}
 
 	function addAutoLinkListEvents(){
@@ -237,6 +235,7 @@
 	function selectionChangeAutoBehavior(e){
 		selectionChangedFlag = true;
 		if(mousedownFlag) return;
+		if(mouseonFlag) return;
 		let selection = window.getSelection();
 		if( selection.isCollapsed ){
 			closeLinkList();
@@ -249,15 +248,22 @@
 			abortApiRequestQueue();
 			return;
 		};
-		makeLinkList(text);
+		setSelectedText(text);
+		makeLinkList();
 		showLinkListByClick();
 		if(isEnableApi()){
 			abortApiRequestQueue();
-			apiRequest(selection);
+			apiRequest(text);
 		}
 	}
 
 	function mousedownCommonBehavior(e){
+		if( isLinkListNodeUnderMouse(e.pageY, e.pageX)){
+			mouseonFlag = true;
+		}
+		else {
+			mouseonFlag = false;
+		}
 		if( e.button != 0 ) return;
 		if ( e.target == arrowNode ) {
 			moveObj = {
@@ -294,11 +300,12 @@
 				selectionChangedFlag = false;
 				let text = selection.toString();
 				if( !checkBlank(text) ) return;
-				makeLinkList(text);
+				setSelectedText(text);
+				makeLinkList();
 				showLinkListByClick();
 				if(isEnableApi()){
 					abortApiRequestQueue();
-					apiRequest(selection);
+					apiRequest(text);
 				}
 			}
 		}
@@ -324,11 +331,12 @@
 			if( !selection.isCollapsed ){
 				let text = selection.toString();
 				if( !checkBlank(text) ) return;
-				makeLinkList(selection.toString());
+				setSelectedText(text);
+				makeLinkList();
 				showLinkListByKey();
 				if(isEnableApi()) {
 					abortApiRequestQueue();
-					apiRequest(selection);
+					apiRequest(text);
 				}
 			}
 		}
@@ -453,7 +461,16 @@
 		return ponyfill.runtime.sendMessage(data);
 	}
 
-	function makeLinkList(text){
+	function setSelectedText(text){
+		selectedText = text;
+	}
+
+	function getSelectedText(){
+		return selectedText;
+	}
+
+	function makeLinkList(){
+		let text = getSelectedText();
 		let list = containerNode.querySelectorAll("."+CSS_PREFIX+"-list");
 		for(let i=0; i<list.length; i++){
 			let node = list[i];
@@ -825,9 +842,6 @@
 		else if(id == CSS_PREFIX+"-zoomDown"){
 			if( zoomLinkList(-1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
 		}
-		else if(id == CSS_PREFIX+"-copy"){
-			Promise.resolve().then(copyText).then(closeLinkList).then(abortApiRequestQueue).catch(unexpectedError);
-		}
 		else if(id == CSS_PREFIX+"-resize"){
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
 			Promise.resolve().then(saveLinkListSize).catch(onSaveError);
@@ -835,14 +849,6 @@
 		else if(id == CSS_PREFIX+"-option"){
 			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).then(abortApiRequestQueue).catch(unexpectedError);
 		}
-	}
-
-	function copyText(){
-		document.execCommand("copy");
-		return ponyfill.runtime.sendMessage({
-			"method": "notice",
-			"data": ponyfill.i18n.getMessage("notificationCopyed")
-		});
 	}
 
 	function resetSize(height,width){
@@ -950,8 +956,8 @@
 		}
 	}
 
-	function apiRequest(selection){
-		let text = selection.toString().replace(REMOVE_SPACE_REGEX," ").trim();
+	function apiRequest(text){
+		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
 		let id = fetchRequestID();
 		let obj = {
 			"id": id,
@@ -1300,7 +1306,7 @@
 		if(apiSwitcheNode.getAttribute("data-checked") != API_SWITCH_ENABLED){
 			setApiSwitch(API_SWITCH_ENABLED);
 			saveApiSwitch(API_SWITCH_ENABLED).catch( onSaveError );
-			apiRequest(window.getSelection());
+			apiRequest(getSelectedText());
 		}
 		else {
 			setApiSwitch(API_SWITCH_DISABLED);

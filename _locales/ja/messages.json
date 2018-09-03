@@ -20,9 +20,6 @@
 	"extensionOptionName": {
 		"message": "設定"
 	},
-	"notificationCopyed": {
-		"message": "選択範囲をコピーしました。"
-	},
 	"notificationUnexpectedError": {
 		"message": "予期せぬエラーが発生しました。$ERROR$",
 		"placeholders": {

@@ -20,9 +20,6 @@
 	"extensionOptionName": {
 		"message": "Options"
 	},
-	"notificationCopyed": {
-		"message": "The selected area was copied."
-	},
 	"notificationUnexpectedError": {
 		"message": "Unexpected error. $ERROR$",
 		"placeholders": {
