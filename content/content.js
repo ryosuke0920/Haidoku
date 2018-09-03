@@ -532,16 +532,20 @@
 
 	function getSelectionRect(){
 		let selection = window.getSelection();
-		let lastRange = selection.getRangeAt(selection.rangeCount-1);
-		let rectList = lastRange.getClientRects();
-		let rect = rectList[rectList.length-1];
-		return rect;
+		for(let i=selection.rangeCount-1; 0<=i; i--) {
+			let range = selection.getRangeAt(i);
+			if(range.collapsed) continue;
+			let rectList = range.getClientRects();
+			let rect = rectList[rectList.length-1];
+			return rect;
+		}
 	}
 
 	function showLinkList(){
 		show(linkListNode);
 		applyLinkListSize();
 		let rect = getSelectionRect();
+		if(!rect) throw( new Error("Rect not found.") );
 		linkListNodeLeft = makeWidgetPointX(rect);
 		linkListNodeTop = makeWidgetPointY(rect);
 		moveWidget();
@@ -759,6 +763,7 @@
 	function widgetActionMouseclick(e){
 		removeStopper();
 		let rect = getSelectionRect();
+		if(!rect) throw( new Error("Rect not found.") );
 		linkListNodeLeft = makeWidgetPointX(rect);
 		linkListNodeTop = makeWidgetPointY(rect);
 		moveWidget();
@@ -1302,7 +1307,7 @@
 	}
 
 	function apiSwitchBehavior(e){
-		if(apiSwitcheNode.getAttribute("data-checked") != API_SWITCH_ENABLED){
+		if(!isApiSwitchOn()){
 			setApiSwitch(API_SWITCH_ENABLED);
 			saveApiSwitch(API_SWITCH_ENABLED).catch( onSaveError );
 			apiRequest(getSelectedText());
