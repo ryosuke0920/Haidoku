@@ -106,6 +106,10 @@
 		apiHeaderNode.setAttribute("id",CSS_PREFIX+"-apiHeader");
 		apiContentNode.appendChild(apiHeaderNode);
 
+		let apiHeaderTextAreaNode = document.createElement("div");
+		apiHeaderTextAreaNode.setAttribute("id",CSS_PREFIX+"-apiHeaderTextArea");
+		apiHeaderNode.appendChild(apiHeaderTextAreaNode);
+
 		apiSwitcheNode = document.createElement("span");
 		apiSwitcheNode.setAttribute("id",CSS_PREFIX+"-apiSwitch");
 		apiSwitcheNode.classList.add(CSS_PREFIX+"-checkboxButton");
@@ -117,7 +121,7 @@
 
 		let apiTitleWrapper = document.createElement("div");
 		apiTitleWrapper.setAttribute("id",CSS_PREFIX+"-apiTitleWrapper");
-		apiHeaderNode.appendChild(apiTitleWrapper);
+		apiHeaderTextAreaNode.appendChild(apiTitleWrapper);
 
 		historyButtoneNode = document.createElement("div");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
@@ -141,15 +145,15 @@
 		apiErrorMessageNode.setAttribute("id",CSS_PREFIX+"-apiErrorMessage");
 		apiTitleWrapper.appendChild(apiErrorMessageNode);
 
-		let apiNowLoadingMsgNode = document.createElement("span");
+		let apiNowLoadingMsgNode = document.createElement("div");
 		apiNowLoadingMsgNode.setAttribute("id",CSS_PREFIX+"-nowLoadingMsg");
 		apiNowLoadingMsgNode.innerText = ponyfill.i18n.getMessage("htmlNowSearching");
-		apiHeaderNode.appendChild(apiNowLoadingMsgNode);
+		apiHeaderTextAreaNode.appendChild(apiNowLoadingMsgNode);
 
-		let apiOffMsgNode = document.createElement("span");
+		let apiOffMsgNode = document.createElement("div");
 		apiOffMsgNode.setAttribute("id",CSS_PREFIX+"-apiOffMsg");
 		apiOffMsgNode.innerText = ponyfill.i18n.getMessage("htmlLinkageDisabled");
-		apiHeaderNode.appendChild(apiOffMsgNode);
+		apiHeaderTextAreaNode.appendChild(apiOffMsgNode);
 
 		let apiLoadingNode = document.createElement("div");
 		apiLoadingNode.setAttribute("id",CSS_PREFIX+"-apiLoading");
@@ -1140,7 +1144,7 @@
 					if(meaningNode) {
 						let list = meaningNode.querySelectorAll("ol>li>dl,ol>li>ul");
 						for(let j=0; j<list.length; j++){
-							list[i].parentNode.removeChild(list[j]);
+							list[i].parentNode.removeChild(list[j]);//TODO
 						}
 					}
 				}

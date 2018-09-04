@@ -19,7 +19,7 @@
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
 	display: grid;
-	grid-template-columns: min-content auto;
+	grid-template-columns: min-content minmax(100px,auto);
 }
 #lessLaborGoToDictionary-cover {
 	all: initial;
@@ -193,7 +193,7 @@
 	border-top: solid 1px gray;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
-	padding-right: 40px;
+	display: flex;
 }
 #lessLaborGoToDictionary-apiFooter {
 	border-bottom: solid 1px gray;
@@ -205,17 +205,31 @@
 #lessLaborGoToDictionary-apiFooter, #lessLaborGoToDictionary-apiFooter *{
 	background-color:#eaecf0
 }
+#lessLaborGoToDictionary-apiHeaderTextArea {
+	display: block;
+	flex: auto;
+	min-width: 0;
+}
+#lessLaborGoToDictionary-apiHeaderTextArea > * {
+	display:block;
+	min-width: 0;
+}
+#lessLaborGoToDictionary-apiHeaderTextArea * {
+	white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
 #lessLaborGoToDictionary-apiOffMsg,#lessLaborGoToDictionary-nowLoadingMsg {
 	display: none;
 }
 #lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-checkboxButton {
-	position: absolute;
+	position: relative;
 	background-color: gray;
 	display: inline-block;
 	height: 20px;
 	width: 30px;
+	min-width: 30px;
 	border-radius: 15px;
-	right: 0.5em;
 	cursor: pointer;
 }
 #lessLaborGoToDictionary-apiContent span.lessLaborGoToDictionary-circle {
@@ -362,6 +376,9 @@
 #lessLaborGoToDictionary-apiBody i, #lessLaborGoToDictionary-apiBody strong {
 	display: inline;
 }
+#lessLaborGoToDictionary-apiTitleWrapper {
+	display: block;
+}
 #lessLaborGoToDictionary-apiTitle {
 	font-weight: bold;
 	font-size: 1.1em;
@@ -459,10 +476,10 @@
 	display: block;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-nowLoadingMsg {
-	display: inline;
+	display: block;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOffMsg {
-	display: inline;
+	display: block;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOff {
 	display: block;
