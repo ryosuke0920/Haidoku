@@ -384,6 +384,11 @@
 #lessLaborGoToDictionary-apiBody a:active, #lessLaborGoToDictionary-apiBody a:active * {
 	color: #ee0000;
 }
+#lessLaborGoToDictionary-apiErrorMessage {
+	display: inline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 #lessLaborGoToDictionary-history,
 #lessLaborGoToDictionary-historyDone {
 	display: inline-block;

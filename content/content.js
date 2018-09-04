@@ -14,12 +14,13 @@
 	const SILENT_ERROR_PREFIX = "[silent]";
 	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
 	const REMOVE_SPACE_REGEX = new RegExp( /(?:\s|\|)+/, "g" );
-	const API_QUERY_DERAY = 1000;
 	const LINK_LIST_CLOSE_TIME = 500;
-	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
+	const API_QUERY_DERAY = 1000;
 	const API_TEXT_MAX_LENGTH = 255;
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
 	const API_WHITE_SPACE_ERROR = "white space error";
+	const API_TITLE_MAX_LENGTH = 25;
+	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 
 	let linkListNode;
 	let linkListNodeTop = 0;
@@ -40,6 +41,7 @@
 	let containerNode;
 	let apiContentNode;
 	let apiTitleNode;
+	let apiErrorMessageNode;
 	let apiBodyNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
@@ -134,6 +136,10 @@
 		apiTitleNode.setAttribute("rel","noreferrer");
 		apiTitleNode.setAttribute("target","_blank");
 		apiTitleWrapper.appendChild(apiTitleNode);
+
+		apiErrorMessageNode = document.createElement("div");
+		apiErrorMessageNode.setAttribute("id",CSS_PREFIX+"-apiErrorMessage");
+		apiTitleWrapper.appendChild(apiErrorMessageNode);
 
 		let apiNowLoadingMsgNode = document.createElement("span");
 		apiNowLoadingMsgNode.setAttribute("id",CSS_PREFIX+"-nowLoadingMsg");
@@ -1029,6 +1035,18 @@
 		hide(historyButtoneNode);
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
+		apiTitleNode.removeAttribute("data-text");
+		apiTitleNode.removeAttribute("data-title");
+		apiTitleNode.removeAttribute("href");
+		apiTitleNode.innerText = apiErrorMessageNode.innerText = "";
+		clearApiTitle();
+	}
+
+	function clearApiTitle(){
+		apiTitleNode.removeAttribute("data-text");
+		apiTitleNode.removeAttribute("data-title");
+		apiTitleNode.removeAttribute("href");
+		apiTitleNode.innerText = apiErrorMessageNode.innerText = "";
 	}
 
 	function clearChildren(node){
@@ -1225,73 +1243,70 @@
 	}
 
 	function apiResponseError(e){
-		let content = document.createElement("div");
-		if( e.error == API_WHITE_SPACE_ERROR ){
-			apiTitleNode.removeAttribute("href");
-			apiTitleNode.innerText = "White space limitation";
-			content.innerText = ponyfill.i18n.getMessage("htmlWhiteSpaceLimitation");
-			after(content);
-			return;
-		}
-		if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
-			apiTitleNode.removeAttribute("href");
-			apiTitleNode.innerText = "Max length limitation";
-			content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthLimitation",[API_TEXT_MAX_LENGTH]);
-			after(content);
-			return;
-		}
-		if(!isActiveApiRequestQueue(this)) return;
-
 		function after(content){
 			apiBodyNode.appendChild(content);
 			linkListNode.classList.remove(CSS_PREFIX+"-loading");
 		}
 
+		clearApiTitle();
+		let content = document.createElement("div");
+		if( e.error == API_WHITE_SPACE_ERROR ){
+			apiErrorMessageNode.innerText = e.text;
+			content.innerText = ponyfill.i18n.getMessage("htmlWhiteSpaceLimitation");
+			after(content);
+			return;
+		}
+		if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
+			apiErrorMessageNode.innerText = e.text;
+			content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthLimitation",[API_TEXT_MAX_LENGTH]);
+			after(content);
+			return;
+		}
+
+		if(!isActiveApiRequestQueue(this)) return;
+
 		if(e && ( e instanceof Object) && e.hasOwnProperty("error")){
 			if( e.error == MEANING_NOT_FOUND_ERROR ){
+				apiTitleNode.innerText = e.text;
 				apiTitleNode.setAttribute("href", e.fullurl);
 				content.innerText = ponyfill.i18n.getMessage("htmlMeaningNotFound");
 				after(content);
 				return;
 			}
 			if( e.error == SECTION_NOT_FOUND_ERROR ){
+				apiTitleNode.innerText = e.text;
 				apiTitleNode.setAttribute("href", e.fullurl);
 				content.innerText = ponyfill.i18n.getMessage("htmlSectionNotFound");
 				after(content);
 				return;
 			}
 			if( e.error == PAGE_NOT_FOUND_ERROR ){
-				apiTitleNode.removeAttribute("href");
-				apiTitleNode.innerText = "Page not found";
+				apiErrorMessageNode.innerText = e.text;
 				content.innerText = ponyfill.i18n.getMessage("htmlPageNotFound");
 				after(content);
 				return;
 			}
 			else if( e.error == CONNECTION_ERROR ){
-				apiTitleNode.removeAttribute("href");
-				apiTitleNode.innerText = "Connection error";
+				apiErrorMessageNode.innerText = e.text;
 				content.innerText = ponyfill.i18n.getMessage("htmlConnectionError",[e.code]);
 				after(content);
 				return;
 			}
 			else if( e.error == SERVER_ERROR ){
-				apiTitleNode.removeAttribute("href");
-				apiTitleNode.innerText = "Server error";
+				apiErrorMessageNode.innerText = e.text;
 				content.innerText = ponyfill.i18n.getMessage("htmlServerError",[e.code]);
 				after(content);
 				return;
 			}
 			else if( e.error == APPLICATION_ERROR ){
-				apiTitleNode.removeAttribute("href");
-				apiTitleNode.innerText = "Application error";
+				apiErrorMessageNode.innerText = e.text;
 				content.innerText = ponyfill.i18n.getMessage("htmlApplicationError",[e.code]);
 				after(content);
 				return;
 			}
 		}
 		console.error(e);
-		apiTitleNode.removeAttribute("href");
-		apiTitleNode.innerText = "Unexpected error";
+		apiErrorMessageNode.innerText = e.text;
 		content.innerText = ponyfill.i18n.getMessage("htmlUnexpectedError",[e.toString()]);
 		after(content);
 		return;
