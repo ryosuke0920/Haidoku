@@ -1056,110 +1056,139 @@
 	function apiResponse(e){
 		if( !isActiveApiRequestQueue(this) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
-		if( e.text.toLowerCase() != e.title.toLowerCase() ) {
-			apiTitleNode.innerText = ponyfill.i18n.getMessage("htmlMaybeTitle",[e.title]);
-		}
-		else {
-			apiTitleNode.innerText = e.title;
-		}
-		apiTitleNode.setAttribute("data-text", e.text);
-		apiTitleNode.setAttribute("data-title", e.title);
-		apiTitleNode.setAttribute("href", e.fullurl);
-		let sections = [];
-		let languageNodeList = [];
+		makeApiTitleNode(e.text, e.title, e.fullurl);
+		let parsed = parseHTML(e.html);
 		let property = API_SERVICE_PROPERTY[e.service];
-		if(languageFilter.length > 0){
-			let obj = filterLanguage(e.html, languageFilter, property.followed, property.languageTopRegex, property.languageBottomRegex);
-			sections = sections.concat(obj.content);
-			languageNodeList = languageNodeList.concat(obj.language);
-			if(sections.length<=0){
-				e.error = SECTION_NOT_FOUND_ERROR;
-				return apiResponseError.bind(this)(e);
-			}
-		}
-		else {
-			for(let i=0; i<e.html.length; i++){
-				let div = document.createElement("div");
-				div.innerHTML = e.html[i];
-				sections.push(div);
-			}
-		}
-		for(let i=0; i<sections.length; i++){
-			let doc = sections[i];
-			let content;
-			if(apiCutOut){
-				let meaningNode = cutOut(doc, property.cutOut);
-				if(!meaningNode){
-					e.error = MEANING_NOT_FOUND_ERROR;
-					return apiResponseError.bind(this)(e);
+		let warnings = [];
+		if(0 < languageFilter.length){
+			let list = [];
+			for(let i=0; i<parsed.length; i++){
+				let obj = parsed[i];
+				console.log(obj);
+				if ( isLanguageFilterd(obj.title.innerText, languageFilter, property.followed, property.languageTopRegex, property.languageBottomRegex ) ) {
+					list.push(obj);
 				}
-				content = document.createElement("div")
-				content.appendChild(languageNodeList[i]);
-				content.appendChild(meaningNode);
+			}
+			if ( list.length <= 0 ) {
+				warnings.push( makeMessageNode(ponyfill.i18n.getMessage("htmlSectionNotFound")));
 			}
 			else {
-				content = doc;
-				content = reduceSections(content,property.reduceSection);
+				parsed = list;
 			}
-			content = removeSimbol(content);
-			content = convertStyle(content);
-			content = convertAudio(content);
-			content = convertAnchor(content, e.service);
-			apiBodyNode.appendChild(content);
+		}
+		if(apiCutOut){
+			for(let i=0; i<parsed.length; i++){
+				let obj = parsed[i];
+				let node = cutOut(obj.content, property.cutOut);
+				if(node){
+					obj.content = node;
+				}
+				else {
+					let msg = makeMessageNode(ponyfill.i18n.getMessage("htmlMeaningNotFound"));
+					obj.warnings.push(msg);
+				}
+			}
+		}
+		for(let i=0; i<warnings.length; i++){
+			apiBodyNode.appendChild(warnings[i]);
+		}
+		for(let i=0; i<parsed.length; i++){
+			let obj = parsed[i];
+			obj.title = removeSimbol(obj.title);
+			obj.title = convertStyle(obj.title);
+			obj.title = convertAnchor(obj.title, e.service);
+			obj.content = removeSimbol(obj.content);
+			obj.content = convertStyle(obj.content);
+			obj.content = convertAudio(obj.content);
+			obj.content = convertAnchor(obj.content, e.service);
+			apiBodyNode.appendChild(obj.title);
+			for(let j=0; j<obj.warnings.length; j++){
+				apiBodyNode.appendChild(obj.warnings[j]);
+			}
+			apiBodyNode.appendChild(obj.content);
 		}
 		show(historyButtoneNode);
 		linkListNode.classList.remove(CSS_PREFIX+"-loading");
 	}
 
-	function filterLanguage(domList, filterList, followed, languageTopRegex, languageBottomRegex ){
-		let sections = [];
-		let languageNodeList = [];
-		let regex;
-		if(followed) regex = new RegExp("\\s+" + followed + "$", "i");
-		for(let i=0; i<domList.length; i++){
-			let div = document.createElement("div");
-			div.innerHTML = domList[i];
-			let list = div.querySelectorAll(".section-heading");
-			for(let k=0; k<list.length; k++){
-				let target = list[k];
-				for(let j=0; j<filterList.length; j++){
-					let language = filterList[j];
-					if (followed != null) language = language.replace(regex, "");
-					let languageMatcher = new RegExp( languageTopRegex + language + languageBottomRegex, "i");
-					if(!target.innerText.match(languageMatcher)) continue;
-					languageNodeList.push(target);
-					let tmp = [];
-					tmp.push(target);
-					while( target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ){
-						tmp.push( target.nextElementSibling );
-						target = target.nextElementSibling;
-					}
-					let div2 = document.createElement("div");
-					for(let l=0; l<tmp.length; l++ ){
-						div2.appendChild(tmp[l]);
-					}
-					sections.push(div2);
-					break;
-				}
-			}
+	function makeApiTitleNode(text,title,url){
+		if( text.toLowerCase() != title.toLowerCase() ) {
+			apiTitleNode.innerText = ponyfill.i18n.getMessage("htmlMaybeTitle",[title]);
 		}
-		return {"content":sections, "language":languageNodeList};
+		else {
+			apiTitleNode.innerText = title;
+		}
+		apiTitleNode.setAttribute("data-text", text);
+		apiTitleNode.setAttribute("data-title", title);
+		apiTitleNode.setAttribute("href", url);
 	}
 
-	function cutOut(dom, keyword){
+	function parseHTML(htmls){
+		let result = [];
+		for(let i=0; i<htmls.length; i++){
+			let html = htmls[i];
+			let node = document.createElement("div");
+			node.innerHTML = html;
+			let list = node.querySelectorAll(".section-heading");
+			for(let j=0; j<list.length; j++){
+				let target = list[j];
+				let tmp = [];
+				while( target && target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ) {
+					tmp.push(target.nextElementSibling);
+					target = target.nextElementSibling;
+				}
+				let obj = {
+					"title": list[j],
+					"warnings":[],
+					"tmp": tmp
+				};
+				result.push(obj)
+			}
+		}
+		for(let i=0; i<result.length; i++){
+			let obj = result[i];
+			let content = document.createElement("div");
+			for(let j=0; j<obj.tmp.length; j++){
+				content.appendChild(obj.tmp[j]);
+			}
+			obj.content = content;
+			delete obj.tmp;
+		}
+		return result;
+	}
+
+	function isLanguageFilterd(title,filterList, followed, languageTopRegex, languageBottomRegex) {
+		let replaceRegex;
+		if(followed) replaceRegex = new RegExp("\\s+" + followed + "$", "i");
+		for(let i=0; i<filterList.length; i++){
+			let language = filterList[i];
+			if (followed != null) language = language.replace(replaceRegex, "");
+			let languageMatcher = new RegExp( languageTopRegex + language + languageBottomRegex, "i");
+			if(title.match(languageMatcher)) return true;
+		}
+		return false;
+	}
+
+	function makeMessageNode(message){
+		let node = document.createElement("div");
+		node.classList.add( CSS_PREFIX+"-apiWarningMessage" );
+		node.innerText = message;
+		return node;
+	}
+
+	function cutOut(node, keyword){
 		let meaningNode;
 		if(keyword){
-			let list = dom.querySelectorAll("p");
+			let list = node.querySelectorAll("p");
 			for(let i=0; i<list.length; i++){
 				if(list[i].innerText == keyword) {
 					meaningNode = list[i].nextElementSibling;
 					break;
 				}
 			}
-
 		}
 		else {
-			let list = dom.querySelectorAll("ol");
+			let list = node.querySelectorAll("ol");
 			for(let i=0; i<list.length; i++){
 				if( checkBlank(list[i].innerText) ) {
 					meaningNode = list[i];
@@ -1174,41 +1203,25 @@
 		return meaningNode;
 	}
 
-	function reduceSections(dom, sections){
-		let list = dom.querySelectorAll("h1.in-block,h2.in-block,h3.in-block,h4.in-block,h5.in-block,h6.in-block");
-		for(let i=0; i<list.length; i++){
-			let node = list[i];
-			for(let j=0; j<sections.length; j++ ){
-				if( !node.innerText.match(sections[j]) ) continue;
-				while(node.nextElementSibling && !node.nextElementSibling.classList.contains("in-block")){
-					node.nextElementSibling.remove();
-				}
-				node.remove();
-				break;
-			}
-		}
-		return dom;
-	}
-
-	function removeSimbol(dom){
-		let list = dom.querySelectorAll(".indicator,.noprint");
+	function removeSimbol(node){
+		let list = node.querySelectorAll(".indicator,.noprint");
 		for(let i=0; i<list.length; i++){
 			list[i].parentNode.removeChild(list[i]);
 		}
-		return dom;
+		return node;
 	}
 
-	function convertStyle(dom){
-		let list = dom.querySelectorAll("[style]");
+	function convertStyle(node){
+		let list = node.querySelectorAll("[style]");
 		for(let i=0; i<list.length; i++){
 			list[i].style.float = "none";
 			if( list[i].style.width ) list[i].style.width = "auto";
 		}
-		return dom;
+		return node;
 	}
 
-	function convertAudio(dom){
-		let list = dom.querySelectorAll("audio");
+	function convertAudio(node, service){
+		let list = node.querySelectorAll("audio");
 		for(let i=0; i<list.length; i++){
 			let audio = list[i];
 			audio.style.display = "none";
@@ -1230,7 +1243,7 @@
 					}
 				}
 				if(!url) return onAudioPlayError( new Error("Audio source not found.") );
-				url = fullSSLURL(url);
+				url = new URL(url, service).href;
 				let p = ponyfill.runtime.sendMessage({
 					"method": "downloadAsBaase64",
 					"data": {
@@ -1240,41 +1253,19 @@
 				p.catch( (e)=>{ return onAudioPlayError(e); });
 			});
 		}
-		return dom;
+		return node;
 	}
 
-	function convertAnchor(dom, service){
-		let regexURL1 = /^\/\//;
-		let regexURL2 = /^http/;
-		let list = dom.querySelectorAll("a");
+	function convertAnchor(node, service){
+		let list = node.querySelectorAll("a");
 		for(let i=0; i<list.length; i++){
 			let url = list[i].getAttribute("href");
-			if( url != undefined ){
-				if( url.match(regexURL1) ){
-					list[i].setAttribute("href", fullSSLURL(url));
-				}
-				else if( !url.match(regexURL2) ){
-					list[i].setAttribute("href", service + url);
-				}
-			}
+			list[i].setAttribute("href", new URL(url, service).href );
 			list[i].setAttribute("target", "_blank");
 			list[i].setAttribute("rel", "noreferrer");
 			list[i].addEventListener("click", onClickAnchor);
 		}
-		return dom;
-	}
-
-	function fullSSLURL(url){
-		if( url.match("^//") ){
-			return "https:" + url;
-		}
-		if( url.match(/^http:/) ){
-			return url.replace(/^http:/, "https:");
-		}
-		if( url.match("^/") ){
-			return "https:/" + url;
-		}
-		return url;
+		return node;
 	}
 
 	function apiResponseError(e){
@@ -1282,7 +1273,6 @@
 			apiBodyNode.appendChild(content);
 			linkListNode.classList.remove(CSS_PREFIX+"-loading");
 		}
-
 		clearApiTitle();
 		let content = document.createElement("div");
 		if( e.error == API_WHITE_SPACE_ERROR ){
@@ -1297,24 +1287,8 @@
 			after(content);
 			return;
 		}
-
 		if(!isActiveApiRequestQueue(this)) return;
-
 		if(e && ( e instanceof Object) && e.hasOwnProperty("error")){
-			if( e.error == MEANING_NOT_FOUND_ERROR ){
-				apiTitleNode.innerText = e.text;
-				apiTitleNode.setAttribute("href", e.fullurl);
-				content.innerText = ponyfill.i18n.getMessage("htmlMeaningNotFound");
-				after(content);
-				return;
-			}
-			if( e.error == SECTION_NOT_FOUND_ERROR ){
-				apiTitleNode.innerText = e.text;
-				apiTitleNode.setAttribute("href", e.fullurl);
-				content.innerText = ponyfill.i18n.getMessage("htmlSectionNotFound");
-				after(content);
-				return;
-			}
 			if( e.error == PAGE_NOT_FOUND_ERROR ){
 				apiErrorMessageNode.innerText = e.text;
 				content.innerText = ponyfill.i18n.getMessage("htmlPageNotFound");

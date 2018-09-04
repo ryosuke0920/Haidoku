@@ -432,9 +432,6 @@
 #lessLaborGoToDictionary-apiBody h2.in-block::before {
 	content: "# ";
 }
-#lessLaborGoToDictionary-apiBody h2.in-block, #lessLaborGoToDictionary-apiBody h2.in-block * {
-	font-weight: normal;
-}
 #lessLaborGoToDictionary-apiBody h1.in-block, #lessLaborGoToDictionary-apiBody h2.in-block, #lessLaborGoToDictionary-apiBody h3.in-block,
 #lessLaborGoToDictionary-apiBody h4.in-block, #lessLaborGoToDictionary-apiBody h5.in-block, #lessLaborGoToDictionary-apiBody h6.in-block {
 	border-bottom: solid 2px black;
@@ -467,6 +464,14 @@
 	cursor: pointer;
 	vertical-align: middle;
 	margin: 2px;
+}
+#lessLaborGoToDictionary-apiBody div.lessLaborGoToDictionary-apiWarningMessage {
+	padding: 2px;
+	border: solid 1px red;
+	border-radius: 5px;
+	background-color: rgba(255,0,0,0.65);
+	color: white;
+	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitleWrapper,
 #lessLaborGoToDictionary-viewer.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody {

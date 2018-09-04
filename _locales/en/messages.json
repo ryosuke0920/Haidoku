@@ -95,10 +95,10 @@
 		}
 	},
 	"htmlMeaningNotFound": {
-		"message": "The page was found but \"Cut out description\" was failed."
+		"message": "\"Cut out description\" was failed."
 	},
 	"htmlSectionNotFound": {
-		"message": "The page was found but there ware no description for the language specified in \"Language filter\"."
+		"message": "There ware no description for the language specified in \"Language filter\"."
 	},
 	"htmlPageNotFound": {
 		"message": "The page could not be found."

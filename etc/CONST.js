@@ -36,7 +36,6 @@ const API_SERVICE_PROPERTY = {
 		"followed": null,
 		"languageTopRegex":".+\\(",
 		"languageBottomRegex":"\\)$",
-		"reduceSection": [],
 		"cutOut": "Bedeutungen:",
 		"path": "/w/api.php"
 	},
@@ -47,7 +46,6 @@ const API_SERVICE_PROPERTY = {
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
-		"reduceSection": [],
 		"path": "/w/api.php"
 	},
 	"https://fr.wiktionary.org":{
@@ -57,7 +55,6 @@ const API_SERVICE_PROPERTY = {
 		"followed": null,
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
-		"reduceSection": [],
 		"path": "/w/api.php"
 	},
 	"https://ja.wiktionary.org":{
@@ -67,13 +64,10 @@ const API_SERVICE_PROPERTY = {
 		"followed": null,
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
-		"reduceSection": [],
 		"path": "/w/api.php"
 	}
 };
 const PAGE_NOT_FOUND_ERROR = "page not found";
-const SECTION_NOT_FOUND_ERROR = "section not found";
-const MEANING_NOT_FOUND_ERROR = "meaning not found";
 const CONNECTION_ERROR = "connection error";
 const SERVER_ERROR = "server error";
 const APPLICATION_ERROR = "application error";
