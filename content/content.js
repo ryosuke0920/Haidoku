@@ -1075,35 +1075,9 @@
 		let languageNodeList = [];
 		let property = API_SERVICE_PROPERTY[e.service];
 		if(languageFilter.length > 0){
-			let regex;
-			if(property.followed) regex = new RegExp("\\s+"+property.followed+"$","i");
-			for(let i=0; i<e.html.length; i++){
-				let div = document.createElement("div");
-				div.innerHTML = e.html[i];
-				for(let j=0; j<languageFilter.length; j++){
-					let language = languageFilter[j];
-					if (property.followed != null) language = language.replace(regex, "");
-					let languageMatcher = new RegExp( property.languageTopRegex + language + property.languageBottomRegex, "i");
-					let list = div.querySelectorAll(".section-heading");
-					for(let k=0; k<list.length; k++){
-						let target = list[k];
-						if(!target.innerText.match(languageMatcher)) continue;
-						languageNodeList.push(target);
-						let tmp = [];
-						tmp.push(target);
-						while( target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ){
-							tmp.push( target.nextElementSibling );
-							target = target.nextElementSibling;
-						}
-						let div2 = document.createElement("div");
-						for(let l=0; l<tmp.length; l++ ){
-							div2.appendChild(tmp[l]);
-						}
-						sections.push(div2);
-						break;
-					}
-				}
-			}
+			let obj = filterLanguage(e.html, languageFilter, property.followed, property.languageTopRegex, property.languageBottomRegex);
+			sections = sections.concat(obj.content);
+			languageNodeList = languageNodeList.concat(obj.language);
 			if(sections.length<=0){
 				e.error = SECTION_NOT_FOUND_ERROR;
 				return apiResponseError.bind(this)(e);
@@ -1116,38 +1090,11 @@
 				sections.push(div);
 			}
 		}
-		let regexURL1 = /^\/\//;
-		let regexURL2 = /^http/;
 		for(let i=0; i<sections.length; i++){
 			let doc = sections[i];
 			let content;
 			if(apiCutOut){
-				let meaningNode;
-				if(property.cutOut){
-					let list = doc.querySelectorAll("p");
-					for(let j=0; j<list.length; j++){
-						if(list[j].innerText == property.cutOut) {
-							meaningNode = list[j].nextElementSibling;
-							break;
-						}
-					}
-
-				}
-				else {
-					let olList = doc.querySelectorAll("ol");
-					for(let j=0; j<olList.length; j++){
-						if( checkBlank(olList[j].innerText) ) {
-							meaningNode = olList[j];
-							break;
-						}
-					}
-					if(meaningNode) {
-						let list = meaningNode.querySelectorAll("ol>li>dl,ol>li>ul");
-						for(let j=0; j<list.length; j++){
-							list[j].parentNode.removeChild(list[j]);
-						}
-					}
-				}
+				let meaningNode = cutOut(doc, property.cutOut);
 				if(!meaningNode){
 					e.error = MEANING_NOT_FOUND_ERROR;
 					return apiResponseError.bind(this)(e);
@@ -1158,79 +1105,169 @@
 			}
 			else {
 				content = doc;
-				list = content.querySelectorAll("h1.in-block,h2.in-block,h3.in-block,h4.in-block,h5.in-block,h6.in-block");
-				for(let i=0; i<list.length; i++){
-					let node = list[i];
-					for(let j=0; j<property.reduceSection.length; j++ ){
-						if( !node.innerText.match(property.reduceSection[j]) ) continue;
-						while(node.nextElementSibling && !node.nextElementSibling.classList.contains("in-block")){
-							node.nextElementSibling.remove();
-						}
-						node.remove();
-						break;
-					}
-				}
+				content = reduceSections(content,property.reduceSection);
 			}
-			list = content.querySelectorAll(".indicator,.noprint");
-			for(let i=0; i<list.length; i++){
-				list[i].parentNode.removeChild(list[i]);
-			}
-			list = content.querySelectorAll("[style]");
-			for(let i=0; i<list.length; i++){
-				list[i].style.float = "none";
-				if( list[i].style.width ) list[i].style.width = "auto";
-			}
-			list = content.querySelectorAll("audio");
-			for(let i=0; i<list.length; i++){
-				let audio = list[i];
-				audio.style.display = "none";
-				let playButton = document.createElement("span");
-				playButton.classList.add(CSS_PREFIX+"-play");
-				if(audio.nextElementSibling){
-					audio.nextElementSibling.insertBefore(playButton);
-				}
-				else{
-					audio.parentNode.appendChild(playButton);
-				}
-				playButton.addEventListener("click",(e)=>{
-					let url = audio.currentSrc;
-					if(!url){
-						let list = audio.querySelectorAll("source");
-						for(let i=list.length-1; 0<=i; i--){
-							url = list[i].src;
-							if( url.match("ogg$") ) break;
-						}
-					}
-					if(!url) return onAudioPlayError( new Error("Audio source not found.") );
-					url = fullSSLURL(url);
-					let p = ponyfill.runtime.sendMessage({
-						"method": "downloadAsBaase64",
-						"data": {
-							"url": url
-						}
-					});
-					p.catch( (e)=>{ return onAudioPlayError(e); });
-				});
-			}
-			list = content.querySelectorAll("a");
-			for(let i=0; i<list.length; i++){
-				let url = list[i].getAttribute("href");
-				if( url != undefined ){
-					if( url.match(regexURL1) ){
-						list[i].setAttribute("href", fullSSLURL(url));
-					}
-					else if( !url.match(regexURL2) ){
-						list[i].setAttribute("href", e.service + url);
-					}
-				}
-				list[i].setAttribute("target", "_blank");
-				list[i].setAttribute("rel", "noreferrer");
-				list[i].addEventListener("click", onClickAnchor);
-			}
+			content = removeSimbol(content);
+			content = convertStyle(content);
+			content = convertAudio(content);
+			content = convertAnchor(content, e.service);
 			apiBodyNode.appendChild(content);
 		}
 		show(historyButtoneNode);
 		linkListNode.classList.remove(CSS_PREFIX+"-loading");
+	}
+
+	function filterLanguage(domList, filterList, followed, languageTopRegex, languageBottomRegex ){
+		let sections = [];
+		let languageNodeList = [];
+		let regex;
+		if(followed) regex = new RegExp("\\s+" + followed + "$", "i");
+		for(let i=0; i<domList.length; i++){
+			let div = document.createElement("div");
+			div.innerHTML = domList[i];
+			let list = div.querySelectorAll(".section-heading");
+			for(let k=0; k<list.length; k++){
+				let target = list[k];
+				for(let j=0; j<filterList.length; j++){
+					let language = filterList[j];
+					if (followed != null) language = language.replace(regex, "");
+					let languageMatcher = new RegExp( languageTopRegex + language + languageBottomRegex, "i");
+					if(!target.innerText.match(languageMatcher)) continue;
+					languageNodeList.push(target);
+					let tmp = [];
+					tmp.push(target);
+					while( target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ){
+						tmp.push( target.nextElementSibling );
+						target = target.nextElementSibling;
+					}
+					let div2 = document.createElement("div");
+					for(let l=0; l<tmp.length; l++ ){
+						div2.appendChild(tmp[l]);
+					}
+					sections.push(div2);
+					break;
+				}
+			}
+		}
+		return {"content":sections, "language":languageNodeList};
+	}
+
+	function cutOut(dom, keyword){
+		let meaningNode;
+		if(keyword){
+			let list = dom.querySelectorAll("p");
+			for(let i=0; i<list.length; i++){
+				if(list[i].innerText == keyword) {
+					meaningNode = list[i].nextElementSibling;
+					break;
+				}
+			}
+
+		}
+		else {
+			let list = dom.querySelectorAll("ol");
+			for(let i=0; i<list.length; i++){
+				if( checkBlank(list[i].innerText) ) {
+					meaningNode = list[i];
+					let list2 = meaningNode.querySelectorAll("ol>li>dl,ol>li>ul");
+					for(let j=0; j<list2.length; j++){
+						list2[j].parentNode.removeChild(list2[j]);
+					}
+					break;
+				}
+			}
+		}
+		return meaningNode;
+	}
+
+	function reduceSections(dom, sections){
+		let list = dom.querySelectorAll("h1.in-block,h2.in-block,h3.in-block,h4.in-block,h5.in-block,h6.in-block");
+		for(let i=0; i<list.length; i++){
+			let node = list[i];
+			for(let j=0; j<sections.length; j++ ){
+				if( !node.innerText.match(sections[j]) ) continue;
+				while(node.nextElementSibling && !node.nextElementSibling.classList.contains("in-block")){
+					node.nextElementSibling.remove();
+				}
+				node.remove();
+				break;
+			}
+		}
+		return dom;
+	}
+
+	function removeSimbol(dom){
+		let list = dom.querySelectorAll(".indicator,.noprint");
+		for(let i=0; i<list.length; i++){
+			list[i].parentNode.removeChild(list[i]);
+		}
+		return dom;
+	}
+
+	function convertStyle(dom){
+		let list = dom.querySelectorAll("[style]");
+		for(let i=0; i<list.length; i++){
+			list[i].style.float = "none";
+			if( list[i].style.width ) list[i].style.width = "auto";
+		}
+		return dom;
+	}
+
+	function convertAudio(dom){
+		let list = dom.querySelectorAll("audio");
+		for(let i=0; i<list.length; i++){
+			let audio = list[i];
+			audio.style.display = "none";
+			let playButton = document.createElement("span");
+			playButton.classList.add(CSS_PREFIX+"-play");
+			if(audio.nextElementSibling){
+				audio.nextElementSibling.insertBefore(playButton);
+			}
+			else{
+				audio.parentNode.appendChild(playButton);
+			}
+			playButton.addEventListener("click",(e)=>{
+				let url = audio.currentSrc;
+				if(!url){
+					let list = audio.querySelectorAll("source");
+					for(let i=list.length-1; 0<=i; i--){
+						url = list[i].src;
+						if( url.match("ogg$") ) break;
+					}
+				}
+				if(!url) return onAudioPlayError( new Error("Audio source not found.") );
+				url = fullSSLURL(url);
+				let p = ponyfill.runtime.sendMessage({
+					"method": "downloadAsBaase64",
+					"data": {
+						"url": url
+					}
+				});
+				p.catch( (e)=>{ return onAudioPlayError(e); });
+			});
+		}
+		return dom;
+	}
+
+	function convertAnchor(dom, service){
+		let regexURL1 = /^\/\//;
+		let regexURL2 = /^http/;
+		let list = dom.querySelectorAll("a");
+		for(let i=0; i<list.length; i++){
+			let url = list[i].getAttribute("href");
+			if( url != undefined ){
+				if( url.match(regexURL1) ){
+					list[i].setAttribute("href", fullSSLURL(url));
+				}
+				else if( !url.match(regexURL2) ){
+					list[i].setAttribute("href", service + url);
+				}
+			}
+			list[i].setAttribute("target", "_blank");
+			list[i].setAttribute("rel", "noreferrer");
+			list[i].addEventListener("click", onClickAnchor);
+		}
+		return dom;
 	}
 
 	function fullSSLURL(url){
