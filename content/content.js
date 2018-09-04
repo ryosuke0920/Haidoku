@@ -1013,9 +1013,7 @@
 		).catch(
 			apiResponseError.bind(obj)
 		).finally(
-			()=>{
-				dropApiRequestQueue(obj)
-			}
+			()=>{　dropApiRequestQueue(obj)　}
 		).catch((e)=>{ console.error(e) });
 	}
 
@@ -1028,7 +1026,7 @@
 	}
 
 	function abortApiRequestQueue(){
-			let valueList = Object.values(apiRequestQueue);
+		let valueList = Object.values(apiRequestQueue);
 		for(let i=0; i<valueList.length; i++){
 			valueList[i].abort = true;
 		}
@@ -1039,10 +1037,6 @@
 		hide(historyButtoneNode);
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
-		apiTitleNode.removeAttribute("data-text");
-		apiTitleNode.removeAttribute("data-title");
-		apiTitleNode.removeAttribute("href");
-		apiTitleNode.innerText = apiErrorMessageNode.innerText = "";
 		clearApiTitle();
 	}
 
