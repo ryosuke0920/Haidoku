@@ -1144,7 +1144,7 @@
 					if(meaningNode) {
 						let list = meaningNode.querySelectorAll("ol>li>dl,ol>li>ul");
 						for(let j=0; j<list.length; j++){
-							list[i].parentNode.removeChild(list[j]);//TODO
+							list[j].parentNode.removeChild(list[j]);
 						}
 					}
 				}
