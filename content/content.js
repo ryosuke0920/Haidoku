@@ -1024,6 +1024,8 @@
 		apiTitleNode.removeAttribute("data-text");
 		apiTitleNode.removeAttribute("data-title");
 		apiTitleNode.removeAttribute("href");
+		apiTitleNode.removeAttribute("title");
+		apiErrorMessageNode.removeAttribute("title");
 		apiTitleNode.innerText = apiErrorMessageNode.innerText = "";
 	}
 
@@ -1068,8 +1070,7 @@
 					obj.content = node;
 				}
 				else {
-					let msg = makeMessageNode(ponyfill.i18n.getMessage("htmlMeaningNotFound"));
-					obj.warnings.push(msg);
+					obj.warnings.push( makeMessageNode(ponyfill.i18n.getMessage("htmlMeaningNotFound")) );
 				}
 			}
 		}
@@ -1111,9 +1112,8 @@
 	function parseHTML(htmls){
 		let result = [];
 		for(let i=0; i<htmls.length; i++){
-			let html = htmls[i];
 			let node = document.createElement("div");
-			node.innerHTML = html;
+			node.innerHTML = htmls[i];
 			let list = node.querySelectorAll(".section-heading");
 			for(let j=0; j<list.length; j++){
 				let target = list[j];

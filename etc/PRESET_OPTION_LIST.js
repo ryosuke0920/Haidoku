@@ -297,7 +297,7 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
-		"l": "Hulu (com)",
+		"l": "Hulu",
 		"u": "https://www.hulu.com/search?q=$1"
 	},
 	{
