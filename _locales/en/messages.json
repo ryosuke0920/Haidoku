@@ -421,7 +421,7 @@
 		"message": "Wiktionary article has description for all words of all languages. Using language filter, it's displayed a description of only the language you want."
 	},
 	"htmlLanguageFilterAside": {
-		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\".　If you select \"English\" for Language filter, only the English description \"4\" will be displayed."
+		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\". If you select \"English\" for Language filter, only the English description \"4\" will be displayed."
 	},
 	"htmlAddLanguageFilter": {
 		"message": "Add language filter"

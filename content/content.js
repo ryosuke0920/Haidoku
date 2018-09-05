@@ -243,7 +243,6 @@
 		updateInnerSelectionFlag();
 		if(innerSelectionFlag) return;
 		closeLinkList();
-		abortApiRequestQueue();
 	}
 
 	function selectionChangeAutoBehavior(e){
@@ -253,21 +252,18 @@
 		let selection = window.getSelection();
 		if( selection.isCollapsed ){
 			closeLinkList();
-			abortApiRequestQueue();
 			return;
 		}
 		let text = selection.toString();
 		if( !checkBlank(text) ) {
 			closeLinkList();
-			abortApiRequestQueue();
 			return;
 		};
 		makeLinkList(text);
 		showLinkListByClick();
-		if(isEnableApi()){
-			abortApiRequestQueue();
-			apiRequest(text);
-		}
+		if(!isEnableApi()) return;
+		abortApiRequestQueue();
+		apiRequest(text);
 	}
 
 	function mousedownCommonBehavior(e){
@@ -286,7 +282,6 @@
 		if( e.button != 0 ) return;
 		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) {
 			closeLinkList();
-			abortApiRequestQueue();
 		}
 	}
 
@@ -301,26 +296,22 @@
 
 	function mouseupAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( selectionChangedFlag && !innerSelectionFlag ){
-			let selection = window.getSelection();
-			if( !selection.isCollapsed ){
-				selectionChangedFlag = false;
-				let text = selection.toString();
-				if( !checkBlank(text) ) return;
-				makeLinkList(text);
-				showLinkListByClick();
-				if(isEnableApi()){
-					abortApiRequestQueue();
-					apiRequest(text);
-				}
-			}
-		}
+		if( !( selectionChangedFlag && !innerSelectionFlag ) ) return;
+		let selection = window.getSelection();
+		if( selection.isCollapsed ) return;
+		selectionChangedFlag = false;
+		let text = selection.toString();
+		if( !checkBlank(text) ) return;
+		makeLinkList(text);
+		showLinkListByClick();
+		if(!isEnableApi()) return;
+		abortApiRequestQueue();
+		apiRequest(text);
 	}
 
 	function keydownBehavior(e){
 		if( e.key == "Escape" || e.key == "Esc"){
 			closeLinkList();
-			abortApiRequestQueue();
 		}
 		else if((shiftKeyFlag && e.key == "Shift")||(ctrlKeyFlag && e.key == "Control")){
 			switchLinkList();
@@ -330,20 +321,17 @@
 	function switchLinkList(){
 		if(isLinkListShown() && !hasStopper()){
 			closeLinkList();
-			abortApiRequestQueue();
 		}
 		else if ( hasToShow() ) {
 			let selection = window.getSelection();
-			if( !selection.isCollapsed ){
-				let text = selection.toString();
-				if( !checkBlank(text) ) return;
-				makeLinkList(text);
-				showLinkListByKey();
-				if(isEnableApi()) {
-					abortApiRequestQueue();
-					apiRequest(text);
-				}
-			}
+			if( selection.isCollapsed ) return;
+			let text = selection.toString();
+			if( !checkBlank(text) ) return;
+			makeLinkList(text);
+			showLinkListByKey();
+			if(!isEnableApi()) return;
+			abortApiRequestQueue();
+			apiRequest(text);
 		}
 	}
 
@@ -436,6 +424,7 @@
 	function closeLinkList(){
 		resetScrollTmp();
 		hide(linkListNode);
+		abortApiRequestQueue();
 	}
 
 	function closeLinkListDelay(){
@@ -444,7 +433,6 @@
 
 	function onClickAnchor(e){
 		closeLinkListDelay();
-		abortApiRequestQueue();
 	}
 
 	function onClickSaveHistory(e){
@@ -612,14 +600,12 @@
 		}
 		if( change["ol"] ) {
 			closeLinkList();
-			abortApiRequestQueue();
 			setOptionList( change["ol"]["newValue"] );
 			resetLinkListEvents();
 			if(hasLinkList()) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 		}
 		if( change["bf"] ){
 			closeLinkList();
-			abortApiRequestQueue();
 			setLinkListFlag( change["bf"]["newValue"] );
 			resetLinkListEvents();
 		}
@@ -640,7 +626,6 @@
 		}
 		if( change["s"] ){
 			closeLinkList();
-			abortApiRequestQueue();
 			setServiceCode( change["s"]["newValue"] );
 			applyServiceCode( change["s"]["newValue"] );
 		}
@@ -654,7 +639,6 @@
 		if(change["w"]["newValue"] == windowId) return;
 		if( change["sw"] ){
 			closeLinkList();
-			abortApiRequestQueue();
 			setApiSwitch( change["sw"]["newValue"] );
 		}
 	}
@@ -857,7 +841,7 @@
 			Promise.resolve().then(saveLinkListSize).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-option"){
-			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).then(abortApiRequestQueue).catch(unexpectedError);
+			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).catch(unexpectedError);
 		}
 	}
 
@@ -1009,7 +993,7 @@
 		).catch(
 			apiResponseError.bind(obj)
 		).finally(
-			()=>{　dropApiRequestQueue(obj)　}
+			()=>{ dropApiRequestQueue(obj) }
 		).catch((e)=>{ console.error(e) });
 	}
 

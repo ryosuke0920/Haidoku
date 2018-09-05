@@ -10,7 +10,7 @@ let faviconCache = {};
 let serviceCode = API_SERVICE_CODE_NONE;
 let apiDocumentCache = [];
 
-ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible　*/
+ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible */
 
 Promise.resolve()
 .then(initContextMenu)
