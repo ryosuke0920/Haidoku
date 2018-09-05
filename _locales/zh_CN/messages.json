@@ -1,0 +1,657 @@
+{
+    "extensionName": {
+        "message": "Search Dictionary Faster",
+        "hash": "740c17d6abb1f6e89a050740f20ba3e3"
+    },
+    "extensionDescription": {
+        "message": "快速搜索词典。",
+        "hash": "c2df36d78bc6b62a4f7202505bf8b69f"
+    },
+    "extensionOptionAutoView": {
+        "message": "自动显示",
+        "hash": "43e5f9d00b9bc1381949ce550410ddd6"
+    },
+    "extensionOptionManualView": {
+        "message": "手动显示",
+        "hash": "eacdb47e6c967be14e239a65963c034a"
+    },
+    "extensionOptionManualViewByShiftKey": {
+        "message": "按住 Shift 键显示",
+        "hash": "1b5b706d70e07cbbf5aeb3309ad8ffda"
+    },
+    "extensionOptionManualViewByCtrlKey": {
+        "message": "按住 Ctrl 键显示",
+        "hash": "b0dca8092ed2d52450401adf96df67da"
+    },
+    "extensionOptionName": {
+        "message": "选项",
+        "hash": "531dad0078a72193602b18495f0ad4e9"
+    },
+    "notificationCopyed": {
+        "message": "已复制选中的区域。",
+        "hash": "1d9b7743063e8bde8f93a183a9d330af"
+    },
+    "notificationUnexpectedError": {
+        "message": "意外错误。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "f8dc40efc13a6145ab062377b2cf5710"
+    },
+    "notificationReadOptionError": {
+        "message": "读取您的配置时出错。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "152b04221ab19293a894dec403ca1932"
+    },
+    "notificationSaveOptionError": {
+        "message": "保存您的配置时出错。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "b3effa302d58a3b1c039fd4b736b03d4"
+    },
+    "notificationOpenWindowError": {
+        "message": "新建窗口失败。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "232bbd774dc6a821975e7a51c06cc513"
+    },
+    "notificationDataUriError": {
+        "message": "无法搜索，意外的图像格式（Data URI）。",
+        "hash": "ecd8d258a820c519948aa299275feeff"
+    },
+    "notificationDownloadLanguageError": {
+        "message": "下载语言列表失败。",
+        "hash": "770af341d5e9d6f5e25d9860b8f2ca95"
+    },
+    "notificationAudioPlayError": {
+        "message": "音频播放失败。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "dcecd625bfc9f7449a21909c9d9758dd"
+    },
+    "htmlMaybeTitle": {
+        "message": "您是否指：$WORD$",
+        "placeholders": {
+            "WORD": { "content": "$1" }
+        },
+        "hash": "416e331cd4c2a39636f15f49557f34f1"
+    },
+    "htmlLinkageDisabled": {
+        "message": "有链接维基词典已禁用。",
+        "hash": "bea5e4d8140b5528e36d7ab12a912f80"
+    },
+    "htmlLinkageMessage": {
+        "message": "参见右侧预览，在单击右上角的按钮时，有链接维基词典被启用。无论您是否欲查，<span class=\"lessLaborGoToDictionary-warning\">在您选中一段文本时，该文本将自动发送到维基词典以进行查询，而这可能含有您的隐私信息</span>。请理解该功能的运作方式并慎重使用。我们建议您在不需要它时禁用此功能。",
+        "hash": "95c869bc7844b2c05fd49c6e7eb30e5a"
+    },
+    "htmlNowSearching": {
+        "message": "正在搜索。",
+        "hash": "ef6b93cb969fd50797ee322ef9409c82"
+    },
+    "htmlWhiteSpaceLimitation": {
+        "message": "不要搜索空格。",
+        "hash": "1636c92d822b9b1aac4f4241be58eb2d"
+    },
+    "htmlMaxLengthLimitation": {
+        "message": "搜索不要超过 $ERROR$ 字节。",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "7fe3a1e460b7a91a6cec330ec2e7c49a"
+    },
+    "htmlMeaningNotFound": {
+        "message": "页面已找到，但取出描述失败。",
+        "hash": "581e96dc29cc3afec46390eaabc73f35"
+    },
+    "htmlSectionNotFound": {
+        "message": "页面已找到，但没有“语言过滤器”指定语言的描述。",
+        "hash": "65d1fee4f1dfb9240a32068ca43df2c0"
+    },
+    "htmlPageNotFound": {
+        "message": "无法找到页面。",
+        "hash": "264cd392342007997c42a8ce33520047"
+    },
+    "htmlConnectionError": {
+        "message": "连接服务器失败。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "e3cd37522205125a3e98279b07d1c01e"
+    },
+    "htmlServerError": {
+        "message": "服务器返回了一个错误。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "be39487fc661ffa5771d62ece9f41a3b"
+    },
+    "htmlApplicationError": {
+        "message": "应用程序返回了一个错误。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "94fbe0a411b299ce3b8541eacf2c94e2"
+    },
+    "htmlUnexpectedError": {
+        "message": "发生意外错误。$ERROR$",
+        "placeholders": {
+            "ERROR": { "content": "$1" }
+        },
+        "hash": "2eb2b2508fd492410144af7110592b41"
+    },
+    "htmlZoomDown": {
+        "message": "缩小",
+        "hash": "3ceffad458919ae1bf7b55b21999815c"
+    },
+    "htmlZoomUp": {
+        "message": "放大",
+        "hash": "743f1f6dec932b160ec6b01f4d62616a"
+    },
+    "htmlCopy": {
+        "message": "复制",
+        "hash": "4e2f826d2cfc84448fbb14ab3862a834"
+    },
+    "htmlMove": {
+        "message": "移动",
+        "hash": "57304071fa0122d93576c332f8a8ee68"
+    },
+    "htmlResize": {
+        "message": "重置大小",
+        "hash": "664887be8e735804272885c25b09e8ae"
+    },
+    "htmlOption": {
+        "message": "选项",
+        "hash": "0e4dfc1c44a2baffbd741f9a1abde6c8"
+    },
+    "htmlSaveHistory": {
+        "message": "保存历史记录",
+        "hash": "290d32ef8cf7fdce9b6b6924f6d08230"
+    },
+    "htmlSaveHistoryDone": {
+        "message": "已保存历史",
+        "hash": "3c77ac644bd4e652b6ff19be38cb66e9"
+    },
+    "htmlFormName": {
+        "message": "编辑链接",
+        "hash": "d5256c9a8b8112ac7977bad6cb7da4bf"
+    },
+    "htmlHistoryName": {
+        "message": "历史记录",
+        "hash": "6b8f0d500af7fbca100a1be3dc0817d6"
+    },
+    "htmlRankingName": {
+        "message": "找到弱项",
+        "hash": "79ebba70fe2e323e92e5c21810a9e45f"
+    },
+    "htmlOthersName": {
+        "message": "查看",
+        "hash": "3d4487384c2bb1545db2420c51fc79fc"
+    },
+    "htmlContactName": {
+        "message": "信息",
+        "hash": "772b8e57e5d6623f1cf59d7d90ddaa47"
+    },
+    "htmlFormDescription": {
+        "message": "您可以自行添加、更改顺序、编辑或删除项目。添加空白项后，您需要自行输入名称和网址（URL）。网址字段中的 $$1 在使用时将被替换为选中文本。",
+        "hash": "807fb3efa1ceb1752255b11068ee4781"
+    },
+    "htmlUsageOrder": {
+        "message": "排序",
+        "hash": "bd8e350097d433420f1d5b93e8a1cff1"
+    },
+    "htmlUsageCheck": {
+        "message": "在小工具中显示",
+        "hash": "e51dfc60b87d6ff5a511454e72940c7a"
+    },
+    "htmlUsageHist": {
+        "message": "保存历史",
+        "hash": "b9d7743414ce94439806d907df554174"
+    },
+    "htmlUsageDelete": {
+        "message": "删除",
+        "hash": "312061580d361b43b842322a1e5de394"
+    },
+    "htmlPresetDescription": {
+        "message": "选择一些网站，然后按“添加”按钮。这样它就添加到小工具了。",
+        "hash": "c8bba0b032e246154b9e2e4b03f6436b"
+    },
+    "htmlAddFromPreset": {
+        "message": "添加搜索引擎",
+        "hash": "616443e9da6a2ee5d76c0b75461d96e3"
+    },
+    "htmlAddBlankFieldButtonName": {
+        "message": "添加空白项",
+        "hash": "e2d248df4753b8175eba14470cafa172"
+    },
+    "htmlHandle": {
+        "message": "更改顺序",
+        "hash": "d63c9a95a9a38872187b81634fc315c7"
+    },
+    "htmlLabelText": {
+        "message": "网站名称",
+        "hash": "dda1414fdd4251796d8cc43dc512f769"
+    },
+    "htmlUrlText": {
+        "message": "网址",
+        "hash": "a45b8d0fa09a63c8009ba8f0497c7d38"
+    },
+    "htmlRemoveButtonName": {
+        "message": "删除",
+        "hash": "ba4d75c0e084b96aed007047d5d3f999"
+    },
+    "htmlLabelDescription": {
+        "message": "网站名称，显示时使用。",
+        "hash": "6f23da774445459cfb905c4c0be71338"
+    },
+    "htmlUrlDescription": {
+        "message": "链接的网址（URL）。$$1 在使用时将被替换为选中的文本。",
+        "hash": "b5e345ed58cc0e5e7c220ed33e7b424e"
+    },
+    "htmlFilterText": {
+        "message": "过滤器",
+        "hash": "0fc4758553925ca8337a74a3ada462f7"
+    },
+    "htmlLanguageAll": {
+        "message": "所有",
+        "hash": "284b8fd170c2a405a6f5eb56b485d695"
+    },
+    "htmlLanguageEn": {
+        "message": "英文",
+        "hash": "648e324401faf8ae90395ce21e894596"
+    },
+    "htmlLanguageJa": {
+        "message": "日文",
+        "hash": "ed0730b295dca59e5a09fa843eb87c8d"
+    },
+    "htmlLanguageZh": {
+        "message": "中文",
+        "hash": "985aaf35ed7f5d3a39e0e94bfd30d321"
+    },
+    "htmlAddPresetButtonName": {
+        "message": "添加",
+        "hash": "c30738ff9271a856100751bbca5e5794"
+    },
+    "htmlPresetSearchKeyword": {
+        "message": "搜索关键词",
+        "hash": "fb18a6d6469cac33922307604feb895a"
+    },
+    "htmlPresetClearSearchButton": {
+        "message": "清除",
+        "hash": "db95283bae679a06db7392b46dd0b411"
+    },
+    "htmlHistoryUpdateButton": {
+        "message": "更新",
+        "hash": "eb6223a666b89520b8e22963ac425eec"
+    },
+    "htmlHistoryPageText": {
+        "message": "页",
+        "hash": "14d81a64d07a76bdbd4b3ba26cd29a84"
+    },
+    "htmlHistoryRowSizeText": {
+        "message": "行数",
+        "hash": "fe7bc800a7941397d849127ba0c78ce4"
+    },
+    "htmlHistoryRowSizeAllText": {
+        "message": "显示所有行",
+        "hash": "40d0db49792865856bf4d61e74655ac6"
+    },
+    "htmlHistoryOrderDesc": {
+        "message": "从新到旧",
+        "hash": "f75f611a03fe85d74a88f97d0ec44701"
+    },
+    "htmlHistoryOrderAsc": {
+        "message": "从旧到新",
+        "hash": "90048a3fcf15753afcb7663a5850a91c"
+    },
+    "htmlHistoryCheckDelete": {
+        "message": "删除选中的历史记录",
+        "hash": "b2614462a49a77bc15f28b3450170342"
+    },
+    "htmlHistoryAllDelete": {
+        "message": "删除所有历史记录",
+        "hash": "c48e890bf7f09ec9c6cdb104594be3c2"
+    },
+    "alertHistoryAllDelete": {
+        "message": "这将删除所有的历史记录（包括未在此表中列全的记录）",
+        "hash": "b696e0c1e83620c97428e3f72ccbeec0"
+    },
+    "htmlHistoryDescription": {
+        "message": "“找到弱项”功能依赖历史记录数据。历史记录数据在您的计算机上保存，不会被浏览器的“同步”功能传送。您可以在“链接编辑”菜单中更改配置决定是否保存历史记录。",
+        "hash": "54081745e7f114b9f5a8d495e9b2dc70"
+    },
+    "htmlHistoryZeroRowMessage": {
+        "message": "没有结果。",
+        "hash": "6205bda2bdddc5b8e9f78279873732c0"
+    },
+    "htmlHistoryDate": {
+        "message": "日期",
+        "hash": "c84b9422552f2f228b38a46f47ede9a7"
+    },
+    "htmlHistoryText": {
+        "message": "选中的文本",
+        "hash": "16f9181a141a3d8cbab738e2189cbf11"
+    },
+    "htmlHistoryFromSite": {
+        "message": "源网站",
+        "hash": "20177abf13e07fb53c221ac040e02c80"
+    },
+    "htmlHistoryToSite": {
+        "message": "链接目标",
+        "hash": "8aedc0743a0cd6cbbf02853a2d60c82d"
+    },
+    "htmlPageFirst": {
+        "message": "第一页",
+        "hash": "6d721874be1ead1aa76a14f3a2cd9cfe"
+    },
+    "htmlPagePrev": {
+        "message": "上一页",
+        "hash": "a44ef31e86202f92009bbf82fc80f448"
+    },
+    "htmlPageNext": {
+        "message": "下一页",
+        "hash": "4f4d5416e7ba3e50c26b49b3e6e68629"
+    },
+    "htmlPageLast": {
+        "message": "最后一页",
+        "hash": "2e1673c2d8f41f8a8b54ae51624a6af1"
+    },
+    "htmlRankingDescription": {
+        "message": "搜索次数根据历史记录的汇总计算。请选择日期范围，然后点击“汇总”按钮。如果部分历史记录被删除，则搜索次数会相应减少。我们利用此数据帮助您找到语言弱项以助力学习。",
+        "hash": "3b81d00484b7a202e1258d12c6e5ae86"
+    },
+    "htmlRankingAggregateButton": {
+        "message": "汇总",
+        "hash": "b516ea33ef8283d82dd5b425044b267d"
+    },
+    "htmlRankingOneMonth": {
+        "message": "最近 1 个月",
+        "hash": "97e66f79c4f13d12bc80327f56fdbf8a"
+    },
+    "htmlRankingThreeMonth": {
+        "message": "最近 3 个月",
+        "hash": "9ac533f998b5db5fdc00c9cb04efc86c"
+    },
+    "htmlRankingSixMonth": {
+        "message": "最近 6 个月",
+        "hash": "b4f7171c9173089f4205acf24b9e92fd"
+    },
+    "htmlRankingOneYear": {
+        "message": "最近 1 年",
+        "hash": "3f21cdd1875099f904487d40b2127254"
+    },
+    "htmlRankingAllRange": {
+        "message": "全部",
+        "hash": "284b8fd170c2a405a6f5eb56b485d695"
+    },
+    "htmlRankingCustomRange": {
+        "message": "指定日期范围",
+        "hash": "dfc6ef523f8f3d6ddf54970ca4414717"
+    },
+    "htmlRankingText": {
+        "message": "选中的文本",
+        "hash": "16f9181a141a3d8cbab738e2189cbf11"
+    },
+    "htmlRankingCount": {
+        "message": "搜索次数",
+        "hash": "0249543d3f9f7184e8b734af8caf0c5d"
+    },
+    "htmlRankingGraph": {
+        "message": "图表",
+        "hash": "470b1a08cb251cffdd6c40d9379612ec"
+    },
+    "htmlRankingZeroRowMessage": {
+        "message": "没有结果。",
+        "hash": "6205bda2bdddc5b8e9f78279873732c0"
+    },
+    "htmlLinkListStyleTitle": {
+        "message": "小工具样式",
+        "hash": "be42bc94f118c4b650e2741a04cbb499"
+    },
+    "htmlLinkListStyleClassic": {
+        "message": "经典",
+        "hash": "33de73f47b351ad0e351ea8fb9a64e1a"
+    },
+    "htmlLinkListStyleDark": {
+        "message": "黑暗",
+        "hash": "f52e24bb113e8c96fde952627b413812"
+    },
+    "htmlLinkListActionTitle": {
+        "message": "小工具显示动作",
+        "hash": "4568830ee219caf813751f11ed05f5cc"
+    },
+    "htmlLinkListActionNormal": {
+        "message": "无图标",
+        "hash": "e00efa9f1a1d9a347c3028ae803e7d21"
+    },
+    "htmlLinkListActionMouseover": {
+        "message": "鼠标悬停",
+        "hash": "c184c03e26c817d78cb1aa7284b748d5"
+    },
+    "htmlLinkListActionMouseclick": {
+        "message": "鼠标单击",
+        "hash": "8152a43d82217a9473a18562b38fca32"
+    },
+    "htmlLinkListLayoutTitle": {
+        "message": "小工具布局",
+        "hash": "b453700b94b17e4fcf29db06fa0c3af5"
+    },
+    "htmlLinkListLayoutPatternTitle": {
+        "message": "小工具布局模式",
+        "hash": "fa65bacd0f7af829cc22f3c0cd68c919"
+    },
+    "htmlFaviconDisplayTitle": {
+        "message": "显示链接内容",
+        "hash": "c40b188b3fe66b000b1e26d5314435e7"
+    },
+    "htmlFaviconDisplayNormal": {
+        "message": "小图标和站点名称",
+        "hash": "1f35a0ca7e26b83ca5515d43120be919"
+    },
+    "htmlFaviconDisplayOnly": {
+        "message": "仅小图标",
+        "hash": "6a8fc043b1db2847e5c7e3efedb6a795"
+    },
+    "htmLinkListDirectionTitle": {
+        "message": "链接安排方向",
+        "hash": "e5bb19332a3c3dbf91ca6a823f0e54f1"
+    },
+    "htmlLinkListDirectionHorizontal": {
+        "message": "横向",
+        "hash": "3629030516e2aee4089275208f322297"
+    },
+    "htmlLinkListDirectionVertical": {
+        "message": "纵向",
+        "hash": "79c3f0c45b5b86e5044c26f40505be1e"
+    },
+    "htmlLinkListSeparatorTitle": {
+        "message": "链接与维基词典之间的分隔符",
+        "hash": "bf871ea7bc5db590aa290481c101b2c7"
+    },
+    "htmlLinkListSeparatorHorizontal": {
+        "message": "横向",
+        "hash": "3629030516e2aee4089275208f322297"
+    },
+    "htmlLinkListSeparatorVertical": {
+        "message": "纵向",
+        "hash": "79c3f0c45b5b86e5044c26f40505be1e"
+    },
+    "htmlApiServiceTitle": {
+        "message": "有链接维基词典",
+        "hash": "0334b307290f83071c19874a5bcc495a"
+    },
+    "htmlApiServiceDescription": {
+        "message": "维基词典是由志愿者制作的一个词典网站。您选择的字词将显示维基词典提供的描述。",
+        "hash": "465630fcdd26f49c6b916d8ff27c6dee"
+    },
+    "htmlServiceCodeTitle": {
+        "message": "选择维基词典",
+        "hash": "4e2e130fb254717f96f4aac40e218786"
+    },
+    "htmlServiceCodeDescription": {
+        "message": "请选择维基词典。可以显示的语言因站点而异。信息的质量和规模也有不同。在您更改此设置后，“语言过滤器”也需要设置。",
+        "hash": "fb5af02f8fe683e3ceecc88eccb5c559"
+    },
+    "htmlServiceCodeNone": {
+        "message": "禁用",
+        "hash": "3cd205f2e4eebe52d3320ae5c75aa53c"
+    },
+    "htmlServiceCodeEn": {
+        "message": "https://en.wiktionary.org/ - 英语",
+        "hash": "b4bbb46dd472d772dff1bcd16337abe2"
+    },
+    "htmlServiceCodeJa": {
+        "message": "https://ja.wiktionary.org/ - 日语",
+        "hash": "0e339fcc3a6bd90c3e02400d794e82c8"
+    },
+    "htmlServiceCodeSelectMessage": {
+        "message": "请选择一个维基词典。",
+        "hash": "29679c4b0ec9234079af7d30a93ae3d2"
+    },
+    "htmlLanguageFilterTitle": {
+        "message": "语言过滤器",
+        "hash": "802007d06f6fa4c67dbe7d267ac9d768"
+    },
+    "htmlLanguageFilterDescription": {
+        "message": "维基词典收录有众多语言的众多字词。使用语言过滤器决定显示显示哪些语言的描述。",
+        "hash": "2a8a5ce6e42c7e5639ab02bb659cb4b4"
+    },
+    "htmlLanguageFilterAside": {
+        "message": "例如，“four”在英语中意味着“4”，但在法语中是“烤箱、炉子”。如果您在语言过滤器中只选择了英语，则只会显示英语对“4”的描述。",
+        "hash": "8769bc049a6e1c4eb9fc7709741dd7fe"
+    },
+    "htmlAddLanguageFilter": {
+        "message": "添加语言过滤器",
+        "hash": "6e565aef05092c785816fb411c1a9329"
+    },
+    "htmlLanguageFilterSelectedDescription": {
+        "message": "已选择的语言过滤器列表。",
+        "hash": "283a51d9a63d661b6629c7043dbe3f9d"
+    },
+    "htmlLanguageFilterNoneSelectedDescription": {
+        "message": "没有选择语言过滤器。",
+        "hash": "4901406d7cc389995b0ee75ba42f6a3e"
+    },
+    "htmlLanguageFilterDownloadMessage": {
+        "message": "正在从维基词典下载语言列表",
+        "hash": "add2d78f2f7cebdf8f8e9570ae2f6915"
+    },
+    "htmlApiCutOutTitle": {
+        "message": "裁剪描述",
+        "hash": "df5a7f36c1f351b270cb49e60fc4d752"
+    },
+    "htmlApiCutOutDescription": {
+        "message": "从描述中取出“含义”部分并显示。",
+        "hash": "21bae31e787b0ed2d00fc25af7793669"
+    },
+    "htmlApiCutOutLabel": {
+        "message": "启用",
+        "hash": "2212934c2b3d751385bf1c26d91172f3"
+    },
+    "htmlLinkListSampleTitle": {
+        "message": "小工具预览",
+        "hash": "224d496658bf4b350cd3b13fdaeecefe"
+    },
+    "htmlRleaseNoteTitle": {
+        "message": "发行说明",
+        "hash": "97adb4886a83a9a241925e2d088ec41e"
+    },
+    "htmlReleaseNoteDescription1": {
+        "message": "发行说明位于 GitHub。",
+        "hash": "b4164a6e6b52d89bd641d96e90b4607c"
+    },
+    "htmlReleaseNoteDescription2": {
+        "message": "新版本发表会在 Twitter 上宣布。",
+        "hash": "6085a850d0f64766d1d2b02c6e7b940e"
+    },
+    "htmlAboutDataTitle": {
+        "message": "关于数据使用。",
+        "hash": "b6dcef15976b7d4dc7f6b3ed6f9f06d7"
+    },
+    "htmlAboutDataDescription1": {
+        "message": "设置数据会被浏览器的“同步”功能传送。历史数据不会被同步。",
+        "hash": "5cfe92b42c6cbb39c239ff64ebb711ec"
+    },
+    "htmlAboutDataDescription2": {
+        "message": "在点击链接或维基词典的链接时，基本的网络信息（IP 地址、Cookie 等）和选中的文本将会被发送。HTTP REFER（信息来源页面）不会列入。",
+        "hash": "cdd30e94a30f37a25c16397d5779bce1"
+    },
+    "htmlAboutDataDescription3": {
+        "message": "根据需要下载网站图标（Favicon）并保存。",
+        "hash": "2ea99ca4d8029520d5eb351d8fc0d818"
+    },
+    "htmlContactTitle": {
+        "message": "联系",
+        "hash": "92d3755cacb176a04f1c832ea62ea712"
+    },
+    "htmlIssueDescription": {
+        "message": "请使用 GitHub Issues 报告缺陷、提交请求等。",
+        "hash": "b5bd0be20eb87e6a3c47043415ecdb83"
+    },
+    "htmlMailDescription": {
+        "message": "也可通过电子邮件联系我们。",
+        "hash": "8e529df336a956d2d7c7ffb79b04f296"
+    },
+    "htmlIam": {
+        "message": "自由程序员 Ryosuke Ohta (太田亮介)",
+        "hash": "d16564a471009af2606333663b5fad94"
+    },
+    "htmlLicenseTitle": {
+        "message": "许可协议",
+        "hash": "9b42bd2f6fdb26369fa5b8697888edfc"
+    },
+    "htmlLicenseDescription": {
+        "message": "本软件依照 MIT 许可证发布。",
+        "hash": "10f0e0b58b401858e3804fcd2d975c00"
+    },
+    "htmlCheckBlankError": {
+        "message": "请填写此字段。",
+        "hash": "8f7324778f0104c88e301141f2814344"
+    },
+    "htmlCheckURLError": {
+        "message": "请输入一个 URL。",
+        "hash": "30d156ac1dda2f341cce888233eed99a"
+    },
+    "htmlCheckByteLengthError": {
+        "message": "长度不能超过 $MAX_LENGTH$ 字节。当前 $LENGTH$ 字节。",
+        "placeholders": {
+            "MAX_LENGTH": { "content": "$1" },
+            "LENGTH": { "content": "$2" }
+        },
+        "hash": "3c7452d8717373709cef584aadd97924"
+    },
+    "htmlCheckFieldLengthError": {
+        "message": "您最多添加 $MAX_FIELDS$ 项。",
+        "placeholders": {
+            "MAX_FIELDS": { "content": "$1" }
+        },
+        "hash": "fd10a4e21127bb37952041c8370ccd40"
+    },
+    "htmlCheckPresetLengthError": {
+        "message": "最多添加 $MAX_FIELDS$ 个网站。总计 $SUM$ 个部分。目前已选择 $CHECKED$ 项。您还可以添加 $REMAINING$ 项。",
+        "placeholders": {
+            "MAX_FIELDS": { "content": "$1" },
+            "SUM": { "content": "$2" },
+            "CHECKED": { "content": "$3" },
+            "REMAINING": { "content": "$4" }
+        },
+        "hash": "c9f22a4eb61686eb8b994a792e027d88"
+    },
+    "htmlDateInputError": {
+        "message": "请输入正确的日期。",
+        "hash": "ec0c986ee44e6547527add601f3850a1"
+    },
+    "htmlCheckLanguageFilterLengthError": {
+        "message": "“语言过滤器”最多 $MAX$ 项",
+        "placeholders": {
+            "MAX": { "content": "$1" }
+        },
+        "hash": "dec87ca5a641fae142e5f6bf2c98ad14"
+    },
+
+    "__WET_LOCALE__": { "message": "zh_CN" }
+}
