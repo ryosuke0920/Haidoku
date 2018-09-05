@@ -35,7 +35,6 @@
 			{ "selector": "#"+CSS_PREFIX+"-move", "property": "title", "key": "htmlMove" },
 			{ "selector": "#"+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
 			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
-			{ "selector": "#"+CSS_PREFIX+"-copy", "property": "title", "key": "htmlCopy" },
 			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
 			{ "selector": "#"+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
 			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" },
