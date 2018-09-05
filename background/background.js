@@ -190,18 +190,18 @@ function resetMenu(json){
 		if( ponyfill.isFirefox() && faviconCache.hasOwnProperty(url) ){
 			args["icons"] = { "16": faviconCache[url] };
 		}
+		ponyfill.contextMenus.create(args);
 		options[id] = {
 			"hist": hist,
 			"url": url,
 			"label": label,
 			"origin": false
 		}
-		ponyfill.contextMenus.create(args);
 	}
 	if( 0 < optionList.length ) {
 		ponyfill.contextMenus.create({
 			"id": "origin",
-			"title": "origin",
+			"title": "Origin",
 			"contexts": ["page","image","selection"]
 		});
 		for( let i=0; i<optionList.length; i++){

@@ -58,7 +58,6 @@
 	let moveObj;
 	let historyButtoneNode;
 	let historyDoneButtoneNode;
-	let selectedText = "";
 	let innerSelectionFlag = false;
 
 	Promise.resolve()
@@ -263,8 +262,7 @@
 			abortApiRequestQueue();
 			return;
 		};
-		setSelectedText(text);
-		makeLinkList();
+		makeLinkList(text);
 		showLinkListByClick();
 		if(isEnableApi()){
 			abortApiRequestQueue();
@@ -309,8 +307,7 @@
 				selectionChangedFlag = false;
 				let text = selection.toString();
 				if( !checkBlank(text) ) return;
-				setSelectedText(text);
-				makeLinkList();
+				makeLinkList(text);
 				showLinkListByClick();
 				if(isEnableApi()){
 					abortApiRequestQueue();
@@ -340,8 +337,7 @@
 			if( !selection.isCollapsed ){
 				let text = selection.toString();
 				if( !checkBlank(text) ) return;
-				setSelectedText(text);
-				makeLinkList();
+				makeLinkList(text);
 				showLinkListByKey();
 				if(isEnableApi()) {
 					abortApiRequestQueue();
@@ -471,15 +467,15 @@
 	}
 
 	function setSelectedText(text){
-		selectedText = text;
+		linkListNode.setAttribute("data-selected-text", text);
 	}
 
 	function getSelectedText(){
-		return selectedText;
+		return linkListNode.getAttribute("data-selected-text");
 	}
 
-	function makeLinkList(){
-		let text = getSelectedText();
+	function makeLinkList(text){
+		setSelectedText(text);
 		let list = containerNode.querySelectorAll("."+CSS_PREFIX+"-list");
 		for(let i=0; i<list.length; i++){
 			let node = list[i];
@@ -1047,6 +1043,11 @@
 		apiTitleNode.innerText = apiErrorMessageNode.innerText = "";
 	}
 
+	function setApiErrorMessage(text){
+		apiErrorMessageNode.innerText = text;
+		apiErrorMessageNode.setAttribute("title", text);
+	}
+
 	function clearChildren(node){
 		while(node.lastChild){
 			node.removeChild(node.lastChild);
@@ -1064,7 +1065,6 @@
 			let list = [];
 			for(let i=0; i<parsed.length; i++){
 				let obj = parsed[i];
-				console.log(obj);
 				if ( isLanguageFilterd(obj.title.innerText, languageFilter, property.followed, property.languageTopRegex, property.languageBottomRegex ) ) {
 					list.push(obj);
 				}
@@ -1118,6 +1118,7 @@
 		else {
 			apiTitleNode.innerText = title;
 		}
+		apiTitleNode.setAttribute("title", title);
 		apiTitleNode.setAttribute("data-text", text);
 		apiTitleNode.setAttribute("data-title", title);
 		apiTitleNode.setAttribute("href", url);
@@ -1276,13 +1277,13 @@
 		clearApiTitle();
 		let content = document.createElement("div");
 		if( e.error == API_WHITE_SPACE_ERROR ){
-			apiErrorMessageNode.innerText = e.text;
+			setApiErrorMessage(e.text);
 			content.innerText = ponyfill.i18n.getMessage("htmlWhiteSpaceLimitation");
 			after(content);
 			return;
 		}
 		if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
-			apiErrorMessageNode.innerText = e.text;
+			setApiErrorMessage(e.text);
 			content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthLimitation",[API_TEXT_MAX_LENGTH]);
 			after(content);
 			return;
@@ -1290,32 +1291,32 @@
 		if(!isActiveApiRequestQueue(this)) return;
 		if(e && ( e instanceof Object) && e.hasOwnProperty("error")){
 			if( e.error == PAGE_NOT_FOUND_ERROR ){
-				apiErrorMessageNode.innerText = e.text;
+				setApiErrorMessage(e.text);
 				content.innerText = ponyfill.i18n.getMessage("htmlPageNotFound");
 				after(content);
 				return;
 			}
 			else if( e.error == CONNECTION_ERROR ){
-				apiErrorMessageNode.innerText = e.text;
+				setApiErrorMessage(e.text);
 				content.innerText = ponyfill.i18n.getMessage("htmlConnectionError",[e.code]);
 				after(content);
 				return;
 			}
 			else if( e.error == SERVER_ERROR ){
-				apiErrorMessageNode.innerText = e.text;
+				setApiErrorMessage(e.text);
 				content.innerText = ponyfill.i18n.getMessage("htmlServerError",[e.code]);
 				after(content);
 				return;
 			}
 			else if( e.error == APPLICATION_ERROR ){
-				apiErrorMessageNode.innerText = e.text;
+				setApiErrorMessage(e.text);
 				content.innerText = ponyfill.i18n.getMessage("htmlApplicationError",[e.code]);
 				after(content);
 				return;
 			}
 		}
 		console.error(e);
-		apiErrorMessageNode.innerText = e.text;
+		setApiErrorMessage(e.text);
 		content.innerText = ponyfill.i18n.getMessage("htmlUnexpectedError",[e.toString()]);
 		after(content);
 		return;

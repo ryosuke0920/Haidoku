@@ -216,8 +216,8 @@
 }
 #lessLaborGoToDictionary-apiHeaderTextArea * {
 	white-space: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 #lessLaborGoToDictionary-apiOffMsg,#lessLaborGoToDictionary-nowLoadingMsg {
 	display: none;
@@ -400,11 +400,6 @@
 #lessLaborGoToDictionary-apiTitle:active,
 #lessLaborGoToDictionary-apiBody a:active, #lessLaborGoToDictionary-apiBody a:active * {
 	color: #ee0000;
-}
-#lessLaborGoToDictionary-apiErrorMessage {
-	display: inline;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 #lessLaborGoToDictionary-history,
 #lessLaborGoToDictionary-historyDone {
