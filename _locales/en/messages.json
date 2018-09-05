@@ -94,6 +94,9 @@
 			}
 		}
 	},
+	"htmlParseFailed": {
+		"message": "Parsing failed."
+	},
 	"htmlMeaningNotFound": {
 		"message": "\"Cut out description\" was failed."
 	},

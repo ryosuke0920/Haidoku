@@ -1044,53 +1044,71 @@
 		if( !isActiveApiRequestQueue(this) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		makeApiTitleNode(e.text, e.title, e.fullurl);
-		let parsed = parseHTML(e.html);
+		let result = parseHTML(e.html);
+		let header = result.header;
+		let parsed = result.result;
+		let bases = result.bases;
+		let parseStatus = result.status;
 		let property = API_SERVICE_PROPERTY[e.service];
 		let warnings = [];
-		if(0 < languageFilter.length){
-			let list = [];
-			for(let i=0; i<parsed.length; i++){
-				let obj = parsed[i];
-				if ( isLanguageFilterd(obj.title.innerText, languageFilter, property.followed, property.languageTopRegex, property.languageBottomRegex ) ) {
-					list.push(obj);
+		if(parseStatus){
+			if(0 < languageFilter.length){
+				let list = [];
+				for(let i=0; i<parsed.length; i++){
+					let obj = parsed[i];
+					if ( isLanguageFilterd(obj.title.innerText, languageFilter, property.followed, property.languageTopRegex, property.languageBottomRegex ) ) {
+						list.push(obj);
+					}
 				}
-			}
-			if ( list.length <= 0 ) {
-				warnings.push( makeMessageNode(ponyfill.i18n.getMessage("htmlSectionNotFound")));
-			}
-			else {
-				parsed = list;
-			}
-		}
-		if(apiCutOut){
-			for(let i=0; i<parsed.length; i++){
-				let obj = parsed[i];
-				let node = cutOut(obj.content, property.cutOut);
-				if(node){
-					obj.content = node;
+				if ( list.length <= 0 ) {
+					apiBodyNode.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlSectionNotFound")));
 				}
 				else {
-					obj.warnings.push( makeMessageNode(ponyfill.i18n.getMessage("htmlMeaningNotFound")) );
+					parsed = list;
 				}
 			}
-		}
-		for(let i=0; i<warnings.length; i++){
-			apiBodyNode.appendChild(warnings[i]);
-		}
-		for(let i=0; i<parsed.length; i++){
-			let obj = parsed[i];
-			obj.title = removeSimbol(obj.title);
-			obj.title = convertStyle(obj.title);
-			obj.title = convertAnchor(obj.title, e.service);
-			obj.content = removeSimbol(obj.content);
-			obj.content = convertStyle(obj.content);
-			obj.content = convertAudio(obj.content);
-			obj.content = convertAnchor(obj.content, e.service);
-			apiBodyNode.appendChild(obj.title);
-			for(let j=0; j<obj.warnings.length; j++){
-				apiBodyNode.appendChild(obj.warnings[j]);
+			if(apiCutOut){
+				for(let i=0; i<parsed.length; i++){
+					let obj = parsed[i];
+					let node = cutOut(obj.content, property.cutOut);
+					if(node){
+						obj.content = node;
+					}
+					else {
+						obj.warnings.push( makeMessageNode(ponyfill.i18n.getMessage("htmlMeaningNotFound")) );
+					}
+				}
 			}
-			apiBodyNode.appendChild(obj.content);
+			header = removeSimbol(header);
+			header = convertStyle(header);
+			header = convertAnchor(header, e.service);
+			apiBodyNode.appendChild(header);
+			for(let i=0; i<parsed.length; i++){
+				let obj = parsed[i];
+				obj.title = removeSimbol(obj.title);
+				obj.title = convertStyle(obj.title);
+				obj.title = convertAnchor(obj.title, e.service);
+				apiBodyNode.appendChild(obj.title);
+				for(let j=0; j<obj.warnings.length; j++){
+					apiBodyNode.appendChild(obj.warnings[j]);
+				}
+				obj.content = removeSimbol(obj.content);
+				obj.content = convertStyle(obj.content);
+				obj.content = convertAudio(obj.content, e.service);
+				obj.content = convertAnchor(obj.content, e.service);
+				apiBodyNode.appendChild(obj.content);
+			}
+		}
+		else {
+			apiBodyNode.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlParseFailed")));
+			for(let i=0; i<bases.length; i++){
+				let base = bases[i];
+				base = removeSimbol(base);
+				base = convertStyle(base);
+				base = convertAudio(base, e.service);
+				base = convertAnchor(base, e.service);
+				apiBodyNode.appendChild(base);
+			}
 		}
 		show(historyButtoneNode);
 		linkListNode.classList.remove(CSS_PREFIX+"-loading");
@@ -1110,36 +1128,57 @@
 	}
 
 	function parseHTML(htmls){
+		let tmp = [];
+		let header = document.createElement("div");
 		let result = [];
+		let bases = [];
+		let flag = false;
+		/* need to change if really multiple htmls */
 		for(let i=0; i<htmls.length; i++){
 			let node = document.createElement("div");
 			node.innerHTML = htmls[i];
-			let list = node.querySelectorAll(".section-heading");
+			bases.push(node);
+			if ( flag ) continue;
+			let list = node.querySelectorAll("h2.in-block");
+			if ( list.length <= 0 ) {
+				flag = true;
+				continue;
+			}
+			let container = list[0];
+			while(container.previousElementSibling){
+				container = container.previousElementSibling;
+				tmp.push(container);
+			}
 			for(let j=0; j<list.length; j++){
 				let target = list[j];
-				let tmp = [];
-				while( target && target.nextElementSibling && !target.nextElementSibling.classList.contains("section-heading") ) {
-					tmp.push(target.nextElementSibling);
+				let a = [];
+				while( target && target.nextElementSibling && !( target.nextElementSibling.tagName=="H2" && target.nextElementSibling.classList.contains("in-block") ) ) {
+					a.push(target.nextElementSibling);
 					target = target.nextElementSibling;
 				}
 				let obj = {
 					"title": list[j],
 					"warnings":[],
-					"tmp": tmp
+					"tmp": a
 				};
 				result.push(obj)
 			}
 		}
-		for(let i=0; i<result.length; i++){
-			let obj = result[i];
-			let content = document.createElement("div");
-			for(let j=0; j<obj.tmp.length; j++){
-				content.appendChild(obj.tmp[j]);
+		if(!flag){
+			for(let i=0; i<tmp.length; i++){
+				header.appendChild(tmp[i]);
 			}
-			obj.content = content;
-			delete obj.tmp;
+			for(let i=0; i<result.length; i++){
+				let obj = result[i];
+				let container = document.createElement("div");
+				for(let j=0; j<obj.tmp.length; j++){
+					container.appendChild(obj.tmp[j]);
+				}
+				obj.content = container;
+				delete obj.tmp;
+			}
 		}
-		return result;
+		return { "header": header, "result": result, "bases": bases, "status": !flag  };
 	}
 
 	function isLanguageFilterd(title,filterList, followed, languageTopRegex, languageBottomRegex) {

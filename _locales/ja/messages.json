@@ -94,6 +94,9 @@
 			}
 		}
 	},
+	"htmlParseFailed": {
+		"message": "構文解析に失敗しました。"
+	},
 	"htmlMeaningNotFound": {
 		"message": "\"解説の切り出し\"に失敗しました。"
 	},
