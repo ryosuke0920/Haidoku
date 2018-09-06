@@ -122,6 +122,7 @@
 			cursor: pointer;
 			background-size: cover;
 			margin-right: 3px;
+			box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 		}
 		#lessLaborGoToDictionary-move {
 			cursor: move;
@@ -199,7 +200,7 @@
 		#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
 			display: none;
 		}
-		#lessLaborGoToDictionary-apiContent > *{
+		#lessLaborGoToDictionary-apiContent > * {
 			border-right: solid 1px gray;
 			border-left: solid 1px gray;
 			background-color: white;
@@ -293,7 +294,7 @@
 			display: none;
 		}
 		.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-nowLoadingMsg {
-			display: inline;
+			display: block;
 		}
 		.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-nowLoadingMsg {
 			display: none;
@@ -302,7 +303,7 @@
 			display: none;
 		}
 		.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOffMsg {
-			display: inline;
+			display: block;
 		}
 		#lessLaborGoToDictionary-apiLoading {
 			display: none;
