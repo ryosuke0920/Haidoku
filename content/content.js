@@ -243,6 +243,7 @@
 			display: inline-block;
 			height: 20px;
 			width: 30px;
+			min-width: 30px;
 			border-radius: 15px;
 			right: 0.5em;
 			cursor: pointer;
