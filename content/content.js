@@ -75,20 +75,52 @@
 			/* break promise chain, but not need notification. */
 			throw( new Error( SILENT_ERROR_PREFIX + " not found body") );
 		}
+		let rootNode = document.createElement("div");
+		rootNode.setAttribute("style","all: initial;");
+		rootNode.style.position = "absolute";
+		rootNode.style.top = "0";
+		rootNode.style.left = "0";
+		body.appendChild(rootNode);
+		let shadow = rootNode.attachShadow({"mode": "open"});
 
 		widgetNode = document.createElement("div");
 		widgetNode.style.padding = LINK_NODE_PADDING + "px";
 		widgetNode.setAttribute("id",CSS_PREFIX+"-widget");
 		hide(widgetNode);
-		body.appendChild( widgetNode );
-
-		let shadow = widgetNode.attachShadow({"mode": "open"});
+		shadow.appendChild(widgetNode);
 
 		let style = document.createElement("style");
 		style.textContent = `
 		* {
 			padding: 0;
 			margin: 0;
+		}
+		#lessLaborGoToDictionary-widget {
+			display: block;
+			position: absolute;
+			z-index: 2147483646;
+			background-color: white;
+			box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+			overflow: auto;
+			resize: both;
+			user-select: none;
+			-moz-user-select: none;
+		}
+		#lessLaborGoToDictionary-widget.lessLaborGoToDictionary-hide {
+			display: none;
+		}
+		#lessLaborGoToDictionary-widget.lessLaborGoToDictionary-stopper {
+			width: 30px !important;
+			height: 30px !important;
+			padding: 0px !important;
+			overflow: hidden;
+			resize: none;
+		}
+		#lessLaborGoToDictionary-widget.lessLaborGoToDictionary-dark {
+			border-top-right-radius: 5px;
+			border-bottom-left-radius: 5px;
+			background: linear-gradient(to bottom right, #404040, #202020);
+			box-shadow: 0 2px 4px 0 rgba(0,0,0,0.64),0 2px 10px 0 rgba(0,0,0,0.48);
 		}
 		#lessLaborGoToDictionary-viewer {
 			position: relative;
@@ -366,30 +398,33 @@
 		#lessLaborGoToDictionary-apiBody dt,
 		#lessLaborGoToDictionary-apiBody dd,
 		#lessLaborGoToDictionary-apiBody table {
-			margin-top: 1em;
+			margin-top: 0.5em;
 			margin-bottom: 1em;
 		}
 		#lessLaborGoToDictionary-apiBody h1 {
-			font-size: 1.30em;
+			font-size: 1.6em;
 		}
 		#lessLaborGoToDictionary-apiBody h2 {
-			font-size: 1.25em;
+			font-size: 1.5em;
 		}
 		#lessLaborGoToDictionary-apiBody h3 {
-			font-size: 1.20em;
+			font-size: 1.3em;
 		}
 		#lessLaborGoToDictionary-apiBody h4 {
-			font-size: 1.15em;
+			font-size: 1.2em;
 		}
 		#lessLaborGoToDictionary-apiBody h5 {
-			font-size: 1.10em;
+			font-size: 1.1em;
 		}
 		#lessLaborGoToDictionary-apiBody h6 {
-			font-size: 1.05em;
+			font-size: 1em;
 		}
 		#lessLaborGoToDictionary-apiBody ul,
 		#lessLaborGoToDictionary-apiBody ol {
 			margin-left: 1em;
+		}
+		#lessLaborGoToDictionary-apiBody hr {
+			border: none;
 		}
 		#lessLaborGoToDictionary-apiBody table {
 			border-collapse: collapse;
@@ -459,11 +494,11 @@
 			box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 		}
 `;
-		shadow.appendChild(style)
+		widgetNode.appendChild(style)
 
 		linkListNode = document.createElement("div");
 		linkListNode.setAttribute("id",CSS_PREFIX+"-viewer");
-		shadow.appendChild(linkListNode);
+		widgetNode.appendChild(linkListNode);
 		applyLinkListSize();
 
 		coverNode = document.createElement("div");
@@ -775,28 +810,28 @@
 
 	function applyFaviconDisplay(res){
 		if( res == LINK_LIST_FAVICON_ONLY ) {
-			linkListNode.classList.add(CSS_PREFIX+"-mini");
+			widgetNode.classList.add(CSS_PREFIX+"-mini");
 		}
 		else {
-			linkListNode.classList.remove(CSS_PREFIX+"-mini");
+			widgetNode.classList.remove(CSS_PREFIX+"-mini");
 		}
 	}
 
 	function applyLinknListDirection(res){
 		if( res == LINK_LIST_DIRECTION_HORIZAONTAL ) {
-			linkListNode.classList.add(CSS_PREFIX+"-inline");
+			widgetNode.classList.add(CSS_PREFIX+"-inline");
 		}
 		else {
-			linkListNode.classList.remove(CSS_PREFIX+"-inline");
+			widgetNode.classList.remove(CSS_PREFIX+"-inline");
 		}
 	}
 
 	function applyLinknListSeparator(res){
 		if( res == LINK_LIST_SEPARATOR_VERTICAL ) {
-			linkListNode.classList.add(CSS_PREFIX+"-separator");
+			widgetNode.classList.add(CSS_PREFIX+"-separator");
 		}
 		else {
-			linkListNode.classList.remove(CSS_PREFIX+"-separator");
+			widgetNode.classList.remove(CSS_PREFIX+"-separator");
 		}
 	}
 

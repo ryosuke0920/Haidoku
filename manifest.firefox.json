@@ -31,9 +31,6 @@
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
-			"css": [
-				"content/content.css"
-			],
 			"js": [
 				"etc/CONST.js",
 				"lib/ponyfill.js",
