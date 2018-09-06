@@ -23,18 +23,38 @@ const API_SWITCH_ENABLED = "1";
 const API_SERVICE_CODE_NONE = "-";
 const API_SERVICE_NONE = null;
 const API_SERVICE = {
+	"de": "https://de.wiktionary.org",
 	"en": "https://en.wiktionary.org",
+	"fr": "https://fr.wiktionary.org",
 	"ja": "https://ja.wiktionary.org"
 };
 const API_SERVICE_PROPERTY = {
+	"https://de.wiktionary.org":{
+		"defaultLanguage": ["Deutsch","Englisch"],
+		"namespace":"Kategorie",
+		"langCat": "Kategorie:Sprachen",
+		"followed": null,
+		"languageTopRegex":".+\\(",
+		"languageBottomRegex":"\\)$",
+		"cutOut": "Bedeutungen:",
+		"path": "/w/api.php"
+	},
 	"https://en.wiktionary.org":{
 		"defaultLanguage": ["English"],
 		"namespace":"Category",
 		"langCat": "Category:All_languages",
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
-		"reduceSection": [
-			new RegExp("^(?:Etymology|Synonyms|Hyponyms|Derived terms|Related terms|Translations|References|Further reading|Anagrams|Compounds|Declension|Conjugation|Inflection|See also|Antonyms|Descendants|Usage notes|quotation|coordinate term|Alternative forms)","i")
-		],
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
+		"path": "/w/api.php"
+	},
+	"https://fr.wiktionary.org":{
+		"defaultLanguage": ["français","anglais"],
+		"namespace":"Catégorie",
+		"langCat": "Catégorie:Langues",
+		"followed": null,
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
 		"path": "/w/api.php"
 	},
 	"https://ja.wiktionary.org":{
@@ -42,15 +62,12 @@ const API_SERVICE_PROPERTY = {
 		"namespace":"カテゴリ",
 		"langCat": "カテゴリ:言語",
 		"followed": null,
-		"reduceSection": [
-			new RegExp("^(?:関連語|上位語|下位語|同族語|複合語|同系語|語源|派生語|対義語|熟語|翻訳|類義語|参照|異綴|アナグラム|異表記|訳語|同音異義語|典拠|参考文献|脚注|造語|出典|字典番号)")
-		],
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
 		"path": "/w/api.php"
 	}
 };
 const PAGE_NOT_FOUND_ERROR = "page not found";
-const SECTION_NOT_FOUND_ERROR = "section not found";
-const MEANING_NOT_FOUND_ERROR = "meaning not found";
 const CONNECTION_ERROR = "connection error";
 const SERVER_ERROR = "server error";
 const APPLICATION_ERROR = "application error";

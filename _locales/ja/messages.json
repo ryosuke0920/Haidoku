@@ -20,9 +20,6 @@
 	"extensionOptionName": {
 		"message": "設定"
 	},
-	"notificationCopyed": {
-		"message": "選択範囲をコピーしました。"
-	},
 	"notificationUnexpectedError": {
 		"message": "予期せぬエラーが発生しました。$ERROR$",
 		"placeholders": {
@@ -97,11 +94,14 @@
 			}
 		}
 	},
+	"htmlParseFailed": {
+		"message": "構文解析に失敗しました。"
+	},
 	"htmlMeaningNotFound": {
-		"message": "ページは見つかりましたが、\"解説の切り出し\"に失敗しました。"
+		"message": "\"解説の切り出し\"に失敗しました。"
 	},
 	"htmlSectionNotFound": {
-		"message": "ページは見つかりましたが、\"言語フィルター\"で指定している言語の解説は見つかりませんでした。"
+		"message": "\"言語フィルター\"で指定している言語の解説は見つかりませんでした。"
 	},
 	"htmlPageNotFound": {
 		"message": "ページが見つかりませんでした。"
@@ -143,9 +143,6 @@
 	},
 	"htmlZoomUp": {
 		"message": "拡大"
-	},
-	"htmlCopy": {
-		"message": "コピー"
 	},
 	"htmlMove": {
 		"message": "移動"
@@ -405,8 +402,14 @@
 	"htmlServiceCodeNone": {
 		"message": "無効にする"
 	},
+	"htmlServiceCodeDe": {
+		"message": "https://de.wiktionary.org/ - ドイツ語"
+	},
 	"htmlServiceCodeEn": {
 		"message": "https://en.wiktionary.org/ - 英語"
+	},
+	"htmlServiceCodeFr": {
+		"message": "https://fr.wiktionary.org/ - フランス語"
 	},
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - 日本語"
