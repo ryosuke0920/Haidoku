@@ -25,10 +25,8 @@
 	let widgetNode;
 	let widgetNodeTop = 0;
 	let widgetNodeLeft = 0;
-
-	let linkListNode;
-	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
-	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
+	let widgetNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
+	let widgetNodeWidth = LINK_NODE_DEFAULT_WIDTH;
 	let widgetScrollTopTmp = 0;
 	let widgetScrollleftTmp = 0;
 	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
@@ -496,23 +494,23 @@
 `;
 		widgetNode.appendChild(style)
 
-		linkListNode = document.createElement("div");
-		linkListNode.setAttribute("id",CSS_PREFIX+"-viewer");
-		widgetNode.appendChild(linkListNode);
+		let viewerNode = document.createElement("div");
+		viewerNode.setAttribute("id",CSS_PREFIX+"-viewer");
+		widgetNode.appendChild(viewerNode);
 		applyLinkListSize();
 
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
 		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/rect30.png")+")";
-		linkListNode.appendChild(coverNode);
+		viewerNode.appendChild(coverNode);
 
 		menuNode = document.createElement("nav");
 		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
-		linkListNode.appendChild(menuNode);
+		viewerNode.appendChild(menuNode);
 
 		let linkListGridNode = document.createElement("div");
 		linkListGridNode.setAttribute("id",CSS_PREFIX+"-grid");
-		linkListNode.appendChild(linkListGridNode);
+		viewerNode.appendChild(linkListGridNode);
 
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
@@ -639,11 +637,11 @@
 
 	function addCommonLinkListEvents(){
 		ponyfill.storage.onChanged.addListener( onStorageChanged );
-		linkListNode.addEventListener("click", menuClickBihavior);
+		widgetNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
-		linkListNode.addEventListener("mousedown", mousedownCommonBehavior);
+		widgetNode.addEventListener("mousedown", mousedownCommonBehavior);
 		document.addEventListener("mousedown", mousedownOuterBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
 		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
@@ -665,7 +663,7 @@
 
 	function updateInnerSelectionFlag(){
 		let selection = window.getSelection();
-		innerSelectionFlag = selection.containsNode(linkListNode, true);
+		innerSelectionFlag = selection.containsNode(widgetNode, true);
 	}
 
 	function manualSelectionChangeBehavior(e){
@@ -799,12 +797,12 @@
 	function switchWatchFlag(){
 		let height = getLinkListHeight();
 		let width = getLinkListWidth();
-		if ( linkListNodeHeight != height || linkListNodeWidth != width ){
+		if ( widgetNodeHeight != height || widgetNodeWidth != width ){
 			resizeWatcherFlag = true;
 			if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
 			if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
-			linkListNodeHeight = height;
-			linkListNodeWidth = width;
+			widgetNodeHeight = height;
+			widgetNodeWidth = width;
 		}
 	}
 
@@ -848,8 +846,8 @@
 		return ponyfill.runtime.sendMessage({
 			"method": "saveLinkListSize",
 			"data": {
-				"lh": linkListNodeHeight,
-				"lw": linkListNodeWidth
+				"lh": widgetNodeHeight,
+				"lw": widgetNodeWidth
 			}
 		});
 	}
@@ -888,11 +886,11 @@
 	}
 
 	function setSelectedText(text){
-		linkListNode.setAttribute("data-selected-text", text);
+		widgetNode.setAttribute("data-selected-text", text);
 	}
 
 	function getSelectedText(){
-		return linkListNode.getAttribute("data-selected-text");
+		return widgetNode.getAttribute("data-selected-text");
 	}
 
 	function makeLinkList(text){
@@ -943,7 +941,7 @@
 	}
 
 	function applyLinkListSize(){
-		resizeWidget(linkListNodeHeight, linkListNodeWidth)
+		resizeWidget(widgetNodeHeight, widgetNodeWidth)
 	}
 
 	function resizeWidget(height, width){
@@ -987,26 +985,26 @@
 		let clientX = rect.right;
 		let pageX = window.scrollX + clientX;
 		let viewPortWidth = window.innerWidth - SCROLL_SPACE;
-		if ( viewPortWidth < linkListNode.offsetWidth ){
+		if ( viewPortWidth < widgetNode.offsetWidth ){
 			return window.scrollX;
 		}
-		if ( (clientX + linkListNode.offsetWidth + RECT_SPACE) <= viewPortWidth){
+		if ( (clientX + widgetNode.offsetWidth + RECT_SPACE) <= viewPortWidth){
 			return pageX + RECT_SPACE;
 		}
-		return window.scrollX + viewPortWidth - linkListNode.offsetWidth;
+		return window.scrollX + viewPortWidth - widgetNode.offsetWidth;
 	}
 
 	function makeWidgetPointY(rect){
 		let clientY = rect.bottom;
 		let pageY = window.scrollY + clientY;
 		let viewPortHeight = window.innerHeight - SCROLL_SPACE;
-		if ( viewPortHeight < linkListNode.offsetHeight ){
+		if ( viewPortHeight < widgetNode.offsetHeight ){
 			return pageY + RECT_SPACE;
 		}
-		if ( (clientY + RECT_SPACE + linkListNode.offsetHeight) <=  viewPortHeight ){
+		if ( (clientY + RECT_SPACE + widgetNode.offsetHeight) <=  viewPortHeight ){
 			return pageY + RECT_SPACE;
 		}
-		yy = rect.top - linkListNode.offsetHeight - RECT_SPACE;
+		yy = rect.top - widgetNode.offsetHeight - RECT_SPACE;
 		if ( 0 <= yy) {
 			return window.scrollY + yy;
 		}
@@ -1014,14 +1012,14 @@
 	}
 
 	function isLinkListShown(){
-		return !linkListNode.classList.contains(CSS_PREFIX+"-hide");
+		return !widgetNode.classList.contains(CSS_PREFIX+"-hide");
 	}
 
 	function onStorageChanged(change, area){
 		if( change["lh"] || change["lw"] ){
-			let lh = linkListNodeHeight;
+			let lh = widgetNodeHeight;
 			if( change.hasOwnProperty("lh") ) lh = change["lh"]["newValue"];
-			let lw = linkListNodeWidth;
+			let lw = widgetNodeWidth;
 			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
 			setLinkListSize( lh, lw );
 		}
@@ -1080,8 +1078,8 @@
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
-		linkListNodeHeight = height;
-		linkListNodeWidth = width;
+		widgetNodeHeight = height;
+		widgetNodeWidth = width;
 		if( isLinkListShown() ) applyLinkListSize();
 	}
 
@@ -1161,30 +1159,28 @@
 
 	function setLinkListStyle(res){
 		widgetNode.classList.remove(CSS_PREFIX+"-dark");
-		linkListNode.classList.remove(CSS_PREFIX+"-dark");
 		if( res == LINK_LIST_STYLE_DARK ) {
 			widgetNode.classList.add(CSS_PREFIX+"-dark");
-			linkListNode.classList.add(CSS_PREFIX+"-dark");
 		}
 	}
 
 	function setLinkListAction(res){
 		linkListAction = res;
 		resetScrollTmp();
-		linkListNode.classList.remove(CSS_PREFIX+"-mouseover");
-		linkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
+		widgetNode.classList.remove(CSS_PREFIX+"-mouseover");
+		widgetNode.classList.remove(CSS_PREFIX+"-mouseclick");
 		removeStopper();
-		linkListNode.removeEventListener("mouseenter", removeStopper);
-		linkListNode.removeEventListener("mouseleave", controlStopper);
+		widgetNode.removeEventListener("mouseenter", removeStopper);
+		widgetNode.removeEventListener("mouseleave", controlStopper);
 		coverNode.removeEventListener("click", widgetActionMouseclick);
 		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
-			linkListNode.classList.add(CSS_PREFIX+"-mouseover");
+			widgetNode.classList.add(CSS_PREFIX+"-mouseover");
 			addStopper();
-			linkListNode.addEventListener("mouseenter", removeStopper);
-			linkListNode.addEventListener("mouseleave", controlStopper);
+			widgetNode.addEventListener("mouseenter", removeStopper);
+			widgetNode.addEventListener("mouseleave", controlStopper);
 		}
 		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
-			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
+			widgetNode.classList.add(CSS_PREFIX+"-mouseclick");
 			addStopper();
 			coverNode.addEventListener("click", widgetActionMouseclick);
 		}
@@ -1210,18 +1206,16 @@
 
 	function addStopper(){
 		widgetNode.classList.add(CSS_PREFIX+"-stopper");
-		linkListNode.classList.add(CSS_PREFIX+"-stopper");
 	}
 
 	function removeStopper(e){
 		if(!hasStopper())return;
 		scrollWidget(widgetScrollTopTmp, widgetScrollleftTmp);
-		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
 		widgetNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
 	function hasStopper(){
-		return linkListNode.classList.contains(CSS_PREFIX+"-stopper");
+		return widgetNode.classList.contains(CSS_PREFIX+"-stopper");
 	}
 
 	function resetScrollTmp(){
@@ -1287,8 +1281,8 @@
 	}
 
 	function resetSize(height,width){
-		linkListNodeHeight = height;
-		linkListNodeWidth = width;
+		widgetNodeHeight = height;
+		widgetNodeWidth = width;
 		applyLinkListSize();
 	}
 
@@ -1310,11 +1304,11 @@
 	}
 
 	function applyZoomLinkList(){
-		let list = linkListNode.querySelectorAll("span."+CSS_PREFIX+"-label");
+		let list = containerNode.querySelectorAll("span."+CSS_PREFIX+"-label");
 		for(let i=0; i<list.length; i++){
 			setFontSize(list[i], anchorSize);
 		}
-		list = linkListNode.querySelectorAll("img."+CSS_PREFIX+"-favicon");
+		list = containerNode.querySelectorAll("img."+CSS_PREFIX+"-favicon");
 		for(let i=0; i<list.length; i++){
 			setFaviconSize(list[i], anchorSize);
 		}
@@ -1454,7 +1448,7 @@
 	}
 
 	function clearApiContent(){
-		linkListNode.classList.add(CSS_PREFIX+"-loading");
+		widgetNode.classList.add(CSS_PREFIX+"-loading");
 		hide(historyButtoneNode);
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
@@ -1555,7 +1549,7 @@
 			}
 		}
 		show(historyButtoneNode);
-		linkListNode.classList.remove(CSS_PREFIX+"-loading");
+		widgetNode.classList.remove(CSS_PREFIX+"-loading");
 	}
 
 	function makeApiTitleNode(text,title,url){
@@ -1751,7 +1745,7 @@
 	function apiResponseError(e){
 		function after(content){
 			apiBodyNode.appendChild(content);
-			linkListNode.classList.remove(CSS_PREFIX+"-loading");
+			widgetNode.classList.remove(CSS_PREFIX+"-loading");
 		}
 		clearApiTitle();
 		let content = document.createElement("div");
@@ -1824,11 +1818,11 @@
 	function setApiSwitch(value){
 		if(value != API_SWITCH_ENABLED){
 			apiSwitcheNode.removeAttribute("data-checked");
-			linkListNode.classList.add(CSS_PREFIX+"-apiDisabled");
+			widgetNode.classList.add(CSS_PREFIX+"-apiDisabled");
 		}
 		else {
 			apiSwitcheNode.setAttribute("data-checked", API_SWITCH_ENABLED);
-			linkListNode.classList.remove(CSS_PREFIX+"-apiDisabled");
+			widgetNode.classList.remove(CSS_PREFIX+"-apiDisabled");
 		}
 	}
 
