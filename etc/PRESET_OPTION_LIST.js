@@ -296,6 +296,11 @@ const PRESET_OPTION_LIST = [
 		"u": "https://www.google.com/search?q=site:developer.mozilla.org/en-US/ $1"
 	},
 	{
+		"la": "en",
+		"l": "Hulu",
+		"u": "https://www.hulu.com/search?q=$1"
+	},
+	{
 		"la": "ja",
 		"l": "Wikipedia (ja)",
 		"u": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
@@ -460,6 +465,26 @@ const PRESET_OPTION_LIST = [
 		"la": "ja",
 		"l": "developer.mozilla.org (ja) by Google",
 		"u": "https://www.google.co.jp/search?q=site:developer.mozilla.org/ja/ $1"
+	},
+	{
+		"la": "ja",
+		"l": "Hulu (jp)",
+		"u": "https://www.happyon.jp/search?q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "AbemaTV",
+		"u": "https://abema.tv/search?q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "dTV",
+		"u": "https://pc.video.dmkt-sp.jp/search/increment?words=$1"
+	},
+	{
+		"la": "ja",
+		"l": "dTVチャンネル",
+		"u": "https://dch.dmkt-sp.jp/word/$1"
 	},
 	{
 		"la": "zh",
