@@ -35,7 +35,6 @@
 			{ "selector": "#"+CSS_PREFIX+"-move", "property": "title", "key": "htmlMove" },
 			{ "selector": "#"+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
 			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
-			{ "selector": "#"+CSS_PREFIX+"-copy", "property": "title", "key": "htmlCopy" },
 			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
 			{ "selector": "#"+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
 			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" },
@@ -55,7 +54,9 @@
 			{ "selector": ".serviceCodeTitle", "property": "innerText", "key": "htmlServiceCodeTitle" },
 			{ "selector": ".serviceCodeDescription", "property": "innerText", "key": "htmlServiceCodeDescription" },
 			{ "selector": ".serviceCodeNone", "property": "innerText", "key": "htmlServiceCodeNone" },
+			{ "selector": ".serviceCodeDe", "property": "innerText", "key": "htmlServiceCodeDe" },
 			{ "selector": ".serviceCodeEn", "property": "innerText", "key": "htmlServiceCodeEn" },
+			{ "selector": ".serviceCodeFr", "property": "innerText", "key": "htmlServiceCodeFr" },
 			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
 			{ "selector": ".serviceCodeSelectMessage", "property": "innerText", "key": "htmlServiceCodeSelectMessage" },
 			{ "selector": ".languageFilterTitle", "property": "innerText", "key": "htmlLanguageFilterTitle" },
@@ -587,8 +588,8 @@
 			obj.title = obj.title.replace( namespaceRegex, "");
 			obj.shortPrefix = obj.sortkeyprefix;
 			if(obj.shortPrefix.length <= 0) obj.shortPrefix = obj.title;
-			obj.shortPrefix = obj.shortPrefix.substr(0,1);
-			if(obj.shortPrefix==" "||obj.shortPrefix=="*"|| (followed && !obj.title.match(followedRegex) ) ) {
+			obj.shortPrefix = obj.shortPrefix.substr(0,1).toLowerCase();
+			if(obj.shortPrefix==" "||obj.shortPrefix=="*"||obj.shortPrefix=="!"||obj.shortPrefix=="#"|| (followed && !obj.title.match(followedRegex) ) ) {
 				this.cat.splice(i,1);
 				i--;
 				continue;
@@ -622,7 +623,7 @@
 		let prototype = document.querySelector("#languageFilterInputPrototype");
 		let languages = getLanguageFilterCache(service);
 		let languageList = getLanguageFilterList();
-		languages = languages.filter( obj => obj.sortkeyprefix.substr(0,1)==prefixCode );
+		languages = languages.filter( obj => obj.shortPrefix == prefixCode );
 		for(let i=0; i<languages.length; i++){
 			let language = languages[i];
 			let wrapper = document.importNode(prototype.content, true);

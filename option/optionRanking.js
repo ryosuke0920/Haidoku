@@ -112,7 +112,7 @@
 
 	function rankingMakeRange(){
 		let value = rankingDateRangeNode.value;
-		if( value == "all" )　return null;
+		if( value == "all" ) return null;
 		let start;
 		let end;
 		if( value == "custom" ){
