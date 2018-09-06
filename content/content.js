@@ -94,11 +94,6 @@
 		widgetNode.appendChild(viewerNode);
 		applyLinkListSize();
 
-		coverNode = document.createElement("div");
-		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
-		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/rect30.png")+")";
-		viewerNode.appendChild(coverNode);
-
 		menuNode = document.createElement("nav");
 		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
 		viewerNode.appendChild(menuNode);
@@ -106,6 +101,11 @@
 		let linkListGridNode = document.createElement("div");
 		linkListGridNode.setAttribute("id",CSS_PREFIX+"-grid");
 		viewerNode.appendChild(linkListGridNode);
+
+		coverNode = document.createElement("div");
+		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
+		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/rect30.png")+")";
+		viewerNode.appendChild(coverNode);
 
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
