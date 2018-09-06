@@ -89,13 +89,13 @@
 		* {
 			padding: 0;
 			margin: 0;
-			user-select: none;
-			-moz-user-select: none;
 		}
 		#lessLaborGoToDictionary-viewer {
 			position: relative;
 			font-family: sans-serif;
 			font-size: 1em;
+			user-select: text;
+			-moz-user-select: text;
 		}
 		#lessLaborGoToDictionary-cover {
 			display: none;
@@ -113,16 +113,15 @@
 			height: 22px;
 			line-height: 0;
 			white-space: nowrap;
-			padding-top: 5px;
-			padding-left: 5px;
+			margin-bottom: 3px;
 		}
 		.lessLaborGoToDictionary-buttonIcon {
 			display: inline-block;
-			height: 16px;
-			width: 16px;
+			height: 22px;
+			width: 22px;
 			cursor: pointer;
-			box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
-			margin-right: 5px;
+			background-size: cover;
+			margin-right: 3px;
 		}
 		#lessLaborGoToDictionary-move {
 			cursor: move;
@@ -183,8 +182,6 @@
 			margin:5px;
 			font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
 			font-size: 14px;
-			user-select: text;
-			-moz-user-select: text;
 		}
 		#lessLaborGoToDictionary-apiContent a {
 			color: #3366cc;
