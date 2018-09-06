@@ -1,7 +1,7 @@
 ( () => {
 	const API_LANGUAGE_MAX = 10;
 	let othersNode = document.querySelector("#others");
-	let sampleLinkListNode = othersNode.querySelector("#"+CSS_PREFIX+"-viewer");
+	let sampleWidgetNode;
 	let serviceCodeSelectNode = othersNode.querySelector(".serviceCodeSelect");
 	let apiCutOutNode = othersNode.querySelector(".apiCutOut");
 	let downloadLanguagePaneNode = othersNode.querySelector("#downloadLanguagePane");
@@ -19,8 +19,21 @@
 	Promise.resolve().then(getFavicon).then(gotFavicon).then(initProperties).catch(unexpectedError);
 
 	function initOthers(){
+		initSampleWidget();
 		initI18n();
 		initNode();
+	}
+
+	function initSampleWidget(){
+		let widgetTemplate = document.querySelector("#widgetTemplate");
+		widgetTemplate = document.importNode(widgetTemplate.content, true);
+		sampleWidgetNode = widgetTemplate.querySelector("#"+CSS_PREFIX+"-widget");
+		sampleWidgetNode.style.padding = LINK_NODE_PADDING + "px";
+		let sampleWidgetStyle = sampleWidgetNode.querySelector("#widgetStyle");
+		sampleWidgetStyle.textContent = WIDGET_STYLE;
+		let container = document.querySelector("#widgetContainer");
+		let shadow = container.attachShadow({"mode": "open"});
+		shadow.appendChild(widgetTemplate);
 	}
 
 	function initI18n(){
@@ -32,12 +45,6 @@
 			{ "selector": ".linkListActionNormal", "property": "innerText", "key": "htmlLinkListActionNormal" },
 			{ "selector": ".linkListActionMouseover", "property": "innerText", "key": "htmlLinkListActionMouseover" },
 			{ "selector": ".linkListActionMouseclick", "property": "innerText", "key": "htmlLinkListActionMouseclick" },
-			{ "selector": "#"+CSS_PREFIX+"-move", "property": "title", "key": "htmlMove" },
-			{ "selector": "#"+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
-			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
-			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
-			{ "selector": "#"+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
-			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" },
 			{ "selector": ".linkListLayoutTitle", "property": "innerText", "key": "htmlLinkListLayoutTitle" },
 			{ "selector": ".linkListLayoutPatternTitle", "property": "innerText", "key": "htmlLinkListLayoutPatternTitle" },
 			{ "selector": ".faviconDisplayTitle", "property": "innerText", "key": "htmlFaviconDisplayTitle" },
@@ -71,6 +78,15 @@
 			{ "selector": ".linkListSampleTitle", "property": "innerText", "key": "htmlLinkListSampleTitle" }
 		];
 		setI18n(list);
+		list = [
+			{ "selector": "#"+CSS_PREFIX+"-move", "property": "title", "key": "htmlMove" },
+			{ "selector": "#"+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
+			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
+			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
+			{ "selector": "#"+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
+			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" }
+		];
+		setI18n(list, sampleWidgetNode);
 	}
 
 	function initNode(){
@@ -381,7 +397,7 @@
 
 	function setSampleLinkListAnchor(list){
 		let prototype = othersNode.querySelector("#"+CSS_PREFIX+"-list-prototype");
-		let container = othersNode.querySelector("#"+CSS_PREFIX+"-container");
+		let container = sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-container");
 		clearChildren(container);
 		for(let i=0; i<list.length; i++){
 			let item = list[i];
@@ -402,43 +418,43 @@
 	}
 
 	function setSampleLinkListStyle(value){
-		sampleLinkListNode.classList.remove(CSS_PREFIX+"-dark");
-		if( value == LINK_LIST_STYLE_DARK ) sampleLinkListNode.classList.add(CSS_PREFIX+"-dark");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-dark");
+		if( value == LINK_LIST_STYLE_DARK ) sampleWidgetNode.classList.add(CSS_PREFIX+"-dark");
 	}
 
 	function setSampleLinkListDirection(value){
 		if(value==LINK_LIST_DIRECTION_VERTICAL){
-			sampleLinkListNode.classList.remove(CSS_PREFIX+"-inline");
+			sampleWidgetNode.classList.remove(CSS_PREFIX+"-inline");
 		}
 		else {
-			sampleLinkListNode.classList.add(CSS_PREFIX+"-inline");
+			sampleWidgetNode.classList.add(CSS_PREFIX+"-inline");
 		}
 	}
 
 	function setSampleLinkListSeparator(value){
 		if(value==LINK_LIST_SEPARATOR_VERTICAL){
-			sampleLinkListNode.classList.add(CSS_PREFIX+"-separator");
+			sampleWidgetNode.classList.add(CSS_PREFIX+"-separator");
 		}
 		else {
-			sampleLinkListNode.classList.remove(CSS_PREFIX+"-separator");
+			sampleWidgetNode.classList.remove(CSS_PREFIX+"-separator");
 		}
 	}
 
 	function setSampleLinkListFaviconDisplay(value){
 		if(value==LINK_LIST_FAVICON_NORMAL){
-			sampleLinkListNode.classList.remove(CSS_PREFIX+"-mini");
+			sampleWidgetNode.classList.remove(CSS_PREFIX+"-mini");
 		}
 		else {
-			sampleLinkListNode.classList.add(CSS_PREFIX+"-mini");
+			sampleWidgetNode.classList.add(CSS_PREFIX+"-mini");
 		}
 	}
 
 	function setSampleLinkListServiceCode(value){
 		if(value!=API_SERVICE_CODE_NONE){
-			sampleLinkListNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.remove(CSS_PREFIX+"-hide");
+			sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.remove(CSS_PREFIX+"-hide");
 		}
 		else {
-			sampleLinkListNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.add(CSS_PREFIX+"-hide");
+			sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.add(CSS_PREFIX+"-hide");
 		}
 	}
 

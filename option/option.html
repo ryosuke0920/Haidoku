@@ -329,62 +329,66 @@
 				</section>
 				<section id="linkListSample" class="borderComponent">
 					<h1 class="linkListSampleTitle">htmlLinkListSampleTitle</h1>
-					<div class="box">
-						<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 300px; width: 450px; z-index:auto;">
-							<div id="lessLaborGoToDictionary-cover" style="background-image:url(/image/rect30.png)"></div>
-							<nav id="lessLaborGoToDictionary-menu">
-								<div id="lessLaborGoToDictionary-move" style="background-image:url(/image/arrow.svg)"></div>
-								<div id="lessLaborGoToDictionary-resize" style="background-image:url(/image/resize.svg)"></div>
-								<div id="lessLaborGoToDictionary-zoomDown" style="background-image:url(/image/minus.svg)"></div>
-								<div id="lessLaborGoToDictionary-zoomUp" style="background-image:url(/image/plus.svg)"></div>
-								<div id="lessLaborGoToDictionary-option" style="background-image:url(/image/option.svg)"></div>
-							</nav>
-							<div id="lessLaborGoToDictionary-grid">
-								<ul id="lessLaborGoToDictionary-container">
-									<li class="lessLaborGoToDictionary-list">
-										<a class="lessLaborGoToDictionary-anchor">
-											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
-										</a>
-									</li>
-									<li class="lessLaborGoToDictionary-list">
-										<a class="lessLaborGoToDictionary-anchor">
-											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2</span>
-										</a>
-									</li>
-									<li class="lessLaborGoToDictionary-list">
-										<a class="lessLaborGoToDictionary-anchor">
-											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3</span>
-										</a>
-									</li>
-								</ul>
-								<div id="lessLaborGoToDictionary-apiContent">
-									<div id="lessLaborGoToDictionary-apiHeader">
-										<div id="lessLaborGoToDictionary-apiHeaderTextArea">
-											<div id="lessLaborGoToDictionary-apiTitleWrapper">
-												<div id="lessLaborGoToDictionary-history" style="background-image: url(/image/history.svg);" ></div>
-												<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank">Wiktionary</a>
+					<div class="box" id="widgetContainer"></div>
+					<template id="widgetTemplate">
+						<div id="lessLaborGoToDictionary-widget">
+							<style id="widgetStyle"></style>
+							<div id="lessLaborGoToDictionary-viewer">
+								<div id="lessLaborGoToDictionary-cover" style="background-image:url(/image/rect30.png)"></div>
+								<nav id="lessLaborGoToDictionary-menu">
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-move" style="background-image:url(/image/arrow.svg)"></div>
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-resize" style="background-image:url(/image/resize.svg)"></div>
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-zoomDown" style="background-image:url(/image/minus.svg)"></div>
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-zoomUp" style="background-image:url(/image/plus.svg)"></div>
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-option" style="background-image:url(/image/option.svg)"></div>
+								</nav>
+								<div id="lessLaborGoToDictionary-grid">
+									<ul id="lessLaborGoToDictionary-container">
+										<li class="lessLaborGoToDictionary-list">
+											<a class="lessLaborGoToDictionary-anchor">
+												<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
+											</a>
+										</li>
+										<li class="lessLaborGoToDictionary-list">
+											<a class="lessLaborGoToDictionary-anchor">
+												<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2</span>
+											</a>
+										</li>
+										<li class="lessLaborGoToDictionary-list">
+											<a class="lessLaborGoToDictionary-anchor">
+												<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3</span>
+											</a>
+										</li>
+									</ul>
+									<div id="lessLaborGoToDictionary-apiContent">
+										<div id="lessLaborGoToDictionary-apiHeader">
+											<div id="lessLaborGoToDictionary-apiHeaderTextArea">
+												<div id="lessLaborGoToDictionary-apiTitleWrapper">
+													<div id="lessLaborGoToDictionary-history" style="background-image: url(/image/history.svg);" ></div>
+													<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank">Wiktionary</a>
+												</div>
 											</div>
+											<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
 										</div>
-										<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
+										<div id="lessLaborGoToDictionary-apiLoading">
+											<div id="lessLaborGoToDictionary-apiLoadingContent" style="background-image:url(/image/circle.svg)"></div>
+										</div>
+										<div id="lessLaborGoToDictionary-apiOff"></div>
+										<div id="lessLaborGoToDictionary-apiBody">
+											<h2 class="in-block section-heading"><span class="mw-headline">Sample language</span></h2>
+											<ol>
+												<li><a class="new">sample</a> sample sample </li>
+												<li><a>sample</a> sample sample
+												<li><b>test</b> test test </li>
+												<li><i>test</i> test test </li>
+											</ol>
+										</div>
+										<div id="lessLaborGoToDictionary-apiFooter">Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0</div>
 									</div>
-									<div id="lessLaborGoToDictionary-apiLoading">
-										<div id="lessLaborGoToDictionary-apiLoadingContent" style="background-image:url(/image/circle.svg)"></div>
-									</div>
-									<div id="lessLaborGoToDictionary-apiOff"></div>
-									<div id="lessLaborGoToDictionary-apiBody">
-										<h2 class="in-block section-heading"><span class="mw-headline">Sample language</span></h2>
-										<ol>
-											<li><a class="new">sample</a> sample sample </li>
-											<li><a>sample</a> sample sample
-											<li><b>test</b> test test </li>
-											<li><i>test</i> test test </li>
-										</ol>
-									</div>
-									<div id="lessLaborGoToDictionary-apiFooter">Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</template>
 				</section>
 			</div>
 			<div id="languageFilterSelectPane" class="panelComponent hide">
