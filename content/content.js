@@ -1045,58 +1045,61 @@
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		makeApiTitleNode(e.text, e.title, e.fullurl);
 		let result = parseHTML(e.html);
-		let header = result.header;
-		let parsed = result.result;
+		let parsed = result.parsed;
 		let bases = result.bases;
 		let parseStatus = result.status;
 		let property = API_SERVICE_PROPERTY[e.service];
 		let warnings = [];
 		if(parseStatus){
-			if(0 < languageFilter.length){
-				let list = [];
-				for(let i=0; i<parsed.length; i++){
-					let obj = parsed[i];
-					if ( isLanguageFilterd(obj.title.innerText, languageFilter, property.followed, property.languageTopRegex, property.languageBottomRegex ) ) {
-						list.push(obj);
+			for(let h=0; h<parsed.length; h++){
+				let header = parsed[h].header;
+				let bodys = parsed[h].bodys;
+				if(0 < languageFilter.length){
+					let list = [];
+					for(let i=0; i<bodys.length; i++){
+						let obj = bodys[i];
+						if ( isLanguageFilterd(obj.title.innerText, languageFilter, property.followed, property.languageTopRegex, property.languageBottomRegex ) ) {
+							list.push(obj);
+						}
 					}
-				}
-				if ( list.length <= 0 ) {
-					apiBodyNode.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlSectionNotFound")));
-				}
-				else {
-					parsed = list;
-				}
-			}
-			if(apiCutOut){
-				for(let i=0; i<parsed.length; i++){
-					let obj = parsed[i];
-					let node = cutOut(obj.content, property.cutOut);
-					if(node){
-						obj.content = node;
+					if ( list.length <= 0 ) {
+						apiBodyNode.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlSectionNotFound")));
 					}
 					else {
-						obj.warnings.push( makeMessageNode(ponyfill.i18n.getMessage("htmlMeaningNotFound")) );
+						bodys = list;
 					}
 				}
-			}
-			header = removeSimbol(header);
-			header = convertStyle(header);
-			header = convertAnchor(header, e.service);
-			apiBodyNode.appendChild(header);
-			for(let i=0; i<parsed.length; i++){
-				let obj = parsed[i];
-				obj.title = removeSimbol(obj.title);
-				obj.title = convertStyle(obj.title);
-				obj.title = convertAnchor(obj.title, e.service);
-				apiBodyNode.appendChild(obj.title);
-				for(let j=0; j<obj.warnings.length; j++){
-					apiBodyNode.appendChild(obj.warnings[j]);
+				if(apiCutOut){
+					for(let i=0; i<bodys.length; i++){
+						let obj = bodys[i];
+						let node = cutOut(obj.content, property.cutOut);
+						if(node){
+							obj.content = node;
+						}
+						else {
+							obj.warnings.push( makeMessageNode(ponyfill.i18n.getMessage("htmlMeaningNotFound")) );
+						}
+					}
 				}
-				obj.content = removeSimbol(obj.content);
-				obj.content = convertStyle(obj.content);
-				obj.content = convertAudio(obj.content, e.service);
-				obj.content = convertAnchor(obj.content, e.service);
-				apiBodyNode.appendChild(obj.content);
+				header = removeSimbol(header);
+				header = convertStyle(header);
+				header = convertAnchor(header, e.service);
+				apiBodyNode.appendChild(header);
+				for(let i=0; i<bodys.length; i++){
+					let obj = bodys[i];
+					obj.title = removeSimbol(obj.title);
+					obj.title = convertStyle(obj.title);
+					obj.title = convertAnchor(obj.title, e.service);
+					apiBodyNode.appendChild(obj.title);
+					for(let j=0; j<obj.warnings.length; j++){
+						apiBodyNode.appendChild(obj.warnings[j]);
+					}
+					obj.content = removeSimbol(obj.content);
+					obj.content = convertStyle(obj.content);
+					obj.content = convertAudio(obj.content, e.service);
+					obj.content = convertAnchor(obj.content, e.service);
+					apiBodyNode.appendChild(obj.content);
+				}
 			}
 		}
 		else {
@@ -1128,12 +1131,21 @@
 	}
 
 	function parseHTML(htmls){
-		let tmp = [];
-		let header = document.createElement("div");
-		let result = [];
+		let parsed = [];
 		let bases = [];
 		let flag = false;
-		/* need to change if really multiple htmls */
+		/*
+		parsed = [
+			header:[dom]
+			bodys:[
+				title: dom
+				warnings:[dom]
+				content:dom
+			],
+			bases:[dom],
+			status: boolean
+		]
+		*/
 		for(let i=0; i<htmls.length; i++){
 			let node = document.createElement("div");
 			node.innerHTML = htmls[i];
@@ -1144,41 +1156,44 @@
 				flag = true;
 				continue;
 			}
-			let container = list[0];
-			while(container.previousElementSibling){
-				container = container.previousElementSibling;
-				tmp.push(container);
+			let tmp = list[0];
+			let headersTmp = [];
+			while(tmp.previousElementSibling){
+				headersTmp.push(tmp.previousElementSibling);
+				tmp = tmp.previousElementSibling;
 			}
+			let header = document.createElement("div");
+			for(let j=0; j<headersTmp.length; j++){
+				header.appendChild(headersTmp[j]);
+			}
+			let bodys = [];
 			for(let j=0; j<list.length; j++){
 				let target = list[j];
-				let a = [];
+				let contentTmp = [];
 				while( target && target.nextElementSibling && !( target.nextElementSibling.tagName=="H2" && target.nextElementSibling.classList.contains("in-block") ) ) {
-					a.push(target.nextElementSibling);
+					contentTmp.push(target.nextElementSibling);
 					target = target.nextElementSibling;
 				}
 				let obj = {
 					"title": list[j],
-					"warnings":[],
-					"tmp": a
+					"warnings": [],
+					"content": null,
+					"tmp": contentTmp
 				};
-				result.push(obj)
+				bodys.push(obj);
 			}
-		}
-		if(!flag){
-			for(let i=0; i<tmp.length; i++){
-				header.appendChild(tmp[i]);
-			}
-			for(let i=0; i<result.length; i++){
-				let obj = result[i];
-				let container = document.createElement("div");
+			for(let i=0; i<bodys.length; i++){
+				let obj = bodys[i];
+				let content = document.createElement("div");
 				for(let j=0; j<obj.tmp.length; j++){
-					container.appendChild(obj.tmp[j]);
+					content.appendChild(obj.tmp[j]);
 				}
-				obj.content = container;
+				obj.content = content;
 				delete obj.tmp;
 			}
+			parsed.push({"header":header, "bodys":bodys});
 		}
-		return { "header": header, "result": result, "bases": bases, "status": !flag  };
+		return { "parsed": parsed, "bases": bases, "status": !flag  };
 	}
 
 	function isLanguageFilterd(title,filterList, followed, languageTopRegex, languageBottomRegex) {
