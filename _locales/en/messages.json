@@ -414,6 +414,9 @@
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - Japanese"
 	},
+	"htmlServiceCodeZh": {
+		"message": "https://zh.wiktionary.org/ - Chinese"
+	},
 	"htmlServiceCodeSelectMessage": {
 		"message": "Please select a Wiktionary."
 	},

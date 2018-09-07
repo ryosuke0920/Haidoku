@@ -26,7 +26,8 @@ const API_SERVICE = {
 	"de": "https://de.wiktionary.org",
 	"en": "https://en.wiktionary.org",
 	"fr": "https://fr.wiktionary.org",
-	"ja": "https://ja.wiktionary.org"
+	"ja": "https://ja.wiktionary.org",
+	"zh": "https://zh.wiktionary.org"
 };
 const API_SERVICE_PROPERTY = {
 	"https://de.wiktionary.org":{
@@ -61,6 +62,15 @@ const API_SERVICE_PROPERTY = {
 		"defaultLanguage": ["英語","日本語"],
 		"namespace":"カテゴリ",
 		"langCat": "カテゴリ:言語",
+		"followed": null,
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
+		"path": "/w/api.php"
+	},
+	"https://zh.wiktionary.org":{
+		"defaultLanguage": ["汉语","英语"],
+		"namespace":"Category",
+		"langCat": "分类:所有语言",
 		"followed": null,
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",

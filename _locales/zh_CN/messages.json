@@ -509,6 +509,9 @@
 		"message": "https://ja.wiktionary.org/ - 日语",
 		"hash": "0e339fcc3a6bd90c3e02400d794e82c8"
 	},
+	"htmlServiceCodeZh": {
+		"message": "https://zh.wiktionary.org/ - 汉语"
+	},
 	"htmlServiceCodeSelectMessage": {
 		"message": "请选择一个维基词典。",
 		"hash": "29679c4b0ec9234079af7d30a93ae3d2"
