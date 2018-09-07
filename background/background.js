@@ -323,23 +323,6 @@ function getDefaultOptionList(){
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
-function makeFaviconURL(url){
-	return remainDomainURL(url) + "favicon.ico";
-}
-
-function remainDomainURL(url){
-	let newURL = "";
-	let count = 0;
-	for(let i=0; i<url.length; i++){
-		let str = url.substr(i,1);
-		newURL += str;
-		if(str == "/") count++;
-		if(3 <= count) break;
-	}
-	if(count < 3) newURL += "/";
-	return newURL;
-}
-
 function updateFaviconCache(updateAll=true){
 	return new Promise((resolve)=>{
 		let queue = [];
@@ -347,7 +330,7 @@ function updateFaviconCache(updateAll=true){
 			let obj = optionList[i];
 			if(!obj.c) continue;
 			if(!updateAll && faviconCache.hasOwnProperty(obj.u)) continue;
-			let faviconURL = makeFaviconURL(obj.u);
+			let faviconURL = new URL(obj.u).origin + "/favicon.ico";
 			let data = {
 				"url": obj.u,
 				"faviconURL": [faviconURL],
@@ -400,7 +383,7 @@ function faviconChain(){
 }
 
 function requestAjaxSearchURL(){
-	return promiseAjax("GET", makeURL(this.data.url,""), "document");
+	return promiseAjax("GET", new URL(this.data.url).origin, "document");
 }
 
 function responseAjaxSearchURL(e){
