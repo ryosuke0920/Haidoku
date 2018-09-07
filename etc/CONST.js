@@ -38,6 +38,7 @@ const API_SERVICE_PROPERTY = {
 		"languageTopRegex":".+\\(",
 		"languageBottomRegex":"\\)$",
 		"cutOut": "Bedeutungen:",
+		"prefixFlag":true,
 		"path": "/w/api.php"
 	},
 	"https://en.wiktionary.org":{
@@ -47,6 +48,7 @@ const API_SERVICE_PROPERTY = {
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
+		"prefixFlag":true,
 		"path": "/w/api.php"
 	},
 	"https://fr.wiktionary.org":{
@@ -56,6 +58,7 @@ const API_SERVICE_PROPERTY = {
 		"followed": null,
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
+		"prefixFlag":true,
 		"path": "/w/api.php"
 	},
 	"https://ja.wiktionary.org":{
@@ -65,6 +68,7 @@ const API_SERVICE_PROPERTY = {
 		"followed": null,
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
+		"prefixFlag":true,
 		"path": "/w/api.php"
 	},
 	"https://zh.wiktionary.org":{
@@ -74,6 +78,7 @@ const API_SERVICE_PROPERTY = {
 		"followed": null,
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
+		"prefixFlag":false,
 		"path": "/w/api.php"
 	}
 };

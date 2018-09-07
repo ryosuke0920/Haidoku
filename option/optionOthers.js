@@ -607,9 +607,7 @@
 	}
 
 	function apiLangMakeOption(prefix){
-		while(apiLangPrefixSelectNode.lastChild){
-			apiLangPrefixSelectNode.removeChild(apiLangPrefixSelectNode.lastChild);
-		}
+		clearChildren(apiLangPrefixSelectNode);
 		let prefixList = Object.keys(prefix);
 		for(let i=0; i<prefixList.length; i++){
 			let option = document.createElement("option");
@@ -617,6 +615,7 @@
 			option.innerText = prefixList[i] + " ("+prefix[prefixList[i]]+")";
 			apiLangPrefixSelectNode.appendChild(option);
 		}
+		apiLangPrefixSelectNode.disabled = false;
 	}
 
 	function apiLangMakeRadio(service, prefixCode){
@@ -624,7 +623,7 @@
 		let prototype = document.querySelector("#languageFilterInputPrototype");
 		let languages = getLanguageFilterCache(service);
 		let languageList = getLanguageFilterList();
-		languages = languages.filter( obj => obj.shortPrefix == prefixCode );
+		if(prefixCode) languages = languages.filter( obj => obj.shortPrefix == prefixCode );
 		for(let i=0; i<languages.length; i++){
 			let language = languages[i];
 			let wrapper = document.importNode(prototype.content, true);
@@ -666,9 +665,17 @@
 	}
 
 	function openLanguageFilterSelectPane(service){
-		let prefix = getPrefixCache(service);
-		apiLangMakeOption(prefix);
-		apiLangMakeRadio( service, Object.keys(prefix)[0] );
+		let prefixFlag = API_SERVICE_PROPERTY[service].prefixFlag;
+		if(prefixFlag){
+			let prefix = getPrefixCache(service);
+			apiLangMakeOption(prefix);
+			apiLangMakeRadio( service, Object.keys(prefix)[0] );
+		}
+		else {
+			clearChildren(apiLangPrefixSelectNode);
+			apiLangPrefixSelectNode.disabled = true;
+			apiLangMakeRadio( service );
+		}
 		show(languageFilterSelectPaneNode);
 	}
 

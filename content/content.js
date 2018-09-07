@@ -19,7 +19,6 @@
 	const API_TEXT_MAX_LENGTH = 255;
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
 	const API_WHITE_SPACE_ERROR = "white space error";
-	const API_TITLE_MAX_LENGTH = 25;
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 
 	let linkListNode;
