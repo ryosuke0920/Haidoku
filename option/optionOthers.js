@@ -58,6 +58,7 @@
 			{ "selector": ".serviceCodeEn", "property": "innerText", "key": "htmlServiceCodeEn" },
 			{ "selector": ".serviceCodeFr", "property": "innerText", "key": "htmlServiceCodeFr" },
 			{ "selector": ".serviceCodeJa", "property": "innerText", "key": "htmlServiceCodeJa" },
+			{ "selector": ".serviceCodeRu", "property": "innerText", "key": "htmlServiceCodeRu" },
 			{ "selector": ".serviceCodeZh", "property": "innerText", "key": "htmlServiceCodeZh" },
 			{ "selector": ".serviceCodeSelectMessage", "property": "innerText", "key": "htmlServiceCodeSelectMessage" },
 			{ "selector": ".languageFilterTitle", "property": "innerText", "key": "htmlLanguageFilterTitle" },

@@ -1043,11 +1043,11 @@
 		if( !isActiveApiRequestQueue(this) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		makeApiTitleNode(e.text, e.title, e.fullurl);
-		let result = parseHTML(e.html);
+		let property = API_SERVICE_PROPERTY[e.service];
+		let result = parseHTML(e.html, property.sectionHeading);
 		let parsed = result.parsed;
 		let bases = result.bases;
 		let parseStatus = result.status;
-		let property = API_SERVICE_PROPERTY[e.service];
 		let warnings = [];
 		if(parseStatus){
 			for(let h=0; h<parsed.length; h++){
@@ -1129,7 +1129,7 @@
 		apiTitleNode.setAttribute("href", url);
 	}
 
-	function parseHTML(htmls){
+	function parseHTML(htmls, sectionHeading){
 		let parsed = [];
 		let bases = [];
 		let flag = false;
@@ -1150,14 +1150,14 @@
 			node.innerHTML = htmls[i];
 			bases.push(node);
 			if ( flag ) continue;
-			let list = node.querySelectorAll("h2.in-block");
+			let list = node.querySelectorAll(sectionHeading);
 			if ( list.length <= 0 ) {
 				flag = true;
 				continue;
 			}
 			let tmp = list[0];
 			let headersTmp = [];
-			while(tmp.previousElementSibling){
+			while(tmp && tmp.previousElementSibling){
 				headersTmp.push(tmp.previousElementSibling);
 				tmp = tmp.previousElementSibling;
 			}
@@ -1169,7 +1169,7 @@
 			for(let j=0; j<list.length; j++){
 				let target = list[j];
 				let contentTmp = [];
-				while( target && target.nextElementSibling && !( target.nextElementSibling.tagName=="H2" && target.nextElementSibling.classList.contains("in-block") ) ) {
+				while( target && target.nextElementSibling && !nodeListContains(list,target.nextElementSibling) ) {
 					contentTmp.push(target.nextElementSibling);
 					target = target.nextElementSibling;
 				}
@@ -1193,6 +1193,13 @@
 			parsed.push({"header":header, "bodys":bodys});
 		}
 		return { "parsed": parsed, "bases": bases, "status": !flag  };
+	}
+
+	function nodeListContains(nodeList, node){
+		for(let i=0; i<nodeList.length; i++){
+			if(nodeList[i].isEqualNode(node))　return true;
+		}
+		return false;
 	}
 
 	function isLanguageFilterd(title,filterList, followed, languageTopRegex, languageBottomRegex) {

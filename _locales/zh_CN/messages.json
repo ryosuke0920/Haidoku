@@ -509,6 +509,9 @@
 		"message": "https://ja.wiktionary.org/ - 日语",
 		"hash": "0e339fcc3a6bd90c3e02400d794e82c8"
 	},
+	"htmlServiceCodeRu": {
+		"message": "https://ru.wiktionary.org/ - 俄语"
+	},
 	"htmlServiceCodeZh": {
 		"message": "https://zh.wiktionary.org/ - 汉语"
 	},

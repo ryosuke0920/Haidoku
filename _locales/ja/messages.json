@@ -414,6 +414,9 @@
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - 日本語"
 	},
+	"htmlServiceCodeRu": {
+		"message": "https://ru.wiktionary.org/ - ロシア語"
+	},
 	"htmlServiceCodeZh": {
 		"message": "https://zh.wiktionary.org/ - 中国語"
 	},
