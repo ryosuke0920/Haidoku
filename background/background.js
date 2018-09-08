@@ -609,6 +609,9 @@ function requestAjaxApiInfo(){
 		},{
 			"key"  :"inprop",
 			"value":"url"
+		},{
+			"key"  :"redirects",
+			"value":""
 		}
 	];
 	this.url.push( makeApiURL(this.service+this.path, param) );
