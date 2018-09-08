@@ -1033,12 +1033,6 @@
 		apiErrorMessageNode.setAttribute("title", text);
 	}
 
-	function clearChildren(node){
-		while(node.lastChild){
-			node.removeChild(node.lastChild);
-		}
-	}
-
 	function apiResponse(e){
 		if( !isActiveApiRequestQueue(this) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
