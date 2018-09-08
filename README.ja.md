@@ -6,7 +6,7 @@ https://addons.mozilla.org/ja/firefox/addon/lesslaborgotodictionary/
 https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
 
 ## 概要
-英語のwebサイトを読む時の単語検索を支援します。テキストを選択するとその意味と検索リンクを表示します。履歴を保存して単語の復習を支援する機能もあります。
+外国のwebサイトを読む時、単語検索を支援します。テキストを選択するとその意味と検索リンクを表示します。履歴を保存して単語の復習を支援する機能もあります。
 
 ## 詳細
 ### ウィジェット
@@ -40,7 +40,7 @@ webサイト上でテキストを選択するとウィジェットが表示さ�
 * You Tube, Dailymotion
 * Facebook, Twitter
 
-等。計103URL。
+等。計114URL。
 
 ## リースノート
 リリースノートはGitHubに掲載しております。  
@@ -60,7 +60,7 @@ https://twitter.com/SearchDictionar
 バグ報告、要望、お問い合わせ等はGitHubのIssuesを使用してください。この書き込みは一般に公開されます。  
 https://github.com/ryosuke0920/Search-Dictionary-Faster/issues  
 
-メールでも受け付けています。  
+メールでも受け付けております。
 ryosuke.ohta.programmer@gmail.com  
 フリーランス プログラマー 太田亮介  
 
