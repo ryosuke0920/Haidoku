@@ -616,7 +616,7 @@
 			option.innerText = prefixList[i] + " ("+prefix[prefixList[i]]+")";
 			apiLangPrefixSelectNode.appendChild(option);
 		}
-		apiLangPrefixSelectNode.disabled = false;
+		show( othersNode.querySelector("#languageFilterNavi") );
 	}
 
 	function apiLangMakeRadio(service, prefixCode){
@@ -674,7 +674,7 @@
 		}
 		else {
 			clearChildren(apiLangPrefixSelectNode);
-			apiLangPrefixSelectNode.disabled = true;
+			hide( othersNode.querySelector("#languageFilterNavi") );
 			apiLangMakeRadio( service );
 		}
 		show(languageFilterSelectPaneNode);
