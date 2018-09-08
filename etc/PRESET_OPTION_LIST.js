@@ -287,6 +287,11 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Stack Overflow",
+		"u": "https://stackoverflow.com/search?q=$1"
+	},
+	{
+		"la": "en",
 		"l": "developer.mozilla.org (en-US)",
 		"u": "https://developer.mozilla.org/en-US/search?q=$1"
 	},
@@ -299,6 +304,11 @@ const PRESET_OPTION_LIST = [
 		"la": "en",
 		"l": "Hulu",
 		"u": "https://www.hulu.com/search?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "reddit",
+		"u": "https://www.reddit.com/search?q=$1"
 	},
 	{
 		"la": "ja",
@@ -487,6 +497,21 @@ const PRESET_OPTION_LIST = [
 		"u": "https://dch.dmkt-sp.jp/word/$1"
 	},
 	{
+		"la": "ja",
+		"l": "Qiita",
+		"u": "https://qiita.com/search?q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "５ちゃんねる",
+		"u": "https://find.5ch.net/search?q=$1"
+	},
+	{
+		"la": "ja",
+		"l": "オープン２ちゃんねる",
+		"u": "http://find.open2ch.net/?q=$1"
+	},
+	{
 		"la": "zh",
 		"l": "维基百科 (zh)",
 		"u": "https://zh.wikipedia.org/w/index.php?search=$1"
@@ -541,5 +566,10 @@ const PRESET_OPTION_LIST = [
 		"la": "zh",
 		"l": "developer.mozilla.org (zh-CN) by Google",
 		"u": "https://www.google.com.hk/search?q=site:developer.mozilla.org/zh-CN/ $1"
+	},
+	{
+		"la": "zh",
+		"l": "帮酷编程问答 By Bing",
+		"u": "https://www.bing.com/search?q=site:ask.helplib.com $1"
 	}
 ];
