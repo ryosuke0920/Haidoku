@@ -577,7 +577,7 @@
 	}
 
 	function isLinkListShown(){
-		return !linkListNode.classList.contains(CSS_PREFIX+"-hide");
+		return isShown(linkListNode);
 	}
 
 	function onStorageChanged(change, area){
@@ -1091,6 +1091,7 @@
 					obj.content = convertStyle(obj.content);
 					obj.content = convertAudio(obj.content, e.service);
 					obj.content = convertAnchor(obj.content, e.service);
+					obj.content = convertNaveFrame(obj.content);
 					apiBodyNode.appendChild(obj.content);
 				}
 			}
@@ -1103,6 +1104,7 @@
 				base = convertStyle(base);
 				base = convertAudio(base, e.service);
 				base = convertAnchor(base, e.service);
+				base = convertNaveFrame(base);
 				apiBodyNode.appendChild(base);
 			}
 		}
@@ -1152,7 +1154,9 @@
 			let tmp = list[0];
 			let headersTmp = [];
 			while(tmp && tmp.previousElementSibling){
-				headersTmp.push(tmp.previousElementSibling);
+				if( checkBlank(tmp.previousElementSibling.innerText) ) {
+					headersTmp.push(tmp.previousElementSibling);
+				}
 				tmp = tmp.previousElementSibling;
 			}
 			let header = document.createElement("div");
@@ -1164,7 +1168,9 @@
 				let target = list[j];
 				let contentTmp = [];
 				while( target && target.nextElementSibling && !nodeListContains(list,target.nextElementSibling) ) {
-					contentTmp.push(target.nextElementSibling);
+					if(checkBlank(target.nextElementSibling.innerText)){
+						contentTmp.push(target.nextElementSibling);
+					}
 					target = target.nextElementSibling;
 				}
 				let obj = {
@@ -1307,6 +1313,31 @@
 		return node;
 	}
 
+	function convertNaveFrame(node){
+		let naviFrameList = node.querySelectorAll(".NavFrame");
+		for(let i=0; i<naviFrameList.length; i++){
+			let naviFrame = naviFrameList[i];
+			let naviHead = naviFrame.querySelector(".NavFrame > .NavHead");
+			let naviContent = naviFrame.querySelector(".NavFrame > .NavContent");
+			if(!(naviHead && naviContent && naviHead.nextElementSibling && naviHead.nextElementSibling.isEqualNode(naviContent)) ){
+				continue;
+			}
+			let display = naviContent.style.display;
+			if (display == "none") display = "block";
+			naviContent.setAttribute("data-display", display);
+			naviHead.addEventListener("click", (e)=>{
+				if(naviContent.style.display != "none"){
+					naviContent.style.display = "none";
+				}
+				else {
+					naviContent.style.display = naviContent.getAttribute("data-display");
+				}
+			});
+			naviContent.style.display = "none";
+		}
+		return node;
+	}
+
 	function apiResponseError(e){
 		function after(content){
 			apiBodyNode.appendChild(content);
@@ -1366,6 +1397,10 @@
 
 	function hide(node){
 		node.classList.add(CSS_PREFIX+"-hide");
+	}
+
+	function isShown(node){
+		return !node.classList.contains(CSS_PREFIX+"-hide");
 	}
 
 	function apiSwitchBehavior(e){
