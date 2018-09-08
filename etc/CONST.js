@@ -44,7 +44,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://en.wiktionary.org":{
-		"defaultLanguage": ["English"],
+		"defaultLanguage": ["English language"],
 		"namespace":"Category",
 		"langCat": "Category:All_languages",
 		"sectionHeading": "h2.in-block",
@@ -77,7 +77,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://ru.wiktionary.org":{
-		"defaultLanguage": ["Русский","Английский"],
+		"defaultLanguage": ["Русский язык","Английский язык"],
 		"namespace":"Категория",
 		"langCat": "Категория:Алфавитный_список_языков",
 		"sectionHeading": "h1.in-block",
