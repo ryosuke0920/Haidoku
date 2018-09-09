@@ -100,15 +100,15 @@
 		},
 		"hash": "7fe3a1e460b7a91a6cec330ec2e7c49a"
 	},
+	"htmlParseFailed": {
+		"message": "无法解析。 它以原始文本显示。"
+	},
 	"htmlMeaningNotFound": {
-		"message": "取出描述失败。",
+		"message": "“仅显示含义”无法完成。 它以原始文本显示。",
 		"hash": "581e96dc29cc3afec46390eaabc73f35"
 	},
-	"htmlParseFailed": {
-		"message": "解析失败了。"
-	},
 	"htmlSectionNotFound": {
-		"message": "没有“语言过滤器”指定语言的描述。",
+		"message": "无法创建“语言过滤器”。它显示没有过滤。",
 		"hash": "65d1fee4f1dfb9240a32068ca43df2c0"
 	},
 	"htmlPageNotFound": {
@@ -548,11 +548,11 @@
 		"hash": "add2d78f2f7cebdf8f8e9570ae2f6915"
 	},
 	"htmlApiCutOutTitle": {
-		"message": "裁剪描述",
+		"message": "仅显示含义",
 		"hash": "df5a7f36c1f351b270cb49e60fc4d752"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "从描述中取出“含义”部分并显示。",
+		"message": "除了对发音等的评论外，只显示“意义”。",
 		"hash": "21bae31e787b0ed2d00fc25af7793669"
 	},
 	"htmlApiCutOutLabel": {
