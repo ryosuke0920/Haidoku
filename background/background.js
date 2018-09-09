@@ -323,23 +323,6 @@ function getDefaultOptionList(){
 	return DEFAULT_OPTION_LIST[DEFAULT_LOCALE];
 }
 
-function makeFaviconURL(url){
-	return remainDomainURL(url) + "favicon.ico";
-}
-
-function remainDomainURL(url){
-	let newURL = "";
-	let count = 0;
-	for(let i=0; i<url.length; i++){
-		let str = url.substr(i,1);
-		newURL += str;
-		if(str == "/") count++;
-		if(3 <= count) break;
-	}
-	if(count < 3) newURL += "/";
-	return newURL;
-}
-
 function updateFaviconCache(updateAll=true){
 	return new Promise((resolve)=>{
 		let queue = [];
@@ -347,7 +330,7 @@ function updateFaviconCache(updateAll=true){
 			let obj = optionList[i];
 			if(!obj.c) continue;
 			if(!updateAll && faviconCache.hasOwnProperty(obj.u)) continue;
-			let faviconURL = makeFaviconURL(obj.u);
+			let faviconURL = new URL(obj.u).origin + "/favicon.ico";
 			let data = {
 				"url": obj.u,
 				"faviconURL": [faviconURL],
@@ -387,20 +370,20 @@ function faviconChain(){
 	this.promise = this.promise
 	.then( requestAjaxSearchURL.bind(this) )
 	.then( responseAjaxSearchURL.bind(this) )
-	.catch( (e)=>{console.error(e)} )
+	.catch( (e)=>{ console.log(e) } )
 	.then( decideFaviconURL.bind(this) )
 	.then( requestAjaxFavicon.bind(this) )
 	.then( responseAjaxFavicon.bind(this) )
 	.then( convertFavicon.bind(this) )
 	.then( setFaviconCache.bind(this) )
 	.then( saveFaviconProcess.bind(this) )
-	.catch( (e)=>{console.error(e)} )
+	.catch( (e)=>{console.log(e)} )
 	.finally( endOfFaviconChain.bind(this) );
 	return this.promise;
 }
 
 function requestAjaxSearchURL(){
-	return promiseAjax("GET", makeURL(this.data.url,""), "document");
+	return promiseAjax("GET", new URL(this.data.url).origin, "document");
 }
 
 function responseAjaxSearchURL(e){
@@ -626,6 +609,9 @@ function requestAjaxApiInfo(){
 		},{
 			"key"  :"inprop",
 			"value":"url"
+		},{
+			"key"  :"redirects",
+			"value":""
 		}
 	];
 	this.url.push( makeApiURL(this.service+this.path, param) );
@@ -634,14 +620,14 @@ function requestAjaxApiInfo(){
 
 function responseAjaxApiInfo(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if ( e.target.response.hasOwnProperty("error")){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -682,14 +668,14 @@ function requestAjaxApiPrefixSearch(){
 
 function responseAjaxApiPrefixSearch(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -732,14 +718,14 @@ function requestAjaxApiInfo2(){
 
 function responseAjaxApiInfo2(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -782,14 +768,14 @@ function requestAjaxApiSearch(){
 
 function responseAjaxApiSearch(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -833,14 +819,14 @@ function requestAjaxApiParse(){
 
 function responseAjaxApiParse(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		console.error(e);
+		console.log(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;

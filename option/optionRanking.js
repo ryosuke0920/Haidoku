@@ -270,9 +270,7 @@
 	}
 
 	function resetRankingContainer(){
-		while(rankingContainerNode.lastChild){
-			rankingContainerNode.removeChild(rankingContainerNode.lastChild);
-		}
+		clearChildren(rankingContainerNode);
 	}
 
 })();

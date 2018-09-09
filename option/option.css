@@ -223,9 +223,6 @@ a:hover {
 	margin-bottom: 1em;
 	font-size: 20px;
 }
-.hide, .cell-hide {
-	display: none;
-}
 .groupLine {
 	display: inline-block;
 	margin-right: 0.5em;
@@ -610,4 +607,8 @@ nav .groupLine {
 }
 .erasticTextComponent.long .excludeImage {
 	display: inline;
+}
+
+.hide, .cell-hide {
+	display: none;
 }
