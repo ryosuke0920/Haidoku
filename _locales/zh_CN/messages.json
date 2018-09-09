@@ -108,7 +108,7 @@
 		"hash": "581e96dc29cc3afec46390eaabc73f35"
 	},
 	"htmlSectionNotFound": {
-		"message": "无法创建“语言过滤器”。它显示没有过滤。",
+		"message": "我找不到与“语言过滤器”匹配的语言。它显示没有过滤器。",
 		"hash": "65d1fee4f1dfb9240a32068ca43df2c0"
 	},
 	"htmlPageNotFound": {

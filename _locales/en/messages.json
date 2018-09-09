@@ -101,7 +101,7 @@
 		"message": "\"Display only meaning\" could not be done. It displayed in original text."
 	},
 	"htmlSectionNotFound": {
-		"message": "\"Language filter\"　could not be done. It displayed without the filter."
+		"message": "Could not find a language matching \"Language filter\". It displayed without the filter."
 	},
 	"htmlPageNotFound": {
 		"message": "The page could not be found."
