@@ -143,9 +143,7 @@
 
 	function removeHistoryRows(){
 		historyNode.querySelector(".historyCheckAllRows").checked = false;
-		while( historyContainerNode.lastChild ){
-			historyContainerNode.removeChild( historyContainerNode.lastChild );
-		}
+		clearChildren(historyContainerNode);
 	}
 
 	function getHistoryRowSize(){

@@ -16,7 +16,7 @@ When you select some words on the website, Widget is displayed. When ESC key is 
 When click a link in Widget, it opens the website to search the word selected. You can customize these links to your favorite website. The links are also displayed on context menu(right click).
 
 ### Wiktionary linkage
-Wiktionary is a dictionary website made by volunteers. When you select some word, it's sent to Wiktinary for search and the description is displayed.
+Wiktionary is a dictionary website made by volunteers. When you select some word, it's sent to Wiktinary for search and the description is displayed. German, English, French, Japanese, Russian, Chinese can be chosen.
 
 ### History, Find weak point
 On the setting screen you can view history. The word with a high number of searches is that used frequently, and you don't remember well. To find the word efficiently, there is a function(Find weak point) to aggregate search counts.
@@ -40,7 +40,7 @@ Generally you have to find out URLs and search parameters, but I already found o
 * You Tube, Dailymotion
 * Facebook, Twitter
 
-etc. Total 103 URLs.
+etc. Total 114 URLs.
 
 ## Release note
 Release note is posted on GitHub.  

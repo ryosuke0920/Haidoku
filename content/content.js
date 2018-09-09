@@ -607,7 +607,7 @@
 	}
 
 	function isLinkListShown(){
-		return !widgetNode.classList.contains(CSS_PREFIX+"-hide");
+		return isShown(widgetNode);
 	}
 
 	function onStorageChanged(change, area){
@@ -1064,21 +1064,15 @@
 		apiErrorMessageNode.setAttribute("title", text);
 	}
 
-	function clearChildren(node){
-		while(node.lastChild){
-			node.removeChild(node.lastChild);
-		}
-	}
-
 	function apiResponse(e){
 		if( !isActiveApiRequestQueue(this) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		makeApiTitleNode(e.text, e.title, e.fullurl);
-		let result = parseHTML(e.html);
+		let property = API_SERVICE_PROPERTY[e.service];
+		let result = parseHTML(e.html, property.sectionHeading);
 		let parsed = result.parsed;
 		let bases = result.bases;
 		let parseStatus = result.status;
-		let property = API_SERVICE_PROPERTY[e.service];
 		let warnings = [];
 		if(parseStatus){
 			for(let h=0; h<parsed.length; h++){
@@ -1128,6 +1122,7 @@
 					obj.content = convertStyle(obj.content);
 					obj.content = convertAudio(obj.content, e.service);
 					obj.content = convertAnchor(obj.content, e.service);
+					obj.content = convertNaveFrame(obj.content);
 					apiBodyNode.appendChild(obj.content);
 				}
 			}
@@ -1140,6 +1135,7 @@
 				base = convertStyle(base);
 				base = convertAudio(base, e.service);
 				base = convertAnchor(base, e.service);
+				base = convertNaveFrame(base);
 				apiBodyNode.appendChild(base);
 			}
 		}
@@ -1160,7 +1156,7 @@
 		apiTitleNode.setAttribute("href", url);
 	}
 
-	function parseHTML(htmls){
+	function parseHTML(htmls, sectionHeading){
 		let parsed = [];
 		let bases = [];
 		let flag = false;
@@ -1181,15 +1177,17 @@
 			node.innerHTML = htmls[i];
 			bases.push(node);
 			if ( flag ) continue;
-			let list = node.querySelectorAll("h2.in-block");
+			let list = node.querySelectorAll(sectionHeading);
 			if ( list.length <= 0 ) {
 				flag = true;
 				continue;
 			}
 			let tmp = list[0];
 			let headersTmp = [];
-			while(tmp.previousElementSibling){
-				headersTmp.push(tmp.previousElementSibling);
+			while(tmp && tmp.previousElementSibling){
+				if( checkBlank(tmp.previousElementSibling.innerText) ) {
+					headersTmp.push(tmp.previousElementSibling);
+				}
 				tmp = tmp.previousElementSibling;
 			}
 			let header = document.createElement("div");
@@ -1200,8 +1198,10 @@
 			for(let j=0; j<list.length; j++){
 				let target = list[j];
 				let contentTmp = [];
-				while( target && target.nextElementSibling && !( target.nextElementSibling.tagName=="H2" && target.nextElementSibling.classList.contains("in-block") ) ) {
-					contentTmp.push(target.nextElementSibling);
+				while( target && target.nextElementSibling && !nodeListContains(list,target.nextElementSibling) ) {
+					if(checkBlank(target.nextElementSibling.innerText)){
+						contentTmp.push(target.nextElementSibling);
+					}
 					target = target.nextElementSibling;
 				}
 				let obj = {
@@ -1224,6 +1224,13 @@
 			parsed.push({"header":header, "bodys":bodys});
 		}
 		return { "parsed": parsed, "bases": bases, "status": !flag  };
+	}
+
+	function nodeListContains(nodeList, node){
+		for(let i=0; i<nodeList.length; i++){
+			if(nodeList[i].isEqualNode(node))　return true;
+		}
+		return false;
 	}
 
 	function isLanguageFilterd(title,filterList, followed, languageTopRegex, languageBottomRegex) {
@@ -1337,6 +1344,31 @@
 		return node;
 	}
 
+	function convertNaveFrame(node){
+		let naviFrameList = node.querySelectorAll(".NavFrame");
+		for(let i=0; i<naviFrameList.length; i++){
+			let naviFrame = naviFrameList[i];
+			let naviHead = naviFrame.querySelector(".NavFrame > .NavHead");
+			let naviContent = naviFrame.querySelector(".NavFrame > .NavContent");
+			if(!(naviHead && naviContent && naviHead.nextElementSibling && naviHead.nextElementSibling.isEqualNode(naviContent)) ){
+				continue;
+			}
+			let display = naviContent.style.display;
+			if (display == "none") display = "block";
+			naviContent.setAttribute("data-display", display);
+			naviHead.addEventListener("click", (e)=>{
+				if(naviContent.style.display != "none"){
+					naviContent.style.display = "none";
+				}
+				else {
+					naviContent.style.display = naviContent.getAttribute("data-display");
+				}
+			});
+			naviContent.style.display = "none";
+		}
+		return node;
+	}
+
 	function apiResponseError(e){
 		function after(content){
 			apiBodyNode.appendChild(content);
@@ -1383,7 +1415,7 @@
 				return;
 			}
 		}
-		console.error(e);
+		console.log(e);
 		setApiErrorMessage(e.text);
 		content.innerText = ponyfill.i18n.getMessage("htmlUnexpectedError",[e.toString()]);
 		after(content);
@@ -1396,6 +1428,10 @@
 
 	function hide(node){
 		node.classList.add(CSS_PREFIX+"-hide");
+	}
+
+	function isShown(node){
+		return !node.classList.contains(CSS_PREFIX+"-hide");
 	}
 
 	function apiSwitchBehavior(e){

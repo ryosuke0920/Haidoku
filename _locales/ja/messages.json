@@ -95,13 +95,13 @@
 		}
 	},
 	"htmlParseFailed": {
-		"message": "構文解析に失敗しました。"
+		"message": "構文解析できませんでした。原文のまま表示します。"
 	},
 	"htmlMeaningNotFound": {
-		"message": "\"解説の切り出し\"に失敗しました。"
+		"message": "\"意味だけ表示\"できませんでした。原文のまま表示します。"
 	},
 	"htmlSectionNotFound": {
-		"message": "\"言語フィルター\"で指定している言語の解説は見つかりませんでした。"
+		"message": "\"言語フィルター\"に一致する言語が見つかりません。フィルターなしで表示します。"
 	},
 	"htmlPageNotFound": {
 		"message": "ページが見つかりませんでした。"
@@ -414,6 +414,12 @@
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - 日本語"
 	},
+	"htmlServiceCodeRu": {
+		"message": "https://ru.wiktionary.org/ - ロシア語"
+	},
+	"htmlServiceCodeZh": {
+		"message": "https://zh.wiktionary.org/ - 中国語"
+	},
 	"htmlServiceCodeSelectMessage": {
 		"message": "ウィクショナリーを選択してください。"
 	},
@@ -439,10 +445,10 @@
 		"message": "ウィクショナリーから言語の一覧をダウンロードしています。"
 	},
 	"htmlApiCutOutTitle": {
-		"message": "解説の切り出し"
+		"message": "意味だけ表示"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "解説から\"意味\"の部分を切り出して表示します。"
+		"message": "発音などの解説を除いて、\"意味\"だけを表示します。"
 	},
 	"htmlApiCutOutLabel": {
 		"message": "有効にする"
@@ -478,7 +484,7 @@
 		"message": "バグ報告、要望、お問い合わせ等はGitHubのIssuesを使用してください。書き込みは一般に公開されます。"
 	},
 	"htmlMailDescription": {
-		"message": "メールでも受け付けています。"
+		"message": "メールでも受け付けております。"
 	},
 	"htmlIam": {
 		"message": "フリーランス プログラマー 太田亮介"
