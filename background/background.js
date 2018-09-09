@@ -370,14 +370,14 @@ function faviconChain(){
 	this.promise = this.promise
 	.then( requestAjaxSearchURL.bind(this) )
 	.then( responseAjaxSearchURL.bind(this) )
-	.catch( (e)=>{console.error(e)} )
+	.catch( (e)=>{ console.log(e) } )
 	.then( decideFaviconURL.bind(this) )
 	.then( requestAjaxFavicon.bind(this) )
 	.then( responseAjaxFavicon.bind(this) )
 	.then( convertFavicon.bind(this) )
 	.then( setFaviconCache.bind(this) )
 	.then( saveFaviconProcess.bind(this) )
-	.catch( (e)=>{console.error(e)} )
+	.catch( (e)=>{console.log(e)} )
 	.finally( endOfFaviconChain.bind(this) );
 	return this.promise;
 }
