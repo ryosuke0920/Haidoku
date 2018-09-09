@@ -1077,6 +1077,7 @@
 				header = removeSimbol(header);
 				header = convertStyle(header);
 				header = convertAnchor(header, e.service);
+				header = convertNaveFrame(header);
 				apiBodyNode.appendChild(header);
 				for(let i=0; i<bodys.length; i++){
 					let obj = bodys[i];
