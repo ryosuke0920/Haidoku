@@ -95,13 +95,13 @@
 		}
 	},
 	"htmlParseFailed": {
-		"message": "Parsing failed."
+		"message": "Could not parse. It displayed in original text."
 	},
 	"htmlMeaningNotFound": {
-		"message": "\"Cut out description\" was failed."
+		"message": "\"Display only meaning\" could not be done. It displayed in original text."
 	},
 	"htmlSectionNotFound": {
-		"message": "There ware no description for the language specified in \"Language filter\"."
+		"message": "Could not find a language matching \"Language filter\". It displayed without the filter."
 	},
 	"htmlPageNotFound": {
 		"message": "The page could not be found."
@@ -414,6 +414,12 @@
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - Japanese"
 	},
+	"htmlServiceCodeRu": {
+		"message": "https://ru.wiktionary.org/ - Russian"
+	},
+	"htmlServiceCodeZh": {
+		"message": "https://zh.wiktionary.org/ - Chinese"
+	},
 	"htmlServiceCodeSelectMessage": {
 		"message": "Please select a Wiktionary."
 	},
@@ -439,10 +445,10 @@
 		"message": "It's downloading list of language from Wiktionary"
 	},
 	"htmlApiCutOutTitle": {
-		"message": "Cut out description"
+		"message": "Display only meaning"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "From the description, cut out the part of \"meaning\" and display it."
+		"message": "Only the \"meaning\" is displayed except for descriptioin on pronunciation etc."
 	},
 	"htmlApiCutOutLabel": {
 		"message": "Enable"

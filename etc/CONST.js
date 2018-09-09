@@ -26,44 +26,76 @@ const API_SERVICE = {
 	"de": "https://de.wiktionary.org",
 	"en": "https://en.wiktionary.org",
 	"fr": "https://fr.wiktionary.org",
-	"ja": "https://ja.wiktionary.org"
+	"ja": "https://ja.wiktionary.org",
+	"ru": "https://ru.wiktionary.org",
+	"zh": "https://zh.wiktionary.org"
 };
 const API_SERVICE_PROPERTY = {
 	"https://de.wiktionary.org":{
 		"defaultLanguage": ["Deutsch","Englisch"],
 		"namespace":"Kategorie",
 		"langCat": "Kategorie:Sprachen",
+		"sectionHeading": "h2.in-block",
 		"followed": null,
 		"languageTopRegex":".+\\(",
 		"languageBottomRegex":"\\)$",
 		"cutOut": "Bedeutungen:",
+		"prefixFlag":true,
 		"path": "/w/api.php"
 	},
 	"https://en.wiktionary.org":{
-		"defaultLanguage": ["English"],
+		"defaultLanguage": ["English language"],
 		"namespace":"Category",
 		"langCat": "Category:All_languages",
+		"sectionHeading": "h2.in-block",
 		"followed": "language","//":"https://en.wiktionary.org/wiki/Wiktionary:Languages#Finding_and_organising_terms_in_a_language",
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
+		"prefixFlag":true,
 		"path": "/w/api.php"
 	},
 	"https://fr.wiktionary.org":{
 		"defaultLanguage": ["français","anglais"],
 		"namespace":"Catégorie",
 		"langCat": "Catégorie:Langues",
+		"sectionHeading": "h2.in-block",
 		"followed": null,
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
+		"prefixFlag":true,
 		"path": "/w/api.php"
 	},
 	"https://ja.wiktionary.org":{
-		"defaultLanguage": ["英語","日本語"],
+		"defaultLanguage": ["日本語","英語"],
 		"namespace":"カテゴリ",
 		"langCat": "カテゴリ:言語",
+		"sectionHeading": "h2.in-block",
 		"followed": null,
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
+		"prefixFlag":true,
+		"path": "/w/api.php"
+	},
+	"https://ru.wiktionary.org":{
+		"defaultLanguage": ["Русский язык","Английский язык"],
+		"namespace":"Категория",
+		"langCat": "Категория:Алфавитный_список_языков",
+		"sectionHeading": "h1.in-block",
+		"followed": "язык",
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
+		"prefixFlag":true,
+		"path": "/w/api.php"
+	},
+	"https://zh.wiktionary.org":{
+		"defaultLanguage": ["汉语","英语"],
+		"namespace":"Category",
+		"langCat": "分类:所有语言",
+		"sectionHeading": "h2.in-block",
+		"followed": null,
+		"languageTopRegex":"^",
+		"languageBottomRegex":"$",
+		"prefixFlag":false,
 		"path": "/w/api.php"
 	}
 };

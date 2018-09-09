@@ -447,6 +447,13 @@
 #lessLaborGoToDictionary-apiBody table.audiotable th {
 	border: none;
 }
+#lessLaborGoToDictionary-apiBody .NavFrame > .NavHead {
+	cursor: pointer;
+	background-color: #c0c0f0;
+}
+#lessLaborGoToDictionary-apiBody .NavFrame > .NavHead:hover {
+	background-color: #c0f0c0;
+}
 #lessLaborGoToDictionary-apiBody span.lessLaborGoToDictionary-play {
 	display: inline-block;
 	background: transparent;
