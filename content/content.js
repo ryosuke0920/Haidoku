@@ -1108,6 +1108,7 @@
 				header = removeSimbol(header);
 				header = convertStyle(header);
 				header = convertAnchor(header, e.service);
+				header = convertNaveFrame(header);
 				apiBodyNode.appendChild(header);
 				for(let i=0; i<bodys.length; i++){
 					let obj = bodys[i];
@@ -1415,7 +1416,7 @@
 				return;
 			}
 		}
-		console.log(e);
+		console.error(e);
 		setApiErrorMessage(e.text);
 		content.innerText = ponyfill.i18n.getMessage("htmlUnexpectedError",[e.toString()]);
 		after(content);
