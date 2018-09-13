@@ -619,14 +619,14 @@ function requestAjaxApiInfo(){
 
 function responseAjaxApiInfo(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if ( e.target.response.hasOwnProperty("error")){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
