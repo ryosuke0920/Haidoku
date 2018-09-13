@@ -370,14 +370,14 @@ function faviconChain(){
 	this.promise = this.promise
 	.then( requestAjaxSearchURL.bind(this) )
 	.then( responseAjaxSearchURL.bind(this) )
-	.catch( (e)=>{ console.log(e) } )
+	.catch( (e)=>{ console.error(e) } )
 	.then( decideFaviconURL.bind(this) )
 	.then( requestAjaxFavicon.bind(this) )
 	.then( responseAjaxFavicon.bind(this) )
 	.then( convertFavicon.bind(this) )
 	.then( setFaviconCache.bind(this) )
 	.then( saveFaviconProcess.bind(this) )
-	.catch( (e)=>{console.log(e)} )
+	.catch( (e)=>{console.error(e)} )
 	.finally( endOfFaviconChain.bind(this) );
 	return this.promise;
 }
@@ -578,9 +578,9 @@ function apiRequest(text){
 }
 
 function detectAjaxApiConnectError(e){
+	console.error(e);
 	try{
 		if( e.target.status == HTTP_NG ){
-			console.log(e);
 			this.error = CONNECTION_ERROR;
 			this.code = e.target.status;
 			this.message = e.target.statusText;
@@ -588,7 +588,6 @@ function detectAjaxApiConnectError(e){
 		}
 	}
 	catch(e){};
-	console.error(e);
 	return Promise.reject(e);
 }
 
@@ -668,14 +667,14 @@ function requestAjaxApiPrefixSearch(){
 
 function responseAjaxApiPrefixSearch(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -718,14 +717,14 @@ function requestAjaxApiInfo2(){
 
 function responseAjaxApiInfo2(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -768,14 +767,14 @@ function requestAjaxApiSearch(){
 
 function responseAjaxApiSearch(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
@@ -819,14 +818,14 @@ function requestAjaxApiParse(){
 
 function responseAjaxApiParse(e){
 	if( e.target.status != HTTP_200_OK ){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.status;
 		this.message = e.target.statusText;
 		return this;
 	}
 	if (e.target.response.hasOwnProperty("error")){
-		console.log(e);
+		console.error(e);
 		this.error = SERVER_ERROR;
 		this.code = e.target.response.error.code;
 		this.message = e.target.response.error.info;
