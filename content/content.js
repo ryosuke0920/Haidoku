@@ -1385,7 +1385,7 @@
 				return;
 			}
 		}
-		console.log(e);
+		console.error(e);
 		setApiErrorMessage(e.text);
 		content.innerText = ponyfill.i18n.getMessage("htmlUnexpectedError",[e.toString()]);
 		after(content);
