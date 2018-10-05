@@ -208,7 +208,7 @@
 		"message": "Delete"
 	},
 	"htmlLabelDescription": {
-		"message": "Input a name. It's displayed on the widget or the context menu."
+		"message": "Input a site name. It's displayed on the widget or the context menu."
 	},
 	"htmlUrlDescription": {
 		"message": "Input a URL. \"$$1\" will be replaced to the selected text."

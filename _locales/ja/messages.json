@@ -208,7 +208,7 @@
 		"message": "削除"
 	},
 	"htmlLabelDescription": {
-		"message": "名前を入力してください。ウィジェットやコンテキストメニューに表示されます。"
+		"message": "サイト名を入力してください。ウィジェットやコンテキストメニューに表示されます。"
 	},
 	"htmlUrlDescription": {
 		"message": "URLを入力してください。\"$$1\"は選択したテキストに置き換えられます。"
@@ -349,7 +349,7 @@
 		"message": "アイコンをマウスオーバーして、ウィジェットを表示する"
 	},
 	"htmlLinkListActionMouseclick": {
-		"message": "アイコンをマウスクリックして、ウィジェットを表示する"
+		"message": "アイコンをクリックして、ウィジェットを表示する"
 	},
 	"htmlLinkListLayoutTitle": {
 		"message": "ウィジェットのレイアウト"
@@ -445,7 +445,7 @@
 		"message": "意味だけ表示"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "発音などの解説を除いて、\"意味\"だけを表示します。"
+		"message": "発音などの解説を除いて、意味だけを表示します。"
 	},
 	"htmlApiCutOutLabel": {
 		"message": "有効にする"
