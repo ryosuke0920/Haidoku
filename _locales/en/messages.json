@@ -1,15 +1,15 @@
 {
 	"extensionName": {
-		"message": "Search Dictionary Faster"
+		"message": "Word Port"
 	},
 	"extensionDescription": {
-		"message": "Support to search words"
+		"message": "Support to search words."
 	},
 	"extensionOptionAutoView": {
-		"message": "Automatically display"
+		"message": "Automatic display"
 	},
 	"extensionOptionManualView": {
-		"message": "Manually display"
+		"message": "Manual display"
 	},
 	"extensionOptionManualViewByShiftKey": {
 		"message": "Display with shift key"
@@ -29,7 +29,7 @@
 		}
 	},
 	"notificationReadOptionError": {
-		"message": "Failed to read your configuration. $ERROR$",
+		"message": "Failed to read a configuration. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -37,7 +37,7 @@
 		}
 	},
 	"notificationSaveOptionError": {
-		"message": "Failed to save your configuration. $ERROR$",
+		"message": "Failed to save a configuration. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -45,7 +45,7 @@
 		}
 	},
 	"notificationOpenWindowError": {
-		"message": "Failed to open new window. $ERROR$",
+		"message": "Failed to open a new window. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -53,13 +53,13 @@
 		}
 	},
 	"notificationDataUriError": {
-		"message": "It can't be searched because it's an unsupported image format(Data URI)."
+		"message": "Can't search the image unsupported format(Data URI)."
 	},
 	"notificationDownloadLanguageError": {
-		"message": "Failed to download list of language."
+		"message": "Failed to download a language list."
 	},
 	"notificationAudioPlayError": {
-		"message": "Audio playback failed. $ERROR$",
+		"message": "Failed to playback the audio. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -75,10 +75,10 @@
 		}
 	},
 	"htmlLinkageDisabled": {
-		"message": "Wiktionary linkage is Disabled."
+		"message": "Wiktionary linkage is disabled."
 	},
 	"htmlLinkageMessage": {
-		"message": "When clicked Upper Right Button, Wiktionary linkage is enabled. Regardless whether you intent or not, <span class=\"lessLaborGoToDictionary-warning\">if you select text, it will be automatically sent to Wiktionary to search, even if it's your privacy information like a password.</span> Please understand it and use carefully. We recommend that you disable it when you don't need it."
+		"message": "Click the upper right button, Wiktionary linkage is enabled. <span class=\"lessLaborGoToDictionary-warning\">Select a text, the text will be automatically sent to Wiktionary to search, even if it includes your privacy information like a password.</span> So use carefully. I recommend that you disable it, when you don't need it."
 	},
 	"htmlNowSearching": {
 		"message": "Now searching."
@@ -95,19 +95,19 @@
 		}
 	},
 	"htmlParseFailed": {
-		"message": "Could not parse. It displayed in original text."
+		"message": "Faild to parse. It displayed original."
 	},
 	"htmlMeaningNotFound": {
-		"message": "\"Display only meaning\" could not be done. It displayed in original text."
+		"message": "There is not a meaning for \"Display only meaning\" function. It displayed original."
 	},
 	"htmlSectionNotFound": {
-		"message": "Could not find a language matching \"Language filter\". It displayed without the filter."
+		"message": "There is not a language matching \"Language filter\". It displayed without the filter."
 	},
 	"htmlPageNotFound": {
-		"message": "The page could not be found."
+		"message": "There is not a matching description."
 	},
 	"htmlConnectionError": {
-		"message": "Could not connect to the server. $ERROR$",
+		"message": "Failed to connect to the server. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -115,7 +115,7 @@
 		}
 	},
 	"htmlServerError": {
-		"message": "The server returned an error. $ERROR$",
+		"message": "Got an error from the server. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -123,7 +123,7 @@
 		}
 	},
 	"htmlApplicationError": {
-		"message": "The application returned an error. $ERROR$",
+		"message": "Got an error from the application. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -131,7 +131,7 @@
 		}
 	},
 	"htmlUnexpectedError": {
-		"message": "An unexpected error occurred. $ERROR$",
+		"message": "Unexpected error. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -139,19 +139,19 @@
 		}
 	},
 	"htmlZoomDown": {
-		"message": "Zoom down"
+		"message": "Zoom out the links"
 	},
 	"htmlZoomUp": {
-		"message": "Zoom up"
+		"message": "Zoom in the links"
 	},
 	"htmlMove": {
-		"message": "move"
+		"message": "Move the widget"
 	},
 	"htmlResize": {
-		"message": "Reset size"
+		"message": "Reset the widget size"
 	},
 	"htmlOption": {
-		"message": "Option"
+		"message": "Open the setting screen"
 	},
 	"htmlSaveHistory": {
 		"message": "Save history"
@@ -160,13 +160,13 @@
 		"message": "Saved history"
 	},
 	"htmlFormName": {
-		"message": "Edit link"
+		"message": "Link edit"
 	},
 	"htmlHistoryName": {
 		"message": "History"
 	},
 	"htmlRankingName": {
-		"message": "Find weak point"
+		"message": "The number of searches"
 	},
 	"htmlOthersName": {
 		"message": "View"
@@ -175,13 +175,13 @@
 		"message": "Info"
 	},
 	"htmlFormDescription": {
-		"message": "You can add, change in order, edit, delete fields. If added blank fields, You have to input \"Site name\" and \"URL\" by yourself. In the URL field \"$$1\" will be replaced to the text selected."
+		"message": "Click \"Select some links to add\" button, you can add some links from a list. Click \"Add blank fields\" button, Input \"$$1\" in the URL field, \"$$1\" will be replaced to the selected text."
 	},
 	"htmlUsageOrder" : {
 		"message": "Sort."
 	},
 	"htmlUsageCheck" : {
-		"message": "Display in Widget."
+		"message": "Enable."
 	},
 	"htmlUsageHist" : {
 		"message": "Save history."
@@ -190,16 +190,13 @@
 		"message": "Delete."
 	},
 	"htmlPresetDescription": {
-		"message": "Select some sites and press \"Add\" button. Then it's added to Widget."
+		"message": "Select some links and press the \"Add\" button. Then it's added."
 	},
 	"htmlAddFromPreset": {
-		"message": "Add search site"
+		"message": "Select some links to add"
 	},
 	"htmlAddBlankFieldButtonName": {
-		"message": "Add blank field"
-	},
-	"htmlHandle": {
-		"message": "Changing the order."
+		"message": "Add blank fields"
 	},
 	"htmlLabelText": {
 		"message": "Site name"
@@ -211,10 +208,10 @@
 		"message": "Delete"
 	},
 	"htmlLabelDescription": {
-		"message": "Site name is displayed instead of URL."
+		"message": "Input a name. It's displayed on the widget or the context menu."
 	},
 	"htmlUrlDescription": {
-		"message": "A URL to link. \"$$1\" will be replaced to the text selected."
+		"message": "Input a URL. \"$$1\" will be replaced to the selected text."
 	},
 	"htmlFilterText": {
 		"message": "Filter"
@@ -259,25 +256,25 @@
 		"message": "Old->New"
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "Delete history checked"
+		"message": "Delete the history items checked"
 	},
 	"htmlHistoryAllDelete": {
-		"message": "Delete all history"
+		"message": "Delete all the history items"
 	},
 	"alertHistoryAllDelete": {
-		"message": "All history will be deleted. It contains the records that isn't displayed on the table."
+		"message": "All the history items will be deleted. It contains the history items which aren't displayed on the table below."
 	},
 	"htmlHistoryDescription": {
-		"message": "History data is used by \"Find weak point\" function. History data is saved into your PC. It is not covered by browser synchronization service. You can change configuration to save or not in \"Link edit\" menu."
+		"message": "The history data are saved into the PC. They are not in range of browser synchronization service. You can change configuration to save history or not on the \"Link edit\" menu."
 	},
 	"htmlHistoryZeroRowMessage": {
-		"message": "Result was 0."
+		"message": "The number of the history items is 0."
 	},
 	"htmlHistoryDate": {
 		"message": "Date"
 	},
 	"htmlHistoryText": {
-		"message": "Text selected"
+		"message": "Selected text"
 	},
 	"htmlHistoryFromSite": {
 		"message": "Source site"
@@ -298,7 +295,7 @@
 		"message": "Last"
 	},
 	"htmlRankingDescription": {
-		"message": "Search count is aggregated from history. Please select date range and click \"Aggregate\" button. If you delete some of history, Search count decreases too. Let's find your weakness and study efficiently."
+		"message": "By using the history data, this function aggregates the number of searches for each selected text. If you delete some of the history items, the number of searches decreases too. Find your weakness of words from the results, and study efficiently."
 	},
 	"htmlRankingAggregateButton": {
 		"message": "Aggregate"
@@ -322,16 +319,16 @@
 		"message": "Specify date range"
 	},
 	"htmlRankingText": {
-		"message": "Text selected"
+		"message": "Selected text"
 	},
 	"htmlRankingCount": {
-		"message": "Search count"
+		"message": "Number of searches"
 	},
 	"htmlRankingGraph": {
 		"message": "Graph"
 	},
 	"htmlRankingZeroRowMessage": {
-		"message": "Result was 0."
+		"message": "The number of the history items is 0."
 	},
 	"htmlLinkListStyleTitle": {
 		"message": "Widget style"
@@ -343,25 +340,25 @@
 		"message": "Dark"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "Widget display action"
+		"message": "Use icon"
 	},
 	"htmlLinkListActionNormal": {
 		"message": "No icon"
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "Mouse over"
+		"message": "Display the widget by mousing over the icon."
 	},
 	"htmlLinkListActionMouseclick": {
-		"message": "Mouse click"
+		"message": "Display the widget by clicking the icon."
 	},
 	"htmlLinkListLayoutTitle": {
 		"message": "Widget layout"
 	},
-	"htmlLinkListLayoutPatternTitle":{
+	"htmlLinkListLayoutPatternTitle": {
 		"message": "Widget layout pattern"
 	},
 	"htmlFaviconDisplayTitle":{
-		"message": "Display content of link"
+		"message": "Content of links"
 	},
 	"htmlFaviconDisplayNormal":{
 		"message": "Favicon and site name"
@@ -379,7 +376,7 @@
 		"message": "Vertical"
 	},
 	"htmlLinkListSeparatorTitle":{
-		"message": "Separator between links and Wiktionary"
+		"message": "Separator between links and Wiktionary linkage"
 	},
 	"htmlLinkListSeparatorHorizontal":{
 		"message": "Horizontal"
@@ -391,13 +388,13 @@
 		"message": "Wiktionary linkage"
 	},
 	"htmlApiServiceDescription": {
-		"message": "Wiktionary is a dictionary site made by volunteers. The description of word you selected is displayed using Wiktionary."
+		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By connecting to Wiktionary, the meaning of the word is displayed on the widget."
 	},
 	"htmlServiceCodeTitle": {
-		"message": "Select Wiktionary"
+		"message": "Select host(language)"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "Please choose Wiktionary. The language used for display differs depending on the site. The quality and scale of information also differs. When you change this, \"Language filter\" need additional setting."
+		"message": "The displayed language and the quality of a content are different for each of the hosts. Change this, Language filter needs additional setting. Select \"Disable\", the area of Wiktionary linkage is hidden."
 	},
 	"htmlServiceCodeNone": {
 		"message": "Disable"
@@ -421,34 +418,34 @@
 		"message": "https://zh.wiktionary.org/ - Chinese"
 	},
 	"htmlServiceCodeSelectMessage": {
-		"message": "Please select a Wiktionary."
+		"message": "Select host."
 	},
 	"htmlLanguageFilterTitle": {
 		"message": "Language filter"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "Wiktionary article has description for all words of all languages. Using language filter, it's displayed a description of only the language you want."
+		"message": "Wiktionary is a multilingual dictionary. The articles include some descriptions of various languages. Using Language filter is that display some descriptions of the languages you specified."
 	},
 	"htmlLanguageFilterAside": {
-		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\". If you select \"English\" for Language filter, only the English description \"4\" will be displayed."
+		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\". If you select \"English\" for Language filter, only \"4\" will be displayed."
 	},
 	"htmlAddLanguageFilter": {
-		"message": "Add language filter"
+		"message": "Add Language filter"
 	},
 	"htmlLanguageFilterSelectedDescription": {
-		"message": "List of language filter selected."
+		"message": "The selected language list."
 	},
 	"htmlLanguageFilterNoneSelectedDescription": {
 		"message": "Language filter is not selected."
 	},
 	"htmlLanguageFilterDownloadMessage": {
-		"message": "It's downloading list of language from Wiktionary"
+		"message": "Now downloading a list of languages from Wiktionary"
 	},
 	"htmlApiCutOutTitle": {
-		"message": "Display only meaning"
+		"message": "Display only the meaning"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "Only the \"meaning\" is displayed except for descriptioin on pronunciation etc."
+		"message": "Display only the meaning except for the descriptions of pronunciation, etc."
 	},
 	"htmlApiCutOutLabel": {
 		"message": "Enable"
@@ -459,35 +456,20 @@
 	"htmlRleaseNoteTitle": {
 		"message": "Release note"
 	},
-	"htmlReleaseNoteDescription1": {
-		"message": "Release note is posted on GitHub."
+	"htmlAnnouncementTitle": {
+		"message": "Announcement"
 	},
-	"htmlReleaseNoteDescription2": {
-		"message": "Release is announced on Twitter."
+	"htmlIssueTitle": {
+		"message": "Feedback"
 	},
-	"htmlAboutDataTitle": {
-		"message": "About how data used."
-	},
-	"htmlAboutDataDescription1": {
-		"message": "Setting data is sent by the synchronization service provided by the browser. History data is out of the synchronization service."
-	},
-	"htmlAboutDataDescription2": {
-		"message": "When click a link or execute wiktionary linkage, it sends basic internet information (IP address, Cookie, etc) and the text selected. HTTP REFER (Information on which site it came from) is excluded."
-	},
-	"htmlAboutDataDescription3": {
-		"message": "As needed download favicon images and save it."
+	"htmlIssueDescription": {
+		"message": "Use for bug reports, suggestions, questions, etc. The posts will be open to the public."
 	},
 	"htmlContactTitle": {
 		"message": "Contact"
 	},
-	"htmlIssueDescription": {
-		"message": "Please use GitHub Issues to report a bug, to request, to contact, etc. Writing is open to the public."
-	},
-	"htmlMailDescription": {
-		"message": "Also receive by email."
-	},
 	"htmlIam": {
-		"message": "Freelance programmer, Ryosuke Ohta (太田亮介)"
+		"message": "Ryosuke Ohta (太田亮介), Freelance programmer, in Tokyo Japan."
 	},
 	"htmlLicenseTitle": {
 		"message": "License"
@@ -496,13 +478,13 @@
 		"message": "This software is released under the MIT License."
 	},
 	"htmlCheckBlankError": {
-		"message": "Please fill out this fields."
+		"message": "Please input in the field."
 	},
 	"htmlCheckURLError": {
-		"message": "Please enter a URL."
+		"message": "Please input URL."
 	},
 	"htmlCheckByteLengthError": {
-		"message": "Please shorten to $MAX_LENGTH$ byte or less (Currently $LENGTH$ bytes).",
+		"message": "Shorten to $MAX_LENGTH$ bytes or less (Currently $LENGTH$ bytes).",
 		"placeholders": {
 			"MAX_LENGTH": {
 				"content": "$1"
@@ -513,7 +495,7 @@
 		}
 	},
 	"htmlCheckFieldLengthError": {
-		"message": "You can add up to $MAX_FIELDS$ items at maximum.",
+		"message": "Limited to $MAX_FIELDS$ items maximum.",
 		"placeholders": {
 			"MAX_FIELDS": {
 				"content": "$1"
@@ -521,7 +503,7 @@
 		}
 	},
 	"htmlCheckPresetLengthError": {
-		"message": "Up to $MAX_FIELDS$ sites can be added. It is set to $SUM$ pieces. Currently $CHECKED$ items are selected. You can add $REMAINING$ more.",
+		"message": "Limited to $MAX_FIELDS$ items maximum. It is set to $SUM$ items. Currently $CHECKED$ items are selected. You can select $REMAINING$ items.",
 		"placeholders": {
 			"MAX_FIELDS": {
 				"content": "$1"
@@ -538,10 +520,10 @@
 		}
 	},
 	"htmlDateInputError": {
-		"message": "Please enter a date correctly."
+		"message": "Please input date correctly."
 	},
 	"htmlCheckLanguageFilterLengthError": {
-		"message": "The number of \"Language filter\" can be set up to $MAX$",
+		"message": "The number of Language filter is limited to $MAX$ items maximum",
 		"placeholders": {
 			"MAX": {
 				"content": "$1"
