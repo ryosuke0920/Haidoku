@@ -105,7 +105,7 @@ a:hover {
 	background-color: white;
 }
 #header {
-	height: 200px;
+	height: 190px;
 	background-color: #404040;
 	color: white;
 }
@@ -115,7 +115,7 @@ a:hover {
 	padding-top: 10px;
 }
 #header h1 {
-	font-size: 16px;
+	font-size: 26px;
 	font-weight: normal;
 	padding-left: 10px;
 }
