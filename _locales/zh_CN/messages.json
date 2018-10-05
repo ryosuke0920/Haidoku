@@ -1,6 +1,6 @@
 {
 	"extensionName": {
-		"message": "Search Dictionary Faster",
+		"message": "Word Port",
 		"hash": "740c17d6abb1f6e89a050740f20ba3e3"
 	},
 	"extensionDescription": {
@@ -222,10 +222,6 @@
 	"htmlAddBlankFieldButtonName": {
 		"message": "添加空白项",
 		"hash": "e2d248df4753b8175eba14470cafa172"
-	},
-	"htmlHandle": {
-		"message": "更改顺序",
-		"hash": "d63c9a95a9a38872187b81634fc315c7"
 	},
 	"htmlLabelText": {
 		"message": "网站名称",
