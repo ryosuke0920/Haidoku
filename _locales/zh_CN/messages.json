@@ -82,8 +82,8 @@
 		"hash": "bea5e4d8140b5528e36d7ab12a912f80"
 	},
 	"htmlLinkageMessage": {
-		"message": "参见右侧预览，在单击右上角的按钮时，有链接维基词典被启用。无论您是否欲查，<span class=\"lessLaborGoToDictionary-warning\">在您选中一段文本时，该文本将自动发送到维基词典以进行查询，而这可能含有您的隐私信息</span>。请理解该功能的运作方式并慎重使用。我们建议您在不需要它时禁用此功能。",
-		"hash": "95c869bc7844b2c05fd49c6e7eb30e5a"
+		"message": "在单击右上角的按钮时，有链接维基词典被启用。<span class=\"lessLaborGoToDictionary-warning\">在您选中一段文本时，该文本将自动发送到维基词典以进行查询，而这可能含有您的隐私信息</span>。所以要小心使用。我们建议您在不需要它时禁用此功能。",
+		"hash": "d967f0b0d1df90a4bdb339a4ed9adf7d"
 	},
 	"htmlNowSearching": {
 		"message": "正在搜索。",
@@ -101,7 +101,8 @@
 		"hash": "7fe3a1e460b7a91a6cec330ec2e7c49a"
 	},
 	"htmlParseFailed": {
-		"message": "无法解析。 它以原始文本显示。"
+		"message": "无法解析。 它以原始文本显示。",
+		"hash": "581a097c5c062573b7fceb02efb7ee20"
 	},
 	"htmlMeaningNotFound": {
 		"message": "“仅显示含义”无法完成。 它以原始文本显示。",
@@ -113,7 +114,7 @@
 	},
 	"htmlPageNotFound": {
 		"message": "无法找到页面。",
-		"hash": "264cd392342007997c42a8ce33520047"
+		"hash": "232be90f4ed902bf39708fe4dfb609d0"
 	},
 	"htmlConnectionError": {
 		"message": "连接服务器失败。$ERROR$",
@@ -144,24 +145,24 @@
 		"hash": "2eb2b2508fd492410144af7110592b41"
 	},
 	"htmlZoomDown": {
-		"message": "缩小",
-		"hash": "3ceffad458919ae1bf7b55b21999815c"
+		"message": "缩小链接",
+		"hash": "467a70106ac460bc62d4d117bbe49e62"
 	},
 	"htmlZoomUp": {
-		"message": "放大",
-		"hash": "743f1f6dec932b160ec6b01f4d62616a"
+		"message": "放大链接",
+		"hash": "aaaa623ee02188659c8e852461b5db9e"
 	},
 	"htmlMove": {
-		"message": "移动",
-		"hash": "57304071fa0122d93576c332f8a8ee68"
+		"message": "移动小部件",
+		"hash": "9a3685eec0f25b35fc6eb5389cc01122"
 	},
 	"htmlResize": {
-		"message": "重置大小",
-		"hash": "664887be8e735804272885c25b09e8ae"
+		"message": "重置小部件大小",
+		"hash": "1a32eddb430ceb4affbfda70f08b3590"
 	},
 	"htmlOption": {
-		"message": "选项",
-		"hash": "0e4dfc1c44a2baffbd741f9a1abde6c8"
+		"message": "打开设置屏幕",
+		"hash": "390ab690f3730257355047d9a47c31ab"
 	},
 	"htmlSaveHistory": {
 		"message": "保存历史记录",
@@ -172,16 +173,16 @@
 		"hash": "3c77ac644bd4e652b6ff19be38cb66e9"
 	},
 	"htmlFormName": {
-		"message": "编辑链接",
-		"hash": "d5256c9a8b8112ac7977bad6cb7da4bf"
+		"message": "链接编辑",
+		"hash": "b9772fb5ba497653aa847f93100b6536"
 	},
 	"htmlHistoryName": {
 		"message": "历史记录",
 		"hash": "6b8f0d500af7fbca100a1be3dc0817d6"
 	},
 	"htmlRankingName": {
-		"message": "找到弱项",
-		"hash": "79ebba70fe2e323e92e5c21810a9e45f"
+		"message": "搜索次数",
+		"hash": "55e44194fb93b2452a51dd6ca96ac7cc"
 	},
 	"htmlOthersName": {
 		"message": "查看",
@@ -192,16 +193,16 @@
 		"hash": "772b8e57e5d6623f1cf59d7d90ddaa47"
 	},
 	"htmlFormDescription": {
-		"message": "您可以自行添加、更改顺序、编辑或删除项目。添加空白项后，您需要自行输入名称和网址（URL）。网址字段中的 $$1 在使用时将被替换为选中文本。",
-		"hash": "807fb3efa1ceb1752255b11068ee4781"
+		"message": "单击“选择要添加的链接”按钮，可以从列表中添加一些链接。 单击“添加空白字段”按钮，在URL字段中输入“$$ 1”，“$$ 1”将替换为所选文本。",
+		"hash": "0d946240e2969de69f7119711ee7d158"
 	},
 	"htmlUsageOrder": {
 		"message": "排序",
 		"hash": "bd8e350097d433420f1d5b93e8a1cff1"
 	},
 	"htmlUsageCheck": {
-		"message": "在小工具中显示",
-		"hash": "e51dfc60b87d6ff5a511454e72940c7a"
+		"message": "启用",
+		"hash": "813f2a9bcee974d67c92911f6c61f9b8"
 	},
 	"htmlUsageHist": {
 		"message": "保存历史",
@@ -212,16 +213,16 @@
 		"hash": "312061580d361b43b842322a1e5de394"
 	},
 	"htmlPresetDescription": {
-		"message": "选择一些网站，然后按“添加”按钮。这样它就添加到小工具了。",
-		"hash": "c8bba0b032e246154b9e2e4b03f6436b"
+		"message": "选择一些链接，然后按“添加”按钮。 然后它被添加了。",
+		"hash": "e1ecde82cbe9922480bf6c40d8288b17"
 	},
 	"htmlAddFromPreset": {
-		"message": "添加搜索引擎",
-		"hash": "616443e9da6a2ee5d76c0b75461d96e3"
+		"message": "选择要添加的链接",
+		"hash": "3d15931f0c4b26100f43a9e3f97b6075"
 	},
 	"htmlAddBlankFieldButtonName": {
-		"message": "添加空白项",
-		"hash": "e2d248df4753b8175eba14470cafa172"
+		"message": "添加空白字段",
+		"hash": "3fc055d3f4f2194f6060876bd42b59d3"
 	},
 	"htmlLabelText": {
 		"message": "网站名称",
@@ -236,12 +237,12 @@
 		"hash": "ba4d75c0e084b96aed007047d5d3f999"
 	},
 	"htmlLabelDescription": {
-		"message": "网站名称，显示时使用。",
-		"hash": "6f23da774445459cfb905c4c0be71338"
+		"message": "输入站点名称。它显示在窗口小部件或上下文菜单上。",
+		"hash": "6bdb22c86da1319f4b1383e2ab8fe83a"
 	},
 	"htmlUrlDescription": {
-		"message": "链接的网址（URL）。$$1 在使用时将被替换为选中的文本。",
-		"hash": "b5e345ed58cc0e5e7c220ed33e7b424e"
+		"message": "输入网址。“$$1”将替换为所选文本。",
+		"hash": "efefc181e2ed22cdfb9a5c2546fc1596"
 	},
 	"htmlFilterText": {
 		"message": "过滤器",
@@ -300,32 +301,32 @@
 		"hash": "90048a3fcf15753afcb7663a5850a91c"
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "删除选中的历史记录",
-		"hash": "b2614462a49a77bc15f28b3450170342"
+		"message": "删除选中的历史记录项",
+		"hash": "73be04d40a106786dd6167d80943f3df"
 	},
 	"htmlHistoryAllDelete": {
-		"message": "删除所有历史记录",
-		"hash": "c48e890bf7f09ec9c6cdb104594be3c2"
+		"message": "删除所有历史记录项目",
+		"hash": "5374d10c22cecc4019f69db7367184b5"
 	},
 	"alertHistoryAllDelete": {
-		"message": "这将删除所有的历史记录（包括未在此表中列全的记录）",
-		"hash": "b696e0c1e83620c97428e3f72ccbeec0"
+		"message": "所有历史记录项目都将被删除。 它包含未在下表中显示的历史记录项目。",
+		"hash": "64e02ceb3014bdb9a533cc3c71decdb9"
 	},
 	"htmlHistoryDescription": {
-		"message": "“找到弱项”功能依赖历史记录数据。历史记录数据在您的计算机上保存，不会被浏览器的“同步”功能传送。您可以在“链接编辑”菜单中更改配置决定是否保存历史记录。",
-		"hash": "54081745e7f114b9f5a8d495e9b2dc70"
+		"message": "历史数据保存到PC中。 它们不在浏览器同步服务范围内。 您可以在“链接编辑”菜单上更改配置以保存历史记录。",
+		"hash": "f5ed004f2994c262d5c92ca4f8657a67"
 	},
 	"htmlHistoryZeroRowMessage": {
-		"message": "没有结果。",
-		"hash": "6205bda2bdddc5b8e9f78279873732c0"
+		"message": "历史记录项的数量为0。",
+		"hash": "f98fda5a686916fbc19e3197241f1559"
 	},
 	"htmlHistoryDate": {
 		"message": "日期",
 		"hash": "c84b9422552f2f228b38a46f47ede9a7"
 	},
 	"htmlHistoryText": {
-		"message": "选中的文本",
-		"hash": "16f9181a141a3d8cbab738e2189cbf11"
+		"message": "选定的文字",
+		"hash": "b62ee7661d2bf92ae6a73e3db27a445a"
 	},
 	"htmlHistoryFromSite": {
 		"message": "源网站",
@@ -352,8 +353,8 @@
 		"hash": "2e1673c2d8f41f8a8b54ae51624a6af1"
 	},
 	"htmlRankingDescription": {
-		"message": "搜索次数根据历史记录的汇总计算。请选择日期范围，然后点击“汇总”按钮。如果部分历史记录被删除，则搜索次数会相应减少。我们利用此数据帮助您找到语言弱项以助力学习。",
-		"hash": "3b81d00484b7a202e1258d12c6e5ae86"
+		"message": "通过使用历史数据，此函数聚合每个所选文本的搜索次数。 如果删除某些历史记录项，搜索次数也会减少。 从结果中找出你的弱点，并有效地学习。",
+		"hash": "6a59d6cecc01c4f958ff2d33b1ec0181"
 	},
 	"htmlRankingAggregateButton": {
 		"message": "汇总",
@@ -384,8 +385,8 @@
 		"hash": "dfc6ef523f8f3d6ddf54970ca4414717"
 	},
 	"htmlRankingText": {
-		"message": "选中的文本",
-		"hash": "16f9181a141a3d8cbab738e2189cbf11"
+		"message": "选定的文字",
+		"hash": "b62ee7661d2bf92ae6a73e3db27a445a"
 	},
 	"htmlRankingCount": {
 		"message": "搜索次数",
@@ -396,8 +397,8 @@
 		"hash": "470b1a08cb251cffdd6c40d9379612ec"
 	},
 	"htmlRankingZeroRowMessage": {
-		"message": "没有结果。",
-		"hash": "6205bda2bdddc5b8e9f78279873732c0"
+		"message": "历史记录项的数量为0。",
+		"hash": "f98fda5a686916fbc19e3197241f1559"
 	},
 	"htmlLinkListStyleTitle": {
 		"message": "小工具样式",
@@ -412,20 +413,20 @@
 		"hash": "f52e24bb113e8c96fde952627b413812"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "小工具显示动作",
-		"hash": "4568830ee219caf813751f11ed05f5cc"
+		"message": "Use icon",
+		"hash": "ec5eee30d1a62688ee2b40c3f3417e41"
 	},
 	"htmlLinkListActionNormal": {
 		"message": "无图标",
 		"hash": "e00efa9f1a1d9a347c3028ae803e7d21"
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "鼠标悬停",
-		"hash": "c184c03e26c817d78cb1aa7284b748d5"
+		"message": "通过将鼠标悬停在图标上来显示小部件。",
+		"hash": "a6447b1f1871d28cbaf3436b87225a2e"
 	},
 	"htmlLinkListActionMouseclick": {
-		"message": "鼠标单击",
-		"hash": "8152a43d82217a9473a18562b38fca32"
+		"message": "单击图标显示窗口小部件。",
+		"hash": "bd3e8dd58f26632cdb3380daf6a398cf"
 	},
 	"htmlLinkListLayoutTitle": {
 		"message": "小工具布局",
@@ -476,67 +477,71 @@
 		"hash": "0334b307290f83071c19874a5bcc495a"
 	},
 	"htmlApiServiceDescription": {
-		"message": "维基词典是由志愿者制作的一个词典网站。您选择的字词将显示维基词典提供的描述。",
-		"hash": "465630fcdd26f49c6b916d8ff27c6dee"
+		"message": "维基词典是维基百科的姊妹网站。 这是一个志愿者发表文章的字典网站。 通过连接到维基词典，该单词的描述将显示在小部件上。",
+		"hash": "d9bc6ca2a4191b32bdab7c67b98aa70e"
 	},
 	"htmlServiceCodeTitle": {
-		"message": "选择维基词典",
-		"hash": "4e2e130fb254717f96f4aac40e218786"
+		"message": "选择主机（语言）",
+		"hash": "307952bd070150973828d3910a3a9e2f"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "请选择维基词典。可以显示的语言因站点而异。信息的质量和规模也有不同。在您更改此设置后，“语言过滤器”也需要设置。",
-		"hash": "fb5af02f8fe683e3ceecc88eccb5c559"
+		"message": "每个主机的显示语言和内容质量都不同。 更改此项，“语言过滤器”需要其他设置。 选择“禁用”，隐藏维基链接的区域。",
+		"hash": "a3055124e92b024ef8edbfc2f30011bb"
 	},
 	"htmlServiceCodeNone": {
 		"message": "禁用",
 		"hash": "3cd205f2e4eebe52d3320ae5c75aa53c"
 	},
 	"htmlServiceCodeDe": {
-		"message": "https://de.wiktionary.org/ - 德语"
+		"message": "https://de.wiktionary.org/ - 德语",
+		"hash": "c1a1eea190ce7ab784fce0a40d89252b"
 	},
 	"htmlServiceCodeEn": {
 		"message": "https://en.wiktionary.org/ - 英语",
 		"hash": "b4bbb46dd472d772dff1bcd16337abe2"
 	},
 	"htmlServiceCodeFr": {
-		"message": "https://fr.wiktionary.org/ - 法语"
+		"message": "https://fr.wiktionary.org/ - 法语",
+		"hash": "e2a8cbb74caf1aca40284ef3f7b9f18f"
 	},
 	"htmlServiceCodeJa": {
 		"message": "https://ja.wiktionary.org/ - 日语",
 		"hash": "0e339fcc3a6bd90c3e02400d794e82c8"
 	},
 	"htmlServiceCodeRu": {
-		"message": "https://ru.wiktionary.org/ - 俄语"
+		"message": "https://ru.wiktionary.org/ - 俄语",
+		"hash": "6ec4ca41a4f894f4dadae4e3ea867370"
 	},
 	"htmlServiceCodeZh": {
-		"message": "https://zh.wiktionary.org/ - 汉语"
+		"message": "https://zh.wiktionary.org/ - 汉语",
+		"hash": "18a10c37b2f91904aee6554efd2204a9"
 	},
 	"htmlServiceCodeSelectMessage": {
-		"message": "请选择一个维基词典。",
-		"hash": "29679c4b0ec9234079af7d30a93ae3d2"
+		"message": "选择一个主机。",
+		"hash": "8435416bad9375cf181415b9f434b23c"
 	},
 	"htmlLanguageFilterTitle": {
 		"message": "语言过滤器",
 		"hash": "802007d06f6fa4c67dbe7d267ac9d768"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "维基词典收录有众多语言的众多字词。使用语言过滤器决定显示显示哪些语言的描述。",
-		"hash": "2a8a5ce6e42c7e5639ab02bb659cb4b4"
+		"message": "维基词典是一种多语言词典。 这些文章包括各种语言的一些描述。 使用“语言过滤器”显示您指定的语言的一些描述。",
+		"hash": "417fd7887c3c00b245844a1e41dfec95"
 	},
 	"htmlLanguageFilterAside": {
-		"message": "例如，“four”在英语中意味着“4”，但在法语中是“烤箱、炉子”。如果您在语言过滤器中只选择了英语，则只会显示英语对“4”的描述。",
-		"hash": "8769bc049a6e1c4eb9fc7709741dd7fe"
+		"message": "例如，“four”在英语中意味着“4”，但在法语中是“烤箱、炉子”。如果您在“语言过滤器”中只选择了英语，则只会显示英语对“4”的描述。",
+		"hash": "075b41afe3e3e33cdb018acb923d9097"
 	},
 	"htmlAddLanguageFilter": {
-		"message": "添加语言过滤器",
-		"hash": "6e565aef05092c785816fb411c1a9329"
+		"message": "添加“语言过滤器”",
+		"hash": "feb0c8c28a8798bfb84ce21e4dcad593"
 	},
 	"htmlLanguageFilterSelectedDescription": {
-		"message": "已选择的语言过滤器列表。",
-		"hash": "283a51d9a63d661b6629c7043dbe3f9d"
+		"message": "选定的语言列表。",
+		"hash": "220b251e929fb60a949ed498408aeda0"
 	},
 	"htmlLanguageFilterNoneSelectedDescription": {
-		"message": "没有选择语言过滤器。",
+		"message": "没有选择“语言过滤器”。",
 		"hash": "4901406d7cc389995b0ee75ba42f6a3e"
 	},
 	"htmlLanguageFilterDownloadMessage": {
@@ -548,8 +553,8 @@
 		"hash": "df5a7f36c1f351b270cb49e60fc4d752"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "除了对发音等的评论外，只显示“意义”。",
-		"hash": "21bae31e787b0ed2d00fc25af7793669"
+		"message": "除了发音等的描述外，仅显示其含义。",
+		"hash": "2729c72a75570a4cc1d8718c7293d278"
 	},
 	"htmlApiCutOutLabel": {
 		"message": "启用",
@@ -563,45 +568,25 @@
 		"message": "发行说明",
 		"hash": "97adb4886a83a9a241925e2d088ec41e"
 	},
-	"htmlReleaseNoteDescription1": {
-		"message": "发行说明位于 GitHub。",
-		"hash": "b4164a6e6b52d89bd641d96e90b4607c"
+	"htmlAnnouncementTitle": {
+		"message": "公告",
+		"hash": "8db21f462945f4f6396f88c41a07e3d6"
 	},
-	"htmlReleaseNoteDescription2": {
-		"message": "新版本发表会在 Twitter 上宣布。",
-		"hash": "6085a850d0f64766d1d2b02c6e7b940e"
+	"htmlIssueTitle": {
+		"message": "反馈",
+		"hash": "3d7bc09932907417ce32c1a447adbe01"
 	},
-	"htmlAboutDataTitle": {
-		"message": "关于数据使用。",
-		"hash": "b6dcef15976b7d4dc7f6b3ed6f9f06d7"
-	},
-	"htmlAboutDataDescription1": {
-		"message": "设置数据会被浏览器的“同步”功能传送。历史数据不会被同步。",
-		"hash": "5cfe92b42c6cbb39c239ff64ebb711ec"
-	},
-	"htmlAboutDataDescription2": {
-		"message": "在点击链接或维基词典的链接时，基本的网络信息（IP 地址、Cookie 等）和选中的文本将会被发送。HTTP REFER（信息来源页面）不会列入。",
-		"hash": "cdd30e94a30f37a25c16397d5779bce1"
-	},
-	"htmlAboutDataDescription3": {
-		"message": "根据需要下载网站图标（Favicon）并保存。",
-		"hash": "2ea99ca4d8029520d5eb351d8fc0d818"
+	"htmlIssueDescription": {
+		"message": "用于错误报告，建议，问题等。这些帖子将向公众开放。",
+		"hash": "198815e11b26de6916ba4b59845ea559"
 	},
 	"htmlContactTitle": {
 		"message": "联系",
 		"hash": "92d3755cacb176a04f1c832ea62ea712"
 	},
-	"htmlIssueDescription": {
-		"message": "请使用 GitHub Issues 报告缺陷、提交请求等。",
-		"hash": "b5bd0be20eb87e6a3c47043415ecdb83"
-	},
-	"htmlMailDescription": {
-		"message": "也可通过电子邮件联系我们。",
-		"hash": "8e529df336a956d2d7c7ffb79b04f296"
-	},
 	"htmlIam": {
-		"message": "自由程序员 Ryosuke Ohta (太田亮介)",
-		"hash": "d16564a471009af2606333663b5fad94"
+		"message": "Ryosuke Ohta（太田亮介），自由程序员，在日本东京。",
+		"hash": "a2e97735bb32f6665cd0da686f5ff68f"
 	},
 	"htmlLicenseTitle": {
 		"message": "许可协议",
@@ -613,7 +598,7 @@
 	},
 	"htmlCheckBlankError": {
 		"message": "请填写此字段。",
-		"hash": "8f7324778f0104c88e301141f2814344"
+		"hash": "7868f93911472885eff4958d18d2bc36"
 	},
 	"htmlCheckURLError": {
 		"message": "请输入一个 URL。",
