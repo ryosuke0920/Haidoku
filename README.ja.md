@@ -1,4 +1,4 @@
-# Word Port
+# High Doku
 ## 配信サイト
 Firefox Add-ons  
 https://addons.mozilla.org/ja/firefox/addon/lesslaborgotodictionary/
