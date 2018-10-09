@@ -1,4 +1,4 @@
-# High Doku
+# Haidoku
 ## 配信サイト
 Firefox Add-ons  
 https://addons.mozilla.org/ja/firefox/addon/lesslaborgotodictionary/

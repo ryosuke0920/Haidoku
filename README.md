@@ -1,4 +1,4 @@
-# High Doku
+# Haidoku
 ## Public distribution
 Firefox Add-ons  
 https://addons.mozilla.org/en-US/firefox/addon/lesslaborgotodictionary/
