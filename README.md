@@ -10,7 +10,9 @@ https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbo
 Select text, some links for searching the text and the meaning of the word are displayed. That is useful to read foreign language. The selected text is saved as history. It supports you to study later.
 
 ## Description
-Translated text is sometimes included incorrect sentence, or edited by thoughts of third parties. Therefore, I think that it is better to read the original text. I don't have the skill enough to read foreign languages, so I had to repeat the work of copying and pasting words and searching at dictionary site. I was tired of the work. It became unnecessary after making this extension.
+In Japanese "Haidoku(拝読)" means to read something with respect.
+
+Translated text or summarized text are sometimes included some incorrect sentences or some thoughts of authors. Therefore, I think that it is better to read the original text to understand correctly. I don't have the skill enough to read foreign languages, so I had to repeat the work of copying and pasting words and searching at dictionary site. I was tired of the work. It became unnecessary after making this extension.
 
 Usage is described below.
 
