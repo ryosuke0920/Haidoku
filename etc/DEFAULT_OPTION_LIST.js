@@ -3,6 +3,12 @@ const DEFAULT_OPTION_LIST = {
 		{
 			"c": true,
 			"h": true,
+			"l": "Cambridge Dictionary",
+			"u": "https://dictionary.cambridge.org/search/english/direct/?q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
 			"l": "Wiktionary (en)",
 			"u": "https://en.wiktionary.org/wiki/Special:Search?search=$1&go=Look+up"
 		},
@@ -27,8 +33,32 @@ const DEFAULT_OPTION_LIST = {
 		{
 			"c": true,
 			"h": true,
+			"l": "Google Images",
+			"u": "https://www.google.com/search?tbm=isch&q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
 			"l": "Google",
 			"u": "https://www.google.com/search?q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
+			"l": "Bing",
+			"u": "https://www.bing.com/search?q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
+			"l": "Facebook",
+			"u": "https://www.facebook.com/search/top/?q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
+			"l": "Twitter",
+			"u": "https://twitter.com/search/?q=$1"
 		}
 	],
 	"ja": [
