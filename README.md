@@ -32,14 +32,14 @@ Click a link, The selected text is saved as history. You can view the history on
 Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By connecting to Wiktionary, the meaning of the word is displayed on the widget. Click clock icon, the selected text is saved as history. Wiktionary is a multilingual dictionary. So languages other than English can also be displayed. If you set "Language filter" on the setting screen, you can display the meaning of the language you specified. In initial setting it's specified English mainly. You can choose Wiktionary host from German, English, French, Japanese, Russian and Chinese. Its quality is different for each host.
 
 ## Release Notes
-https://github.com/ryosuke0920/Search-Dictionary-Faster/releases
+https://github.com/ryosuke0920/Haidoku/releases
 
 ## Announcement
 https://twitter.com/SearchDictionar
 
 ## Feedback
 Use for bug report, suggestion, question, etc.  
-https://github.com/ryosuke0920/Search-Dictionary-Faster/issues
+https://github.com/ryosuke0920/Haidoku/issues
 
 ## Contact
 ryosuke.ohta.programmer@gmail.com  
