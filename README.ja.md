@@ -1,10 +1,10 @@
 # Haidoku
 ## 配信サイト
 Firefox Add-ons  
-https://addons.mozilla.org/ja/firefox/addon/lesslaborgotodictionary/
+https://addons.mozilla.org/firefox/addon/lesslaborgotodictionary/
 
 chrome web store  
-https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
+https://chrome.google.com/webstore/detail/haidoku/oagfpnomdjhbokfdhndphgepbbcbkbdf
 
 ## 概要
 テキストを選択すると、そのテキストを検索するリンクと、単語の意味が表示されます。外国語を読むときに便利です。選択したテキストは履歴として保存されます。この履歴は後で学習の役に立ちます。

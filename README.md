@@ -1,10 +1,10 @@
 # Haidoku
 ## Public distribution
 Firefox Add-ons  
-https://addons.mozilla.org/en-US/firefox/addon/lesslaborgotodictionary/
+https://addons.mozilla.org/firefox/addon/lesslaborgotodictionary/
 
 chrome web store  
-https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
+https://chrome.google.com/webstore/detail/haidoku/oagfpnomdjhbokfdhndphgepbbcbkbdf
 
 ## Summary
 Select text, some links for searching the text and the meaning of the word are displayed. That is useful to read foreign language. The selected text is saved as history. It supports you to study later.
