@@ -1,69 +1,46 @@
-# Search Dictionary Faster
+# Haidoku
 ## Public distribution
-### Firefox Add-ons
+Firefox Add-ons  
 https://addons.mozilla.org/en-US/firefox/addon/lesslaborgotodictionary/
-### chrome web store
+
+chrome web store  
 https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
 
 ## Summary
-When you read a foreign language website, this supports to search words. When you select a word, Widget is displayed that show the meaning of the word and show some links to search the word. There is also a function to save history and support word review.
+Select text, some links for searching the text and the meaning of the word are displayed. That is useful to read foreign language. The selected text is saved as history. It supports you to study later.
 
 ## Description
-### Widget
-When you select some words on the website, Widget is displayed. When ESC key is pressed or mouse is clicked outside the area of Widget, it closes Widget. On the setting screen, you can change small icon button instead of Widget, and also change Widget layout. On context menu(right click), you can change display way either automatic or manual.
+In Japanese "Haidoku(拝読)" means to read something with respect.
+
+Translated text or summarized text are sometimes included some incorrect sentences or some thoughts of authors. Therefore, I think that it is better to read the original text to understand correctly. I don't have the skill enough to read foreign languages, so I had to repeat the work of copying and pasting words and searching at dictionary site. I was tired of the work. It became unnecessary after making this extension.
+
+Usage is described below.
+
+### How to display the widget
+Select text, the small icon is displayed. Click the icon, it's replaced the widget. If you want to hide the widget, click outside of the widget or press Esc button. If you want to show it by keyboard, you need to set on the context menu(right click).
 
 ### Links
-When click a link in Widget, it opens the website to search the word selected. You can customize these links to your favorite website. The links are also displayed on context menu(right click).
+The links like Google Search are displayed on the widget. The links are set on the setting screen. Input "$1" in a URL text box, "$1" will be replaced to the selected text. Even if you don't know URL well, it's no matter. I have already set some major URLs. It has over 100 URLs you can select.
+
+### Context menu (right click) and image search
+The links are also displayed on context menu. Display context menu on an image, you can search the URL of the image. Google Image Search has a URL for searching text and a URL for searching image's URL. You need to use them properly.
+
+### View of history and number of searches
+Click a link, The selected text is saved as history. You can view the history on the setting screen. There is a function to view the number of searches per texts. It is useful when you study words, because you can notice the words which you search frequently. These history data are not in range of the browser sync service. You can choose to save history or not for each of links.
 
 ### Wiktionary linkage
-Wiktionary is a dictionary website made by volunteers. When you select some word, it's sent to Wiktinary for search and the description is displayed. German, English, French, Japanese, Russian, Chinese can be chosen.
+Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By connecting to Wiktionary, the meaning of the word is displayed on the widget. Click clock icon, the selected text is saved as history. Wiktionary is a multilingual dictionary. So languages other than English can also be displayed. If you set "Language filter" on the setting screen, you can display the meaning of the language you specified. In initial setting it's specified English mainly. You can choose Wiktionary host from German, English, French, Japanese, Russian and Chinese. Its quality is different for each host.
 
-### History, Find weak point
-On the setting screen you can view history. The word with a high number of searches is that used frequently, and you don't remember well. To find the word efficiently, there is a function(Find weak point) to aggregate search counts.
+## Release Notes
+https://github.com/ryosuke0920/Haidoku/releases
 
-### About link edit
-Generally you have to find out URLs and search parameters, but I already found out major website URLs and search parameters. So immediately you can use it, if you are not familiar with internet technology. If these specifications are changed by the website administrator, we also need to change. If you want to add some URLs, please request me. There is probably another people who need it too.
-
-* Google (Image, Videos, Translate)
-* Bing (Image, Videos)
-* DuckDuckGo (Image, Videos)
-* Ecosia (Image, Videos)
-* 百度
-* Wikipedia, Wiktionary
-* Cambridge Dictionary
-* Oxford Dictionaries
-* Collins
-* weblio 辞書
-* goo 辞書
-* yahoo 辞書
-* 英辞郎 on the WEB
-* You Tube, Dailymotion
-* Facebook, Twitter
-
-etc. Total 114 URLs.
-
-## Release note
-Release note is posted on GitHub.  
-https://github.com/ryosuke0920/Search-Dictionary-Faster/releases  
-
-Release is announced on Twitter.  
+## Announcement
 https://twitter.com/SearchDictionar
 
-## About how data used.
-Setting data is sent by the synchronization service provided by the browser. History data is out of the synchronization service.  
-
-When click a link or execute wiktionary linkage, it sends basic internet information (IP address, Cookie, etc) and the text selected. HTTP REFER (Information on which site it came from) is excluded.  
-
-As needed download favicon images and save it.  
+## Feedback
+Use for bug report, suggestion, question, etc.  
+https://github.com/ryosuke0920/Haidoku/issues
 
 ## Contact
-Please use GitHub Issues to report a bug, to request, to contact, etc. Writing is open to the public.  
-https://github.com/ryosuke0920/Search-Dictionary-Faster/issues  
-
-Also receive by email.  
 ryosuke.ohta.programmer@gmail.com  
-Freelance programmer, Ryosuke Ohta  
-
-## License
-This software is released under the MIT License.  
-https://opensource.org/licenses/MIT
+Ryosuke Ohta, Freelance programmer, in Tokyo Japan.
