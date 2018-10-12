@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"default_locale": "en",
-	"name":"Hight Doku",
+	"name":"Haidoku",
 	"description":"When select a text, link list which contains some dictionary will be displayed. So you can search faster.",
 	"author": "Ryosuke Ohta",
 	"version":"1.9.0",
