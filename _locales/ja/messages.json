@@ -1,6 +1,6 @@
 {
 	"extensionName": {
-		"message": "手間なし 辞書検索"
+		"message": "Haidoku"
 	},
 	"extensionDescription": {
 		"message": "単語検索を支援します。"
@@ -12,10 +12,10 @@
 		"message": "手動表示"
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "shiftボタンで表示"
+		"message": "Shiftキーで表示"
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "ctrlボタンで表示"
+		"message": "Ctrlキーで表示"
 	},
 	"extensionOptionName": {
 		"message": "設定"
@@ -53,7 +53,7 @@
 		}
 	},
 	"notificationDataUriError": {
-		"message": "サポートしていない画像形式（Data URI）ですので検索できません。"
+		"message": "サポートしていない画像形式（Data URI）ですので、検索できません。"
 	},
 	"notificationDownloadLanguageError": {
 		"message": "言語の一覧のダウンロードに失敗しました。"
@@ -75,10 +75,10 @@
 		}
 	},
 	"htmlLinkageDisabled": {
-		"message": "ウィクショナリー連携は無効です。"
+		"message": "ウィクショナリー連携は無効になっています。"
 	},
 	"htmlLinkageMessage": {
-		"message": "右上のボタンをクリックすると\"ウィクショナリー連携\"が有効になります。この機能はあなたが意図していなくても、<span class=\"lessLaborGoToDictionary-warning\">テキストを選択すると検索するためにそのテキストを自動的にウィクショナリーに送信します。それがパスワードのようなプライバシー情報であってもです。</span>この仕様を理解し、注意して使用してください。必要のないときは無効にしておくことをお勧めします。"
+		"message": "右上のボタンをクリックすると、\"ウィクショナリー連携\"が有効になります。この機能は、<span class=\"lessLaborGoToDictionary-warning\">テキストを選択するだけで、そのテキストをウィクショナリーに送信して検索します。それが、パスワードのようなプライバシー情報であってもです。</span>このため、注意して使用してください。必要のないときは、無効にしておくことをお勧めします。"
 	},
 	"htmlNowSearching": {
 		"message": "検索中です。"
@@ -95,16 +95,16 @@
 		}
 	},
 	"htmlParseFailed": {
-		"message": "構文解析できませんでした。原文のまま表示します。"
+		"message": "構文解析に失敗しました。原文のまま表示します。"
 	},
 	"htmlMeaningNotFound": {
-		"message": "\"意味だけ表示\"できませんでした。原文のまま表示します。"
+		"message": "\"意味\"の解説がないので、\"意味だけ表示\"できませんでした。原文のまま表示します。"
 	},
 	"htmlSectionNotFound": {
-		"message": "\"言語フィルター\"に一致する言語が見つかりません。フィルターなしで表示します。"
+		"message": "\"言語フィルター\"に一致する言語が見つかりませんでした。フィルターなしで表示します。"
 	},
 	"htmlPageNotFound": {
-		"message": "ページが見つかりませんでした。"
+		"message": "解説が見つかりませんでした。"
 	},
 	"htmlConnectionError": {
 		"message": "サーバーに接続できませんでした。$ERROR$",
@@ -139,22 +139,22 @@
 		}
 	},
 	"htmlZoomDown": {
-		"message": "縮小"
+		"message": "リンクを縮小する"
 	},
 	"htmlZoomUp": {
-		"message": "拡大"
+		"message": "リンクを拡大する"
 	},
 	"htmlMove": {
-		"message": "移動"
+		"message": "ウィジェットを移動する"
 	},
 	"htmlResize": {
-		"message": "サイズをリセット"
+		"message": "ウィジェットのサイズをリセットする"
 	},
 	"htmlOption": {
-		"message": "設定"
+		"message": "設定画面を開く"
 	},
 	"htmlSaveHistory": {
-		"message": "履歴を保存"
+		"message": "履歴を保存する"
 	},
 	"htmlSaveHistoryDone": {
 		"message": "履歴を保存済み"
@@ -166,7 +166,7 @@
 		"message": "履歴"
 	},
 	"htmlRankingName": {
-		"message": "苦手を発見"
+		"message": "検索回数"
 	},
 	"htmlOthersName": {
 		"message": "表示"
@@ -175,13 +175,13 @@
 		"message": "情報"
 	},
 	"htmlFormDescription": {
-		"message": "サイトの追加、並び順の変更、変更、削除ができます。入力欄のみを追加した場合、サイト名とURLは手動で設定します。URLに$$1を入力すると、$$1は選択したテキストに置き換えられます。"
+		"message": "「リンクを選んで追加」を押すと、一覧からリンクを選択して追加できます。「入力欄を追加」を押すと、空欄の入力欄が追加されます。URLの入力欄に$$1を入力すると、$$1は選択したテキストに置き換えられます。"
 	},
 	"htmlUsageOrder" : {
 		"message": "並び順を変更する。"
 	},
 	"htmlUsageCheck" : {
-		"message": "ウィジェットに表示する。"
+		"message": "有効にする。"
 	},
 	"htmlUsageHist" : {
 		"message": "履歴を保存する。"
@@ -190,16 +190,13 @@
 		"message": "削除する。"
 	},
 	"htmlPresetDescription": {
-		"message": "サイトを選択してから「追加」ボタンを押すと追加されます。"
+		"message": "リンクを選択して、「追加」ボタンを押すと追加されます。"
 	},
 	"htmlAddFromPreset": {
-		"message": "検索サイト追加"
+		"message": "リンクを選んで追加"
 	},
 	"htmlAddBlankFieldButtonName": {
-		"message": "入力欄のみ追加"
-	},
-	"htmlHandle": {
-		"message": "並び順"
+		"message": "入力欄を追加"
 	},
 	"htmlLabelText": {
 		"message": "サイト名"
@@ -211,10 +208,10 @@
 		"message": "削除"
 	},
 	"htmlLabelDescription": {
-		"message": "URLの代わりに表示されます。"
+		"message": "サイト名を入力してください。ウィジェットやコンテキストメニューに表示されます。"
 	},
 	"htmlUrlDescription": {
-		"message": "リンク先のURLです。\"$$1\"は選択テキストに置き換えられます。"
+		"message": "URLを入力してください。\"$$1\"は選択したテキストに置き換えられます。"
 	},
 	"htmlFilterText": {
 		"message": "フィルタ"
@@ -265,13 +262,13 @@
 		"message": "全ての履歴を削除"
 	},
 	"alertHistoryAllDelete": {
-		"message": "全ての履歴を削除します。表に表示されていない履歴も削除されます。"
+		"message": "全ての履歴を削除します。削除の対象は、下の表に表示されていないデータも含まれます。"
 	},
 	"htmlHistoryDescription": {
-		"message": "履歴は\"苦手を発見\"で使用されます。履歴はパソコンに保存されます。ブラウザの同期サービスの対象ではありません。履歴を保存するかどうかは「リンク編集」メニューで設定してください。"
+		"message": "履歴はパソコン内に保存されます。ブラウザの同期サービスの対象ではありません。履歴を保存するかどうかは、「リンク編集」で設定してください。"
 	},
 	"htmlHistoryZeroRowMessage": {
-		"message": "結果は0件でした。"
+		"message": "履歴の件数は0件です。"
 	},
 	"htmlHistoryDate": {
 		"message": "日時"
@@ -298,7 +295,7 @@
 		"message": "最後"
 	},
 	"htmlRankingDescription": {
-		"message": "履歴から選択テキストの検索回数を集計します。日付範囲を指定して集計ボタンを押して下さい。履歴を削除すると集計結果も減少します。あなたの苦手な単語を見つけて効率よく学習しましょう。"
+		"message": "履歴のデータを使用して、選択テキストごとに検索回数を集計します。履歴を削除すると、検索回数も減少します。あなたの苦手な単語を見つけて、効果的に学習してください。"
 	},
 	"htmlRankingAggregateButton": {
 		"message": "集計"
@@ -331,7 +328,7 @@
 		"message": "グラフ"
 	},
 	"htmlRankingZeroRowMessage": {
-		"message": "結果は0件でした。"
+		"message": "履歴の件数は0件です。"
 	},
 	"htmlLinkListStyleTitle": {
 		"message": "ウィジェットのスタイル"
@@ -343,16 +340,16 @@
 		"message": "ダーク"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "ウィジェットの表示方法"
+		"message": "アイコンの利用"
 	},
 	"htmlLinkListActionNormal": {
 		"message": "アイコンなし"
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "マウスオーバ"
+		"message": "アイコンをマウスオーバーして、ウィジェットを表示する"
 	},
 	"htmlLinkListActionMouseclick": {
-		"message": "マウスクリック"
+		"message": "アイコンをクリックして、ウィジェットを表示する"
 	},
 	"htmlLinkListLayoutTitle": {
 		"message": "ウィジェットのレイアウト"
@@ -391,13 +388,13 @@
 		"message": "ウィクショナリー連携"
 	},
 	"htmlApiServiceDescription": {
-		"message": "ウィクショナリーはボランティアによって作成されている辞書サイトです。ウィクショナリーを使用して選択したテキストの解説を表示します。"
+		"message": "ウィクショナリーは、ウィキペディアの姉妹サイトで、ボランティアが投稿している辞書サイトです。ウィクショナリーと通信して、単語の解説がウィジェットに表示されます。"
 	},
 	"htmlServiceCodeTitle": {
-		"message": "ウィクショナリーの選択"
+		"message": "ホスト（言語）の選択"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "連携するウィクショナリーを選択してください。サイトによって表示される言語が異なります。情報の質や量も異なります。変更すると\"言語フィルター\"も追加設定が必要になります。無効を選択すると表示領域が非表示になります。"
+		"message": "ホストごとに、表示される言語と、辞書の品質が異なります。変更すると、\"言語フィルター\"も追加設定が必要になります。無効を選択すると、表示領域が非表示になります。"
 	},
 	"htmlServiceCodeNone": {
 		"message": "無効にする"
@@ -421,13 +418,13 @@
 		"message": "https://zh.wiktionary.org/ - 中国語"
 	},
 	"htmlServiceCodeSelectMessage": {
-		"message": "ウィクショナリーを選択してください。"
+		"message": "ホストを選択してください。"
 	},
 	"htmlLanguageFilterTitle": {
 		"message": "言語フィルター"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "ウィクショナリーでは１つの単語に対して、全ての言語毎の解説が１つの記事にまとめられています。言語フィルターを適用すると、指定した言語の解説だけが表示されます。"
+		"message": "ウィクショナリーは多言語の辞書です。あらゆる言語の解説が、１つの記事にまとめられています。言語フィルターを適用すると、指定した言語の解説だけが表示されます。"
 	},
 	"htmlLanguageFilterAside": {
 		"message": "例えば、\"four\"は英語で\"4\"を意味しますが、フランス語では\"オーブン・かまど・炉\"を意味します。言語フィルターに\"英語\"を選択すれば、英語の\"4\"の解説だけが表示されます。"
@@ -442,13 +439,13 @@
 		"message": "言語フィルターは選択されていません。"
 	},
 	"htmlLanguageFilterDownloadMessage": {
-		"message": "ウィクショナリーから言語の一覧をダウンロードしています。"
+		"message": "ウィクショナリーから、言語の一覧をダウンロードしています。"
 	},
 	"htmlApiCutOutTitle": {
 		"message": "意味だけ表示"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "発音などの解説を除いて、\"意味\"だけを表示します。"
+		"message": "発音などの解説を除いて、意味だけを表示します。"
 	},
 	"htmlApiCutOutLabel": {
 		"message": "有効にする"
@@ -459,32 +456,17 @@
 	"htmlRleaseNoteTitle": {
 		"message": "リリースノート"
 	},
-	"htmlReleaseNoteDescription1": {
-		"message": "リリースノートはGitHubに掲載しております。"
+	"htmlAnnouncementTitle": {
+		"message": "告知"
 	},
-	"htmlReleaseNoteDescription2": {
-		"message": "リリースはTwitterで告知しております。"
+	"htmlIssueTitle": {
+		"message": "フィードバック"
 	},
-	"htmlAboutDataTitle": {
-		"message": "データの取扱について"
-	},
-	"htmlAboutDataDescription1": {
-		"message": "設定内容はブラウザが提供する同期サービスで送受信されます。履歴データはブラウザの同期サービスの対象外です。"
-	},
-	"htmlAboutDataDescription2": {
-		"message": "リンクをクリックしたりウィクショナリー連携が起動すると、インターネットの基本的な情報（IPアドレス、Cookieなど）と選択したテキストが送信されます。HTTPリファラ（どのサイトから訪れたかを示す情報）は除外しています。"
-	},
-	"htmlAboutDataDescription3": {
-		"message": "必要に応じて、ファビコンをインターネットからダウンロードして保存します。"
+	"htmlIssueDescription": {
+		"message": "バグ報告・提案・質問等に利用してください。投稿は一般に公開されます。"
 	},
 	"htmlContactTitle": {
 		"message": "お問い合わせ"
-	},
-	"htmlIssueDescription": {
-		"message": "バグ報告、要望、お問い合わせ等はGitHubのIssuesを使用してください。書き込みは一般に公開されます。"
-	},
-	"htmlMailDescription": {
-		"message": "メールでも受け付けております。"
 	},
 	"htmlIam": {
 		"message": "フリーランス プログラマー 太田亮介"
@@ -499,7 +481,7 @@
 		"message": "このフィールドは入力必須です。"
 	},
 	"htmlCheckURLError": {
-		"message": "URLを入力して下さい。"
+		"message": "URLを入力してください。"
 	},
 	"htmlCheckByteLengthError": {
 		"message": "$MAX_LENGTH$バイト以下に短くしてください（現在$LENGTH$バイト）。",
@@ -513,7 +495,7 @@
 		}
 	},
 	"htmlCheckFieldLengthError": {
-		"message": "サイトの追加は最大で$MAX_FIELDS$個までです。",
+		"message": "リンクの設定は$MAX_FIELDS$個までです。",
 		"placeholders": {
 			"MAX_FIELDS": {
 				"content": "$1"
@@ -521,7 +503,7 @@
 		}
 	},
 	"htmlCheckPresetLengthError": {
-		"message": "サイトの追加は最大で$MAX_FIELDS$個までです。設定済みは$SUM$個です。現在$CHECKED$個選択しています。追加できるのでは$REMAINING$個です。",
+		"message": "リンクの設定は$MAX_FIELDS$個までです。設定済みは$SUM$個です。現在$CHECKED$個を選択しています。追加できるのでは$REMAINING$個です。",
 		"placeholders": {
 			"MAX_FIELDS": {
 				"content": "$1"
@@ -538,10 +520,10 @@
 		}
 	},
 	"htmlDateInputError": {
-		"message": "日付を正しく入力して下さい。"
+		"message": "日付を正しく入力してください。"
 	},
 	"htmlCheckLanguageFilterLengthError": {
-		"message": "言語フィルターの追加は最大で$MAX$個までです。",
+		"message": "言語フィルターの設定は$MAX$個までです。",
 		"placeholders": {
 			"MAX": {
 				"content": "$1"

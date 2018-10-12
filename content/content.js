@@ -667,7 +667,7 @@
 			"sw": API_SWITCH_DISABLED,
 			"s": serviceCode,
 			"ll": languageFilter,
-			"co": true
+			"co": DEFAULT_MEANING_VALUE
 		});
 		return getter.then(setVer, onReadError);
 	}
