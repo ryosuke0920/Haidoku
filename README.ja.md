@@ -1,10 +1,10 @@
 # Haidoku
 ## 配信サイト
 Firefox Add-ons  
-https://addons.mozilla.org/ja/firefox/addon/lesslaborgotodictionary/
+https://addons.mozilla.org/firefox/addon/lesslaborgotodictionary/
 
 chrome web store  
-https://chrome.google.com/webstore/detail/search-dictionary-faster/oagfpnomdjhbokfdhndphgepbbcbkbdf
+https://chrome.google.com/webstore/detail/haidoku/oagfpnomdjhbokfdhndphgepbbcbkbdf
 
 ## 概要
 テキストを選択すると、そのテキストを検索するリンクと、単語の意味が表示されます。外国語を読むときに便利です。選択したテキストは履歴として保存されます。この履歴は後で学習の役に立ちます。
@@ -32,14 +32,14 @@ Google検索等のリンクがウィジェットに表示されます。リン�
 ウィクショナリーは、ウィキペディアの姉妹サイトで、ボランティアが投稿している辞書サイトです。ウィクショナリーと通信して、単語の意味がウィジェットに表示されます。時計のアイコンを押すと、選択したテキストが履歴として保存されます。ウィクショナリーは多言語の辞書なので、英語以外の言語も表示できます。設定画面で「言語フィルター」を設定すると、指定した言語の意味だけ表示します。初期設定では、主に英語を設定しています。ウィクショナリーのホスト（接続先のサーバー）は、ドイツ語、英語、フランス語、日本語、ロシア語、中国語から選択できます。ホストごとに辞書の品質が異なります。
 
 ## リリースノート
-https://github.com/ryosuke0920/Search-Dictionary-Faster/releases
+https://github.com/ryosuke0920/Haidoku/releases
 
 ## 告知
 https://twitter.com/SearchDictionar
 
 ## フィードバック
 バグ報告・提案・質問等に利用してください。  
-https://github.com/ryosuke0920/Search-Dictionary-Faster/issues
+https://github.com/ryosuke0920/Haidoku/issues
 
 ## お問い合わせ先
 ryosuke.ohta.programmer@gmail.com  
