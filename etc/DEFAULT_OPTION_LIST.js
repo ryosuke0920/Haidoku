@@ -71,6 +71,12 @@ const DEFAULT_OPTION_LIST = {
 		{
 			"c": true,
 			"h": true,
+			"l": "Wiktionary (ja)",
+			"u": "https://ja.wiktionary.org/wiki/?search=$1"
+		},
+		{
+			"c": true,
+			"h": true,
 			"l": "Wikipedia (ja)",
 			"u": "https://ja.wikipedia.org/wiki/Special:Search?go=Go&search=$1"
 		},
@@ -89,8 +95,32 @@ const DEFAULT_OPTION_LIST = {
 		{
 			"c": true,
 			"h": true,
+			"l": "Google 画像検索",
+			"u": "https://www.google.co.jp/search?tbm=isch&q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
 			"l": "Google (jp)",
 			"u": "https://www.google.co.jp/search?q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
+			"l": "Bing",
+			"u": "https://www.bing.com/search?q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
+			"l": "Facebook",
+			"u": "https://www.facebook.com/search/top/?q=$1"
+		},
+		{
+			"c": true,
+			"h": true,
+			"l": "Twitter",
+			"u": "https://twitter.com/search/?q=$1"
 		}
 	]
 };
