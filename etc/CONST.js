@@ -16,7 +16,7 @@ const LINK_LIST_ACTION_NORMAL = "n";
 const LINK_LIST_ACTION_MOUSEOVER = "m";
 const LINK_LIST_ACTION_MOUSECLICK = "c";
 
-const DEFAULT_MEANING_VALUE = false;
+const DEFAULT_MEANING_VALUE = true;
 
 const DEFAULT_LOCALE = "en";
 
