@@ -17,6 +17,8 @@ const LINK_LIST_ACTION_NORMAL = "n";
 const LINK_LIST_ACTION_MOUSEOVER = "m";
 const LINK_LIST_ACTION_MOUSECLICK = "c";
 
+const DEFAULT_MEANING_VALUE = true;
+
 const DEFAULT_LOCALE = "en";
 
 const API_SWITCH_DISABLED = "";
@@ -129,30 +131,26 @@ const WIDGET_STYLE = `
 #lessLaborGoToDictionary-widget.lessLaborGoToDictionary-hide {
 	display: none;
 }
+#lessLaborGoToDictionary-widget.lessLaborGoToDictionary-dark {
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	background: linear-gradient(to bottom right, #404040, #202020);
+}
 #lessLaborGoToDictionary-widget.lessLaborGoToDictionary-stopper {
 	width: 30px !important;
 	height: 30px !important;
 	padding: 0px !important;
 	overflow: hidden;
 	resize: none;
-}
-#lessLaborGoToDictionary-widget.lessLaborGoToDictionary-dark {
-	border-top-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	background: linear-gradient(to bottom right, #404040, #202020);
-	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.64),0 2px 10px 0 rgba(0,0,0,0.48);
-}
-#lessLaborGoToDictionary-viewer {
-	position: relative;
+	background: none;
+	background-color: transparent;
+	border-radius: 15px;
 }
 #lessLaborGoToDictionary-cover {
 	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
 	cursor: pointer;
+	width: 30px;
+	height: 30px;
 }
 .lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-cover {
 	display: block;
@@ -162,6 +160,9 @@ const WIDGET_STYLE = `
 	line-height: 0;
 	white-space: nowrap;
 	margin-bottom: 3px;
+}
+.lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-menu {
+	display: none;
 }
 .lessLaborGoToDictionary-buttonIcon {
 	display: inline-block;
@@ -180,6 +181,9 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
 	display: grid;
 	grid-template-columns: min-content minmax(100px,auto);
+}
+.lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-grid {
+	display: none;
 }
 #lessLaborGoToDictionary-container {
 	margin-bottom: 3px;

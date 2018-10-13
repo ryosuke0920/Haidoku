@@ -121,7 +121,7 @@
 			"ls": LINK_LIST_SEPARATOR_VERTICAL,
 			"s": serviceCode,
 			"ll": languageFilter,
-			"co": true,
+			"co": DEFAULT_MEANING_VALUE
 		});
 		return getter.then(onGot);
 	}

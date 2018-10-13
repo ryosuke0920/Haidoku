@@ -104,7 +104,7 @@
 
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
-		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/rect30.png")+")";
+		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/icon30.png")+")";
 		viewerNode.appendChild(coverNode);
 
 		containerNode = document.createElement("ul");
@@ -697,7 +697,7 @@
 			"sw": API_SWITCH_DISABLED,
 			"s": serviceCode,
 			"ll": languageFilter,
-			"co": true
+			"co": DEFAULT_MEANING_VALUE
 		});
 		return getter.then(setVer, onReadError);
 	}

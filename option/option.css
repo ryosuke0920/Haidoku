@@ -105,17 +105,18 @@ a:hover {
 	background-color: white;
 }
 #header {
-	height: 200px;
+	height: 190px;
 	background-color: #404040;
 	color: white;
 }
 #header .logo {
-	maring: auto;
+	margin: auto;
 	text-align: center;
 	padding-top: 10px;
+	width: 100%;
+	background-color: white;
 }
 #header h1 {
-	font-size: 16px;
 	font-weight: normal;
 	padding-left: 10px;
 }
