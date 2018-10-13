@@ -46,6 +46,7 @@
 			"48": "image/icon48.png",
 			"16": "image/icon16.png"
 		},
+		"default_popup": "popup/popup.html",
 		"default_title": "__MSG_extensionName__"
 	},
 	"permissions": [
