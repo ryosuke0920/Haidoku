@@ -529,5 +529,26 @@
 				"content": "$1"
 			}
 		}
+	},
+	"htmlEnableText": {
+		"message": "ON／OFF"
+	},
+	"htmlDisable": {
+		"message": "OFF"
+	},
+	"htmlEnableAllDomain": {
+		"message": "すべてのドメインでON"
+	},
+	"htmlEnableAllowedDomain": {
+		"message": "許可したドメインでON"
+	},
+	"htmlAllowedDomain": {
+		"message": "ドメイン許可"
+	},
+	"htmlAllowText": {
+		"message": "許可"
+	},
+	"htmlOpenOption": {
+		"message": "設定画面を開く"
 	}
 }

@@ -77,34 +77,6 @@
 	border-bottom: 10px solid red;
 	border-left: 10px solid transparent;
 }
-.checkboxButton {
-	position:relative;
-	background-color: gray;
-	display: inline-block;
-	vertical-align: text-top;
-	height: 20px;
-	width: 30px;
-	border-radius: 15px;
-	cursor: pointer;
-	font-size: 20px;
-}
-.checkboxButton .circle {
-	position: absolute;
-	background: linear-gradient(to bottom, #FFFFFF, #F0F0F0 );
-	display: inline-block;
-	border-radius: 8px;
-	height: 16px;
-	width: 16px;
-	top: 2px;
-	left: 2px;
-}
-.checkboxButton[data-checked="1"] {
-	background-color: #5bd94d;
-}
-.checkboxButton[data-checked="1"] .circle {
-	left: unset;
-	right: 2px;
-}
 .checkboxButton[data-checked="1"].hist {
 	background-color: Orange;
 }

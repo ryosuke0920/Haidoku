@@ -1,0 +1,10 @@
+.popupStyle h1 {
+	font-size: 1em;
+	border-bottom: solid 3px black;
+}
+.popupStyle section {
+	margin-bottom: 1em;
+}
+.popupStyle section:last-of-type {
+	margin-bottom: 0;
+}

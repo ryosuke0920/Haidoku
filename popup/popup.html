@@ -8,24 +8,44 @@
 <link rel="stylesheet" type="text/css" href="/css/popup.css">
 <title></title>
 </head>
-<body>
+<body class="box">
 <div>
-	<main id="main">
-		<table>
-			<tbody>
-				<tr>
-					<th>enable</th>
-					<td></td>
-				</tr>
-				<tr>
-					<th>domain enable</th>
-					<td></td>
-				</tr>
-				<tr>
-					<th>open setting screen.</th>
-					<td></td>
-				</tr>
-		</table>
+	<main class="popupStyle">
+		<section>
+			<h1 class="enableText">enableText</h1>
+			<div>
+				<label>
+					<input type="radio" name="enable" value="0">
+					<span class="disableText">disableText</span>
+				</label>
+				<br>
+				<label>
+					<input type="radio" name="enable" value="1">
+					<span class="enableAllDomainText">enableAllDomainText</span>
+				</label>
+				<br>
+				<label>
+					<input type="radio" name="enable" value="2">
+					<span class="enableAllowedDomainText">enableAllowedDomainText</span>
+				</label>
+			</div>
+		</section>
+		<section>
+			<h1 class="allowedDomainText">allowedDomainText</h1>
+			<div>
+				<label>
+					<span class="domainText">domainText</span>
+					<br>
+					<input type="checkbox" name="allow" value="1">
+					<span class="allowText">allowText</span>
+				</label>
+			</div>
+		</section>
+		<section>
+			<div class="center">
+				<a href="#" id="optionOpener" class="optionName">extensionOptionName</a>
+			</div>
+		</section>
 	</main>
 </div>
 <script src="/etc/CONST.js"></script>
