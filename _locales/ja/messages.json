@@ -537,7 +537,7 @@
 		"message": "OFF"
 	},
 	"htmlEnableAllDomain": {
-		"message": "すべてのドメインでON"
+		"message": "ON"
 	},
 	"htmlEnableAllowedDomain": {
 		"message": "許可したドメインでON"

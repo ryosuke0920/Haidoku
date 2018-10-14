@@ -27,14 +27,46 @@ function onClickEvent(e){
 	else if(e.target.id == "allowDomainCheck"){
 		let domain = e.target.value;
 		console.log("domain=" + domain);
+		if(e.target.checked){
+			saveDomainList(domain).catch(onSaveError);
+		}
+		else{
+			removeDomainList(domain).catch(onSaveError);
+		}
 		return;
 	}
 	else if(e.target.name == "enable"){
 		let value = e.target.value;
 		console.log("value=" + value);
+		save({"e": value}).catch(onSaveError);
 		return;
 	}
 }
+
+function saveDomainList(domain){
+	let p = ponyfill.storage.sync.get({
+		"dl": DEFAULT_DOMAIN_LIST
+	});
+	return p.then((data)=>{
+		console.log(data);
+		if(data.dl.includes(domain)) return;
+		data.dl.push(domain);
+		return save({"dl": data.dl});
+	});
+}
+
+function removeDomainList(domain){
+	let p = ponyfill.storage.sync.get({
+		"dl": DEFAULT_DOMAIN_LIST
+	});
+	return p.then((data)=>{
+		console.log(data);
+		if(!data.dl.includes(domain)) return;
+		data.dl = data.dl.filter((e)=>{return e!=domain});
+		return save({"dl": data.dl});
+	});
+}
+
 
 function showBody(){
 	show(document.body);
