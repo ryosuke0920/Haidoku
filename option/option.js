@@ -1,7 +1,6 @@
 const MAX_FIELD = 50;
 const MAX_LABEL_BYTE = 100;
 const MAX_URL_BYTE = 300;
-const URL_REGEX = new RegExp(/^(?:[hH][tT][tT][pP][sS]?|[fF][tT][pP][sS]?):\/\/\w+/);
 const ADD_FIELD_CLASS = "add";
 const ADD_FIELD_DURATION = 1.5 * 1000;
 const SCROLL_RACIO = 1/2;
@@ -386,11 +385,6 @@ function checkUrl(node, messageNode){
 		show(messageNode);
 		return false;
 	}
-	return true;
-}
-
-function isURL(text){
-	if( !text.match(URL_REGEX) ) return false;
 	return true;
 }
 

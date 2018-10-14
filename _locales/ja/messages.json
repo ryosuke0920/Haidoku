@@ -543,10 +543,13 @@
 		"message": "許可したドメインでON"
 	},
 	"htmlAllowedDomain": {
-		"message": "ドメイン許可"
+		"message": "ドメインの許可"
 	},
 	"htmlAllowText": {
-		"message": "許可"
+		"message": "許可する"
+	},
+	"htmlDisableDomainText": {
+		"message": "このドメインは許可できません。"
 	},
 	"htmlOpenOption": {
 		"message": "設定画面を開く"
