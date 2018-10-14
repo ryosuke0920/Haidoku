@@ -92,6 +92,13 @@ a {
 a:hover {
 	text-decoration: underline;
 }
+.panelStyle>section {
+	margin-bottom: 3em;
+}
+.panelStyle>section>h1 {
+	margin-bottom: 3em;
+}
+
 .controller {
 	position: fixed;
 	top: 0;
@@ -154,7 +161,8 @@ a:hover {
 .borderComponent aside {
 	margin-bottom: 1em;
 }
-.panelH1, .borderComponent>h1 {
+.panelStyle>section>h1,
+.borderComponent>h1 {
 	font-size: 20px;
 	border-radius: 5px;
 	background-color: #404040;

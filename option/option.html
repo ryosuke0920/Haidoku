@@ -232,6 +232,48 @@
 				</template>
 			</div>
 		</div>
+		<div id="control" class="panelStyle panel hide">
+			<section>
+				<h1 class="displayFunctionTitle">displayFunctionTitle</h1>
+				<div>
+					<label>
+						<input type="checkbox" class="" value="">
+						<span class="autoDisplay">autoDisplay</span>
+					</label>
+					<br>
+					<label>
+						<input type="checkbox" class="" value="">
+						<span class="manualDisplayShift">manualDisplayShift</span>
+					</label>
+					<br>
+					<label>
+						<input type="checkbox" class="" value="">
+						<span class="manualDisplayCtrl">manualDisplayCtrl</span>
+					</label>
+					<br>
+				</div>
+			</section>
+			<section>
+				<h1 class="domainListTitle">domainListTitle</h1>
+				<div>
+					<div>
+						<label>
+							<input type="text" class="domain">
+							<input type="button" class="addDomainButton" value="addDomainButton">
+						</label>
+					</div>
+					<ol id="domainAllowedList"></ol>
+					<template>
+						<li>
+							<span class="domainText"domainText></span>
+							<span class="removeDomainBox">
+								<img src="/image/delete.svg" class="removeDomainButtom">
+							</span>
+						</li>
+					</template>
+				</div>
+			</section>
+		</div>
 		<div id="others" class="panel hide">
 			<div class="othersTable">
 				<section class="borderComponent">
@@ -433,35 +475,35 @@
 				</li>
 			</template>
 		</div>
-		<div id="contact" class="panel hide">
+		<div id="contact" class="panelStyle panel hide">
 			<section>
-				<h1 class="panelH1 releaseNoteTitle">htmlRleaseNoteTitle</h1>
+				<h1 class="releaseNoteTitle">htmlRleaseNoteTitle</h1>
 				<p class="sentence">
 					<a href="https://github.com/ryosuke0920/Haidoku/releases" target="_blank">https://github.com/ryosuke0920/Haidoku/releases</a>
 				</p>
 			</section>
 			<section>
-				<h1 class="panelH1 announcementTitle">htmlAnnouncementTitle</h1>
+				<h1 class="announcementTitle">htmlAnnouncementTitle</h1>
 				<p class="sentence">
 					<a href="https://twitter.com/SearchDictionar" target="_blank">https://twitter.com/SearchDictionar</a>
 				</p>
 			</section>
 			<section>
-				<h1 class="panelH1 issueTitle">htmlIssueTitle</h1>
+				<h1 class="issueTitle">htmlIssueTitle</h1>
 				<p class="sentence">
 					<span class="issueDescription">htmlIssueDescription</span><br>
 					<a href="https://github.com/ryosuke0920/Haidoku/issues" target="_blank">https://github.com/ryosuke0920/Haidoku/issues</a>
 				</p>
 			</section>
 			<section>
-				<h1 class="panelH1 contactTitle">htmlContactTitle</h1>
+				<h1 class="contactTitle">htmlContactTitle</h1>
 				<p class="sentence">
 					<a href="mailto:ryosuke.ohta.programmer@gmail.com">ryosuke.ohta.programmer@gmail.com</a><br>
 					<span class="iam">htmlIam</span>
 				</p>
 			</section>
 			<section>
-				<h1 class="panelH1 licenseTitle">htmlLicenseTitle</h1>
+				<h1 class="licenseTitle">htmlLicenseTitle</h1>
 				<p class="sentence">
 					<span class="licenseDescription">htmlLicenseDescription</span><br>
 					<a href="https://opensource.org/licenses/MIT" target="_blank">https://opensource.org/licenses/MIT</a>
@@ -482,6 +524,7 @@
 			<div class="navi active" data-navi-name="form">htmlFormName</div>
 			<div class="navi" data-navi-name="history">htmlHistoryName</div>
 			<div class="navi" data-navi-name="ranking">htmlRankingName</div>
+			<div class="navi" data-navi-name="control">htmlControlName</div>
 			<div class="navi" data-navi-name="others">htmlOthersName</div>
 			<div class="navi" data-navi-name="contact">htmlContactName</div>
 		</nav>
@@ -496,6 +539,7 @@
 <script src="option.js"></script>
 <script src="optionHistory.js"></script>
 <script src="optionRanking.js"></script>
+<script src="optionControl.js"></script>
 <script src="optionOthers.js"></script>
 </body>
 </html>

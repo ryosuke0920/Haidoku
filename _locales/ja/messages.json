@@ -168,6 +168,9 @@
 	"htmlRankingName": {
 		"message": "検索回数"
 	},
+	"htmlControlName": {
+		"message": "制御"
+	},
 	"htmlOthersName": {
 		"message": "表示"
 	},
@@ -332,6 +335,12 @@
 	},
 	"htmlLinkListStyleTitle": {
 		"message": "ウィジェットのスタイル"
+	},
+	"htmlDisplayFunctionTitle": {
+		"message": "ウィジェットの表示方法"
+	},
+	"htmlDomainListTitle": {
+		"message": "ドメイン許可"
 	},
 	"htmlLinkListStyleClassic": {
 		"message": "クラシック"
@@ -543,7 +552,7 @@
 		"message": "許可したドメインでON"
 	},
 	"htmlAllowedDomain": {
-		"message": "ドメインの許可"
+		"message": "ドメイン許可"
 	},
 	"htmlAllowText": {
 		"message": "許可する"

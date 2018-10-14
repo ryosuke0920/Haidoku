@@ -71,6 +71,7 @@ function initI18n(){
 		{ "selector": ".navi[data-navi-name=\"form\"]", "property": "innerText", "key": "htmlFormName" },
 		{ "selector": ".navi[data-navi-name=\"history\"]", "property": "innerText", "key": "htmlHistoryName" },
 		{ "selector": ".navi[data-navi-name=\"ranking\"]", "property": "innerText", "key": "htmlRankingName" },
+		{ "selector": ".navi[data-navi-name=\"control\"]", "property": "innerText", "key": "htmlControlName" },
 		{ "selector": ".navi[data-navi-name=\"others\"]", "property": "innerText", "key": "htmlOthersName" },
 		{ "selector": ".navi[data-navi-name=\"contact\"]", "property": "innerText", "key": "htmlContactName" },
 

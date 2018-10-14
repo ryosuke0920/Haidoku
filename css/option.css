@@ -363,11 +363,6 @@
 	}
 }
 
-/* contact */
-#contact>section {
-	margin-bottom: 3em;
-}
-
 /* component */
 .excludeImage,.includeImage {
 	display: none;
