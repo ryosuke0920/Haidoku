@@ -1,3 +1,5 @@
+let allowDomainCheckNode = document.querySelector("#allowDomainCheck");
+
 init();
 
 function init(){
@@ -13,7 +15,7 @@ function init(){
 	];
 	setI18n(list);
 	document.querySelector("body").addEventListener("click", onClickEvent );
-	hostnameProsess().catch((e)=>console.error(e));
+	Promise.resolve().then(hostnameProsess).then(configProsess).then(showBody).catch((e)=>console.error(e));
 }
 
 function onClickEvent(e){
@@ -22,6 +24,47 @@ function onClickEvent(e){
 		window.close();
 		return;
 	}
+	else if(e.target.id == "allowDomainCheck"){
+		let domain = e.target.value;
+		console.log("domain=" + domain);
+		return;
+	}
+	else if(e.target.name == "enable"){
+		let value = e.target.value;
+		console.log("value=" + value);
+		return;
+	}
+}
+
+function showBody(){
+	show(document.body);
+}
+
+function configProsess(){
+	let p = ponyfill.storage.sync.get({
+		"e": DEFAULT_ENABLE_VALUE,
+		"dl": DEFAULT_DOMAIN_LIST
+	});
+	return p.then( onGotConfig );
+}
+
+function onGotConfig(data){
+	console.log(data);
+	document.querySelector("[name=\"enable\"][value=\""+data.e+"\"]").checked = true;
+	if(data.dl.includes(allowDomainCheckNode.value)){
+		allowDomainCheckNode.checked = true;
+	}
+}
+
+function hostnameProsess(){
+	return Promise.resolve().then( getActiveTab ).then( getCrrentURL ).then( applyHostname );
+}
+
+function getActiveTab(){
+	return browser.tabs.query({
+		"active": true,
+		"windowId": browser.windows.WINDOW_ID_CURRENT
+	});
 }
 
 function getCrrentURL(tabs){
@@ -54,14 +97,7 @@ function applyHostname(url){
 		return;
 	}
 	document.querySelector("#domainText").innerText = url.hostname;
+	allowDomainCheckNode.value = url.hostname;
 	show(allowedDominBox);
 	hide(disableDominBox);
-}
-
-function hostnameProsess(){
-	let p = browser.tabs.query({
-		"active": true,
-		"windowId": browser.windows.WINDOW_ID_CURRENT
-	});
-	return p.then( getCrrentURL ).then( applyHostname );
 }
