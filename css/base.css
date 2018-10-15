@@ -18,6 +18,9 @@ p, .paragraph {
 	white-space: normal;
 	margin-bottom: 1em;
 }
+.space {
+	margin-bottom: 1em;
+}
 ol, ul {
 	margin-left: 2em;
 }
@@ -230,4 +233,26 @@ nav .groupLine {
 .checkboxButton[data-checked="1"] .circle {
 	left: unset;
 	right: 2px;
+}
+.configList>li {
+	border-radius: 5px;
+}
+.configList>li:hover {
+	background-color: Gainsboro;
+}
+.configList>li>div {
+	display:flex;
+}
+.configList .configListLabel {
+	width: 90%;
+}
+.configList .configListRemoveBox {
+	margin-left: 1em;
+	width: 2em;
+}
+.configList .configListRemoveButton {
+	vertical-align: text-bottom;
+	cursor: pointer;
+	width: 16px;
+	height: 16px;
 }

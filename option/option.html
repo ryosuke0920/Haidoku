@@ -235,7 +235,7 @@
 		<div id="control" class="panelStyle panel hide">
 			<section>
 				<h1 class="displayFunctionTitle">displayFunctionTitle</h1>
-				<p id="displayFunctionDescription" class="sentence"></p>
+				<p id="displayFunctionDescription" class="sentence">displayFunctionDescription</p>
 				<div>
 					<label>
 						<input type="checkbox" id="autoDisplayCheck">
@@ -256,23 +256,27 @@
 			</section>
 			<section>
 				<h1 class="domainListTitle">domainListTitle</h1>
-				<div>
-					<div>
-						<label>
-							<input type="text" class="domain">
-							<input type="button" class="addDomainButton" value="addDomainButton">
-						</label>
-					</div>
-					<ol id="domainAllowedList"></ol>
-					<template>
-						<li>
-							<span class="domainText"domainText></span>
-							<span class="removeDomainBox">
-								<img src="/image/delete.svg" class="removeDomainButtom">
-							</span>
-						</li>
-					</template>
+				<p id="displayDomainListDescription" class="sentence">displayDomainListDescription</p>
+				<div class="space">
+					<label>
+						<input type="text" class="domain">
+						<input type="button" class="addDomainButton" value="addDomainButton">
+					</label>
 				</div>
+				<div class="borderComponent">
+					<p>許可しているドメインの一覧です。</p>
+					<ol id="domainAllowedList" class="configList"></ol>
+				</div>
+				<template id="domainListTemplate">
+					<li>
+						<div>
+							<span class="domainText configListLabel">domainText</span>
+							<span class="configListRemoveBox">
+								<img src="/image/delete.svg" class="configListRemoveButton">
+							</span>
+						</div>
+					</li>
+				</template>
 			</section>
 		</div>
 		<div id="others" class="panel hide">
@@ -352,7 +356,7 @@
 						<aside class="sentence languageFilterAside">htmlLanguageFilterAside</aside>
 						<p><button class="addLanguageFilter">htmlAddLanguageFilter</button></p>
 						<p class="sentence languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
-						<ul class="languageFilterBox"></ul>
+						<ol class="languageFilterBox configList"></ol>
 						<div id="downloadLanguagePane" class="box hide">
 							<div></div>
 							<p><span class="languageFilterDownloadMessage">htmlLanguageFilterDownloadMessage</span></p>
@@ -446,7 +450,7 @@
 						<div>
 							<div id="languageSelectList" class="borderComponent">
 								<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
-								<ol class="languageFilterBox"></ol>
+								<ol class="languageFilterBox configList"></ol>
 							</div>
 						</div>
 					</div>
@@ -455,9 +459,9 @@
 			<template id="languageListPrototype">
 				<li>
 					<div>
-						<span class="languageLabel"></span>
-						<span class="removeLanguageBox">
-							<img src="/image/delete.svg" class="removeLanguageButtom">
+						<span class="languageLabel configListLabel"></span>
+						<span class="configListRemoveBox">
+							<img src="/image/delete.svg" class="removeLanguageButtom configListRemoveButton">
 						</span>
 					</div>
 				</li>

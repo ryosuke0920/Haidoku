@@ -229,6 +229,12 @@
 	width: auto;
 }
 
+/* control */
+#domainAllowedList.configList {
+	width: 20em;
+}
+
+
 /* others menu */
 
 .othersTable {
@@ -289,28 +295,6 @@
 }
 #languageFileterComponent {
 	position: relative;
-}
-.removeLanguageButtom {
-	vertical-align: text-bottom;
-	cursor: pointer;
-	width: 16px;
-	height: 16px;
-}
-.languageFilterBox>li {
-	border-radius: 5px;
-}
-.languageFilterBox>li:hover {
-	background-color: Gainsboro;
-}
-.languageFilterBox>li>div {
-	display:flex;
-}
-.languageLabel {
-	width: 90%;
-}
-.removeLanguageBox {
-	margin-left: 1em;
-	width: 2em;
 }
 #downloadLanguagePane {
 	position: absolute;

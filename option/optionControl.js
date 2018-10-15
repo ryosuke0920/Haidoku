@@ -31,6 +31,7 @@
 		applyAutoDisplayCheck(e.bf);
 		applyManualDisplayShiftKeyCheck(e.sk);
 		applyManualDisplayCtrlKeyCheck(e.ck);
+		applyDomainList(e.dl);
 	}
 	function storageOnChageBehavior(e){
 		if( e.hasOwnProperty("w") && e["w"]["newValue"] == windowId ) return;
@@ -52,6 +53,16 @@
 	}
 	function applyManualDisplayCtrlKeyCheck(value){
 		document.querySelector("#manualDisplayCtrlKeyCheck").checked = value;
+	}
+	function applyDomainList(domainList){
+		let domainListNode = document.querySelector("#domainAllowedList");
+		clearChildren(domainListNode);
+		let template = document.querySelector("#domainListTemplate");
+		for(let i=0; i<domainList.length; i++){
+			let node = document.importNode(template.content, true);
+			node.querySelector(".domainText").innerText = domainList[i];
+			domainListNode.appendChild(node);
+		}
 	}
 	function onClickBehavior(e){
 		if(e.target.id == "autoDisplayCheck"){
