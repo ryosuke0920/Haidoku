@@ -28,6 +28,11 @@ function onClickEvent(e){
 		let domain = e.target.value;
 		console.log("domain=" + domain);
 		if(e.target.checked){
+			if(!checkByte(domain,DOMAIN_MAX_LENGTH)){
+				e.preventDefault();
+				notice(ponyfill.i18n.getMessage("notificationCheckDomainByteLengthError", [DOMAIN_MAX_LENGTH] ));
+				return;
+			}
 			saveDomainList(domain).catch(onSaveError);
 		}
 		else{
