@@ -264,15 +264,16 @@
 					</label>
 				</div>
 				<div class="borderComponent">
-					<p>許可しているドメインの一覧です。</p>
+					<p id="domainAllowedDescription" class="hide">domainAllowedDescription</p>
+					<p id="noneDomainAllowedDescription" class="hide">noneDomainAllowedDescription</p>
 					<ol id="domainAllowedList" class="configList"></ol>
 				</div>
 				<template id="domainListTemplate">
-					<li>
+					<li class="domainListItem">
 						<div>
 							<span class="domainText configListLabel">domainText</span>
 							<span class="configListRemoveBox">
-								<img src="/image/delete.svg" class="configListRemoveButton">
+								<img src="/image/delete.svg" class="configListRemoveButton domainListRemoveButton">
 							</span>
 						</div>
 					</li>

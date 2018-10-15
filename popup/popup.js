@@ -56,14 +56,9 @@ function saveDomainList(domain){
 }
 
 function removeDomainList(domain){
-	let p = ponyfill.storage.sync.get({
-		"dl": DEFAULT_DOMAIN_LIST
-	});
-	return p.then((data)=>{
-		console.log(data);
-		if(!data.dl.includes(domain)) return;
-		data.dl = data.dl.filter((e)=>{return e!=domain});
-		return save({"dl": data.dl});
+	return Promise.resolve().then( getDomainList ).then( (domainList)=>{
+		domainList = makeRemoveDomainList(domainList, domain)
+		return save({"dl": domainList});
 	});
 }
 

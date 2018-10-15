@@ -5,11 +5,13 @@
 		console.log("initControl");
 		let list = [
 			{ "selector": ".displayFunctionTitle", "property": "innerText", "key": "htmlDisplayFunctionTitle" },
-			{ "selector": ".domainListTitle", "property": "innerText", "key": "htmlDomainListTitle" },
 			{ "selector": "#displayFunctionDescription", "property": "innerText", "key": "htmlDisplayFunctionDescription" },
 			{ "selector": "#autoDisplayText", "property": "innerText", "key": "extensionOptionAutoView" },
 			{ "selector": "#manualDisplayShiftKeyText", "property": "innerText", "key": "extensionOptionManualViewByShiftKey" },
-			{ "selector": "#manualDisplayCtrlKeyText", "property": "innerText", "key": "extensionOptionManualViewByCtrlKey" }
+			{ "selector": "#manualDisplayCtrlKeyText", "property": "innerText", "key": "extensionOptionManualViewByCtrlKey" },
+			{ "selector": ".domainListTitle", "property": "innerText", "key": "htmlDomainListTitle" },
+			{ "selector": "#domainAllowedDescription", "property": "innerText", "key": "htmlDomainAllowedDescription" },
+			{ "selector": "#noneDomainAllowedDescription", "property": "innerText", "key": "htmlNoneDomainAllowedDescription" }
 		];
 		setI18n(list);
 		applyConfig();
@@ -44,6 +46,9 @@
 		else if(e.hasOwnProperty("ck")){
 			applyManualDisplayCtrlKeyCheck(e.ck.newValue);
 		}
+		else if(e.hasOwnProperty("dl")){
+			applyDomainList(e.dl.newValue);
+		}
 	}
 	function applyAutoDisplayCheck(value){
 		document.querySelector("#autoDisplayCheck").checked = value;
@@ -61,8 +66,23 @@
 		for(let i=0; i<domainList.length; i++){
 			let node = document.importNode(template.content, true);
 			node.querySelector(".domainText").innerText = domainList[i];
+			node.querySelector(".domainListRemoveButton").setAttribute("data-domain",domainList[i]);
 			domainListNode.appendChild(node);
 		}
+		if(domainList.length<=0){
+			hide(document.querySelector("#domainAllowedDescription"));
+			show(document.querySelector("#noneDomainAllowedDescription"));
+		}
+		else {
+			show(document.querySelector("#domainAllowedDescription"));
+			hide(document.querySelector("#noneDomainAllowedDescription"));
+		}
+	}
+	function removeDomainList(domain){
+		return Promise.resolve().then( getDomainList ).then( (domainList)=>{
+			domainList = makeRemoveDomainList(domainList, domain)
+			return saveW({"dl": domainList});
+		});
 	}
 	function onClickBehavior(e){
 		if(e.target.id == "autoDisplayCheck"){
@@ -74,6 +94,9 @@
 		else if(e.target.id == "manualDisplayCtrlKeyCheck"){
 			saveW({"ck": e.target.checked}).catch(onSaveError);
 		}
+		else if(e.target.classList.contains("domainListRemoveButton")){
+			e.target.closest(".domainListItem").remove();
+			removeDomainList(e.target.getAttribute("data-domain")).catch(onSaveError);
+		}
 	}
-
 })();

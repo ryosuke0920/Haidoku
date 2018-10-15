@@ -345,6 +345,12 @@
 	"htmlDomainListTitle": {
 		"message": "ドメイン許可"
 	},
+	"htmlDomainAllowedDescription": {
+		"message": "許可しているドメインの一覧です。"
+	},
+	"htmlNoneDomainAllowedDescription": {
+		"message": "許可しているドメインはありません。"
+	},
 	"htmlLinkListStyleClassic": {
 		"message": "クラシック"
 	},
