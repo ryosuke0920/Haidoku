@@ -43,7 +43,7 @@ function initContextMenu(){
 function getSetting() {
 	let serviceCode = getDefaultServiceCode();
 	return ponyfill.storage.sync.get({
-		"ol": [],
+		"ol": DEFAULT_OPTION_LIST_ON_GET,
 		"bf": DEFAULT_AUTO_VIEW_FLAG,
 		"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
 		"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,

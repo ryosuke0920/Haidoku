@@ -113,7 +113,7 @@
 		let serviceCode = getDefaultServiceCode();
 		let languageFilter = getDefaultLanguageFilter();
 		let getter = ponyfill.storage.sync.get({
-			"ol": [],
+			"ol": DEFAULT_OPTION_LIST_ON_GET,
 			"cl": LINK_LIST_STYLE_DARK,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
 			"f": LINK_LIST_FAVICON_ONLY,

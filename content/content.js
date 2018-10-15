@@ -682,10 +682,10 @@
 		let serviceCode = getDefaultServiceCode();
 		let languageFilter = getDefaultLanguageFilter();
 		let getter = ponyfill.storage.sync.get({
-			"ol": [],
-			"bf": true,
-			"sk": false,
-			"ck": false,
+			"ol": DEFAULT_OPTION_LIST_ON_GET,
+			"bf": DEFAULT_AUTO_VIEW_FLAG,
+			"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
+			"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE,

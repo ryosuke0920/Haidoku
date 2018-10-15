@@ -129,7 +129,7 @@ function initNode(){
 
 function initField(){
 	let getter = ponyfill.storage.sync.get({
-		"ol": []
+		"ol": DEFAULT_OPTION_LIST_ON_GET
 	});
 
 	function onGot(res){
@@ -472,8 +472,8 @@ function makeOptionList(){
 		let histNode = field.querySelector(".hist");
 		let hist = false;
 		if( histNode && histNode.getAttribute("data-checked") ) hist = true;
-		let label = fetchValue(field, ".label");
-		let url = fetchValue(field, ".url");
+		let label = cutStrByByte(fetchValue(field, ".label"), MAX_LABEL_BYTE);
+		let url = cutStrByByte(fetchValue(field, ".url"), MAX_URL_BYTE);
 		let data = {
 			"c": checked,
 			"l": label,
@@ -483,6 +483,13 @@ function makeOptionList(){
 		optionList.push(data);
 	}
 	return optionList;
+}
+
+function cutStrByByte(str,byte){
+	while( !checkByte(str, byte) ){
+		str = str.slice(0,-1);
+	}
+	return str;
 }
 
 function fetchValue(element, selector){
