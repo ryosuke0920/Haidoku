@@ -339,6 +339,9 @@
 	"htmlDisplayFunctionTitle": {
 		"message": "ウィジェットの表示方法"
 	},
+	"htmlDisplayFunctionDescription": {
+		"message": "テキスト選択後、ウィジェットを自動で表示するか、キーボード操作で表示するか選択してください。すべてのチェックを解除すると、表示できなくなります。コンテキストメニュー（右クリック）でも設定できます。"
+	},
 	"htmlDomainListTitle": {
 		"message": "ドメイン許可"
 	},
