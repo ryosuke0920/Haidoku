@@ -620,7 +620,7 @@
 				prefix[obj.shortPrefix] = 1;
 			}
 			/*
-			let n = obj.title.length;
+			let n = byteLength(obj.title);
 			if(max.value<n){
 				max.value = n;
 				max.name = obj.title;
