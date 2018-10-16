@@ -13,7 +13,9 @@
 			{ "selector": "#noneDomainAllowedDescription", "property": "innerText", "key": "htmlNoneDomainAllowedDescription" }
 		];
 		setI18n(list);
-		applyConfig();
+		let p1 = applyConfig().catch(onReadError);
+		let p2 = dlModel.readList().then(applyDomainList).catch(onReadError);
+		dlModel.addStorageChangeListener(applyDomainList);
 		ponyfill.storage.onChanged.addListener(storageOnChageBehavior);
 		document.querySelector("#control").addEventListener("click", onClickBehavior);
 	}
@@ -24,15 +26,13 @@
 		return ponyfill.storage.sync.get({
 			"bf": DEFAULT_AUTO_VIEW_FLAG,
 			"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
-			"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
-			"dl": DEFAULT_DOMAIN_LIST
+			"ck": DEFAULT_CTRL_KEY_VIEW_FLAG
 		});
 	}
 	function gotConfig(e){
 		applyAutoDisplayCheck(e.bf);
 		applyManualDisplayShiftKeyCheck(e.sk);
 		applyManualDisplayCtrlKeyCheck(e.ck);
-		applyDomainList(e.dl);
 	}
 	function storageOnChageBehavior(e){
 		if( e.hasOwnProperty("w") && e["w"]["newValue"] == windowId ) return;
@@ -44,9 +44,6 @@
 		}
 		else if(e.hasOwnProperty("ck")){
 			applyManualDisplayCtrlKeyCheck(e.ck.newValue);
-		}
-		else if(e.hasOwnProperty("dl")){
-			applyDomainList(e.dl.newValue);
 		}
 	}
 	function applyAutoDisplayCheck(value){
@@ -76,12 +73,6 @@
 			show(document.querySelector("#domainAllowedDescription"));
 			hide(document.querySelector("#noneDomainAllowedDescription"));
 		}
-	}
-	function removeDomainList(domain){
-		return Promise.resolve().then( getDomainList ).then( (domainList)=>{
-			domainList = makeRemoveDomainList(domainList, domain)
-			return saveW({"dl": domainList});
-		});
 	}
 	function onClickBehavior(e){
 		if(e.target.id == "autoDisplayCheck"){

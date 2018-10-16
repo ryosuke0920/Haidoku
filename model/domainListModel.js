@@ -16,6 +16,12 @@ class domainListModel extends model {
 	getDomainList(){
 		return this.domainList;
 	}
+	setMethodOnStorageChange(method){
+		this.method = method;
+	}
+	getMethodOnStorageChange(){
+		return this.method;
+	}
 	writeList(list){
 		return saveW({"dl": list});
 	}
@@ -36,7 +42,7 @@ class domainListModel extends model {
 	checkDomainProcess(){
 		return Promise.resolve().then(()=>{
 			if(!this.checkDomain()){
-				this.setMessage(ponyfill.i18n.getMessage("notificationCheckDomainByteLengthError", [DOMAIN_MAX_LENGTH]));
+				this.setMessage(ponyfill.i18n.getMessage("notificationDomainLengthError", [DOMAIN_MAX_LENGTH]));
 				return false;
 			}
 			return true;
@@ -48,7 +54,7 @@ class domainListModel extends model {
 	checkDomainListProcess(){
 		return this.readList().then( this.checkDomainList.bind(this) ).then((result)=>{
 			if(!result){
-				this.setMessage(ponyfill.i18n.getMessage("notificationCheckDomainListSizeError", [DOMAIN_LIST_MAX_SIZE]));
+				this.setMessage(ponyfill.i18n.getMessage("notificationDomainListSizeError", [DOMAIN_LIST_MAX_SIZE]));
 				return false;
 			}
 			return true;
@@ -70,5 +76,16 @@ class domainListModel extends model {
 			list = list.filter((e)=>{return e != domain});
 			return this.writeList(list);
 		});
+	}
+	addStorageChangeListener(method){
+		this.setMethodOnStorageChange(method);
+		ponyfill.storage.onChanged.addListener(this.storageChangeEvent.bind(this));
+	}
+	storageChangeEvent(e){
+		if( e.hasOwnProperty("w") && e.w.newValue == windowId ) return;
+		if( e.hasOwnProperty("dl") ){
+			this.setDomainList(e.dl.newValue);
+			this.getMethodOnStorageChange()(e.dl.newValue);
+		}
 	}
 }

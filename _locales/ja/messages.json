@@ -351,7 +351,7 @@
 	"htmlNoneDomainAllowedDescription": {
 		"message": "許可しているドメインはありません。"
 	},
-	"notificationCheckDomainByteLengthError": {
+	"notificationDomainLengthError": {
 		"message": "ドメインの長さは$LENGTH$バイトまでです。",
 		"placeholders": {
 			"LENGTH": {
@@ -359,7 +359,7 @@
 			}
 		}
 	},
-	"notificationCheckDomainListSizeError": {
+	"notificationDomainListSizeError": {
 		"message": "ドメインの設定は$SIZE$個までです。",
 		"placeholders": {
 			"SIZE": {
