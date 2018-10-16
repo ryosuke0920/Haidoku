@@ -28,12 +28,8 @@ function onClickEvent(e){
 		let domain = e.target.value;
 		console.log("domain=" + domain);
 		if(e.target.checked){
-			if(!checkByte(domain,DOMAIN_MAX_LENGTH)){
-				e.preventDefault();
-				notice(ponyfill.i18n.getMessage("notificationCheckDomainByteLengthError", [DOMAIN_MAX_LENGTH] ));
-				return;
-			}
-			saveDomainList(domain).catch(onSaveError);
+			e.preventDefault();
+			addDomainList(domain,e.target).catch(onSaveError);
 		}
 		else{
 			removeDomainList(domain).catch(onSaveError);
@@ -46,6 +42,32 @@ function onClickEvent(e){
 		save({"e": value}).catch(onSaveError);
 		return;
 	}
+}
+
+function addDomainList(domain,checkNode){
+	if(!checkByte(domain,DOMAIN_MAX_LENGTH)){
+		notice(ponyfill.i18n.getMessage("notificationCheckDomainByteLengthError", [DOMAIN_MAX_LENGTH] ));
+		return;
+	}
+	return Promise.resolve().then( checkDomainListSize ).then((result)=>{
+		console.log(result);
+		if(!result){
+			notice(ponyfill.i18n.getMessage("notificationCheckDomainListSizeError", [DOMAIN_LIST_MAX_SIZE] ));
+			return;
+		}
+		checkNode.checked = true;
+		return saveDomainList(domain);
+	});
+}
+
+function checkDomainListSize(){
+	let p = ponyfill.storage.sync.get({
+		"dl": DEFAULT_DOMAIN_LIST
+	});
+	return p.then((data)=>{
+		console.log(data);
+		return data.dl.length<DOMAIN_LIST_MAX_SIZE;
+	});
 }
 
 function saveDomainList(domain){

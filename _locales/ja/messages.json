@@ -359,6 +359,14 @@
 			}
 		}
 	},
+	"notificationCheckDomainListSizeError": {
+		"message": "ドメインの設定は$SIZE$個までです。",
+		"placeholders": {
+			"SIZE": {
+				"content": "$1"
+			}
+		}
+	},
 	"htmlLinkListStyleClassic": {
 		"message": "クラシック"
 	},
