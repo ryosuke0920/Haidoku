@@ -1,4 +1,5 @@
 let allowDomainCheckNode = document.querySelector("#allowDomainCheck");
+let widgetEnabler = new widgetEnablerModel();
 
 init();
 
@@ -37,9 +38,7 @@ function onClickEvent(e){
 		return;
 	}
 	else if(e.target.name == "enable"){
-		let value = e.target.value;
-		console.log("value=" + value);
-		save({"e": value}).catch(onSaveError);
+		widgetEnabler.save(e.target.value).catch(onSaveError);
 		return;
 	}
 }
@@ -90,22 +89,22 @@ function removeDomainList(domain){
 	});
 }
 
-
 function showBody(){
 	show(document.body);
 }
 
 function configProsess(){
-	let p = ponyfill.storage.sync.get({
-		"e": DEFAULT_ENABLE_VALUE,
-		"dl": DEFAULT_DOMAIN_LIST
+	let p1 = widgetEnabler.getValue().then((value)=>{
+		document.querySelector("[name=\"enable\"][value=\""+value+"\"]").checked = true;
 	});
-	return p.then( onGotConfig );
+	let p2 = ponyfill.storage.sync.get({
+		"dl": DEFAULT_DOMAIN_LIST
+	}).then( onGotConfig );
+	return Promise.all([p1,p2]);
 }
 
 function onGotConfig(data){
 	console.log(data);
-	document.querySelector("[name=\"enable\"][value=\""+data.e+"\"]").checked = true;
 	if(data.dl.includes(allowDomainCheckNode.value)){
 		allowDomainCheckNode.checked = true;
 	}
