@@ -548,6 +548,14 @@
 	"htmlDateInputError": {
 		"message": "日付を正しく入力してください。"
 	},
+	"htmlCheckLanguageFilterByteLengthError": {
+		"message": "言語フィルターの長さは$LENGTH$バイトまでです。",
+		"placeholders": {
+			"LENGTH": {
+				"content": "$1"
+			}
+		}
+	},
 	"htmlCheckLanguageFilterLengthError": {
 		"message": "言語フィルターの設定は$MAX$個までです。",
 		"placeholders": {

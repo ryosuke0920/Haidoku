@@ -1,5 +1,6 @@
 ( () => {
-	const API_LANGUAGE_MAX = 10;
+	const API_LANGUAGE_FILTER_LENGTH = 64;
+	const API_LANGUAGE_FILTER_SIZE = 10;
 	let othersNode = document.querySelector("#others");
 	let sampleWidgetNode;
 	let serviceCodeSelectNode = othersNode.querySelector(".serviceCodeSelect");
@@ -715,9 +716,14 @@
 		let classes = e.target.classList;
 		if(classes.contains("languageFilterCheckbox")){
 			if( e.target.checked ) {
+				if(!checkByte( e.target.value, API_LANGUAGE_FILTER_LENGTH )){
+					e.preventDefault();
+					notice( ponyfill.i18n.getMessage("htmlCheckLanguageFilterByteLengthError", [API_LANGUAGE_FILTER_LENGTH]) );
+					return;
+				}
 				if(!checkLanguageLimit()){
 					e.preventDefault();
-					notice( ponyfill.i18n.getMessage("htmlCheckLanguageFilterLengthError", [API_LANGUAGE_MAX]) );
+					notice( ponyfill.i18n.getMessage("htmlCheckLanguageFilterLengthError", [API_LANGUAGE_FILTER_SIZE]) );
 					return;
 				}
 				apiAddLanguage(e.target.value);
@@ -734,8 +740,7 @@
 
 	function checkLanguageLimit(){
 		let languageList = getLanguageFilterList();
-		if(languageList.length >= API_LANGUAGE_MAX) return false;
-		return true;
+		return languageList.length < API_LANGUAGE_FILTER_SIZE;
 	}
 
 	function apiAddLanguage(language){
