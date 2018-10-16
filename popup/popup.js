@@ -56,6 +56,7 @@ function saveDomainList(domain){
 		console.log(data);
 		if(data.dl.includes(domain)) return;
 		data.dl.push(domain);
+		data.dl.sort();
 		return save({"dl": data.dl});
 	});
 }
