@@ -352,9 +352,9 @@
 		"message": "許可しているドメインはありません。"
 	},
 	"notificationCheckDomainByteLengthError": {
-		"message": "ドメインの長さは$MAX$バイトしか保存できません。",
+		"message": "ドメインの長さは$LENGTH$バイトまでです。",
 		"placeholders": {
-			"MAX": {
+			"LENGTH": {
 				"content": "$1"
 			}
 		}
