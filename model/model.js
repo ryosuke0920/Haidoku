@@ -1,5 +1,11 @@
 class model {
 	constructor(){
-		console.log("model");
+		this.message = "";
+	}
+	setMessage(message){
+		this.message = message
+	}
+	getMessage(){
+		return this.message;
 	}
 }

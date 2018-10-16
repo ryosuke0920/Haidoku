@@ -1,8 +1,7 @@
 (()=>{
+	let dlModel = new domainListModel();
 	initControl();
-
 	function initControl(){
-		console.log("initControl");
 		let list = [
 			{ "selector": ".displayFunctionTitle", "property": "innerText", "key": "htmlDisplayFunctionTitle" },
 			{ "selector": "#displayFunctionDescription", "property": "innerText", "key": "htmlDisplayFunctionDescription" },
@@ -96,7 +95,7 @@
 		}
 		else if(e.target.classList.contains("domainListRemoveButton")){
 			e.target.closest(".domainListItem").remove();
-			removeDomainList(e.target.getAttribute("data-domain")).catch(onSaveError);
+			dlModel.removeDomainList(e.target.getAttribute("data-domain")).catch(onSaveError);
 		}
 	}
 })();

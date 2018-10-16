@@ -1,5 +1,6 @@
 let allowDomainCheckNode = document.querySelector("#allowDomainCheck");
-let widgetEnabler = new widgetEnablerModel();
+let weModel = new widgetEnableModel();
+let dlModel = new domainListModel();
 
 init();
 
@@ -27,65 +28,30 @@ function onClickEvent(e){
 	}
 	else if(e.target.id == "allowDomainCheck"){
 		let domain = e.target.value;
-		console.log("domain=" + domain);
 		if(e.target.checked){
 			e.preventDefault();
-			addDomainList(domain,e.target).catch(onSaveError);
+			addDomainListProcess(domain, e.target).catch(onSaveError);
 		}
 		else{
-			removeDomainList(domain).catch(onSaveError);
+			dlModel.removeDomainList(domain).catch(onSaveError);
 		}
 		return;
 	}
 	else if(e.target.name == "enable"){
-		widgetEnabler.save(e.target.value).catch(onSaveError);
+		weModel.writeValue(e.target.value).catch(onSaveError);
 		return;
 	}
 }
 
-function addDomainList(domain,checkNode){
-	if(!checkByte(domain,DOMAIN_MAX_LENGTH)){
-		notice(ponyfill.i18n.getMessage("notificationCheckDomainByteLengthError", [DOMAIN_MAX_LENGTH] ));
-		return;
-	}
-	return Promise.resolve().then( checkDomainListSize ).then((result)=>{
-		console.log(result);
+function addDomainListProcess(domain,checkNode){
+	dlModel.setDomain(domain);
+	return Promise.resolve().then( dlModel.checkProcess.bind(dlModel) ).then((result)=>{
 		if(!result){
-			notice(ponyfill.i18n.getMessage("notificationCheckDomainListSizeError", [DOMAIN_LIST_MAX_SIZE] ));
+			notice(dlModel.getMessage());
 			return;
 		}
 		checkNode.checked = true;
-		return saveDomainList(domain);
-	});
-}
-
-function checkDomainListSize(){
-	let p = ponyfill.storage.sync.get({
-		"dl": DEFAULT_DOMAIN_LIST
-	});
-	return p.then((data)=>{
-		console.log(data);
-		return data.dl.length<DOMAIN_LIST_MAX_SIZE;
-	});
-}
-
-function saveDomainList(domain){
-	let p = ponyfill.storage.sync.get({
-		"dl": DEFAULT_DOMAIN_LIST
-	});
-	return p.then((data)=>{
-		console.log(data);
-		if(data.dl.includes(domain)) return;
-		data.dl.push(domain);
-		data.dl.sort();
-		return save({"dl": data.dl});
-	});
-}
-
-function removeDomainList(domain){
-	return Promise.resolve().then( getDomainList ).then( (domainList)=>{
-		domainList = makeRemoveDomainList(domainList, domain)
-		return save({"dl": domainList});
+		return dlModel.saveDomainList(domain);
 	});
 }
 
@@ -94,20 +60,15 @@ function showBody(){
 }
 
 function configProsess(){
-	let p1 = widgetEnabler.getValue().then((value)=>{
+	let p1 = weModel.readValue().then((value)=>{
 		document.querySelector("[name=\"enable\"][value=\""+value+"\"]").checked = true;
 	});
-	let p2 = ponyfill.storage.sync.get({
-		"dl": DEFAULT_DOMAIN_LIST
-	}).then( onGotConfig );
+	let p2 = dlModel.readList().then((list)=>{
+		if(list.includes(allowDomainCheckNode.value)){
+			allowDomainCheckNode.checked = true;
+		}
+	});
 	return Promise.all([p1,p2]);
-}
-
-function onGotConfig(data){
-	console.log(data);
-	if(data.dl.includes(allowDomainCheckNode.value)){
-		allowDomainCheckNode.checked = true;
-	}
 }
 
 function hostnameProsess(){
@@ -142,7 +103,6 @@ function getCrrentURL(tabs){
 }
 
 function applyHostname(url){
-	console.log(url);
 	let allowedDominBox = document.querySelector("#allowedDominBox");
 	let disableDominBox = document.querySelector("#disableDominBox");
 	if(!isURL(url.href)){

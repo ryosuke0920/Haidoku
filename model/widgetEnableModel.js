@@ -1,11 +1,11 @@
-class widgetEnablerModel extends model {
+class widgetEnableModel extends model {
 	constructor() {
 		super();
 	}
-	save(value){
-		return save({"e": value}).catch(onSaveError);
+	writeValue(value){
+		return save({"e": value});
 	}
-	getValue(){
+	readValue(){
 		return ponyfill.storage.sync.get({
 			"e": DEFAULT_ENABLE_VALUE
 		}).then((data)=>{
