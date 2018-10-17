@@ -10,10 +10,10 @@ function init(){
 		{ "selector": "#widgetDisableText", "property": "innerText", "key": "htmlWidgetDisable" },
 		{ "selector": "#widgetEnableText", "property": "innerText", "key": "htmlWidgetEnable" },
 		{ "selector": "#widgetEnableAllowedDomainText", "property": "innerText", "key": "htmlWidgetEnableAllowedDomain" },
-		{ "selector": ".allowedDomainText", "property": "innerText", "key": "htmlAllowedDomain" },
-		{ "selector": ".allowText", "property": "innerText", "key": "htmlAllowText" },
-		{ "selector": ".disableDomainText", "property": "innerText", "key": "htmlDisableDomainText" },
-		{ "selector": ".optionName", "property": "innerText", "key": "htmlOpenOption" }
+		{ "selector": "#allowedDomainText", "property": "innerText", "key": "htmlAllowedDomain" },
+		{ "selector": "#allowText", "property": "innerText", "key": "htmlAllowText" },
+		{ "selector": "#disableDomainText", "property": "innerText", "key": "htmlDisableDomainText" },
+		{ "selector": "#optionOpener", "property": "innerText", "key": "htmlOpenOption" }
 	];
 	setI18n(list);
 	document.querySelector("body").addEventListener("click", onClickEvent );
@@ -29,8 +29,7 @@ function onClickEvent(e){
 	else if(e.target.id == "allowDomainCheck"){
 		let domain = e.target.value;
 		if(e.target.checked){
-			e.preventDefault();
-			addDomainListProcess(domain, e.target).catch(onSaveError);
+			addDomainListProcess(domain).catch(onSaveError);
 		}
 		else{
 			dlModel.removeDomainList(domain).catch(onSaveError);
@@ -43,15 +42,14 @@ function onClickEvent(e){
 	}
 }
 
-function addDomainListProcess(domain,checkNode){
+function addDomainListProcess(domain){
 	dlModel.setDomain(domain);
 	return Promise.resolve().then( dlModel.checkProcess.bind(dlModel) ).then((result)=>{
 		if(!result){
 			notice(dlModel.getMessage());
 			return;
 		}
-		checkNode.checked = true;
-		return dlModel.saveDomainList(domain);
+		return dlModel.saveDomainList();
 	});
 }
 

@@ -4,13 +4,13 @@ class domainListModel extends appModel {
 		this.domain = "";
 		this.domainList = [];
 	}
-	setDomain(domain){
-		this.domain = domain;
+	setDomain(domain=""){
+		this.domain = domain.trim();
 	}
 	getDomain(){
 		return this.domain;
 	}
-	writeList(list){
+	writeList(list=[]){
 		return saveW({"dl": list});
 	}
 	readList(){
@@ -28,14 +28,21 @@ class domainListModel extends appModel {
 	}
 	checkDomainProcess(){
 		return Promise.resolve().then(()=>{
-			if(!this.checkDomain()){
+			if(!this.checkDomainBlank()){
+				this.setMessage(ponyfill.i18n.getMessage("htmlCheckBlankError"));
+				return false;
+			}
+			else if(!this.checkDomainLength()){
 				this.setMessage(ponyfill.i18n.getMessage("notificationDomainLengthError", [DOMAIN_MAX_LENGTH]));
 				return false;
 			}
 			return true;
 		});
 	}
-	checkDomain(){
+	checkDomainBlank(){
+		return checkBlank(this.getDomain());
+	}
+	checkDomainLength(){
 		return checkByte(this.getDomain(), DOMAIN_MAX_LENGTH);
 	}
 	checkDomainListProcess(){
@@ -50,7 +57,7 @@ class domainListModel extends appModel {
 	checkDomainList(list){
 		return list.length < DOMAIN_LIST_MAX_SIZE;
 	}
-	saveDomainList(domain){
+	saveDomainList(domain=this.getDomain()){
 		return this.readList().then((list)=>{
 			if(list.includes(domain)) return;
 			list.push(domain);
@@ -63,11 +70,5 @@ class domainListModel extends appModel {
 			list = list.filter((e)=>{return e != domain});
 			return this.writeList(list);
 		});
-	}
-	storageChangeEvent(e){
-		if( e.hasOwnProperty("w") && e.w.newValue == windowId ) return;
-		if( e.hasOwnProperty("dl") ){
-			this.getMethodOnStorageChange()(e.dl.newValue);
-		}
 	}
 }

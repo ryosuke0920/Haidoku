@@ -340,7 +340,7 @@
 		"message": "ウィジェットの起動"
 	},
 	"htmlWidgetEnableDescription": {
-		"message": "ウィジェットの起動可否を選択してください。コンテキストメニュー（右クリック）には影響しません。"
+		"message": "ウィジェットの起動可否を選択してください。OFFにしてもコンテキストメニュー（右クリック）には影響しません。"
 	},
 	"htmlWidgetDisable": {
 		"message": "OFF"
@@ -373,7 +373,10 @@
 		"message": "ドメイン許可"
 	},
 	"htmldomainListDescription":{
-		"message": "ドメインに応じて、ウィジェットの表示を制御します。有効にするには、「ウィジェットの起動」で「許可したドメインでON」を選択してください。コンテキストメニュー（右クリック）には影響しません。"
+		"message": "許可されたドメインの場合、ウィジェットを表示します。有効にするには、「ウィジェットの起動」で「許可したドメインでON」を選択してください。"
+	},
+	"htmlAddDomainButton": {
+		"message": "追加"
 	},
 	"htmlDomainAllowedDescription": {
 		"message": "許可しているドメインの一覧です。"

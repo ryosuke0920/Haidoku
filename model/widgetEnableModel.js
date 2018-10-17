@@ -12,10 +12,4 @@ class widgetEnableModel extends appModel {
 			return data.e;
 		});
 	}
-	storageChangeEvent(e){
-		if( e.hasOwnProperty("w") && e.w.newValue == windowId ) return;
-		if( e.hasOwnProperty("e") ){
-			this.getMethodOnStorageChange()(e.e.newValue);
-		}
-	}
 }

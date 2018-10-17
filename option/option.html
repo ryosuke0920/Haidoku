@@ -238,23 +238,23 @@
 				<p id="widgetEnableDescription" class="sentence">widgetEnableDescription</p>
 				<div>
 					<label>
-						<input type="radio" name="enable" value="0">
+						<input type="radio" name="widgetEnableRadio" class="widgetEnableRadio" value="0">
 						<span id="widgetDisableText">widgetDisableText</span>
 					</label>
 					<br>
 					<label>
-						<input type="radio" name="enable" value="1">
+						<input type="radio" name="widgetEnableRadio" class="widgetEnableRadio" value="1">
 						<span id="widgetEnableText">widgetEnableText</span>
 					</label>
 					<br>
 					<label>
-						<input type="radio" name="enable" value="2">
+						<input type="radio" name="widgetEnableRadio" class="widgetEnableRadio" value="2">
 						<span id="widgetEnableAllowedDomainText">widgetEnableAllowedDomainText</span>
 					</label>
 				</div>
 			</section>
 			<section>
-				<h1 class="displayFunctionTitle">displayFunctionTitle</h1>
+				<h1 id="displayFunctionTitle">displayFunctionTitle</h1>
 				<p id="displayFunctionDescription" class="sentence">displayFunctionDescription</p>
 				<div>
 					<label>
@@ -275,12 +275,15 @@
 				</div>
 			</section>
 			<section>
-				<h1 class="domainListTitle">domainListTitle</h1>
+				<h1 id="domainListTitle">domainListTitle</h1>
 				<p id="domainListDescription" class="sentence">domainListDescription</p>
 				<div class="space">
 					<label>
-						<input type="text" class="domain">
-						<input type="button" class="addDomainButton" value="addDomainButton">
+						<span class="inputWrapper">
+								<input type="text" id="addDomainText" placeholder="example.com" maxlength="253">
+								<span id="domainTextMessage" class="inputMessage hide">domainTextMessage</span>
+						</span>
+						<input type="button" id="addDomainButton" value="addDomainButton">
 					</label>
 				</div>
 				<div class="borderComponent">

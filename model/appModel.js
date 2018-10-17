@@ -1,17 +1,12 @@
 class appModel extends model {
 	constructor(){
 		super();
+		this.message = "";
 	}
-	setMethodOnStorageChange(method){
-		this.method = method;
+	setMessage(message=""){
+		this.message = message
 	}
-	getMethodOnStorageChange(){
-		return this.method;
-	}
-	addStorageChangeListener(method){
-		this.setMethodOnStorageChange(method);
-		ponyfill.storage.onChanged.addListener(this.storageChangeEvent.bind(this));
-	}
-	storageChangeEvent(e){
+	getMessage(){
+		return this.message;
 	}
 }
