@@ -1,4 +1,4 @@
-class domainListModel extends model {
+class domainListModel extends appModel {
 	constructor(){
 		super();
 		this.domain = "";
@@ -10,18 +10,6 @@ class domainListModel extends model {
 	getDomain(){
 		return this.domain;
 	}
-	setDomainList(domainList){
-		this.domainList = domainList;
-	}
-	getDomainList(){
-		return this.domainList;
-	}
-	setMethodOnStorageChange(method){
-		this.method = method;
-	}
-	getMethodOnStorageChange(){
-		return this.method;
-	}
 	writeList(list){
 		return saveW({"dl": list});
 	}
@@ -29,7 +17,6 @@ class domainListModel extends model {
 		return ponyfill.storage.sync.get({
 			"dl": DEFAULT_DOMAIN_LIST
 		}).then((data)=>{
-			this.setDomainList(data.dl);
 			return data.dl;
 		});
 	}
@@ -77,14 +64,9 @@ class domainListModel extends model {
 			return this.writeList(list);
 		});
 	}
-	addStorageChangeListener(method){
-		this.setMethodOnStorageChange(method);
-		ponyfill.storage.onChanged.addListener(this.storageChangeEvent.bind(this));
-	}
 	storageChangeEvent(e){
 		if( e.hasOwnProperty("w") && e.w.newValue == windowId ) return;
 		if( e.hasOwnProperty("dl") ){
-			this.setDomainList(e.dl.newValue);
 			this.getMethodOnStorageChange()(e.dl.newValue);
 		}
 	}

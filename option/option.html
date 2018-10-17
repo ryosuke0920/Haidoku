@@ -11,7 +11,7 @@
 <body class="hide">
 <div>
 	<main id="main">
-		<div id="form" class="panel">
+		<div id="form" class="panel hide">
 			<nav class="controller">
 				<button type="button" class="addFromPreset">htmlAddFromPreset</button>
 				&nbsp;
@@ -232,7 +232,27 @@
 				</template>
 			</div>
 		</div>
-		<div id="control" class="panelStyle panel hide">
+		<div id="control" class="panelStyle panel">
+			<section>
+				<h1 id="widgetEnableTitle">widgetEnableTitle</h1>
+				<p id="widgetEnableDescription" class="sentence">widgetEnableDescription</p>
+				<div>
+					<label>
+						<input type="radio" name="enable" value="0">
+						<span id="widgetDisableText">widgetDisableText</span>
+					</label>
+					<br>
+					<label>
+						<input type="radio" name="enable" value="1">
+						<span id="widgetEnableText">widgetEnableText</span>
+					</label>
+					<br>
+					<label>
+						<input type="radio" name="enable" value="2">
+						<span id="widgetEnableAllowedDomainText">widgetEnableAllowedDomainText</span>
+					</label>
+				</div>
+			</section>
 			<section>
 				<h1 class="displayFunctionTitle">displayFunctionTitle</h1>
 				<p id="displayFunctionDescription" class="sentence">displayFunctionDescription</p>
@@ -256,7 +276,7 @@
 			</section>
 			<section>
 				<h1 class="domainListTitle">domainListTitle</h1>
-				<p id="displayDomainListDescription" class="sentence">displayDomainListDescription</p>
+				<p id="domainListDescription" class="sentence">domainListDescription</p>
 				<div class="space">
 					<label>
 						<input type="text" class="domain">
@@ -527,10 +547,10 @@
 			<h1><span class="title">extensionName</span></h1>
 		</header>
 		<nav id="nav">
-			<div class="navi active" data-navi-name="form">htmlFormName</div>
+			<div class="navi active" data-navi-name="control">htmlControlName</div>
+			<div class="navi" data-navi-name="form">htmlFormName</div>
 			<div class="navi" data-navi-name="history">htmlHistoryName</div>
 			<div class="navi" data-navi-name="ranking">htmlRankingName</div>
-			<div class="navi" data-navi-name="control">htmlControlName</div>
 			<div class="navi" data-navi-name="others">htmlOthersName</div>
 			<div class="navi" data-navi-name="contact">htmlContactName</div>
 		</nav>
@@ -543,6 +563,8 @@
 <script src="/lib/share.js"></script>
 <script src="/lib/common.js"></script>
 <script src="/model/model.js"></script>
+<script src="/model/appModel.js"></script>
+<script src="/model/widgetEnableModel.js"></script>
 <script src="/model/domainListModel.js"></script>
 <script src="option.js"></script>
 <script src="optionHistory.js"></script>

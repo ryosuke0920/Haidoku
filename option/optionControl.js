@@ -1,21 +1,30 @@
 (()=>{
 	let dlModel = new domainListModel();
+	let weModel = new widgetEnableModel();
 	initControl();
 	function initControl(){
 		let list = [
+			{ "selector": "#widgetEnableTitle", "property": "innerText", "key": "htmlWidgetEnableTitle" },
+			{ "selector": "#widgetEnableDescription", "property": "innerText", "key": "htmlWidgetEnableDescription" },
+			{ "selector": "#widgetDisableText", "property": "innerText", "key": "htmlWidgetDisable" },
+			{ "selector": "#widgetEnableText", "property": "innerText", "key": "htmlWidgetEnable" },
+			{ "selector": "#widgetEnableAllowedDomainText", "property": "innerText", "key": "htmlWidgetEnableAllowedDomain" },
 			{ "selector": ".displayFunctionTitle", "property": "innerText", "key": "htmlDisplayFunctionTitle" },
 			{ "selector": "#displayFunctionDescription", "property": "innerText", "key": "htmlDisplayFunctionDescription" },
 			{ "selector": "#autoDisplayText", "property": "innerText", "key": "extensionOptionAutoView" },
 			{ "selector": "#manualDisplayShiftKeyText", "property": "innerText", "key": "extensionOptionManualViewByShiftKey" },
 			{ "selector": "#manualDisplayCtrlKeyText", "property": "innerText", "key": "extensionOptionManualViewByCtrlKey" },
 			{ "selector": ".domainListTitle", "property": "innerText", "key": "htmlDomainListTitle" },
+			{ "selector": "#domainListDescription", "property": "innerText", "key": "htmlDomainListDescription" },
 			{ "selector": "#domainAllowedDescription", "property": "innerText", "key": "htmlDomainAllowedDescription" },
 			{ "selector": "#noneDomainAllowedDescription", "property": "innerText", "key": "htmlNoneDomainAllowedDescription" }
 		];
 		setI18n(list);
 		let p1 = applyConfig().catch(onReadError);
 		let p2 = dlModel.readList().then(applyDomainList).catch(onReadError);
+		let p3 = weModel.readValue().then(applyWidgetEnableCheck).catch(onReadError);
 		dlModel.addStorageChangeListener(applyDomainList);
+		weModel.addStorageChangeListener(applyWidgetEnableCheck);
 		ponyfill.storage.onChanged.addListener(storageOnChageBehavior);
 		document.querySelector("#control").addEventListener("click", onClickBehavior);
 	}
@@ -45,6 +54,9 @@
 		else if(e.hasOwnProperty("ck")){
 			applyManualDisplayCtrlKeyCheck(e.ck.newValue);
 		}
+	}
+	function applyWidgetEnableCheck(value){
+		document.querySelector("[name=\"enable\"][value=\""+value+"\"]").checked = true;
 	}
 	function applyAutoDisplayCheck(value){
 		document.querySelector("#autoDisplayCheck").checked = value;

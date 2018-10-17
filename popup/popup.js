@@ -6,10 +6,10 @@ init();
 
 function init(){
 	let list = [
-		{ "selector": ".enableText", "property": "innerText", "key": "htmlEnableText" },
-		{ "selector": ".disableText", "property": "innerText", "key": "htmlDisable" },
-		{ "selector": ".enableAllDomainText", "property": "innerText", "key": "htmlEnableAllDomain" },
-		{ "selector": ".enableAllowedDomainText", "property": "innerText", "key": "htmlEnableAllowedDomain" },
+		{ "selector": "#widgetEnableTitle", "property": "innerText", "key": "htmlWidgetEnableTitle" },
+		{ "selector": "#widgetDisableText", "property": "innerText", "key": "htmlWidgetDisable" },
+		{ "selector": "#widgetEnableText", "property": "innerText", "key": "htmlWidgetEnable" },
+		{ "selector": "#widgetEnableAllowedDomainText", "property": "innerText", "key": "htmlWidgetEnableAllowedDomain" },
 		{ "selector": ".allowedDomainText", "property": "innerText", "key": "htmlAllowedDomain" },
 		{ "selector": ".allowText", "property": "innerText", "key": "htmlAllowText" },
 		{ "selector": ".disableDomainText", "property": "innerText", "key": "htmlDisableDomainText" },

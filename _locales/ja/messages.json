@@ -336,6 +336,33 @@
 	"htmlLinkListStyleTitle": {
 		"message": "ウィジェットのスタイル"
 	},
+	"htmlWidgetEnableTitle": {
+		"message": "ウィジェットの起動"
+	},
+	"htmlWidgetEnableDescription": {
+		"message": "ウィジェットの起動可否を選択してください。コンテキストメニュー（右クリック）には影響しません。"
+	},
+	"htmlWidgetDisable": {
+		"message": "OFF"
+	},
+	"htmlWidgetEnable": {
+		"message": "ON"
+	},
+	"htmlWidgetEnableAllowedDomain": {
+		"message": "許可したドメインでON"
+	},
+	"htmlAllowedDomain": {
+		"message": "ドメイン許可"
+	},
+	"htmlAllowText": {
+		"message": "許可する"
+	},
+	"htmlDisableDomainText": {
+		"message": "このURLは許可できません。"
+	},
+	"htmlOpenOption": {
+		"message": "設定画面を開く"
+	},
 	"htmlDisplayFunctionTitle": {
 		"message": "ウィジェットの表示方法"
 	},
@@ -344,6 +371,9 @@
 	},
 	"htmlDomainListTitle": {
 		"message": "ドメイン許可"
+	},
+	"htmldomainListDescription":{
+		"message": "ドメインに応じて、ウィジェットの表示を制御します。有効にするには、「ウィジェットの起動」で「許可したドメインでON」を選択してください。コンテキストメニュー（右クリック）には影響しません。"
 	},
 	"htmlDomainAllowedDescription": {
 		"message": "許可しているドメインの一覧です。"
@@ -571,29 +601,5 @@
 				"content": "$1"
 			}
 		}
-	},
-	"htmlEnableText": {
-		"message": "ON／OFF"
-	},
-	"htmlDisable": {
-		"message": "OFF"
-	},
-	"htmlEnableAllDomain": {
-		"message": "ON"
-	},
-	"htmlEnableAllowedDomain": {
-		"message": "許可したドメインでON"
-	},
-	"htmlAllowedDomain": {
-		"message": "ドメイン許可"
-	},
-	"htmlAllowText": {
-		"message": "許可する"
-	},
-	"htmlDisableDomainText": {
-		"message": "このドメインは許可できません。"
-	},
-	"htmlOpenOption": {
-		"message": "設定画面を開く"
 	}
 }

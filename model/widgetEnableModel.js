@@ -1,4 +1,4 @@
-class widgetEnableModel extends model {
+class widgetEnableModel extends appModel {
 	constructor() {
 		super();
 	}
@@ -11,5 +11,11 @@ class widgetEnableModel extends model {
 		}).then((data)=>{
 			return data.e;
 		});
+	}
+	storageChangeEvent(e){
+		if( e.hasOwnProperty("w") && e.w.newValue == windowId ) return;
+		if( e.hasOwnProperty("e") ){
+			this.getMethodOnStorageChange()(e.e.newValue);
+		}
 	}
 }
