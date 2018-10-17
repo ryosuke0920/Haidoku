@@ -22,28 +22,28 @@ class domainListModel extends appModel {
 	}
 	checkProcess(){
 		return this.checkDomainProcess().then((result)=>{
-			if(result) return this.checkDomainListProcess();
-			return false;
+			if(!result) return false;
+			return this.checkDomainListProcess();
 		});
 	}
 	checkDomainProcess(){
 		return Promise.resolve().then(()=>{
-			if(!this.checkDomainBlank()){
+			if(!this.checkDomainBlank(this.getDomain())){
 				this.setMessage(ponyfill.i18n.getMessage("htmlCheckBlankError"));
 				return false;
 			}
-			else if(!this.checkDomainLength()){
+			else if(!this.checkDomainLength(this.getDomain())){
 				this.setMessage(ponyfill.i18n.getMessage("notificationDomainLengthError", [DOMAIN_MAX_LENGTH]));
 				return false;
 			}
 			return true;
 		});
 	}
-	checkDomainBlank(){
-		return checkBlank(this.getDomain());
+	checkDomainBlank(domain){
+		return checkBlank(domain);
 	}
-	checkDomainLength(){
-		return checkByte(this.getDomain(), DOMAIN_MAX_LENGTH);
+	checkDomainLength(domain){
+		return checkByte(domain, DOMAIN_MAX_LENGTH);
 	}
 	checkDomainListProcess(){
 		return this.readList().then( this.checkDomainList.bind(this) ).then((result)=>{

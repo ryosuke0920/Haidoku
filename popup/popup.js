@@ -24,7 +24,6 @@ function onClickEvent(e){
 	if(e.target.id == "optionOpener"){
 		ponyfill.runtime.openOptionsPage();
 		window.close();
-		return;
 	}
 	else if(e.target.id == "allowDomainCheck"){
 		let domain = e.target.value;
@@ -34,11 +33,9 @@ function onClickEvent(e){
 		else{
 			dlModel.removeDomainList(domain).catch(onSaveError);
 		}
-		return;
 	}
 	else if(e.target.name == "enable"){
 		weModel.writeValue(e.target.value).catch(onSaveError);
-		return;
 	}
 }
 
@@ -46,6 +43,7 @@ function addDomainListProcess(domain){
 	dlModel.setDomain(domain);
 	return Promise.resolve().then( dlModel.checkProcess.bind(dlModel) ).then((result)=>{
 		if(!result){
+			document.querySelector("#allowDomainCheck").checked = false;
 			notice(dlModel.getMessage());
 			return;
 		}
