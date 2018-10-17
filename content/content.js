@@ -1,17 +1,17 @@
 (()=>{
+	let body = document.querySelector("body");
+	if( !body ) return;
+
 	const LINK_NODE_DEFAULT_HEIGHT = 200;
 	const LINK_NODE_DEFAULT_WIDTH = 320;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
 	const SCROLL_SPACE = 17;
 	const RECT_SPACE = 3;
-	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
 	const ANCHOR_MIN_SIZE = 0.6;
 	const ANCHOR_RESIO = 0.1;
-	const SILENT_ERROR_PREFIX = "[silent]";
-	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
 	const REMOVE_SPACE_REGEX = new RegExp( /(?:\s|\|)+/, "g" );
 	const LINK_LIST_CLOSE_TIME = 500;
 	const API_QUERY_DERAY = 1000;
@@ -33,6 +33,11 @@
 	let linkListFlag = false;
 	let shiftKeyFlag = false;
 	let ctrlKeyFlag = false;
+	let linkListStyle;
+	let faviconDisplay;
+	let linknListDirection;
+	let linknListSeparator;
+	let apiSwitchFlag;
 	let resizeWatcherFlag = false;
 	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let menuNode;
@@ -58,19 +63,10 @@
 	let historyDoneButtoneNode;
 	let innerSelectionFlag = false;
 
-	Promise.resolve()
-		.then(init)
-		.then(
-			()=>{ return Promise.resolve().then(loadSetting).then(addCommonLinkListEvents); },
-			silentError
-		).catch(unexpectedError);
 
-	function init(){
-		let body = document.querySelector("body");
-		if( !body ){
-			/* break promise chain, but not need notification. */
-			throw( new Error( SILENT_ERROR_PREFIX + " not found body") );
-		}
+	Promise.resolve().then(getConfig).then(gotConfig).catch(onReadError);
+
+	function initWidget(){
 		let rootNode = document.createElement("div");
 		rootNode.setAttribute("style","all: initial;");
 		rootNode.style.position = "absolute";
@@ -92,7 +88,6 @@
 		let viewerNode = document.createElement("div");
 		viewerNode.setAttribute("id",CSS_PREFIX+"-viewer");
 		widgetNode.appendChild(viewerNode);
-		applyLinkListSize();
 
 		menuNode = document.createElement("nav");
 		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
@@ -228,6 +223,19 @@
 		optionNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
+
+		applyZoomLinkList();
+		applyLinkListSize();
+		applyLinkListStyle();
+		applyLinkListAction();
+		applyFaviconDisplay();
+		applyLinknListDirection();
+		applyLinknListSeparator();
+		applyApiSwitch();
+		applyServiceCode();
+
+		resetLinkListEvents();
+		addCommonLinkListEvents();
 	}
 
 	function addCommonLinkListEvents(){
@@ -400,36 +408,41 @@
 			widgetNodeWidth = width;
 		}
 	}
-
-	function applyFaviconDisplay(res){
-		if( res == LINK_LIST_FAVICON_ONLY ) {
+	function setFaviconDisplay(res){
+		faviconDisplay = res;
+	}
+	function applyFaviconDisplay(){
+		if( faviconDisplay == LINK_LIST_FAVICON_ONLY ) {
 			widgetNode.classList.add(CSS_PREFIX+"-mini");
 		}
 		else {
 			widgetNode.classList.remove(CSS_PREFIX+"-mini");
 		}
 	}
-
-	function applyLinknListDirection(res){
-		if( res == LINK_LIST_DIRECTION_HORIZAONTAL ) {
+	function setLinknListDirection(res){
+		linknListDirection = res;
+	}
+	function applyLinknListDirection(){
+		if( linknListDirection == LINK_LIST_DIRECTION_HORIZAONTAL ) {
 			widgetNode.classList.add(CSS_PREFIX+"-inline");
 		}
 		else {
 			widgetNode.classList.remove(CSS_PREFIX+"-inline");
 		}
 	}
-
-	function applyLinknListSeparator(res){
-		if( res == LINK_LIST_SEPARATOR_VERTICAL ) {
+	function setLinknListSeparator(res){
+		linknListSeparator = res;
+	}
+	function applyLinknListSeparator(){
+		if( linknListSeparator == LINK_LIST_SEPARATOR_VERTICAL ) {
 			widgetNode.classList.add(CSS_PREFIX+"-separator");
 		}
 		else {
 			widgetNode.classList.remove(CSS_PREFIX+"-separator");
 		}
 	}
-
-	function applyServiceCode(res){
-		if( res == API_SERVICE_CODE_NONE ) {
+	function applyServiceCode(){
+		if( serviceCode == API_SERVICE_CODE_NONE ) {
 			hide(apiContentNode);
 		}
 		else {
@@ -567,7 +580,6 @@
 
 	function showLinkList(){
 		show(widgetNode);
-		applyLinkListSize();
 		let rect = getSelectionRect();
 		if(!rect) throw( new Error("Rect not found.") );
 		widgetNodeLeft = makeWidgetPointX(rect);
@@ -617,9 +629,11 @@
 			let lw = widgetNodeWidth;
 			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
 			setLinkListSize( lh, lw );
+			applyLinkListSize();
 		}
 		if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
+			applyZoomLinkList();
 		}
 		if( change["ck"] ){
 			setCtrlKeyFlag( change["ck"]["newValue"] );
@@ -640,23 +654,28 @@
 		}
 		if( change["cl"] ){
 			setLinkListStyle( change["cl"]["newValue"] );
+			applyLinkListStyle();
 		}
 		if( change["ca"] ){
 			setLinkListAction( change["ca"]["newValue"] );
+			applyLinkListAction();
 		}
 		if( change["f"] ){
-			applyFaviconDisplay( change["f"]["newValue"] );
+			setFaviconDisplay( change["f"]["newValue"] );
+			applyFaviconDisplay();
 		}
 		if( change["ld"] ){
-			applyLinknListDirection( change["ld"]["newValue"] );
+			setLinknListDirection( change["ld"]["newValue"] );
+			applyLinknListDirection();
 		}
 		if( change["ls"] ){
-			applyLinknListSeparator( change["ls"]["newValue"] );
+			setLinknListSeparator( change["ls"]["newValue"] );
+			applyLinknListSeparator();
 		}
 		if( change["s"] ){
 			closeLinkList();
 			setServiceCode( change["s"]["newValue"] );
-			applyServiceCode( change["s"]["newValue"] );
+			applyServiceCode();
 		}
 		if( change["ll"] ){
 			setLanguageFilter( change["ll"]["newValue"] );
@@ -669,19 +688,21 @@
 		if( change["sw"] ){
 			closeLinkList();
 			setApiSwitch( change["sw"]["newValue"] );
+			applyApiSwitch();
 		}
 	}
 
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
 		widgetNodeHeight = height;
 		widgetNodeWidth = width;
-		if( isLinkListShown() ) applyLinkListSize();
 	}
 
-	function loadSetting(){
-		let serviceCode = getDefaultServiceCode();
+	function getConfig(){
+		let sc = getDefaultServiceCode();
 		let languageFilter = getDefaultLanguageFilter();
-		let getter = ponyfill.storage.sync.get({
+		return ponyfill.storage.sync.get({
+			"e": DEFAULT_ENABLE_VALUE,
+			"dl": DEFAULT_DOMAIN_LIST,
 			"ol": DEFAULT_OPTION_LIST_ON_GET,
 			"bf": DEFAULT_AUTO_VIEW_FLAG,
 			"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
@@ -695,11 +716,21 @@
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
 			"ls": LINK_LIST_SEPARATOR_VERTICAL,
 			"sw": API_SWITCH_DISABLED,
-			"s": serviceCode,
+			"s": sc,
 			"ll": languageFilter,
 			"co": DEFAULT_MEANING_VALUE
 		});
-		return getter.then(setVer, onReadError);
+	}
+
+	function gotConfig(res){
+		if(res.e=="0") return;
+		if(res.e=="2") {
+			console.log("hogehoge");
+		}
+		return Promise.resolve()
+		.then(()=>{ return setVer(res); })
+		.then(()=>{ if(hasLinkList()) return getFavicon().then( gotFavicon ); })
+		.then( initWidget );
 	}
 
 	function setVer( res ){
@@ -711,21 +742,17 @@
 		setShiftKeyFlag( res["sk"] );
 		setLinkListStyle( res["cl"] );
 		setLinkListAction( res["ca"] );
-		applyFaviconDisplay( res["f"] );
-		applyLinknListDirection( res["ld"] );
-		applyLinknListSeparator( res["ls"] );
+		setFaviconDisplay( res["f"] );
+		setLinknListDirection( res["ld"] );
+		setLinknListSeparator( res["ls"] );
 		setApiSwitch( res["sw"] );
 		setServiceCode( res["s"] );
-		applyServiceCode( res["s"] );
 		setLanguageFilter( res["ll"] );
 		setLinkListApiCutOut( res["co"] );
-		resetLinkListEvents();
-		if(hasLinkList()) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 	}
 
 	function setAnchorSize(res){
 		anchorSize = res;
-		applyZoomLinkList();
 	}
 
 	function setLinkListFlag(res){
@@ -753,14 +780,21 @@
 	}
 
 	function setLinkListStyle(res){
+		linkListStyle = res;
+	}
+
+	function applyLinkListStyle(){
 		widgetNode.classList.remove(CSS_PREFIX+"-dark");
-		if( res == LINK_LIST_STYLE_DARK ) {
+		if( linkListStyle == LINK_LIST_STYLE_DARK ) {
 			widgetNode.classList.add(CSS_PREFIX+"-dark");
 		}
 	}
 
 	function setLinkListAction(res){
 		linkListAction = res;
+	}
+
+	function applyLinkListAction(){
 		resetScrollTmp();
 		widgetNode.classList.remove(CSS_PREFIX+"-mouseover");
 		widgetNode.classList.remove(CSS_PREFIX+"-mouseclick");
@@ -963,15 +997,6 @@
 			"data": ponyfill.i18n.getMessage("notificationAudioPlayError", [e.message])
 		});
 		return res;
-	}
-
-	function silentError(e){
-		if( e.message.match( SILENT_ERROR_REGEX ) ){
-			console.log(e);
-		}
-		else {
-			throw(e);
-		}
 	}
 
 	function notify(e){
@@ -1438,17 +1463,21 @@
 	function apiSwitchBehavior(e){
 		if(!isApiSwitchOn()){
 			setApiSwitch(API_SWITCH_ENABLED);
+			applyApiSwitch();
 			saveApiSwitch(API_SWITCH_ENABLED).catch( onSaveError );
 			apiRequest(getSelectedText());
 		}
 		else {
 			setApiSwitch(API_SWITCH_DISABLED);
+			applyApiSwitch();
 			saveApiSwitch(API_SWITCH_DISABLED).catch( onSaveError );
 		}
 	}
-
-	function setApiSwitch(value){
-		if(value != API_SWITCH_ENABLED){
+	function setApiSwitch(res){
+		apiSwitchFlag = res;
+	}
+	function applyApiSwitch(){
+		if(apiSwitchFlag != API_SWITCH_ENABLED){
 			apiSwitcheNode.removeAttribute("data-checked");
 			widgetNode.classList.add(CSS_PREFIX+"-apiDisabled");
 		}
