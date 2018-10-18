@@ -602,7 +602,6 @@
 		let namespaceRegex = new RegExp("^" + namespace + ":");
 		let followed = API_SERVICE_PROPERTY[this.service].followed;
 		let followedRegex = new RegExp(followed + "$", "i");
-		//let max = {value:0,name:""};
 		for(let i=0; i<this.cat.length; i++){
 			let obj = this.cat[i];
 			obj.title = obj.title.replace( namespaceRegex, "");
@@ -620,17 +619,9 @@
 			else {
 				prefix[obj.shortPrefix] = 1;
 			}
-			/*
-			let n = byteLength(obj.title);
-			if(max.value<n){
-				max.value = n;
-				max.name = obj.title;
-			}
-			*/
 		}
 		setLanguageFilterCache(this.service, this.cat);
 		setPrefixCache(this.service, prefix);
-		//console.log(max);
 	}
 
 	function apiLangMakeOption(prefix){
