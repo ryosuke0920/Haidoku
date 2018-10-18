@@ -22,7 +22,23 @@
 
 	let dlModel = new domainListModel();
 
+	let enableWidgetValue;
+	let domainList;
+
+	let rootNode;
 	let widgetNode;
+	let coverNode;
+	let menuNode;
+	let containerNode;
+	let apiContentNode;
+	let apiTitleNode;
+	let apiErrorMessageNode;
+	let apiBodyNode;
+	let apiFooterNode;
+	let apiSwitcheNode;
+	let arrowNode;
+	let historyButtoneNode;
+	let historyDoneButtoneNode;
 	let widgetNodeTop = 0;
 	let widgetNodeLeft = 0;
 	let widgetNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
@@ -30,7 +46,6 @@
 	let widgetScrollTopTmp = 0;
 	let widgetScrollleftTmp = 0;
 	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
-	let coverNode;
 	let optionList = [];
 	let linkListFlag = false;
 	let shiftKeyFlag = false;
@@ -42,12 +57,6 @@
 	let apiSwitchFlag;
 	let resizeWatcherFlag = false;
 	let anchorSize = ANCHOR_DEFAULT_SIZE;
-	let menuNode;
-	let containerNode;
-	let apiContentNode;
-	let apiTitleNode;
-	let apiErrorMessageNode;
-	let apiBodyNode;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 	let faviconCache = {};
@@ -56,20 +65,21 @@
 	let serviceCode = API_SERVICE_CODE_NONE;
 	let languageFilter = [];
 	let apiCutOut = true;
-	let apiFooterNode;
-	let apiSwitcheNode;
 	let windowId = Math.random();
-	let arrowNode;
 	let moveObj;
-	let historyButtoneNode;
-	let historyDoneButtoneNode;
 	let innerSelectionFlag = false;
 
+	start().then(()=>{
+		ponyfill.storage.onChanged.addListener( onStorageChanged );
+		ponyfill.runtime.onMessage.addListener( notify );
+	});
 
-	Promise.resolve().then(getConfig).then(gotConfig).catch(onReadError);
+	function start(){
+		return Promise.resolve().then(getConfig).then(gotConfig).catch(onReadError);
+	}
 
 	function initWidget(){
-		let rootNode = document.createElement("div");
+		rootNode = document.createElement("div");
 		rootNode.setAttribute("style","all: initial;");
 		rootNode.style.position = "absolute";
 		rootNode.style.top = "0";
@@ -241,14 +251,12 @@
 	}
 
 	function addCommonLinkListEvents(){
-		ponyfill.storage.onChanged.addListener( onStorageChanged );
 		widgetNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
 		widgetNode.addEventListener("mousedown", mousedownCommonBehavior);
 		document.addEventListener("mousedown", mousedownOuterBehavior);
-		ponyfill.runtime.onMessage.addListener( notify );
 		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
 	}
 
@@ -625,6 +633,39 @@
 	}
 
 	function onStorageChanged(change, area){
+		if(change.hasOwnProperty("e")){
+			setEnableWidgetValue(change.e.newValue);
+			if( enableWidgetValue == "0" ){
+				if( isEnableWidget() ) disableWidget();
+			}
+			else if( enableWidgetValue == "1" ){
+				if( !isEnableWidget() ) enableWidget();
+			}
+			else if( enableWidgetValue == "2" ){
+				if( dlModel.checkCurrentDomainAllowed(domainList) ){
+					if( !isEnableWidget() ) enableWidget();
+				}
+				else {
+					if( isEnableWidget() ) disableWidget();
+				}
+			}
+			return;
+		}
+		if(change.hasOwnProperty("dl")){
+			setDomainList(change.dl.newValue);
+			if(enableWidgetValue == "2"){
+				if( dlModel.checkCurrentDomainAllowed(domainList) ){
+					if( !isEnableWidget() ) enableWidget();
+				}
+				else {
+					if( isEnableWidget() ) disableWidget();
+				}
+			}
+			return;
+		}
+
+		if( !isEnableWidget() ) return;
+
 		if( change["lh"] || change["lw"] ){
 			let lh = widgetNodeHeight;
 			if( change.hasOwnProperty("lh") ) lh = change["lh"]["newValue"];
@@ -693,7 +734,24 @@
 			applyApiSwitch();
 		}
 	}
-
+	function isEnableWidget(){
+		return rootNode !== undefined;
+	}
+	function disableWidget(){
+		document.removeEventListener("keydown", keydownBehavior);
+		document.removeEventListener("mousemove", mousemoveBehavior);
+		document.removeEventListener("mouseup", mouseupCommonBehavior);
+		document.removeEventListener("mousedown", mousedownOuterBehavior);
+		document.removeEventListener("selectionchange", selectionChangeAutoBehavior);
+		document.removeEventListener("mouseup", mouseupAutoBehavior);
+		document.removeEventListener("mousedown", mousedownAutoBehavior);
+		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
+		rootNode.remove();
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiFooterNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = undefined;
+	}
+	function enableWidget(){
+		start();
+	}
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
 		widgetNodeHeight = height;
 		widgetNodeWidth = width;
@@ -723,16 +781,22 @@
 			"co": DEFAULT_MEANING_VALUE
 		});
 	}
-
 	function gotConfig(res){
-		if(res.e=="0") return;
-		if(res.e=="2" && !dlModel.checkCurrentDomainAllowed(res.dl)) return;
+		setEnableWidgetValue(res.e);
+		setDomainList(res.dl);
+		if(enableWidgetValue == "0") return;
+		if(enableWidgetValue == "2" && !dlModel.checkCurrentDomainAllowed(res.dl)) return;
 		return Promise.resolve()
 		.then(()=>{ return setVer(res); })
 		.then(()=>{ if(hasLinkList()) return getFavicon().then( gotFavicon ); })
 		.then( initWidget );
 	}
-
+	function setEnableWidgetValue(value){
+		enableWidgetValue = value;
+	}
+	function setDomainList(list){
+		domainList = list;
+	}
 	function setVer( res ){
 		setAnchorSize( res["as"] );
 		setLinkListSize( res["lh"], res["lw"] );
