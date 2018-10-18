@@ -1,3 +1,6 @@
+.popupStyle {
+	min-width: 256px;
+}
 .popupStyle section {
 	margin-bottom: 1em;
 }

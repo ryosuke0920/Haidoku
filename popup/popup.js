@@ -72,9 +72,9 @@ function hostnameProsess(){
 }
 
 function getActiveTab(){
-	return browser.tabs.query({
+	return ponyfill.tabs.query({
 		"active": true,
-		"windowId": browser.windows.WINDOW_ID_CURRENT
+		"windowId": ponyfill.windows.WINDOW_ID_CURRENT
 	});
 }
 
