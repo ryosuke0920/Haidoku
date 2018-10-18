@@ -35,6 +35,9 @@
 				"etc/CONST.js",
 				"lib/ponyfill.js",
 				"lib/share.js",
+				"model/model.js",
+				"model/appModel.js",
+				"model/domainListModel.js",
 				"content/content.js"
 			]
 		}

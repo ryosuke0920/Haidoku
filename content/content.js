@@ -20,6 +20,8 @@
 	const API_WHITE_SPACE_ERROR = "white space error";
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 
+	let dlModel = new domainListModel();
+
 	let widgetNode;
 	let widgetNodeTop = 0;
 	let widgetNodeLeft = 0;
@@ -724,9 +726,7 @@
 
 	function gotConfig(res){
 		if(res.e=="0") return;
-		if(res.e=="2") {
-			console.log("hogehoge");
-		}
+		if(res.e=="2" && !dlModel.checkCurrentDomainAllowed(res.dl)) return;
 		return Promise.resolve()
 		.then(()=>{ return setVer(res); })
 		.then(()=>{ if(hasLinkList()) return getFavicon().then( gotFavicon ); })

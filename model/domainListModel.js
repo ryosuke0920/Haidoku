@@ -71,4 +71,11 @@ class domainListModel extends appModel {
 			return this.writeList(list);
 		});
 	}
+	checkCurrentDomainAllowed(list){
+		let domain = new URL( window.location.toString() ).hostname;
+		return this.checkDomainAllowed(list, domain);
+	}
+	checkDomainAllowed(list, domain){
+		return list.includes(domain);
+	}
 }
