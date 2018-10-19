@@ -642,7 +642,7 @@
 				if( !isEnableWidget() ) enableWidget();
 			}
 			else if( enableWidgetValue == "2" ){
-				if( dlModel.checkCurrentDomainAllowed(domainList) ){
+				if( dlModel.isAllowedCurrentDomain(domainList) ){
 					if( !isEnableWidget() ) enableWidget();
 				}
 				else {
@@ -654,7 +654,7 @@
 		if(change.hasOwnProperty("dl")){
 			setDomainList(change.dl.newValue);
 			if(enableWidgetValue == "2"){
-				if( dlModel.checkCurrentDomainAllowed(domainList) ){
+				if( dlModel.isAllowedCurrentDomain(domainList) ){
 					if( !isEnableWidget() ) enableWidget();
 				}
 				else {
@@ -785,7 +785,7 @@
 		setEnableWidgetValue(res.e);
 		setDomainList(res.dl);
 		if(enableWidgetValue == "0") return;
-		if(enableWidgetValue == "2" && !dlModel.checkCurrentDomainAllowed(res.dl)) return;
+		if(enableWidgetValue == "2" && !dlModel.isAllowedCurrentDomain(res.dl)) return;
 		return Promise.resolve()
 		.then(()=>{ return setVer(res); })
 		.then(()=>{ if(hasLinkList()) return getFavicon().then( gotFavicon ); })

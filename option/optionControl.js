@@ -82,8 +82,9 @@
 		let template = controlNode.querySelector("#domainListTemplate");
 		for(let i=0; i<domainList.length; i++){
 			let node = document.importNode(template.content, true);
-			node.querySelector(".domainText").innerText = domainList[i];
-			node.querySelector(".domainListRemoveButton").setAttribute("data-domain",domainList[i]);
+			let domain = domainList[i].d;
+			node.querySelector(".domainText").innerText = domain;
+			node.querySelector(".domainListRemoveButton").setAttribute("data-domain", domain);
 			domainListNode.appendChild(node);
 		}
 		if(domainList.length<=0){
@@ -106,15 +107,14 @@
 			saveW({"ck": e.target.checked}).catch(onSaveError);
 		}
 		else if(e.target.id == "addDomainButton"){
-			let value = controlNode.querySelector("#addDomainText").value;
-			dlModel.setDomain(value);
-			Promise.resolve().then( dlModel.checkDomainProcess.bind(dlModel) ).then((result)=>{
+			let domain = controlNode.querySelector("#addDomainText").value.trim();
+			Promise.resolve().then( ()=>{return dlModel.checkDomainProcess(domain);} ).then((result)=>{
 				if(!result){
 					domainTextMsgNode.innerText = dlModel.getMessage();
 					show(domainTextMsgNode);
 					return;
 				}
-				return dlModel.saveDomainList().then(()=>{
+				return dlModel.saveDomainList(domain).then(()=>{
 					controlNode.querySelector("#addDomainText").value = "";
 				});
 			}).catch(onSaveError);

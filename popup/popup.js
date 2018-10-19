@@ -26,7 +26,7 @@ function onClickEvent(e){
 		window.close();
 	}
 	else if(e.target.id == "allowDomainCheck"){
-		let domain = e.target.value;
+		let domain = e.target.value.trim();
 		if(e.target.checked){
 			addDomainListProcess(domain).catch(onSaveError);
 		}
@@ -40,14 +40,13 @@ function onClickEvent(e){
 }
 
 function addDomainListProcess(domain){
-	dlModel.setDomain(domain);
-	return Promise.resolve().then( dlModel.checkProcess.bind(dlModel) ).then((result)=>{
+	return Promise.resolve().then(()=>{return dlModel.checkProcess(domain);}).then((result)=>{
 		if(!result){
 			document.querySelector("#allowDomainCheck").checked = false;
 			notice(dlModel.getMessage());
 			return;
 		}
-		return dlModel.saveDomainList();
+		return dlModel.saveDomainList(domain);
 	});
 }
 
@@ -60,7 +59,7 @@ function configProsess(){
 		document.querySelector("[name=\"enable\"][value=\""+value+"\"]").checked = true;
 	});
 	let p2 = dlModel.readList().then((list)=>{
-		if(list.includes(allowDomainCheckNode.value)){
+		if(dlModel.isAllowedDomain(list, allowDomainCheckNode.value)){
 			allowDomainCheckNode.checked = true;
 		}
 	});
@@ -74,7 +73,7 @@ function hostnameProsess(){
 function getActiveTab(){
 	return ponyfill.tabs.query({
 		"active": true,
-		"windowId": ponyfill.windows.WINDOW_ID_CURRENT
+		"windowId": ponyfill.windows.getActiveWindowId()
 	});
 }
 

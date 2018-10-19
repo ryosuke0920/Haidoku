@@ -4,12 +4,6 @@ class domainListModel extends appModel {
 		this.domain = "";
 		this.domainList = [];
 	}
-	setDomain(domain=""){
-		this.domain = domain.trim();
-	}
-	getDomain(){
-		return this.domain;
-	}
 	writeList(list=[]){
 		return saveW({"dl": list});
 	}
@@ -20,33 +14,30 @@ class domainListModel extends appModel {
 			return data.dl;
 		});
 	}
-	checkProcess(){
-		return this.checkDomainProcess().then((result)=>{
+	checkProcess(domain){
+		return this.checkDomainProcess(domain).then((result)=>{
 			if(!result) return false;
 			return this.checkDomainListProcess();
 		});
 	}
-	checkDomainProcess(){
+	checkDomainProcess(domain){
 		return Promise.resolve().then(()=>{
-			if(!this.checkDomainBlank(this.getDomain())){
+			if(!checkBlank(domain)){
 				this.setMessage(ponyfill.i18n.getMessage("htmlCheckBlankError"));
 				return false;
 			}
-			else if(!this.checkDomainLength(this.getDomain())){
+			else if(!this.isSafeDomainLength(domain)){
 				this.setMessage(ponyfill.i18n.getMessage("notificationDomainLengthError", [DOMAIN_MAX_LENGTH]));
 				return false;
 			}
 			return true;
 		});
 	}
-	checkDomainBlank(domain){
-		return checkBlank(domain);
-	}
-	checkDomainLength(domain){
+	isSafeDomainLength(domain){
 		return checkByte(domain, DOMAIN_MAX_LENGTH);
 	}
 	checkDomainListProcess(){
-		return this.readList().then( this.checkDomainList.bind(this) ).then((result)=>{
+		return this.readList().then( this.isCapableDomainList.bind(this) ).then((result)=>{
 			if(!result){
 				this.setMessage(ponyfill.i18n.getMessage("notificationDomainListSizeError", [DOMAIN_LIST_MAX_SIZE]));
 				return false;
@@ -54,28 +45,35 @@ class domainListModel extends appModel {
 			return true;
 		});
 	}
-	checkDomainList(list){
+	isCapableDomainList(list){
 		return list.length < DOMAIN_LIST_MAX_SIZE;
 	}
-	saveDomainList(domain=this.getDomain()){
+	saveDomainList(domain){
 		return this.readList().then((list)=>{
-			if(list.includes(domain)) return;
-			list.push(domain);
+			if(this.isAllowedDomain(list, domain)) return;
+			list.push({"d":domain});
 			list.sort();
 			return this.writeList(list);
 		});
 	}
 	removeDomainList(domain){
 		return this.readList().then((list)=>{
-			list = list.filter((e)=>{return e != domain});
+			list = list.filter((e)=>{return e.d != domain});
 			return this.writeList(list);
 		});
 	}
-	checkCurrentDomainAllowed(list){
+	isAllowedCurrentDomain(list){
 		let domain = new URL( window.location.toString() ).hostname;
-		return this.checkDomainAllowed(list, domain);
+		return this.isAllowedDomain(list, domain);
 	}
-	checkDomainAllowed(list, domain){
-		return list.includes(domain);
+	isAllowedDomain(list, domain){
+		let flag = false;
+		this.each(list,(item)=>{
+			if(item.d == domain) {
+				flag = true;
+				return false;
+			}
+		});
+		return flag;
 	}
 }
