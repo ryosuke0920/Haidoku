@@ -12,4 +12,13 @@ class widgetEnableModel extends appModel {
 			return data.e;
 		});
 	}
+	isDisable(value){
+		return value == "0";
+	}
+	isEnable(value){
+		return value == "1";
+	}
+	isEnableWithDomain(value){
+		return value == "2";
+	}
 }

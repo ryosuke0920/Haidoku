@@ -21,6 +21,7 @@
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 
 	let dlModel = new domainListModel();
+	let weModel = new widgetEnableModel();
 
 	let enableWidgetValue;
 	let domainList;
@@ -635,13 +636,13 @@
 	function onStorageChanged(change, area){
 		if(change.hasOwnProperty("e")){
 			setEnableWidgetValue(change.e.newValue);
-			if( enableWidgetValue == "0" ){
+			if( weModel.isDisable(enableWidgetValue) ){
 				if( isEnableWidget() ) disableWidget();
 			}
-			else if( enableWidgetValue == "1" ){
+			else if( weModel.isEnable(enableWidgetValue) ){
 				if( !isEnableWidget() ) enableWidget();
 			}
-			else if( enableWidgetValue == "2" ){
+			else {
 				if( dlModel.isAllowedCurrentDomain(domainList) ){
 					if( !isEnableWidget() ) enableWidget();
 				}
@@ -653,7 +654,7 @@
 		}
 		if(change.hasOwnProperty("dl")){
 			setDomainList(change.dl.newValue);
-			if(enableWidgetValue == "2"){
+			if( weModel.isEnableWithDomain(enableWidgetValue) ){
 				if( dlModel.isAllowedCurrentDomain(domainList) ){
 					if( !isEnableWidget() ) enableWidget();
 				}
@@ -784,8 +785,8 @@
 	function gotConfig(res){
 		setEnableWidgetValue(res.e);
 		setDomainList(res.dl);
-		if(enableWidgetValue == "0") return;
-		if(enableWidgetValue == "2" && !dlModel.isAllowedCurrentDomain(res.dl)) return;
+		if(weModel.isDisable(enableWidgetValue)) return;
+		if(weModel.isEnableWithDomain(enableWidgetValue) && !dlModel.isAllowedCurrentDomain(res.dl)) return;
 		return Promise.resolve()
 		.then(()=>{ return setVer(res); })
 		.then(()=>{ if(hasLinkList()) return getFavicon().then( gotFavicon ); })
@@ -1162,7 +1163,6 @@
 		let parsed = result.parsed;
 		let bases = result.bases;
 		let parseStatus = result.status;
-		let warnings = [];
 		if(parseStatus){
 			for(let h=0; h<parsed.length; h++){
 				let header = parsed[h].header;
