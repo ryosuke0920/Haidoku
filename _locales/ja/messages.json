@@ -340,7 +340,7 @@
 		"message": "ウィジェットの起動"
 	},
 	"htmlWidgetEnableDescription": {
-		"message": "ONにすると、ウィジェットを表示できるようになります。この設定に関わらず、コンテキストメニュー（右クリック）は使用できます。ツールバーのボタンからも設定できます。"
+		"message": ""
 	},
 	"htmlWidgetDisable": {
 		"message": "OFF"
@@ -358,7 +358,7 @@
 		"message": "許可する"
 	},
 	"htmlDisableDomainText": {
-		"message": "このURLは許可できません。"
+		"message": "このドメインは許可できません。"
 	},
 	"htmlOpenOption": {
 		"message": "設定画面を開く"
@@ -367,13 +367,13 @@
 		"message": "ウィジェットの表示方法"
 	},
 	"htmlDisplayFunctionDescription": {
-		"message": "ウィジェットを自動で表示するか、キーボード操作で表示するかを選択してください。すべてのチェック解除すると、ウィジェットを表示できなくなります。コンテキストメニュー（右クリック）でも設定できます。"
+		"message": "テキスト選択後、ウィジェットを自動で表示するか、キーボード操作で表示するかを選択してください。"
 	},
 	"htmlDomainListTitle": {
 		"message": "ドメイン許可"
 	},
 	"htmldomainListDescription":{
-		"message": "URLのドメインが一致した場合、ウィジェットが表示できるようになります。有効にする場合、「ウィジェットの起動」で「許可したドメインでON」を選択してください。"
+		"message": "ドメインが一致した場合、ウィジェットが表示できるようになります。有効にする場合、「ウィジェットの起動」で「許可したドメインでON」を選択してください。"
 	},
 	"htmlAddDomainButton": {
 		"message": "追加"
