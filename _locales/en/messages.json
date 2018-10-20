@@ -3,7 +3,7 @@
 		"message": "Haidoku"
 	},
 	"extensionDescription": {
-		"message": "Supports to read foreign languages."
+		"message": "Supports to search words."
 	},
 	"extensionOptionAutoView": {
 		"message": "Automatic display"
@@ -12,16 +12,16 @@
 		"message": "Manual display"
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "Display with shift key"
+		"message": "Display with Shift key"
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "Display with ctrl key"
+		"message": "Display with Ctrl key"
 	},
 	"extensionOptionName": {
 		"message": "Options"
 	},
 	"notificationUnexpectedError": {
-		"message": "Unexpected error. $ERROR$",
+		"message": "An unexpected error. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -87,7 +87,7 @@
 		"message": "Don't search for spaces."
 	},
 	"htmlMaxLengthLimitation": {
-		"message": "Search within $ERROR$ bytes.",
+		"message": "Don't search for the text larger than $ERROR$ bytes.",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -95,16 +95,16 @@
 		}
 	},
 	"htmlParseFailed": {
-		"message": "Faild to parse. It displayed original text."
+		"message": "Failed to parse. Displayed the original text."
 	},
 	"htmlMeaningNotFound": {
-		"message": "There is not a meaning for \"Display only meaning\" function. It displayed original text."
+		"message": "Failed to do the \"Display only meaning\" function because there is not a meaning. Displayed the original text."
 	},
 	"htmlSectionNotFound": {
-		"message": "There is not a language matching \"Language filter\". It displayed without the filter."
+		"message": "Failed to do the \"Language filter\" function because there is not a matching language. Displayed without filtering."
 	},
 	"htmlPageNotFound": {
-		"message": "There is not a matching description."
+		"message": "A page was not found."
 	},
 	"htmlConnectionError": {
 		"message": "Failed to connect to the server. $ERROR$",
@@ -131,7 +131,7 @@
 		}
 	},
 	"htmlUnexpectedError": {
-		"message": "Unexpected error. $ERROR$",
+		"message": "An unexpected error. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -168,6 +168,9 @@
 	"htmlRankingName": {
 		"message": "The number of searches"
 	},
+	"htmlControlName": {
+		"message": "Control"
+	},
 	"htmlOthersName": {
 		"message": "View"
 	},
@@ -175,7 +178,7 @@
 		"message": "Info"
 	},
 	"htmlFormDescription": {
-		"message": "Click \"Select some links to add\" button, you can add some links from a list. Click \"Add blank fields\" button, Input \"$$1\" in the URL field, \"$$1\" will be replaced to the selected text."
+		"message": "Click the \"Select some links to add\" button, you can add some links from the list. Input \"$$1\" in the URL field, the \"$$1\" will be replaced to a selected text."
 	},
 	"htmlUsageOrder" : {
 		"message": "Sort."
@@ -232,7 +235,7 @@
 		"message": "Add"
 	},
 	"htmlPresetSearchKeyword": {
-		"message": "search keyword"
+		"message": "Search keyword"
 	},
 	"htmlPresetClearSearchButton": {
 		"message": "clear"
@@ -330,6 +333,67 @@
 	"htmlRankingZeroRowMessage": {
 		"message": "The number of the history items is 0."
 	},
+	"htmlWidgetEnableTitle": {
+		"message": "Widget startup"
+	},
+	"htmlWidgetEnableDescription": {
+		"message": ""
+	},
+	"htmlWidgetDisable": {
+		"message": "Disable"
+	},
+	"htmlWidgetEnable": {
+		"message": "Enable"
+	},
+	"htmlWidgetEnableAllowedDomain": {
+		"message": "Enable for the domains listed in the allowed domains"
+	},
+	"htmlDomainListTitle": {
+		"message": "Allow domains"
+	},
+	"htmlAllowText": {
+		"message": "Allow"
+	},
+	"htmlDisableDomainText": {
+		"message": "This domain can't be allowed."
+	},
+	"htmlOpenOption": {
+		"message": "Open setting screen."
+	},
+	"htmlDisplayFunctionTitle": {
+		"message": "How to display widget"
+	},
+	"htmlDisplayFunctionDescription": {
+		"message": "Select how to display widget automatically or manually after selecting text."
+	},
+	"htmldomainListDescription":{
+		"message": "When a domain matches the list below, the  widget can be displayed. To enable, select the \"Enable for the domains listed in the allowed domains\" check on the \"Widget startup\" menu."
+	},
+	"htmlAddDomainButton": {
+		"message": "Add"
+	},
+	"htmlDomainAllowedDescription": {
+		"message": "List of the allowed domains"
+	},
+	"htmlNoneDomainAllowedDescription": {
+		"message": "There are not any allowed domains."
+	},
+	"notificationDomainLengthError": {
+		"message": "The domain lenght is limited to $LENGTH$ bytes or less.",
+		"placeholders": {
+			"LENGTH": {
+				"content": "$1"
+			}
+		}
+	},
+	"notificationDomainListSizeError": {
+		"message": "The number of the domain list is limited to $SIZE$ items maximum.",
+		"placeholders": {
+			"SIZE": {
+				"content": "$1"
+			}
+		}
+	},
 	"htmlLinkListStyleTitle": {
 		"message": "Widget style"
 	},
@@ -346,10 +410,10 @@
 		"message": "No icon"
 	},
 	"htmlLinkListActionMouseover": {
-		"message": "Display the widget by mousing over the icon."
+		"message": "Display widget by mousing over the icon."
 	},
 	"htmlLinkListActionMouseclick": {
-		"message": "Display the widget by clicking the icon."
+		"message": "Display widget by clicking the icon."
 	},
 	"htmlLinkListLayoutTitle": {
 		"message": "Widget layout"
@@ -388,7 +452,7 @@
 		"message": "Wiktionary linkage"
 	},
 	"htmlApiServiceDescription": {
-		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By connecting to Wiktionary, the description of the word is displayed on the widget."
+		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By connecting to Wiktionary, the description of a word is displayed on the widget."
 	},
 	"htmlServiceCodeTitle": {
 		"message": "Select a host(language)"
@@ -478,10 +542,10 @@
 		"message": "This software is released under the MIT License."
 	},
 	"htmlCheckBlankError": {
-		"message": "Please input in the field."
+		"message": "Input required."
 	},
 	"htmlCheckURLError": {
-		"message": "Please input URL."
+		"message": "Input in URL formant."
 	},
 	"htmlCheckByteLengthError": {
 		"message": "Shorten to $MAX_LENGTH$ bytes or less (Currently $LENGTH$ bytes).",
@@ -495,7 +559,7 @@
 		}
 	},
 	"htmlCheckFieldLengthError": {
-		"message": "Limited to $MAX_FIELDS$ items maximum.",
+		"message": "The number of links is limited to $MAX_FIELDS$ items maximum.",
 		"placeholders": {
 			"MAX_FIELDS": {
 				"content": "$1"
@@ -503,7 +567,7 @@
 		}
 	},
 	"htmlCheckPresetLengthError": {
-		"message": "Limited to $MAX_FIELDS$ items maximum. It is set to $SUM$ items. Currently $CHECKED$ items are selected. You can select $REMAINING$ items.",
+		"message": "The number of links is limited to $MAX_FIELDS$ items maximum. It is set to $SUM$ items. Currently $CHECKED$ items are selected. You can select $REMAINING$ items.",
 		"placeholders": {
 			"MAX_FIELDS": {
 				"content": "$1"
@@ -520,10 +584,18 @@
 		}
 	},
 	"htmlDateInputError": {
-		"message": "Please input date correctly."
+		"message": "Input the date correctly."
+	},
+	"htmlCheckLanguageFilterByteLengthError": {
+		"message": "The number of the character of language filte is limited to $LENGTH$ bytes or less.",
+		"placeholders": {
+			"LENGTH": {
+				"content": "$1"
+			}
+		}
 	},
 	"htmlCheckLanguageFilterLengthError": {
-		"message": "The number of Language filter is limited to $MAX$ items maximum",
+		"message": "The number of language filter is limited to $MAX$ items maximum.",
 		"placeholders": {
 			"MAX": {
 				"content": "$1"

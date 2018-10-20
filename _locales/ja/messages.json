@@ -333,9 +333,6 @@
 	"htmlRankingZeroRowMessage": {
 		"message": "履歴の件数は0件です。"
 	},
-	"htmlLinkListStyleTitle": {
-		"message": "ウィジェットのスタイル"
-	},
 	"htmlWidgetEnableTitle": {
 		"message": "ウィジェットの起動"
 	},
@@ -351,7 +348,7 @@
 	"htmlWidgetEnableAllowedDomain": {
 		"message": "許可したドメインでON"
 	},
-	"htmlAllowedDomain": {
+	"htmlDomainListTitle": {
 		"message": "ドメイン許可"
 	},
 	"htmlAllowText": {
@@ -368,9 +365,6 @@
 	},
 	"htmlDisplayFunctionDescription": {
 		"message": "テキスト選択後、ウィジェットを自動で表示するか、キーボード操作で表示するかを選択してください。"
-	},
-	"htmlDomainListTitle": {
-		"message": "ドメイン許可"
 	},
 	"htmldomainListDescription":{
 		"message": "ドメインが一致した場合、ウィジェットが表示できるようになります。有効にする場合、「ウィジェットの起動」で「許可したドメインでON」を選択してください。"
@@ -399,6 +393,9 @@
 				"content": "$1"
 			}
 		}
+	},
+	"htmlLinkListStyleTitle": {
+		"message": "ウィジェットのスタイル"
 	},
 	"htmlLinkListStyleClassic": {
 		"message": "クラシック"

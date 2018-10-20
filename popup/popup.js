@@ -10,7 +10,7 @@ function init(){
 		{ "selector": "#widgetDisableText", "property": "innerText", "key": "htmlWidgetDisable" },
 		{ "selector": "#widgetEnableText", "property": "innerText", "key": "htmlWidgetEnable" },
 		{ "selector": "#widgetEnableAllowedDomainText", "property": "innerText", "key": "htmlWidgetEnableAllowedDomain" },
-		{ "selector": "#allowedDomainText", "property": "innerText", "key": "htmlAllowedDomain" },
+		{ "selector": "#allowedDomainText", "property": "innerText", "key": "htmlDomainListTitle" },
 		{ "selector": "#allowText", "property": "innerText", "key": "htmlAllowText" },
 		{ "selector": "#disableDomainText", "property": "innerText", "key": "htmlDisableDomainText" },
 		{ "selector": "#optionOpener", "property": "innerText", "key": "htmlOpenOption" }
