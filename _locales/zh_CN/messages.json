@@ -416,7 +416,7 @@
 		"message": "启用"
 	},
 	"htmlWidgetEnableAllowedDomain": {
-		"message": "启用允许域中列出的域"
+		"message": "启用允许的域"
 	},
 	"htmlDomainListTitle": {
 		"message": "允许域名"
@@ -437,7 +437,7 @@
 		"message": "选择如何在选择文本后自动或手动显示窗口小部件。"
 	},
 	"htmldomainListDescription":{
-		"message": "当域与下面的列表匹配时，可以显示窗口小部件。 要启用，请在“小工具启动”菜单上选择“启用允许域中列出的域”检查。"
+		"message": "当域与下面的列表匹配时，可以显示窗口小部件。 要启用，请在“小工具启动”菜单上选择“启用允许的域”检查。"
 	},
 	"htmlAddDomainButton": {
 		"message": "加"

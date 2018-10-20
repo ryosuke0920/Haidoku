@@ -346,7 +346,7 @@
 		"message": "Enable"
 	},
 	"htmlWidgetEnableAllowedDomain": {
-		"message": "Enable for the domains listed in the allowed domains"
+		"message": "Enable for the allowed domains"
 	},
 	"htmlDomainListTitle": {
 		"message": "Allow domains"
@@ -367,7 +367,7 @@
 		"message": "Select how to display widget automatically or manually after selecting text."
 	},
 	"htmldomainListDescription":{
-		"message": "When a domain matches the list below, the  widget can be displayed. To enable, select the \"Enable for the domains listed in the allowed domains\" check on the \"Widget startup\" menu."
+		"message": "When a domain matches the list below, the  widget can be displayed. To enable, select the \"Enable for the allowed domains\" check on the \"Widget startup\" menu."
 	},
 	"htmlAddDomainButton": {
 		"message": "Add"
