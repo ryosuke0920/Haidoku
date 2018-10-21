@@ -98,7 +98,7 @@
 		"message": "Failed to parse. Displayed the original text."
 	},
 	"htmlMeaningNotFound": {
-		"message": "Failed to do the \"Display only meaning\" function because there is not a meaning. Displayed the original text."
+		"message": "Failed to do the \"Display only meaning\" function because there is not a description of the meaning. Displayed the original text."
 	},
 	"htmlSectionNotFound": {
 		"message": "Failed to do the \"Language filter\" function because there is not a matching language. Displayed without filtering."

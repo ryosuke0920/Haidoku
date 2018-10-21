@@ -4,7 +4,7 @@
 		"hash": "740c17d6abb1f6e89a050740f20ba3e3"
 	},
 	"extensionDescription": {
-		"message": "支持阅读外语。",
+		"message": "支持搜索单词。",
 		"hash": "c2df36d78bc6b62a4f7202505bf8b69f"
 	},
 	"extensionOptionAutoView": {
@@ -94,7 +94,7 @@
 		"hash": "1636c92d822b9b1aac4f4241be58eb2d"
 	},
 	"htmlMaxLengthLimitation": {
-		"message": "搜索不要超过 $ERROR$ 字节。",
+		"message": "们不搜索超过$ERROR$个字节的文本。",
 		"placeholders": {
 			"ERROR": { "content": "$1" }
 		},
@@ -105,15 +105,15 @@
 		"hash": "581a097c5c062573b7fceb02efb7ee20"
 	},
 	"htmlMeaningNotFound": {
-		"message": "“仅显示含义”无法完成。 它以原始文本显示。",
+		"message": "无法执行“仅显示含义”功能，因为没有含义的描述。 显示原始文本。",
 		"hash": "581e96dc29cc3afec46390eaabc73f35"
 	},
 	"htmlSectionNotFound": {
-		"message": "我找不到与“语言过滤器”匹配的语言。它显示没有过滤器。",
+		"message": "无法执行“语言过滤器”功能，因为没有匹配的语言。 显示没有过滤。",
 		"hash": "65d1fee4f1dfb9240a32068ca43df2c0"
 	},
 	"htmlPageNotFound": {
-		"message": "无法找到页面。",
+		"message": "找不到页面。",
 		"hash": "232be90f4ed902bf39708fe4dfb609d0"
 	},
 	"htmlConnectionError": {
@@ -196,7 +196,7 @@
 		"hash": "772b8e57e5d6623f1cf59d7d90ddaa47"
 	},
 	"htmlFormDescription": {
-		"message": "单击“选择要添加的链接”按钮，可以从列表中添加一些链接。 单击“添加空白字段”按钮，在URL字段中输入“$$ 1”，“$$ 1”将替换为所选文本。",
+		"message": "单击“选择要添加的链接”按钮，可以从列表中添加一些链接。在URL字段中输入\"$$1\"，\"$$1\"将替换为选定的文本。",
 		"hash": "0d946240e2969de69f7119711ee7d158"
 	},
 	"htmlUsageOrder": {
@@ -661,11 +661,11 @@
 		"hash": "10f0e0b58b401858e3804fcd2d975c00"
 	},
 	"htmlCheckBlankError": {
-		"message": "请填写此字段。",
+		"message": "需要输入。",
 		"hash": "7868f93911472885eff4958d18d2bc36"
 	},
 	"htmlCheckURLError": {
-		"message": "请输入一个URL。",
+		"message": "以URL格式输入。",
 		"hash": "30d156ac1dda2f341cce888233eed99a"
 	},
 	"htmlCheckByteLengthError": {
@@ -677,14 +677,14 @@
 		"hash": "3c7452d8717373709cef584aadd97924"
 	},
 	"htmlCheckFieldLengthError": {
-		"message": "您最多添加$MAX_FIELDS$项。",
+		"message": "链接数量限制为$MAX_FIELDS$项目最大值。",
 		"placeholders": {
 			"MAX_FIELDS": { "content": "$1" }
 		},
 		"hash": "fd10a4e21127bb37952041c8370ccd40"
 	},
 	"htmlCheckPresetLengthError": {
-		"message": "最多添加$MAX_FIELDS$个网站。总计$SUM$个部分。目前已选择$CHECKED$项。您还可以添加$REMAINING$项。",
+		"message": "链接数量限制为$MAX_FIELDS$项目最大值。总计$SUM$个部分。目前已选择$CHECKED$项。您还可以添加$REMAINING$项。",
 		"placeholders": {
 			"MAX_FIELDS": { "content": "$1" },
 			"SUM": { "content": "$2" },
@@ -694,7 +694,7 @@
 		"hash": "c9f22a4eb61686eb8b994a792e027d88"
 	},
 	"htmlDateInputError": {
-		"message": "请输入正确的日期。",
+		"message": "正确输入日期。",
 		"hash": "ec0c986ee44e6547527add601f3850a1"
 	},
 	"htmlCheckLanguageFilterByteLengthError": {
