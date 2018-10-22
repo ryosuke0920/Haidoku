@@ -78,6 +78,17 @@
 			{ "selector": ".apiCutOutTitle", "property": "innerText", "key": "htmlApiCutOutTitle" },
 			{ "selector": ".apiCutOutDescription", "property": "innerText", "key": "htmlApiCutOutDescription" },
 			{ "selector": ".apiCutOutLabel", "property": "innerText", "key": "htmlApiCutOutLabel" },
+			{ "selector": "#wikipediaLinkageTitle", "property": "innerText", "key": "htmlWikipediaLinkageTitle" },
+			{ "selector": "#wikipediaLinkageDescription", "property": "innerText", "key": "htmlWikipediaLinkageDescription" },
+			{ "selector": "#wikipediaHostTitle", "property": "innerText", "key": "htmlWikipediaHostTitle" },
+			{ "selector": "#wikipediaHostDescription", "property": "innerText", "key": "htmlWikipediaHostDescription" },
+			{ "selector": "#wikipediaCodeNone", "property": "innerText", "key": "htmlWikipediaCodeNone" },
+			{ "selector": "#wikipediaCodeDe", "property": "innerText", "key": "htmlWikipediaCodeDe" },
+			{ "selector": "#wikipediaCodeEn", "property": "innerText", "key": "htmlWikipediaCodeEn" },
+			{ "selector": "#wikipediaCodeFr", "property": "innerText", "key": "htmlWikipediaCodeFr" },
+			{ "selector": "#wikipediaCodeJa", "property": "innerText", "key": "htmlWikipediaCodeJa" },
+			{ "selector": "#wikipediaCodeRu", "property": "innerText", "key": "htmlWikipediaCodeRu" },
+			{ "selector": "#wikipediaCodeZh", "property": "innerText", "key": "htmlWikipediaCodeZh" },
 			{ "selector": ".linkListSampleTitle", "property": "innerText", "key": "htmlLinkListSampleTitle" }
 		];
 		setI18n(list);

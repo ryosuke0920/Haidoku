@@ -452,7 +452,7 @@
 		"message": "ウィクショナリー連携"
 	},
 	"htmlApiServiceDescription": {
-		"message": "ウィクショナリーは、ウィキペディアの姉妹サイトで、ボランティアが投稿している辞書サイトです。ウィクショナリーと通信して、単語の解説がウィジェットに表示されます。"
+		"message": "ウィクショナリーは、ウィキペディアの姉妹サイトで、ボランティアが投稿している辞書サイトです。ウィクショナリーと通信して、単語の解説をウィジェットに表示します。"
 	},
 	"htmlServiceCodeTitle": {
 		"message": "ホスト（言語）の選択"
@@ -513,6 +513,39 @@
 	},
 	"htmlApiCutOutLabel": {
 		"message": "有効にする"
+	},
+	"htmlWikipediaLinkageTitle": {
+		"message": "ウィキペディア連携"
+	},
+	"htmlWikipediaLinkageDescription": {
+		"message": "ウィキペディアは、ボランティアが投稿している百科事典サイトです。ウィキペディアと通信して、単語の解説をウィジェットに表示します。"
+	},
+	"htmlWikipediaHostTitle": {
+		"message": "ホスト（言語）の選択"
+	},
+	"htmlWikipediaHostDescription": {
+		"message": "ホストごとに、表示される言語と、辞書の品質が異なります。無効を選択すると、表示領域が非表示になります。"
+	},
+	"htmlWikipediaCodeNone": {
+		"message": "無効にする"
+	},
+	"htmlWikipediaCodeDe": {
+		"message": "https://de.wikipedia.org/ - ドイツ語"
+	},
+	"htmlWikipediaCodeEn": {
+		"message": "https://en.wikipedia.org/ - 英語"
+	},
+	"htmlWikipediaCodeFr": {
+		"message": "https://fr.wikipedia.org/ - フランス語"
+	},
+	"htmlWikipediaCodeJa": {
+		"message": "https://ja.wikipedia.org/ - 日本語"
+	},
+	"htmlWikipediaCodeRu": {
+		"message": "https://ru.wikipedia.org/ - ロシア語"
+	},
+	"htmlWikipediaCodeZh": {
+		"message": "https://zh.wikipedia.org/ - 中国語"
 	},
 	"htmlLinkListSampleTitle": {
 		"message": "ウィジェットのサンプル"
