@@ -1076,7 +1076,7 @@
 			"abort": false,
 			"data": {
 				"text": text,
-				"api": "wiktionary"
+				"serviceCode": serviceCode
 			}
 		};
 		if( !checkBlank(text) ){

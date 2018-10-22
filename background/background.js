@@ -7,7 +7,6 @@ let shiftKey = false;
 let ctrlKey = false;
 let options = {};
 let faviconCache = {};
-let serviceCode = API_SERVICE_CODE_NONE;
 let apiDocumentCache = [];
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible */
@@ -41,13 +40,11 @@ function initContextMenu(){
 }
 
 function getSetting() {
-	let serviceCode = getDefaultServiceCode();
 	return ponyfill.storage.sync.get({
 		"ol": DEFAULT_OPTION_LIST_ON_GET,
 		"bf": DEFAULT_AUTO_VIEW_FLAG,
 		"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
-		"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
-		"s": serviceCode
+		"ck": DEFAULT_CTRL_KEY_VIEW_FLAG
 	}).then(onGotSetting);
 }
 
@@ -56,7 +53,6 @@ function onGotSetting(json){
 	autoViewFlag = json["bf"];
 	shiftKey = json["sk"];
 	ctrlKey = json["ck"];
-	serviceCode = json["s"];
 }
 
 function initListener(){
@@ -95,7 +91,7 @@ function notify(message, sender, sendResponse){
 		return Promise.resolve(faviconCache);
 	}
 	else if( method == "apiRequest" ){
-		return apiRequest(data.text).catch((e)=>{
+		return apiRequest(data).catch((e)=>{
 			console.error(e);
 			return Promise.reject(e);
 		});
@@ -162,8 +158,7 @@ function onStorageChanged(change, area){
 	if(change["ol"]) {
 		updateFaviconCache(false).then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
-	if(change["s"]) {
-		serviceCode = change["s"]["newValue"];
+	if(change["s"] || chage["wc"]) {
 		apiDocumentCache = [];
 	}
 }
@@ -556,17 +551,17 @@ function broadcastWindows(windows){
 	}
 }
 
-function apiRequest(text){
-	let obj = {"text": text};
-	if(!API_SERVICE.hasOwnProperty(serviceCode)){
+function apiRequest(data){
+	let obj = {"text": data.text};
+	if(!API_SERVICE.hasOwnProperty(data.serviceCode)){
 		obj.error = APPLICATION_ERROR;
-		obj.code = serviceCode;
+		obj.code = data.serviceCode;
 		obj.message = "service not found.";
 		return Promise.resolve(obj);
 	}
-	let cache = fetchApiDocumentCache(text);
+	let cache = fetchApiDocumentCache(data.text);
 	if(cache) return Promise.resolve(cache);
-	let service = API_SERVICE[serviceCode];
+	let service = API_SERVICE[data.serviceCode];
 	obj.service = service;
 	obj.path = API_SERVICE_PROPERTY[service].path;
 	obj.url = [];

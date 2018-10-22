@@ -40,7 +40,13 @@ const API_SERVICE = {
 	"fr": "https://fr.wiktionary.org",
 	"ja": "https://ja.wiktionary.org",
 	"ru": "https://ru.wiktionary.org",
-	"zh": "https://zh.wiktionary.org"
+	"zh": "https://zh.wiktionary.org",
+	"w-de": "https://de.wikipedia.org",
+	"w-en": "https://en.wikipedia.org",
+	"w-fr": "https://fr.wikipedia.org",
+	"w-ja": "https://ja.wikipedia.org",
+	"w-ru": "https://ru.wikipedia.org",
+	"w-zh": "https://zh.wikipedia.org"
 };
 const API_SERVICE_PROPERTY = {
 	"https://de.wiktionary.org":{
@@ -108,6 +114,24 @@ const API_SERVICE_PROPERTY = {
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
 		"prefixFlag":false,
+		"path": "/w/api.php"
+	},
+	"https://de.wikipedia.org":{
+		"path": "/w/api.php"
+	},
+	"https://en.wikipedia.org":{
+		"path": "/w/api.php"
+	},
+	"https://fr.wikipedia.org":{
+		"path": "/w/api.php"
+	},
+	"https://ja.wikipedia.org":{
+		"path": "/w/api.php"
+	},
+	"https://ru.wikipedia.org":{
+		"path": "/w/api.php"
+	},
+	"https://zh.wikipedia.org":{
 		"path": "/w/api.php"
 	}
 };
