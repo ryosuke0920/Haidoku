@@ -127,26 +127,24 @@
 		apiHeaderNode.setAttribute("id",CSS_PREFIX+"-apiHeader");
 		apiContentNode.appendChild(apiHeaderNode);
 
-		let apiHeaderTextAreaNode = document.createElement("div");
-		apiHeaderTextAreaNode.setAttribute("id",CSS_PREFIX+"-apiHeaderTextArea");
-		apiHeaderNode.appendChild(apiHeaderTextAreaNode);
+		let apiWikiMenuNode = document.createElement("div");
+		apiWikiMenuNode.setAttribute("id",CSS_PREFIX+"-apiWikiMenu");
+		apiHeaderNode.appendChild(apiWikiMenuNode);
 
 		apiSwitcheNode = document.createElement("span");
 		apiSwitcheNode.setAttribute("id",CSS_PREFIX+"-apiSwitch");
 		apiSwitcheNode.classList.add(CSS_PREFIX+"-checkboxButton");
-		apiHeaderNode.appendChild(apiSwitcheNode);
+		apiSwitcheNode.classList.add(CSS_PREFIX+"-apiWikiButton");
+		apiWikiMenuNode.appendChild(apiSwitcheNode);
 
 		let apiSwitcheCircleNode = document.createElement("span");
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
 		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
 
-		let apiWikiMenuNode = document.createElement("div");
-		apiWikiMenuNode.setAttribute("id",CSS_PREFIX+"-apiWikiMenu");
-		apiHeaderTextAreaNode.appendChild(apiWikiMenuNode);
-
 		historyButtoneNode = document.createElement("span");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
 		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
+		historyButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
 		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
 		apiWikiMenuNode.appendChild(historyButtoneNode);
@@ -154,6 +152,7 @@
 		historyDoneButtoneNode = document.createElement("span");
 		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
 		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
+		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
 		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
 		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
 		apiWikiMenuNode.appendChild(historyDoneButtoneNode);
@@ -167,16 +166,6 @@
 		w2ButtonNode.classList.add(CSS_PREFIX+"-textButton");
 		w2ButtonNode.title = w2ButtonNode.innerText = "Wikipedia";
 		apiWikiMenuNode.appendChild(w2ButtonNode);
-
-		let apiNowLoadingMsgNode = document.createElement("div");
-		apiNowLoadingMsgNode.setAttribute("id",CSS_PREFIX+"-nowLoadingMsg");
-		apiNowLoadingMsgNode.innerText = ponyfill.i18n.getMessage("htmlNowSearching");
-		apiHeaderTextAreaNode.appendChild(apiNowLoadingMsgNode);
-
-		let apiOffMsgNode = document.createElement("div");
-		apiOffMsgNode.setAttribute("id",CSS_PREFIX+"-apiOffMsg");
-		apiOffMsgNode.innerText = ponyfill.i18n.getMessage("htmlLinkageDisabled");
-		apiHeaderTextAreaNode.appendChild(apiOffMsgNode);
 
 		let apiLoadingNode = document.createElement("div");
 		apiLoadingNode.setAttribute("id",CSS_PREFIX+"-apiLoading");
@@ -1090,6 +1079,7 @@
 	}
 
 	function apiRequest(text){
+		widgetNode.classList.add(CSS_PREFIX+"-loading");
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
 		let obj = {
 			"abort": false,
@@ -1152,8 +1142,7 @@
 	}
 
 	function clearApiContent(){
-		widgetNode.classList.add(CSS_PREFIX+"-loading");
-		hide(historyButtoneNode);
+		show(historyButtoneNode);
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
 		clearApiTitle();
@@ -1248,7 +1237,6 @@
 				apiBodyNode.appendChild(base);
 			}
 		}
-		show(historyButtoneNode);
 		widgetNode.classList.remove(CSS_PREFIX+"-loading");
 	}
 
