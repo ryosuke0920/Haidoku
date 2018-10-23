@@ -1,5 +1,5 @@
 const CSS_PREFIX = "lessLaborGoToDictionary";
-const LINK_NODE_PADDING = 5;
+const LINK_NODE_PADDING = 0;
 /* cl */
 const LINK_LIST_STYLE_CLASSIC = "c";
 const LINK_LIST_STYLE_DARK = "d";
@@ -149,11 +149,11 @@ const WIDGET_STYLE = `
 	margin: 0;
 }
 #lessLaborGoToDictionary-widget {
+	background: linear-gradient(#FCFCFC, #F0F0F0);
 	display: block;
 	position: absolute;
 	z-index: 2147483646;
-	background-color: white;
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+	box-shadow: 0 0 2px black;
 	overflow: auto;
 	resize: both;
 	user-select: none;
@@ -189,27 +189,36 @@ const WIDGET_STYLE = `
 	display: block;
 }
 #lessLaborGoToDictionary-menu {
-	height: 22px;
-	line-height: 0;
+	border-bottom: solid 1px #888888;
+	background: linear-gradient(#FCFCFC, #F0F0F0);
 	white-space: nowrap;
-	margin-bottom: 3px;
+	padding: 3px;
+	min-width: 300px;
+}
+#lessLaborGoToDictionary-menu > * {
+	margin-right: 3px;
 }
 .lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-menu {
 	display: none;
 }
 .lessLaborGoToDictionary-buttonIcon {
 	display: inline-block;
-	height: 16px;
-	width: 16px;
+	height: 20px;
+	width: 20px;
 	cursor: pointer;
 	background-size: cover;
-	margin-right: 5px;
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 	user-select: none;
 	-moz-user-select: none;
 }
+.lessLaborGoToDictionary-textButton {
+	color: #888888;
+	cursor: pointer;
+}
 #lessLaborGoToDictionary-move {
 	cursor: move;
+}
+#lessLaborGoToDictionary-grid {
+	border-bottom: solid 1px #888888;
 }
 .lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
 	display: grid;
@@ -219,20 +228,20 @@ const WIDGET_STYLE = `
 	display: none;
 }
 #lessLaborGoToDictionary-container {
-	margin-bottom: 3px;
+	background: linear-gradient(#FCFCFC, #F0F0F0);
+	padding: 3px;
 }
 .lessLaborGoToDictionary-list {
 	display: block;
 	white-space: nowrap;
-	margin-right: 5px;
 }
 .lessLaborGoToDictionary-inline .lessLaborGoToDictionary-list {
 	display: inline;
 	white-space: normal;
+	margin-right: 3px;
 }
 .lessLaborGoToDictionary-dark .lessLaborGoToDictionary-list {
 	color: white;
-	border-top: 2px solid #505050;
 }
 .lessLaborGoToDictionary-dark .lessLaborGoToDictionary-list:hover {
 	background-color:#505050;
@@ -263,7 +272,6 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-favicon {
 	width: 16px;
 	height: 16px;
-	margin: auto;
 }
 .lessLaborGoToDictionary-label {
 	cursor: pointer;
@@ -273,11 +281,18 @@ const WIDGET_STYLE = `
 	display: none;
 }
 #lessLaborGoToDictionary-apiContent {
-	border-radius: 10px;
+	border-top: solid 1px #888888;
 	font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
 	font-size: 14px;
 	user-select: text;
 	-moz-user-select: text;
+}
+.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-apiContent {
+	border-top: none;
+	border-left: solid 1px #888888;
+}
+#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
+	display: none;
 }
 #lessLaborGoToDictionary-apiContent a {
 	color: #3366cc;
@@ -292,29 +307,19 @@ const WIDGET_STYLE = `
 #lessLaborGoToDictionary-apiContent a:active {
 	color: #ee0000;
 }
-#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
-	display: none;
-}
-#lessLaborGoToDictionary-apiContent > * {
-	border-right: solid 1px gray;
-	border-left: solid 1px gray;
-	background-color: white;
-	padding:5px 10px;
-}
 #lessLaborGoToDictionary-apiHeader {
+	background: linear-gradient(#FCFCFC, #F0F0F0);
+	border-bottom: solid 1px #888888;
+	padding: 3px;
 	position: relative;
-	border-top: solid 1px gray;
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-	background-color:#eaecf0;
 	display: flex;
 }
 #lessLaborGoToDictionary-apiFooter {
-	border-bottom: solid 1px gray;
-	border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10px;
+	background: linear-gradient(#FCFCFC, #F0F0F0);
+	border-top: solid 1px #888888;
+	color: #888888;
+	padding: 3px;
 	font-size:0.9em;
-	background-color:#eaecf0;
 }
 #lessLaborGoToDictionary-apiHeaderTextArea {
 	display: block;
@@ -324,11 +329,6 @@ const WIDGET_STYLE = `
 #lessLaborGoToDictionary-apiHeaderTextArea > * {
 	display:block;
 	min-width: 0;
-}
-#lessLaborGoToDictionary-apiHeaderTextArea * {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 .lessLaborGoToDictionary-checkboxButton {
 	position: relative;
@@ -362,36 +362,48 @@ const WIDGET_STYLE = `
 	right: 2px;
 }
 #lessLaborGoToDictionary-apiHeaderTextArea {
-	font-size: 1.2em;
+}
+#lessLaborGoToDictionary-apiWikiMenu > * {
+	margin-right: 1em;
+}
+.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiWikiMenu,
+.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiWikiMenu {
+	display: none;
+}
+#lessLaborGoToDictionary-apiBodyWrapper {
+	background-color: white;
+	padding: 3px;
+}
+#lessLaborGoToDictionary-history, #lessLaborGoToDictionary-historyDone {
+	vertical-align: bottom
+}
+#lessLaborGoToDictionary-history {
+}
+#lessLaborGoToDictionary-historyDone {
+	cursor: auto;
 }
 #lessLaborGoToDictionary-history.lessLaborGoToDictionary-hide,
 #lessLaborGoToDictionary-historyDone.lessLaborGoToDictionary-hide {
 	display: none;
 }
-#lessLaborGoToDictionary-history {
-	margin-right: 10px;
+#lessLaborGoToDictionary-apiTitleBox {
+	display: block;
+	flex: auto;
+	min-width: 0;
+	font-size: 18px;
 }
-#lessLaborGoToDictionary-historyDone {
-	margin-right: 10px;
-	cursor: auto;
+#lessLaborGoToDictionary-apiTitleBox > * {
+	display:block;
+	min-width: 0;
 }
-.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiTitleWrapper,
-.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiTitleWrapper {
-	display: none;
+#lessLaborGoToDictionary-apiTitleBox * {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
-#lessLaborGoToDictionary-apiTitle {
-	font-weight: bold;
-	cursor: pointer;
-	color: #3366cc;
-}
-#lessLaborGoToDictionary-apiTitle:visited {
-	color: #551a8b;
-}
-#lessLaborGoToDictionary-apiTitle:hover {
-	text-decoration: underline;
-}
-#lessLaborGoToDictionary-apiTitle:active {
-	color: #ee0000;
+#lessLaborGoToDictionary-apiBody {
+	grid-column-start: 1; 
+	grid-column-end: 3; 
 }
 #lessLaborGoToDictionary-nowLoadingMsg {
 	display: none;
@@ -409,6 +421,7 @@ const WIDGET_STYLE = `
 	display: block;
 }
 #lessLaborGoToDictionary-apiLoading {
+	background-color: white;
 	padding: 0;
 	display: none;
 	height: 5em;
@@ -442,8 +455,9 @@ const WIDGET_STYLE = `
 	}
 }
 #lessLaborGoToDictionary-apiOff {
+	background-color: white;
 	display: none;
-	font-size: 0.9em;
+	padding: 3px;
 }
 .lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOff {
 	display: block;
@@ -452,8 +466,8 @@ const WIDGET_STYLE = `
 	color: red;
 	font-weight: bold;
 }
-.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBody,
-.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiBody {
+.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiBodyWrapper,
+.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiBodyWrapper {
 	display: none;
 }
 #lessLaborGoToDictionary-apiBody h1,

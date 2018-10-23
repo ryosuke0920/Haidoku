@@ -140,33 +140,33 @@
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
 		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
 
-		let apiTitleWrapper = document.createElement("div");
-		apiTitleWrapper.setAttribute("id",CSS_PREFIX+"-apiTitleWrapper");
-		apiHeaderTextAreaNode.appendChild(apiTitleWrapper);
+		let apiWikiMenuNode = document.createElement("div");
+		apiWikiMenuNode.setAttribute("id",CSS_PREFIX+"-apiWikiMenu");
+		apiHeaderTextAreaNode.appendChild(apiWikiMenuNode);
 
-		historyButtoneNode = document.createElement("div");
+		historyButtoneNode = document.createElement("span");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
 		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
-		apiTitleWrapper.appendChild(historyButtoneNode);
+		apiWikiMenuNode.appendChild(historyButtoneNode);
 
-		historyDoneButtoneNode = document.createElement("div");
+		historyDoneButtoneNode = document.createElement("span");
 		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
 		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
 		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
-		apiTitleWrapper.appendChild(historyDoneButtoneNode);
+		apiWikiMenuNode.appendChild(historyDoneButtoneNode);
 
-		apiTitleNode = document.createElement("a");
-		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
-		apiTitleNode.setAttribute("rel","noreferrer");
-		apiTitleNode.setAttribute("target","_blank");
-		apiTitleWrapper.appendChild(apiTitleNode);
+		let w1ButtonNode = document.createElement("span");
+		w1ButtonNode.classList.add(CSS_PREFIX+"-textButton");
+		w1ButtonNode.title = w1ButtonNode.innerText = "Wiktionary";
+		apiWikiMenuNode.appendChild(w1ButtonNode);
 
-		apiErrorMessageNode = document.createElement("div");
-		apiErrorMessageNode.setAttribute("id",CSS_PREFIX+"-apiErrorMessage");
-		apiTitleWrapper.appendChild(apiErrorMessageNode);
+		let w2ButtonNode = document.createElement("span");
+		w2ButtonNode.classList.add(CSS_PREFIX+"-textButton");
+		w2ButtonNode.title = w2ButtonNode.innerText = "Wikipedia";
+		apiWikiMenuNode.appendChild(w2ButtonNode);
 
 		let apiNowLoadingMsgNode = document.createElement("div");
 		apiNowLoadingMsgNode.setAttribute("id",CSS_PREFIX+"-nowLoadingMsg");
@@ -192,9 +192,27 @@
 		apiLoadingContentNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/circle.svg")+")";
 		apiLoadingNode.appendChild(apiLoadingContentNode);
 
+		let apiBodyWrapper = document.createElement("div");
+		apiBodyWrapper.setAttribute("id",CSS_PREFIX+"-apiBodyWrapper");
+		apiContentNode.appendChild(apiBodyWrapper);
+
+		let apiTitleBoxNode = document.createElement("h1");
+		apiTitleBoxNode.setAttribute("id",CSS_PREFIX+"-apiTitleBox");
+		apiBodyWrapper.appendChild(apiTitleBoxNode);
+
+		apiTitleNode = document.createElement("a");
+		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
+		apiTitleNode.setAttribute("rel","noreferrer");
+		apiTitleNode.setAttribute("target","_blank");
+		apiTitleBoxNode.appendChild(apiTitleNode);
+
+		apiErrorMessageNode = document.createElement("span");
+		apiErrorMessageNode.setAttribute("id",CSS_PREFIX+"-apiErrorMessage");
+		apiTitleBoxNode.appendChild(apiErrorMessageNode);
+
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
-		apiContentNode.appendChild(apiBodyNode);
+		apiBodyWrapper.appendChild(apiBodyNode);
 
 		apiFooterNode = document.createElement("div");
 		apiFooterNode.setAttribute("id",CSS_PREFIX+"-apiFooter");
@@ -779,7 +797,8 @@
 			"sw": API_SWITCH_DISABLED,
 			"s": sc,
 			"ll": languageFilter,
-			"co": DEFAULT_MEANING_VALUE
+			"co": DEFAULT_MEANING_VALUE,
+			"wc": "w-"+sc
 		});
 	}
 	function gotConfig(res){

@@ -136,7 +136,7 @@
 			"s": serviceCode,
 			"ll": languageFilter,
 			"co": DEFAULT_MEANING_VALUE,
-			"wc": serviceCode
+			"wc": "w-"+serviceCode
 		});
 		return getter.then(onGot);
 	}
