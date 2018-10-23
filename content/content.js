@@ -19,6 +19,7 @@
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
 	const API_WHITE_SPACE_ERROR = "white space error";
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
+	const FOOTER_CONTENT2 = "Provided by Wikipedia under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 
 	let dlModel = new domainListModel();
 	let weModel = new widgetEnableModel();
@@ -35,7 +36,9 @@
 	let apiTitleNode;
 	let apiErrorMessageNode;
 	let apiBodyNode;
-	let apiFooterNode;
+	let apiTitleNode2;
+	let apiErrorMessageNode2;
+	let apiBodyNode2;
 	let apiSwitcheNode;
 	let arrowNode;
 	let historyButtoneNode;
@@ -127,15 +130,11 @@
 		apiHeaderNode.setAttribute("id",CSS_PREFIX+"-apiHeader");
 		apiContentNode.appendChild(apiHeaderNode);
 
-		let apiWikiMenuNode = document.createElement("div");
-		apiWikiMenuNode.setAttribute("id",CSS_PREFIX+"-apiWikiMenu");
-		apiHeaderNode.appendChild(apiWikiMenuNode);
-
 		apiSwitcheNode = document.createElement("span");
 		apiSwitcheNode.setAttribute("id",CSS_PREFIX+"-apiSwitch");
 		apiSwitcheNode.classList.add(CSS_PREFIX+"-checkboxButton");
 		apiSwitcheNode.classList.add(CSS_PREFIX+"-apiWikiButton");
-		apiWikiMenuNode.appendChild(apiSwitcheNode);
+		apiHeaderNode.appendChild(apiSwitcheNode);
 
 		let apiSwitcheCircleNode = document.createElement("span");
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
@@ -147,7 +146,7 @@
 		historyButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
 		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
-		apiWikiMenuNode.appendChild(historyButtoneNode);
+		apiHeaderNode.appendChild(historyButtoneNode);
 
 		historyDoneButtoneNode = document.createElement("span");
 		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
@@ -155,17 +154,18 @@
 		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
 		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
 		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
-		apiWikiMenuNode.appendChild(historyDoneButtoneNode);
+		apiHeaderNode.appendChild(historyDoneButtoneNode);
 
 		let w1ButtonNode = document.createElement("span");
 		w1ButtonNode.classList.add(CSS_PREFIX+"-textButton");
+		w1ButtonNode.classList.add(CSS_PREFIX+"-textButtonActive");
 		w1ButtonNode.title = w1ButtonNode.innerText = "Wiktionary";
-		apiWikiMenuNode.appendChild(w1ButtonNode);
+		apiHeaderNode.appendChild(w1ButtonNode);
 
 		let w2ButtonNode = document.createElement("span");
 		w2ButtonNode.classList.add(CSS_PREFIX+"-textButton");
 		w2ButtonNode.title = w2ButtonNode.innerText = "Wikipedia";
-		apiWikiMenuNode.appendChild(w2ButtonNode);
+		apiHeaderNode.appendChild(w2ButtonNode);
 
 		let apiLoadingNode = document.createElement("div");
 		apiLoadingNode.setAttribute("id",CSS_PREFIX+"-apiLoading");
@@ -183,6 +183,7 @@
 
 		let apiBodyWrapper = document.createElement("div");
 		apiBodyWrapper.setAttribute("id",CSS_PREFIX+"-apiBodyWrapper");
+		apiBodyWrapper.setAttribute("class",CSS_PREFIX+"-apiWikiText");
 		apiContentNode.appendChild(apiBodyWrapper);
 
 		let apiTitleBoxNode = document.createElement("h1");
@@ -203,10 +204,39 @@
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
 		apiBodyWrapper.appendChild(apiBodyNode);
 
-		apiFooterNode = document.createElement("div");
-		apiFooterNode.setAttribute("id",CSS_PREFIX+"-apiFooter");
+		let apiFooterNode = document.createElement("div");
+		apiFooterNode.setAttribute("class",CSS_PREFIX+"-apiFooter");
 		apiFooterNode.innerText = FOOTER_CONTENT;
-		apiContentNode.appendChild(apiFooterNode);
+		apiBodyWrapper.appendChild(apiFooterNode);
+
+		let apiBodyWrapper2 = document.createElement("div");
+		apiBodyWrapper2.setAttribute("id",CSS_PREFIX+"-apiBodyWrapper2");
+		apiBodyWrapper2.setAttribute("class",CSS_PREFIX+"-apiWikiText");
+		apiContentNode.appendChild(apiBodyWrapper2);
+
+		let apiTitleBoxNode2 = document.createElement("h1");
+		apiTitleBoxNode2.setAttribute("id",CSS_PREFIX+"-apiTitleBox2");
+		apiBodyWrapper2.appendChild(apiTitleBoxNode2);
+
+		apiTitleNode2 = document.createElement("a");
+		apiTitleNode2.setAttribute("id",CSS_PREFIX+"-apiTitle2");
+		apiTitleNode2.setAttribute("rel","noreferrer");
+		apiTitleNode2.setAttribute("target","_blank");
+		apiTitleBoxNode2.appendChild(apiTitleNode2);
+
+		apiErrorMessageNode2 = document.createElement("span");
+		apiErrorMessageNode2.setAttribute("id",CSS_PREFIX+"-apiErrorMessage2");
+		apiTitleBoxNode2.appendChild(apiErrorMessageNode2);
+
+		apiBodyNode2 = document.createElement("div");
+		apiBodyNode2.setAttribute("id",CSS_PREFIX+"-apiBody2");
+		apiBodyWrapper2.appendChild(apiBodyNode2);
+
+		let apiFooterNode2 = document.createElement("div");
+		apiFooterNode2.setAttribute("class",CSS_PREFIX+"-apiFooter");
+		apiFooterNode2.innerText = FOOTER_CONTENT2;
+		apiBodyWrapper2.appendChild(apiFooterNode2);
+
 		clearApiContent();
 
 		arrowNode = document.createElement("div");
@@ -755,7 +785,7 @@
 		document.removeEventListener("mousedown", mousedownAutoBehavior);
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiFooterNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = undefined;
 	}
 	function enableWidget(){
 		start();
