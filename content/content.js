@@ -43,6 +43,8 @@
 	let arrowNode;
 	let historyButtoneNode;
 	let historyDoneButtoneNode;
+	let historyButtoneNode2;
+	let historyDoneButtoneNode2;
 	let widgetNodeTop = 0;
 	let widgetNodeLeft = 0;
 	let widgetNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
@@ -137,22 +139,6 @@
 		apiSwitcheCircleNode.classList.add(CSS_PREFIX+"-circle");
 		apiSwitcheNode.appendChild(apiSwitcheCircleNode);
 
-		historyButtoneNode = document.createElement("span");
-		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
-		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
-		historyButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
-		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
-		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
-		apiHeaderNode.appendChild(historyButtoneNode);
-
-		historyDoneButtoneNode = document.createElement("span");
-		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
-		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
-		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
-		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
-		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
-		apiHeaderNode.appendChild(historyDoneButtoneNode);
-
 		let w1ButtonNode = document.createElement("span");
 		w1ButtonNode.setAttribute("id",CSS_PREFIX+"-wiktionaryButton");
 		w1ButtonNode.classList.add(CSS_PREFIX+"-textButton");
@@ -185,8 +171,24 @@
 		apiContentNode.appendChild(apiBodyWrapper);
 
 		let apiTitleBoxNode = document.createElement("h1");
-		apiTitleBoxNode.setAttribute("id",CSS_PREFIX+"-apiTitleBox");
+		apiTitleBoxNode.classList.add(CSS_PREFIX+"-apiTitleBox");
 		apiBodyWrapper.appendChild(apiTitleBoxNode);
+
+		historyButtoneNode = document.createElement("span");
+		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
+		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
+		historyButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
+		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
+		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
+		apiTitleBoxNode.appendChild(historyButtoneNode);
+
+		historyDoneButtoneNode = document.createElement("span");
+		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
+		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
+		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
+		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
+		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
+		apiTitleBoxNode.appendChild(historyDoneButtoneNode);
 
 		apiTitleNode = document.createElement("a");
 		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
@@ -215,8 +217,24 @@
 		apiContentNode.appendChild(apiBodyWrapper2);
 
 		let apiTitleBoxNode2 = document.createElement("h1");
-		apiTitleBoxNode2.setAttribute("id",CSS_PREFIX+"-apiTitleBox2");
+		apiTitleBoxNode2.classList.add(CSS_PREFIX+"-apiTitleBox");
 		apiBodyWrapper2.appendChild(apiTitleBoxNode2);
+
+		historyButtoneNode2 = document.createElement("span");
+		historyButtoneNode2.setAttribute("id",CSS_PREFIX+"-history2");
+		historyButtoneNode2.classList.add(CSS_PREFIX+"-buttonIcon");
+		historyButtoneNode2.classList.add(CSS_PREFIX+"-apiWikiButton");
+		historyButtoneNode2.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
+		historyButtoneNode2.title = ponyfill.i18n.getMessage("htmlSaveHistory");
+		apiTitleBoxNode2.appendChild(historyButtoneNode2);
+
+		historyDoneButtoneNode2 = document.createElement("span");
+		historyDoneButtoneNode2.setAttribute("id",CSS_PREFIX+"-historyDone2");
+		historyDoneButtoneNode2.classList.add(CSS_PREFIX+"-buttonIcon");
+		historyDoneButtoneNode2.classList.add(CSS_PREFIX+"-apiWikiButton");
+		historyDoneButtoneNode2.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
+		historyDoneButtoneNode2.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
+		apiTitleBoxNode2.appendChild(historyDoneButtoneNode2);
 
 		apiTitleNode2 = document.createElement("a");
 		apiTitleNode2.setAttribute("id",CSS_PREFIX+"-apiTitle2");
@@ -802,7 +820,7 @@
 		document.removeEventListener("mousedown", mousedownAutoBehavior);
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiTitleNode2 = apiErrorMessageNode2 = apiBodyNode2 = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = undefined;
 	}
 	function enableWidget(){
 		start();
@@ -1145,6 +1163,11 @@
 			"data": {
 				"text": text,
 				"serviceCode": serviceCode
+			},
+			"node":{
+				"title": apiTitleNode,
+				"error": apiErrorMessageNode,
+				"body": apiBodyNode
 			}
 		};
 		if( !checkBlank(text) ){
@@ -1204,27 +1227,24 @@
 		show(historyButtoneNode);
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
-		clearApiTitle();
+		clearChildren(apiBodyNode2);
+		clearApiTitle(apiTitleNode, apiErrorMessageNode);
+		clearApiTitle(apiTitleNode2, apiErrorMessageNode2);
 	}
 
-	function clearApiTitle(){
-		apiTitleNode.removeAttribute("data-text");
-		apiTitleNode.removeAttribute("data-title");
-		apiTitleNode.removeAttribute("href");
-		apiTitleNode.removeAttribute("title");
-		apiErrorMessageNode.removeAttribute("title");
-		apiTitleNode.innerText = apiErrorMessageNode.innerText = "";
-	}
-
-	function setApiErrorMessage(text){
-		apiErrorMessageNode.innerText = text;
-		apiErrorMessageNode.setAttribute("title", text);
+	function clearApiTitle(titleNode, errorNode){
+		titleNode.removeAttribute("data-text");
+		titleNode.removeAttribute("data-title");
+		titleNode.removeAttribute("href");
+		titleNode.removeAttribute("title");
+		errorNode.removeAttribute("title");
+		titleNode.innerText = errorNode.innerText = "";
 	}
 
 	function apiResponse(e){
 		if( !isActiveApiRequestQueue(this) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
-		makeApiTitleNode(e.text, e.title, e.fullurl);
+		makeApiTitleNode(this.node.title, e.text, e.title, e.fullurl);
 		let property = API_SERVICE_PROPERTY[e.service];
 		let result = parseHTML(e.html, property.sectionHeading);
 		let parsed = result.parsed;
@@ -1243,7 +1263,7 @@
 						}
 					}
 					if ( list.length <= 0 ) {
-						apiBodyNode.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlSectionNotFound")));
+						this.node.body.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlSectionNotFound")));
 					}
 					else {
 						bodys = list;
@@ -1265,27 +1285,27 @@
 				header = convertStyle(header);
 				header = convertAnchor(header, e.service);
 				header = convertNaveFrame(header);
-				apiBodyNode.appendChild(header);
+				this.node.body.appendChild(header);
 				for(let i=0; i<bodys.length; i++){
 					let obj = bodys[i];
 					obj.title = removeSimbol(obj.title);
 					obj.title = convertStyle(obj.title);
 					obj.title = convertAnchor(obj.title, e.service);
-					apiBodyNode.appendChild(obj.title);
+					this.node.body.appendChild(obj.title);
 					for(let j=0; j<obj.warnings.length; j++){
-						apiBodyNode.appendChild(obj.warnings[j]);
+						this.node.body.appendChild(obj.warnings[j]);
 					}
 					obj.content = removeSimbol(obj.content);
 					obj.content = convertStyle(obj.content);
 					obj.content = convertAudio(obj.content, e.service);
 					obj.content = convertAnchor(obj.content, e.service);
 					obj.content = convertNaveFrame(obj.content);
-					apiBodyNode.appendChild(obj.content);
+					this.node.body.appendChild(obj.content);
 				}
 			}
 		}
 		else {
-			apiBodyNode.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlParseFailed")));
+			this.node.body.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlParseFailed")));
 			for(let i=0; i<bases.length; i++){
 				let base = bases[i];
 				base = removeSimbol(base);
@@ -1293,23 +1313,23 @@
 				base = convertAudio(base, e.service);
 				base = convertAnchor(base, e.service);
 				base = convertNaveFrame(base);
-				apiBodyNode.appendChild(base);
+				this.node.body.appendChild(base);
 			}
 		}
 		widgetNode.classList.remove(CSS_PREFIX+"-loading");
 	}
 
-	function makeApiTitleNode(text,title,url){
+	function makeApiTitleNode(titleNode,text,title,url){
 		if( text.toLowerCase() != title.toLowerCase() ) {
-			apiTitleNode.innerText = ponyfill.i18n.getMessage("htmlMaybeTitle",[title]);
+			titleNode.innerText = ponyfill.i18n.getMessage("htmlMaybeTitle",[title]);
 		}
 		else {
-			apiTitleNode.innerText = title;
+			titleNode.innerText = title;
 		}
-		apiTitleNode.setAttribute("title", title);
-		apiTitleNode.setAttribute("data-text", text);
-		apiTitleNode.setAttribute("data-title", title);
-		apiTitleNode.setAttribute("href", url);
+		titleNode.setAttribute("title", title);
+		titleNode.setAttribute("data-text", text);
+		titleNode.setAttribute("data-title", title);
+		titleNode.setAttribute("href", url);
 	}
 
 	function parseHTML(htmls, sectionHeading){
@@ -1526,11 +1546,16 @@
 	}
 
 	function apiResponseError(e){
+		let self = this;
 		function after(content){
-			apiBodyNode.appendChild(content);
+			self.node.body.appendChild(content);
 			widgetNode.classList.remove(CSS_PREFIX+"-loading");
 		}
-		clearApiTitle();
+		function setApiErrorMessage(text){
+			self.node.error.innerText = text;
+			self.node.error.setAttribute("title", text);
+		}
+		clearApiTitle(this.node.title, this.node.error);
 		let content = document.createElement("div");
 		if( e.error == API_WHITE_SPACE_ERROR ){
 			setApiErrorMessage(e.text);
@@ -1575,7 +1600,6 @@
 		setApiErrorMessage(e.text);
 		content.innerText = ponyfill.i18n.getMessage("htmlUnexpectedError",[e.toString()]);
 		after(content);
-		return;
 	}
 
 	function show(node){

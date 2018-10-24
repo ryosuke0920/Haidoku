@@ -413,19 +413,9 @@ const WIDGET_STYLE = `
 #lessLaborGoToDictionary-historyDone.lessLaborGoToDictionary-hide {
 	display: none;
 }
-#lessLaborGoToDictionary-apiTitleBox {
-	flex: auto;
-	font-size: 18px;
+.lessLaborGoToDictionary-apiTitleBox {
+	font-size: 14px;
 	padding: 3px;
-}
-#lessLaborGoToDictionary-apiTitleBox > * {
-	display:block;
-	min-width: 0;
-}
-#lessLaborGoToDictionary-apiTitleBox * {
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 #lessLaborGoToDictionary-apiOffMsg {
 	display: none;
