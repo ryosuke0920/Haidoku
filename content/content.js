@@ -67,6 +67,7 @@
 	let apiRequestQueue = {};
 	let fetchRequestID = (()=>{ let id = 0; return ()=>{return ++id} })();
 	let serviceCode = API_SERVICE_CODE_NONE;
+	let serviceCode2 = API_SERVICE_CODE_NONE;
 	let languageFilter = [];
 	let apiCutOut = true;
 	let windowId = Math.random();
@@ -157,12 +158,13 @@
 		apiHeaderNode.appendChild(historyDoneButtoneNode);
 
 		let w1ButtonNode = document.createElement("span");
+		w1ButtonNode.setAttribute("id",CSS_PREFIX+"-wiktionaryButton");
 		w1ButtonNode.classList.add(CSS_PREFIX+"-textButton");
-		w1ButtonNode.classList.add(CSS_PREFIX+"-textButtonActive");
 		w1ButtonNode.title = w1ButtonNode.innerText = "Wiktionary";
 		apiHeaderNode.appendChild(w1ButtonNode);
 
 		let w2ButtonNode = document.createElement("span");
+		w2ButtonNode.setAttribute("id",CSS_PREFIX+"-wikipediaButton");
 		w2ButtonNode.classList.add(CSS_PREFIX+"-textButton");
 		w2ButtonNode.title = w2ButtonNode.innerText = "Wikipedia";
 		apiHeaderNode.appendChild(w2ButtonNode);
@@ -203,7 +205,7 @@
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
 		apiBodyWrapper.appendChild(apiBodyNode);
-/*
+
 		let apiBodyWrapper2 = document.createElement("div");
 		apiBodyWrapper2.setAttribute("id",CSS_PREFIX+"-apiBodyWrapper2");
 		apiBodyWrapper2.setAttribute("class",CSS_PREFIX+"-apiWikiText");
@@ -226,14 +228,20 @@
 		apiBodyNode2 = document.createElement("div");
 		apiBodyNode2.setAttribute("id",CSS_PREFIX+"-apiBody2");
 		apiBodyWrapper2.appendChild(apiBodyNode2);
-*/
+
 		clearApiContent();
 
 		let apiFooterNode = document.createElement("div");
+		apiFooterNode.setAttribute("id",CSS_PREFIX+"-wiktionaryFooter");
 		apiFooterNode.setAttribute("class",CSS_PREFIX+"-apiFooter");
 		apiFooterNode.innerText = apiFooterNode.title = FOOTER_CONTENT;
 		apiContentNode.appendChild(apiFooterNode);
 
+		let apiFooterNode2 = document.createElement("div");
+		apiFooterNode2.setAttribute("id",CSS_PREFIX+"-wikipediaFooter");
+		apiFooterNode2.setAttribute("class",CSS_PREFIX+"-apiFooter");
+		apiFooterNode2.innerText = apiFooterNode.title = FOOTER_CONTENT2;
+		apiContentNode.appendChild(apiFooterNode2);
 
 		arrowNode = document.createElement("div");
 		arrowNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/arrow.svg")+")";
@@ -486,10 +494,14 @@
 		}
 	}
 	function applyServiceCode(){
-		if( serviceCode == API_SERVICE_CODE_NONE ) {
+		widgetNode.classList.remove(CSS_PREFIX+"-enableWiktionary");
+		widgetNode.classList.remove(CSS_PREFIX+"-enableWikipedia");
+		if( serviceCode == API_SERVICE_CODE_NONE && serviceCode2 == API_SERVICE_CODE_NONE ) {
 			hide(apiContentNode);
 		}
 		else {
+			if( serviceCode != API_SERVICE_CODE_NONE ) widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
+			if( serviceCode2 != API_SERVICE_CODE_NONE ) widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
 			show(apiContentNode);
 		}
 	}
@@ -749,9 +761,10 @@
 			setLinknListSeparator( change["ls"]["newValue"] );
 			applyLinknListSeparator();
 		}
-		if( change["s"] ){
+		if( change["s"] || change["wc"] ){
 			closeLinkList();
-			setServiceCode( change["s"]["newValue"] );
+			if (change["s"]) setServiceCode( change["s"]["newValue"] );
+			if (change["wc"]) setServiceCode2( change["wc"]["newValue"] );
 			applyServiceCode();
 		}
 		if( change["ll"] ){
@@ -772,6 +785,9 @@
 		return rootNode !== undefined;
 	}
 	function disableWidget(){
+		widgetNode.removeEventListener("click", menuClickBihavior);
+		widgetNode.removeEventListener("mousedown", mousedownCommonBehavior);
+		apiSwitcheNode.removeEventListener("click", apiSwitchBehavior);
 		document.removeEventListener("keydown", keydownBehavior);
 		document.removeEventListener("mousemove", mousemoveBehavior);
 		document.removeEventListener("mouseup", mouseupCommonBehavior);
@@ -846,6 +862,7 @@
 		setLinknListSeparator( res["ls"] );
 		setApiSwitch( res["sw"] );
 		setServiceCode( res["s"] );
+		setServiceCode2( res["wc"] );
 		setLanguageFilter( res["ll"] );
 		setLinkListApiCutOut( res["co"] );
 	}
@@ -868,6 +885,9 @@
 
 	function setServiceCode(res){
 		serviceCode = res;
+	}
+	function setServiceCode2(res){
+		serviceCode2 = res;
 	}
 
 	function setLanguageFilter(res){
@@ -1005,6 +1025,14 @@
 		}
 		else if(id == CSS_PREFIX+"-option"){
 			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).catch(unexpectedError);
+		}
+		else if(id == CSS_PREFIX+"-wiktionaryButton"){
+			widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
+			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+		}
+		else if(id == CSS_PREFIX+"-wikipediaButton"){
+			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+			widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
 		}
 	}
 
@@ -1172,6 +1200,14 @@
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
 		clearApiTitle();
+		widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
+		widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
+		if (serviceCode != API_SERVICE_CODE_NONE){
+			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+		}
+		else if ( serviceCode2 != API_SERVICE_CODE_NONE ){
+			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+		}
 	}
 
 	function clearApiTitle(){
