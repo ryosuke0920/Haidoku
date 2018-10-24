@@ -160,14 +160,12 @@ const WIDGET_STYLE = `
 	-moz-user-select: none;
 	font-family: sans-serif;
 	font-size: 1em;
-	border-top-right-radius: 10px;
-	border-bottom-left-radius: 10px;
 }
 #lessLaborGoToDictionary-widget.lessLaborGoToDictionary-hide {
 	display: none;
 }
 #lessLaborGoToDictionary-widget.lessLaborGoToDictionary-dark {
-	background: linear-gradient(to bottom right, #404040, #202020);
+	background: linear-gradient(#404040, #202020);
 }
 #lessLaborGoToDictionary-widget.lessLaborGoToDictionary-stopper {
 	width: 30px !important;
@@ -189,13 +187,13 @@ const WIDGET_STYLE = `
 	display: block;
 }
 #lessLaborGoToDictionary-menu {
-	border-bottom: solid 1px #888888;
+	border-bottom: solid 1px #808080;
 	background: linear-gradient(#FFFFFF, #F0F0F0);
 	white-space: nowrap;
 	padding: 3px;
 }
 .lessLaborGoToDictionary-dark #lessLaborGoToDictionary-menu {
-	background: linear-gradient(to bottom right, #404040, #202020);
+	background: linear-gradient(#404040, #202020);
 }
 #lessLaborGoToDictionary-menu > * {
 	margin-right: 3px;
@@ -215,19 +213,19 @@ const WIDGET_STYLE = `
 	-moz-user-select: none;
 }
 .lessLaborGoToDictionary-textButton {
-	color: #888888;
+	color: #808080;
 	font-weight: bold;
 	cursor: pointer;
 }
 .lessLaborGoToDictionary-textButton.lessLaborGoToDictionary-textButtonActive {
-	color: #888888;
-	border-bottom: solid 2px #5bd94d;
+	color: #808080;
+	border-bottom: solid 2px #808080;
 }
 #lessLaborGoToDictionary-move {
 	cursor: move;
 }
 #lessLaborGoToDictionary-grid {
-	border-bottom: solid 1px #888888;
+	border-bottom: solid 1px #808080;
 }
 .lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
 	display: grid;
@@ -241,7 +239,7 @@ const WIDGET_STYLE = `
 	padding: 3px;
 }
 .lessLaborGoToDictionary-dark #lessLaborGoToDictionary-container {
-	background: linear-gradient(to bottom right, #404040, #202020);
+	background: linear-gradient(#404040, #202020);
 }
 .lessLaborGoToDictionary-list {
 	display: block;
@@ -292,15 +290,18 @@ const WIDGET_STYLE = `
 	display: none;
 }
 #lessLaborGoToDictionary-apiContent {
-	border-top: solid 1px #888888;
+	position: relative;
+	background-color: white;
+	border-top: solid 1px #808080;
 	font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
 	font-size: 14px;
 	user-select: text;
 	-moz-user-select: text;
+	padding-bottom: 2em;
 }
 .lessLaborGoToDictionary-separator #lessLaborGoToDictionary-apiContent {
 	border-top: none;
-	border-left: solid 1px #888888;
+	border-left: solid 1px #808080;
 }
 #lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
 	display: none;
@@ -320,14 +321,15 @@ const WIDGET_STYLE = `
 }
 #lessLaborGoToDictionary-apiHeader {
 	background: linear-gradient(#FFFFFF, #F0F0F0);
-	border-bottom: solid 1px #888888;
+	border-bottom: solid 1px #808080;
 	padding: 3px;
 	position: relative;
 	display: flex;
 	white-space: nowrap;
+	overflow: hidden;
 }
 .lessLaborGoToDictionary-dark #lessLaborGoToDictionary-apiHeader {
-	background: linear-gradient(to bottom right, #404040, #202020);
+	background: linear-gradient(#404040, #202020);
 }
 #lessLaborGoToDictionary-apiHeader > .lessLaborGoToDictionary-apiWikiButton {
 	vertical-align: bottom;
@@ -336,18 +338,25 @@ const WIDGET_STYLE = `
 	margin-right: 5px;
 }
 .lessLaborGoToDictionary-apiFooter {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	left: 0;
 	background: linear-gradient(#FFFFFF, #F0F0F0);
-	border-top: solid 1px #888888;
-	color: #888888;
+	border-top: solid 1px #808080;
+	color: #808080;
 	padding: 3px;
 	font-size:0.9em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 .lessLaborGoToDictionary-dark .lessLaborGoToDictionary-apiFooter {
-	background: linear-gradient(to bottom right, #404040, #202020);
+	background: linear-gradient(#404040, #202020);
 }
 .lessLaborGoToDictionary-checkboxButton {
 	position: relative;
-	background-color: gray;
+	background-color: #808080;
 	display: inline-block;
 	height: 20px;
 	width: 30px;

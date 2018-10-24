@@ -203,12 +203,7 @@
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
 		apiBodyWrapper.appendChild(apiBodyNode);
-
-		let apiFooterNode = document.createElement("div");
-		apiFooterNode.setAttribute("class",CSS_PREFIX+"-apiFooter");
-		apiFooterNode.innerText = FOOTER_CONTENT;
-		apiBodyWrapper.appendChild(apiFooterNode);
-
+/*
 		let apiBodyWrapper2 = document.createElement("div");
 		apiBodyWrapper2.setAttribute("id",CSS_PREFIX+"-apiBodyWrapper2");
 		apiBodyWrapper2.setAttribute("class",CSS_PREFIX+"-apiWikiText");
@@ -231,13 +226,14 @@
 		apiBodyNode2 = document.createElement("div");
 		apiBodyNode2.setAttribute("id",CSS_PREFIX+"-apiBody2");
 		apiBodyWrapper2.appendChild(apiBodyNode2);
-
-		let apiFooterNode2 = document.createElement("div");
-		apiFooterNode2.setAttribute("class",CSS_PREFIX+"-apiFooter");
-		apiFooterNode2.innerText = FOOTER_CONTENT2;
-		apiBodyWrapper2.appendChild(apiFooterNode2);
-
+*/
 		clearApiContent();
+
+		let apiFooterNode = document.createElement("div");
+		apiFooterNode.setAttribute("class",CSS_PREFIX+"-apiFooter");
+		apiFooterNode.innerText = apiFooterNode.title = FOOTER_CONTENT;
+		apiContentNode.appendChild(apiFooterNode);
+
 
 		arrowNode = document.createElement("div");
 		arrowNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/arrow.svg")+")";
