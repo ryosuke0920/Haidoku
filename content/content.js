@@ -102,22 +102,18 @@
 		style.textContent = WIDGET_STYLE;
 		widgetNode.appendChild(style)
 
-		let viewerNode = document.createElement("div");
-		viewerNode.setAttribute("id",CSS_PREFIX+"-viewer");
-		widgetNode.appendChild(viewerNode);
-
 		menuNode = document.createElement("nav");
 		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
-		viewerNode.appendChild(menuNode);
+		widgetNode.appendChild(menuNode);
 
 		let linkListGridNode = document.createElement("div");
 		linkListGridNode.setAttribute("id",CSS_PREFIX+"-grid");
-		viewerNode.appendChild(linkListGridNode);
+		widgetNode.appendChild(linkListGridNode);
 
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
 		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/icon30.png")+")";
-		viewerNode.appendChild(coverNode);
+		widgetNode.appendChild(coverNode);
 
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
@@ -184,8 +180,8 @@
 		apiLoadingNode.appendChild(apiLoadingContentNode);
 
 		let apiBodyWrapper = document.createElement("div");
-		apiBodyWrapper.setAttribute("id",CSS_PREFIX+"-apiBodyWrapper");
-		apiBodyWrapper.setAttribute("class",CSS_PREFIX+"-apiWikiText");
+		apiBodyWrapper.setAttribute("id",CSS_PREFIX+"-wiktionaryContent");
+		apiBodyWrapper.setAttribute("class",CSS_PREFIX+"-wikiContent");
 		apiContentNode.appendChild(apiBodyWrapper);
 
 		let apiTitleBoxNode = document.createElement("h1");
@@ -204,11 +200,18 @@
 
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
+		apiBodyNode.setAttribute("class",CSS_PREFIX+"-apiWikiText");
 		apiBodyWrapper.appendChild(apiBodyNode);
 
+		let apiFooterNode = document.createElement("div");
+		apiFooterNode.setAttribute("id",CSS_PREFIX+"-wiktionaryFooter");
+		apiFooterNode.setAttribute("class",CSS_PREFIX+"-apiFooter");
+		apiFooterNode.innerText = apiFooterNode.title = FOOTER_CONTENT;
+		apiBodyWrapper.appendChild(apiFooterNode);
+
 		let apiBodyWrapper2 = document.createElement("div");
-		apiBodyWrapper2.setAttribute("id",CSS_PREFIX+"-apiBodyWrapper2");
-		apiBodyWrapper2.setAttribute("class",CSS_PREFIX+"-apiWikiText");
+		apiBodyWrapper2.setAttribute("id",CSS_PREFIX+"-wikipediaContent");
+		apiBodyWrapper2.setAttribute("class",CSS_PREFIX+"-wikiContent");
 		apiContentNode.appendChild(apiBodyWrapper2);
 
 		let apiTitleBoxNode2 = document.createElement("h1");
@@ -227,21 +230,16 @@
 
 		apiBodyNode2 = document.createElement("div");
 		apiBodyNode2.setAttribute("id",CSS_PREFIX+"-apiBody2");
+		apiBodyNode2.setAttribute("class",CSS_PREFIX+"-apiWikiText");
 		apiBodyWrapper2.appendChild(apiBodyNode2);
-
-		clearApiContent();
-
-		let apiFooterNode = document.createElement("div");
-		apiFooterNode.setAttribute("id",CSS_PREFIX+"-wiktionaryFooter");
-		apiFooterNode.setAttribute("class",CSS_PREFIX+"-apiFooter");
-		apiFooterNode.innerText = apiFooterNode.title = FOOTER_CONTENT;
-		apiContentNode.appendChild(apiFooterNode);
 
 		let apiFooterNode2 = document.createElement("div");
 		apiFooterNode2.setAttribute("id",CSS_PREFIX+"-wikipediaFooter");
 		apiFooterNode2.setAttribute("class",CSS_PREFIX+"-apiFooter");
 		apiFooterNode2.innerText = apiFooterNode.title = FOOTER_CONTENT2;
-		apiContentNode.appendChild(apiFooterNode2);
+		apiBodyWrapper2.appendChild(apiFooterNode2);
+
+		clearApiContent();
 
 		arrowNode = document.createElement("div");
 		arrowNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/arrow.svg")+")";
@@ -287,6 +285,13 @@
 		applyLinknListSeparator();
 		applyApiSwitch();
 		applyServiceCode();
+
+		if (serviceCode != API_SERVICE_CODE_NONE){
+			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+		}
+		else if ( serviceCode2 != API_SERVICE_CODE_NONE ){
+			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+		}
 
 		resetLinkListEvents();
 		addCommonLinkListEvents();
@@ -1200,14 +1205,6 @@
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
 		clearApiTitle();
-		widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
-		widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
-		if (serviceCode != API_SERVICE_CODE_NONE){
-			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
-		}
-		else if ( serviceCode2 != API_SERVICE_CODE_NONE ){
-			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
-		}
 	}
 
 	function clearApiTitle(){
