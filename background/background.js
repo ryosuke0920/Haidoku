@@ -7,7 +7,7 @@ let shiftKey = false;
 let ctrlKey = false;
 let options = {};
 let faviconCache = {};
-let apiDocumentCache = [];
+let apiDocumentCache = {};
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible */
 
@@ -158,8 +158,8 @@ function onStorageChanged(change, area){
 	if(change["ol"]) {
 		updateFaviconCache(false).then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
-	if(change["s"] || chage["wc"]) {
-		apiDocumentCache = [];
+	if(change["s"] || change["wc"]) {
+		apiDocumentCache = {};
 	}
 }
 
@@ -559,13 +559,13 @@ function apiRequest(data){
 		obj.message = "service not found.";
 		return Promise.resolve(obj);
 	}
-	let cache = fetchApiDocumentCache(data.text);
-	if(cache) return Promise.resolve(cache);
 	let service = API_SERVICE[data.serviceCode];
 	obj.service = service;
 	obj.path = API_SERVICE_PROPERTY[service].path;
 	obj.url = [];
 	obj.html = [];
+	let cache = fetchApiDocumentCache(obj);
+	if(cache) return Promise.resolve(cache);
 	return Promise.resolve().then( requestAjaxApiInfo.bind(obj) ).then( responseAjaxApiInfo.bind(obj) ).catch( detectAjaxApiConnectError.bind(obj) );
 }
 
@@ -833,16 +833,22 @@ function returnContent(){
 }
 
 function addApiDocumentCache(obj){
-	if(fetchApiDocumentCache(obj.text)) return;
-	apiDocumentCache.push(obj);
-	if(apiDocumentCache.length > MAX_API_CACHE) apiDocumentCache.shift();
+	if(!apiDocumentCache.hasOwnProperty(obj.service)){
+		apiDocumentCache[obj.service] = [];
+	}
+	else {
+		if(fetchApiDocumentCache(obj)!==false) return;
+	}
+	apiDocumentCache[obj.service].push(obj);
+	if(apiDocumentCache[obj.service].length > MAX_API_CACHE) apiDocumentCache[obj.service].shift();
 }
 
-function fetchApiDocumentCache(text){
-	for(let i=0; i<apiDocumentCache.length; i++){
-		if( text == apiDocumentCache[i].title || text == apiDocumentCache[i].text ){
-			let temp = apiDocumentCache.splice(i,1);
-			apiDocumentCache.push(temp[0]);
+function fetchApiDocumentCache(obj){
+	if(!apiDocumentCache.hasOwnProperty(obj.service)) return false;
+	for(let i=0; i<apiDocumentCache[obj.service].length; i++){
+		if( obj.text == apiDocumentCache[obj.service][i].title || obj.text == apiDocumentCache[obj.service][i].text){
+			let temp = apiDocumentCache[obj.service].splice(i,1);
+			apiDocumentCache[obj.service].push(temp[0]);
 			return temp[0];
 		}
 	}
