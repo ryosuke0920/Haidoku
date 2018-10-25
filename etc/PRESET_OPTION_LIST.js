@@ -11,6 +11,16 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Conservapedia",
+		"u": "https://www.conservapedia.com/index.php?search=$1&title=Special:Search&go=Go"
+	},
+	{
+		"la": "en",
+		"l": "Citizendium",
+		"u": "http://en.citizendium.org/wiki?search=$1&title=Special:Search&go=Go+To+Page"
+	},
+	{
+		"la": "en",
 		"l": "Google",
 		"u": "https://www.google.com/search?q=$1"
 	},
@@ -272,6 +282,36 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
+		"l": "Longman Dictionary",
+		"u": "https://www.ldoceonline.com/search/english/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Longman Dictionary English-Japanese",
+		"u": "https://www.ldoceonline.com/search/english-japanese/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Longman Dictionary English-Korean",
+		"u": "https://www.ldoceonline.com/search/english-korean/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Longman Dictionary English-Spanish",
+		"u": "https://www.ldoceonline.com/search/english-spanish/direct/?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Longman Dictionary Japanese-English",
+		"u": "https://www.ldoceonline.com/dictionary/japanese-english/$1"
+	},
+	{
+		"la": "en",
+		"l": "Longman Dictionary Spanish-English",
+		"u": "https://www.ldoceonline.com/search/spanish-english/direct/?q=$1"
+	},
+	{
+		"la": "en",
 		"l": "Merriam-Webster",
 		"u": "https://www.merriam-webster.com/dictionary/$1"
 	},
@@ -284,6 +324,11 @@ const PRESET_OPTION_LIST = [
 		"la": "en",
 		"l": "Quora",
 		"u": "https://www.quora.com/search?q=$1"
+	},
+	{
+		"la": "en",
+		"l": "Stack Exchange",
+		"u": "https://stackexchange.com/search?q=$1"
 	},
 	{
 		"la": "en",
@@ -556,6 +601,16 @@ const PRESET_OPTION_LIST = [
 		"la": "zh",
 		"l": "Google Videos",
 		"u": "https://www.google.com.hk/search?q=$1&tbm=vid"
+	},
+	{
+		"la": "zh",
+		"l": "YOUKU",
+		"u": "https://www.soku.com/search_video/q_$1"
+	},
+	{
+		"la": "zh",
+		"l": "微博",
+		"u": "http://s.weibo.com/weibo/$1"
 	},
 	{
 		"la": "zh",

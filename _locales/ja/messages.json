@@ -87,7 +87,7 @@
 		"message": "空白文字は検索しません。"
 	},
 	"htmlMaxLengthLimitation": {
-		"message": "$ERROR$バイト以内で検索します。",
+		"message": "$ERROR$バイトより多いテキストは検索しません。",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -168,6 +168,9 @@
 	"htmlRankingName": {
 		"message": "検索回数"
 	},
+	"htmlControlName": {
+		"message": "制御"
+	},
 	"htmlOthersName": {
 		"message": "表示"
 	},
@@ -175,7 +178,7 @@
 		"message": "情報"
 	},
 	"htmlFormDescription": {
-		"message": "「リンクを選んで追加」を押すと、一覧からリンクを選択して追加できます。「入力欄を追加」を押すと、空欄の入力欄が追加されます。URLの入力欄に$$1を入力すると、$$1は選択したテキストに置き換えられます。"
+		"message": "「リンクを選んで追加」を押すと、一覧からリンクを選択して追加できます。URL入力欄に$$1を入力すると、$$1は選択したテキストに置き換わります。"
 	},
 	"htmlUsageOrder" : {
 		"message": "並び順を変更する。"
@@ -329,6 +332,67 @@
 	},
 	"htmlRankingZeroRowMessage": {
 		"message": "履歴の件数は0件です。"
+	},
+	"htmlWidgetEnableTitle": {
+		"message": "ウィジェットの起動"
+	},
+	"htmlWidgetEnableDescription": {
+		"message": ""
+	},
+	"htmlWidgetDisable": {
+		"message": "OFF"
+	},
+	"htmlWidgetEnable": {
+		"message": "ON"
+	},
+	"htmlWidgetEnableAllowedDomain": {
+		"message": "許可したドメインでON"
+	},
+	"htmlDomainListTitle": {
+		"message": "ドメイン許可"
+	},
+	"htmlAllowText": {
+		"message": "許可する"
+	},
+	"htmlDisableDomainText": {
+		"message": "このドメインは許可できません。"
+	},
+	"htmlOpenOption": {
+		"message": "設定画面を開く"
+	},
+	"htmlDisplayFunctionTitle": {
+		"message": "ウィジェットの表示方法"
+	},
+	"htmlDisplayFunctionDescription": {
+		"message": "テキスト選択後、ウィジェットを自動で表示するか、キーボード操作で表示するかを選択してください。"
+	},
+	"htmldomainListDescription":{
+		"message": "ドメインが一致した場合、ウィジェットが表示できるようになります。有効にする場合、「ウィジェットの起動」で「許可したドメインでON」を選択してください。"
+	},
+	"htmlAddDomainButton": {
+		"message": "追加"
+	},
+	"htmlDomainAllowedDescription": {
+		"message": "許可しているドメインの一覧です。"
+	},
+	"htmlNoneDomainAllowedDescription": {
+		"message": "許可しているドメインはありません。"
+	},
+	"notificationDomainLengthError": {
+		"message": "ドメインの長さは$LENGTH$バイトまでです。",
+		"placeholders": {
+			"LENGTH": {
+				"content": "$1"
+			}
+		}
+	},
+	"notificationDomainListSizeError": {
+		"message": "ドメインの設定は$SIZE$個までです。",
+		"placeholders": {
+			"SIZE": {
+				"content": "$1"
+			}
+		}
 	},
 	"htmlLinkListStyleTitle": {
 		"message": "ウィジェットのスタイル"
@@ -521,6 +585,14 @@
 	},
 	"htmlDateInputError": {
 		"message": "日付を正しく入力してください。"
+	},
+	"htmlCheckLanguageFilterByteLengthError": {
+		"message": "言語フィルターの長さは$LENGTH$バイトまでです。",
+		"placeholders": {
+			"LENGTH": {
+				"content": "$1"
+			}
+		}
 	},
 	"htmlCheckLanguageFilterLengthError": {
 		"message": "言語フィルターの設定は$MAX$個までです。",

@@ -43,10 +43,10 @@ function initContextMenu(){
 function getSetting() {
 	let serviceCode = getDefaultServiceCode();
 	return ponyfill.storage.sync.get({
-		"ol": [],
-		"bf": true,
-		"sk": false,
-		"ck": false,
+		"ol": DEFAULT_OPTION_LIST_ON_GET,
+		"bf": DEFAULT_AUTO_VIEW_FLAG,
+		"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
+		"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
 		"s": serviceCode
 	}).then(onGotSetting);
 }
@@ -63,9 +63,6 @@ function initListener(){
 	ponyfill.storage.onChanged.addListener( onStorageChanged );
 	ponyfill.contextMenus.onClicked.addListener( contextMenuBehavior );
 	ponyfill.runtime.onMessage.addListener(notify);
-	ponyfill.browserAction.onClicked.addListener((e)=>{
-		ponyfill.runtime.openOptionsPage();
-	});
 }
 
 function openWindow( url ){

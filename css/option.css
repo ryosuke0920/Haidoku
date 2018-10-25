@@ -1,99 +1,3 @@
-/* normal */
-* {
-	margin: 0;
-	padding: 0;
-}
-body {
-	background-color: white;
-	font-size: 16px;
-	font-family: Verdana, Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
-}
-.sentence {
-	font-size: 1em;
-	font-family: Georgia, "Times New Roman", "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "メイリオ", Meiryo, serif;
-}
-aside.sentence {
-	font-size: 0.9em;
-}
-p, .paragraph {
-	white-space: normal;
-	margin-bottom: 1em;
-}
-ol, ul {
-	margin-left: 2em;
-}
-ol>li {
-	list-style: decimal outside;
-}
-ul>li {
-	list-style: disc outside;
-}
-aside {
-	background-color: WhiteSmoke;
-	padding: 0.2em;
-}
-input[type="text"], input[type="url"], input[type="number"], input[type="date"] {
-	height: 27px;
-	font-size: 1em;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
-}
-
-input[type="text"], input[type="url"], input[type="number"], input[type="date"], aside {
-	border-radius: 5px;
-	border: solid 1px #ccc;
-}
-input[type="text"]:focus, input[type="url"]:focus, input[type="number"]:focus, input[type="date"]:focus,
-.checkWrapper:hover {
-	border-color: rgb(165, 200, 238);
-	box-shadow: rgba(165, 200, 238, 0.32) 0px 3px 3px 0px, rgba(165, 200, 238, 0.32) 0px 0px 0px 2px;
-}
-button, .select {
-	min-height: 26px;
-	padding: 3px 0.5em;
-	border: solid 1px WhiteSmoke;
-	border-radius: 5px;
-	cursor: pointer;
-	background: linear-gradient(to bottom, #FFFFFF, #EEE);
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
-}
-button:hover,.select:hover {
-	background: linear-gradient(to bottom, #EEEEEE, #DDD);
-}
-.select {
-	cursor: pointer;
-}
-option {
-	background-color: white;
-}
-.table {
-	width: 100%;
-	border-collapse: collapse;
-	border: 2px solid #ccc;
-	margin-bottom: 1em;
-}
-.table thead th {
-	background-color: WhiteSmoke;
-	color: black;
-	font-weight:bold;
-	text-align: left;
-}
-.table tbody tr:nth-child(2n) {
-	background-color: WhiteSmoke;
-}
-.table thead th, .table tbody td {
-	padding: 2px 5px;
-	border: 2px solid #ccc;
-}
-address{
-	font-style: normal;
-}
-a {
-	text-decoration: none;
-}
-a:hover {
-	text-decoration: underline;
-}
 #menu {
 	position: fixed;
 	top:0;
@@ -142,108 +46,6 @@ a:hover {
 	margin-left: 160px;
 	padding: 2em;
 }
-.controller {
-	position: fixed;
-	top: 0;
-	left: 160px;
-	right: 0;
-	padding: 0.5em 2em;
-	white-space: nowrap;
-	background-color: rgba(0,0,0,0.7);
-	color: white;
-	z-index:20;
-	line-height: 10px;
-	min-height: 45px;
-}
-.panelComponent {
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	background-color: rgba(0,0,0,0.7);
-	color: white;
-	z-index:30;
-	padding: 2em 5em;
-	overflow: scroll;
-	min-width: 680px;
-}
-.panelComponent .removePanelComponent {
-	position: absolute;
-	top: 0.5em;
-	right: 0.5em;
-	cursor: pointer;
-}
-.panelComponent .panelBody {
-	color: black;
-	background-color: white;
-	border-radius: 5px;
-	min-width: 680px;
-	padding: 0.5em;
-}
-.panelComponent .panelBody .panelNavi {
-	padding: 0.5em;
-	border-radius: 5px;
-	background-color: #404040;
-	margin-bottom: 1em;
-	white-space: nowrap;
-	position: sticky;
-	top: -2em;
-}
-
-.desk {
-	margin-top: 3em;
-}
-.box{
-	padding: 0.5em;
-}
-.borderComponent {
-	border-radius: 5px;
-	border: solid 2px #C0C0C0;
-	padding: 0.5em;
-}
-.borderComponent aside {
-	margin-bottom: 1em;
-}
-#contact h1,
-.borderComponent>h1 {
-	font-size: 20px;
-	border-radius: 5px;
-	background-color: #404040;
-	color: white;
-	padding: 0.2em 0.5em;
-	font-weight: bold;
-	margin-bottom: 0.5em;
-}
-.subComponent {
-	margin-top: 1.5em;
-	margin-bottom: 2em;
-}
-.subComponent>h1 {
-	border-bottom: solid 2px #ccc;
-	margin-bottom: 1em;
-	font-size: 20px;
-}
-.groupLine {
-	display: inline-block;
-	margin-right: 0.5em;
-	padding:3px;
-	background-color: WhiteSmoke;
-	border: solid 2px #C0C0C0;
-	border-radius: 5px;
-	color: black;
-	min-height: 20px;
-}
-.panelComponent .panelBody nav .groupLine,
-.controller .groupLine {
-	padding:5px 10px;
-}
-.controller>button {
-	margin-top: 5px;
-}
-nav .groupLine {
-	border: none;
-}
 
 /* edit link menu */
 
@@ -274,34 +76,6 @@ nav .groupLine {
 	border-right: 10px solid transparent;
 	border-bottom: 10px solid red;
 	border-left: 10px solid transparent;
-}
-.checkboxButton {
-	position:relative;
-	background-color: gray;
-	display: inline-block;
-	vertical-align: text-top;
-	height: 20px;
-	width: 30px;
-	border-radius: 15px;
-	cursor: pointer;
-	font-size: 20px;
-}
-.checkboxButton .circle {
-	position: absolute;
-	background: linear-gradient(to bottom, #FFFFFF, #F0F0F0 );
-	display: inline-block;
-	border-radius: 8px;
-	height: 16px;
-	width: 16px;
-	top: 2px;
-	left: 2px;
-}
-.checkboxButton[data-checked="1"] {
-	background-color: #5bd94d;
-}
-.checkboxButton[data-checked="1"] .circle {
-	left: unset;
-	right: 2px;
 }
 .checkboxButton[data-checked="1"].hist {
 	background-color: Orange;
@@ -455,6 +229,12 @@ nav .groupLine {
 	width: auto;
 }
 
+/* control */
+#domainAllowedList.configList {
+	width: 20em;
+}
+
+
 /* others menu */
 
 .othersTable {
@@ -516,28 +296,6 @@ nav .groupLine {
 #languageFileterComponent {
 	position: relative;
 }
-.removeLanguageButtom {
-	vertical-align: text-bottom;
-	cursor: pointer;
-	width: 16px;
-	height: 16px;
-}
-.languageFilterBox>li {
-	border-radius: 5px;
-}
-.languageFilterBox>li:hover {
-	background-color: Gainsboro;
-}
-.languageFilterBox>li>div {
-	display:flex;
-}
-.languageLabel {
-	width: 90%;
-}
-.removeLanguageBox {
-	margin-left: 1em;
-	width: 2em;
-}
 #downloadLanguagePane {
 	position: absolute;
 	top:0;
@@ -589,11 +347,6 @@ nav .groupLine {
 	}
 }
 
-/* contact */
-#contact>section {
-	margin-bottom: 3em;
-}
-
 /* component */
 .excludeImage,.includeImage {
 	display: none;
@@ -608,8 +361,4 @@ nav .groupLine {
 }
 .erasticTextComponent.long .excludeImage {
 	display: inline;
-}
-
-.hide, .cell-hide {
-	display: none;
 }

@@ -4,7 +4,7 @@
 	"name":"__MSG_extensionName__",
 	"description":"__MSG_extensionDescription__",
 	"author": "Ryosuke Ohta",
-	"version":"1.9.0",
+	"version":"1.10.3",
 	"icons": {
 		"128": "image/icon128.png",
 		"64": "image/icon64.png",
@@ -31,13 +31,14 @@
 	"content_scripts": [
 		{
 			"matches": ["*://*/*"],
-			"css": [
-				"content/content.css"
-			],
 			"js": [
 				"etc/CONST.js",
 				"lib/ponyfill.js",
 				"lib/share.js",
+				"model/model.js",
+				"model/appModel.js",
+				"model/widgetEnableModel.js",
+				"model/domainListModel.js",
 				"content/content.js"
 			]
 		}
@@ -49,6 +50,7 @@
 			"48": "image/icon48.png",
 			"16": "image/icon16.png"
 		},
+		"default_popup": "popup/popup.html",
 		"default_title": "__MSG_extensionName__"
 	},
 	"permissions": [

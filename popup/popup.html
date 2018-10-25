@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" type="text/css" href="/css/base.css">
+<link rel="stylesheet" type="text/css" href="/css/popup.css">
+<title></title>
+</head>
+<body class="box hide popupStyle">
+<div>
+	<main class="panelStyle">
+		<section>
+			<h1 id="widgetEnableTitle">widgetEnableTitle</h1>
+			<div>
+				<label>
+					<input type="radio" name="enable" value="0">
+					<span id="widgetDisableText">widgetDisableText</span>
+				</label>
+				<br>
+				<label>
+					<input type="radio" name="enable" value="1">
+					<span id="widgetEnableText">widgetEnableText</span>
+				</label>
+				<br>
+				<label>
+					<input type="radio" name="enable" value="2">
+					<span id="widgetEnableAllowedDomainText">widgetEnableAllowedDomainText</span>
+				</label>
+			</div>
+		</section>
+		<section>
+			<h1 id="allowedDomainText">allowedDomainText</h1>
+			<div id="allowedDominBox">
+				<span id="domainText">domainText</span><br>
+				<label>
+					<input type="checkbox" id="allowDomainCheck" value="1">
+					<span id="allowText">allowText</span>
+				</label>
+			</div>
+			<p id="disableDominBox">
+				<span id="disableDomainText">disableDomainText</span>
+			</p>
+		</section>
+		<section>
+			<div>
+				<a href="#" id="optionOpener">extensionOptionName</a>
+			</div>
+		</section>
+	</main>
+</div>
+<script src="/etc/CONST.js"></script>
+<script src="/lib/ponyfill.js"></script>
+<script src="/lib/share.js"></script>
+<script src="/lib/common.js"></script>
+<script src="/model/model.js"></script>
+<script src="/model/appModel.js"></script>
+<script src="/model/widgetEnableModel.js"></script>
+<script src="/model/domainListModel.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
