@@ -329,9 +329,6 @@ const WIDGET_STYLE = `
 #lessLaborGoToDictionary-apiContent a:active {
 	color: #ee0000;
 }
-#lessLaborGoToDictionary-wiktionaryContent, #lessLaborGoToDictionary-wikipediaContent {
-	display: none;
-}
 .lessLaborGoToDictionary-selectWiktionary #lessLaborGoToDictionary-wiktionaryContent,
 .lessLaborGoToDictionary-selectWikipedia #lessLaborGoToDictionary-wikipediaContent {
 	display: block;
@@ -368,8 +365,14 @@ const WIDGET_STYLE = `
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.lessLaborGoToDictionary-loading .lessLaborGoToDictionary-apiFooter {
+	display: none;
+}
 .lessLaborGoToDictionary-dark .lessLaborGoToDictionary-apiFooter {
 	background: linear-gradient(#404040, #202020);
+}
+.lessLaborGoToDictionary-wikiContent {
+	display: none;
 }
 .lessLaborGoToDictionary-checkboxButton {
 	position: relative;
@@ -416,6 +419,11 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-apiTitleBox {
 	font-size: 14px;
 	padding: 3px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.lessLaborGoToDictionary-loading .lessLaborGoToDictionary-apiTitleBox {
+	display: none;
 }
 #lessLaborGoToDictionary-apiOffMsg {
 	display: none;
@@ -423,28 +431,28 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOffMsg {
 	display: block;
 }
-#lessLaborGoToDictionary-apiLoading {
+.lessLaborGoToDictionary-apiLoading {
 	background-color: white;
 	border-bottom: solid 1px #808080;
 	padding: 0;
 	display: none;
-	min-height: 5em;
+	min-height: 7em;
 	position: absolute;
 	top: 28px;
 	bottom: 0;
 	left: 0;
 	right: 0;
 }
-.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-apiLoading {
+.lessLaborGoToDictionary-separator .lessLaborGoToDictionary-apiLoading {
 	border-bottom: none;
 }
-.lessLaborGoToDictionary-loading #lessLaborGoToDictionary-apiLoading {
+.lessLaborGoToDictionary-loading .lessLaborGoToDictionary-apiLoading {
 	display: block;
 }
-.lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiLoading {
+.lessLaborGoToDictionary-apiDisabled .lessLaborGoToDictionary-apiLoading {
 	display: none;
 }
-#lessLaborGoToDictionary-apiLoadingContent {
+.lessLaborGoToDictionary-apiLoadingContent {
 	background-repeat: no-repeat;
 	background-position: center;
 	height:100%;
@@ -483,8 +491,10 @@ const WIDGET_STYLE = `
 	padding: 3px;
 	padding-bottom: 2em;
 }
+.lessLaborGoToDictionary-loading .lessLaborGoToDictionary-apiWikiText{
+	display: none;
+}
 .lessLaborGoToDictionary-hide.lessLaborGoToDictionary-wikiContent,
-.lessLaborGoToDictionary-loading .lessLaborGoToDictionary-wikiContent,
 .lessLaborGoToDictionary-apiDisabled .lessLaborGoToDictionary-wikiContent {
 	display: none !important;
 }

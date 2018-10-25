@@ -33,9 +33,11 @@
 	let menuNode;
 	let containerNode;
 	let apiContentNode;
+	let wikipediaContent;
 	let apiTitleNode;
 	let apiErrorMessageNode;
 	let apiBodyNode;
+	let wiktionaryContent;
 	let apiTitleNode2;
 	let apiErrorMessageNode2;
 	let apiBodyNode2;
@@ -151,28 +153,28 @@
 		w2ButtonNode.title = w2ButtonNode.innerText = "Wikipedia";
 		apiHeaderNode.appendChild(w2ButtonNode);
 
-		let apiLoadingNode = document.createElement("div");
-		apiLoadingNode.setAttribute("id",CSS_PREFIX+"-apiLoading");
-		apiContentNode.appendChild(apiLoadingNode);
-
 		let apiOffNode = document.createElement("div");
 		apiOffNode.setAttribute("id",CSS_PREFIX+"-apiOff");
 		apiOffNode.innerHTML = ponyfill.i18n.getMessage("htmlLinkageMessage");
 		apiContentNode.appendChild(apiOffNode);
 
+		wiktionaryContent = document.createElement("div");
+		wiktionaryContent.setAttribute("id",CSS_PREFIX+"-wiktionaryContent");
+		wiktionaryContent.setAttribute("class",CSS_PREFIX+"-wikiContent");
+		apiContentNode.appendChild(wiktionaryContent);
+
+		let apiLoadingNode = document.createElement("div");
+		apiLoadingNode.classList.add(CSS_PREFIX+"-apiLoading");
+		wiktionaryContent.appendChild(apiLoadingNode);
+
 		let apiLoadingContentNode = document.createElement("div");
-		apiLoadingContentNode.setAttribute("id",CSS_PREFIX+"-apiLoadingContent");
+		apiLoadingContentNode.classList.add(CSS_PREFIX+"-apiLoadingContent");
 		apiLoadingContentNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/circle.svg")+")";
 		apiLoadingNode.appendChild(apiLoadingContentNode);
 
-		let apiBodyWrapper = document.createElement("div");
-		apiBodyWrapper.setAttribute("id",CSS_PREFIX+"-wiktionaryContent");
-		apiBodyWrapper.setAttribute("class",CSS_PREFIX+"-wikiContent");
-		apiContentNode.appendChild(apiBodyWrapper);
-
 		let apiTitleBoxNode = document.createElement("h1");
 		apiTitleBoxNode.classList.add(CSS_PREFIX+"-apiTitleBox");
-		apiBodyWrapper.appendChild(apiTitleBoxNode);
+		wiktionaryContent.appendChild(apiTitleBoxNode);
 
 		historyButtoneNode = document.createElement("span");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
@@ -203,22 +205,31 @@
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
 		apiBodyNode.setAttribute("class",CSS_PREFIX+"-apiWikiText");
-		apiBodyWrapper.appendChild(apiBodyNode);
+		wiktionaryContent.appendChild(apiBodyNode);
 
 		let apiFooterNode = document.createElement("div");
 		apiFooterNode.setAttribute("id",CSS_PREFIX+"-wiktionaryFooter");
 		apiFooterNode.setAttribute("class",CSS_PREFIX+"-apiFooter");
 		apiFooterNode.innerText = apiFooterNode.title = FOOTER_CONTENT;
-		apiBodyWrapper.appendChild(apiFooterNode);
+		wiktionaryContent.appendChild(apiFooterNode);
 
-		let apiBodyWrapper2 = document.createElement("div");
-		apiBodyWrapper2.setAttribute("id",CSS_PREFIX+"-wikipediaContent");
-		apiBodyWrapper2.setAttribute("class",CSS_PREFIX+"-wikiContent");
-		apiContentNode.appendChild(apiBodyWrapper2);
+		wikipediaContent = document.createElement("div");
+		wikipediaContent.setAttribute("id",CSS_PREFIX+"-wikipediaContent");
+		wikipediaContent.setAttribute("class",CSS_PREFIX+"-wikiContent");
+		apiContentNode.appendChild(wikipediaContent);
+
+		let apiLoadingNode2 = document.createElement("div");
+		apiLoadingNode2.classList.add(CSS_PREFIX+"-apiLoading");
+		wikipediaContent.appendChild(apiLoadingNode2);
+
+		let apiLoadingContentNode2 = document.createElement("div");
+		apiLoadingContentNode2.classList.add(CSS_PREFIX+"-apiLoadingContent");
+		apiLoadingContentNode2.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/circle.svg")+")";
+		apiLoadingNode2.appendChild(apiLoadingContentNode2);
 
 		let apiTitleBoxNode2 = document.createElement("h1");
 		apiTitleBoxNode2.classList.add(CSS_PREFIX+"-apiTitleBox");
-		apiBodyWrapper2.appendChild(apiTitleBoxNode2);
+		wikipediaContent.appendChild(apiTitleBoxNode2);
 
 		historyButtoneNode2 = document.createElement("span");
 		historyButtoneNode2.setAttribute("id",CSS_PREFIX+"-history2");
@@ -249,13 +260,13 @@
 		apiBodyNode2 = document.createElement("div");
 		apiBodyNode2.setAttribute("id",CSS_PREFIX+"-apiBody2");
 		apiBodyNode2.setAttribute("class",CSS_PREFIX+"-apiWikiText");
-		apiBodyWrapper2.appendChild(apiBodyNode2);
+		wikipediaContent.appendChild(apiBodyNode2);
 
 		let apiFooterNode2 = document.createElement("div");
 		apiFooterNode2.setAttribute("id",CSS_PREFIX+"-wikipediaFooter");
 		apiFooterNode2.setAttribute("class",CSS_PREFIX+"-apiFooter");
 		apiFooterNode2.innerText = apiFooterNode.title = FOOTER_CONTENT2;
-		apiBodyWrapper2.appendChild(apiFooterNode2);
+		wikipediaContent.appendChild(apiFooterNode2);
 
 		clearApiContent();
 
@@ -1156,7 +1167,6 @@
 	}
 
 	function apiRequest(text){
-		widgetNode.classList.add(CSS_PREFIX+"-loading");
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
 		let obj = {
 			"abort": false,
@@ -1165,6 +1175,7 @@
 				"serviceCode": serviceCode
 			},
 			"node":{
+				"wrapper": wiktionaryContent,
 				"title": apiTitleNode,
 				"error": apiErrorMessageNode,
 				"body": apiBodyNode
@@ -1230,6 +1241,8 @@
 		clearChildren(apiBodyNode2);
 		clearApiTitle(apiTitleNode, apiErrorMessageNode);
 		clearApiTitle(apiTitleNode2, apiErrorMessageNode2);
+		wiktionaryContent.classList.add(CSS_PREFIX+"-loading");
+		wikipediaContent.classList.add(CSS_PREFIX+"-loading");
 	}
 
 	function clearApiTitle(titleNode, errorNode){
@@ -1316,7 +1329,7 @@
 				this.node.body.appendChild(base);
 			}
 		}
-		widgetNode.classList.remove(CSS_PREFIX+"-loading");
+		this.node.wrapper.classList.remove(CSS_PREFIX+"-loading");
 	}
 
 	function makeApiTitleNode(titleNode,text,title,url){
@@ -1549,7 +1562,7 @@
 		let self = this;
 		function after(content){
 			self.node.body.appendChild(content);
-			widgetNode.classList.remove(CSS_PREFIX+"-loading");
+			self.node.wrapper.classList.remove(CSS_PREFIX+"-loading");
 		}
 		function setApiErrorMessage(text){
 			self.node.error.innerText = text;
