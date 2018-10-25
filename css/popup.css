@@ -1,0 +1,9 @@
+.popupStyle {
+	min-width: 256px;
+}
+.popupStyle section {
+	margin-bottom: 1em;
+}
+.popupStyle section:last-of-type {
+	margin-bottom: 0;
+}

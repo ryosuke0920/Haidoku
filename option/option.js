@@ -1,7 +1,6 @@
 const MAX_FIELD = 50;
 const MAX_LABEL_BYTE = 100;
 const MAX_URL_BYTE = 300;
-const URL_REGEX = new RegExp(/^(?:[hH][tT][tT][pP][sS]?|[fF][tT][pP][sS]?):\/\/\w+/);
 const ADD_FIELD_CLASS = "add";
 const ADD_FIELD_DURATION = 1.5 * 1000;
 const SCROLL_RACIO = 1/2;
@@ -72,6 +71,7 @@ function initI18n(){
 		{ "selector": ".navi[data-navi-name=\"form\"]", "property": "innerText", "key": "htmlFormName" },
 		{ "selector": ".navi[data-navi-name=\"history\"]", "property": "innerText", "key": "htmlHistoryName" },
 		{ "selector": ".navi[data-navi-name=\"ranking\"]", "property": "innerText", "key": "htmlRankingName" },
+		{ "selector": ".navi[data-navi-name=\"control\"]", "property": "innerText", "key": "htmlControlName" },
 		{ "selector": ".navi[data-navi-name=\"others\"]", "property": "innerText", "key": "htmlOthersName" },
 		{ "selector": ".navi[data-navi-name=\"contact\"]", "property": "innerText", "key": "htmlContactName" },
 
@@ -129,7 +129,7 @@ function initNode(){
 
 function initField(){
 	let getter = ponyfill.storage.sync.get({
-		"ol": []
+		"ol": DEFAULT_OPTION_LIST_ON_GET
 	});
 
 	function onGot(res){
@@ -389,11 +389,6 @@ function checkUrl(node, messageNode){
 	return true;
 }
 
-function isURL(text){
-	if( !text.match(URL_REGEX) ) return false;
-	return true;
-}
-
 function blurBehavior(e){
 	let classList = e.target.classList;
 	if(classList.contains("label") || classList.contains("url")){
@@ -477,8 +472,8 @@ function makeOptionList(){
 		let histNode = field.querySelector(".hist");
 		let hist = false;
 		if( histNode && histNode.getAttribute("data-checked") ) hist = true;
-		let label = fetchValue(field, ".label");
-		let url = fetchValue(field, ".url");
+		let label = cutStrByByte(fetchValue(field, ".label"), MAX_LABEL_BYTE);
+		let url = cutStrByByte(fetchValue(field, ".url"), MAX_URL_BYTE);
 		let data = {
 			"c": checked,
 			"l": label,
@@ -488,6 +483,13 @@ function makeOptionList(){
 		optionList.push(data);
 	}
 	return optionList;
+}
+
+function cutStrByByte(str,byte){
+	while( !checkByte(str, byte) ){
+		str = str.slice(0,-1);
+	}
+	return str;
 }
 
 function fetchValue(element, selector){

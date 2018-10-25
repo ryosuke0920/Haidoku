@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<link rel="stylesheet" type="text/css" href="option.css">
-<link rel="stylesheet" type="text/css" href="/content/content.css">
+<link rel="stylesheet" type="text/css" href="/css/base.css">
+<link rel="stylesheet" type="text/css" href="/css/option.css">
 <title>extensionName</title>
 </head>
 <body class="hide">
 <div>
 	<main id="main">
-		<div id="form" class="panel">
+		<div id="form" class="panel hide">
 			<nav class="controller">
 				<button type="button" class="addFromPreset">htmlAddFromPreset</button>
 				&nbsp;
@@ -86,7 +86,7 @@
 						<p class="sentence presetDescription">htmlPresetDescription</p>
 						<div id="table"></div>
 						<template id="cellPrototype">
-							<section class="hide checkWrapper borderComponent" data-language="">
+							<section class="hide checkWrapper borderComponent highlightMouseover" data-language="">
 								<h1><input type="checkbox" class="checkbox">&nbsp;<span class="label"></span></h1>
 								<p class="url"></p>
 								<aside class="sentence presetAside hide"></aside>
@@ -232,6 +232,77 @@
 				</template>
 			</div>
 		</div>
+		<div id="control" class="panelStyle panel">
+			<section>
+				<h1 id="widgetEnableTitle">widgetEnableTitle</h1>
+				<p id="widgetEnableDescription" class="sentence">widgetEnableDescription</p>
+				<div>
+					<label>
+						<input type="radio" name="widgetEnableRadio" class="widgetEnableRadio" value="0">
+						<span id="widgetDisableText">widgetDisableText</span>
+					</label>
+					<br>
+					<label>
+						<input type="radio" name="widgetEnableRadio" class="widgetEnableRadio" value="1">
+						<span id="widgetEnableText">widgetEnableText</span>
+					</label>
+					<br>
+					<label>
+						<input type="radio" name="widgetEnableRadio" class="widgetEnableRadio" value="2">
+						<span id="widgetEnableAllowedDomainText">widgetEnableAllowedDomainText</span>
+					</label>
+				</div>
+			</section>
+			<section>
+				<h1 id="displayFunctionTitle">displayFunctionTitle</h1>
+				<p id="displayFunctionDescription" class="sentence">displayFunctionDescription</p>
+				<div>
+					<label>
+						<input type="checkbox" id="autoDisplayCheck">
+						<span id="autoDisplayText">autoDisplayText</span>
+					</label>
+					<br>
+					<label>
+						<input type="checkbox" id="manualDisplayShiftKeyCheck">
+						<span id="manualDisplayShiftKeyText">manualDisplayShiftKeyText</span>
+					</label>
+					<br>
+					<label>
+						<input type="checkbox" id="manualDisplayCtrlKeyCheck">
+						<span id="manualDisplayCtrlKeyText">manualDisplayCtrlKeyText</span>
+					</label>
+					<br>
+				</div>
+			</section>
+			<section>
+				<h1 id="domainListTitle">domainListTitle</h1>
+				<p id="domainListDescription" class="sentence">domainListDescription</p>
+				<div class="space">
+					<label>
+						<span class="inputWrapper">
+								<input type="text" id="addDomainText" placeholder="example.com" maxlength="253">
+								<span id="domainTextMessage" class="inputMessage hide">domainTextMessage</span>
+						</span>
+						<input type="button" id="addDomainButton" value="addDomainButton">
+					</label>
+				</div>
+				<div class="borderComponent">
+					<p id="domainAllowedDescription" class="hide">domainAllowedDescription</p>
+					<p id="noneDomainAllowedDescription" class="hide">noneDomainAllowedDescription</p>
+					<ol id="domainAllowedList" class="configList"></ol>
+				</div>
+				<template id="domainListTemplate">
+					<li class="domainListItem">
+						<div>
+							<span class="domainText configListLabel">domainText</span>
+							<span class="configListRemoveBox">
+								<img src="/image/delete.svg" class="configListRemoveButton domainListRemoveButton">
+							</span>
+						</div>
+					</li>
+				</template>
+			</section>
+		</div>
 		<div id="others" class="panel hide">
 			<div class="othersTable">
 				<section class="borderComponent">
@@ -309,7 +380,7 @@
 						<aside class="sentence languageFilterAside">htmlLanguageFilterAside</aside>
 						<p><button class="addLanguageFilter">htmlAddLanguageFilter</button></p>
 						<p class="sentence languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
-						<ul class="languageFilterBox"></ul>
+						<ol class="languageFilterBox configList"></ol>
 						<div id="downloadLanguagePane" class="box hide">
 							<div></div>
 							<p><span class="languageFilterDownloadMessage">htmlLanguageFilterDownloadMessage</span></p>
@@ -328,62 +399,65 @@
 				</section>
 				<section id="linkListSample" class="borderComponent">
 					<h1 class="linkListSampleTitle">htmlLinkListSampleTitle</h1>
-					<div class="box">
-						<div id="lessLaborGoToDictionary-viewer" style="position:relative; padding: 3px; height: 300px; width: 450px; z-index:auto;">
-							<div id="lessLaborGoToDictionary-cover" style="background-image:url(/image/icon30.png)"></div>
-							<nav id="lessLaborGoToDictionary-menu">
-								<div id="lessLaborGoToDictionary-move" style="background-image:url(/image/arrow.svg)"></div>
-								<div id="lessLaborGoToDictionary-resize" style="background-image:url(/image/resize.svg)"></div>
-								<div id="lessLaborGoToDictionary-zoomDown" style="background-image:url(/image/minus.svg)"></div>
-								<div id="lessLaborGoToDictionary-zoomUp" style="background-image:url(/image/plus.svg)"></div>
-								<div id="lessLaborGoToDictionary-option" style="background-image:url(/image/option.svg)"></div>
-							</nav>
-							<div id="lessLaborGoToDictionary-grid">
-								<ul id="lessLaborGoToDictionary-container">
-									<li class="lessLaborGoToDictionary-list">
-										<a class="lessLaborGoToDictionary-anchor">
-											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
-										</a>
-									</li>
-									<li class="lessLaborGoToDictionary-list">
-										<a class="lessLaborGoToDictionary-anchor">
-											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2</span>
-										</a>
-									</li>
-									<li class="lessLaborGoToDictionary-list">
-										<a class="lessLaborGoToDictionary-anchor">
-											<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3</span>
-										</a>
-									</li>
-								</ul>
-								<div id="lessLaborGoToDictionary-apiContent">
-									<div id="lessLaborGoToDictionary-apiHeader">
-										<div id="lessLaborGoToDictionary-apiHeaderTextArea">
-											<div id="lessLaborGoToDictionary-apiTitleWrapper">
-												<div id="lessLaborGoToDictionary-history" style="background-image: url(/image/history.svg);" ></div>
-												<a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank">Wiktionary</a>
+					<div class="box" id="widgetContainer"></div>
+					<template id="widgetTemplate">
+						<div id="lessLaborGoToDictionary-widget">
+							<style id="widgetStyle"></style>
+							<div id="lessLaborGoToDictionary-viewer">
+								<nav id="lessLaborGoToDictionary-menu">
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-move" style="background-image:url(/image/arrow.svg)"></div>
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-resize" style="background-image:url(/image/resize.svg)"></div>
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-zoomDown" style="background-image:url(/image/minus.svg)"></div>
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-zoomUp" style="background-image:url(/image/plus.svg)"></div>
+									<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-option" style="background-image:url(/image/option.svg)"></div>
+								</nav>
+								<div id="lessLaborGoToDictionary-grid">
+									<ul id="lessLaborGoToDictionary-container">
+										<li class="lessLaborGoToDictionary-list">
+											<a class="lessLaborGoToDictionary-anchor">
+												<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test1</span>
+											</a>
+										</li>
+										<li class="lessLaborGoToDictionary-list">
+											<a class="lessLaborGoToDictionary-anchor">
+												<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test2</span>
+											</a>
+										</li>
+										<li class="lessLaborGoToDictionary-list">
+											<a class="lessLaborGoToDictionary-anchor">
+												<img class="lessLaborGoToDictionary-favicon" src="/image/favicon.svg" style="height: 1em; width: 1em;"><span class="lessLaborGoToDictionary-label">test3</span>
+											</a>
+										</li>
+									</ul>
+									<div id="lessLaborGoToDictionary-apiContent">
+										<div id="lessLaborGoToDictionary-apiHeader">
+											<div id="lessLaborGoToDictionary-apiHeaderTextArea">
+												<div id="lessLaborGoToDictionary-apiTitleWrapper">
+													<div class="lessLaborGoToDictionary-buttonIcon" id="lessLaborGoToDictionary-history" style="background-image: url(/image/history.svg);" ></div><a id="lessLaborGoToDictionary-apiTitle" rel="noreferrer" target="_blank">Wiktionary</a>
+												</div>
 											</div>
+											<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
 										</div>
-										<span id="lessLaborGoToDictionary-apiSwitch" class="lessLaborGoToDictionary-checkboxButton" data-checked="1"><span class="lessLaborGoToDictionary-circle"></span></span>
+										<div id="lessLaborGoToDictionary-apiLoading">
+											<div id="lessLaborGoToDictionary-apiLoadingContent" style="background-image:url(/image/circle.svg)"></div>
+										</div>
+										<div id="lessLaborGoToDictionary-apiOff"></div>
+										<div id="lessLaborGoToDictionary-apiBody">
+											<h2 class="in-block section-heading"><span class="mw-headline">Sample language</span></h2>
+											<ol>
+												<li><a class="new">sample</a> sample sample </li>
+												<li><a>sample</a> sample sample
+												<li><b>test</b> test test </li>
+												<li><i>test</i> test test </li>
+											</ol>
+										</div>
+										<div id="lessLaborGoToDictionary-apiFooter">Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0</div>
 									</div>
-									<div id="lessLaborGoToDictionary-apiLoading">
-										<div id="lessLaborGoToDictionary-apiLoadingContent" style="background-image:url(/image/circle.svg)"></div>
-									</div>
-									<div id="lessLaborGoToDictionary-apiOff"></div>
-									<div id="lessLaborGoToDictionary-apiBody">
-										<h2 class="in-block section-heading"><span class="mw-headline">Sample language</span></h2>
-										<ol>
-											<li><a class="new">sample</a> sample sample </li>
-											<li><a>sample</a> sample sample
-											<li><b>test</b> test test </li>
-											<li><i>test</i> test test </li>
-										</ol>
-									</div>
-									<div id="lessLaborGoToDictionary-apiFooter">Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0</div>
 								</div>
+								<div id="lessLaborGoToDictionary-cover" style="background-image:url(/image/rect30.png)"></div>
 							</div>
 						</div>
-					</div>
+					</template>
 				</section>
 			</div>
 			<div id="languageFilterSelectPane" class="panelComponent hide">
@@ -400,7 +474,7 @@
 						<div>
 							<div id="languageSelectList" class="borderComponent">
 								<p class="languageFilterSelectedDescription">htmlLanguageFilterSelectedDescription</p>
-								<ol class="languageFilterBox"></ol>
+								<ol class="languageFilterBox configList"></ol>
 							</div>
 						</div>
 					</div>
@@ -409,9 +483,9 @@
 			<template id="languageListPrototype">
 				<li>
 					<div>
-						<span class="languageLabel"></span>
-						<span class="removeLanguageBox">
-							<img src="/image/delete.svg" class="removeLanguageButtom">
+						<span class="languageLabel configListLabel"></span>
+						<span class="configListRemoveBox">
+							<img src="/image/delete.svg" class="removeLanguageButtom configListRemoveButton">
 						</span>
 					</div>
 				</li>
@@ -430,7 +504,7 @@
 				</li>
 			</template>
 		</div>
-		<div id="contact" class="panel hide">
+		<div id="contact" class="panelStyle panel hide">
 			<section>
 				<h1 class="releaseNoteTitle">htmlRleaseNoteTitle</h1>
 				<p class="sentence">
@@ -476,7 +550,8 @@
 			<h1><span class="title">extensionName</span></h1>
 		</header>
 		<nav id="nav">
-			<div class="navi active" data-navi-name="form">htmlFormName</div>
+			<div class="navi active" data-navi-name="control">htmlControlName</div>
+			<div class="navi" data-navi-name="form">htmlFormName</div>
 			<div class="navi" data-navi-name="history">htmlHistoryName</div>
 			<div class="navi" data-navi-name="ranking">htmlRankingName</div>
 			<div class="navi" data-navi-name="others">htmlOthersName</div>
@@ -490,9 +565,14 @@
 <script src="/lib/indexeddb.js"></script>
 <script src="/lib/share.js"></script>
 <script src="/lib/common.js"></script>
+<script src="/model/model.js"></script>
+<script src="/model/appModel.js"></script>
+<script src="/model/widgetEnableModel.js"></script>
+<script src="/model/domainListModel.js"></script>
 <script src="option.js"></script>
 <script src="optionHistory.js"></script>
 <script src="optionRanking.js"></script>
+<script src="optionControl.js"></script>
 <script src="optionOthers.js"></script>
 </body>
 </html>

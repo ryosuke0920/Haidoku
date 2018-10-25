@@ -1,18 +1,17 @@
 (()=>{
+	let body = document.querySelector("body");
+	if( !body ) return;
+
 	const LINK_NODE_DEFAULT_HEIGHT = 200;
 	const LINK_NODE_DEFAULT_WIDTH = 320;
 	const LINK_NODE_MIN_HEIGHT = 50;
 	const LINK_NODE_MIN_WIDTH = 50;
-	const LINK_NODE_PADDING = 3;
 	const SCROLL_SPACE = 17;
 	const RECT_SPACE = 3;
-	const SCROLL_BAR_WIDTH = 22;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
 	const ANCHOR_MAX_SIZE = 2;
 	const ANCHOR_MIN_SIZE = 0.6;
 	const ANCHOR_RESIO = 0.1;
-	const SILENT_ERROR_PREFIX = "[silent]";
-	const SILENT_ERROR_REGEX = new RegExp( /^\[silent\]/ );
 	const REMOVE_SPACE_REGEX = new RegExp( /(?:\s|\|)+/, "g" );
 	const LINK_LIST_CLOSE_TIME = 500;
 	const API_QUERY_DERAY = 1000;
@@ -21,27 +20,44 @@
 	const API_WHITE_SPACE_ERROR = "white space error";
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 
-	let linkListNode;
-	let linkListNodeTop = 0;
-	let linkListNodeLeft = 0;
-	let linkListNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
-	let linkListNodeWidth = LINK_NODE_DEFAULT_WIDTH;
-	let linkListScrollTopTmp = 0;
-	let linkListScrollleftTmp = 0;
-	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
+	let dlModel = new domainListModel();
+	let weModel = new widgetEnableModel();
+
+	let enableWidgetValue;
+	let domainList;
+
+	let rootNode;
+	let widgetNode;
 	let coverNode;
-	let optionList = [];
-	let linkListFlag = false;
-	let shiftKeyFlag = false;
-	let ctrlKeyFlag = false;
-	let resizeWatcherFlag = false;
-	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let menuNode;
 	let containerNode;
 	let apiContentNode;
 	let apiTitleNode;
 	let apiErrorMessageNode;
 	let apiBodyNode;
+	let apiFooterNode;
+	let apiSwitcheNode;
+	let arrowNode;
+	let historyButtoneNode;
+	let historyDoneButtoneNode;
+	let widgetNodeTop = 0;
+	let widgetNodeLeft = 0;
+	let widgetNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
+	let widgetNodeWidth = LINK_NODE_DEFAULT_WIDTH;
+	let widgetScrollTopTmp = 0;
+	let widgetScrollleftTmp = 0;
+	let linkListAction = LINK_LIST_ACTION_MOUSECLICK;
+	let optionList = [];
+	let linkListFlag = false;
+	let shiftKeyFlag = false;
+	let ctrlKeyFlag = false;
+	let linkListStyle;
+	let faviconDisplay;
+	let linknListDirection;
+	let linknListSeparator;
+	let apiSwitchFlag;
+	let resizeWatcherFlag = false;
+	let anchorSize = ANCHOR_DEFAULT_SIZE;
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 	let faviconCache = {};
@@ -50,47 +66,54 @@
 	let serviceCode = API_SERVICE_CODE_NONE;
 	let languageFilter = [];
 	let apiCutOut = true;
-	let apiFooterNode;
-	let apiSwitcheNode;
 	let windowId = Math.random();
-	let arrowNode;
 	let moveObj;
-	let historyButtoneNode;
-	let historyDoneButtoneNode;
 	let innerSelectionFlag = false;
 
-	Promise.resolve()
-		.then(init)
-		.then(
-			()=>{ return Promise.resolve().then(loadSetting).then(addCommonLinkListEvents); },
-			silentError
-		).catch(unexpectedError);
+	start().then(()=>{
+		ponyfill.storage.onChanged.addListener( onStorageChanged );
+		ponyfill.runtime.onMessage.addListener( notify );
+	});
 
-	function init(){
-		let body = document.querySelector("body");
-		if( !body ){
-			/* break promise chain, but not need notification. */
-			throw( new Error( SILENT_ERROR_PREFIX + " not found body") );
-		}
-		linkListNode = document.createElement("div");
-		linkListNode.setAttribute("id",CSS_PREFIX+"-viewer");
-		hide(linkListNode);
-		linkListNode.style.padding = LINK_NODE_PADDING + "px";
-		applyLinkListSize();
-		body.appendChild( linkListNode );
+	function start(){
+		return Promise.resolve().then(getConfig).then(gotConfig).catch(onReadError);
+	}
+
+	function initWidget(){
+		rootNode = document.createElement("div");
+		rootNode.setAttribute("style","all: initial;");
+		rootNode.style.position = "absolute";
+		rootNode.style.top = "0";
+		rootNode.style.left = "0";
+		body.appendChild(rootNode);
+		let shadow = rootNode.attachShadow({"mode": "open"});
+
+		widgetNode = document.createElement("div");
+		widgetNode.style.padding = LINK_NODE_PADDING + "px";
+		widgetNode.setAttribute("id",CSS_PREFIX+"-widget");
+		hide(widgetNode);
+		shadow.appendChild(widgetNode);
+
+		let style = document.createElement("style");
+		style.textContent = WIDGET_STYLE;
+		widgetNode.appendChild(style)
+
+		let viewerNode = document.createElement("div");
+		viewerNode.setAttribute("id",CSS_PREFIX+"-viewer");
+		widgetNode.appendChild(viewerNode);
+
+		menuNode = document.createElement("nav");
+		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
+		viewerNode.appendChild(menuNode);
+
+		let linkListGridNode = document.createElement("div");
+		linkListGridNode.setAttribute("id",CSS_PREFIX+"-grid");
+		viewerNode.appendChild(linkListGridNode);
 
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
 		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/icon30.png")+")";
-		linkListNode.appendChild(coverNode);
-
-		menuNode = document.createElement("nav");
-		menuNode.setAttribute("id",CSS_PREFIX+"-menu");
-		linkListNode.appendChild(menuNode);
-
-		let linkListGridNode = document.createElement("div");
-		linkListGridNode.setAttribute("id",CSS_PREFIX+"-grid");
-		linkListNode.appendChild(linkListGridNode);
+		viewerNode.appendChild(coverNode);
 
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
@@ -123,12 +146,14 @@
 
 		historyButtoneNode = document.createElement("div");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
+		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
 		apiTitleWrapper.appendChild(historyButtoneNode);
 
 		historyDoneButtoneNode = document.createElement("div");
 		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
+		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
 		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
 		apiTitleWrapper.appendChild(historyDoneButtoneNode);
@@ -180,42 +205,59 @@
 		arrowNode = document.createElement("div");
 		arrowNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/arrow.svg")+")";
 		arrowNode.setAttribute("id", CSS_PREFIX+"-move");
+		arrowNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		arrowNode.title = ponyfill.i18n.getMessage("htmlMove");
 		menuNode.appendChild(arrowNode);
 
 		let resizeNode = document.createElement("div");
 		resizeNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/resize.svg")+")";
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
+		resizeNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		resizeNode.title = ponyfill.i18n.getMessage("htmlResize");
 		menuNode.appendChild(resizeNode);
 
 		let zoomDownNode = document.createElement("div");
 		zoomDownNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/minus.svg")+")";
 		zoomDownNode.setAttribute("id",CSS_PREFIX+"-zoomDown");
+		zoomDownNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		zoomDownNode.title = ponyfill.i18n.getMessage("htmlZoomDown");
 		menuNode.appendChild(zoomDownNode);
 
 		let zoomUpNode = document.createElement("div");
 		zoomUpNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/plus.svg")+")";
 		zoomUpNode.setAttribute("id",CSS_PREFIX+"-zoomUp");
+		zoomUpNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		zoomUpNode.title = ponyfill.i18n.getMessage("htmlZoomUp");
 		menuNode.appendChild(zoomUpNode);
 
 		let optionNode = document.createElement("div");
 		optionNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/option.svg")+")";
 		optionNode.setAttribute("id",CSS_PREFIX+"-option");
+		optionNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
+
+		applyZoomLinkList();
+		applyLinkListSize();
+		applyLinkListStyle();
+		applyLinkListAction();
+		applyFaviconDisplay();
+		applyLinknListDirection();
+		applyLinknListSeparator();
+		applyApiSwitch();
+		applyServiceCode();
+
+		resetLinkListEvents();
+		addCommonLinkListEvents();
 	}
 
 	function addCommonLinkListEvents(){
-		ponyfill.storage.onChanged.addListener( onStorageChanged );
-		linkListNode.addEventListener("click", menuClickBihavior);
+		widgetNode.addEventListener("click", menuClickBihavior);
 		document.addEventListener("keydown", keydownBehavior);
 		document.addEventListener("mousemove", mousemoveBehavior);
 		document.addEventListener("mouseup", mouseupCommonBehavior);
-		document.addEventListener("mousedown", mousedownCommonBehavior);
-		ponyfill.runtime.onMessage.addListener( notify );
+		widgetNode.addEventListener("mousedown", mousedownCommonBehavior);
+		document.addEventListener("mousedown", mousedownOuterBehavior);
 		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
 	}
 
@@ -235,7 +277,7 @@
 
 	function updateInnerSelectionFlag(){
 		let selection = window.getSelection();
-		innerSelectionFlag = selection.containsNode(linkListNode, true);
+		innerSelectionFlag = selection.containsNode(widgetNode, true);
 	}
 
 	function manualSelectionChangeBehavior(e){
@@ -265,21 +307,25 @@
 		apiRequest(text);
 	}
 
+	function mousedownOuterBehavior(e){
+		if( e.button != 0 ) return;
+		mousedownFlag = true;
+	}
+
 	function mousedownCommonBehavior(e){
 		if( e.button != 0 ) return;
 		if ( e.target == arrowNode ) {
 			moveObj = {
-				"dy": e.pageY - linkListNodeTop,
-				"dx": e.pageX - linkListNodeLeft
+				"dy": e.pageY - widgetNodeTop,
+				"dx": e.pageX - widgetNodeLeft
 			};
 			return;
 		}
-		if ( e.target != coverNode ) mousedownFlag = true;
 	}
 
 	function mousedownAutoBehavior(e){
 		if( e.button != 0 ) return;
-		if( !isLinkListNodeUnderMouse(e.pageY, e.pageX) ) {
+		if( !isOnWidget(e.pageY, e.pageX) ) {
 			closeLinkList();
 		}
 	}
@@ -342,20 +388,20 @@
 		if ( !hasStopper() && isLinkListShown() && mousedownFlag ) resizeWatcher();
 	}
 
-	function isLinkListNodeUnderMouse(yy,xx){
-		if( linkListNodeTop <= yy && yy < ( linkListNodeTop + linkListNode.offsetHeight )
-		&& linkListNodeLeft <= xx && xx < ( linkListNodeLeft + linkListNode.offsetWidth ) ){
+	function isOnWidget(yy,xx){
+		if( widgetNodeTop <= yy && yy < ( widgetNodeTop + widgetNode.offsetHeight )
+		&& widgetNodeLeft <= xx && xx < ( widgetNodeLeft + widgetNode.offsetWidth ) ){
 			return true;
 		}
 		return false;
 	}
 
 	function getLinkListHeight(){
-		return linkListNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
+		return widgetNode.offsetHeight - ( 2 * LINK_NODE_PADDING );
 	}
 
 	function getLinkListWidth(){
-		return linkListNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
+		return widgetNode.offsetWidth - ( 2 * LINK_NODE_PADDING );
 	}
 
 	function resizeWatcher(){
@@ -365,44 +411,49 @@
 	function switchWatchFlag(){
 		let height = getLinkListHeight();
 		let width = getLinkListWidth();
-		if ( linkListNodeHeight != height || linkListNodeWidth != width ){
+		if ( widgetNodeHeight != height || widgetNodeWidth != width ){
 			resizeWatcherFlag = true;
 			if ( height < LINK_NODE_MIN_HEIGHT ) height = LINK_NODE_MIN_HEIGHT;
 			if ( width < LINK_NODE_MIN_WIDTH ) width = LINK_NODE_MIN_WIDTH;
-			linkListNodeHeight = height;
-			linkListNodeWidth = width;
+			widgetNodeHeight = height;
+			widgetNodeWidth = width;
 		}
 	}
-
-	function applyFaviconDisplay(res){
-		if( res == LINK_LIST_FAVICON_ONLY ) {
-			linkListNode.classList.add(CSS_PREFIX+"-mini");
+	function setFaviconDisplay(res){
+		faviconDisplay = res;
+	}
+	function applyFaviconDisplay(){
+		if( faviconDisplay == LINK_LIST_FAVICON_ONLY ) {
+			widgetNode.classList.add(CSS_PREFIX+"-mini");
 		}
 		else {
-			linkListNode.classList.remove(CSS_PREFIX+"-mini");
+			widgetNode.classList.remove(CSS_PREFIX+"-mini");
 		}
 	}
-
-	function applyLinknListDirection(res){
-		if( res == LINK_LIST_DIRECTION_HORIZAONTAL ) {
-			linkListNode.classList.add(CSS_PREFIX+"-inline");
+	function setLinknListDirection(res){
+		linknListDirection = res;
+	}
+	function applyLinknListDirection(){
+		if( linknListDirection == LINK_LIST_DIRECTION_HORIZAONTAL ) {
+			widgetNode.classList.add(CSS_PREFIX+"-inline");
 		}
 		else {
-			linkListNode.classList.remove(CSS_PREFIX+"-inline");
+			widgetNode.classList.remove(CSS_PREFIX+"-inline");
 		}
 	}
-
-	function applyLinknListSeparator(res){
-		if( res == LINK_LIST_SEPARATOR_VERTICAL ) {
-			linkListNode.classList.add(CSS_PREFIX+"-separator");
+	function setLinknListSeparator(res){
+		linknListSeparator = res;
+	}
+	function applyLinknListSeparator(){
+		if( linknListSeparator == LINK_LIST_SEPARATOR_VERTICAL ) {
+			widgetNode.classList.add(CSS_PREFIX+"-separator");
 		}
 		else {
-			linkListNode.classList.remove(CSS_PREFIX+"-separator");
+			widgetNode.classList.remove(CSS_PREFIX+"-separator");
 		}
 	}
-
-	function applyServiceCode(res){
-		if( res == API_SERVICE_CODE_NONE ) {
+	function applyServiceCode(){
+		if( serviceCode == API_SERVICE_CODE_NONE ) {
 			hide(apiContentNode);
 		}
 		else {
@@ -414,15 +465,15 @@
 		return ponyfill.runtime.sendMessage({
 			"method": "saveLinkListSize",
 			"data": {
-				"lh": linkListNodeHeight,
-				"lw": linkListNodeWidth
+				"lh": widgetNodeHeight,
+				"lw": widgetNodeWidth
 			}
 		});
 	}
 
 	function closeLinkList(){
 		resetScrollTmp();
-		hide(linkListNode);
+		hide(widgetNode);
 		abortApiRequestQueue();
 	}
 
@@ -454,11 +505,11 @@
 	}
 
 	function setSelectedText(text){
-		linkListNode.setAttribute("data-selected-text", text);
+		widgetNode.setAttribute("data-selected-text", text);
 	}
 
 	function getSelectedText(){
-		return linkListNode.getAttribute("data-selected-text");
+		return widgetNode.getAttribute("data-selected-text");
 	}
 
 	function makeLinkList(text){
@@ -509,8 +560,12 @@
 	}
 
 	function applyLinkListSize(){
-		linkListNode.style.height = linkListNodeHeight + "px";
-		linkListNode.style.width = linkListNodeWidth + "px";
+		resizeWidget(widgetNodeHeight, widgetNodeWidth)
+	}
+
+	function resizeWidget(height, width){
+		widgetNode.style.height = height + "px";
+		widgetNode.style.width = width + "px";
 	}
 
 	function showLinkListByClick(){
@@ -535,41 +590,39 @@
 	}
 
 	function showLinkList(){
-		show(linkListNode);
-		applyLinkListSize();
+		show(widgetNode);
 		let rect = getSelectionRect();
 		if(!rect) throw( new Error("Rect not found.") );
-		linkListNodeLeft = makeWidgetPointX(rect);
-		linkListNodeTop = makeWidgetPointY(rect);
+		widgetNodeLeft = makeWidgetPointX(rect);
+		widgetNodeTop = makeWidgetPointY(rect);
 		moveWidget();
-		linkListNode.scrollTop = 0;
-		linkListNode.scrollLeft = 0;
+		scrollWidget(0,0);
 	}
 
 	function makeWidgetPointX(rect){
 		let clientX = rect.right;
 		let pageX = window.scrollX + clientX;
 		let viewPortWidth = window.innerWidth - SCROLL_SPACE;
-		if ( viewPortWidth < linkListNode.offsetWidth ){
+		if ( viewPortWidth < widgetNode.offsetWidth ){
 			return window.scrollX;
 		}
-		if ( (clientX + linkListNode.offsetWidth + RECT_SPACE) <= viewPortWidth){
+		if ( (clientX + widgetNode.offsetWidth + RECT_SPACE) <= viewPortWidth){
 			return pageX + RECT_SPACE;
 		}
-		return window.scrollX + viewPortWidth - linkListNode.offsetWidth;
+		return window.scrollX + viewPortWidth - widgetNode.offsetWidth;
 	}
 
 	function makeWidgetPointY(rect){
 		let clientY = rect.bottom;
 		let pageY = window.scrollY + clientY;
 		let viewPortHeight = window.innerHeight - SCROLL_SPACE;
-		if ( viewPortHeight < linkListNode.offsetHeight ){
+		if ( viewPortHeight < widgetNode.offsetHeight ){
 			return pageY + RECT_SPACE;
 		}
-		if ( (clientY + RECT_SPACE + linkListNode.offsetHeight) <=  viewPortHeight ){
+		if ( (clientY + RECT_SPACE + widgetNode.offsetHeight) <=  viewPortHeight ){
 			return pageY + RECT_SPACE;
 		}
-		yy = rect.top - linkListNode.offsetHeight - RECT_SPACE;
+		yy = rect.top - widgetNode.offsetHeight - RECT_SPACE;
 		if ( 0 <= yy) {
 			return window.scrollY + yy;
 		}
@@ -577,19 +630,54 @@
 	}
 
 	function isLinkListShown(){
-		return isShown(linkListNode);
+		return isShown(widgetNode);
 	}
 
 	function onStorageChanged(change, area){
+		if(change.hasOwnProperty("e")){
+			setEnableWidgetValue(change.e.newValue);
+			if( weModel.isDisable(enableWidgetValue) ){
+				if( isEnableWidget() ) disableWidget();
+			}
+			else if( weModel.isEnable(enableWidgetValue) ){
+				if( !isEnableWidget() ) enableWidget();
+			}
+			else {
+				if( dlModel.isAllowedCurrentDomain(domainList) ){
+					if( !isEnableWidget() ) enableWidget();
+				}
+				else {
+					if( isEnableWidget() ) disableWidget();
+				}
+			}
+			return;
+		}
+		if(change.hasOwnProperty("dl")){
+			setDomainList(change.dl.newValue);
+			if( weModel.isEnableWithDomain(enableWidgetValue) ){
+				if( dlModel.isAllowedCurrentDomain(domainList) ){
+					if( !isEnableWidget() ) enableWidget();
+				}
+				else {
+					if( isEnableWidget() ) disableWidget();
+				}
+			}
+			return;
+		}
+
+		if( !isEnableWidget() ) return;
+
 		if( change["lh"] || change["lw"] ){
-			let lh = linkListNodeHeight;
+			let lh = widgetNodeHeight;
 			if( change.hasOwnProperty("lh") ) lh = change["lh"]["newValue"];
-			let lw = linkListNodeWidth;
+			let lw = widgetNodeWidth;
 			if( change.hasOwnProperty("lw") ) lw = change["lw"]["newValue"];
 			setLinkListSize( lh, lw );
+			applyLinkListSize();
 		}
 		if( change["as"] ){
 			setAnchorSize( change["as"]["newValue"] );
+			applyZoomLinkList();
 		}
 		if( change["ck"] ){
 			setCtrlKeyFlag( change["ck"]["newValue"] );
@@ -610,23 +698,28 @@
 		}
 		if( change["cl"] ){
 			setLinkListStyle( change["cl"]["newValue"] );
+			applyLinkListStyle();
 		}
 		if( change["ca"] ){
 			setLinkListAction( change["ca"]["newValue"] );
+			applyLinkListAction();
 		}
 		if( change["f"] ){
-			applyFaviconDisplay( change["f"]["newValue"] );
+			setFaviconDisplay( change["f"]["newValue"] );
+			applyFaviconDisplay();
 		}
 		if( change["ld"] ){
-			applyLinknListDirection( change["ld"]["newValue"] );
+			setLinknListDirection( change["ld"]["newValue"] );
+			applyLinknListDirection();
 		}
 		if( change["ls"] ){
-			applyLinknListSeparator( change["ls"]["newValue"] );
+			setLinknListSeparator( change["ls"]["newValue"] );
+			applyLinknListSeparator();
 		}
 		if( change["s"] ){
 			closeLinkList();
 			setServiceCode( change["s"]["newValue"] );
-			applyServiceCode( change["s"]["newValue"] );
+			applyServiceCode();
 		}
 		if( change["ll"] ){
 			setLanguageFilter( change["ll"]["newValue"] );
@@ -639,23 +732,42 @@
 		if( change["sw"] ){
 			closeLinkList();
 			setApiSwitch( change["sw"]["newValue"] );
+			applyApiSwitch();
 		}
 	}
-
+	function isEnableWidget(){
+		return rootNode !== undefined;
+	}
+	function disableWidget(){
+		document.removeEventListener("keydown", keydownBehavior);
+		document.removeEventListener("mousemove", mousemoveBehavior);
+		document.removeEventListener("mouseup", mouseupCommonBehavior);
+		document.removeEventListener("mousedown", mousedownOuterBehavior);
+		document.removeEventListener("selectionchange", selectionChangeAutoBehavior);
+		document.removeEventListener("mouseup", mouseupAutoBehavior);
+		document.removeEventListener("mousedown", mousedownAutoBehavior);
+		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
+		rootNode.remove();
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiFooterNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = undefined;
+	}
+	function enableWidget(){
+		start();
+	}
 	function setLinkListSize( height=LINK_NODE_DEFAULT_HEIGHT, width=LINK_NODE_DEFAULT_WIDTH ){
-		linkListNodeHeight = height;
-		linkListNodeWidth = width;
-		if( isLinkListShown() ) applyLinkListSize();
+		widgetNodeHeight = height;
+		widgetNodeWidth = width;
 	}
 
-	function loadSetting(){
-		let serviceCode = getDefaultServiceCode();
+	function getConfig(){
+		let sc = getDefaultServiceCode();
 		let languageFilter = getDefaultLanguageFilter();
-		let getter = ponyfill.storage.sync.get({
-			"ol": [],
-			"bf": true,
-			"sk": false,
-			"ck": false,
+		return ponyfill.storage.sync.get({
+			"e": DEFAULT_ENABLE_VALUE,
+			"dl": DEFAULT_DOMAIN_LIST,
+			"ol": DEFAULT_OPTION_LIST_ON_GET,
+			"bf": DEFAULT_AUTO_VIEW_FLAG,
+			"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
+			"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE,
@@ -665,13 +777,27 @@
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
 			"ls": LINK_LIST_SEPARATOR_VERTICAL,
 			"sw": API_SWITCH_DISABLED,
-			"s": serviceCode,
+			"s": sc,
 			"ll": languageFilter,
 			"co": DEFAULT_MEANING_VALUE
 		});
-		return getter.then(setVer, onReadError);
 	}
-
+	function gotConfig(res){
+		setEnableWidgetValue(res.e);
+		setDomainList(res.dl);
+		if(weModel.isDisable(enableWidgetValue)) return;
+		if(weModel.isEnableWithDomain(enableWidgetValue) && !dlModel.isAllowedCurrentDomain(res.dl)) return;
+		return Promise.resolve()
+		.then(()=>{ return setVer(res); })
+		.then(()=>{ if(hasLinkList()) return getFavicon().then( gotFavicon ); })
+		.then( initWidget );
+	}
+	function setEnableWidgetValue(value){
+		enableWidgetValue = value;
+	}
+	function setDomainList(list){
+		domainList = list;
+	}
 	function setVer( res ){
 		setAnchorSize( res["as"] );
 		setLinkListSize( res["lh"], res["lw"] );
@@ -681,21 +807,17 @@
 		setShiftKeyFlag( res["sk"] );
 		setLinkListStyle( res["cl"] );
 		setLinkListAction( res["ca"] );
-		applyFaviconDisplay( res["f"] );
-		applyLinknListDirection( res["ld"] );
-		applyLinknListSeparator( res["ls"] );
+		setFaviconDisplay( res["f"] );
+		setLinknListDirection( res["ld"] );
+		setLinknListSeparator( res["ls"] );
 		setApiSwitch( res["sw"] );
 		setServiceCode( res["s"] );
-		applyServiceCode( res["s"] );
 		setLanguageFilter( res["ll"] );
 		setLinkListApiCutOut( res["co"] );
-		resetLinkListEvents();
-		if(hasLinkList()) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 	}
 
 	function setAnchorSize(res){
 		anchorSize = res;
-		applyZoomLinkList();
 	}
 
 	function setLinkListFlag(res){
@@ -723,27 +845,36 @@
 	}
 
 	function setLinkListStyle(res){
-		linkListNode.classList.remove(CSS_PREFIX+"-dark");
-		if( res == LINK_LIST_STYLE_DARK ) linkListNode.classList.add(CSS_PREFIX+"-dark");
+		linkListStyle = res;
+	}
+
+	function applyLinkListStyle(){
+		widgetNode.classList.remove(CSS_PREFIX+"-dark");
+		if( linkListStyle == LINK_LIST_STYLE_DARK ) {
+			widgetNode.classList.add(CSS_PREFIX+"-dark");
+		}
 	}
 
 	function setLinkListAction(res){
 		linkListAction = res;
+	}
+
+	function applyLinkListAction(){
 		resetScrollTmp();
-		linkListNode.classList.remove(CSS_PREFIX+"-mouseover");
-		linkListNode.classList.remove(CSS_PREFIX+"-mouseclick");
+		widgetNode.classList.remove(CSS_PREFIX+"-mouseover");
+		widgetNode.classList.remove(CSS_PREFIX+"-mouseclick");
 		removeStopper();
-		linkListNode.removeEventListener("mouseenter", removeStopper);
-		linkListNode.removeEventListener("mouseleave", controlStopper);
+		widgetNode.removeEventListener("mouseenter", removeStopper);
+		widgetNode.removeEventListener("mouseleave", controlStopper);
 		coverNode.removeEventListener("click", widgetActionMouseclick);
 		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
-			linkListNode.classList.add(CSS_PREFIX+"-mouseover");
+			widgetNode.classList.add(CSS_PREFIX+"-mouseover");
 			addStopper();
-			linkListNode.addEventListener("mouseenter", removeStopper);
-			linkListNode.addEventListener("mouseleave", controlStopper);
+			widgetNode.addEventListener("mouseenter", removeStopper);
+			widgetNode.addEventListener("mouseleave", controlStopper);
 		}
 		else if( linkListAction == LINK_LIST_ACTION_MOUSECLICK ) {
-			linkListNode.classList.add(CSS_PREFIX+"-mouseclick");
+			widgetNode.classList.add(CSS_PREFIX+"-mouseclick");
 			addStopper();
 			coverNode.addEventListener("click", widgetActionMouseclick);
 		}
@@ -753,37 +884,36 @@
 		removeStopper();
 		let rect = getSelectionRect();
 		if(!rect) throw( new Error("Rect not found.") );
-		linkListNodeLeft = makeWidgetPointX(rect);
-		linkListNodeTop = makeWidgetPointY(rect);
+		widgetNodeLeft = makeWidgetPointX(rect);
+		widgetNodeTop = makeWidgetPointY(rect);
 		moveWidget();
 	}
 
 	function controlStopper(e){
 		if(!resizeWatcherFlag){
 			addStopper();
-			linkListScrollTopTmp = linkListNode.scrollTop;
-			linkListScrollleftTmp = linkListNode.scrollLeft;
-			linkListNode.scrollTop = linkListNode.scrollLeft = 0;
+			widgetScrollTopTmp = widgetNode.scrollTop;
+			widgetScrollleftTmp = widgetNode.scrollLeft;
+			scrollWidget(0,0);
 		}
 	}
 
 	function addStopper(){
-		linkListNode.classList.add(CSS_PREFIX+"-stopper");
+		widgetNode.classList.add(CSS_PREFIX+"-stopper");
 	}
 
 	function removeStopper(e){
 		if(!hasStopper())return;
-		linkListNode.scrollTop = linkListScrollTopTmp;
-		linkListNode.scrollLeft = linkListScrollleftTmp;
-		linkListNode.classList.remove(CSS_PREFIX+"-stopper");
+		scrollWidget(widgetScrollTopTmp, widgetScrollleftTmp);
+		widgetNode.classList.remove(CSS_PREFIX+"-stopper");
 	}
 
 	function hasStopper(){
-		return linkListNode.classList.contains(CSS_PREFIX+"-stopper");
+		return widgetNode.classList.contains(CSS_PREFIX+"-stopper");
 	}
 
 	function resetScrollTmp(){
-		linkListScrollTopTmp = linkListScrollleftTmp = 0;
+		widgetScrollTopTmp = widgetScrollleftTmp = 0;
 	}
 
 	function resetLinkListEvents(){
@@ -845,8 +975,8 @@
 	}
 
 	function resetSize(height,width){
-		linkListNodeHeight = height;
-		linkListNodeWidth = width;
+		widgetNodeHeight = height;
+		widgetNodeWidth = width;
 		applyLinkListSize();
 	}
 
@@ -868,11 +998,11 @@
 	}
 
 	function applyZoomLinkList(){
-		let list = linkListNode.querySelectorAll("span."+CSS_PREFIX+"-label");
+		let list = containerNode.querySelectorAll("span."+CSS_PREFIX+"-label");
 		for(let i=0; i<list.length; i++){
 			setFontSize(list[i], anchorSize);
 		}
-		list = linkListNode.querySelectorAll("img."+CSS_PREFIX+"-favicon");
+		list = containerNode.querySelectorAll("img."+CSS_PREFIX+"-favicon");
 		for(let i=0; i<list.length; i++){
 			setFaviconSize(list[i], anchorSize);
 		}
@@ -932,15 +1062,6 @@
 			"data": ponyfill.i18n.getMessage("notificationAudioPlayError", [e.message])
 		});
 		return res;
-	}
-
-	function silentError(e){
-		if( e.message.match( SILENT_ERROR_REGEX ) ){
-			console.log(e);
-		}
-		else {
-			throw(e);
-		}
 	}
 
 	function notify(e){
@@ -1012,7 +1133,7 @@
 	}
 
 	function clearApiContent(){
-		linkListNode.classList.add(CSS_PREFIX+"-loading");
+		widgetNode.classList.add(CSS_PREFIX+"-loading");
 		hide(historyButtoneNode);
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
@@ -1042,7 +1163,6 @@
 		let parsed = result.parsed;
 		let bases = result.bases;
 		let parseStatus = result.status;
-		let warnings = [];
 		if(parseStatus){
 			for(let h=0; h<parsed.length; h++){
 				let header = parsed[h].header;
@@ -1110,7 +1230,7 @@
 			}
 		}
 		show(historyButtoneNode);
-		linkListNode.classList.remove(CSS_PREFIX+"-loading");
+		widgetNode.classList.remove(CSS_PREFIX+"-loading");
 	}
 
 	function makeApiTitleNode(text,title,url){
@@ -1342,7 +1462,7 @@
 	function apiResponseError(e){
 		function after(content){
 			apiBodyNode.appendChild(content);
-			linkListNode.classList.remove(CSS_PREFIX+"-loading");
+			widgetNode.classList.remove(CSS_PREFIX+"-loading");
 		}
 		clearApiTitle();
 		let content = document.createElement("div");
@@ -1407,23 +1527,27 @@
 	function apiSwitchBehavior(e){
 		if(!isApiSwitchOn()){
 			setApiSwitch(API_SWITCH_ENABLED);
+			applyApiSwitch();
 			saveApiSwitch(API_SWITCH_ENABLED).catch( onSaveError );
 			apiRequest(getSelectedText());
 		}
 		else {
 			setApiSwitch(API_SWITCH_DISABLED);
+			applyApiSwitch();
 			saveApiSwitch(API_SWITCH_DISABLED).catch( onSaveError );
 		}
 	}
-
-	function setApiSwitch(value){
-		if(value != API_SWITCH_ENABLED){
+	function setApiSwitch(res){
+		apiSwitchFlag = res;
+	}
+	function applyApiSwitch(){
+		if(apiSwitchFlag != API_SWITCH_ENABLED){
 			apiSwitcheNode.removeAttribute("data-checked");
-			linkListNode.classList.add(CSS_PREFIX+"-apiDisabled");
+			widgetNode.classList.add(CSS_PREFIX+"-apiDisabled");
 		}
 		else {
 			apiSwitcheNode.setAttribute("data-checked", API_SWITCH_ENABLED);
-			linkListNode.classList.remove(CSS_PREFIX+"-apiDisabled");
+			widgetNode.classList.remove(CSS_PREFIX+"-apiDisabled");
 		}
 	}
 
@@ -1447,14 +1571,19 @@
 	}
 
 	function moveWidgetMousePonit(e){
-		linkListNodeTop = e.pageY - moveObj.dy;
-		linkListNodeLeft = e.pageX - moveObj.dx;
+		widgetNodeTop = e.pageY - moveObj.dy;
+		widgetNodeLeft = e.pageX - moveObj.dx;
 		moveWidget();
 	}
 
 	function moveWidget(){
-		linkListNode.style.top = linkListNodeTop+"px";
-		linkListNode.style.left = linkListNodeLeft+"px";
+		widgetNode.style.top = widgetNodeTop+"px";
+		widgetNode.style.left = widgetNodeLeft+"px";
+	}
+
+	function scrollWidget(top, left){
+		widgetNode.scrollTop = top;
+		widgetNode.scrollLeft = left;
 	}
 
 	function saveHistoryWiktionaryLinkage(){
