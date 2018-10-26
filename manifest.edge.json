@@ -35,6 +35,7 @@
 				"model/appModel.js",
 				"model/widgetEnableModel.js",
 				"model/domainListModel.js",
+				"model/requestStatusModel.js",
 				"content/content.js"
 			]
 		}

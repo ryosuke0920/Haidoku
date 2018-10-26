@@ -117,21 +117,27 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://de.wikipedia.org":{
+		"sectionHeading": "h2.in-block",
 		"path": "/w/api.php"
 	},
 	"https://en.wikipedia.org":{
+		"sectionHeading": "h2.in-block",
 		"path": "/w/api.php"
 	},
 	"https://fr.wikipedia.org":{
+		"sectionHeading": "h2.in-block",
 		"path": "/w/api.php"
 	},
 	"https://ja.wikipedia.org":{
+		"sectionHeading": "h2.in-block",
 		"path": "/w/api.php"
 	},
 	"https://ru.wikipedia.org":{
+		"sectionHeading": "h2.in-block",
 		"path": "/w/api.php"
 	},
 	"https://zh.wikipedia.org":{
+		"sectionHeading": "h2.in-block",
 		"path": "/w/api.php"
 	}
 };
@@ -191,6 +197,7 @@ const WIDGET_STYLE = `
 	background: linear-gradient(#FFFFFF, #F0F0F0);
 	white-space: nowrap;
 	padding: 3px;
+	height: 26px;
 }
 .lessLaborGoToDictionary-dark #lessLaborGoToDictionary-menu {
 	background: linear-gradient(#404040, #202020);

@@ -17,12 +17,13 @@
 	const API_QUERY_DERAY = 1000;
 	const API_TEXT_MAX_LENGTH = 255;
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
-	const API_WHITE_SPACE_ERROR = "white space error";
 	const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 	const FOOTER_CONTENT2 = "Provided by Wikipedia under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
 
 	let dlModel = new domainListModel();
 	let weModel = new widgetEnableModel();
+	let wikipediaRequestStatus;
+	let wiktionaryRequestStatus;
 
 	let enableWidgetValue;
 	let domainList;
@@ -68,8 +69,6 @@
 	let mousedownFlag = false;
 	let selectionChangedFlag = false;
 	let faviconCache = {};
-	let apiRequestQueue = {};
-	let fetchRequestID = (()=>{ let id = 0; return ()=>{return ++id} })();
 	let serviceCode = API_SERVICE_CODE_NONE;
 	let serviceCode2 = API_SERVICE_CODE_NONE;
 	let languageFilter = [];
@@ -322,6 +321,9 @@
 			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
 		}
 
+		wikipediaRequestStatus = new requestStatusModel();
+		wiktionaryRequestStatus = new requestStatusModel();
+
 		resetLinkListEvents();
 		addCommonLinkListEvents();
 	}
@@ -378,7 +380,6 @@
 		makeLinkList(text);
 		showLinkListByClick();
 		if(!isEnableApi()) return;
-		abortApiRequestQueue();
 		apiRequest(text);
 	}
 
@@ -425,7 +426,6 @@
 		makeLinkList(text);
 		showLinkListByClick();
 		if(!isEnableApi()) return;
-		abortApiRequestQueue();
 		apiRequest(text);
 	}
 
@@ -450,7 +450,6 @@
 			makeLinkList(text);
 			showLinkListByKey();
 			if(!isEnableApi()) return;
-			abortApiRequestQueue();
 			apiRequest(text);
 		}
 	}
@@ -530,12 +529,24 @@
 	function applyServiceCode(){
 		widgetNode.classList.remove(CSS_PREFIX+"-enableWiktionary");
 		widgetNode.classList.remove(CSS_PREFIX+"-enableWikipedia");
+		widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
+		widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
 		if( serviceCode == API_SERVICE_CODE_NONE && serviceCode2 == API_SERVICE_CODE_NONE ) {
 			hide(apiContentNode);
 		}
 		else {
-			if( serviceCode != API_SERVICE_CODE_NONE ) widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
-			if( serviceCode2 != API_SERVICE_CODE_NONE ) widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
+			if( serviceCode != API_SERVICE_CODE_NONE ){
+				widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
+			}
+			if( serviceCode2 != API_SERVICE_CODE_NONE ){
+				widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
+			}
+			if( serviceCode == API_SERVICE_CODE_NONE && serviceCode2 != API_SERVICE_CODE_NONE ){
+				widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+			}
+			else {
+				widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+			}
 			show(apiContentNode);
 		}
 	}
@@ -553,7 +564,8 @@
 	function closeLinkList(){
 		resetScrollTmp();
 		hide(widgetNode);
-		abortApiRequestQueue();
+		wiktionaryRequestStatus.abort();
+		wikipediaRequestStatus.abort();
 	}
 
 	function closeLinkListDelay(){
@@ -831,7 +843,7 @@
 		document.removeEventListener("mousedown", mousedownAutoBehavior);
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiTitleNode2 = apiErrorMessageNode2 = apiBodyNode2 = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiTitleNode2 = apiErrorMessageNode2 = apiBodyNode2 = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = wiktionaryRequestStatus = wikipediaRequestStatus = undefined;
 	}
 	function enableWidget(){
 		start();
@@ -1167,9 +1179,18 @@
 	}
 
 	function apiRequest(text){
+		clearApiContent();
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
+		if( serviceCode != API_SERVICE_CODE_NONE ) apiWiktionaryRequest(text);
+		if( serviceCode2 != API_SERVICE_CODE_NONE ) apiWikipediaRequest(text);
+	}
+
+	function apiWiktionaryRequest(text){
+		let delay = wiktionaryRequestStatus.hasAnother();
+		wiktionaryRequestStatus.abort();
 		let obj = {
-			"abort": false,
+			"id": wiktionaryRequestStatus.start(),
+			"status": wiktionaryRequestStatus,
 			"data": {
 				"text": text,
 				"serviceCode": serviceCode
@@ -1181,56 +1202,78 @@
 				"body": apiBodyNode
 			}
 		};
-		if( !checkBlank(text) ){
-			obj.data.error = API_WHITE_SPACE_ERROR;
-			return apiResponseError.bind(obj)(obj.data);
-		}
 		if( !checkByte(text, API_TEXT_MAX_LENGTH) ){
 			obj.data.error = API_TEXT_MAX_LENGTH_ERROR;
-			return apiResponseError.bind(obj)(obj.data);
+			apiResponseError.bind(obj)(obj.data);
+			obj.status.done(obj.id);
+			return;
 		}
-		obj.id = fetchRequestID();
-		apiRequestQueue[obj.id] = obj;
-		let keyList = Object.keys(apiRequestQueue);
-		if(keyList.length<=1) {
-			clearApiContent();
+		if(!delay) {
 			apiRequestStart(obj);
 			return;
 		}
 		setTimeout((e)=>{
-			if( !isActiveApiRequestQueue(obj) ){
-				dropApiRequestQueue(obj);
-				return;
-			}
+			if( !obj.status.isActive(obj.id) ) return;
 			apiRequestStart(obj);
 		}, API_QUERY_DERAY);
+
+		function apiRequestStart(obj){
+			ponyfill.runtime.sendMessage({
+				"method": "apiRequest",
+				"data": obj.data
+			}).then(
+				apiWiktionaryResponse.bind(obj)
+			).catch(
+				apiResponseError.bind(obj)
+			).finally(()=>{
+				obj.status.done(obj.id);
+			});
+		}
 	}
 
-	function apiRequestStart(obj){
-		ponyfill.runtime.sendMessage({
-			"method": "apiRequest",
-			"data": obj.data
-		}).then(
-			apiResponse.bind(obj)
-		).catch(
-			apiResponseError.bind(obj)
-		).finally(
-			()=>{ dropApiRequestQueue(obj) }
-		).catch((e)=>{ console.error(e) });
-	}
+	function apiWikipediaRequest(text){
+		let delay = wikipediaRequestStatus.hasAnother();
+		wikipediaRequestStatus.abort();
+		let obj = {
+			"id": wikipediaRequestStatus.start(),
+			"status": wikipediaRequestStatus,
+			"data": {
+				"text": text,
+				"serviceCode": serviceCode2
+			},
+			"node":{
+				"wrapper": wikipediaContent,
+				"title": apiTitleNode2,
+				"error": apiErrorMessageNode2,
+				"body": apiBodyNode2
+			}
+		};
+		if( !checkByte(text, API_TEXT_MAX_LENGTH) ){
+			obj.data.error = API_TEXT_MAX_LENGTH_ERROR;
+			apiResponseError.bind(obj)(obj.data);
+			obj.status.done(obj.id);
+			return;
+		}
+		if(!delay) {
+			apiRequestStart(obj);
+			return;
+		}
+		setTimeout((e)=>{
+			if( !obj.status.isActive(obj.id) ) return;
+			apiRequestStart(obj);
+		}, API_QUERY_DERAY);
 
-	function isActiveApiRequestQueue(obj){
-		return ( apiRequestQueue.hasOwnProperty(obj.id) && !obj.abort );
-	}
-
-	function dropApiRequestQueue(obj){
-		delete apiRequestQueue[obj.id];
-	}
-
-	function abortApiRequestQueue(){
-		let valueList = Object.values(apiRequestQueue);
-		for(let i=0; i<valueList.length; i++){
-			valueList[i].abort = true;
+		function apiRequestStart(obj){
+			ponyfill.runtime.sendMessage({
+				"method": "apiRequest",
+				"data": obj.data
+			}).then(
+				apiWikipediaResponse.bind(obj)
+			).catch(
+				apiResponseError.bind(obj)
+			).finally(()=>{
+				obj.status.done(obj.id);
+			});
 		}
 	}
 
@@ -1254,8 +1297,8 @@
 		titleNode.innerText = errorNode.innerText = "";
 	}
 
-	function apiResponse(e){
-		if( !isActiveApiRequestQueue(this) ) return;
+	function apiWiktionaryResponse(e){
+		if( !this.status.isActive(this.id) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		makeApiTitleNode(this.node.title, e.text, e.title, e.fullurl);
 		let property = API_SERVICE_PROPERTY[e.service];
@@ -1298,12 +1341,14 @@
 				header = convertStyle(header);
 				header = convertAnchor(header, e.service);
 				header = convertNaveFrame(header);
+				header = convertReferer(header);
 				this.node.body.appendChild(header);
 				for(let i=0; i<bodys.length; i++){
 					let obj = bodys[i];
 					obj.title = removeSimbol(obj.title);
 					obj.title = convertStyle(obj.title);
 					obj.title = convertAnchor(obj.title, e.service);
+					obj.title = convertReferer(obj.title);
 					this.node.body.appendChild(obj.title);
 					for(let j=0; j<obj.warnings.length; j++){
 						this.node.body.appendChild(obj.warnings[j]);
@@ -1313,6 +1358,7 @@
 					obj.content = convertAudio(obj.content, e.service);
 					obj.content = convertAnchor(obj.content, e.service);
 					obj.content = convertNaveFrame(obj.content);
+					obj.content = convertReferer(obj.content);
 					this.node.body.appendChild(obj.content);
 				}
 			}
@@ -1326,6 +1372,62 @@
 				base = convertAudio(base, e.service);
 				base = convertAnchor(base, e.service);
 				base = convertNaveFrame(base);
+				base = convertReferer(base);
+				this.node.body.appendChild(base);
+			}
+		}
+		this.node.wrapper.classList.remove(CSS_PREFIX+"-loading");
+	}
+
+	function apiWikipediaResponse(e){
+		if( !this.status.isActive(this.id) ) return;
+		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
+		makeApiTitleNode(this.node.title, e.text, e.title, e.fullurl);
+		let property = API_SERVICE_PROPERTY[e.service];
+		let result = parseHTML(e.html, property.sectionHeading);
+		let parsed = result.parsed;
+		let bases = result.bases;
+		let parseStatus = result.status;
+		if(parseStatus){
+			for(let h=0; h<parsed.length; h++){
+				let header = parsed[h].header;
+				let bodys = parsed[h].bodys;
+				header = removeSimbol(header);
+				header = convertStyle(header);
+				header = convertAnchor(header, e.service);
+				header = convertNaveFrame(header);
+				header = convertReferer(header);
+				this.node.body.appendChild(header);
+				for(let i=0; i<bodys.length; i++){
+					let obj = bodys[i];
+					obj.title = removeSimbol(obj.title);
+					obj.title = convertStyle(obj.title);
+					obj.title = convertAnchor(obj.title, e.service);
+					obj.title = convertReferer(obj.title);
+					this.node.body.appendChild(obj.title);
+					for(let j=0; j<obj.warnings.length; j++){
+						this.node.body.appendChild(obj.warnings[j]);
+					}
+					obj.content = removeSimbol(obj.content);
+					obj.content = convertStyle(obj.content);
+					obj.content = convertAudio(obj.content, e.service);
+					obj.content = convertAnchor(obj.content, e.service);
+					obj.content = convertNaveFrame(obj.content);
+					obj.content = convertReferer(obj.content);
+					this.node.body.appendChild(obj.content);
+				}
+			}
+		}
+		else {
+			this.node.body.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlParseFailed")));
+			for(let i=0; i<bases.length; i++){
+				let base = bases[i];
+				base = removeSimbol(base);
+				base = convertStyle(base);
+				base = convertAudio(base, e.service);
+				base = convertAnchor(base, e.service);
+				base = convertNaveFrame(base);
+				base = convertReferer(base);
 				this.node.body.appendChild(base);
 			}
 		}
@@ -1533,6 +1635,14 @@
 		return node;
 	}
 
+	function convertReferer(node){
+		let list = node.querySelectorAll("[src],[href]");
+		for(let i=0; i<list.length; i++){
+			list[i].setAttribute("referrerpolicy", "no-referrer");
+		}
+		return node;
+	}
+
 	function convertNaveFrame(node){
 		let naviFrameList = node.querySelectorAll(".NavFrame");
 		for(let i=0; i<naviFrameList.length; i++){
@@ -1559,6 +1669,7 @@
 	}
 
 	function apiResponseError(e){
+		if(!this.status.isActive(this.id)) return;
 		let self = this;
 		function after(content){
 			self.node.body.appendChild(content);
@@ -1570,19 +1681,12 @@
 		}
 		clearApiTitle(this.node.title, this.node.error);
 		let content = document.createElement("div");
-		if( e.error == API_WHITE_SPACE_ERROR ){
-			setApiErrorMessage(e.text);
-			content.innerText = ponyfill.i18n.getMessage("htmlWhiteSpaceLimitation");
-			after(content);
-			return;
-		}
 		if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
 			setApiErrorMessage(e.text);
 			content.innerText = ponyfill.i18n.getMessage("htmlMaxLengthLimitation",[API_TEXT_MAX_LENGTH]);
 			after(content);
 			return;
 		}
-		if(!isActiveApiRequestQueue(this)) return;
 		if(e && ( e instanceof Object) && e.hasOwnProperty("error")){
 			if( e.error == PAGE_NOT_FOUND_ERROR ){
 				setApiErrorMessage(e.text);
