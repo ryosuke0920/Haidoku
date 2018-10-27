@@ -133,7 +133,6 @@
 		apiSwitcheNode = document.createElement("span");
 		apiSwitcheNode.setAttribute("id",CSS_PREFIX+"-apiSwitch");
 		apiSwitcheNode.classList.add(CSS_PREFIX+"-checkboxButton");
-		apiSwitcheNode.classList.add(CSS_PREFIX+"-apiWikiButton");
 		apiHeaderNode.appendChild(apiSwitcheNode);
 
 		let apiSwitcheCircleNode = document.createElement("span");
@@ -178,7 +177,7 @@
 		historyButtoneNode = document.createElement("span");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
 		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
-		historyButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
+		historyButtoneNode.classList.add(CSS_PREFIX+"-historyButton");
 		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
 		apiTitleBoxNode.appendChild(historyButtoneNode);
@@ -186,7 +185,7 @@
 		historyDoneButtoneNode = document.createElement("span");
 		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
 		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
-		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-apiWikiButton");
+		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-historyButton");
 		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
 		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
 		apiTitleBoxNode.appendChild(historyDoneButtoneNode);
@@ -233,7 +232,7 @@
 		historyButtoneNode2 = document.createElement("span");
 		historyButtoneNode2.setAttribute("id",CSS_PREFIX+"-history2");
 		historyButtoneNode2.classList.add(CSS_PREFIX+"-buttonIcon");
-		historyButtoneNode2.classList.add(CSS_PREFIX+"-apiWikiButton");
+		historyButtoneNode2.classList.add(CSS_PREFIX+"-historyButton");
 		historyButtoneNode2.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
 		historyButtoneNode2.title = ponyfill.i18n.getMessage("htmlSaveHistory");
 		apiTitleBoxNode2.appendChild(historyButtoneNode2);
@@ -241,7 +240,7 @@
 		historyDoneButtoneNode2 = document.createElement("span");
 		historyDoneButtoneNode2.setAttribute("id",CSS_PREFIX+"-historyDone2");
 		historyDoneButtoneNode2.classList.add(CSS_PREFIX+"-buttonIcon");
-		historyDoneButtoneNode2.classList.add(CSS_PREFIX+"-apiWikiButton");
+		historyDoneButtoneNode2.classList.add(CSS_PREFIX+"-historyButton");
 		historyDoneButtoneNode2.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
 		historyDoneButtoneNode2.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
 		apiTitleBoxNode2.appendChild(historyDoneButtoneNode2);
@@ -843,7 +842,7 @@
 		document.removeEventListener("mousedown", mousedownAutoBehavior);
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiTitleNode2 = apiErrorMessageNode2 = apiBodyNode2 = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = wiktionaryRequestStatus = wikipediaRequestStatus = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiTitleNode2 = apiErrorMessageNode2 = apiBodyNode2 = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = historyButtoneNode2 = historyDoneButtoneNode2 = wiktionaryRequestStatus = wikipediaRequestStatus = undefined;
 	}
 	function enableWidget(){
 		start();
@@ -1057,7 +1056,12 @@
 		if(id == CSS_PREFIX+"-history"){
 			hide(historyButtoneNode);
 			show(historyDoneButtoneNode);
-			Promise.resolve().then(saveHistoryWiktionaryLinkage).catch(onSaveError);
+			Promise.resolve().then(()=>{return saveHistoryWiktionaryLinkage(apiTitleNode)}).catch(onSaveError);
+		}
+		else if(id == CSS_PREFIX+"-history2"){
+			hide(historyButtoneNode2);
+			show(historyDoneButtoneNode2);
+			Promise.resolve().then(()=>{return saveHistoryWiktionaryLinkage(apiTitleNode2)}).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
@@ -1280,6 +1284,8 @@
 	function clearApiContent(){
 		show(historyButtoneNode);
 		hide(historyDoneButtoneNode);
+		show(historyButtoneNode2);
+		hide(historyDoneButtoneNode2);
 		clearChildren(apiBodyNode);
 		clearChildren(apiBodyNode2);
 		clearApiTitle(apiTitleNode, apiErrorMessageNode);
@@ -1793,13 +1799,13 @@
 		widgetNode.scrollLeft = left;
 	}
 
-	function saveHistoryWiktionaryLinkage(){
+	function saveHistoryWiktionaryLinkage(titleNode){
 		return saveHistory(
-			apiTitleNode.getAttribute("data-text"),
+			titleNode.getAttribute("data-text"),
 			window.location.toString(),
 			document.title.toString(),
-			apiTitleNode.href,
-			apiTitleNode.getAttribute("data-title"),
+			titleNode.href,
+			titleNode.getAttribute("data-title"),
 			true
 		).catch(onSaveError);
 	}

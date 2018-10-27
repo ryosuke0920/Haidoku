@@ -237,15 +237,15 @@ const WIDGET_STYLE = `
 	cursor: move;
 }
 #lessLaborGoToDictionary-grid {
+}
+.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
+	display: grid;
+	grid-template-columns: min-content minmax(100px,auto);
 	position: absolute;
 	top: 33px;
 	bottom: 0;
 	left: 0;
 	right: 0;
-}
-.lessLaborGoToDictionary-separator #lessLaborGoToDictionary-grid {
-	display: grid;
-	grid-template-columns: min-content minmax(100px,auto);
 }
 .lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-grid {
 	display: none;
@@ -352,9 +352,6 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-dark #lessLaborGoToDictionary-apiHeader {
 	background: linear-gradient(#404040, #202020);
 }
-#lessLaborGoToDictionary-apiHeader > .lessLaborGoToDictionary-apiWikiButton {
-	vertical-align: bottom;
-}
 #lessLaborGoToDictionary-apiHeader > * {
 	margin-right: 5px;
 }
@@ -411,26 +408,23 @@ const WIDGET_STYLE = `
 	left: unset;
 	right: 2px;
 }
-#lessLaborGoToDictionary-history, #lessLaborGoToDictionary-historyDone {
-	vertical-align: bottom
-}
-#lessLaborGoToDictionary-history {
-}
-#lessLaborGoToDictionary-historyDone {
-	cursor: auto;
-}
-#lessLaborGoToDictionary-history.lessLaborGoToDictionary-hide,
-#lessLaborGoToDictionary-historyDone.lessLaborGoToDictionary-hide {
-	display: none;
-}
 .lessLaborGoToDictionary-apiTitleBox {
-	font-size: 14px;
-	padding: 3px;
+	font-size: 15px;
+	padding: 5px;
 	white-space: nowrap;
 	overflow: hidden;
 }
 .lessLaborGoToDictionary-loading .lessLaborGoToDictionary-apiTitleBox {
 	display: none;
+}
+.lessLaborGoToDictionary-historyButton {
+	vertical-align: bottom;
+}
+#lessLaborGoToDictionary-historyDone, #lessLaborGoToDictionary-historyDone2 {
+	cursor: auto;
+}
+.lessLaborGoToDictionary-historyButton.lessLaborGoToDictionary-hide {
+		display: none;
 }
 #lessLaborGoToDictionary-apiOffMsg {
 	display: none;
@@ -495,7 +489,7 @@ const WIDGET_STYLE = `
 }
 .lessLaborGoToDictionary-apiWikiText {
 	background-color: white;
-	padding: 3px;
+	padding: 5px;
 	padding-bottom: 2em;
 }
 .lessLaborGoToDictionary-loading .lessLaborGoToDictionary-apiWikiText{
