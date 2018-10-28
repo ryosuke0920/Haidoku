@@ -1203,7 +1203,9 @@
 				"wrapper": wiktionaryContent,
 				"title": apiTitleNode,
 				"error": apiErrorMessageNode,
-				"body": apiBodyNode
+				"body": apiBodyNode,
+				"history": historyButtoneNode,
+				"historyDone": historyDoneButtoneNode
 			}
 		};
 		if( !checkByte(text, API_TEXT_MAX_LENGTH) ){
@@ -1249,7 +1251,9 @@
 				"wrapper": wikipediaContent,
 				"title": apiTitleNode2,
 				"error": apiErrorMessageNode2,
-				"body": apiBodyNode2
+				"body": apiBodyNode2,
+				"history": historyButtoneNode2,
+				"historyDone": historyDoneButtoneNode2
 			}
 		};
 		if( !checkByte(text, API_TEXT_MAX_LENGTH) ){
@@ -1678,6 +1682,8 @@
 		if(!this.status.isActive(this.id)) return;
 		let self = this;
 		function after(content){
+			hide( self.node.history );
+			hide( self.node.historyDone );
 			self.node.body.appendChild(content);
 			self.node.wrapper.classList.remove(CSS_PREFIX+"-loading");
 		}
