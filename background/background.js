@@ -158,9 +158,6 @@ function onStorageChanged(change, area){
 	if(change["ol"]) {
 		updateFaviconCache(false).then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
-	if(change["s"] || change["wc"]) {
-		apiDocumentCache = {};
-	}
 }
 
 function resetMenu(json){
