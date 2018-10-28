@@ -128,7 +128,7 @@
 		let languageFilter = getDefaultLanguageFilter();
 		let getter = ponyfill.storage.sync.get({
 			"ol": DEFAULT_OPTION_LIST_ON_GET,
-			"cl": LINK_LIST_STYLE_DARK,
+			"cl": LINK_LIST_DEFAULT_STYLE,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
 			"f": LINK_LIST_FAVICON_ONLY,
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
@@ -529,7 +529,7 @@
 	}
 
 	function serviceCodeChangeBehavior(serviceCode){
-		if(serviceCode != API_SERVICE_CODE_NONE){
+		if(serviceCode != API_SERVICE_CODE_NONE || getWikipediaCode() != API_SERVICE_CODE_NONE){
 			saveServiceCode(serviceCode).catch(onSaveError);
 		}
 		else {
@@ -554,13 +554,26 @@
 	}
 
 	function wikipediaSelectChangeBehavior(e){
-		saveWikipediaCode(e.target.value).catch(onSaveError);
+		if(e.target.value != API_SERVICE_CODE_NONE || getServiceCode() != API_SERVICE_CODE_NONE){
+			saveWikipediaCode(e.target.value).catch(onSaveError);
+		}
+		else {
+			saveWikipediaCodeNone(e.target.value).catch(onSaveError);
+		}
 		setSampleLinkListServiceCode();
 	}
 
 	function saveWikipediaCode(code){
 		let data = {
 			"wc": code
+		};
+		return saveW(data);
+	}
+
+	function saveWikipediaCodeNone(code){
+		let data = {
+			"wc": code,
+			"sw": API_SWITCH_DISABLED
 		};
 		return saveW(data);
 	}

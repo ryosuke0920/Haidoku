@@ -27,6 +27,7 @@ const DEFAULT_ENABLE_VALUE = "1";
 const DEFAULT_OPTION_LIST_ON_GET = [];
 const DEFAULT_DOMAIN_LIST = [];
 const DEFAULT_MEANING_VALUE = true;
+const LINK_LIST_DEFAULT_STYLE = LINK_LIST_STYLE_CLASSIC;
 
 const DEFAULT_LOCALE = "en";
 
@@ -409,7 +410,7 @@ const WIDGET_STYLE = `
 	right: 2px;
 }
 .lessLaborGoToDictionary-apiTitleBox {
-	font-size: 15px;
+	font-size: 18px;
 	padding: 5px;
 	white-space: nowrap;
 	overflow: hidden;
@@ -418,7 +419,7 @@ const WIDGET_STYLE = `
 	display: none;
 }
 .lessLaborGoToDictionary-historyButton {
-	vertical-align: bottom;
+	vertical-align: middle;
 }
 #lessLaborGoToDictionary-historyDone, #lessLaborGoToDictionary-historyDone2 {
 	cursor: auto;

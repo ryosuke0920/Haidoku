@@ -723,7 +723,7 @@
 		return isShown(widgetNode);
 	}
 
-	function onStorageChanged(change, area){
+	function onStorageChanged(change){
 		if(change.hasOwnProperty("e")){
 			setEnableWidgetValue(change.e.newValue);
 			if( weModel.isDisable(enableWidgetValue) ){
@@ -865,7 +865,7 @@
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE,
-			"cl": LINK_LIST_STYLE_DARK,
+			"cl": LINK_LIST_DEFAULT_STYLE,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
 			"f": LINK_LIST_FAVICON_ONLY,
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
