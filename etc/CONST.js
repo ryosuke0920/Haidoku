@@ -446,8 +446,9 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-apiLoadingContent {
 	background-repeat: no-repeat;
 	background-position: center;
-	height:100%;
-	animation: loading 2s ease-out 0s infinite running;
+	height:50px;
+	width:50px;
+	animation: loading 1s ease-out 0s infinite running;
 	background-size: 0%;
 	opacity: 1;
 }
