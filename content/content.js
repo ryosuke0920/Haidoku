@@ -33,6 +33,7 @@
 	let coverNode;
 	let menuNode;
 	let containerNode;
+	let footerNode;
 	let apiContentNode;
 	let wikipediaContent;
 	let apiTitleNode;
@@ -113,6 +114,10 @@
 		linkListGridNode.setAttribute("id",CSS_PREFIX+"-grid");
 		widgetNode.appendChild(linkListGridNode);
 
+		footerNode = document.createElement("div");
+		footerNode.setAttribute("id",CSS_PREFIX+"-footer");
+		widgetNode.appendChild(footerNode);
+
 		coverNode = document.createElement("div");
 		coverNode.setAttribute("id",CSS_PREFIX+"-cover");
 		coverNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/icon30.png")+")";
@@ -121,6 +126,10 @@
 		containerNode = document.createElement("ul");
 		containerNode.setAttribute("id",CSS_PREFIX+"-container");
 		linkListGridNode.appendChild(containerNode);
+
+		let blankNode = document.createElement("div");
+		blankNode.setAttribute("id",CSS_PREFIX+"-blank");
+		linkListGridNode.appendChild(blankNode);
 
 		apiContentNode = document.createElement("div");
 		apiContentNode.setAttribute("id",CSS_PREFIX+"-apiContent");
@@ -205,12 +214,6 @@
 		apiBodyNode.setAttribute("class",CSS_PREFIX+"-apiWikiText");
 		wiktionaryContent.appendChild(apiBodyNode);
 
-		let apiFooterNode = document.createElement("div");
-		apiFooterNode.setAttribute("id",CSS_PREFIX+"-wiktionaryFooter");
-		apiFooterNode.setAttribute("class",CSS_PREFIX+"-apiFooter");
-		apiFooterNode.innerText = apiFooterNode.title = FOOTER_CONTENT;
-		wiktionaryContent.appendChild(apiFooterNode);
-
 		wikipediaContent = document.createElement("div");
 		wikipediaContent.setAttribute("id",CSS_PREFIX+"-wikipediaContent");
 		wikipediaContent.setAttribute("class",CSS_PREFIX+"-wikiContent");
@@ -259,12 +262,6 @@
 		apiBodyNode2.setAttribute("id",CSS_PREFIX+"-apiBody2");
 		apiBodyNode2.setAttribute("class",CSS_PREFIX+"-apiWikiText");
 		wikipediaContent.appendChild(apiBodyNode2);
-
-		let apiFooterNode2 = document.createElement("div");
-		apiFooterNode2.setAttribute("id",CSS_PREFIX+"-wikipediaFooter");
-		apiFooterNode2.setAttribute("class",CSS_PREFIX+"-apiFooter");
-		apiFooterNode2.innerText = apiFooterNode.title = FOOTER_CONTENT2;
-		wikipediaContent.appendChild(apiFooterNode2);
 
 		clearApiContent();
 
@@ -542,9 +539,11 @@
 			}
 			if( serviceCode == API_SERVICE_CODE_NONE && serviceCode2 != API_SERVICE_CODE_NONE ){
 				widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+				footerNode.innerText = footerNode.title = FOOTER_CONTENT2;
 			}
 			else {
 				widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+				footerNode.innerText = footerNode.title = FOOTER_CONTENT;
 			}
 			show(apiContentNode);
 		}
@@ -1079,10 +1078,12 @@
 		else if(id == CSS_PREFIX+"-wiktionaryButton"){
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
 			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+			footerNode.innerText = FOOTER_CONTENT;
 		}
 		else if(id == CSS_PREFIX+"-wikipediaButton"){
 			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
+			footerNode.innerText = FOOTER_CONTENT2;
 		}
 	}
 
