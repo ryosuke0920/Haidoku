@@ -252,6 +252,8 @@
 		}
 		if( e.hasOwnProperty("wc") ){
 			setWikipediaCode(e["wc"]["newValue"]);
+		}
+		if( e.hasOwnProperty("s") || e.hasOwnProperty("wc") ){
 			setSampleLinkListServiceCode();
 		}
 	}
@@ -486,11 +488,22 @@
 	}
 
 	function setSampleLinkListServiceCode(){
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-apiDisabled");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-enableWiktionary");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-enableWikipedia");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
 		if( isApiEnable() ){
-			sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.remove(CSS_PREFIX+"-hide");
-		}
-		else {
-			sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.add(CSS_PREFIX+"-hide");
+			if(getServiceCode()!=API_SERVICE_CODE_NONE){
+				sampleWidgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
+				sampleWidgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+			}
+			if(getWikipediaCode()!=API_SERVICE_CODE_NONE){
+				sampleWidgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
+				if(getServiceCode()==API_SERVICE_CODE_NONE){
+					sampleWidgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+				}
+			}
 		}
 	}
 

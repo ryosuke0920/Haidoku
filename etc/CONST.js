@@ -244,11 +244,16 @@ const WIDGET_STYLE = `
 	display: none;
 }
 #lessLaborGoToDictionary-footer {
+	display: none;
 	border-top: solid 1px #808080;
 	background: linear-gradient(#FFFFFF, #F0F0F0);
 	color: #808080;
 	font-size: 0.8em;
 	padding: 3px;
+}
+.lessLaborGoToDictionary-enableWiktionary #lessLaborGoToDictionary-footer,
+.lessLaborGoToDictionary-enableWikipedia #lessLaborGoToDictionary-footer {
+	display: block;
 }
 .lessLaborGoToDictionary-dark #lessLaborGoToDictionary-footer {
 	background: linear-gradient(#404040, #202020);
@@ -309,6 +314,7 @@ const WIDGET_STYLE = `
 	display: none;
 }
 #lessLaborGoToDictionary-apiContent {
+	display: none;
 	border-top: solid 1px #808080;
 	position: relative;
 	background-color: white;
@@ -325,8 +331,9 @@ const WIDGET_STYLE = `
 	grid-row-start: 1;
 	grid-row-end: 3;
 }
-#lessLaborGoToDictionary-apiContent.lessLaborGoToDictionary-hide {
-	display: none;
+.lessLaborGoToDictionary-enableWiktionary #lessLaborGoToDictionary-apiContent,
+.lessLaborGoToDictionary-enableWikipedia #lessLaborGoToDictionary-apiContent {
+	display: block;
 }
 #lessLaborGoToDictionary-apiContent a {
 	color: #3366cc;
@@ -348,7 +355,6 @@ const WIDGET_STYLE = `
 #lessLaborGoToDictionary-apiHeader {
 	background: linear-gradient(#FFFFFF, #F0F0F0);
 	padding: 3px;
-	position: relative;
 	display: flex;
 	white-space: nowrap;
 	overflow: hidden;
