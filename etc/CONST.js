@@ -517,7 +517,7 @@ const WIDGET_STYLE = `
 }
 .lessLaborGoToDictionary-apiWikiText ul,
 .lessLaborGoToDictionary-apiWikiText ol {
-	margin-left: 2em;
+	list-style-position: inside;
 }
 .lessLaborGoToDictionary-apiWikiText hr {
 	border: none;
