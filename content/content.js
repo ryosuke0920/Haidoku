@@ -1394,53 +1394,16 @@
 		if( !this.status.isActive(this.id) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		makeApiTitleNode(this.node.title, e.text, e.title, e.fullurl);
-		let property = API_SERVICE_PROPERTY[e.service];
-		let result = parseHTML(e.html, property.sectionHeading);
-		let parsed = result.parsed;
-		let bases = result.bases;
-		let parseStatus = result.status;
-		if(parseStatus){
-			for(let h=0; h<parsed.length; h++){
-				let header = parsed[h].header;
-				let bodys = parsed[h].bodys;
-				header = removeSimbol(header);
-				header = convertStyle(header);
-				header = convertAnchor(header, e.service);
-				header = convertNaveFrame(header);
-				header = convertReferer(header);
-				this.node.body.appendChild(header);
-				for(let i=0; i<bodys.length; i++){
-					let obj = bodys[i];
-					obj.title = removeSimbol(obj.title);
-					obj.title = convertStyle(obj.title);
-					obj.title = convertAnchor(obj.title, e.service);
-					obj.title = convertReferer(obj.title);
-					this.node.body.appendChild(obj.title);
-					for(let j=0; j<obj.warnings.length; j++){
-						this.node.body.appendChild(obj.warnings[j]);
-					}
-					obj.content = removeSimbol(obj.content);
-					obj.content = convertStyle(obj.content);
-					obj.content = convertAudio(obj.content, e.service);
-					obj.content = convertAnchor(obj.content, e.service);
-					obj.content = convertNaveFrame(obj.content);
-					obj.content = convertReferer(obj.content);
-					this.node.body.appendChild(obj.content);
-				}
-			}
-		}
-		else {
-			this.node.body.appendChild(makeMessageNode(ponyfill.i18n.getMessage("htmlParseFailed")));
-			for(let i=0; i<bases.length; i++){
-				let base = bases[i];
-				base = removeSimbol(base);
-				base = convertStyle(base);
-				base = convertAudio(base, e.service);
-				base = convertAnchor(base, e.service);
-				base = convertNaveFrame(base);
-				base = convertReferer(base);
-				this.node.body.appendChild(base);
-			}
+		let bases = makeBaseHTML(e.html);
+		for(let i=0; i<bases.length; i++){
+			let base = bases[i];
+			base = removeSimbol(base);
+			base = convertStyle(base);
+			base = convertAudio(base, e.service);
+			base = convertAnchor(base, e.service);
+			base = convertNaveFrame(base);
+			base = convertReferer(base);
+			this.node.body.appendChild(base);
 		}
 		this.node.wrapper.classList.remove(CSS_PREFIX+"-loading");
 	}
@@ -1458,9 +1421,18 @@
 		titleNode.setAttribute("href", url);
 	}
 
+	function makeBaseHTML(htmls){
+		let bases = [];
+		for(let i=0; i<htmls.length; i++){
+			let node = document.createElement("div");
+			node.innerHTML = htmls[i];
+			bases.push(node);
+		}
+		return bases;
+	}
 	function parseHTML(htmls, sectionHeading){
 		let parsed = [];
-		let bases = [];
+		let bases = makeBaseHTML(htmls);
 		let flag = false;
 		/*
 		parsed = [
@@ -1474,10 +1446,8 @@
 			status: boolean
 		]
 		*/
-		for(let i=0; i<htmls.length; i++){
-			let node = document.createElement("div");
-			node.innerHTML = htmls[i];
-			bases.push(node);
+		for(let i=0; i<bases.length; i++){
+			let node = bases[i];
 			if ( flag ) continue;
 			let list = node.querySelectorAll(sectionHeading);
 			if ( list.length <= 0 ) {
