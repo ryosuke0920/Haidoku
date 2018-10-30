@@ -31,6 +31,9 @@ const LINK_LIST_DEFAULT_STYLE = LINK_LIST_STYLE_CLASSIC;
 
 const DEFAULT_LOCALE = "en";
 
+const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
+const FOOTER_CONTENT2 = "Provided by Wikipedia under Creative Commons Attribution-Share Alike 3.0";//https://www.mediawiki.org/wiki/API:Licensing
+
 const API_SWITCH_DISABLED = "";
 const API_SWITCH_ENABLED = "1";
 const API_SERVICE_CODE_NONE = "-";
