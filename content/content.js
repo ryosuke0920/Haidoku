@@ -79,10 +79,10 @@
 	start().then(()=>{
 		ponyfill.storage.onChanged.addListener( onStorageChanged );
 		ponyfill.runtime.onMessage.addListener( notify );
-	});
+	}).catch(onReadError);
 
 	function start(){
-		return Promise.resolve().then(getConfig).then(gotConfig).catch(onReadError);
+		return Promise.resolve().then(getConfig).then(gotConfig);
 	}
 
 	function initWidget(){
