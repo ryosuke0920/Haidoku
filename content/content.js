@@ -774,7 +774,6 @@
 			if(hasLinkList()) getFavicon().then( gotFavicon ).catch((e)=>{console.error(e);});
 		}
 		if( change["bf"] ){
-			closeLinkList();
 			setLinkListFlag( change["bf"]["newValue"] );
 			resetLinkListEvents();
 		}
@@ -799,7 +798,6 @@
 			applyLinknListSeparator();
 		}
 		if( change["s"] || change["wc"] ){
-			closeLinkList();
 			if (change["s"]) setServiceCode( change["s"]["newValue"] );
 			if (change["wc"]) setServiceCode2( change["wc"]["newValue"] );
 			applyServiceCode();
