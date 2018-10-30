@@ -525,26 +525,21 @@
 		widgetNode.classList.remove(CSS_PREFIX+"-enableWikipedia");
 		widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
 		widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
-		if( serviceCode == API_SERVICE_CODE_NONE && serviceCode2 == API_SERVICE_CODE_NONE ) {
+		if( !hasServiceCode() ) {
 			hide(apiContentNode);
+			return;
+		}
+		if( serviceCode != API_SERVICE_CODE_NONE ) widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
+		if( serviceCode2 != API_SERVICE_CODE_NONE ) widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
+		if( serviceCode == API_SERVICE_CODE_NONE && serviceCode2 != API_SERVICE_CODE_NONE ){
+			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+			footerNode.innerText = footerNode.title = FOOTER_CONTENT2;
 		}
 		else {
-			if( serviceCode != API_SERVICE_CODE_NONE ){
-				widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
-			}
-			if( serviceCode2 != API_SERVICE_CODE_NONE ){
-				widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
-			}
-			if( serviceCode == API_SERVICE_CODE_NONE && serviceCode2 != API_SERVICE_CODE_NONE ){
-				widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
-				footerNode.innerText = footerNode.title = FOOTER_CONTENT2;
-			}
-			else {
-				widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
-				footerNode.innerText = footerNode.title = FOOTER_CONTENT;
-			}
-			show(apiContentNode);
+			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+			footerNode.innerText = footerNode.title = FOOTER_CONTENT;
 		}
+		show(apiContentNode);
 	}
 
 	function saveLinkListSize(){
@@ -1045,7 +1040,7 @@
 	}
 
 	function hasServiceCode(){
-		return (serviceCode != API_SERVICE_CODE_NONE);
+		return serviceCode != API_SERVICE_CODE_NONE || serviceCode2 != API_SERVICE_CODE_NONE;
 	}
 
 	function menuClickBihavior(e){
