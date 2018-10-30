@@ -169,7 +169,7 @@ const WIDGET_STYLE = `
 	display: none;
 }
 #lessLaborGoToDictionary-widget.lessLaborGoToDictionary-dark {
-	background: linear-gradient(#404040, #202020);
+	background-color: #202020;
 }
 #lessLaborGoToDictionary-widget.lessLaborGoToDictionary-stopper {
 	width: 30px !important;
@@ -451,22 +451,19 @@ const WIDGET_STYLE = `
 	background-position: center;
 	height: 20px;
 	width: 20px;
-	animation: loading 1s ease-out 0s infinite running;
-	background-size: 0%;
-	opacity: 1;
+	border-radius: 10px;
+	background-color: #3366cc;
+	animation: loading 0.2s linear infinite running;
 }
 @keyframes loading {
 	0%{
-		background-size: 0%;
-		opacity: 1;
+		visibility: visible;
 	}
 	50%{
-		background-size: 100%;
-		opacity: 0;
+		visibility: hidden;
 	}
 	100%{
-		background-size: 100%;
-		opacity: 0;
+		visibility: hidden;
 	}
 }
 #lessLaborGoToDictionary-apiOff {

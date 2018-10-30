@@ -174,7 +174,6 @@
 
 		let apiLoadingContentNode = document.createElement("div");
 		apiLoadingContentNode.classList.add(CSS_PREFIX+"-apiLoadingContent");
-		apiLoadingContentNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/circle.svg")+")";
 		apiLoadingNode.appendChild(apiLoadingContentNode);
 
 		let apiTitleBoxNode = document.createElement("h1");
