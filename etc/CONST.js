@@ -433,7 +433,7 @@ const WIDGET_STYLE = `
 }
 .lessLaborGoToDictionary-apiLoading {
 	background-color: white;
-	padding: 0;
+	padding: 5px;
 	display: none;
 	height: 8em;
 	min-height: 8em;
@@ -449,8 +449,8 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-apiLoadingContent {
 	background-repeat: no-repeat;
 	background-position: center;
-	height:50px;
-	width:50px;
+	height: 20px;
+	width: 20px;
 	animation: loading 1s ease-out 0s infinite running;
 	background-size: 0%;
 	opacity: 1;
