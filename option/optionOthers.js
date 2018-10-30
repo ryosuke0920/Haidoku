@@ -445,6 +445,9 @@
 			else {
 				img.setAttribute("src", ponyfill.extension.getURL("/image/favicon.svg"));
 			}
+			let anchor = node.querySelector("a");
+			anchor.setAttribute("href", item.u);
+			anchor.addEventListener("click", (e)=>{e.preventDefault();});
 			container.appendChild(clone);
 		}
 	}
