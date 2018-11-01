@@ -452,13 +452,13 @@
 		"message": "Wiktionary linkage"
 	},
 	"htmlApiServiceDescription": {
-		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By connecting to Wiktionary, the description of a word is displayed on the widget."
+		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By using Wiktionary, the description of a word is displayed on the widget."
 	},
 	"htmlServiceCodeTitle": {
-		"message": "Select a host(language)"
+		"message": "Select a host"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "The displayed language and the quality of a content are different for each of the hosts. Change this, \"Language filter\" needs additional setting. Select \"Disable\", the area of Wiktionary linkage is hidden."
+		"message": "The displayed language and the quality of the description are different for each of the hosts. Change this, \"Language filter\" needs additional setting. Select \"Disable\", the area of Wiktionary linkage is hidden."
 	},
 	"htmlServiceCodeNone": {
 		"message": "Disable"
@@ -482,7 +482,7 @@
 		"message": "https://zh.wiktionary.org/ - Chinese"
 	},
 	"htmlServiceCodeSelectMessage": {
-		"message": "Select host."
+		"message": "Select a host."
 	},
 	"htmlLanguageFilterTitle": {
 		"message": "Language filter"
@@ -513,6 +513,39 @@
 	},
 	"htmlApiCutOutLabel": {
 		"message": "Enable"
+	},
+	"htmlWikipediaLinkageTitle": {
+		"message": "Wikipedia linkage"
+	},
+	"htmlWikipediaLinkageDescription": {
+		"message": "Wiktipedia is an encyclopedia site where volunteers post articles. By using Wiktipedia, the description of a word is displayed on the widget"
+	},
+	"htmlWikipediaHostTitle": {
+		"message": "Select a host"
+	},
+	"htmlWikipediaHostDescription": {
+		"message": "The displayed language and the quality of the description are different for each of the hosts."
+	},
+	"htmlWikipediaCodeNone": {
+		"message": "Disable"
+	},
+	"htmlWikipediaCodeDe": {
+		"message": "https://de.wikipedia.org/ - German"
+	},
+	"htmlWikipediaCodeEn": {
+		"message": "https://en.wikipedia.org/ - English"
+	},
+	"htmlWikipediaCodeFr": {
+		"message": "https://fr.wikipedia.org/ - French"
+	},
+	"htmlWikipediaCodeJa": {
+		"message": "https://ja.wikipedia.org/ - Japanese"
+	},
+	"htmlWikipediaCodeRu": {
+		"message": "https://ru.wikipedia.org/ - Russian"
+	},
+	"htmlWikipediaCodeZh": {
+		"message": "https://zh.wikipedia.org/ - Chinese"
 	},
 	"htmlLinkListSampleTitle": {
 		"message": "Widget sample"
