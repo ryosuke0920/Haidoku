@@ -8,6 +8,8 @@ let ctrlKey = false;
 let options = {};
 let faviconCache = {};
 let apiDocumentCache = {};
+let audioHash = {};
+let audioId = (()=>{ let i=0; return ()=>{ return ++i;}})();
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible */
 
@@ -96,8 +98,14 @@ function notify(message, sender, sendResponse){
 			return Promise.reject(e);
 		});
 	}
-	else if( method == "downloadAsBaase64" ){
-		return downloadAsBaase64(data.url).catch((e)=>{
+	else if( method == "audioStop" ){
+		return audioStop(data.audioId).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
+	}
+	else if( method == "audioStart" ){
+		return audioStart(data.url, sender).catch((e)=>{
 			console.error(e);
 			return Promise.reject(e);
 		});
@@ -852,21 +860,43 @@ function fetchApiDocumentCache(obj){
 	return false;
 }
 
-function downloadAsBaase64(url){
-	return promiseAjax("GET", url, "blob").then( onDownloadAsBase64 );
+function audioStart(url, sender){
+	let obj = {"sender": sender};
+	return promiseAjax("GET", url, "blob").then( onDownloadAsBase64.bind(obj) );
 }
 
 function onDownloadAsBase64(e){
 	if(e.target.status == HTTP_206_PARTIAL || e.target.status == HTTP_200_OK){
-		return blob2Base64(e.target.response).then( audioPlay );
+		return blob2Base64(e.target.response).then( audioPlay.bind(this) );
 	}
 	return Promise.reject( new Error(e.target.status) );
 }
 
 function audioPlay(base64){
+	let id = CSS_PREFIX + "-audio-" + audioId();
 	let audio = document.createElement("audio");
+	audio.setAttribute("id", id);
+	audioHash[id] = audio;
 	let source = document.createElement("source");
 	source.src = base64;
 	audio.appendChild(source);
-	return audio.play();
+	audio.addEventListener("ended",(e)=>{
+		let id = e.target.getAttribute("id");
+		delete audioHash[id];
+		ponyfill.tabs.sendMessage(this.sender.tab.id, {"method":"audioStop","audioId":id});
+	});
+	return audio.play().then(()=>{
+		return {"audioId": id};
+	}).catch((e)=>{
+		let id = e.target.getAttribute("id");
+		delete audioHash[id];
+		return Promise.reject(e);
+	});
+}
+
+function audioStop(audioId){
+	let audio = audioHash[audioId];
+	if(!audio) return;
+	audio.pause();
+	delete audioHash[audioId];
 }

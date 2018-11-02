@@ -1171,6 +1171,9 @@
 		if(e.method == "updateFaviconCache") {
 			faviconCache = e.data;
 		}
+		else if(e.method == "audioStop") {
+			audioStop(e.audioId);
+		}
 	}
 
 	function apiRequest(text){
@@ -1572,6 +1575,21 @@
 				audio.parentNode.appendChild(playButton);
 			}
 			playButton.addEventListener("click",(e)=>{
+				let button = e.target;
+				let status = button.getAttribute("data-status") || "0";
+				if (button.classList.contains(CSS_PREFIX+"-playing") && status == "2") {
+					let p = ponyfill.runtime.sendMessage({
+						"method": "audioStop",
+						"data": {
+							"audioId": button.getAttribute("id")
+						}
+					});
+					button.removeAttribute("id");
+					button.removeAttribute("data-status");
+					button.classList.remove(CSS_PREFIX+"-playing");
+					return p;
+				}
+				if( status != "0" ) return;
 				let url = audio.currentSrc;
 				if(!url){
 					let list = audio.querySelectorAll("source");
@@ -1583,15 +1601,32 @@
 				if(!url) return onAudioPlayError( new Error("Audio source not found.") );
 				url = new URL(url, service).href;
 				let p = ponyfill.runtime.sendMessage({
-					"method": "downloadAsBaase64",
+					"method": "audioStart",
 					"data": {
 						"url": url
 					}
 				});
-				p.catch( (e)=>{ return onAudioPlayError(e); });
+				p.then((e)=>{
+					button.setAttribute("id", e.audioId);
+					button.setAttribute("data-status","2");
+				}).catch( (e)=>{
+					button.removeAttribute("data-status");
+					button.classList.remove(CSS_PREFIX+"-playing");
+					return onAudioPlayError(e);
+				});
+				button.setAttribute("data-status","1");
+				button.classList.add(CSS_PREFIX+"-playing");
 			});
 		}
 		return node;
+	}
+
+	function audioStop(audioId){
+		let button = widgetNode.querySelector("#"+ audioId);
+		if(!button) return;
+		button.removeAttribute("id");
+		button.removeAttribute("data-status");
+		button.classList.remove(CSS_PREFIX+"-playing");
 	}
 
 	function convertAnchor(node, service){

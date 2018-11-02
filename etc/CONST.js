@@ -594,6 +594,9 @@ const WIDGET_STYLE = `
 	vertical-align: middle;
 	margin: 2px;
 }
+.lessLaborGoToDictionary-apiWikiText .lessLaborGoToDictionary-play.lessLaborGoToDictionary-playing {
+	background-color: black;
+}
 .lessLaborGoToDictionary-apiWikiText div.lessLaborGoToDictionary-apiWarningMessage {
 	padding: 2px;
 	border: solid 1px red;
