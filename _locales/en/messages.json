@@ -3,13 +3,13 @@
 		"message": "Haidoku"
 	},
 	"extensionDescription": {
-		"message": "Supports to search words."
+		"message": "Support to search words."
 	},
 	"extensionOptionAutoView": {
-		"message": "Automatic display"
+		"message": "Display automatically"
 	},
 	"extensionOptionManualView": {
-		"message": "Manual display"
+		"message": "Display manually"
 	},
 	"extensionOptionManualViewByShiftKey": {
 		"message": "Display with Shift key"
@@ -56,10 +56,10 @@
 		"message": "Can't search the image unsupported format(Data URI)."
 	},
 	"notificationDownloadLanguageError": {
-		"message": "Failed to download a language list."
+		"message": "Failed to download the language list."
 	},
 	"notificationAudioPlayError": {
-		"message": "Failed to playback the audio. $ERROR$",
+		"message": "The audio palayback failed. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -75,10 +75,10 @@
 		}
 	},
 	"htmlLinkageDisabled": {
-		"message": "Wiktionary linkage is disabled."
+		"message": "Wiktionary Linkage is disabled."
 	},
 	"htmlLinkageMessage": {
-		"message": "Click the upper right button, Wiktionary linkage is enabled. <span class=\"lessLaborGoToDictionary-warning\">Select a text, the text will be automatically sent to Wiktionary to search, even if it includes your privacy information like a password.</span> So use carefully. I recommend that you disable it, when you don't need it."
+		"message": "Turn on the upper left slide button, Wiktionary Linkage or Wikipedia Linkage are enabled. If you select any text, the text is automatically sent to the server for searching, even if it includes your privacy information like a password. So use carefully. I recommend that you disable when you don't need it or enable widget by allowed domains."
 	},
 	"htmlNowSearching": {
 		"message": "Now searching."
@@ -95,16 +95,16 @@
 		}
 	},
 	"htmlParseFailed": {
-		"message": "Failed to parse. Displayed the original text."
+		"message": "Failed to parse the text. Displayed the original text."
 	},
 	"htmlMeaningNotFound": {
-		"message": "Failed to do the \"Display only meaning\" function because there is not a description of the meaning. Displayed the original text."
+		"message": "Failed to execute Display Only Meaning function because there is not a description of the meaning. Displayed the original text."
 	},
 	"htmlSectionNotFound": {
-		"message": "Failed to do the \"Language filter\" function because there is not a matching language. Displayed without filtering."
+		"message": "Failed to execute Language Filter function because there is not a matching language. Displayed without filtering."
 	},
 	"htmlPageNotFound": {
-		"message": "A page was not found."
+		"message": "The page was not found."
 	},
 	"htmlConnectionError": {
 		"message": "Failed to connect to the server. $ERROR$",
@@ -123,7 +123,7 @@
 		}
 	},
 	"htmlApplicationError": {
-		"message": "Got an error from the application. $ERROR$",
+		"message": "Got an error from this add-on. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -139,19 +139,19 @@
 		}
 	},
 	"htmlZoomDown": {
-		"message": "Zoom out the links"
+		"message": "Zoom out links"
 	},
 	"htmlZoomUp": {
-		"message": "Zoom in the links"
+		"message": "Zoom in links"
 	},
 	"htmlMove": {
-		"message": "Move the widget"
+		"message": "Move widget"
 	},
 	"htmlResize": {
-		"message": "Reset the widget size"
+		"message": "Reset widget size"
 	},
 	"htmlOption": {
-		"message": "Open the setting screen"
+		"message": "Open setting screen"
 	},
 	"htmlSaveHistory": {
 		"message": "Save history"
@@ -166,7 +166,7 @@
 		"message": "History"
 	},
 	"htmlRankingName": {
-		"message": "The number of searches"
+		"message": "Number of searches"
 	},
 	"htmlControlName": {
 		"message": "Control"
@@ -178,7 +178,7 @@
 		"message": "Info"
 	},
 	"htmlFormDescription": {
-		"message": "Click the \"Select some links to add\" button, you can add some links from the list. Input \"$$1\" in the URL field, the \"$$1\" will be replaced to a selected text."
+		"message": "Click the \"Select some links to add\" button, you can add some links from a list which has major URLs. If you input a \"$$1\" in a URL field, the \"$$1\" is replaced to the selected text."
 	},
 	"htmlUsageOrder" : {
 		"message": "Sort."
@@ -193,7 +193,7 @@
 		"message": "Delete."
 	},
 	"htmlPresetDescription": {
-		"message": "Select some links and press the \"Add\" button. Then it's added."
+		"message": "Select some links and press the \"Add\" button. Then they're added."
 	},
 	"htmlAddFromPreset": {
 		"message": "Select some links to add"
@@ -211,10 +211,10 @@
 		"message": "Delete"
 	},
 	"htmlLabelDescription": {
-		"message": "Input a site name. It's displayed on the widget or the context menu."
+		"message": "Input a site name. It's displayed on the widget or context menu."
 	},
 	"htmlUrlDescription": {
-		"message": "Input a URL. \"$$1\" will be replaced to the selected text."
+		"message": "Input a URL. A \"$$1\" is replaced to the selected text."
 	},
 	"htmlFilterText": {
 		"message": "Filter"
@@ -259,7 +259,7 @@
 		"message": "Old->New"
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "Delete the history items checked"
+		"message": "Delete checked history items"
 	},
 	"htmlHistoryAllDelete": {
 		"message": "Delete all the history items"
@@ -268,7 +268,7 @@
 		"message": "All the history items will be deleted. It contains the history items which aren't displayed on the table below."
 	},
 	"htmlHistoryDescription": {
-		"message": "The history data are saved into the PC. They are not in scope of browser synchronization service. You can change configuration to save history or not on the \"Link edit\" menu."
+		"message": "These history data are saved into the PC. They are not in the scope of browser synchronization service. You can change the configurations to save history or not on the \"Link edit\" menu."
 	},
 	"htmlHistoryZeroRowMessage": {
 		"message": "The number of the history items is 0."
@@ -298,7 +298,7 @@
 		"message": "Last"
 	},
 	"htmlRankingDescription": {
-		"message": "By using the history data, this function aggregates the number of searches for each selected text. If you delete some of the history items, the number of searches decreases too. Find out your weakness of words from the results, and study efficiently."
+		"message": "By using history data, this function aggregates the number of searches for each selected text. If you delete some of the history items, the number of searches decreases too. The numbers will be good for studying."
 	},
 	"htmlRankingAggregateButton": {
 		"message": "Aggregate"
@@ -346,7 +346,7 @@
 		"message": "Enable"
 	},
 	"htmlWidgetEnableAllowedDomain": {
-		"message": "Enable for the allowed domains"
+		"message": "Enable by the allowed domains"
 	},
 	"htmlDomainListTitle": {
 		"message": "Allow domains"
@@ -364,10 +364,10 @@
 		"message": "How to display widget"
 	},
 	"htmlDisplayFunctionDescription": {
-		"message": "Select how to display widget automatically or manually after selecting text."
+		"message": "Select how to display widget automatically or manually after selecting a text."
 	},
 	"htmldomainListDescription":{
-		"message": "When a domain matches the list below, the  widget can be displayed. To enable, select the \"Enable for the allowed domains\" check on the \"Widget startup\" menu."
+		"message": "When a domain matches the list below, the  widget can be displayed. To enable, select the \"Enable by the allowed domains\" check on the \"Widget startup\" menu."
 	},
 	"htmlAddDomainButton": {
 		"message": "Add"
@@ -422,7 +422,7 @@
 		"message": "Widget layout pattern"
 	},
 	"htmlFaviconDisplayTitle":{
-		"message": "Content of links"
+		"message": "Contents of links"
 	},
 	"htmlFaviconDisplayNormal":{
 		"message": "Favicon and site name"
@@ -440,7 +440,7 @@
 		"message": "Vertical"
 	},
 	"htmlLinkListSeparatorTitle":{
-		"message": "Separator between links and Wiktionary linkage"
+		"message": "Separator between link area and description area"
 	},
 	"htmlLinkListSeparatorHorizontal":{
 		"message": "Horizontal"
@@ -449,7 +449,7 @@
 		"message": "Vertical"
 	},
 	"htmlApiServiceTitle": {
-		"message": "Wiktionary linkage"
+		"message": "Wiktionary Linkage"
 	},
 	"htmlApiServiceDescription": {
 		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By using Wiktionary, the description of a word is displayed on the widget."
@@ -458,7 +458,7 @@
 		"message": "Select a host"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "The displayed language and the quality of the description are different for each of the hosts. Change this, \"Language filter\" needs additional setting. Select \"Disable\", the area of Wiktionary linkage is hidden."
+		"message": "The displayed language and the content of the description are different for each host. If you change it, Language Filter needs additional setting. If you select the \"Disable\" option, the description area is hidden."
 	},
 	"htmlServiceCodeNone": {
 		"message": "Disable"
@@ -485,16 +485,16 @@
 		"message": "Select a host."
 	},
 	"htmlLanguageFilterTitle": {
-		"message": "Language filter"
+		"message": "Language Filter"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "Wiktionary is a multilingual dictionary. The articles include some descriptions of various languages. Using \"Language filter\" is that display some descriptions of the languages you specified."
+		"message": "Wiktionary is a multilingual dictionary. Its articles include some descriptions of various languages. Using Language Filter, that displayed only descriptions of the languages you specified."
 	},
 	"htmlLanguageFilterAside": {
-		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\". If you select \"English\" for \"Language filter\", only \"4\" will be displayed."
+		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\". If you select \"English\" for Language Filter, only \"4\" is displayed."
 	},
 	"htmlAddLanguageFilter": {
-		"message": "Add Language filter"
+		"message": "Add languages"
 	},
 	"htmlLanguageFilterSelectedDescription": {
 		"message": "The selected language list."
@@ -506,16 +506,16 @@
 		"message": "Now downloading a list of languages from Wiktionary"
 	},
 	"htmlApiCutOutTitle": {
-		"message": "Display only the meaning"
+		"message": "Display Only Meaning"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "Display only the meaning except for the descriptions of pronunciation, etc."
+		"message": "Leave a meaning from the word description, exclude others like a pronunciation."
 	},
 	"htmlApiCutOutLabel": {
 		"message": "Enable"
 	},
 	"htmlWikipediaLinkageTitle": {
-		"message": "Wikipedia linkage"
+		"message": "Wikipedia Linkage"
 	},
 	"htmlWikipediaLinkageDescription": {
 		"message": "Wiktipedia is an encyclopedia site where volunteers post articles. By using Wiktipedia, the description of a word is displayed on the widget"
@@ -524,7 +524,7 @@
 		"message": "Select a host"
 	},
 	"htmlWikipediaHostDescription": {
-		"message": "The displayed language and the quality of the description are different for each of the hosts."
+		"message": "The displayed language and the content of the description are different for each host."
 	},
 	"htmlWikipediaCodeNone": {
 		"message": "Disable"
@@ -620,7 +620,7 @@
 		"message": "Input the date correctly."
 	},
 	"htmlCheckLanguageFilterByteLengthError": {
-		"message": "The number of the character of language filte is limited to $LENGTH$ bytes or less.",
+		"message": "The number of the character of Language Filter is limited to $LENGTH$ bytes or less.",
 		"placeholders": {
 			"LENGTH": {
 				"content": "$1"
@@ -628,7 +628,7 @@
 		}
 	},
 	"htmlCheckLanguageFilterLengthError": {
-		"message": "The number of language filter is limited to $MAX$ items maximum.",
+		"message": "The number of the language of Language Filter is limited to $MAX$ items maximum.",
 		"placeholders": {
 			"MAX": {
 				"content": "$1"
