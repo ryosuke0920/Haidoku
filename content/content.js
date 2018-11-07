@@ -160,7 +160,7 @@
 
 		let apiOffNode = document.createElement("div");
 		apiOffNode.setAttribute("id",CSS_PREFIX+"-apiOff");
-		apiOffNode.innerHTML = ponyfill.i18n.getMessage("htmlLinkageMessage");
+		apiOffNode.innerText = ponyfill.i18n.getMessage("htmlLinkageMessage");
 		apiContentNode.appendChild(apiOffNode);
 
 		wiktionaryContent = document.createElement("div");
