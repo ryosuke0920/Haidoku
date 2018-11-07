@@ -99,7 +99,11 @@
 			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
 			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
 			{ "selector": "#"+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
-			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" }
+			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" },
+			{ "selector": "#"+CSS_PREFIX+"-wiktionaryButton", "property": "innerText", "key": "htmlWiktionary" },
+			{ "selector": "#"+CSS_PREFIX+"-wiktionaryButton", "property": "title", "key": "htmlWiktionaryTitle" },
+			{ "selector": "#"+CSS_PREFIX+"-wikipediaButton", "property": "innerText", "key": "htmlWikipedia" },
+			{ "selector": "#"+CSS_PREFIX+"-wikipediaButton", "property": "title", "key": "htmlWikipediaTitle" }
 		];
 		setI18n(list, sampleWidgetNode);
 	}
