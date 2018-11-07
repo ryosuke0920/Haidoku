@@ -159,6 +159,18 @@
 	"htmlSaveHistoryDone": {
 		"message": "履歴を保存済み"
 	},
+	"htmlWiktionary": {
+		"message": "Wiktionary"
+	},
+	"htmlWiktionaryTitle": {
+		"message": "ウィクショナリー"
+	},
+	"htmlWikipedia": {
+		"message": "Wikipedia"
+	},
+	"htmlWikipediaTitle": {
+		"message": "ウィキペディア"
+	},
 	"htmlFormName": {
 		"message": "リンク編集"
 	},

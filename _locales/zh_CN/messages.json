@@ -172,6 +172,18 @@
 		"message": "已保存历史",
 		"hash": "3c77ac644bd4e652b6ff19be38cb66e9"
 	},
+	"htmlWiktionary": {
+		"message": "Wiktionary"
+	},
+	"htmlWiktionaryTitle": {
+		"message": "维基词典"
+	},
+	"htmlWikipedia": {
+		"message": "Wikipedia"
+	},
+	"htmlWikipediaTitle": {
+		"message": "维基百科"
+	},
 	"htmlFormName": {
 		"message": "链接编辑",
 		"hash": "b9772fb5ba497653aa847f93100b6536"

@@ -149,13 +149,15 @@
 		let w1ButtonNode = document.createElement("span");
 		w1ButtonNode.setAttribute("id",CSS_PREFIX+"-wiktionaryButton");
 		w1ButtonNode.classList.add(CSS_PREFIX+"-textButton");
-		w1ButtonNode.title = w1ButtonNode.innerText = "Wiktionary";
+		w1ButtonNode.innerText = ponyfill.i18n.getMessage("htmlWiktionary");
+		w1ButtonNode.title = ponyfill.i18n.getMessage("htmlWiktionaryTitle");
 		apiHeaderNode.appendChild(w1ButtonNode);
 
 		let w2ButtonNode = document.createElement("span");
 		w2ButtonNode.setAttribute("id",CSS_PREFIX+"-wikipediaButton");
 		w2ButtonNode.classList.add(CSS_PREFIX+"-textButton");
-		w2ButtonNode.title = w2ButtonNode.innerText = "Wikipedia";
+		w2ButtonNode.innerText = ponyfill.i18n.getMessage("htmlWikipedia");
+		w2ButtonNode.title = ponyfill.i18n.getMessage("htmlWikipediaTitle");
 		apiHeaderNode.appendChild(w2ButtonNode);
 
 		let apiOffNode = document.createElement("div");

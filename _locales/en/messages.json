@@ -159,6 +159,18 @@
 	"htmlSaveHistoryDone": {
 		"message": "Saved history"
 	},
+	"htmlWiktionary": {
+		"message": "Wiktionary"
+	},
+	"htmlWiktionaryTitle": {
+		"message": "Wiktionary"
+	},
+	"htmlWikipedia": {
+		"message": "Wikipedia"
+	},
+	"htmlWikipediaTitle": {
+		"message": "Wikipedia"
+	},
 	"htmlFormName": {
 		"message": "Link edit"
 	},
