@@ -59,7 +59,7 @@
 		"message": "Failed to download the language list."
 	},
 	"notificationAudioPlayError": {
-		"message": "The audio palayback failed. $ERROR$",
+		"message": "The audio playback failed. $ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -78,7 +78,7 @@
 		"message": "Wiktionary Linkage is disabled."
 	},
 	"htmlLinkageMessage": {
-		"message": "Turn on the upper left slide button, Wiktionary Linkage or Wikipedia Linkage are enabled. If you select any text, the text is automatically sent to the server for searching, even if it includes your privacy information like a password. So use carefully. I recommend that you disable when you don't need it or enable widget by allowed domains."
+		"message": "Turn on the upper left slide button, Wiktionary Linkage or Wikipedia Linkage are enabled. If you select any text, the text is automatically sent to the server for searching, even if the text includes your privacy information like a password. So use carefully. I recommend that you disable when you don't need it or enable widget by allowed domains."
 	},
 	"htmlNowSearching": {
 		"message": "Now searching."
@@ -346,7 +346,7 @@
 		"message": "Enable"
 	},
 	"htmlWidgetEnableAllowedDomain": {
-		"message": "Enable by the allowed domains"
+		"message": "Enable by allowed domains"
 	},
 	"htmlDomainListTitle": {
 		"message": "Allow domains"
@@ -367,13 +367,13 @@
 		"message": "Select how to display widget automatically or manually after selecting a text."
 	},
 	"htmldomainListDescription":{
-		"message": "When a domain matches the list below, the  widget can be displayed. To enable, select the \"Enable by the allowed domains\" check on the \"Widget startup\" menu."
+		"message": "When a domain matches the list below, the  widget can be displayed. To enable, select the \"Enable by allowed domains\" check on the \"Widget startup\" menu."
 	},
 	"htmlAddDomainButton": {
 		"message": "Add"
 	},
 	"htmlDomainAllowedDescription": {
-		"message": "List of the allowed domains"
+		"message": "List of allowed domains"
 	},
 	"htmlNoneDomainAllowedDescription": {
 		"message": "There are not any allowed domains."
@@ -455,7 +455,7 @@
 		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By using Wiktionary, the description of a word is displayed on the widget."
 	},
 	"htmlServiceCodeTitle": {
-		"message": "Select a host"
+		"message": "Select host"
 	},
 	"htmlServiceCodeDescription": {
 		"message": "The displayed language and the content of the description are different for each host. If you change it, Language Filter needs additional setting. If you select the \"Disable\" option, the description area is hidden."
@@ -497,7 +497,7 @@
 		"message": "Add languages"
 	},
 	"htmlLanguageFilterSelectedDescription": {
-		"message": "The selected language list."
+		"message": "List of selected languages"
 	},
 	"htmlLanguageFilterNoneSelectedDescription": {
 		"message": "Language filter is not selected."
@@ -509,7 +509,7 @@
 		"message": "Display Only Meaning"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "Leave a meaning from the word description, exclude others like a pronunciation."
+		"message": "Leave a content for the meaning from the word description, exclude other content like a pronunciation."
 	},
 	"htmlApiCutOutLabel": {
 		"message": "Enable"
@@ -518,10 +518,10 @@
 		"message": "Wikipedia Linkage"
 	},
 	"htmlWikipediaLinkageDescription": {
-		"message": "Wiktipedia is an encyclopedia site where volunteers post articles. By using Wiktipedia, the description of a word is displayed on the widget"
+		"message": "Wikipedia is an encyclopedia site where volunteers post articles. By using Wiktipedia, the description of a word is displayed on the widget"
 	},
 	"htmlWikipediaHostTitle": {
-		"message": "Select a host"
+		"message": "Select host"
 	},
 	"htmlWikipediaHostDescription": {
 		"message": "The displayed language and the content of the description are different for each host."
