@@ -26,7 +26,7 @@ const DEFAULT_CTRL_KEY_VIEW_FLAG = false;
 const DEFAULT_ENABLE_VALUE = "1";
 const DEFAULT_OPTION_LIST_ON_GET = [];
 const DEFAULT_DOMAIN_LIST = [];
-const DEFAULT_MEANING_VALUE = true;
+const DEFAULT_MEANING_VALUE = false;
 const LINK_LIST_DEFAULT_STYLE = LINK_LIST_STYLE_CLASSIC;
 
 const DEFAULT_LOCALE = "en";
@@ -452,7 +452,7 @@ const WIDGET_STYLE = `
 	height: 20px;
 	width: 20px;
 	border-radius: 10px;
-	background-color: #3366cc;
+	background-color: #5bd94d;
 	animation: loading 0.2s linear infinite running;
 }
 @keyframes loading {
