@@ -25,7 +25,7 @@
 
 	let enableWidgetValue;
 	let domainList;
-
+	let tmpText = "";
 	let rootNode;
 	let widgetNode;
 	let coverNode;
@@ -528,9 +528,9 @@
 			hide(apiContentNode);
 			return;
 		}
-		if( serviceCode != API_SERVICE_CODE_NONE ) widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
-		if( serviceCode2 != API_SERVICE_CODE_NONE ) widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
-		if( serviceCode == API_SERVICE_CODE_NONE && serviceCode2 != API_SERVICE_CODE_NONE ){
+		if( hasWiktionaryCode() ) widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
+		if( hasWikipediaCode() ) widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
+		if( !hasWiktionaryCode() && hasWikipediaCode() ){
 			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
 			footerNode.innerText = footerNode.title = FOOTER_CONTENT2;
 		}
@@ -1037,7 +1037,15 @@
 	}
 
 	function hasServiceCode(){
-		return serviceCode != API_SERVICE_CODE_NONE || serviceCode2 != API_SERVICE_CODE_NONE;
+		return hasWiktionaryCode() || hasWikipediaCode();
+	}
+
+	function hasWiktionaryCode(){
+		return serviceCode != API_SERVICE_CODE_NONE;
+	}
+
+	function hasWikipediaCode(){
+		return serviceCode2 != API_SERVICE_CODE_NONE;
 	}
 
 	function menuClickBihavior(e){
@@ -1069,11 +1077,17 @@
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
 			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
 			footerNode.innerText = FOOTER_CONTENT;
+			if(isEnableApi() && hasWiktionaryCode()){
+				apiWiktionaryRequest(tmpText);
+			}
 		}
 		else if(id == CSS_PREFIX+"-wikipediaButton"){
 			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
 			footerNode.innerText = FOOTER_CONTENT2;
+			if(isEnableApi() && hasWikipediaCode()){
+				apiWikipediaRequest(tmpText);
+			}
 		}
 	}
 
@@ -1179,8 +1193,9 @@
 	function apiRequest(text){
 		clearApiContent();
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
-		if( serviceCode != API_SERVICE_CODE_NONE ) apiWiktionaryRequest(text);
-		if( serviceCode2 != API_SERVICE_CODE_NONE ) apiWikipediaRequest(text);
+		tmpText = text;
+		if( hasWiktionaryCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWiktionary") ) apiWiktionaryRequest(text);
+		if( hasWikipediaCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWikipedia") ) apiWikipediaRequest(text);
 	}
 
 	function apiWiktionaryRequest(text){
