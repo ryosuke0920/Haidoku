@@ -326,6 +326,9 @@ const WIDGET_STYLE = `
 	user-select: text;
 	-moz-user-select: text;
 }
+.lessLaborGoToDictionary-dark #lessLaborGoToDictionary-apiContent {
+	background-color: #DDDDDD;
+}
 .lessLaborGoToDictionary-separator #lessLaborGoToDictionary-apiContent {
 	border-top: none;
 	border-left: solid 1px #808080;
@@ -432,7 +435,6 @@ const WIDGET_STYLE = `
 	display: block;
 }
 .lessLaborGoToDictionary-apiLoading {
-	background-color: white;
 	padding: 5px;
 	display: none;
 	height: 8em;
@@ -468,19 +470,13 @@ const WIDGET_STYLE = `
 }
 #lessLaborGoToDictionary-apiOff {
 	border-top: solid 1px #808080;
-	background-color: white;
 	display: none;
 	padding: 3px;
 }
 .lessLaborGoToDictionary-apiDisabled #lessLaborGoToDictionary-apiOff {
 	display: block;
 }
-.lessLaborGoToDictionary-warning {
-	color: red;
-	font-weight: bold;
-}
 .lessLaborGoToDictionary-apiWikiText {
-	background-color: white;
 	padding: 5px;
 }
 .lessLaborGoToDictionary-loading .lessLaborGoToDictionary-apiWikiText {
@@ -587,7 +583,7 @@ const WIDGET_STYLE = `
 	box-sizing: border-box;
 	width: 0;
 	height: 20px;
-	border-color: transparent transparent transparent #202020;
+	border-color: transparent transparent transparent #888888;
 	border-style: solid;
 	border-width: 10px 0px 10px 20px;
 	cursor: pointer;
@@ -595,7 +591,7 @@ const WIDGET_STYLE = `
 	margin: 2px;
 }
 .lessLaborGoToDictionary-apiWikiText .lessLaborGoToDictionary-play.lessLaborGoToDictionary-playing {
-	background-color: black;
+	background-color: #888888;
 }
 .lessLaborGoToDictionary-apiWikiText div.lessLaborGoToDictionary-apiWarningMessage {
 	padding: 2px;
