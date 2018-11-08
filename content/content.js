@@ -558,6 +558,7 @@
 		hide(widgetNode);
 		wiktionaryRequestStatus.abort();
 		wikipediaRequestStatus.abort();
+		ponyfill.runtime.sendMessage({"method":"audioStopByTabId"});
 	}
 
 	function closeLinkListDelay(){

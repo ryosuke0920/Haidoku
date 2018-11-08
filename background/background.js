@@ -111,6 +111,10 @@ function notify(message, sender, sendResponse){
 			return Promise.reject(e);
 		});
 	}
+	else if( method == "audioStopByTabId" ){
+		audioStopByTabId(sender.tab.id);
+		return;
+	}
 	else {
 		return save(data).catch((e)=>{
 			console.error(e);
@@ -908,6 +912,10 @@ function audioStop(audioId){
 }
 
 function tabsOnRemovedBehavior(tabId, removeInfo){
+	audioStopByTabId(tabId);
+}
+
+function audioStopByTabId(tabId){
 	let list = audioList.filter( obj => obj.tabId == tabId );
 	if( list.length == 0 ) return;
 	for(let i=0; i<list.length; i++){
