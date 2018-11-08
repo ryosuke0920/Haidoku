@@ -66,14 +66,6 @@
 			}
 		}
 	},
-	"htmlMaybeTitle" :{
-		"message": "Did you mean: $WORD$",
-		"placeholders": {
-			"WORD": {
-				"content": "$1"
-			}
-		}
-	},
 	"htmlLinkageDisabled": {
 		"message": "Wiktionary Linkage is disabled."
 	},

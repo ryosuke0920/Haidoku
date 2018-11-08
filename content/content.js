@@ -43,6 +43,8 @@
 	let apiBodyNode2;
 	let apiSwitcheNode;
 	let arrowNode;
+	let unmatchTextNode;
+	let unmatchTextNode2;
 	let historyButtoneNode;
 	let historyDoneButtoneNode;
 	let historyButtoneNode2;
@@ -182,6 +184,11 @@
 		apiTitleBoxNode.classList.add(CSS_PREFIX+"-apiTitleBox");
 		wiktionaryContent.appendChild(apiTitleBoxNode);
 
+		unmatchTextNode = document.createElement("div");
+		unmatchTextNode.classList.add(CSS_PREFIX+"-unmatchText");
+		unmatchTextNode.innerText = unmatchTextNode.title = ponyfill.i18n.getMessage("htmlUnmatchText");
+		apiTitleBoxNode.appendChild(unmatchTextNode);
+
 		historyButtoneNode = document.createElement("span");
 		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
 		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
@@ -230,6 +237,11 @@
 		let apiTitleBoxNode2 = document.createElement("h1");
 		apiTitleBoxNode2.classList.add(CSS_PREFIX+"-apiTitleBox");
 		wikipediaContent.appendChild(apiTitleBoxNode2);
+
+		unmatchTextNode2 = document.createElement("div");
+		unmatchTextNode2.classList.add(CSS_PREFIX+"-unmatchText");
+		unmatchTextNode2.innerText = unmatchTextNode2.title = ponyfill.i18n.getMessage("htmlUnmatchText");
+		apiTitleBoxNode2.appendChild(unmatchTextNode2);
 
 		historyButtoneNode2 = document.createElement("span");
 		historyButtoneNode2.setAttribute("id",CSS_PREFIX+"-history2");
@@ -834,7 +846,7 @@
 		document.removeEventListener("mousedown", mousedownAutoBehavior);
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiTitleNode2 = apiErrorMessageNode2 = apiBodyNode2 = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = historyButtoneNode2 = historyDoneButtoneNode2 = wiktionaryRequestStatus = wikipediaRequestStatus = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiTitleNode2 = apiErrorMessageNode2 = apiBodyNode2 = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = historyButtoneNode2 = historyDoneButtoneNode2 = wiktionaryRequestStatus = wikipediaRequestStatus = unmatchTextNode = unmatchTextNode2 = undefined;
 	}
 	function enableWidget(){
 		start();
@@ -1215,6 +1227,7 @@
 				"wrapper": wiktionaryContent,
 				"title": apiTitleNode,
 				"error": apiErrorMessageNode,
+				"unmatch": unmatchTextNode,
 				"body": apiBodyNode,
 				"history": historyButtoneNode,
 				"historyDone": historyDoneButtoneNode
@@ -1263,6 +1276,7 @@
 				"wrapper": wikipediaContent,
 				"title": apiTitleNode2,
 				"error": apiErrorMessageNode2,
+				"unmatch": unmatchTextNode2,
 				"body": apiBodyNode2,
 				"history": historyButtoneNode2,
 				"historyDone": historyDoneButtoneNode2
@@ -1304,25 +1318,26 @@
 		hide(historyDoneButtoneNode2);
 		clearChildren(apiBodyNode);
 		clearChildren(apiBodyNode2);
-		clearApiTitle(apiTitleNode, apiErrorMessageNode);
-		clearApiTitle(apiTitleNode2, apiErrorMessageNode2);
+		clearApiTitle(apiTitleNode, apiErrorMessageNode, unmatchTextNode);
+		clearApiTitle(apiTitleNode2, apiErrorMessageNode2, unmatchTextNode2);
 		wiktionaryContent.classList.add(CSS_PREFIX+"-loading");
 		wikipediaContent.classList.add(CSS_PREFIX+"-loading");
 	}
 
-	function clearApiTitle(titleNode, errorNode){
+	function clearApiTitle(titleNode, errorNode, unmatchNode){
 		titleNode.removeAttribute("data-text");
 		titleNode.removeAttribute("data-title");
 		titleNode.removeAttribute("href");
 		titleNode.removeAttribute("title");
 		errorNode.removeAttribute("title");
+		hide(unmatchNode);
 		titleNode.innerText = errorNode.innerText = "";
 	}
 
 	function apiWiktionaryResponse(e){
 		if( !this.status.isActive(this.id) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
-		makeApiTitleNode(this.node.title, e.text, e.title, e.fullurl);
+		makeApiTitleNode(this.node.title, e.text, e.title, e.fullurl, this.node.unmatch);
 		let property = API_SERVICE_PROPERTY[e.service];
 		let result = parseHTML(e.html, property.sectionHeading);
 		let parsed = result.parsed;
@@ -1404,7 +1419,7 @@
 	function apiWikipediaResponse(e){
 		if( !this.status.isActive(this.id) ) return;
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
-		makeApiTitleNode(this.node.title, e.text, e.title, e.fullurl);
+		makeApiTitleNode(this.node.title, e.text, e.title, e.fullurl, this.node.unmatch);
 		let bases = makeBaseHTML(e.html);
 		for(let i=0; i<bases.length; i++){
 			let base = bases[i];
@@ -1419,13 +1434,9 @@
 		this.node.wrapper.classList.remove(CSS_PREFIX+"-loading");
 	}
 
-	function makeApiTitleNode(titleNode,text,title,url){
-		if( text.toLowerCase() != title.toLowerCase() ) {
-			titleNode.innerText = ponyfill.i18n.getMessage("htmlMaybeTitle",[title]);
-		}
-		else {
-			titleNode.innerText = title;
-		}
+	function makeApiTitleNode(titleNode,text,title,url,unmatchNode){
+		if( text.toLowerCase() != title.toLowerCase() ) show(unmatchNode);
+		titleNode.innerText = title;
 		titleNode.setAttribute("title", title);
 		titleNode.setAttribute("data-text", text);
 		titleNode.setAttribute("data-title", title);
@@ -1705,7 +1716,7 @@
 			self.node.error.innerText = text;
 			self.node.error.setAttribute("title", text);
 		}
-		clearApiTitle(this.node.title, this.node.error);
+		clearApiTitle(this.node.title, this.node.error, this.node.unmatch);
 		let content = document.createElement("div");
 		if( e.error == API_TEXT_MAX_LENGTH_ERROR ){
 			setApiErrorMessage(e.text);

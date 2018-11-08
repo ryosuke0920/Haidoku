@@ -70,13 +70,6 @@
 		},
 		"hash": "dcecd625bfc9f7449a21909c9d9758dd"
 	},
-	"htmlMaybeTitle": {
-		"message": "您是否指：$WORD$",
-		"placeholders": {
-			"WORD": { "content": "$1" }
-		},
-		"hash": "416e331cd4c2a39636f15f49557f34f1"
-	},
 	"htmlLinkageDisabled": {
 		"message": "有链接维基词典已禁用。",
 		"hash": "bea5e4d8140b5528e36d7ab12a912f80"

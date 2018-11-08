@@ -416,10 +416,11 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-apiTitleBox {
 	font-size: 14px;
 	padding: 5px;
-	white-space: nowrap;
-	overflow: hidden;
 }
 .lessLaborGoToDictionary-loading .lessLaborGoToDictionary-apiTitleBox {
+	display: none;
+}
+.lessLaborGoToDictionary-unmatchText.lessLaborGoToDictionary-hide {
 	display: none;
 }
 .lessLaborGoToDictionary-historyButton {
