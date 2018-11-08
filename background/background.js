@@ -8,7 +8,7 @@ let ctrlKey = false;
 let options = {};
 let faviconCache = {};
 let apiDocumentCache = {};
-let audioHash = {};
+let audioList = [];
 let audioId = (()=>{ let i=0; return ()=>{ return ++i;}})();
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible */
@@ -61,6 +61,7 @@ function initListener(){
 	ponyfill.storage.onChanged.addListener( onStorageChanged );
 	ponyfill.contextMenus.onClicked.addListener( contextMenuBehavior );
 	ponyfill.runtime.onMessage.addListener(notify);
+	ponyfill.tabs.onRemoved.addListener(tabsOnRemovedBehavior);
 }
 
 function openWindow( url ){
@@ -876,27 +877,42 @@ function audioPlay(base64){
 	let id = CSS_PREFIX + "-audio-" + audioId();
 	let audio = document.createElement("audio");
 	audio.setAttribute("id", id);
-	audioHash[id] = audio;
+	audioList.push({
+		"id": id,
+		"audio": audio,
+		"tabId": this.sender.tab.id
+	});
 	let source = document.createElement("source");
 	source.src = base64;
 	audio.appendChild(source);
 	audio.addEventListener("ended",(e)=>{
-		let id = e.target.getAttribute("id");
-		delete audioHash[id];
+		let id = audio.getAttribute("id");
+		audioList = audioList.filter( obj => obj.id != id );
 		ponyfill.tabs.sendMessage(this.sender.tab.id, {"method":"audioStop","audioId":id});
 	});
 	return audio.play().then(()=>{
 		return {"audioId": id};
 	}).catch((e)=>{
-		let id = e.target.getAttribute("id");
-		delete audioHash[id];
+		let id = audio.getAttribute("id");
+		audioList = audioList.filter( obj => obj.id != id );
 		return Promise.reject(e);
 	});
 }
 
 function audioStop(audioId){
-	let audio = audioHash[audioId];
-	if(!audio) return;
+	let list = audioList.filter( obj => obj.id == audioId );
+	if( list.length == 0 ) return;
+	let audio = list[0].audio;
 	audio.pause();
-	delete audioHash[audioId];
+	audioList = audioList.filter( obj => obj.id != audioId );
+}
+
+function tabsOnRemovedBehavior(tabId, removeInfo){
+	let list = audioList.filter( obj => obj.tabId == tabId );
+	if( list.length == 0 ) return;
+	for(let i=0; i<list.length; i++){
+		let audio = list[i].audio;
+		audio.pause();
+	}
+	audioList = audioList.filter( obj => obj.tabId != tabId );
 }
