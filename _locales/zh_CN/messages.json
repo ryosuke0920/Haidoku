@@ -105,6 +105,9 @@
 		"message": "无法执行语言过滤功能，因为没有匹配的语言。 显示没有过滤。",
 		"hash": "65d1fee4f1dfb9240a32068ca43df2c0"
 	},
+	"htmlUnmatchText": {
+		"message": "找不到该页面。 显示全文搜索的结果。"
+	},
 	"htmlPageNotFound": {
 		"message": "找不到该页面。",
 		"hash": "232be90f4ed902bf39708fe4dfb609d0"
