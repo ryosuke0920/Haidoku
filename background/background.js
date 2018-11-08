@@ -563,8 +563,7 @@ function broadcastWindows(windows){
 
 function apiRequest(data){
 	let obj = {
-		"text": data.text,
-		"process": API_INFO_PROCESS
+		"text": data.text
 	};
 	if(!API_SERVICE.hasOwnProperty(data.serviceCode)){
 		obj.error = APPLICATION_ERROR;
@@ -638,7 +637,6 @@ function responseAjaxApiInfo(e){
 		return this;
 	}
 	if (e.target.response.query.pages.hasOwnProperty("-1")){
-		this.process = API_PREFIX_PROCESS;
 		return Promise.resolve().then( requestAjaxApiPrefixSearch.bind(this) ).then( responseAjaxApiPrefixSearch.bind(this) );
 	}
 	let page = Object.values(e.target.response.query.pages);
@@ -687,12 +685,10 @@ function responseAjaxApiPrefixSearch(e){
 		return this;
 	}
 	if(e.target.response.query.prefixsearch.length==0){
-		this.process = API_SEARCH_PROCESS;
 		return Promise.resolve().then( requestAjaxApiSearch.bind(this) ).then( responseAjaxApiSearch.bind(this) );
 	}
 	let title = e.target.response.query.prefixsearch[0].title;
 	if(title.toLowerCase() != this.text.toLowerCase()){
-		this.process = API_SEARCH_PROCESS;
 		return Promise.resolve().then( requestAjaxApiSearch.bind(this) ).then( responseAjaxApiSearch.bind(this) );
 	}
 	this.title = title;

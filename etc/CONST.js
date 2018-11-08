@@ -34,10 +34,6 @@ const DEFAULT_LOCALE = "en";
 const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0; additional terms may apply.";//https://www.mediawiki.org/wiki/API:Licensing
 const FOOTER_CONTENT2 = "Provided by Wikipedia under Creative Commons Attribution-Share Alike 3.0; additional terms may apply.";//https://www.mediawiki.org/wiki/API:Licensing
 
-const API_INFO_PROCESS = "1";
-const API_PREFIX_PROCESS = "2";
-const API_SEARCH_PROCESS = "3";
-
 const API_SWITCH_DISABLED = "";
 const API_SWITCH_ENABLED = "1";
 const API_SERVICE_CODE_NONE = "-";
