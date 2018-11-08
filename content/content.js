@@ -1206,14 +1206,18 @@
 	}
 
 	function apiRequest(text){
-		clearApiContent();
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
 		tmpText = text;
-		if( hasWiktionaryCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWiktionary") ) apiWiktionaryRequest(text);
-		if( hasWikipediaCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWikipedia") ) apiWikipediaRequest(text);
+		if( hasWiktionaryCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWiktionary") ){
+			apiWiktionaryRequest(text);
+		}
+		if( hasWikipediaCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWikipedia") ){
+			apiWikipediaRequest(text);
+		}
 	}
 
 	function apiWiktionaryRequest(text){
+		clearWiktionaryContent();
 		let delay = wiktionaryRequestStatus.hasAnother();
 		wiktionaryRequestStatus.abort();
 		let obj = {
@@ -1263,6 +1267,7 @@
 	}
 
 	function apiWikipediaRequest(text){
+		clearWikipediaContent();
 		let delay = wikipediaRequestStatus.hasAnother();
 		wikipediaRequestStatus.abort();
 		let obj = {
@@ -1312,15 +1317,23 @@
 	}
 
 	function clearApiContent(){
+		clearWiktionaryContent();
+		clearWikipediaContent();
+	}
+
+	function clearWiktionaryContent(){
 		show(historyButtoneNode);
 		hide(historyDoneButtoneNode);
+		clearChildren(apiBodyNode);
+		clearApiTitle(apiTitleNode, apiErrorMessageNode, unmatchTextNode);
+		wiktionaryContent.classList.add(CSS_PREFIX+"-loading");
+	}
+
+	function clearWikipediaContent(){
 		show(historyButtoneNode2);
 		hide(historyDoneButtoneNode2);
-		clearChildren(apiBodyNode);
 		clearChildren(apiBodyNode2);
-		clearApiTitle(apiTitleNode, apiErrorMessageNode, unmatchTextNode);
 		clearApiTitle(apiTitleNode2, apiErrorMessageNode2, unmatchTextNode2);
-		wiktionaryContent.classList.add(CSS_PREFIX+"-loading");
 		wikipediaContent.classList.add(CSS_PREFIX+"-loading");
 	}
 
