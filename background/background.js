@@ -576,7 +576,7 @@ function apiRequest(text, serviceCode){
 	obj.path = API_SERVICE_PROPERTY[service].path;
 	obj.url = [];
 	obj.html = [];
-	let cache = fetchApiDocumentCache(obj);
+	let cache = fetchApiDocumentCache(obj.text, obj.service);
 	if(cache) return Promise.resolve(cache);
 	return Promise.resolve().then( requestAjaxApiInfo.bind(obj) ).then( responseAjaxApiInfo.bind(obj) ).catch( detectAjaxApiConnectError.bind(obj) );
 }
@@ -849,18 +849,18 @@ function addApiDocumentCache(obj){
 		apiDocumentCache[obj.service] = [];
 	}
 	else {
-		if(fetchApiDocumentCache(obj)!==false) return;
+		if(fetchApiDocumentCache(obj.text, obj.service)!==false) return;
 	}
 	apiDocumentCache[obj.service].push(obj);
 	if(apiDocumentCache[obj.service].length > MAX_API_CACHE) apiDocumentCache[obj.service].shift();
 }
 
-function fetchApiDocumentCache(obj){
-	if(!apiDocumentCache.hasOwnProperty(obj.service)) return false;
-	for(let i=0; i<apiDocumentCache[obj.service].length; i++){
-		if( obj.text == apiDocumentCache[obj.service][i].title || obj.text == apiDocumentCache[obj.service][i].text){
-			let temp = apiDocumentCache[obj.service].splice(i,1);
-			apiDocumentCache[obj.service].push(temp[0]);
+function fetchApiDocumentCache(text, serviceCode){
+	if(!apiDocumentCache.hasOwnProperty(serviceCode)) return false;
+	for(let i=0; i<apiDocumentCache[serviceCode].length; i++){
+		if( text == apiDocumentCache[serviceCode][i].title || text == apiDocumentCache[serviceCode][i].text){
+			let temp = apiDocumentCache[serviceCode].splice(i,1);
+			apiDocumentCache[serviceCode].push(temp[0]);
 			return temp[0];
 		}
 	}
