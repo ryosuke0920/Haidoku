@@ -106,7 +106,7 @@ function notify(message, sender, sendResponse){
 		});
 	}
 	else if( method == "audioStart" ){
-		return audioStart(data.url, sender).catch((e)=>{
+		return audioStart(data.url, sender.tab.id).catch((e)=>{
 			console.error(e);
 			return Promise.reject(e);
 		});
@@ -867,8 +867,8 @@ function fetchApiDocumentCache(obj){
 	return false;
 }
 
-function audioStart(url, sender){
-	let obj = {"sender": sender};
+function audioStart(url, tabId){
+	let obj = {"tabId": tabId};
 	return promiseAjax("GET", url, "blob").then( onDownloadAsBase64.bind(obj) );
 }
 
@@ -886,7 +886,7 @@ function audioPlay(base64){
 	audioList.push({
 		"id": id,
 		"audio": audio,
-		"tabId": this.sender.tab.id
+		"tabId": this.tabId
 	});
 	let source = document.createElement("source");
 	source.src = base64;
@@ -894,7 +894,7 @@ function audioPlay(base64){
 	audio.addEventListener("ended",(e)=>{
 		let id = audio.getAttribute("id");
 		audioList = audioList.filter( obj => obj.id != id );
-		ponyfill.tabs.sendMessage(this.sender.tab.id, {"method":"audioStop","audioId":id});
+		ponyfill.tabs.sendMessage(this.tabId, {"method":"audioStop","audioId":id});
 	});
 	return audio.play().then(()=>{
 		return {"audioId": id};
