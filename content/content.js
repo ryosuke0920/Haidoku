@@ -534,14 +534,12 @@
 		}
 	}
 	function applyServiceCode(){
+		hide(apiContentNode);
 		widgetNode.classList.remove(CSS_PREFIX+"-enableWiktionary");
 		widgetNode.classList.remove(CSS_PREFIX+"-enableWikipedia");
 		widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
 		widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
-		if( !hasServiceCode() ) {
-			hide(apiContentNode);
-			return;
-		}
+		if( !hasServiceCode() ) return;
 		if( hasWiktionaryCode() ) widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
 		if( hasWikipediaCode() ) widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
 		if( !hasWiktionaryCode() && hasWikipediaCode() ){
