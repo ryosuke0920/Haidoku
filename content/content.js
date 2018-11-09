@@ -1076,12 +1076,12 @@
 		if(id == CSS_PREFIX+"-history"){
 			hide(historyButtoneNode);
 			show(historyDoneButtoneNode);
-			Promise.resolve().then(()=>{return saveHistoryWiktionaryLinkage(apiTitleNode)}).catch(onSaveError);
+			saveHistoryWithNode(apiTitleNode).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-history2"){
 			hide(historyButtoneNode2);
 			show(historyDoneButtoneNode2);
-			Promise.resolve().then(()=>{return saveHistoryWiktionaryLinkage(apiTitleNode2)}).catch(onSaveError);
+			saveHistoryWithNode(apiTitleNode2).catch(onSaveError);
 		}
 		else if(id == CSS_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
@@ -1851,7 +1851,7 @@
 		widgetNode.scrollLeft = left;
 	}
 
-	function saveHistoryWiktionaryLinkage(titleNode){
+	function saveHistoryWithNode(titleNode){
 		return saveHistory(
 			titleNode.getAttribute("data-text"),
 			window.location.toString(),
@@ -1859,7 +1859,7 @@
 			titleNode.href,
 			titleNode.getAttribute("data-title"),
 			true
-		).catch(onSaveError);
+		);
 	}
 
 })();
