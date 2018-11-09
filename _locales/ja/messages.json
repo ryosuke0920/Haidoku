@@ -528,7 +528,7 @@
 		"message": "ウィキペディアは、ボランティアが投稿している百科事典サイトです。ウィキペディアと通信して、単語の解説をウィジェットに表示します。"
 	},
 	"htmlWikipediaHostTitle": {
-		"message": "ホスト（言語）の選択"
+		"message": "ホストの選択"
 	},
 	"htmlWikipediaHostDescription": {
 		"message": "ホストごとに、表示される言語と解説の内容が異なります。"

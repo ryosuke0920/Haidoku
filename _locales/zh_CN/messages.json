@@ -639,7 +639,7 @@
 		"message": "维基百科是一个百科全书网站，志愿者发表文章。 通过使用Wikipedia，在窗口小部件上显示单词的描述"
 	},
 	"htmlWikipediaHostTitle": {
-		"message": "选择一个主机"
+		"message": "选择主机"
 	},
 	"htmlWikipediaHostDescription": {
 		"message": "每个主机的显示语言和描述内容都不同。"

@@ -489,7 +489,7 @@
 		"message": "https://zh.wiktionary.org/ - Chinese"
 	},
 	"htmlServiceCodeSelectMessage": {
-		"message": "Select a host."
+		"message": "Select host."
 	},
 	"htmlLanguageFilterTitle": {
 		"message": "Language Filter"
