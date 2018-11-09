@@ -1352,7 +1352,7 @@
 		titleNode.removeAttribute("title");
 		errorNode.removeAttribute("title");
 		hide(unmatchNode);
-		titleNode.innerText = errorNode.innerText = "";
+		titleNode.innerText = titleNode.title = errorNode.innerText = errorNode.title = "";
 	}
 
 	function apiWiktionaryResponse(e){
@@ -1457,7 +1457,7 @@
 
 	function makeApiTitleNode(titleNode,text,title,url,unmatchNode){
 		if( text.toLowerCase() != title.toLowerCase() ) show(unmatchNode);
-		titleNode.innerText = title;
+		titleNode.innerText = titleNode.title = title;
 		titleNode.setAttribute("title", title);
 		titleNode.setAttribute("data-text", text);
 		titleNode.setAttribute("data-title", title);
@@ -1734,8 +1734,7 @@
 			self.node.wrapper.classList.remove(CSS_PREFIX+"-loading");
 		}
 		function setApiErrorMessage(text){
-			self.node.error.innerText = text;
-			self.node.error.setAttribute("title", text);
+			self.node.error.innerText = self.node.error.title = text;
 		}
 		clearApiTitle(this.node.title, this.node.error, this.node.unmatch);
 		let content = document.createElement("div");
