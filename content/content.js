@@ -321,10 +321,10 @@
 		applyApiSwitch();
 		applyServiceCode();
 
-		if (serviceCode != API_SERVICE_CODE_NONE){
+		if (hasWiktionaryCode()){
 			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
 		}
-		else if ( serviceCode2 != API_SERVICE_CODE_NONE ){
+		else if (hasWikipediaCode()){
 			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
 		}
 
@@ -812,6 +812,7 @@
 			applyLinknListSeparator();
 		}
 		if( change["s"] || change["wc"] ){
+			closeLinkList();
 			if (change["s"]) setServiceCode( change["s"]["newValue"] );
 			if (change["wc"]) setServiceCode2( change["wc"]["newValue"] );
 			applyServiceCode();
