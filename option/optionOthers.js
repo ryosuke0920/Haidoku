@@ -489,9 +489,7 @@
 	}
 
 	function isApiEnable(){
-		if(getServiceCode()!=API_SERVICE_CODE_NONE) return true;
-		if(getWikipediaCode()!=API_SERVICE_CODE_NONE) return true;
-		return false;
+		return getServiceCode()!=API_SERVICE_CODE_NONE || getWikipediaCode()!=API_SERVICE_CODE_NONE;
 	}
 
 	function setSampleLinkListServiceCode(){

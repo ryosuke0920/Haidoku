@@ -1349,8 +1349,6 @@
 		titleNode.removeAttribute("data-text");
 		titleNode.removeAttribute("data-title");
 		titleNode.removeAttribute("href");
-		titleNode.removeAttribute("title");
-		errorNode.removeAttribute("title");
 		hide(unmatchNode);
 		titleNode.innerText = titleNode.title = errorNode.innerText = errorNode.title = "";
 	}
@@ -1458,7 +1456,6 @@
 	function makeApiTitleNode(titleNode,text,title,url,unmatchNode){
 		if( text.toLowerCase() != title.toLowerCase() ) show(unmatchNode);
 		titleNode.innerText = titleNode.title = title;
-		titleNode.setAttribute("title", title);
 		titleNode.setAttribute("data-text", text);
 		titleNode.setAttribute("data-title", title);
 		titleNode.setAttribute("href", url);
