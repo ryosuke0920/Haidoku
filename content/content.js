@@ -845,6 +845,7 @@
 		document.removeEventListener("mouseup", mouseupAutoBehavior);
 		document.removeEventListener("mousedown", mousedownAutoBehavior);
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
+		removeLinkListActonEvent();
 		rootNode.remove();
 		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiTitleNode2 = apiErrorMessageNode2 = apiBodyNode2 = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = historyButtoneNode2 = historyDoneButtoneNode2 = wiktionaryRequestStatus = wikipediaRequestStatus = unmatchTextNode = unmatchTextNode2 = undefined;
 	}
@@ -962,14 +963,22 @@
 		linkListAction = res;
 	}
 
-	function applyLinkListAction(){
+	function removeLinkListActonEvent(){
+		widgetNode.removeEventListener("mouseenter", removeStopper);
+		widgetNode.removeEventListener("mouseleave", controlStopper);
+		coverNode.removeEventListener("click", widgetActionMouseclick);
+	}
+
+	function clearLinkListAction(){
 		resetScrollTmp();
 		widgetNode.classList.remove(CSS_PREFIX+"-mouseover");
 		widgetNode.classList.remove(CSS_PREFIX+"-mouseclick");
 		removeStopper();
-		widgetNode.removeEventListener("mouseenter", removeStopper);
-		widgetNode.removeEventListener("mouseleave", controlStopper);
-		coverNode.removeEventListener("click", widgetActionMouseclick);
+		removeLinkListActonEvent();
+	}
+
+	function applyLinkListAction(){
+		clearLinkListAction();
 		if( linkListAction == LINK_LIST_ACTION_MOUSEOVER ){
 			widgetNode.classList.add(CSS_PREFIX+"-mouseover");
 			addStopper();
