@@ -96,7 +96,7 @@
 		"message": "Failed to execute Language Filter function because there is not a matching language. Displayed without filtering."
 	},
 	"htmlUnmatchText": {
-		"message": "The page was not found. Displayed the results of full text search."
+		"message": "The appropriate page was not found. Displayed the result of full text search."
 	},
 	"htmlPageNotFound": {
 		"message": "The page was not found."

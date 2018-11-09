@@ -106,7 +106,7 @@
 		"hash": "65d1fee4f1dfb9240a32068ca43df2c0"
 	},
 	"htmlUnmatchText": {
-		"message": "找不到该页面。 显示全文搜索的结果。"
+		"message": "找不到合适的页面。 显示全文搜索的结果。"
 	},
 	"htmlPageNotFound": {
 		"message": "找不到该页面。",
