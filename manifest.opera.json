@@ -4,7 +4,7 @@
 	"name":"__MSG_extensionName__",
 	"description":"__MSG_extensionDescription__",
 	"author": "Ryosuke Ohta",
-	"version":"1.11.1",
+	"version":"1.11.2",
 	"icons": {
 		"128": "image/icon128.png",
 		"64": "image/icon64.png",
