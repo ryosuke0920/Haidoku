@@ -636,7 +636,7 @@ function responseAjaxApiInfo(e){
 		this.message = e.target.response.error.info;
 		return this;
 	}
-	if (e.target.response.query.pages.hasOwnProperty("-1")){
+	if (!e.target.response.query.hasOwnProperty("pages") || e.target.response.query.pages.hasOwnProperty("-1")){
 		return Promise.resolve().then( requestAjaxApiPrefixSearch.bind(this) ).then( responseAjaxApiPrefixSearch.bind(this) );
 	}
 	let page = Object.values(e.target.response.query.pages);
@@ -734,7 +734,7 @@ function responseAjaxApiInfo2(e){
 		this.message = e.target.response.error.info;
 		return this;
 	}
-	if (e.target.response.query.pages.hasOwnProperty("0")){
+	if(!e.target.response.query.hasOwnProperty("pages") || e.target.response.query.pages.hasOwnProperty("0")){
 		this.error = PAGE_NOT_FOUND_ERROR;
 		addApiDocumentCache(this);
 		return this;
