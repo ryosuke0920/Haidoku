@@ -10,6 +10,7 @@
 	let languageFilterSelectPaneNode = document.querySelector("#languageFilterSelectPane");
 	let languageFilterContainerNode = languageFilterSelectPaneNode.querySelector("#languageFilterContainer");
 	let apiLangPrefixSelectNode = languageFilterSelectPaneNode.querySelector(".apiLangPrefixSelect");
+	let wikipediaSelectNode = othersNode.querySelector("#wikipediaSelect");
 	let languageFilterCache = {};
 	let apiPrefixCache = {};
 	let languageFilterlist = [];
@@ -78,6 +79,17 @@
 			{ "selector": ".apiCutOutTitle", "property": "innerText", "key": "htmlApiCutOutTitle" },
 			{ "selector": ".apiCutOutDescription", "property": "innerText", "key": "htmlApiCutOutDescription" },
 			{ "selector": ".apiCutOutLabel", "property": "innerText", "key": "htmlApiCutOutLabel" },
+			{ "selector": "#wikipediaLinkageTitle", "property": "innerText", "key": "htmlWikipediaLinkageTitle" },
+			{ "selector": "#wikipediaLinkageDescription", "property": "innerText", "key": "htmlWikipediaLinkageDescription" },
+			{ "selector": "#wikipediaHostTitle", "property": "innerText", "key": "htmlWikipediaHostTitle" },
+			{ "selector": "#wikipediaHostDescription", "property": "innerText", "key": "htmlWikipediaHostDescription" },
+			{ "selector": "#wikipediaCodeNone", "property": "innerText", "key": "htmlWikipediaCodeNone" },
+			{ "selector": "#wikipediaCodeDe", "property": "innerText", "key": "htmlWikipediaCodeDe" },
+			{ "selector": "#wikipediaCodeEn", "property": "innerText", "key": "htmlWikipediaCodeEn" },
+			{ "selector": "#wikipediaCodeFr", "property": "innerText", "key": "htmlWikipediaCodeFr" },
+			{ "selector": "#wikipediaCodeJa", "property": "innerText", "key": "htmlWikipediaCodeJa" },
+			{ "selector": "#wikipediaCodeRu", "property": "innerText", "key": "htmlWikipediaCodeRu" },
+			{ "selector": "#wikipediaCodeZh", "property": "innerText", "key": "htmlWikipediaCodeZh" },
 			{ "selector": ".linkListSampleTitle", "property": "innerText", "key": "htmlLinkListSampleTitle" }
 		];
 		setI18n(list);
@@ -87,7 +99,11 @@
 			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
 			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
 			{ "selector": "#"+CSS_PREFIX+"-option", "property": "title", "key": "htmlOption" },
-			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" }
+			{ "selector": "#"+CSS_PREFIX+"-history", "property": "title", "key": "htmlSaveHistory" },
+			{ "selector": "#"+CSS_PREFIX+"-wiktionaryButton", "property": "innerText", "key": "htmlWiktionary" },
+			{ "selector": "#"+CSS_PREFIX+"-wiktionaryButton", "property": "title", "key": "htmlWiktionaryTitle" },
+			{ "selector": "#"+CSS_PREFIX+"-wikipediaButton", "property": "innerText", "key": "htmlWikipedia" },
+			{ "selector": "#"+CSS_PREFIX+"-wikipediaButton", "property": "title", "key": "htmlWikipediaTitle" }
 		];
 		setI18n(list, sampleWidgetNode);
 	}
@@ -99,6 +115,7 @@
 		apiLangPrefixSelectNode.addEventListener("change", apiLangPrefixSelectChangeBehavior);
 		othersNode.addEventListener("click", otherNodeClickBehavior);
 		othersNode.addEventListener("change", otherNodeChangeBehavior);
+		wikipediaSelectNode.addEventListener("change", wikipediaSelectChangeBehavior);
 		ponyfill.runtime.onMessage.addListener( notify );
 	}
 
@@ -115,14 +132,15 @@
 		let languageFilter = getDefaultLanguageFilter();
 		let getter = ponyfill.storage.sync.get({
 			"ol": DEFAULT_OPTION_LIST_ON_GET,
-			"cl": LINK_LIST_STYLE_DARK,
+			"cl": LINK_LIST_DEFAULT_STYLE,
 			"ca": LINK_LIST_ACTION_MOUSECLICK,
 			"f": LINK_LIST_FAVICON_ONLY,
 			"ld": LINK_LIST_DIRECTION_VERTICAL,
 			"ls": LINK_LIST_SEPARATOR_VERTICAL,
 			"s": serviceCode,
 			"ll": languageFilter,
-			"co": DEFAULT_MEANING_VALUE
+			"co": DEFAULT_MEANING_VALUE,
+			"wc": "w-"+serviceCode
 		});
 		return getter.then(onGot);
 	}
@@ -140,10 +158,11 @@
 		setLinkListSeparator(res["ls"]);
 		setSampleLinkListSeparator(res["ls"]);
 		setServiceCode(res["s"]);
-		setSampleLinkListServiceCode(res["s"]);
 		setLanguageFilterList(res["ll"]);
 		makeLanguageFilterListNodes();
 		setApiCutOut(res["co"]);
+		setWikipediaCode(res["wc"]);
+		setSampleLinkListServiceCode();
 	}
 
 	function notify(e){
@@ -224,7 +243,7 @@
 		}
 		if( e.hasOwnProperty("s") ){
 			setServiceCode(e["s"]["newValue"]);
-			setSampleLinkListServiceCode(e["s"]["newValue"]);
+			setSampleLinkListServiceCode();
 			makeLanguageFilterListNodes();
 		}
 		if( e.hasOwnProperty("ll") ){
@@ -234,6 +253,12 @@
 		}
 		if( e.hasOwnProperty("co") ){
 			setApiCutOut(e["co"]["newValue"]);
+		}
+		if( e.hasOwnProperty("wc") ){
+			setWikipediaCode(e["wc"]["newValue"]);
+		}
+		if( e.hasOwnProperty("s") || e.hasOwnProperty("wc") ){
+			setSampleLinkListServiceCode();
 		}
 	}
 
@@ -359,6 +384,14 @@
 		return apiCutOutNode.checked;
 	}
 
+	function setWikipediaCode(value){
+		wikipediaSelectNode.value = value;
+	}
+
+	function getWikipediaCode(value){
+		return wikipediaSelectNode.value;
+	}
+
 	function changeLayout(value) {
 		if(value=="1"){
 			setFaviconDisplay(LINK_LIST_FAVICON_ONLY);
@@ -416,6 +449,9 @@
 			else {
 				img.setAttribute("src", ponyfill.extension.getURL("/image/favicon.svg"));
 			}
+			let anchor = node.querySelector("a");
+			anchor.setAttribute("href", item.u);
+			anchor.addEventListener("click", (e)=>{e.preventDefault();});
 			container.appendChild(clone);
 		}
 	}
@@ -452,12 +488,30 @@
 		}
 	}
 
-	function setSampleLinkListServiceCode(value){
-		if(value!=API_SERVICE_CODE_NONE){
-			sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.remove(CSS_PREFIX+"-hide");
-		}
-		else {
-			sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-apiContent").classList.add(CSS_PREFIX+"-hide");
+	function isApiEnable(){
+		return getServiceCode()!=API_SERVICE_CODE_NONE || getWikipediaCode()!=API_SERVICE_CODE_NONE;
+	}
+
+	function setSampleLinkListServiceCode(){
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-apiDisabled");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-enableWiktionary");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-enableWikipedia");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
+		sampleWidgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
+		let footer = sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-footer");
+		if( isApiEnable() ){
+			footer.innerText = footer.title = FOOTER_CONTENT;
+			if(getServiceCode()!=API_SERVICE_CODE_NONE){
+				sampleWidgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
+				sampleWidgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+			}
+			if(getWikipediaCode()!=API_SERVICE_CODE_NONE){
+				sampleWidgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
+				if(getServiceCode()==API_SERVICE_CODE_NONE){
+					sampleWidgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+					footer.innerText = footer.title = FOOTER_CONTENT2;
+				}
+			}
 		}
 	}
 
@@ -496,13 +550,13 @@
 	}
 
 	function serviceCodeChangeBehavior(serviceCode){
-		if(serviceCode != API_SERVICE_CODE_NONE){
+		if(serviceCode != API_SERVICE_CODE_NONE || getWikipediaCode() != API_SERVICE_CODE_NONE){
 			saveServiceCode(serviceCode).catch(onSaveError);
 		}
 		else {
 			saveServiceCodeNone(serviceCode).catch(onSaveError);
 		}
-		setSampleLinkListServiceCode(serviceCode);
+		setSampleLinkListServiceCode();
 	}
 
 	function saveServiceCode(value){
@@ -515,6 +569,31 @@
 	function saveServiceCodeNone(value){
 		let data = {
 			"s": value,
+			"sw": API_SWITCH_DISABLED
+		};
+		return saveW(data);
+	}
+
+	function wikipediaSelectChangeBehavior(e){
+		if(e.target.value != API_SERVICE_CODE_NONE || getServiceCode() != API_SERVICE_CODE_NONE){
+			saveWikipediaCode(e.target.value).catch(onSaveError);
+		}
+		else {
+			saveWikipediaCodeNone(e.target.value).catch(onSaveError);
+		}
+		setSampleLinkListServiceCode();
+	}
+
+	function saveWikipediaCode(code){
+		let data = {
+			"wc": code
+		};
+		return saveW(data);
+	}
+
+	function saveWikipediaCodeNone(code){
+		let data = {
+			"wc": code,
 			"sw": API_SWITCH_DISABLED
 		};
 		return saveW(data);

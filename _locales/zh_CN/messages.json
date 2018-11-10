@@ -70,19 +70,12 @@
 		},
 		"hash": "dcecd625bfc9f7449a21909c9d9758dd"
 	},
-	"htmlMaybeTitle": {
-		"message": "您是否指：$WORD$",
-		"placeholders": {
-			"WORD": { "content": "$1" }
-		},
-		"hash": "416e331cd4c2a39636f15f49557f34f1"
-	},
 	"htmlLinkageDisabled": {
 		"message": "有链接维基词典已禁用。",
 		"hash": "bea5e4d8140b5528e36d7ab12a912f80"
 	},
 	"htmlLinkageMessage": {
-		"message": "在单击右上角的按钮时，有链接维基词典被启用。<span class=\"lessLaborGoToDictionary-warning\">在您选中一段文本时，该文本将自动发送到维基词典以进行查询，而这可能含有您的隐私信息</span>。所以要小心使用。我们建议您在不需要它时禁用此功能。",
+		"message": "启用左上方的幻灯片按钮，维基词典链接或维基百科链接。 如果您选择任何文本，则文本会自动发送到服务器进行搜索，即使文本中包含您的隐私信息（如密码）也是如此。 所以要小心使用。 我建议您在不需要时禁用它或按允许的域启用小部件。",
 		"hash": "d967f0b0d1df90a4bdb339a4ed9adf7d"
 	},
 	"htmlNowSearching": {
@@ -101,19 +94,22 @@
 		"hash": "7fe3a1e460b7a91a6cec330ec2e7c49a"
 	},
 	"htmlParseFailed": {
-		"message": "无法解析。 它以原始文本显示。",
+		"message": "无法解析文本。 显示原始文本。",
 		"hash": "581a097c5c062573b7fceb02efb7ee20"
 	},
 	"htmlMeaningNotFound": {
-		"message": "无法执行“仅显示含义”功能，因为没有含义的描述。 显示原始文本。",
+		"message": "无法执行仅显示含义功能，因为没有含义的描述。 显示原始文本。",
 		"hash": "581e96dc29cc3afec46390eaabc73f35"
 	},
 	"htmlSectionNotFound": {
-		"message": "无法执行“语言过滤器”功能，因为没有匹配的语言。 显示没有过滤。",
+		"message": "无法执行语言过滤功能，因为没有匹配的语言。 显示没有过滤。",
 		"hash": "65d1fee4f1dfb9240a32068ca43df2c0"
 	},
+	"htmlUnmatchText": {
+		"message": "显示全文搜索的结果。"
+	},
 	"htmlPageNotFound": {
-		"message": "找不到页面。",
+		"message": "找不到该页面。",
 		"hash": "232be90f4ed902bf39708fe4dfb609d0"
 	},
 	"htmlConnectionError": {
@@ -131,7 +127,7 @@
 		"hash": "be39487fc661ffa5771d62ece9f41a3b"
 	},
 	"htmlApplicationError": {
-		"message": "应用程序返回了一个错误。$ERROR$",
+		"message": "从此加载项收到错误。$ERROR$",
 		"placeholders": {
 			"ERROR": { "content": "$1" }
 		},
@@ -172,6 +168,18 @@
 		"message": "已保存历史",
 		"hash": "3c77ac644bd4e652b6ff19be38cb66e9"
 	},
+	"htmlWiktionary": {
+		"message": "Wiktionary"
+	},
+	"htmlWiktionaryTitle": {
+		"message": "维基词典"
+	},
+	"htmlWikipedia": {
+		"message": "Wikipedia"
+	},
+	"htmlWikipediaTitle": {
+		"message": "维基百科"
+	},
 	"htmlFormName": {
 		"message": "链接编辑",
 		"hash": "b9772fb5ba497653aa847f93100b6536"
@@ -196,7 +204,7 @@
 		"hash": "772b8e57e5d6623f1cf59d7d90ddaa47"
 	},
 	"htmlFormDescription": {
-		"message": "单击“选择要添加的链接”按钮，可以从列表中添加一些链接。在URL字段中输入\"$$1\"，\"$$1\"将替换为选定的文本。",
+		"message": "单击“选择要添加的链接”按钮，可以从包含主要URL的列表中添加一些链接。 如果您在URL字段中输入“$$1”，则“$$1”将替换为所选文本。",
 		"hash": "0d946240e2969de69f7119711ee7d158"
 	},
 	"htmlUsageOrder": {
@@ -244,7 +252,7 @@
 		"hash": "6bdb22c86da1319f4b1383e2ab8fe83a"
 	},
 	"htmlUrlDescription": {
-		"message": "输入网址。“$$1”将替换为所选文本。",
+		"message": "输入网址。 将“$$1”替换为所选文本。",
 		"hash": "efefc181e2ed22cdfb9a5c2546fc1596"
 	},
 	"htmlFilterText": {
@@ -304,7 +312,7 @@
 		"hash": "90048a3fcf15753afcb7663a5850a91c"
 	},
 	"htmlHistoryCheckDelete": {
-		"message": "删除选中的历史记录项",
+		"message": "删除已检查的历史记录",
 		"hash": "73be04d40a106786dd6167d80943f3df"
 	},
 	"htmlHistoryAllDelete": {
@@ -356,7 +364,7 @@
 		"hash": "2e1673c2d8f41f8a8b54ae51624a6af1"
 	},
 	"htmlRankingDescription": {
-		"message": "通过使用历史数据，此函数聚合每个所选文本的搜索次数。 如果删除某些历史记录项，搜索次数也会减少。 从结果中找出你的弱点，并有效地学习。",
+		"message": "通过使用历史数据，此函数聚合每个所选文本的搜索次数。 如果删除某些历史记录项，搜索次数也会减少。 这些数字对学习有好处。",
 		"hash": "6a59d6cecc01c4f958ff2d33b1ec0181"
 	},
 	"htmlRankingAggregateButton": {
@@ -416,7 +424,7 @@
 		"message": "启用"
 	},
 	"htmlWidgetEnableAllowedDomain": {
-		"message": "启用允许的域"
+		"message": "允许的域启用"
 	},
 	"htmlDomainListTitle": {
 		"message": "允许域名"
@@ -437,7 +445,7 @@
 		"message": "选择如何在选择文本后自动或手动显示窗口小部件。"
 	},
 	"htmldomainListDescription":{
-		"message": "当域与下面的列表匹配时，可以显示窗口小部件。 要启用，请在“小工具启动”菜单上选择“启用允许的域”检查。"
+		"message": "当域与下面的列表匹配时，可以显示窗口小部件。 要启用，请在“小工具启动”菜单上选择“允许的域启用”检查。"
 	},
 	"htmlAddDomainButton": {
 		"message": "加"
@@ -525,7 +533,7 @@
 		"hash": "79c3f0c45b5b86e5044c26f40505be1e"
 	},
 	"htmlLinkListSeparatorTitle": {
-		"message": "链接与维基词典之间的分隔符",
+		"message": "链接区域和描述区域之间的分隔符",
 		"hash": "bf871ea7bc5db590aa290481c101b2c7"
 	},
 	"htmlLinkListSeparatorHorizontal": {
@@ -545,11 +553,11 @@
 		"hash": "d9bc6ca2a4191b32bdab7c67b98aa70e"
 	},
 	"htmlServiceCodeTitle": {
-		"message": "选择主机（语言）",
+		"message": "选择主机",
 		"hash": "307952bd070150973828d3910a3a9e2f"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "每个主机的显示语言和内容质量都不同。 更改此项，“语言过滤器”需要其他设置。 选择“禁用”，隐藏维基链接的区域。",
+		"message": "每个主机的显示语言和描述内容都不同。 如果您更改它，语言过滤器需要其他设置。 如果选择“禁用”选项，则隐藏描述区域。",
 		"hash": "a3055124e92b024ef8edbfc2f30011bb"
 	},
 	"htmlServiceCodeNone": {
@@ -581,7 +589,7 @@
 		"hash": "18a10c37b2f91904aee6554efd2204a9"
 	},
 	"htmlServiceCodeSelectMessage": {
-		"message": "选择一个主机。",
+		"message": "选择主机",
 		"hash": "8435416bad9375cf181415b9f434b23c"
 	},
 	"htmlLanguageFilterTitle": {
@@ -589,23 +597,23 @@
 		"hash": "802007d06f6fa4c67dbe7d267ac9d768"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "维基词典是一种多语言词典。 这些文章包括各种语言的一些描述。 使用“语言过滤器”显示您指定的语言的一些描述。",
+		"message": "维基词典是一种多语言词典。 其文章包括各种语言的一些描述。 使用语言过滤器，仅显示您指定的语言的描述。",
 		"hash": "417fd7887c3c00b245844a1e41dfec95"
 	},
 	"htmlLanguageFilterAside": {
-		"message": "例如，“four”在英语中意味着“4”，但在法语中是“烤箱、炉子”。如果您在“语言过滤器”中只选择了英语，则只会显示英语对“4”的描述。",
+		"message": "例如，“four”在英语中意味着“4”，但在法语中是“烤箱、炉子”。如果您在语言过滤器中只选择了英语，则只会显示英语对“4”的描述。",
 		"hash": "075b41afe3e3e33cdb018acb923d9097"
 	},
 	"htmlAddLanguageFilter": {
-		"message": "添加“语言过滤器”",
+		"message": "添加语言",
 		"hash": "feb0c8c28a8798bfb84ce21e4dcad593"
 	},
 	"htmlLanguageFilterSelectedDescription": {
-		"message": "选定的语言列表。",
+		"message": "所选语言列表",
 		"hash": "220b251e929fb60a949ed498408aeda0"
 	},
 	"htmlLanguageFilterNoneSelectedDescription": {
-		"message": "没有选择“语言过滤器”。",
+		"message": "没有选择语言过滤器。",
 		"hash": "4901406d7cc389995b0ee75ba42f6a3e"
 	},
 	"htmlLanguageFilterDownloadMessage": {
@@ -617,12 +625,45 @@
 		"hash": "df5a7f36c1f351b270cb49e60fc4d752"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "除了发音等的描述外，仅显示其含义。",
+		"message": "为词语描述中的含义留下内容，排除其他内容，如发音。",
 		"hash": "2729c72a75570a4cc1d8718c7293d278"
 	},
 	"htmlApiCutOutLabel": {
 		"message": "启用",
 		"hash": "2212934c2b3d751385bf1c26d91172f3"
+	},
+	"htmlWikipediaLinkageTitle": {
+		"message": "维基百科链接"
+	},
+	"htmlWikipediaLinkageDescription": {
+		"message": "维基百科是一个百科全书网站，志愿者发表文章。 通过使用Wikipedia，在窗口小部件上显示单词的描述"
+	},
+	"htmlWikipediaHostTitle": {
+		"message": "选择主机"
+	},
+	"htmlWikipediaHostDescription": {
+		"message": "每个主机的显示语言和描述内容都不同。"
+	},
+	"htmlWikipediaCodeNone": {
+		"message": "禁用"
+	},
+	"htmlWikipediaCodeDe": {
+		"message": "https://de.wikipedia.org/ - 德语"
+	},
+	"htmlWikipediaCodeEn": {
+		"message": "https://en.wikipedia.org/ - 英语"
+	},
+	"htmlWikipediaCodeFr": {
+		"message": "https://fr.wikipedia.org/ - 法语"
+	},
+	"htmlWikipediaCodeJa": {
+		"message": "https://ja.wikipedia.org/ - 日语"
+	},
+	"htmlWikipediaCodeRu": {
+		"message": "https://ru.wikipedia.org/ - 俄语"
+	},
+	"htmlWikipediaCodeZh": {
+		"message": "https://zh.wikipedia.org/ - 汉语"
 	},
 	"htmlLinkListSampleTitle": {
 		"message": "小工具预览",
@@ -698,7 +739,7 @@
 		"hash": "ec0c986ee44e6547527add601f3850a1"
 	},
 	"htmlCheckLanguageFilterByteLengthError": {
-		"message": "“语言过滤”字符的数量限制为$LENGTH$字节或更少。",
+		"message": "语言过滤字符的数量限制为$LENGTH$字节或更少。",
 		"placeholders": {
 			"LENGTH": {
 				"content": "$1"
@@ -706,7 +747,7 @@
 		}
 	},
 	"htmlCheckLanguageFilterLengthError": {
-		"message": "“语言过滤器”最多$MAX$项。",
+		"message": "语言过滤器的语言数量限制为$MAX$项目最大值。",
 		"placeholders": {
 			"MAX": { "content": "$1" }
 		},

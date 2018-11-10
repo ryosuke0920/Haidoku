@@ -245,6 +245,9 @@
 	margin-right: 1em;
 	margin-bottom: 1em;
 }
+#linkListSample {
+	min-height: 400px;
+}
 @media (min-width: 1094px) {
 	.othersTable {
 		grid-template-columns: 1fr 1fr ;
@@ -264,6 +267,12 @@
 @media (min-width: 1372px) {
 	.othersTable {
 		grid-template-columns: 1fr 1fr 1fr ;
+	}
+	#wikipediaLinkage{
+		grid-column-start: 2;
+		grid-column-end: 3;
+		grid-row-start: 1;
+		grid-row-end: 3;
 	}
 	#linkListSample {
 		position: relative;
@@ -288,10 +297,6 @@
 	vertical-align: top;
 	display: inline-block;
 	width: 300px;
-}
-#languageSelectList {
-	position: sticky;
-	top: 3em;
 }
 #languageFileterComponent {
 	position: relative;
