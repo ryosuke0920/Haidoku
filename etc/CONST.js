@@ -179,7 +179,7 @@ const WIDGET_STYLE = `
 	resize: none;
 	background: none;
 	background-color: transparent;
-	border-radius: 15px;
+	box-shadow: none;
 }
 #lessLaborGoToDictionary-cover {
 	display: none;
@@ -257,6 +257,9 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-enableWiktionary #lessLaborGoToDictionary-footer,
 .lessLaborGoToDictionary-enableWikipedia #lessLaborGoToDictionary-footer {
 	display: block;
+}
+.lessLaborGoToDictionary-stopper #lessLaborGoToDictionary-footer {
+	display: none;
 }
 .lessLaborGoToDictionary-dark #lessLaborGoToDictionary-footer {
 	background: linear-gradient(#404040, #202020);
