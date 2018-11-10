@@ -7,8 +7,9 @@ let shiftKey = false;
 let ctrlKey = false;
 let options = {};
 let faviconCache = {};
-let serviceCode = API_SERVICE_CODE_NONE;
-let apiDocumentCache = [];
+let apiDocumentCache = {};
+let audioList = [];
+let audioId = (()=>{ let i=0; return ()=>{ return ++i;}})();
 
 ponyfill.runtime.onInstalled.addListener( install ); /* call as soon as possible */
 
@@ -41,13 +42,11 @@ function initContextMenu(){
 }
 
 function getSetting() {
-	let serviceCode = getDefaultServiceCode();
 	return ponyfill.storage.sync.get({
 		"ol": DEFAULT_OPTION_LIST_ON_GET,
 		"bf": DEFAULT_AUTO_VIEW_FLAG,
 		"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
-		"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
-		"s": serviceCode
+		"ck": DEFAULT_CTRL_KEY_VIEW_FLAG
 	}).then(onGotSetting);
 }
 
@@ -56,13 +55,13 @@ function onGotSetting(json){
 	autoViewFlag = json["bf"];
 	shiftKey = json["sk"];
 	ctrlKey = json["ck"];
-	serviceCode = json["s"];
 }
 
 function initListener(){
 	ponyfill.storage.onChanged.addListener( onStorageChanged );
 	ponyfill.contextMenus.onClicked.addListener( contextMenuBehavior );
 	ponyfill.runtime.onMessage.addListener(notify);
+	ponyfill.tabs.onRemoved.addListener(tabsOnRemovedBehavior);
 }
 
 function openWindow( url ){
@@ -95,16 +94,26 @@ function notify(message, sender, sendResponse){
 		return Promise.resolve(faviconCache);
 	}
 	else if( method == "apiRequest" ){
-		return apiRequest(data.text).catch((e)=>{
+		return apiRequest(data.text, data.serviceCode).catch((e)=>{
 			console.error(e);
 			return Promise.reject(e);
 		});
 	}
-	else if( method == "downloadAsBaase64" ){
-		return downloadAsBaase64(data.url).catch((e)=>{
+	else if( method == "audioStop" ){
+		return audioStop(data.audioId).catch((e)=>{
 			console.error(e);
 			return Promise.reject(e);
 		});
+	}
+	else if( method == "audioStart" ){
+		return audioStart(data.url, sender.tab.id).catch((e)=>{
+			console.error(e);
+			return Promise.reject(e);
+		});
+	}
+	else if( method == "audioStopByTabId" ){
+		audioStopByTabId(sender.tab.id);
+		return;
 	}
 	else {
 		return save(data).catch((e)=>{
@@ -162,10 +171,6 @@ function onStorageChanged(change, area){
 	if(change["ol"]) {
 		updateFaviconCache(false).then(resetMenu).then(broadcastFaviconCache).catch((e)=>{console.error(e)});
 	};
-	if(change["s"]) {
-		serviceCode = change["s"]["newValue"];
-		apiDocumentCache = [];
-	}
 }
 
 function resetMenu(json){
@@ -556,21 +561,23 @@ function broadcastWindows(windows){
 	}
 }
 
-function apiRequest(text){
-	let obj = {"text": text};
+function apiRequest(text, serviceCode){
+	let obj = {
+		"text": text
+	};
 	if(!API_SERVICE.hasOwnProperty(serviceCode)){
 		obj.error = APPLICATION_ERROR;
 		obj.code = serviceCode;
 		obj.message = "service not found.";
 		return Promise.resolve(obj);
 	}
-	let cache = fetchApiDocumentCache(text);
-	if(cache) return Promise.resolve(cache);
 	let service = API_SERVICE[serviceCode];
 	obj.service = service;
 	obj.path = API_SERVICE_PROPERTY[service].path;
 	obj.url = [];
 	obj.html = [];
+	let cache = fetchApiDocumentCache(obj.text, obj.service);
+	if(cache) return Promise.resolve(cache);
 	return Promise.resolve().then( requestAjaxApiInfo.bind(obj) ).then( responseAjaxApiInfo.bind(obj) ).catch( detectAjaxApiConnectError.bind(obj) );
 }
 
@@ -629,7 +636,7 @@ function responseAjaxApiInfo(e){
 		this.message = e.target.response.error.info;
 		return this;
 	}
-	if (e.target.response.query.pages.hasOwnProperty("-1")){
+	if (!e.target.response.query.hasOwnProperty("pages") || e.target.response.query.pages.hasOwnProperty("-1")){
 		return Promise.resolve().then( requestAjaxApiPrefixSearch.bind(this) ).then( responseAjaxApiPrefixSearch.bind(this) );
 	}
 	let page = Object.values(e.target.response.query.pages);
@@ -727,7 +734,7 @@ function responseAjaxApiInfo2(e){
 		this.message = e.target.response.error.info;
 		return this;
 	}
-	if (e.target.response.query.pages.hasOwnProperty("0")){
+	if(!e.target.response.query.hasOwnProperty("pages") || e.target.response.query.pages.hasOwnProperty("0")){
 		this.error = PAGE_NOT_FOUND_ERROR;
 		addApiDocumentCache(this);
 		return this;
@@ -838,37 +845,84 @@ function returnContent(){
 }
 
 function addApiDocumentCache(obj){
-	if(fetchApiDocumentCache(obj.text)) return;
-	apiDocumentCache.push(obj);
-	if(apiDocumentCache.length > MAX_API_CACHE) apiDocumentCache.shift();
+	if(!apiDocumentCache.hasOwnProperty(obj.service)){
+		apiDocumentCache[obj.service] = [];
+	}
+	else {
+		if(fetchApiDocumentCache(obj.text, obj.service)!==false) return;
+	}
+	apiDocumentCache[obj.service].push(obj);
+	if(apiDocumentCache[obj.service].length > MAX_API_CACHE) apiDocumentCache[obj.service].shift();
 }
 
-function fetchApiDocumentCache(text){
-	for(let i=0; i<apiDocumentCache.length; i++){
-		if( text == apiDocumentCache[i].title || text == apiDocumentCache[i].text ){
-			let temp = apiDocumentCache.splice(i,1);
-			apiDocumentCache.push(temp[0]);
+function fetchApiDocumentCache(text, serviceCode){
+	if(!apiDocumentCache.hasOwnProperty(serviceCode)) return false;
+	for(let i=0; i<apiDocumentCache[serviceCode].length; i++){
+		if( text == apiDocumentCache[serviceCode][i].title || text == apiDocumentCache[serviceCode][i].text){
+			let temp = apiDocumentCache[serviceCode].splice(i,1);
+			apiDocumentCache[serviceCode].push(temp[0]);
 			return temp[0];
 		}
 	}
 	return false;
 }
 
-function downloadAsBaase64(url){
-	return promiseAjax("GET", url, "blob").then( onDownloadAsBase64 );
+function audioStart(url, tabId){
+	let obj = {"tabId": tabId};
+	return promiseAjax("GET", url, "blob").then( onDownloadAsBase64.bind(obj) );
 }
 
 function onDownloadAsBase64(e){
 	if(e.target.status == HTTP_206_PARTIAL || e.target.status == HTTP_200_OK){
-		return blob2Base64(e.target.response).then( audioPlay );
+		return blob2Base64(e.target.response).then( audioPlay.bind(this) );
 	}
 	return Promise.reject( new Error(e.target.status) );
 }
 
 function audioPlay(base64){
+	let id = CSS_PREFIX + "-audio-" + audioId();
 	let audio = document.createElement("audio");
+	audio.setAttribute("id", id);
+	audioList.push({
+		"id": id,
+		"audio": audio,
+		"tabId": this.tabId
+	});
 	let source = document.createElement("source");
 	source.src = base64;
 	audio.appendChild(source);
-	return audio.play();
+	audio.addEventListener("ended",(e)=>{
+		let id = audio.getAttribute("id");
+		audioList = audioList.filter( obj => obj.id != id );
+		ponyfill.tabs.sendMessage(this.tabId, {"method":"audioStop","audioId":id});
+	});
+	return audio.play().then(()=>{
+		return {"audioId": id};
+	}).catch((e)=>{
+		let id = audio.getAttribute("id");
+		audioList = audioList.filter( obj => obj.id != id );
+		return Promise.reject(e);
+	});
+}
+
+function audioStop(audioId){
+	let list = audioList.filter( obj => obj.id == audioId );
+	if( list.length == 0 ) return;
+	let audio = list[0].audio;
+	audio.pause();
+	audioList = audioList.filter( obj => obj.id != audioId );
+}
+
+function tabsOnRemovedBehavior(tabId, removeInfo){
+	audioStopByTabId(tabId);
+}
+
+function audioStopByTabId(tabId){
+	let list = audioList.filter( obj => obj.tabId == tabId );
+	if( list.length == 0 ) return;
+	for(let i=0; i<list.length; i++){
+		let audio = list[i].audio;
+		audio.pause();
+	}
+	audioList = audioList.filter( obj => obj.tabId != tabId );
 }

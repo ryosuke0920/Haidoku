@@ -52,7 +52,7 @@ class domainListModel extends appModel {
 		return this.readList().then((list)=>{
 			if(this.isAllowedDomain(list, domain)) return;
 			list.push({"d":domain});
-			list.sort();
+			list.sort((a,b)=>{ return a.d.localeCompare(b.d) });
 			return this.writeList(list);
 		});
 	}

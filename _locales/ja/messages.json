@@ -66,19 +66,11 @@
 			}
 		}
 	},
-	"htmlMaybeTitle" :{
-		"message": "もしかして、$WORD$",
-		"placeholders": {
-			"WORD": {
-				"content": "$1"
-			}
-		}
-	},
 	"htmlLinkageDisabled": {
 		"message": "ウィクショナリー連携は無効になっています。"
 	},
 	"htmlLinkageMessage": {
-		"message": "右上のボタンをクリックすると、\"ウィクショナリー連携\"が有効になります。この機能は、<span class=\"lessLaborGoToDictionary-warning\">テキストを選択するだけで、そのテキストをウィクショナリーに送信して検索します。それが、パスワードのようなプライバシー情報であってもです。</span>このため、注意して使用してください。必要のないときは、無効にしておくことをお勧めします。"
+		"message": "左上のスライドボタンを有効にすると、ウィクショナリー連携またはウィキペディア連携が有効になります。この機能を使うと、テキストを選択するだけで、そのテキストはサーバーに送信されて検索されます。パスワードのようなプライバシー情報が含まれていても送信されます。このため、注意して使用してください。必要のないときは無効にしておくか、ドメイン許可を有効にすることをお勧めします。"
 	},
 	"htmlNowSearching": {
 		"message": "検索中です。"
@@ -103,8 +95,11 @@
 	"htmlSectionNotFound": {
 		"message": "\"言語フィルター\"に一致する言語が見つかりませんでした。フィルターなしで表示します。"
 	},
+	"htmlUnmatchText": {
+		"message": "全文検索の結果を表示しました。"
+	},
 	"htmlPageNotFound": {
-		"message": "解説が見つかりませんでした。"
+		"message": "ページが見つかりませんでした。"
 	},
 	"htmlConnectionError": {
 		"message": "サーバーに接続できませんでした。$ERROR$",
@@ -123,7 +118,7 @@
 		}
 	},
 	"htmlApplicationError": {
-		"message": "アプリケーションがエラーを返しました。$ERROR$",
+		"message": "拡張機能がエラーを返しました。$ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
@@ -159,6 +154,18 @@
 	"htmlSaveHistoryDone": {
 		"message": "履歴を保存済み"
 	},
+	"htmlWiktionary": {
+		"message": "Wiktionary"
+	},
+	"htmlWiktionaryTitle": {
+		"message": "ウィクショナリー"
+	},
+	"htmlWikipedia": {
+		"message": "Wikipedia"
+	},
+	"htmlWikipediaTitle": {
+		"message": "ウィキペディア"
+	},
 	"htmlFormName": {
 		"message": "リンク編集"
 	},
@@ -178,7 +185,7 @@
 		"message": "情報"
 	},
 	"htmlFormDescription": {
-		"message": "「リンクを選んで追加」を押すと、一覧からリンクを選択して追加できます。URL入力欄に$$1を入力すると、$$1は選択したテキストに置き換わります。"
+		"message": "「リンクを選んで追加」を押すと、メジャーなURLの一覧からリンクを選択して追加できます。URL入力欄に$$1を入力すると、$$1は選択したテキストに置き換わります。"
 	},
 	"htmlUsageOrder" : {
 		"message": "並び順を変更する。"
@@ -298,7 +305,7 @@
 		"message": "最後"
 	},
 	"htmlRankingDescription": {
-		"message": "履歴のデータを使用して、選択テキストごとに検索回数を集計します。履歴を削除すると、検索回数も減少します。あなたの苦手な単語を見つけて、効果的に学習してください。"
+		"message": "履歴のデータを使用して、選択テキストごとに検索回数を集計します。履歴を削除すると、検索回数も減少します。検索回数は学習の役に立ちます。"
 	},
 	"htmlRankingAggregateButton": {
 		"message": "集計"
@@ -431,7 +438,7 @@
 		"message": "ファビコンのみ"
 	},
 	"htmLinkListDirectionTitle":{
-		"message": "リンクを並べる方向"
+		"message": "リンクの並べ方"
 	},
 	"htmlLinkListDirectionHorizontal":{
 		"message": "水平方向に並べる"
@@ -440,7 +447,7 @@
 		"message": "垂直方向に並べる"
 	},
 	"htmlLinkListSeparatorTitle":{
-		"message": "リンクとウィクショナリーの区切り"
+		"message": "リンク表示域と解説表示域の区切り"
 	},
 	"htmlLinkListSeparatorHorizontal":{
 		"message": "水平に区切る"
@@ -452,13 +459,13 @@
 		"message": "ウィクショナリー連携"
 	},
 	"htmlApiServiceDescription": {
-		"message": "ウィクショナリーは、ウィキペディアの姉妹サイトで、ボランティアが投稿している辞書サイトです。ウィクショナリーと通信して、単語の解説がウィジェットに表示されます。"
+		"message": "ウィクショナリーは、ウィキペディアの姉妹サイトで、ボランティアが投稿している辞書サイトです。ウィクショナリーと通信して、単語の解説をウィジェットに表示します。"
 	},
 	"htmlServiceCodeTitle": {
-		"message": "ホスト（言語）の選択"
+		"message": "ホストの選択"
 	},
 	"htmlServiceCodeDescription": {
-		"message": "ホストごとに、表示される言語と、辞書の品質が異なります。変更すると、\"言語フィルター\"も追加設定が必要になります。無効を選択すると、表示領域が非表示になります。"
+		"message": "ホストごとに、表示される言語と、辞書の品質が異なります。変更すると、\"言語フィルター\"も追加設定が必要になります。"
 	},
 	"htmlServiceCodeNone": {
 		"message": "無効にする"
@@ -494,7 +501,7 @@
 		"message": "例えば、\"four\"は英語で\"4\"を意味しますが、フランス語では\"オーブン・かまど・炉\"を意味します。言語フィルターに\"英語\"を選択すれば、英語の\"4\"の解説だけが表示されます。"
 	},
 	"htmlAddLanguageFilter": {
-		"message": "言語フィルターを追加する"
+		"message": "言語を追加する"
 	},
 	"htmlLanguageFilterSelectedDescription": {
 		"message": "選択中の言語フィルターの一覧です。"
@@ -513,6 +520,39 @@
 	},
 	"htmlApiCutOutLabel": {
 		"message": "有効にする"
+	},
+	"htmlWikipediaLinkageTitle": {
+		"message": "ウィキペディア連携"
+	},
+	"htmlWikipediaLinkageDescription": {
+		"message": "ウィキペディアは、ボランティアが投稿している百科事典サイトです。ウィキペディアと通信して、単語の解説をウィジェットに表示します。"
+	},
+	"htmlWikipediaHostTitle": {
+		"message": "ホストの選択"
+	},
+	"htmlWikipediaHostDescription": {
+		"message": "ホストごとに、表示される言語と解説の内容が異なります。"
+	},
+	"htmlWikipediaCodeNone": {
+		"message": "無効にする"
+	},
+	"htmlWikipediaCodeDe": {
+		"message": "https://de.wikipedia.org/ - ドイツ語"
+	},
+	"htmlWikipediaCodeEn": {
+		"message": "https://en.wikipedia.org/ - 英語"
+	},
+	"htmlWikipediaCodeFr": {
+		"message": "https://fr.wikipedia.org/ - フランス語"
+	},
+	"htmlWikipediaCodeJa": {
+		"message": "https://ja.wikipedia.org/ - 日本語"
+	},
+	"htmlWikipediaCodeRu": {
+		"message": "https://ru.wikipedia.org/ - ロシア語"
+	},
+	"htmlWikipediaCodeZh": {
+		"message": "https://zh.wikipedia.org/ - 中国語"
 	},
 	"htmlLinkListSampleTitle": {
 		"message": "ウィジェットのサンプル"
