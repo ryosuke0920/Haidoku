@@ -17,6 +17,9 @@
 	const API_QUERY_DERAY = 1000;
 	const API_TEXT_MAX_LENGTH = 255;
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
+	const CORON_REGEX = /:/;
+	const SHARP_REGEX = /^(.+)#/;
+	const OUTER_LINK_CLASS = CSS_PREFIX+"-openTabImage";
 
 	let dlModel = new domainListModel();
 	let weModel = new widgetEnableModel();
@@ -1677,19 +1680,37 @@
 	}
 
 	function convertAnchor(node, service){
+		let regexes = Object.values(API_SERVICE_PROPERTY).map(x=>x.wiki);
 		let list = node.querySelectorAll("a");
 		for(let i=0; i<list.length; i++){
 			let url = list[i].getAttribute("href");
-			list[i].setAttribute("href", new URL(url, service).href );
+			url = new URL(url, service).href
+			list[i].setAttribute("href", url );
 			list[i].setAttribute("target", "_blank");
 			list[i].setAttribute("rel", "noreferrer");
 			list[i].addEventListener("click", onClickAnchor);
-			let img = document.createElement("img");
-			img.classList.add(CSS_PREFIX+"-openTabImage");
-			img.setAttribute("src", ponyfill.extension.getURL("/image/link.svg"));
-			list[i].appendChild(img);
+			let matches;
+			for(let j=0; j<regexes.length; j++){
+				matches = url.match(regexes[j]);
+				if(!matches) continue;
+				let word = matches[1];
+				if(word.match(CORON_REGEX)) continue;
+				if(matches = word.match(SHARP_REGEX)) word = matches[1];
+				list[i].setAttribute("data-word", decodeURIComponent(word));
+				let img = document.createElement("img");
+				img.classList.add(OUTER_LINK_CLASS);
+				img.setAttribute("src", ponyfill.extension.getURL("/image/link.svg"));
+				list[i].appendChild(img);
+				list[i].addEventListener("click", onClickWiki);
+				break;
+			}
 		}
 		return node;
+	}
+	function onClickWiki(e){
+		if(!e.target.classList.contains(OUTER_LINK_CLASS)){
+			e.preventDefault();
+		}
 	}
 
 	function convertReferer(node){

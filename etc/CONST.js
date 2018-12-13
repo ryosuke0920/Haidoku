@@ -54,6 +54,7 @@ const API_SERVICE = {
 };
 const API_SERVICE_PROPERTY = {
 	"https://de.wiktionary.org":{
+		"wiki": new RegExp("^https://de.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["Deutsch","Englisch"],
 		"namespace":"Kategorie",
 		"langCat": "Kategorie:Sprachen",
@@ -66,6 +67,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://en.wiktionary.org":{
+		"wiki": new RegExp("^https://en.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["English language"],
 		"namespace":"Category",
 		"langCat": "Category:All_languages",
@@ -77,6 +79,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://fr.wiktionary.org":{
+		"wiki": new RegExp("^https://fr.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["français","anglais"],
 		"namespace":"Catégorie",
 		"langCat": "Catégorie:Langues",
@@ -88,6 +91,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://ja.wiktionary.org":{
+		"wiki": new RegExp("^https://ja.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["日本語","英語"],
 		"namespace":"カテゴリ",
 		"langCat": "カテゴリ:言語",
@@ -99,6 +103,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://ru.wiktionary.org":{
+		"wiki": new RegExp("^https://ru.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["Русский язык","Английский язык"],
 		"namespace":"Категория",
 		"langCat": "Категория:Алфавитный_список_языков",
@@ -110,6 +115,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://zh.wiktionary.org":{
+		"wiki": new RegExp("^https://zh.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["汉语","英语"],
 		"namespace":"Category",
 		"langCat": "分类:所有语言",
@@ -121,21 +127,27 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://de.wikipedia.org":{
+		"wiki": new RegExp("^https://de.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://en.wikipedia.org":{
+		"wiki": new RegExp("^https://en.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://fr.wikipedia.org":{
+		"wiki": new RegExp("^https://fr.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://ja.wikipedia.org":{
+		"wiki": new RegExp("^https://ja.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://ru.wikipedia.org":{
+		"wiki": new RegExp("^https://ru.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://zh.wikipedia.org":{
+		"wiki": new RegExp("^https://zh.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	}
 };
@@ -564,7 +576,7 @@ const WIDGET_STYLE = `
 .lessLaborGoToDictionary-apiWikiText .mw-empty-elt {
 	display: none;
 }
-.lessLaborGoToDictionary-apiWikiText a.new {
+#lessLaborGoToDictionary-apiContent .lessLaborGoToDictionary-apiWikiText a.new {
 	color: #dd3333;
 }
 .lessLaborGoToDictionary-apiWikiText table.wikitable {
@@ -605,7 +617,7 @@ const WIDGET_STYLE = `
 	color: white;
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
-.lessLaborGoToDictionary-openTabImage {
+.lessLaborGoToDictionary-apiWikiText .lessLaborGoToDictionary-openTabImage {
 	vertical-align: middle;
 	margin-left: 2px;
 }
