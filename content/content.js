@@ -1684,6 +1684,10 @@
 			list[i].setAttribute("target", "_blank");
 			list[i].setAttribute("rel", "noreferrer");
 			list[i].addEventListener("click", onClickAnchor);
+			let img = document.createElement("img");
+			img.classList.add(CSS_PREFIX+"-openTabImage");
+			img.setAttribute("src", ponyfill.extension.getURL("/image/link.svg"));
+			list[i].appendChild(img);
 		}
 		return node;
 	}

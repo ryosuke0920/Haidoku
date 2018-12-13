@@ -605,4 +605,8 @@ const WIDGET_STYLE = `
 	color: white;
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
+.lessLaborGoToDictionary-openTabImage {
+	vertical-align: middle;
+	margin-left: 2px;
+}
 `;
