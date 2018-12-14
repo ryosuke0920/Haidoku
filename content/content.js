@@ -1236,7 +1236,7 @@
 			"status": wiktionaryRequestStatus,
 			"data": {
 				"text": text,
-				"serviceCode": serviceCode
+				"service": API_SERVICE[serviceCode]
 			},
 			"node":{
 				"wrapper": wiktionaryContent,
@@ -1286,7 +1286,7 @@
 			"status": wikipediaRequestStatus,
 			"data": {
 				"text": text,
-				"serviceCode": serviceCode2
+				"service": API_SERVICE[serviceCode2]
 			},
 			"node":{
 				"wrapper": wikipediaContent,
@@ -1680,7 +1680,7 @@
 	}
 
 	function convertAnchor(node, service){
-		let regexes = Object.values(API_SERVICE_PROPERTY).map(x=>x.wiki);
+		let services = Object.values(API_SERVICE_PROPERTY);
 		let list = node.querySelectorAll("a");
 		for(let i=0; i<list.length; i++){
 			let url = list[i].getAttribute("href");
@@ -1690,17 +1690,15 @@
 			list[i].setAttribute("rel", "noreferrer");
 			list[i].addEventListener("click", onClickAnchor);
 			let matches;
-			for(let j=0; j<regexes.length; j++){
-				matches = url.match(regexes[j]);
+			for(let j=0; j<services.length; j++){
+				matches = url.match(services[j].wiki);
 				if(!matches) continue;
 				let word = matches[1];
 				if(word.match(CORON_REGEX)) continue;
 				if(matches = word.match(SHARP_REGEX)) word = matches[1];
 				list[i].setAttribute("data-word", decodeURIComponent(word));
-				let img = document.createElement("img");
-				img.classList.add(OUTER_LINK_CLASS);
-				img.setAttribute("src", ponyfill.extension.getURL("/image/link.svg"));
-				list[i].appendChild(img);
+				list[i].setAttribute("data-service", services[j].key);
+				list[i].removeEventListener("click", onClickAnchor);
 				list[i].addEventListener("click", onClickWiki);
 				break;
 			}
@@ -1708,8 +1706,11 @@
 		return node;
 	}
 	function onClickWiki(e){
-		if(!e.target.classList.contains(OUTER_LINK_CLASS)){
+		let word = e.target.getAttribute("data-word");
+		let service = e.target.getAttribute("data-service");
+		if( word != null ){
 			e.preventDefault();
+			apiWiktionaryRequest(word);
 		}
 	}
 

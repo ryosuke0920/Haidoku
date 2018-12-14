@@ -94,7 +94,7 @@ function notify(message, sender, sendResponse){
 		return Promise.resolve(faviconCache);
 	}
 	else if( method == "apiRequest" ){
-		return apiRequest(data.text, data.serviceCode).catch((e)=>{
+		return apiRequest(data.text, data.service).catch((e)=>{
 			console.error(e);
 			return Promise.reject(e);
 		});
@@ -561,17 +561,10 @@ function broadcastWindows(windows){
 	}
 }
 
-function apiRequest(text, serviceCode){
+function apiRequest(text, service){
 	let obj = {
 		"text": text
 	};
-	if(!API_SERVICE.hasOwnProperty(serviceCode)){
-		obj.error = APPLICATION_ERROR;
-		obj.code = serviceCode;
-		obj.message = "service not found.";
-		return Promise.resolve(obj);
-	}
-	let service = API_SERVICE[serviceCode];
 	obj.service = service;
 	obj.path = API_SERVICE_PROPERTY[service].path;
 	obj.url = [];

@@ -54,6 +54,7 @@ const API_SERVICE = {
 };
 const API_SERVICE_PROPERTY = {
 	"https://de.wiktionary.org":{
+		"key": "https://de.wiktionary.org",
 		"wiki": new RegExp("^https://de.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["Deutsch","Englisch"],
 		"namespace":"Kategorie",
@@ -67,6 +68,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://en.wiktionary.org":{
+		"key": "https://en.wiktionary.org",
 		"wiki": new RegExp("^https://en.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["English language"],
 		"namespace":"Category",
@@ -79,6 +81,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://fr.wiktionary.org":{
+		"key": "https://fr.wiktionary.org",
 		"wiki": new RegExp("^https://fr.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["français","anglais"],
 		"namespace":"Catégorie",
@@ -91,6 +94,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://ja.wiktionary.org":{
+		"key": "https://ja.wiktionary.org",
 		"wiki": new RegExp("^https://ja.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["日本語","英語"],
 		"namespace":"カテゴリ",
@@ -103,6 +107,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://ru.wiktionary.org":{
+		"key": "https://ru.wiktionary.org",
 		"wiki": new RegExp("^https://ru.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["Русский язык","Английский язык"],
 		"namespace":"Категория",
@@ -115,6 +120,7 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://zh.wiktionary.org":{
+		"key": "https://zh.wiktionary.org",
 		"wiki": new RegExp("^https://zh.wiktionary.org/wiki/(.+)"),
 		"defaultLanguage": ["汉语","英语"],
 		"namespace":"Category",
@@ -127,26 +133,32 @@ const API_SERVICE_PROPERTY = {
 		"path": "/w/api.php"
 	},
 	"https://de.wikipedia.org":{
+		"key": "https://de.wikipedia.org",
 		"wiki": new RegExp("^https://de.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://en.wikipedia.org":{
+		"key": "https://en.wikipedia.org",
 		"wiki": new RegExp("^https://en.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://fr.wikipedia.org":{
+		"key": "https://fr.wikipedia.org",
 		"wiki": new RegExp("^https://fr.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://ja.wikipedia.org":{
+		"key": "https://ja.wikipedia.org",
 		"wiki": new RegExp("^https://ja.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://ru.wikipedia.org":{
+		"key": "https://ru.wikipedia.org",
 		"wiki": new RegExp("^https://ru.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	},
 	"https://zh.wikipedia.org":{
+		"key": "https://zh.wikipedia.org",
 		"wiki": new RegExp("^https://zh.wikipedia.org/wiki/(.+)"),
 		"path": "/w/api.php"
 	}
@@ -616,9 +628,5 @@ const WIDGET_STYLE = `
 	background-color: rgba(255,0,0,0.65);
 	color: white;
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
-}
-.lessLaborGoToDictionary-apiWikiText .lessLaborGoToDictionary-openTabImage {
-	vertical-align: middle;
-	margin-left: 2px;
 }
 `;
