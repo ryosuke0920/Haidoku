@@ -1104,7 +1104,7 @@
 			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
 			footerNode.innerText = FOOTER_CONTENT;
 			if(isEnableApi() && hasWiktionaryCode()){
-				apiWiktionaryRequest(tmpText);
+				apiWiktionaryRequest(tmpText, API_SERVICE[serviceCode]);
 			}
 		}
 		else if(id == CSS_PREFIX+"-wikipediaButton"){
@@ -1112,7 +1112,7 @@
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
 			footerNode.innerText = FOOTER_CONTENT2;
 			if(isEnableApi() && hasWikipediaCode()){
-				apiWikipediaRequest(tmpText);
+				apiWikipediaRequest(tmpText, API_SERVICE[serviceCode2]);
 			}
 		}
 	}
@@ -1220,14 +1220,14 @@
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
 		tmpText = text;
 		if( hasWiktionaryCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWiktionary") ){
-			apiWiktionaryRequest(text);
+			apiWiktionaryRequest(text, API_SERVICE[serviceCode]);
 		}
 		if( hasWikipediaCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWikipedia") ){
-			apiWikipediaRequest(text);
+			apiWikipediaRequest(text, API_SERVICE[serviceCode2]);
 		}
 	}
 
-	function apiWiktionaryRequest(text){
+	function apiWiktionaryRequest(text, service){
 		clearWiktionaryContent();
 		let delay = wiktionaryRequestStatus.hasAnother();
 		wiktionaryRequestStatus.abort();
@@ -1236,7 +1236,7 @@
 			"status": wiktionaryRequestStatus,
 			"data": {
 				"text": text,
-				"service": API_SERVICE[serviceCode]
+				"service": service
 			},
 			"node":{
 				"wrapper": wiktionaryContent,
@@ -1277,7 +1277,7 @@
 		}
 	}
 
-	function apiWikipediaRequest(text){
+	function apiWikipediaRequest(text, service){
 		clearWikipediaContent();
 		let delay = wikipediaRequestStatus.hasAnother();
 		wikipediaRequestStatus.abort();
@@ -1286,7 +1286,7 @@
 			"status": wikipediaRequestStatus,
 			"data": {
 				"text": text,
-				"service": API_SERVICE[serviceCode2]
+				"service": service
 			},
 			"node":{
 				"wrapper": wikipediaContent,
@@ -1698,6 +1698,7 @@
 				if(matches = word.match(SHARP_REGEX)) word = matches[1];
 				list[i].setAttribute("data-word", decodeURIComponent(word));
 				list[i].setAttribute("data-service", services[j].key);
+				list[i].setAttribute("data-type", services[j].type);
 				list[i].removeEventListener("click", onClickAnchor);
 				list[i].addEventListener("click", onClickWiki);
 				break;
@@ -1707,10 +1708,16 @@
 	}
 	function onClickWiki(e){
 		let word = e.target.getAttribute("data-word");
-		let service = e.target.getAttribute("data-service");
 		if( word != null ){
 			e.preventDefault();
-			apiWiktionaryRequest(word);
+			let service = e.target.getAttribute("data-service");
+			let type = e.target.getAttribute("data-type");
+			if(type=="t") {
+				apiWiktionaryRequest(word, service);
+			}
+			else {
+				apiWikipediaRequest(word, service);
+			}
 		}
 	}
 
