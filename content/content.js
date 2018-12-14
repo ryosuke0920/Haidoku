@@ -164,7 +164,6 @@
 		apiContentNode.appendChild(apiOffNode);
 
 		wiktionaryContent = document.createElement("div");
-		wiktionaryContent.setAttribute("id",CSS_PREFIX+"-wiktionaryContent");
 		wiktionaryContent.setAttribute("class",CSS_PREFIX+"-wikiContent");
 		apiContentNode.appendChild(wiktionaryContent);
 

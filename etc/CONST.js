@@ -393,12 +393,6 @@ const WIDGET_STYLE = `
 #hdk-apiContent a:active {
 	color: #ee0000;
 }
-/*
-.hdk-selectWiktionary #hdk-wiktionaryContent,
-.hdk-selectWikipedia #hdk-wikipediaContent {
-	display: block;
-}
-*/
 #hdk-apiHeader {
 	background: linear-gradient(#FFFFFF, #F0F0F0);
 	padding: 3px;
@@ -414,7 +408,6 @@ const WIDGET_STYLE = `
 }
 .hdk-wikiContent {
 	border-top: solid 1px #808080;
-	//display: none;
 }
 .hdk-hide.hdk-wikiContent,
 .hdk-apiDisabled .hdk-wikiContent {
