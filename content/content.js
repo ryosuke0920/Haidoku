@@ -17,9 +17,8 @@
 	const API_QUERY_DERAY = 1000;
 	const API_TEXT_MAX_LENGTH = 255;
 	const API_TEXT_MAX_LENGTH_ERROR = "max length error";
-	const CORON_REGEX = /:/;
+	const COLON_REGEX = /:/;
 	const SHARP_REGEX = /^(.+)#/;
-	const OUTER_LINK_CLASS = CSS_PREFIX+"-openTabImage";
 
 	let dlModel = new domainListModel();
 	let weModel = new widgetEnableModel();
@@ -1627,7 +1626,7 @@
 				matches = url.match(services[j].wiki);
 				if(!matches) continue;
 				let word = matches[1];
-				if(word.match(CORON_REGEX)) continue;
+				if(word.match(COLON_REGEX)) continue;
 				if(matches = word.match(SHARP_REGEX)) word = matches[1];
 				list[i].setAttribute("data-word", decodeURIComponent(word));
 				list[i].setAttribute("data-service", services[j].key);
