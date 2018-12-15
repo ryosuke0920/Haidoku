@@ -407,6 +407,7 @@ const WIDGET_STYLE = `
 	margin-right: 5px;
 }
 .hdk-wikiContent {
+	position: relative;
 	border-top: solid 1px #808080;
 }
 .hdk-hide.hdk-wikiContent,
@@ -447,7 +448,7 @@ const WIDGET_STYLE = `
 	font-size: 14px;
 	padding: 5px;
 }
-.hdk-loading .hdk-apiTitleBox {
+.hdk-apiTitleBox.hdk-hide {
 	display: none;
 }
 .hdk-unmatchText.hdk-hide {
@@ -470,10 +471,10 @@ const WIDGET_STYLE = `
 	display: block;
 }
 .hdk-apiLoading {
-	padding: 5px;
 	display: none;
-	height: 8em;
-	min-height: 8em;
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }
 .hdk-separator .hdk-apiLoading {
 }
@@ -513,9 +514,6 @@ const WIDGET_STYLE = `
 }
 .hdk-apiWikiText {
 	padding: 5px;
-}
-.hdk-loading .hdk-apiWikiText {
-	display: none;
 }
 .hdk-apiWikiText h1,
 .hdk-apiWikiText h2,

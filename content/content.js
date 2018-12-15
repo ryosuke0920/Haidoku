@@ -36,6 +36,7 @@
 	let containerNode;
 	let footerNode;
 	let apiContentNode;
+	let apiTitleBoxNode;
 	let apiTitleNode;
 	let apiErrorMessageNode;
 	let apiBodyNode;
@@ -167,15 +168,7 @@
 		wiktionaryContent.setAttribute("class",CSS_PREFIX+"-wikiContent");
 		apiContentNode.appendChild(wiktionaryContent);
 
-		let apiLoadingNode = document.createElement("div");
-		apiLoadingNode.classList.add(CSS_PREFIX+"-apiLoading");
-		wiktionaryContent.appendChild(apiLoadingNode);
-
-		let apiLoadingContentNode = document.createElement("div");
-		apiLoadingContentNode.classList.add(CSS_PREFIX+"-apiLoadingContent");
-		apiLoadingNode.appendChild(apiLoadingContentNode);
-
-		let apiTitleBoxNode = document.createElement("h1");
+		apiTitleBoxNode = document.createElement("h1");
 		apiTitleBoxNode.classList.add(CSS_PREFIX+"-apiTitleBox");
 		wiktionaryContent.appendChild(apiTitleBoxNode);
 
@@ -209,6 +202,14 @@
 		apiErrorMessageNode = document.createElement("span");
 		apiErrorMessageNode.setAttribute("id",CSS_PREFIX+"-apiErrorMessage");
 		apiTitleBoxNode.appendChild(apiErrorMessageNode);
+
+		let apiLoadingNode = document.createElement("div");
+		apiLoadingNode.classList.add(CSS_PREFIX+"-apiLoading");
+		wiktionaryContent.appendChild(apiLoadingNode);
+
+		let apiLoadingContentNode = document.createElement("div");
+		apiLoadingContentNode.classList.add(CSS_PREFIX+"-apiLoadingContent");
+		apiLoadingNode.appendChild(apiLoadingContentNode);
 
 		apiBodyNode = document.createElement("div");
 		apiBodyNode.setAttribute("id",CSS_PREFIX+"-apiBody");
@@ -787,7 +788,7 @@
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		removeLinkListActonEvent();
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = wiktionaryRequestStatus = wikipediaRequestStatus = unmatchTextNode = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleBoxNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = wiktionaryRequestStatus = wikipediaRequestStatus = unmatchTextNode = undefined;
 	}
 	function enableWidget(){
 		start();
@@ -1037,6 +1038,7 @@
 			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
 			footerNode.innerText = FOOTER_CONTENT;
 			if(isEnableApi() && hasWiktionaryCode()){
+				addLoading();
 				apiWiktionaryRequest(tmpText, API_SERVICE[serviceCode]);
 			}
 		}
@@ -1045,6 +1047,7 @@
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
 			footerNode.innerText = FOOTER_CONTENT2;
 			if(isEnableApi() && hasWikipediaCode()){
+				addLoading();
 				apiWikipediaRequest(tmpText, API_SERVICE[serviceCode2]);
 			}
 		}
@@ -1150,6 +1153,8 @@
 	}
 
 	function apiRequest(text){
+		hide(apiTitleBoxNode);
+		clearApiContent();
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
 		tmpText = text;
 		if( hasWiktionaryCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWiktionary") ){
@@ -1161,7 +1166,6 @@
 	}
 
 	function apiWiktionaryRequest(text, service){
-		clearApiContent();
 		let delay = wiktionaryRequestStatus.hasAnother();
 		wiktionaryRequestStatus.abort();
 		let obj = {
@@ -1202,7 +1206,6 @@
 	}
 
 	function apiWikipediaRequest(text, service){
-		clearApiContent();
 		let delay = wikipediaRequestStatus.hasAnother();
 		wikipediaRequestStatus.abort();
 		let obj = {
@@ -1245,12 +1248,21 @@
 	function removeLoading(){
 		widgetNode.classList.remove(CSS_PREFIX+"-loading");
 	}
+
+	function addLoading(){
+		widgetNode.classList.add(CSS_PREFIX+"-loading");
+	}
+
 	function clearApiContent(){
+		clearWikiContent();
+		addLoading();
+	}
+
+	function clearWikiContent(){
 		show(historyButtoneNode);
 		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
 		clearApiTitle();
-		widgetNode.classList.add(CSS_PREFIX+"-loading");
 	}
 
 	function clearApiTitle(){
@@ -1265,6 +1277,7 @@
 
 	function apiWiktionaryResponse(e){
 		if( !this.status.isActive(this.id) ) return;
+		clearWikiContent();
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		makeApiTitleNode(e.text, e.title, e.fullurl);
 		let property = API_SERVICE_PROPERTY[e.service];
@@ -1342,11 +1355,13 @@
 				apiBodyNode.appendChild(base);
 			}
 		}
+		show(apiTitleBoxNode);
 		removeLoading();
 	}
 
 	function apiWikipediaResponse(e){
 		if( !this.status.isActive(this.id) ) return;
+		clearWikiContent();
 		if( e.hasOwnProperty("error") ) return apiResponseError.bind(this)(e);
 		makeApiTitleNode(e.text, e.title, e.fullurl);
 		let bases = makeBaseHTML(e.html);
@@ -1360,6 +1375,7 @@
 			base = convertReferer(base);
 			apiBodyNode.appendChild(base);
 		}
+		show(apiTitleBoxNode);
 		removeLoading();
 	}
 
@@ -1619,6 +1635,7 @@
 			e.preventDefault();
 			let service = e.target.getAttribute("data-service");
 			let type = e.target.getAttribute("data-type");
+			addLoading();
 			if(type=="t") {
 				apiWiktionaryRequest(word, service);
 			}
@@ -1663,11 +1680,13 @@
 
 	function apiResponseError(e){
 		if(!this.status.isActive(this.id)) return;
+		clearWikiContent();
 		let self = this;
 		function after(content){
 			hide( historyButtoneNode );
 			hide( historyDoneButtoneNode );
 			apiBodyNode.appendChild(content);
+			show(apiTitleBoxNode);
 			removeLoading();
 		}
 		function setApiErrorMessage(text){
