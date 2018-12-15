@@ -117,14 +117,6 @@
 			}
 		}
 	},
-	"htmlApplicationError": {
-		"message": "拡張機能がエラーを返しました。$ERROR$",
-		"placeholders": {
-			"ERROR": {
-				"content": "$1"
-			}
-		}
-	},
 	"htmlUnexpectedError": {
 		"message": "予期せぬエラーが発生しました。$ERROR$",
 		"placeholders": {

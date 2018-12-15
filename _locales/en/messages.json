@@ -117,14 +117,6 @@
 			}
 		}
 	},
-	"htmlApplicationError": {
-		"message": "Got an error from this add-on. $ERROR$",
-		"placeholders": {
-			"ERROR": {
-				"content": "$1"
-			}
-		}
-	},
 	"htmlUnexpectedError": {
 		"message": "An unexpected error. $ERROR$",
 		"placeholders": {

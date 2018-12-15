@@ -629,7 +629,7 @@
 		widgetNodeLeft = makeWidgetPointX(rect);
 		widgetNodeTop = makeWidgetPointY(rect);
 		moveWidget();
-		scrollWidget(0,0);
+		initScrollWidget();
 	}
 
 	function makeWidgetPointX(rect){
@@ -944,7 +944,7 @@
 			addStopper();
 			widgetScrollTopTmp = widgetNode.scrollTop;
 			widgetScrollleftTmp = widgetNode.scrollLeft;
-			scrollWidget(0,0);
+			initScrollWidget();
 		}
 	}
 
@@ -1354,7 +1354,7 @@
 			}
 		}
 		apiBodyNode.appendChild(makeFooterNode(FOOTER_CONTENT));
-		scrollWidget(0,0);
+		initScrollWidget();
 		show(apiTitleBoxNode);
 		removeLoading();
 	}
@@ -1376,7 +1376,7 @@
 			apiBodyNode.appendChild(base);
 		}
 		apiBodyNode.appendChild(makeFooterNode(FOOTER_CONTENT2));
-		scrollWidget(0,0);
+		initScrollWidget();
 		show(apiTitleBoxNode);
 		removeLoading();
 	}
@@ -1728,12 +1728,6 @@
 				after(content);
 				return;
 			}
-			else if( e.error == APPLICATION_ERROR ){
-				setApiErrorMessage(e.text);
-				content.innerText = ponyfill.i18n.getMessage("htmlApplicationError",[e.code]);
-				after(content);
-				return;
-			}
 		}
 		console.error(e);
 		setApiErrorMessage(e.text);
@@ -1813,6 +1807,10 @@
 	function scrollWidget(top, left){
 		widgetNode.scrollTop = top;
 		widgetNode.scrollLeft = left;
+	}
+
+	function initScrollWidget(){
+		scrollWidget(0,0);
 	}
 
 	function saveHistoryWithNode(titleNode){
