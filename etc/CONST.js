@@ -286,9 +286,7 @@ const WIDGET_STYLE = `
 	display: none;
 	border-top: solid 1px #808080;
 	background: linear-gradient(#FFFFFF, #F0F0F0);
-	color: #808080;
-	font-size: 0.8em;
-	padding: 3px;
+	height: 22px;
 }
 .hdk-enableWiktionary #hdk-footer,
 .hdk-enableWikipedia #hdk-footer {
@@ -407,6 +405,7 @@ const WIDGET_STYLE = `
 	margin-right: 5px;
 }
 .hdk-wikiContent {
+	min-height: 5em;
 	position: relative;
 	border-top: solid 1px #808080;
 }
@@ -633,5 +632,9 @@ const WIDGET_STYLE = `
 	background-color: rgba(255,0,0,0.65);
 	color: white;
 	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+}
+.hdk-apiWikiText .hdk-apiFooter {
+	color: #808080;
+	font-size: 90%;
 }
 `;

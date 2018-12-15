@@ -486,11 +486,9 @@
 		if( hasWikipediaCode() ) widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
 		if( !hasWiktionaryCode() && hasWikipediaCode() ){
 			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
-			footerNode.innerText = footerNode.title = FOOTER_CONTENT2;
 		}
 		else {
 			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
-			footerNode.innerText = footerNode.title = FOOTER_CONTENT;
 		}
 		show(apiContentNode);
 	}
@@ -1020,6 +1018,9 @@
 			show(historyDoneButtoneNode);
 			saveHistoryWithNode(apiTitleNode).catch(onSaveError);
 		}
+		else if(id == CSS_PREFIX+"-apiTitle"){
+			closeLinkListDelay();
+		}
 		else if(id == CSS_PREFIX+"-zoomUp"){
 			if( zoomLinkList(1) ) Promise.resolve().then(saveAnchorSize).catch(onSaveError);
 		}
@@ -1036,7 +1037,6 @@
 		else if(id == CSS_PREFIX+"-wiktionaryButton"){
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
 			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
-			footerNode.innerText = FOOTER_CONTENT;
 			if(isEnableApi() && hasWiktionaryCode()){
 				addLoading();
 				apiWiktionaryRequest(tmpText, API_SERVICE[serviceCode]);
@@ -1045,7 +1045,6 @@
 		else if(id == CSS_PREFIX+"-wikipediaButton"){
 			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
-			footerNode.innerText = FOOTER_CONTENT2;
 			if(isEnableApi() && hasWikipediaCode()){
 				addLoading();
 				apiWikipediaRequest(tmpText, API_SERVICE[serviceCode2]);
@@ -1355,6 +1354,8 @@
 				apiBodyNode.appendChild(base);
 			}
 		}
+		apiBodyNode.appendChild(makeFooterNode(FOOTER_CONTENT));
+		scrollWidget(0,0);
 		show(apiTitleBoxNode);
 		removeLoading();
 	}
@@ -1375,8 +1376,17 @@
 			base = convertReferer(base);
 			apiBodyNode.appendChild(base);
 		}
+		apiBodyNode.appendChild(makeFooterNode(FOOTER_CONTENT2));
+		scrollWidget(0,0);
 		show(apiTitleBoxNode);
 		removeLoading();
+	}
+
+	function makeFooterNode(text){
+		let p = document.createElement("p");
+		p.classList.add(CSS_PREFIX+"-apiFooter");
+		p.innerText = text;
+		return p
 	}
 
 	function makeApiTitleNode(text,　title,　url){
