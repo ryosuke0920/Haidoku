@@ -1353,7 +1353,8 @@
 
 	function makeApiTitleNode(text,　title,　url){
 		if( text.toLowerCase() != title.toLowerCase() ) show(unmatchTextNode);
-		apiTitleNode.innerText = apiTitleNode.title = title;
+		apiTitleNode.innerText = title;
+		apiTitleNode.setAttribute("title", title);
 		apiTitleNode.setAttribute("data-text", text);
 		apiTitleNode.setAttribute("data-title", title);
 		apiTitleNode.setAttribute("href", url);
