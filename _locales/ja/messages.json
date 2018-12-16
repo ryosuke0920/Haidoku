@@ -3,7 +3,7 @@
 		"message": "Haidoku"
 	},
 	"extensionDescription": {
-		"message": "単語検索を支援します。"
+		"message": "Dictionaries in your browser"
 	},
 	"extensionOptionAutoView": {
 		"message": "自動表示"
@@ -111,14 +111,6 @@
 	},
 	"htmlServerError": {
 		"message": "サーバーがエラーを返しました。$ERROR$",
-		"placeholders": {
-			"ERROR": {
-				"content": "$1"
-			}
-		}
-	},
-	"htmlApplicationError": {
-		"message": "拡張機能がエラーを返しました。$ERROR$",
 		"placeholders": {
 			"ERROR": {
 				"content": "$1"
