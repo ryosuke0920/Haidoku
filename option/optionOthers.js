@@ -498,9 +498,7 @@
 		sampleWidgetNode.classList.remove(CSS_PREFIX+"-enableWikipedia");
 		sampleWidgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
 		sampleWidgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
-		let footer = sampleWidgetNode.querySelector("#"+CSS_PREFIX+"-footer");
 		if( isApiEnable() ){
-			footer.innerText = footer.title = FOOTER_CONTENT;
 			if(getServiceCode()!=API_SERVICE_CODE_NONE){
 				sampleWidgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
 				sampleWidgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
@@ -509,7 +507,6 @@
 				sampleWidgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
 				if(getServiceCode()==API_SERVICE_CODE_NONE){
 					sampleWidgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
-					footer.innerText = footer.title = FOOTER_CONTENT2;
 				}
 			}
 		}

@@ -126,13 +126,6 @@
 		},
 		"hash": "be39487fc661ffa5771d62ece9f41a3b"
 	},
-	"htmlApplicationError": {
-		"message": "从此加载项收到错误。$ERROR$",
-		"placeholders": {
-			"ERROR": { "content": "$1" }
-		},
-		"hash": "94fbe0a411b299ce3b8541eacf2c94e2"
-	},
 	"htmlUnexpectedError": {
 		"message": "发生意外错误。$ERROR$",
 		"placeholders": {
