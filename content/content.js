@@ -22,8 +22,7 @@
 
 	let dlModel = new domainListModel();
 	let weModel = new widgetEnableModel();
-	let wikipediaRequestStatus;
-	let wiktionaryRequestStatus;
+	let reqestStatus;
 
 	let enableWidgetValue;
 	let domainList;
@@ -269,8 +268,7 @@
 			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
 		}
 
-		wikipediaRequestStatus = new requestStatusModel();
-		wiktionaryRequestStatus = new requestStatusModel();
+		reqestStatus = new requestStatusModel();
 
 		resetLinkListEvents();
 		addCommonLinkListEvents();
@@ -505,8 +503,7 @@
 	function closeLinkList(){
 		resetScrollTmp();
 		hide(widgetNode);
-		wiktionaryRequestStatus.abort();
-		wikipediaRequestStatus.abort();
+		reqestStatus.abort();
 		ponyfill.runtime.sendMessage({"method":"audioStopByTabId"});
 	}
 
@@ -785,7 +782,7 @@
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		removeLinkListActonEvent();
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleBoxNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = wiktionaryRequestStatus = wikipediaRequestStatus = unmatchTextNode = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleBoxNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = reqestStatus = unmatchTextNode = undefined;
 	}
 	function enableWidget(){
 		start();
@@ -1038,7 +1035,7 @@
 			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
 			if(isEnableApi() && hasWiktionaryCode()){
 				addLoading();
-				apiWiktionaryRequest(tmpText, API_SERVICE[serviceCode]);
+				apiWikimediaRequest(tmpText, API_SERVICE[serviceCode]);
 			}
 		}
 		else if(id == CSS_PREFIX+"-wikipediaButton"){
@@ -1046,7 +1043,7 @@
 			widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
 			if(isEnableApi() && hasWikipediaCode()){
 				addLoading();
-				apiWikipediaRequest(tmpText, API_SERVICE[serviceCode2]);
+				apiWikimediaRequest(tmpText, API_SERVICE[serviceCode2]);
 			}
 		}
 	}
@@ -1156,19 +1153,20 @@
 		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
 		tmpText = text;
 		if( hasWiktionaryCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWiktionary") ){
-			apiWiktionaryRequest(text, API_SERVICE[serviceCode]);
+			apiWikimediaRequest(text, API_SERVICE[serviceCode]);
 		}
-		if( hasWikipediaCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWikipedia") ){
-			apiWikipediaRequest(text, API_SERVICE[serviceCode2]);
+		else {
+			apiWikimediaRequest(text, API_SERVICE[serviceCode2]);
 		}
 	}
 
-	function apiWiktionaryRequest(text, service){
-		let delay = wiktionaryRequestStatus.hasAnother();
-		wiktionaryRequestStatus.abort();
+	function apiWikimediaRequest(text, service){
+		let delay = reqestStatus.hasAnother();
+		reqestStatus.abort();
 		let obj = {
-			"id": wiktionaryRequestStatus.start(),
-			"status": wiktionaryRequestStatus,
+			"id": reqestStatus.start(),
+			"type": API_SERVICE_PROPERTY[service].type,
+			"status": reqestStatus,
 			"data": {
 				"text": text,
 				"service": service
@@ -1193,49 +1191,12 @@
 			ponyfill.runtime.sendMessage({
 				"method": "apiRequest",
 				"data": obj.data
-			}).then(
-				apiWiktionaryResponse.bind(obj)
-			).catch(
-				apiResponseError.bind(obj)
-			).finally(()=>{
-				obj.status.done(obj.id);
-			});
-		}
-	}
-
-	function apiWikipediaRequest(text, service){
-		let delay = wikipediaRequestStatus.hasAnother();
-		wikipediaRequestStatus.abort();
-		let obj = {
-			"id": wikipediaRequestStatus.start(),
-			"status": wikipediaRequestStatus,
-			"data": {
-				"text": text,
-				"service": service
-			}
-		};
-		if( !checkByte(text, API_TEXT_MAX_LENGTH) ){
-			obj.data.error = API_TEXT_MAX_LENGTH_ERROR;
-			apiResponseError.bind(obj)(obj.data);
-			obj.status.done(obj.id);
-			return;
-		}
-		if(!delay) {
-			apiRequestStart(obj);
-			return;
-		}
-		setTimeout((e)=>{
-			if( !obj.status.isActive(obj.id) ) return;
-			apiRequestStart(obj);
-		}, API_QUERY_DERAY);
-
-		function apiRequestStart(obj){
-			ponyfill.runtime.sendMessage({
-				"method": "apiRequest",
-				"data": obj.data
-			}).then(
-				apiWikipediaResponse.bind(obj)
-			).catch(
+			}).then((e)=>{
+				if(obj.type == API_SERVICE_WIKIPEDIA_TYPE){
+					return apiWikipediaResponse.bind(obj)(e);
+				}
+				return apiWiktionaryResponse.bind(obj)(e);
+			}).catch(
 				apiResponseError.bind(obj)
 			).finally(()=>{
 				obj.status.done(obj.id);
@@ -1630,7 +1591,6 @@
 				if(matches = word.match(SHARP_REGEX)) word = matches[1];
 				list[i].setAttribute("data-word", decodeURIComponent(word));
 				list[i].setAttribute("data-service", services[j].key);
-				list[i].setAttribute("data-type", services[j].type);
 				list[i].removeEventListener("click", onClickAnchor);
 				list[i].addEventListener("click", onClickWiki);
 				break;
@@ -1643,14 +1603,8 @@
 		if( word != null ){
 			e.preventDefault();
 			let service = e.target.getAttribute("data-service");
-			let type = e.target.getAttribute("data-type");
 			addLoading();
-			if(type=="t") {
-				apiWiktionaryRequest(word, service);
-			}
-			else {
-				apiWikipediaRequest(word, service);
-			}
+			apiWikimediaRequest(word, service);
 		}
 	}
 
