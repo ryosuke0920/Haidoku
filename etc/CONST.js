@@ -54,11 +54,12 @@ const API_SERVICE = {
 };
 const API_SERVICE_WIKIPEDIA_TYPE = "p";
 const API_SERVICE_WIKTIONARY_TYPE = "t";
+const API_SERVICE_PATH = "/w/api.php";
 const API_SERVICE_PROPERTY = {
 	"https://de.wiktionary.org":{
 		"key": "https://de.wiktionary.org",
 		"type": API_SERVICE_WIKTIONARY_TYPE,
-		"wiki": new RegExp("^https://de.wiktionary.org/wiki/(.+)"),
+		"wiki": new RegExp("^https://de\\.wiktionary\\.org/wiki/(.+)"),
 		"defaultLanguage": ["Deutsch","Englisch"],
 		"namespace":"Kategorie",
 		"langCat": "Kategorie:Sprachen",
@@ -68,12 +69,12 @@ const API_SERVICE_PROPERTY = {
 		"languageBottomRegex":"\\)$",
 		"cutOut": "Bedeutungen:",
 		"prefixFlag":true,
-		"path": "/w/api.php"
+		"path": API_SERVICE_PATH
 	},
 	"https://en.wiktionary.org":{
 		"key": "https://en.wiktionary.org",
 		"type": API_SERVICE_WIKTIONARY_TYPE,
-		"wiki": new RegExp("^https://en.wiktionary.org/wiki/(.+)"),
+		"wiki": new RegExp("^https://en\\.wiktionary\\.org/wiki/(.+)"),
 		"defaultLanguage": ["English language"],
 		"namespace":"Category",
 		"langCat": "Category:All_languages",
@@ -82,12 +83,12 @@ const API_SERVICE_PROPERTY = {
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
 		"prefixFlag":true,
-		"path": "/w/api.php"
+		"path": API_SERVICE_PATH
 	},
 	"https://fr.wiktionary.org":{
 		"key": "https://fr.wiktionary.org",
 		"type": API_SERVICE_WIKTIONARY_TYPE,
-		"wiki": new RegExp("^https://fr.wiktionary.org/wiki/(.+)"),
+		"wiki": new RegExp("^https://fr\\.wiktionary\\.org/wiki/(.+)"),
 		"defaultLanguage": ["français","anglais"],
 		"namespace":"Catégorie",
 		"langCat": "Catégorie:Langues",
@@ -96,12 +97,12 @@ const API_SERVICE_PROPERTY = {
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
 		"prefixFlag":true,
-		"path": "/w/api.php"
+		"path": API_SERVICE_PATH
 	},
 	"https://ja.wiktionary.org":{
 		"key": "https://ja.wiktionary.org",
 		"type": API_SERVICE_WIKTIONARY_TYPE,
-		"wiki": new RegExp("^https://ja.wiktionary.org/wiki/(.+)"),
+		"wiki": new RegExp("^https://ja\\.wiktionary\\.org/wiki/(.+)"),
 		"defaultLanguage": ["日本語","英語"],
 		"namespace":"カテゴリ",
 		"langCat": "カテゴリ:言語",
@@ -110,12 +111,12 @@ const API_SERVICE_PROPERTY = {
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
 		"prefixFlag":true,
-		"path": "/w/api.php"
+		"path": API_SERVICE_PATH
 	},
 	"https://ru.wiktionary.org":{
 		"key": "https://ru.wiktionary.org",
 		"type": API_SERVICE_WIKTIONARY_TYPE,
-		"wiki": new RegExp("^https://ru.wiktionary.org/wiki/(.+)"),
+		"wiki": new RegExp("^https://ru\\.wiktionary\\.org/wiki/(.+)"),
 		"defaultLanguage": ["Русский язык","Английский язык"],
 		"namespace":"Категория",
 		"langCat": "Категория:Алфавитный_список_языков",
@@ -124,12 +125,12 @@ const API_SERVICE_PROPERTY = {
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
 		"prefixFlag":true,
-		"path": "/w/api.php"
+		"path": API_SERVICE_PATH
 	},
 	"https://zh.wiktionary.org":{
 		"key": "https://zh.wiktionary.org",
 		"type": API_SERVICE_WIKTIONARY_TYPE,
-		"wiki": new RegExp("^https://zh.wiktionary.org/wiki/(.+)"),
+		"wiki": new RegExp("^https://zh\\.wiktionary\\.org/wiki/(.+)"),
 		"defaultLanguage": ["汉语","英语"],
 		"namespace":"Category",
 		"langCat": "分类:所有语言",
@@ -138,43 +139,43 @@ const API_SERVICE_PROPERTY = {
 		"languageTopRegex":"^",
 		"languageBottomRegex":"$",
 		"prefixFlag":false,
-		"path": "/w/api.php"
+		"path": API_SERVICE_PATH
 	},
 	"https://de.wikipedia.org":{
 		"key": "https://de.wikipedia.org",
 		"type": API_SERVICE_WIKIPEDIA_TYPE,
-		"wiki": new RegExp("^https://de.wikipedia.org/wiki/(.+)"),
-		"path": "/w/api.php"
+		"wiki": new RegExp("^https://de\\.wikipedia\\.org/wiki/(.+)"),
+		"path": API_SERVICE_PATH
 	},
 	"https://en.wikipedia.org":{
 		"key": "https://en.wikipedia.org",
 		"type": API_SERVICE_WIKIPEDIA_TYPE,
-		"wiki": new RegExp("^https://en.wikipedia.org/wiki/(.+)"),
-		"path": "/w/api.php"
+		"wiki": new RegExp("^https://en\\.wikipedia\\.org/wiki/(.+)"),
+		"path": API_SERVICE_PATH
 	},
 	"https://fr.wikipedia.org":{
 		"key": "https://fr.wikipedia.org",
 		"type": API_SERVICE_WIKIPEDIA_TYPE,
-		"wiki": new RegExp("^https://fr.wikipedia.org/wiki/(.+)"),
-		"path": "/w/api.php"
+		"wiki": new RegExp("^https://fr\\.wikipedia\\.org/wiki/(.+)"),
+		"path": API_SERVICE_PATH
 	},
 	"https://ja.wikipedia.org":{
 		"key": "https://ja.wikipedia.org",
 		"type": API_SERVICE_WIKIPEDIA_TYPE,
-		"wiki": new RegExp("^https://ja.wikipedia.org/wiki/(.+)"),
-		"path": "/w/api.php"
+		"wiki": new RegExp("^https://ja\\.wikipedia\\.org/wiki/(.+)"),
+		"path": API_SERVICE_PATH
 	},
 	"https://ru.wikipedia.org":{
 		"key": "https://ru.wikipedia.org",
 		"type": API_SERVICE_WIKIPEDIA_TYPE,
-		"wiki": new RegExp("^https://ru.wikipedia.org/wiki/(.+)"),
-		"path": "/w/api.php"
+		"wiki": new RegExp("^https://ru\\.wikipedia\\.org/wiki/(.+)"),
+		"path": API_SERVICE_PATH
 	},
 	"https://zh.wikipedia.org":{
 		"key": "https://zh.wikipedia.org",
 		"type": API_SERVICE_WIKIPEDIA_TYPE,
-		"wiki": new RegExp("^https://zh.wikipedia.org/wiki/(.+)"),
-		"path": "/w/api.php"
+		"wiki": new RegExp("^https://zh\\.wikipedia\\.org/wiki/(.+)"),
+		"path": API_SERVICE_PATH
 	}
 };
 const PAGE_NOT_FOUND_ERROR = "page not found";
