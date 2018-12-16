@@ -1656,7 +1656,8 @@
 			removeLoading();
 		}
 		function setApiErrorMessage(text){
-			apiErrorMessageNode.innerText = apiErrorMessageNode.title = text;
+			apiErrorMessageNode.innerText = text;
+			apiErrorMessageNode.setAttribute("title", text);
 		}
 		clearApiTitle();
 		let content = document.createElement("div");
