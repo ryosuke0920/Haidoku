@@ -44,6 +44,7 @@
 	let unmatchTextNode;
 	let historyButtoneNode;
 	let historyDoneButtoneNode;
+	let apiFooterNode;
 	let widgetNodeTop = 0;
 	let widgetNodeLeft = 0;
 	let widgetNodeHeight = LINK_NODE_DEFAULT_HEIGHT;
@@ -250,6 +251,9 @@
 		optionNode.classList.add(CSS_PREFIX+"-buttonIcon");
 		optionNode.title = ponyfill.i18n.getMessage("htmloption");
 		menuNode.appendChild(optionNode);
+
+		apiFooterNode = document.createElement("p");
+		apiFooterNode.classList.add(CSS_PREFIX+"-apiFooter");
 
 		applyZoomLinkList();
 		applyLinkListSize();
@@ -782,7 +786,7 @@
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		removeLinkListActonEvent();
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleBoxNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = reqestStatus = unmatchTextNode = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleBoxNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = reqestStatus = unmatchTextNode = apiFooterNode = undefined;
 	}
 	function enableWidget(){
 		start();
@@ -1343,10 +1347,8 @@
 	}
 
 	function makeFooterNode(text){
-		let p = document.createElement("p");
-		p.classList.add(CSS_PREFIX+"-apiFooter");
-		p.innerText = text;
-		return p
+		apiFooterNode.innerText = text;
+		return apiFooterNode;
 	}
 
 	function makeApiTitleNode(text,　title,　url){
