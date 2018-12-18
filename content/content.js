@@ -173,6 +173,8 @@
 
 		unmatchTextNode = document.createElement("div");
 		unmatchTextNode.classList.add(CSS_PREFIX+"-unmatchText");
+		unmatchTextNode.classList.add(CSS_PREFIX+"-apiWarningMessage");
+		unmatchTextNode.classList.add(CSS_PREFIX+"-orange");
 		unmatchTextNode.innerText = unmatchTextNode.title = ponyfill.i18n.getMessage("htmlUnmatchText");
 		apiTitleBoxNode.appendChild(unmatchTextNode);
 

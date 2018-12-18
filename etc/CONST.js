@@ -452,8 +452,24 @@ const WIDGET_STYLE = `
 .hdk-apiTitleBox.hdk-hide {
 	display: none;
 }
+.hdk-unmatchText {
+	margin-bottom: 0.5em;
+}
 .hdk-unmatchText.hdk-hide {
 	display: none;
+}
+.hdk-apiWarningMessage {
+	padding: 2px;
+	border: solid 1px red;
+	border-radius: 5px;
+	background-color: rgba(255,0,0,0.65);
+	color: white;
+	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+}
+.hdk-apiWarningMessage.hdk-orange {
+	border: solid 1px orange;
+	background-color: rgba(255,165,0,0.65);
+	color: #7F5200;
 }
 .hdk-historyButton {
 	vertical-align: middle;
@@ -626,14 +642,6 @@ const WIDGET_STYLE = `
 }
 .hdk-apiWikiText .hdk-play.hdk-playing {
 	background-color: #888888;
-}
-.hdk-apiWikiText div.hdk-apiWarningMessage {
-	padding: 2px;
-	border: solid 1px red;
-	border-radius: 5px;
-	background-color: rgba(255,0,0,0.65);
-	color: white;
-	box-shadow: rgba(0, 0, 0, 0.32) 0px 2px 2px 0px, rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
 }
 .hdk-apiWikiText .hdk-apiFooter {
 	color: #808080;
