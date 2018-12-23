@@ -234,7 +234,11 @@ const WIDGET_STYLE = `
 	background: linear-gradient(#FFFFFF, #F0F0F0);
 	white-space: nowrap;
 	padding: 3px;
-	height: 26px;
+	height: 22px;
+	border-bottom: solid 1px #808080;
+	position: sticky;
+	top: 0;
+	z-index: 1;
 }
 .hdk-dark #hdk-menu {
 	background: linear-gradient(#404040, #202020);
@@ -274,7 +278,6 @@ const WIDGET_STYLE = `
 	cursor: move;
 }
 #hdk-grid {
-	border-top: solid 1px #808080;
 }
 .hdk-separator #hdk-grid {
 	display: grid;
