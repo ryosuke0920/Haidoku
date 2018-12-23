@@ -234,6 +234,13 @@
 		arrowNode.title = ponyfill.i18n.getMessage("htmlMove");
 		menuNode.appendChild(arrowNode);
 
+		let scrollNode = document.createElement("div");
+		scrollNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/scroll.svg")+")";
+		scrollNode.setAttribute("id",CSS_PREFIX+"-scroll");
+		scrollNode.classList.add(CSS_PREFIX+"-buttonIcon");
+		scrollNode.title = ponyfill.i18n.getMessage("htmlScroll");
+		menuNode.appendChild(scrollNode);
+
 		let resizeNode = document.createElement("div");
 		resizeNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/resize.svg")+")";
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
@@ -1047,6 +1054,9 @@
 		else if(id == CSS_PREFIX+"-resize"){
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
 			Promise.resolve().then(saveLinkListSize).catch(onSaveError);
+		}
+		else if(id == CSS_PREFIX+"-scroll"){
+			initScrollWidget();
 		}
 		else if(id == CSS_PREFIX+"-option"){
 			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).catch(unexpectedError);

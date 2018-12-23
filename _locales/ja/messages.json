@@ -140,6 +140,9 @@
 	"htmlResize": {
 		"message": "ウィジェットのサイズをリセットする"
 	},
+	"htmlScroll": {
+		"message": "トップへスクロールする"
+	},
 	"htmlOption": {
 		"message": "設定画面を開く"
 	},

@@ -151,6 +151,9 @@
 		"message": "重置小部件大小",
 		"hash": "1a32eddb430ceb4affbfda70f08b3590"
 	},
+	"htmlScroll": {
+		"message": "滚动到顶部"
+	},
 	"htmlOption": {
 		"message": "打开设置屏幕",
 		"hash": "390ab690f3730257355047d9a47c31ab"

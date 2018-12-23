@@ -140,6 +140,9 @@
 	"htmlResize": {
 		"message": "Reset widget size"
 	},
+	"htmlScroll": {
+		"message": "Scroll to the top"
+	},
 	"htmlOption": {
 		"message": "Open setting screen"
 	},
