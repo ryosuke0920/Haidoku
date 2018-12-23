@@ -487,6 +487,9 @@ const WIDGET_STYLE = `
 .hdk-apiDisabled #hdk-apiOffMsg {
 	display: block;
 }
+.hdk-linkageMessage {
+	margin-bottom: 1em;
+}
 .hdk-apiLoading {
 	display: none;
 	position: absolute;

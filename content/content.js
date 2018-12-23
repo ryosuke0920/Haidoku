@@ -159,8 +159,17 @@
 
 		let apiOffNode = document.createElement("div");
 		apiOffNode.setAttribute("id",CSS_PREFIX+"-apiOff");
-		apiOffNode.innerText = ponyfill.i18n.getMessage("htmlLinkageMessage");
 		apiContentNode.appendChild(apiOffNode);
+
+		let offMsgNode1 = document.createElement("p");
+		offMsgNode1.classList.add(CSS_PREFIX+"-linkageMessage");
+		offMsgNode1.innerText = ponyfill.i18n.getMessage("htmlLinkageMessage1");
+		apiOffNode.appendChild(offMsgNode1);
+
+		let offMsgNode2 = document.createElement("p");
+		offMsgNode2.classList.add(CSS_PREFIX+"-linkageMessage");
+		offMsgNode2.innerText = ponyfill.i18n.getMessage("htmlLinkageMessage2");
+		apiOffNode.appendChild(offMsgNode2);
 
 		wiktionaryContent = document.createElement("div");
 		wiktionaryContent.setAttribute("class",CSS_PREFIX+"-wikiContent");
