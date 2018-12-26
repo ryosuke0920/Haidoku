@@ -26,7 +26,6 @@
 
 	let enableWidgetValue;
 	let domainList;
-	let tmpText = "";
 	let rootNode;
 	let widgetNode;
 	let coverNode;
@@ -160,8 +159,17 @@
 
 		let apiOffNode = document.createElement("div");
 		apiOffNode.setAttribute("id",CSS_PREFIX+"-apiOff");
-		apiOffNode.innerText = ponyfill.i18n.getMessage("htmlLinkageMessage");
 		apiContentNode.appendChild(apiOffNode);
+
+		let offMsgNode1 = document.createElement("p");
+		offMsgNode1.classList.add(CSS_PREFIX+"-linkageMessage");
+		offMsgNode1.innerText = ponyfill.i18n.getMessage("htmlLinkageMessage1");
+		apiOffNode.appendChild(offMsgNode1);
+
+		let offMsgNode2 = document.createElement("p");
+		offMsgNode2.classList.add(CSS_PREFIX+"-linkageMessage");
+		offMsgNode2.innerText = ponyfill.i18n.getMessage("htmlLinkageMessage2");
+		apiOffNode.appendChild(offMsgNode2);
 
 		wiktionaryContent = document.createElement("div");
 		wiktionaryContent.setAttribute("class",CSS_PREFIX+"-wikiContent");
@@ -173,6 +181,8 @@
 
 		unmatchTextNode = document.createElement("div");
 		unmatchTextNode.classList.add(CSS_PREFIX+"-unmatchText");
+		unmatchTextNode.classList.add(CSS_PREFIX+"-apiWarningMessage");
+		unmatchTextNode.classList.add(CSS_PREFIX+"-orange");
 		unmatchTextNode.innerText = unmatchTextNode.title = ponyfill.i18n.getMessage("htmlUnmatchText");
 		apiTitleBoxNode.appendChild(unmatchTextNode);
 
@@ -224,6 +234,13 @@
 		arrowNode.title = ponyfill.i18n.getMessage("htmlMove");
 		menuNode.appendChild(arrowNode);
 
+		let scrollNode = document.createElement("div");
+		scrollNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/scroll.svg")+")";
+		scrollNode.setAttribute("id",CSS_PREFIX+"-scroll");
+		scrollNode.classList.add(CSS_PREFIX+"-buttonIcon");
+		scrollNode.title = ponyfill.i18n.getMessage("htmlScroll");
+		menuNode.appendChild(scrollNode);
+
 		let resizeNode = document.createElement("div");
 		resizeNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/resize.svg")+")";
 		resizeNode.setAttribute("id",CSS_PREFIX+"-resize");
@@ -264,13 +281,6 @@
 		applyLinknListSeparator();
 		applyApiSwitch();
 		applyServiceCode();
-
-		if (hasWiktionaryCode()){
-			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
-		}
-		else if (hasWikipediaCode()){
-			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
-		}
 
 		reqestStatus = new requestStatusModel();
 
@@ -327,7 +337,7 @@
 			closeLinkList();
 			return;
 		};
-		makeLinkList(text);
+		makeWidget(text);
 		showLinkListByClick();
 		if(!isEnableApi()) return;
 		apiRequest(text);
@@ -373,7 +383,7 @@
 		selectionChangedFlag = false;
 		let text = selection.toString();
 		if( !checkBlank(text) ) return;
-		makeLinkList(text);
+		makeWidget(text);
 		showLinkListByClick();
 		if(!isEnableApi()) return;
 		apiRequest(text);
@@ -397,7 +407,7 @@
 			if( selection.isCollapsed ) return;
 			let text = selection.toString();
 			if( !checkBlank(text) ) return;
-			makeLinkList(text);
+			makeWidget(text);
 			showLinkListByKey();
 			if(!isEnableApi()) return;
 			apiRequest(text);
@@ -480,20 +490,28 @@
 		hide(apiContentNode);
 		widgetNode.classList.remove(CSS_PREFIX+"-enableWiktionary");
 		widgetNode.classList.remove(CSS_PREFIX+"-enableWikipedia");
-		widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
-		widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
 		if( !hasServiceCode() ) return;
 		if( hasWiktionaryCode() ) widgetNode.classList.add(CSS_PREFIX+"-enableWiktionary");
 		if( hasWikipediaCode() ) widgetNode.classList.add(CSS_PREFIX+"-enableWikipedia");
 		if( !hasWiktionaryCode() && hasWikipediaCode() ){
-			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+			addSelectWikipedia()
 		}
 		else {
-			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+			addSelectWiktionary()
 		}
 		show(apiContentNode);
 	}
-
+	function hasSelectWiktionary(){
+		return widgetNode.classList.contains(CSS_PREFIX+"-selectWiktionary");
+	}
+	function addSelectWiktionary(){
+		widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
+		widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
+	}
+	function addSelectWikipedia(){
+		widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
+		widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
+	}
 	function saveLinkListSize(){
 		return ponyfill.runtime.sendMessage({
 			"method": "saveLinkListSize",
@@ -546,14 +564,20 @@
 		return widgetNode.getAttribute("data-selected-text");
 	}
 
-	function makeLinkList(text){
+	function makeWidget(text) {
 		setSelectedText(text);
+		clearApiContent();
+		applyApiSwitch();
+		hide(apiTitleBoxNode);
+		makeLinkList(text);
+	}
+
+	function makeLinkList(text){
 		let list = containerNode.querySelectorAll("."+CSS_PREFIX+"-list");
 		for(let i=0; i<list.length; i++){
 			let node = list[i];
 			containerNode.removeChild(node);
 		}
-		clearApiContent();
 		for(let i=0; i<optionList.length; i++){
 			let item = optionList[i];
 			let li = document.createElement("li");
@@ -1031,24 +1055,23 @@
 			resetSize(LINK_NODE_DEFAULT_HEIGHT, LINK_NODE_DEFAULT_WIDTH);
 			Promise.resolve().then(saveLinkListSize).catch(onSaveError);
 		}
+		else if(id == CSS_PREFIX+"-scroll"){
+			initScrollWidget();
+		}
 		else if(id == CSS_PREFIX+"-option"){
 			ponyfill.runtime.sendMessage({"method": "openOptions"}).then(closeLinkList).catch(unexpectedError);
 		}
 		else if(id == CSS_PREFIX+"-wiktionaryButton"){
-			widgetNode.classList.remove(CSS_PREFIX+"-selectWikipedia");
-			widgetNode.classList.add(CSS_PREFIX+"-selectWiktionary");
-			if(isEnableApi() && hasWiktionaryCode()){
-				addLoading();
-				apiWikimediaRequest(tmpText, API_SERVICE[serviceCode]);
-			}
+			addSelectWiktionary()
+			addLoading();
+			removeApiDisabled();
+			apiWikimediaRequest(getSelectedText(), API_SERVICE[serviceCode]);
 		}
 		else if(id == CSS_PREFIX+"-wikipediaButton"){
-			widgetNode.classList.add(CSS_PREFIX+"-selectWikipedia");
-			widgetNode.classList.remove(CSS_PREFIX+"-selectWiktionary");
-			if(isEnableApi() && hasWikipediaCode()){
-				addLoading();
-				apiWikimediaRequest(tmpText, API_SERVICE[serviceCode2]);
-			}
+			addSelectWikipedia()
+			addLoading();
+			removeApiDisabled();
+			apiWikimediaRequest(getSelectedText(), API_SERVICE[serviceCode2]);
 		}
 	}
 
@@ -1154,9 +1177,7 @@
 	function apiRequest(text){
 		hide(apiTitleBoxNode);
 		clearApiContent();
-		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
-		tmpText = text;
-		if( hasWiktionaryCode() && widgetNode.classList.contains(CSS_PREFIX+"-selectWiktionary") ){
+		if( hasSelectWiktionary() ){
 			apiWikimediaRequest(text, API_SERVICE[serviceCode]);
 		}
 		else {
@@ -1165,6 +1186,7 @@
 	}
 
 	function apiWikimediaRequest(text, service){
+		text = text.replace(REMOVE_SPACE_REGEX," ").trim();
 		let delay = reqestStatus.hasAnother();
 		reqestStatus.abort();
 		let obj = {
@@ -1721,14 +1743,23 @@
 	function setApiSwitch(res){
 		apiSwitchFlag = res;
 	}
+
+	function addApiDisabled(){
+		widgetNode.classList.add(CSS_PREFIX+"-apiDisabled");
+	}
+
+	function removeApiDisabled(){
+		widgetNode.classList.remove(CSS_PREFIX+"-apiDisabled");
+	}
+
 	function applyApiSwitch(){
 		if(apiSwitchFlag != API_SWITCH_ENABLED){
 			apiSwitcheNode.removeAttribute("data-checked");
-			widgetNode.classList.add(CSS_PREFIX+"-apiDisabled");
+			addApiDisabled();
 		}
 		else {
 			apiSwitcheNode.setAttribute("data-checked", API_SWITCH_ENABLED);
-			widgetNode.classList.remove(CSS_PREFIX+"-apiDisabled");
+			removeApiDisabled();
 		}
 	}
 

@@ -95,6 +95,7 @@
 		setI18n(list);
 		list = [
 			{ "selector": "#"+CSS_PREFIX+"-move", "property": "title", "key": "htmlMove" },
+			{ "selector": "#"+CSS_PREFIX+"-scroll", "property": "title", "key": "htmlScroll" },
 			{ "selector": "#"+CSS_PREFIX+"-zoomDown", "property": "title", "key": "htmlZoomDown" },
 			{ "selector": "#"+CSS_PREFIX+"-zoomUp", "property": "title", "key": "htmlZoomUp" },
 			{ "selector": "#"+CSS_PREFIX+"-resize", "property": "title", "key": "htmlResize" },
