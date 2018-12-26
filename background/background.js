@@ -113,7 +113,7 @@ function notify(message, sender, sendResponse){
 	}
 	else if( method == "audioStopByTabId" ){
 		audioStopByTabId(sender.tab.id);
-		return;
+		return Promise.resolve();
 	}
 	else {
 		return save(data).catch((e)=>{

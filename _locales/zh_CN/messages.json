@@ -74,9 +74,11 @@
 		"message": "有链接维基词典已禁用。",
 		"hash": "bea5e4d8140b5528e36d7ab12a912f80"
 	},
-	"htmlLinkageMessage": {
-		"message": "启用左上方的幻灯片按钮，维基词典链接或维基百科链接。 如果您选择任何文本，则文本会自动发送到服务器进行搜索，即使文本中包含您的隐私信息（如密码）也是如此。 所以要小心使用。 我建议您在不需要时禁用它或按允许的域启用小部件。",
-		"hash": "d967f0b0d1df90a4bdb339a4ed9adf7d"
+	"htmlLinkageMessage1": {
+		"message": "单击上面的“Wiktionary”或“Wikipedia”，将显示搜索所选文本的结果。"
+	},
+	"htmlLinkageMessage2": {
+		"message": "打开左上方的滑动按钮，即使文本中包含您的隐私信息（如密码），所选文本也会自动发送到服务器进行搜索。 我建议您在不需要时禁用它或按允许的域启用小部件。"
 	},
 	"htmlNowSearching": {
 		"message": "正在搜索。",
@@ -148,6 +150,9 @@
 	"htmlResize": {
 		"message": "重置小部件大小",
 		"hash": "1a32eddb430ceb4affbfda70f08b3590"
+	},
+	"htmlScroll": {
+		"message": "滚动到顶部"
 	},
 	"htmlOption": {
 		"message": "打开设置屏幕",

@@ -69,8 +69,11 @@
 	"htmlLinkageDisabled": {
 		"message": "Wiktionary Linkage is disabled."
 	},
-	"htmlLinkageMessage": {
-		"message": "Turn on the upper left slide button, Wiktionary Linkage or Wikipedia Linkage are enabled. If you select any text, the text is automatically sent to the server for searching, even if the text includes your privacy information like a password. So use carefully. I recommend that you disable when you don't need it or enable widget by allowed domains."
+	"htmlLinkageMessage1": {
+		"message": "Click \"Wiktionary\" or \"Wikipedia\" above, the selected text search result is displayed."
+	},
+	"htmlLinkageMessage2": {
+		"message": "Turn on the upper left slide button, the selected text is automatically sent to the server to search, even if the text includes your privacy information like a password. I recommend that you disable when you don't need it or enable widget by allowed domains."
 	},
 	"htmlNowSearching": {
 		"message": "Now searching."
@@ -136,6 +139,9 @@
 	},
 	"htmlResize": {
 		"message": "Reset widget size"
+	},
+	"htmlScroll": {
+		"message": "Scroll to the top"
 	},
 	"htmlOption": {
 		"message": "Open setting screen"
