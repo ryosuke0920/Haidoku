@@ -1531,70 +1531,101 @@
 
 	function convertAudio(node, service){
 		let list = node.querySelectorAll("audio");
-		for(let i=0; i<list.length; i++){
-			let audio = list[i];
-			audio.style.display = "none";
-			let playButton = document.createElement("span");
-			playButton.classList.add(CSS_PREFIX+"-play");
-			if(audio.nextElementSibling){
-				audio.nextElementSibling.insertBefore(playButton);
-			}
-			else{
-				audio.parentNode.appendChild(playButton);
-			}
-			playButton.addEventListener("click",(e)=>{
-				let button = e.target;
-				let status = button.getAttribute("data-status") || "0";
-				if (button.classList.contains(CSS_PREFIX+"-playing") && status == "2") {
-					let p = ponyfill.runtime.sendMessage({
-						"method": "audioStop",
-						"data": {
-							"audioId": button.getAttribute("id")
-						}
-					});
-					button.removeAttribute("id");
-					button.removeAttribute("data-status");
-					button.classList.remove(CSS_PREFIX+"-playing");
-					return p;
-				}
-				if( status != "0" ) return;
-				let url = audio.currentSrc;
-				if(!url){
-					let list = audio.querySelectorAll("source");
-					for(let i=list.length-1; 0<=i; i--){
-						url = list[i].src;
-						if( url.match("ogg$") ) break;
-					}
-				}
-				if(!url) return onAudioPlayError( new Error("Audio source not found.") );
-				url = new URL(url, service).href;
-				let p = ponyfill.runtime.sendMessage({
-					"method": "audioStart",
-					"data": {
-						"url": url
-					}
-				});
-				p.then((e)=>{
-					button.setAttribute("id", e.audioId);
-					button.setAttribute("data-status","2");
-				}).catch( (e)=>{
-					button.removeAttribute("data-status");
-					button.classList.remove(CSS_PREFIX+"-playing");
-					return onAudioPlayError(e);
-				});
-				button.setAttribute("data-status","1");
-				button.classList.add(CSS_PREFIX+"-playing");
-			});
-		}
+		for(let i=0; i<list.length; i++) _convertAudio(list[i], service);
 		return node;
 	}
 
+	function _convertAudio(audio, service){
+		audio.style.display = "none";
+		let url = audio.currentSrc;
+		if(!url){
+			let list = audio.querySelectorAll("source");
+			for(let i=list.length-1; 0<=i; i--){
+				url = list[i].src;
+				if( url.match("ogg$") ) break;
+			}
+		}
+		url = new URL(url, service).href;
+
+		let audioControl = document.createElement("span");
+		audioControl.classList.add(CSS_PREFIX+"-audioControl");
+		audioControl.setAttribute("data-url", url);
+		if(audio.nextElementSibling){
+			audio.nextElementSibling.insertBefore(audioControl);
+		}
+		else{
+			audio.parentNode.appendChild(audioControl);
+		}
+
+		let playButton = document.createElement("span");
+		playButton.classList.add(CSS_PREFIX+"-play");
+		playButton.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/play.svg")+")";
+		audioControl.appendChild(playButton);
+
+		let stopButton = document.createElement("span");
+		stopButton.classList.add(CSS_PREFIX+"-stop");
+		stopButton.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/stop.svg")+")";
+		audioControl.appendChild(stopButton);
+
+		let volumeButtom = document.createElement("span");
+		volumeButtom.classList.add(CSS_PREFIX+"-volume");
+		volumeButtom.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/volume.svg")+")";
+		audioControl.appendChild(volumeButtom);
+
+		let volumeInput = document.createElement("input");
+		volumeInput.classList.add(CSS_PREFIX+"-volumeInput");
+		volumeInput.setAttribute("type", "range");
+		volumeInput.setAttribute("min", "0");
+		volumeInput.setAttribute("max", "1");
+		volumeInput.setAttribute("step", "0.1");
+		audioControl.appendChild(volumeInput);
+
+		audioControl.addEventListener("click",(e)=>{
+			if(e.target.classList.contains(CSS_PREFIX+"-play")){
+				audioPlay(e.currentTarget);
+			}
+			else if(e.target.classList.contains(CSS_PREFIX+"-stop")){
+				audioStopCall(e.currentTarget);
+			}
+		});
+	}
+
+	function audioPlay(audioControl){
+		let url = audioControl.getAttribute("data-url");
+		if(!url) return onAudioPlayError( new Error("Audio source not found.") );
+		let volumeInput = audioControl.querySelector("."+CSS_PREFIX+"-volumeInput");
+		let p = ponyfill.runtime.sendMessage({
+			"method": "audioStart",
+			"data": {
+				"url": url,
+				"volume": volumeInput.value
+			}
+		});
+		p.then((e)=>{
+			audioControl.setAttribute("id", e.audioId);
+		}).catch( (e)=>{
+			audioControl.classList.remove(CSS_PREFIX+"-playing");
+			return onAudioPlayError(e);
+		});
+		audioControl.classList.add(CSS_PREFIX+"-playing");
+	}
+
+	function audioStopCall(audioControl){
+		let p = ponyfill.runtime.sendMessage({
+			"method": "audioStop",
+			"data": {
+				"audioId": audioControl.getAttribute("id")
+			}
+		});
+		audioControl.removeAttribute("id");
+		audioControl.classList.remove(CSS_PREFIX+"-playing");
+	}
+
 	function audioStop(audioId){
-		let button = widgetNode.querySelector("#"+ audioId);
-		if(!button) return;
-		button.removeAttribute("id");
-		button.removeAttribute("data-status");
-		button.classList.remove(CSS_PREFIX+"-playing");
+		let audioControl = widgetNode.querySelector("#"+ audioId);
+		if(!audioControl) return;
+		audioControl.removeAttribute("id");
+		audioControl.classList.remove(CSS_PREFIX+"-playing");
 	}
 
 	function convertAnchor(node, service){
