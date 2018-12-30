@@ -1578,6 +1578,7 @@
 		volumeInput.setAttribute("min", "0");
 		volumeInput.setAttribute("max", "1");
 		volumeInput.setAttribute("step", "0.1");
+		volumeInput.setAttribute("value", "0.5");
 		audioControl.appendChild(volumeInput);
 
 		audioControl.addEventListener("click",(e)=>{
