@@ -113,6 +113,10 @@ function notify(message, sender, sendResponse){
 		audioStopByTabId(sender.tab.id);
 		return Promise.resolve();
 	}
+	else if( method == "volumeUpdate" ){
+		volumeUpdate(data.audioId, data.volume);
+		return Promise.resolve();
+	}
 	else {
 		return save(data).catch((e)=>{
 			console.error(e);
@@ -906,6 +910,13 @@ function audioStop(audioId){
 	let audio = list[0].audio;
 	audio.pause();
 	audioList = audioList.filter( obj => obj.id != audioId );
+}
+
+function volumeUpdate(audioId, volume){
+	let list = audioList.filter( obj => obj.id == audioId );
+	if( list.length == 0 ) return;
+	let audio = list[0].audio;
+	audio.volume = volume;
 }
 
 function tabsOnRemovedBehavior(tabId, removeInfo){

@@ -1577,7 +1577,7 @@
 		volumeInput.setAttribute("type", "range");
 		volumeInput.setAttribute("min", "0");
 		volumeInput.setAttribute("max", "1");
-		volumeInput.setAttribute("step", "0.1");
+		volumeInput.setAttribute("step", "0.05");
 		volumeInput.setAttribute("value", "0.5");
 		audioControl.appendChild(volumeInput);
 
@@ -1587,6 +1587,12 @@
 			}
 			else if(e.target.classList.contains(CSS_PREFIX+"-stop")){
 				audioStopCall(e.currentTarget);
+			}
+		});
+
+		audioControl.addEventListener("input",(e)=>{
+			if(e.target.classList.contains(CSS_PREFIX+"-volumeInput")){
+				volumeUpdate(e.currentTarget);
 			}
 		});
 	}
@@ -1627,6 +1633,18 @@
 		if(!audioControl) return;
 		audioControl.removeAttribute("id");
 		audioControl.classList.remove(CSS_PREFIX+"-playing");
+	}
+
+	function volumeUpdate(audioControl){
+		if(!audioControl.classList.contains(CSS_PREFIX+"-playing")) return;
+		let volumeInput = audioControl.querySelector("."+CSS_PREFIX+"-volumeInput");
+		let p = ponyfill.runtime.sendMessage({
+			"method": "volumeUpdate",
+			"data": {
+				"audioId": audioControl.getAttribute("id"),
+				"volume": volumeInput.value
+			}
+		});
 	}
 
 	function convertAnchor(node, service){
