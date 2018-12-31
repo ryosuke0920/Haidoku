@@ -100,19 +100,21 @@ function notify(message, sender, sendResponse){
 		});
 	}
 	else if( method == "audioStop" ){
-		return audioStop(data.audioId).catch((e)=>{
-			console.error(e);
-			return Promise.reject(e);
-		});
+		audioStop(data.audioId);
+		return Promise.resolve();
 	}
 	else if( method == "audioStart" ){
-		return audioStart(data.url, sender.tab.id).catch((e)=>{
+		return audioStart(data.url, data.volume, sender.tab.id).catch((e)=>{
 			console.error(e);
 			return Promise.reject(e);
 		});
 	}
 	else if( method == "audioStopByTabId" ){
 		audioStopByTabId(sender.tab.id);
+		return Promise.resolve();
+	}
+	else if( method == "volumeUpdate" ){
+		volumeUpdate(data.audioId, data.volume);
 		return Promise.resolve();
 	}
 	else {
@@ -860,8 +862,11 @@ function fetchApiDocumentCache(text, serviceCode){
 	return false;
 }
 
-function audioStart(url, tabId){
-	let obj = {"tabId": tabId};
+function audioStart(url, volume, tabId){
+	let obj = {
+		"tabId": tabId,
+		"volume": volume
+	};
 	return promiseAjax("GET", url, "blob").then( onDownloadAsBase64.bind(obj) );
 }
 
@@ -889,6 +894,7 @@ function audioPlay(base64){
 		audioList = audioList.filter( obj => obj.id != id );
 		ponyfill.tabs.sendMessage(this.tabId, {"method":"audioStop","audioId":id});
 	});
+	audio.volume = this.volume;
 	return audio.play().then(()=>{
 		return {"audioId": id};
 	}).catch((e)=>{
@@ -904,6 +910,13 @@ function audioStop(audioId){
 	let audio = list[0].audio;
 	audio.pause();
 	audioList = audioList.filter( obj => obj.id != audioId );
+}
+
+function volumeUpdate(audioId, volume){
+	let list = audioList.filter( obj => obj.id == audioId );
+	if( list.length == 0 ) return;
+	let audio = list[0].audio;
+	audio.volume = volume;
 }
 
 function tabsOnRemovedBehavior(tabId, removeInfo){
