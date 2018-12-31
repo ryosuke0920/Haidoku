@@ -633,21 +633,37 @@ const WIDGET_STYLE = `
 .hdk-apiWikiText .NavFrame > .NavHead:hover {
 	background-color: #c0f0c0;
 }
-.hdk-apiWikiText .hdk-play {
+.hdk-apiWikiText .hdk-audioControl {
 	display: inline-block;
-	background: transparent;
-	box-sizing: border-box;
-	width: 0;
-	height: 20px;
-	border-color: transparent transparent transparent #888888;
-	border-style: solid;
-	border-width: 10px 0px 10px 20px;
-	cursor: pointer;
-	vertical-align: middle;
-	margin: 2px;
+	width: 100px;
+	height: 16px;
 }
-.hdk-apiWikiText .hdk-play.hdk-playing {
-	background-color: #888888;
+.hdk-apiWikiText .hdk-play,
+.hdk-apiWikiText .hdk-stop,
+.hdk-apiWikiText .hdk-volume {
+	width: 16px;
+	height: 16px;
+	margin-right: 2px;
+}
+.hdk-apiWikiText .hdk-play,
+.hdk-apiWikiText .hdk-stop {
+	cursor: pointer;
+}
+.hdk-apiWikiText .hdk-play, .hdk-apiWikiText .hdk-volume {
+	display: inline-block;
+}
+.hdk-apiWikiText .hdk-stop {
+	display: none;
+}
+.hdk-apiWikiText .hdk-playing .hdk-play {
+	display: none;
+}
+.hdk-apiWikiText .hdk-playing .hdk-stop {
+	display: inline-block;
+}
+.hdk-apiWikiText .hdk-volumeInput {
+	display: inline-block;
+	width: 50px;
 }
 .hdk-apiWikiText .hdk-apiFooter {
 	color: #808080;
