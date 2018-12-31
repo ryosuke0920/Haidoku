@@ -100,10 +100,8 @@ function notify(message, sender, sendResponse){
 		});
 	}
 	else if( method == "audioStop" ){
-		return audioStop(data.audioId).catch((e)=>{
-			console.error(e);
-			return Promise.reject(e);
-		});
+		audioStop(data.audioId);
+		return Promise.resolve();
 	}
 	else if( method == "audioStart" ){
 		return audioStart(data.url, data.volume, sender.tab.id).catch((e)=>{
