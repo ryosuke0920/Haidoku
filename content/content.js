@@ -296,6 +296,7 @@
 		widgetNode.addEventListener("mousedown", mousedownCommonBehavior);
 		document.addEventListener("mousedown", mousedownOuterBehavior);
 		apiSwitcheNode.addEventListener("click", apiSwitchBehavior);
+		window.addEventListener("unload",unloadBehavior);
 	}
 
 	function addAutoLinkListEvents(){
@@ -310,6 +311,11 @@
 		document.addEventListener("selectionchange", manualSelectionChangeBehavior);
 		document.removeEventListener("mouseup", mouseupAutoBehavior);
 		document.removeEventListener("mousedown", mousedownAutoBehavior);
+		window.removeEventListener("unload",unloadBehavior);
+	}
+
+	function unloadBehavior(e){
+		ponyfill.runtime.sendMessage({"method":"audioStopByTabId"});
 	}
 
 	function updateInnerSelectionFlag(){
@@ -797,6 +803,7 @@
 		return rootNode !== undefined;
 	}
 	function disableWidget(){
+		closeLinkList();
 		widgetNode.removeEventListener("click", menuClickBihavior);
 		widgetNode.removeEventListener("mousedown", mousedownCommonBehavior);
 		apiSwitcheNode.removeEventListener("click", apiSwitchBehavior);
