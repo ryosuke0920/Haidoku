@@ -635,15 +635,18 @@ const WIDGET_STYLE = `
 }
 .hdk-apiWikiText .hdk-audioControl {
 	display: inline-block;
-	width: 100px;
-	height: 16px;
+	background-color: white;
+	padding: 2px;
+	border-radius: 2px;
+}
+.hdk-apiWikiText .hdk-audioControl > *{
+	vertical-align: middle;
 }
 .hdk-apiWikiText .hdk-play,
 .hdk-apiWikiText .hdk-stop,
 .hdk-apiWikiText .hdk-volume {
 	width: 16px;
 	height: 16px;
-	margin-right: 2px;
 }
 .hdk-apiWikiText .hdk-play,
 .hdk-apiWikiText .hdk-stop {
