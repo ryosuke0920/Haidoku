@@ -12,10 +12,10 @@
 		"message": "Display manually"
 	},
 	"extensionOptionManualViewByShiftKey": {
-		"message": "Display with Shift key"
+		"message": "Display/hide with Shift key"
 	},
 	"extensionOptionManualViewByCtrlKey": {
-		"message": "Display with Ctrl key"
+		"message": "Display/hide with Ctrl key"
 	},
 	"extensionOptionName": {
 		"message": "Options"
@@ -144,7 +144,7 @@
 		"message": "Scroll to the top"
 	},
 	"htmlOption": {
-		"message": "Open setting screen"
+		"message": "Open settings screen"
 	},
 	"htmlSaveHistory": {
 		"message": "Save history"
@@ -165,7 +165,7 @@
 		"message": "Wikipedia"
 	},
 	"htmlFormName": {
-		"message": "Link edit"
+		"message": "Edit links"
 	},
 	"htmlHistoryName": {
 		"message": "History"
@@ -177,49 +177,49 @@
 		"message": "Control"
 	},
 	"htmlOthersName": {
-		"message": "View"
+		"message": "Appearance"
 	},
 	"htmlContactName": {
-		"message": "Info"
+		"message": "About"
 	},
 	"htmlFormDescription": {
-		"message": "Click the \"Select some links to add\" button, you can add some links from a list which has major URLs. If you input a \"$$1\" in a URL field, the \"$$1\" is replaced to the selected text."
+		"message": "Click the \"Add premade links\" button to add ready-made links from a list of some popular websites. \"$$1\" in any URL is replaced with the selected text to search for."
 	},
 	"htmlUsageOrder" : {
-		"message": "Sort."
+		"message": "Sort"
 	},
 	"htmlUsageCheck" : {
-		"message": "Enable."
+		"message": "Enable"
 	},
 	"htmlUsageHist" : {
-		"message": "Save history."
+		"message": "Save history"
 	},
 	"htmlUsageDelete" : {
-		"message": "Delete."
+		"message": "Delete"
 	},
 	"htmlPresetDescription": {
 		"message": "Select some links and press the \"Add\" button. Then they're added."
 	},
 	"htmlAddFromPreset": {
-		"message": "Select some links to add"
+		"message": "Add premade links"
 	},
 	"htmlAddBlankFieldButtonName": {
-		"message": "Add blank fields"
+		"message": "Add a custom link"
 	},
 	"htmlLabelText": {
-		"message": "Site name"
+		"message": "Site name:"
 	},
 	"htmlUrlText": {
-		"message": "URL"
+		"message": "URL:"
 	},
 	"htmlRemoveButtonName": {
 		"message": "Delete"
 	},
 	"htmlLabelDescription": {
-		"message": "Input a site name. It's displayed on the widget or context menu."
+		"message": "Input a site name. It's displayed in the widget or context menu."
 	},
 	"htmlUrlDescription": {
-		"message": "Input a URL. A \"$$1\" is replaced to the selected text."
+		"message": "Input a URL. A \"$$1\" is replaced with the selected text."
 	},
 	"htmlFilterText": {
 		"message": "Filter"
@@ -228,13 +228,13 @@
 		"message": "All"
 	},
 	"htmlLanguageEn": {
-		"message": "English"
+		"message": "English examples"
 	},
 	"htmlLanguageJa": {
-		"message": "Japanese"
+		"message": "Japanese examples"
 	},
 	"htmlLanguageZh": {
-		"message": "Chinese"
+		"message": "Chinese examples"
 	},
 	"htmlAddPresetButtonName": {
 		"message": "Add"
@@ -267,13 +267,13 @@
 		"message": "Delete checked history items"
 	},
 	"htmlHistoryAllDelete": {
-		"message": "Delete all the history items"
+		"message": "Delete all history items"
 	},
 	"alertHistoryAllDelete": {
-		"message": "All the history items will be deleted. It contains the history items which aren't displayed on the table below."
+		"message": "All history items will be deleted. It contains history items which aren't displayed in the table below."
 	},
 	"htmlHistoryDescription": {
-		"message": "These history data are saved into the PC. They are not in the scope of browser synchronization service. You can change the configurations to save history or not on the \"Link edit\" menu."
+		"message": "This history data is saved into the PC. They are not in the scope of browser synchronization service. You can change the configurations to save history or not on the \"Link edit\" menu."
 	},
 	"htmlHistoryZeroRowMessage": {
 		"message": "The number of the history items is 0."
@@ -369,7 +369,7 @@
 		"message": "How to display widget"
 	},
 	"htmlDisplayFunctionDescription": {
-		"message": "Select how to display widget automatically or manually after selecting a text."
+		"message": "Select whether to display widget automatically or manually after selecting a text."
 	},
 	"htmldomainListDescription":{
 		"message": "When a domain matches the list below, the  widget can be displayed. To enable, select the \"Enable by allowed domains\" check on the \"Widget startup\" menu."
@@ -409,7 +409,7 @@
 		"message": "Dark"
 	},
 	"htmlLinkListActionTitle": {
-		"message": "Use icon"
+		"message": "Use icon with \"Display automatically\""
 	},
 	"htmlLinkListActionNormal": {
 		"message": "No icon"
@@ -424,7 +424,7 @@
 		"message": "Widget layout"
 	},
 	"htmlLinkListLayoutPatternTitle": {
-		"message": "Widget layout pattern"
+		"message": "Premade widget layout pattern"
 	},
 	"htmlFaviconDisplayTitle":{
 		"message": "Contents of links"
@@ -457,7 +457,7 @@
 		"message": "Wiktionary Linkage"
 	},
 	"htmlApiServiceDescription": {
-		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary site where volunteers post articles. By using Wiktionary, the description of a word is displayed on the widget."
+		"message": "Wiktionary is a sister site of Wikipedia. It's a dictionary run by volunteers. When using Wiktionary, the description of a word is displayed on the widget."
 	},
 	"htmlServiceCodeTitle": {
 		"message": "Select host"
@@ -493,7 +493,7 @@
 		"message": "Language Filter"
 	},
 	"htmlLanguageFilterDescription": {
-		"message": "Wiktionary is a multilingual dictionary. Its articles include some descriptions of various languages. Using Language Filter, that displayed only descriptions of the languages you specified."
+		"message": "Wiktionary is a multilingual dictionary. Its articles include some descriptions of various languages. Using Language Filter, only descriptions of the languages you specified are displayed."
 	},
 	"htmlLanguageFilterAside": {
 		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\". If you select \"English\" for Language Filter, only \"4\" is displayed."
@@ -514,7 +514,7 @@
 		"message": "Display Only Meaning"
 	},
 	"htmlApiCutOutDescription": {
-		"message": "Leave a content for the meaning from the word description, exclude other content like a pronunciation."
+		"message": "Leave only content for the meaning of the word, exclude other content like pronunciation and etymology."
 	},
 	"htmlApiCutOutLabel": {
 		"message": "Enable"
@@ -523,7 +523,7 @@
 		"message": "Wikipedia Linkage"
 	},
 	"htmlWikipediaLinkageDescription": {
-		"message": "Wikipedia is an encyclopedia site where volunteers post articles. By using Wiktipedia, the description of a word is displayed on the widget"
+		"message": "Wikipedia is an encyclopedia site where volunteers post articles. By using Wikipedia, the description of a word is displayed on the widget"
 	},
 	"htmlWikipediaHostTitle": {
 		"message": "Select host"
@@ -556,10 +556,10 @@
 		"message": "Widget sample"
 	},
 	"htmlRleaseNoteTitle": {
-		"message": "Release note"
+		"message": "Release notes"
 	},
 	"htmlAnnouncementTitle": {
-		"message": "Announcement"
+		"message": "Announcements"
 	},
 	"htmlIssueTitle": {
 		"message": "Feedback"
@@ -583,7 +583,7 @@
 		"message": "Input required."
 	},
 	"htmlCheckURLError": {
-		"message": "Input in URL formant."
+		"message": "Input in URL format."
 	},
 	"htmlCheckByteLengthError": {
 		"message": "Shorten to $MAX_LENGTH$ bytes or less (Currently $LENGTH$ bytes).",
