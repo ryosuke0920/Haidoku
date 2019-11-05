@@ -18,18 +18,22 @@ case ${1} in
 	"firefox") 
 		cp ${APP_DIR}"manifest.firefox.json" ${APP_DIR}"manifest.json";
 		check ${?};
+		echo "switched manifest with firefox"
 		;;
 	"chrome") 
 		cp ${APP_DIR}"manifest.chrome.json" ${APP_DIR}"manifest.json";
 		check ${?};
+		echo "switched manifest with chrome"
 		;;
 	"opera") 
 		cp ${APP_DIR}"manifest.opera.json" ${APP_DIR}"manifest.json";
 		check ${?};
+		echo "switched manifest with opera"
 		;;
 	"edge") 
 		cp ${APP_DIR}"manifest.edge.json" ${APP_DIR}"manifest.json";
 		check ${?};
+		echo "switched manifest with edge"
 		;;
 esac
 
