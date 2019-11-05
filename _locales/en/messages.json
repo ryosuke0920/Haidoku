@@ -273,7 +273,7 @@
 		"message": "All history items will be deleted. It contains history items which aren't displayed in the table below."
 	},
 	"htmlHistoryDescription": {
-		"message": "This history data is saved into the PC. They are not in the scope of browser synchronization service. You can change the configurations to save history or not on the \"Link edit\" menu."
+		"message": "This history data is saved into the PC. They are not in the scope of browser synchronization service. You can change the configurations to save history or not on the \"Edit links\" menu."
 	},
 	"htmlHistoryZeroRowMessage": {
 		"message": "The number of the history items is 0."
@@ -363,7 +363,7 @@
 		"message": "This domain can't be allowed."
 	},
 	"htmlOpenOption": {
-		"message": "Open setting screen."
+		"message": "Open settings screen."
 	},
 	"htmlDisplayFunctionTitle": {
 		"message": "How to display widget"
