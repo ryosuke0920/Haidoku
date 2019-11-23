@@ -6,6 +6,8 @@
 	let serviceCodeSelectNode = othersNode.querySelector(".serviceCodeSelect");
 	let apiCutOutNode = othersNode.querySelector(".apiCutOut");
 	let downloadLanguagePaneNode = othersNode.querySelector("#downloadLanguagePane");
+	let languageFilterTextNode = othersNode.querySelector("#languageFilterText");
+	let languageFilterTextMessageNode = othersNode.querySelector("#languageFilterTextMessage");
 	let languageFilterBoxNodes = othersNode.querySelectorAll(".languageFilterBox");
 	let languageFilterSelectPaneNode = document.querySelector("#languageFilterSelectPane");
 	let languageFilterContainerNode = languageFilterSelectPaneNode.querySelector("#languageFilterContainer");
@@ -74,6 +76,7 @@
 			{ "selector": ".languageFilterDescription", "property": "innerText", "key": "htmlLanguageFilterDescription" },
 			{ "selector": ".languageFilterAside", "property": "innerText", "key": "htmlLanguageFilterAside" },
 			{ "selector": ".addLanguageFilter", "property": "innerText", "key": "htmlAddLanguageFilter" },
+			{ "selector": "#addLanguageFilterFromText", "property": "innerText", "key": "htmlAddLanguageFilterFromText" },
 			{ "selector": ".languageFilterSelectedDescription", "property": "innerText", "key": "htmlLanguageFilterSelectedDescription" },
 			{ "selector": ".languageFilterDownloadMessage", "property": "innerText", "key": "htmlLanguageFilterDownloadMessage" },
 			{ "selector": ".apiCutOutTitle", "property": "innerText", "key": "htmlApiCutOutTitle" },
@@ -122,6 +125,7 @@
 
 	function hideInputMessage(e){
 		if(e.target.closest(".addLanguageFilter")) return;
+		if(e.target.id == "addLanguageFilterFromText") return;
 		let list = othersNode.querySelectorAll(".inputMessage:not(.hide)");
 		for(let i=0; i<list.length; i++){
 			hide(list[i]);
@@ -185,6 +189,9 @@
 			let language = node.getAttribute("data-language");
 			apiRemoveLanguage(language);
 			languageFilterCheckboxInactive(language);
+		}
+		else if( e.target.id=="addLanguageFilterFromText" ){
+			languageFilterTextProcess(languageFilterTextNode.value);
 		}
 	}
 
@@ -868,6 +875,25 @@
 
 	function gotFavicon(e){
 		faviconCache = e;
+	}
+
+	function languageFilterTextProcess(){
+		let value = languageFilterTextNode.value.trim();
+		if(!checkBlank(value)){
+			languageFilterTextMessageNode.innerText = ponyfill.i18n.getMessage("htmlCheckBlankError");
+			show(languageFilterTextMessageNode);
+			return;
+		}
+		if(!checkByte( value, API_LANGUAGE_FILTER_LENGTH )){
+			languageFilterTextMessageNode.innerText = ponyfill.i18n.getMessage("htmlCheckLanguageFilterByteLengthError", [API_LANGUAGE_FILTER_LENGTH]);
+			show(languageFilterTextMessageNode);
+			return;
+		}
+		if(!checkLanguageLimit()){
+			languageFilterTextMessageNode.innerText = ponyfill.i18n.getMessage("htmlCheckLanguageFilterLengthError", [API_LANGUAGE_FILTER_SIZE]);
+			show(languageFilterTextMessageNode);
+			return;
+		}
 	}
 
 })();

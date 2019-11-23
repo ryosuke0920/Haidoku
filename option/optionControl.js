@@ -18,7 +18,7 @@
 			{ "selector": "#manualDisplayCtrlKeyText", "property": "innerText", "key": "extensionOptionManualViewByCtrlKey" },
 			{ "selector": "#domainListTitle", "property": "innerText", "key": "htmlDomainListTitle" },
 			{ "selector": "#domainListDescription", "property": "innerText", "key": "htmlDomainListDescription" },
-			{ "selector": "#addDomainButton", "property": "value", "key": "htmlAddDomainButton" },
+			{ "selector": "#addDomainButton", "property": "innerText", "key": "htmlAddDomainButton" },
 			{ "selector": "#domainAllowedDescription", "property": "innerText", "key": "htmlDomainAllowedDescription" },
 			{ "selector": "#noneDomainAllowedDescription", "property": "innerText", "key": "htmlNoneDomainAllowedDescription" }
 		];
