@@ -835,6 +835,11 @@
 		makeLanguageFilterListNodes();
 	}
 
+	function checkLanguageExists(value){
+		let languageList = getLanguageFilterList();
+		return !languageList.includes(value);
+	}
+
 	function languageFilterCheckboxInactive(language){
 		let node = languageFilterContainer.querySelector(".languageFilterCheckbox[value=\""+language+"\"]");
 		if(!node) return;
@@ -886,6 +891,11 @@
 		}
 		if(!checkByte( value, API_LANGUAGE_FILTER_LENGTH )){
 			languageFilterTextMessageNode.innerText = ponyfill.i18n.getMessage("htmlCheckLanguageFilterByteLengthError", [API_LANGUAGE_FILTER_LENGTH]);
+			show(languageFilterTextMessageNode);
+			return;
+		}
+		if(!checkLanguageExists(value)){
+			languageFilterTextMessageNode.innerText = ponyfill.i18n.getMessage("htmlAlreadyExistsError");
 			show(languageFilterTextMessageNode);
 			return;
 		}

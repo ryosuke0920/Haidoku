@@ -574,7 +574,7 @@
 		"message": "お問い合わせ"
 	},
 	"htmlIam": {
-		"message": "フリーランス プログラマー 太田亮介"
+		"message": "氏名: 太田亮介"
 	},
 	"htmlLicenseTitle": {
 		"message": "ライセンス"
@@ -642,5 +642,8 @@
 				"content": "$1"
 			}
 		}
+	},
+	"htmlAlreadyExistsError": {
+		"message": "既に存在します。"
 	}
 }
