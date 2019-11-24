@@ -894,6 +894,8 @@
 			show(languageFilterTextMessageNode);
 			return;
 		}
+		languageFilterTextNode.value = "";
+		apiAddLanguage(value);
 	}
 
 })();

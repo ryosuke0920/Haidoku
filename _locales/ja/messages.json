@@ -502,7 +502,7 @@
 		"message": "一覧から言語を追加する"
 	},
 	"htmlAddLanguageFilterFromText": {
-		"message": "追加する"
+		"message": "追加"
 	},
 	"htmlLanguageFilterSelectedDescription": {
 		"message": "選択中の言語フィルターの一覧です。"

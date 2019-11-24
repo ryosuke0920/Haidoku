@@ -499,6 +499,9 @@
 		"message": "For example, \"four\" means \"4 \" in English, but in French it means \"oven, furnace\". If you select \"English\" for Language Filter, only \"4\" is displayed."
 	},
 	"htmlAddLanguageFilter": {
+		"message": "Add languages from list"
+	},
+	"htmlAddLanguageFilterFromText": {
 		"message": "Add languages"
 	},
 	"htmlLanguageFilterSelectedDescription": {

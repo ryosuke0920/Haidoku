@@ -603,8 +603,10 @@
 		"hash": "075b41afe3e3e33cdb018acb923d9097"
 	},
 	"htmlAddLanguageFilter": {
-		"message": "添加语言",
-		"hash": "feb0c8c28a8798bfb84ce21e4dcad593"
+		"message": "从列表中添加语言"
+	},
+	"htmlAddLanguageFilterFromText": {
+		"message": "添加语言"
 	},
 	"htmlLanguageFilterSelectedDescription": {
 		"message": "所选语言列表",
