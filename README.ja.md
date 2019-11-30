@@ -37,4 +37,4 @@ https://github.com/ryosuke0920/Haidoku/issues
 
 ## お問い合わせ先
 ryosuke.ohta.programmer@gmail.com  
-フリーランス プログラマー 太田亮介
+太田亮介

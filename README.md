@@ -37,4 +37,4 @@ https://github.com/ryosuke0920/Haidoku/issues
 
 ## Contact
 ryosuke.ohta.programmer@gmail.com  
-Ryosuke Ohta, Freelance programmer, in Tokyo Japan.
+Ryosuke Ohta, in Tokyo Japan.
