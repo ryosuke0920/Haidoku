@@ -41,8 +41,6 @@
 	let apiSwitcheNode;
 	let arrowNode;
 	let unmatchTextNode;
-	let historyButtoneNode;
-	let historyDoneButtoneNode;
 	let apiFooterNode;
 	let widgetNodeTop = 0;
 	let widgetNodeLeft = 0;
@@ -89,7 +87,7 @@
 		rootNode.style.top = "0";
 		rootNode.style.left = "0";
 		body.appendChild(rootNode);
-		let shadow = rootNode.attachShadow({"mode": "open"});
+		let shadow = rootNode.attachShadow({"mode": "closed"});
 
 		widgetNode = document.createElement("div");
 		widgetNode.style.padding = LINK_NODE_PADDING + "px";
@@ -185,22 +183,6 @@
 		unmatchTextNode.classList.add(CSS_PREFIX+"-orange");
 		unmatchTextNode.innerText = unmatchTextNode.title = ponyfill.i18n.getMessage("htmlUnmatchText");
 		apiTitleBoxNode.appendChild(unmatchTextNode);
-
-		historyButtoneNode = document.createElement("span");
-		historyButtoneNode.setAttribute("id",CSS_PREFIX+"-history");
-		historyButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
-		historyButtoneNode.classList.add(CSS_PREFIX+"-historyButton");
-		historyButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/history.svg")+")";
-		historyButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistory");
-		apiTitleBoxNode.appendChild(historyButtoneNode);
-
-		historyDoneButtoneNode = document.createElement("span");
-		historyDoneButtoneNode.setAttribute("id",CSS_PREFIX+"-historyDone");
-		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-buttonIcon");
-		historyDoneButtoneNode.classList.add(CSS_PREFIX+"-historyButton");
-		historyDoneButtoneNode.style.backgroundImage = "url("+ponyfill.extension.getURL("/image/done.svg")+")";
-		historyDoneButtoneNode.title = ponyfill.i18n.getMessage("htmlSaveHistoryDone");
-		apiTitleBoxNode.appendChild(historyDoneButtoneNode);
 
 		apiTitleNode = document.createElement("a");
 		apiTitleNode.setAttribute("id",CSS_PREFIX+"-apiTitle");
@@ -817,7 +799,7 @@
 		document.removeEventListener("selectionchange", manualSelectionChangeBehavior);
 		removeLinkListActonEvent();
 		rootNode.remove();
-		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleBoxNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = historyButtoneNode = historyDoneButtoneNode = reqestStatus = unmatchTextNode = apiFooterNode = undefined;
+		rootNode = widgetNode = coverNode = menuNode = containerNode = apiContentNode = apiTitleBoxNode = apiTitleNode = apiErrorMessageNode = apiBodyNode = apiSwitcheNode = arrowNode = reqestStatus = unmatchTextNode = apiFooterNode = undefined;
 	}
 	function enableWidget(){
 		start();
@@ -1044,12 +1026,7 @@
 
 	function menuClickBihavior(e){
 		let id = e.target.getAttribute("id");
-		if(id == CSS_PREFIX+"-history"){
-			hide(historyButtoneNode);
-			show(historyDoneButtoneNode);
-			saveHistoryWithNode(apiTitleNode).catch(onSaveError);
-		}
-		else if(id == CSS_PREFIX+"-apiTitle"){
+		if(id == CSS_PREFIX+"-apiTitle"){
 			closeLinkListDelay();
 		}
 		else if(id == CSS_PREFIX+"-zoomUp"){
@@ -1251,8 +1228,6 @@
 	}
 
 	function clearWikiContent(){
-		show(historyButtoneNode);
-		hide(historyDoneButtoneNode);
 		clearChildren(apiBodyNode);
 		clearApiTitle();
 	}
@@ -1728,8 +1703,6 @@
 		clearWikiContent();
 		let self = this;
 		function after(content){
-			hide( historyButtoneNode );
-			hide( historyDoneButtoneNode );
 			apiBodyNode.appendChild(content);
 			show(apiTitleBoxNode);
 			removeLoading();
