@@ -72,6 +72,8 @@
 			{ "selector": ".serviceCodeRu", "property": "innerText", "key": "htmlServiceCodeRu" },
 			{ "selector": ".serviceCodeZh", "property": "innerText", "key": "htmlServiceCodeZh" },
 			{ "selector": ".serviceCodeSelectMessage", "property": "innerText", "key": "htmlServiceCodeSelectMessage" },
+			{ "selector": "#wiktionarySaveHistoryTitle", "property": "innerText", "key": "htmlSaveHistoryTitle" },
+			{ "selector": "#wiktionarySaveHistoryEnable", "property": "innerText", "key": "htmlEnable" },
 			{ "selector": ".languageFilterTitle", "property": "innerText", "key": "htmlLanguageFilterTitle" },
 			{ "selector": ".languageFilterDescription", "property": "innerText", "key": "htmlLanguageFilterDescription" },
 			{ "selector": ".languageFilterAside", "property": "innerText", "key": "htmlLanguageFilterAside" },
@@ -81,7 +83,7 @@
 			{ "selector": ".languageFilterDownloadMessage", "property": "innerText", "key": "htmlLanguageFilterDownloadMessage" },
 			{ "selector": ".apiCutOutTitle", "property": "innerText", "key": "htmlApiCutOutTitle" },
 			{ "selector": ".apiCutOutDescription", "property": "innerText", "key": "htmlApiCutOutDescription" },
-			{ "selector": ".apiCutOutLabel", "property": "innerText", "key": "htmlApiCutOutLabel" },
+			{ "selector": ".apiCutOutLabel", "property": "innerText", "key": "htmlEnable" },
 			{ "selector": "#wikipediaLinkageTitle", "property": "innerText", "key": "htmlWikipediaLinkageTitle" },
 			{ "selector": "#wikipediaLinkageDescription", "property": "innerText", "key": "htmlWikipediaLinkageDescription" },
 			{ "selector": "#wikipediaHostTitle", "property": "innerText", "key": "htmlWikipediaHostTitle" },
@@ -93,6 +95,8 @@
 			{ "selector": "#wikipediaCodeJa", "property": "innerText", "key": "htmlWikipediaCodeJa" },
 			{ "selector": "#wikipediaCodeRu", "property": "innerText", "key": "htmlWikipediaCodeRu" },
 			{ "selector": "#wikipediaCodeZh", "property": "innerText", "key": "htmlWikipediaCodeZh" },
+			{ "selector": "#wikipediaSaveHistoryTitle", "property": "innerText", "key": "htmlSaveHistoryTitle" },
+			{ "selector": "#wikipediaSaveHistoryEnable", "property": "innerText", "key": "htmlEnable" },
 			{ "selector": ".linkListSampleTitle", "property": "innerText", "key": "htmlLinkListSampleTitle" }
 		];
 		setI18n(list);

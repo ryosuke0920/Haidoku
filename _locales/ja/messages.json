@@ -483,6 +483,12 @@
 	"htmlServiceCodeSelectMessage": {
 		"message": "ホストを選択してください。"
 	},
+	"htmlSaveHistoryTitle": {
+		"message": "履歴の保存"
+	},
+	"htmlEnable": {
+		"message": "有効にする"
+	},
 	"htmlLanguageFilterTitle": {
 		"message": "言語フィルター"
 	},
@@ -512,9 +518,6 @@
 	},
 	"htmlApiCutOutDescription": {
 		"message": "発音などの解説を除いて、意味だけを表示します。"
-	},
-	"htmlApiCutOutLabel": {
-		"message": "有効にする"
 	},
 	"htmlWikipediaLinkageTitle": {
 		"message": "ウィキペディア連携"
