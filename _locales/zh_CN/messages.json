@@ -158,14 +158,6 @@
 		"message": "打开设置屏幕",
 		"hash": "390ab690f3730257355047d9a47c31ab"
 	},
-	"htmlSaveHistory": {
-		"message": "保存历史记录",
-		"hash": "290d32ef8cf7fdce9b6b6924f6d08230"
-	},
-	"htmlSaveHistoryDone": {
-		"message": "已保存历史",
-		"hash": "3c77ac644bd4e652b6ff19be38cb66e9"
-	},
 	"htmlWiktionary": {
 		"message": "Wiktionary"
 	},

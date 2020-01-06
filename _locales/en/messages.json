@@ -146,12 +146,6 @@
 	"htmlOption": {
 		"message": "Open settings screen"
 	},
-	"htmlSaveHistory": {
-		"message": "Save history"
-	},
-	"htmlSaveHistoryDone": {
-		"message": "Saved history"
-	},
 	"htmlWiktionary": {
 		"message": "Wiktionary"
 	},

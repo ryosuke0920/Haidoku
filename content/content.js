@@ -1326,6 +1326,7 @@
 		initScrollWidget();
 		show(apiTitleBoxNode);
 		removeLoading();
+		saveHistoryWithNode(apiTitleNode).catch(onSaveError);
 	}
 
 	function apiWikipediaResponse(e){
@@ -1348,6 +1349,7 @@
 		initScrollWidget();
 		show(apiTitleBoxNode);
 		removeLoading();
+		saveHistoryWithNode(apiTitleNode).catch(onSaveError);
 	}
 
 	function makeFooterNode(text){
