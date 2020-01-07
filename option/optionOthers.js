@@ -13,6 +13,8 @@
 	let languageFilterContainerNode = languageFilterSelectPaneNode.querySelector("#languageFilterContainer");
 	let apiLangPrefixSelectNode = languageFilterSelectPaneNode.querySelector(".apiLangPrefixSelect");
 	let wikipediaSelectNode = othersNode.querySelector("#wikipediaSelect");
+	let wiktionarySaveHistoryNode = othersNode.querySelector("#wiktionarySaveHistory");
+	let wikipediaSaveHistoryNode = othersNode.querySelector("#wikipediaSaveHistory");
 	let languageFilterCache = {};
 	let apiPrefixCache = {};
 	let languageFilterlist = [];
@@ -148,6 +150,8 @@
 			"s": serviceCode,
 			"ll": languageFilter,
 			"co": DEFAULT_MEANING_VALUE,
+			"ah":DEFAULT_WIKITIONARY_HISTORY_SAVE_VALUE,
+			"wh":DEFAULT_WIKIPEDIA_HISTORY_SAVE_VALUE,
 			"wc": "w-"+serviceCode
 		});
 		return getter.then(onGot);
@@ -170,6 +174,8 @@
 		makeLanguageFilterListNodes();
 		setApiCutOut(res["co"]);
 		setWikipediaCode(res["wc"]);
+		setWiktionarySaveHistory(res["ah"]);
+		setWikipediaSaveHistory(res["wh"]);
 		setSampleLinkListServiceCode();
 	}
 
@@ -195,6 +201,12 @@
 		}
 		else if( e.target.id=="addLanguageFilterFromText" ){
 			languageFilterTextProcess(languageFilterTextNode.value);
+		}
+		else if( e.target.id=="wiktionarySaveHistory" ){
+			saveWiktionarySaveHisoty(e.target.checked).catch(onSaveError);
+		}
+		else if( e.target.id=="wikipediaSaveHistory" ){
+			saveWikipediaSaveHisoty(e.target.checked).catch(onSaveError);
 		}
 	}
 
@@ -271,6 +283,20 @@
 		if( e.hasOwnProperty("s") || e.hasOwnProperty("wc") ){
 			setSampleLinkListServiceCode();
 		}
+		if( e.hasOwnProperty("ah") ){
+			setWiktionarySaveHistory(e["ah"]["newValue"]);
+		}
+		if( e.hasOwnProperty("wh") ){
+			setWikipediaSaveHistory(e["wh"]["newValue"]);
+		}
+	}
+
+	function setWiktionarySaveHistory(value){
+		wiktionarySaveHistoryNode.checked = value
+	}
+
+	function setWikipediaSaveHistory(value){
+		wikipediaSaveHistoryNode.checked = value
 	}
 
 	function setOptionList(list){
@@ -603,6 +629,20 @@
 		let data = {
 			"wc": code,
 			"sw": API_SWITCH_DISABLED
+		};
+		return saveW(data);
+	}
+
+	function saveWiktionarySaveHisoty(value){
+		let data = {
+			"ah": value
+		};
+		return saveW(data);
+	}
+
+	function saveWikipediaSaveHisoty(value){
+		let data = {
+			"wh": value
 		};
 		return saveW(data);
 	}
