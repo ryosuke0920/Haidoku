@@ -483,6 +483,12 @@
 	"htmlServiceCodeSelectMessage": {
 		"message": "Select host."
 	},
+	"htmlSaveHistoryTitle": {
+		"message": "Save history"
+	},
+	"htmlEnable": {
+		"message": "Enable"
+	},
 	"htmlLanguageFilterTitle": {
 		"message": "Language Filter"
 	},
@@ -512,9 +518,6 @@
 	},
 	"htmlApiCutOutDescription": {
 		"message": "Leave only content for the meaning of the word, exclude other content like pronunciation and etymology."
-	},
-	"htmlApiCutOutLabel": {
-		"message": "Enable"
 	},
 	"htmlWikipediaLinkageTitle": {
 		"message": "Wikipedia Linkage"

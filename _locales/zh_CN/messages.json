@@ -582,6 +582,12 @@
 		"message": "选择主机",
 		"hash": "8435416bad9375cf181415b9f434b23c"
 	},
+	"htmlSaveHistoryTitle": {
+		"message": "保存历史"
+	},
+	"htmlEnable": {
+		"message": "启用"
+	},
 	"htmlLanguageFilterTitle": {
 		"message": "语言过滤器",
 		"hash": "802007d06f6fa4c67dbe7d267ac9d768"
@@ -619,10 +625,6 @@
 	"htmlApiCutOutDescription": {
 		"message": "为词语描述中的含义留下内容，排除其他内容，如发音。",
 		"hash": "2729c72a75570a4cc1d8718c7293d278"
-	},
-	"htmlApiCutOutLabel": {
-		"message": "启用",
-		"hash": "2212934c2b3d751385bf1c26d91172f3"
 	},
 	"htmlWikipediaLinkageTitle": {
 		"message": "维基百科链接"
