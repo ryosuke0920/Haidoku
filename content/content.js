@@ -70,6 +70,9 @@
 	let windowId = Math.random();
 	let moveObj;
 	let innerSelectionFlag = false;
+	let wiktionaryHistorySaveFlag = DEFAULT_WIKTIONARY_HISTORY_SAVE_VALUE;
+	let wikipediaHistorySaveFlag = DEFAULT_WIKIPEDIA_HISTORY_SAVE_VALUE;
+	let historySaveMemory = {};
 
 	start().then(()=>{
 		ponyfill.storage.onChanged.addListener( onStorageChanged );
@@ -773,6 +776,13 @@
 		if( change["co"] ){
 			setLinkListApiCutOut( change["co"]["newValue"] );
 		}
+		if(change["ah"]){
+			setWiktionaryHistorySaveFlag(change["ah"]["newValue"]);
+		}
+		if(change["wh"]){
+			setWikipediaHistorySaveFlag(change["wh"]["newValue"]);
+		}
+
 		if(!change.hasOwnProperty("w")) return;
 		if(change["w"]["newValue"] == windowId) return;
 		if( change["sw"] ){
@@ -831,6 +841,8 @@
 			"s": sc,
 			"ll": languageFilter,
 			"co": DEFAULT_MEANING_VALUE,
+			"ah": DEFAULT_WIKTIONARY_HISTORY_SAVE_VALUE,
+			"wh": DEFAULT_WIKIPEDIA_HISTORY_SAVE_VALUE,
 			"wc": "w-"+sc
 		});
 	}
@@ -840,7 +852,7 @@
 		if(weModel.isDisable(enableWidgetValue)) return;
 		if(weModel.isEnableWithDomain(enableWidgetValue) && !dlModel.isAllowedCurrentDomain(res.dl)) return;
 		return Promise.resolve()
-		.then(()=>{ return setVer(res); })
+		.then(()=>{ return setVar(res); })
 		.then(()=>{ if(hasLinkList()) return getFavicon().then( gotFavicon ); })
 		.then( initWidget );
 	}
@@ -850,7 +862,7 @@
 	function setDomainList(list){
 		domainList = list;
 	}
-	function setVer( res ){
+	function setVar( res ){
 		setAnchorSize( res["as"] );
 		setLinkListSize( res["lh"], res["lw"] );
 		setOptionList( res["ol"] );
@@ -867,6 +879,8 @@
 		setServiceCode2( res["wc"] );
 		setLanguageFilter( res["ll"] );
 		setLinkListApiCutOut( res["co"] );
+		setWiktionaryHistorySaveFlag(res["ah"]);
+		setWikipediaHistorySaveFlag(res["wh"]);
 	}
 
 	function setAnchorSize(res){
@@ -902,6 +916,14 @@
 
 	function setLinkListStyle(res){
 		linkListStyle = res;
+	}
+
+	function setWiktionaryHistorySaveFlag(res){
+		wiktionaryHistorySaveFlag = res;
+	}
+
+	function setWikipediaHistorySaveFlag(res){
+		wikipediaHistorySaveFlag = res;
 	}
 
 	function applyLinkListStyle(){
@@ -1326,7 +1348,10 @@
 		initScrollWidget();
 		show(apiTitleBoxNode);
 		removeLoading();
-		saveHistoryWithNode(apiTitleNode).catch(onSaveError);
+		if(wiktionaryHistorySaveFlag && !isSavedHistoryMemory(this.data.service, this.data.text)){
+			saveHistoryWithNode(apiTitleNode).catch(onSaveError);
+			addSavedHistoryMemory(this.data.service, this.data.text)
+		}
 	}
 
 	function apiWikipediaResponse(e){
@@ -1349,7 +1374,10 @@
 		initScrollWidget();
 		show(apiTitleBoxNode);
 		removeLoading();
-		saveHistoryWithNode(apiTitleNode).catch(onSaveError);
+		if(wikipediaHistorySaveFlag && !isSavedHistoryMemory(this.data.service, this.data.text)){
+			saveHistoryWithNode(apiTitleNode).catch(onSaveError);
+			addSavedHistoryMemory(this.data.service, this.data.text)
+		}
 	}
 
 	function makeFooterNode(text){
@@ -1494,6 +1522,17 @@
 			}
 		}
 		return meaningNode;
+	}
+
+	function isSavedHistoryMemory(service, text){
+		return historySaveMemory.hasOwnProperty(service) && historySaveMemory[service].includes(text);
+	}
+
+	function addSavedHistoryMemory(service, text){
+		if(!historySaveMemory.hasOwnProperty(service)){
+			historySaveMemory[service] = [];
+		}
+		historySaveMemory[service].push(text);
 	}
 
 	function removeSimbol(node){

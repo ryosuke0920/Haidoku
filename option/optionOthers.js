@@ -150,8 +150,8 @@
 			"s": serviceCode,
 			"ll": languageFilter,
 			"co": DEFAULT_MEANING_VALUE,
-			"ah":DEFAULT_WIKITIONARY_HISTORY_SAVE_VALUE,
-			"wh":DEFAULT_WIKIPEDIA_HISTORY_SAVE_VALUE,
+			"ah": DEFAULT_WIKTIONARY_HISTORY_SAVE_VALUE,
+			"wh": DEFAULT_WIKIPEDIA_HISTORY_SAVE_VALUE,
 			"wc": "w-"+serviceCode
 		});
 		return getter.then(onGot);
