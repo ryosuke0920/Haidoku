@@ -5,7 +5,9 @@
 	const LINK_NODE_DEFAULT_HEIGHT = 200;
 	const LINK_NODE_DEFAULT_WIDTH = 320;
 	const LINK_NODE_MIN_HEIGHT = 50;
+	const LINK_NODE_MAX_HEIGHT = 9999;
 	const LINK_NODE_MIN_WIDTH = 50;
+	const LINK_NODE_MAX_WIDTH = 9999;
 	const SCROLL_SPACE = 17;
 	const RECT_SPACE = 3;
 	const ANCHOR_DEFAULT_SIZE = 0.8;
@@ -507,8 +509,8 @@
 		return ponyfill.runtime.sendMessage({
 			"method": "saveLinkListSize",
 			"data": {
-				"lh": widgetNodeHeight,
-				"lw": widgetNodeWidth
+				"lh": widgetNodeHeight < LINK_NODE_MAX_HEIGHT ? widgetNodeHeight : LINK_NODE_MAX_HEIGHT,
+				"lw": widgetNodeWidth < LINK_NODE_MAX_WIDTH ? widgetNodeWidth : LINK_NODE_MAX_WIDTH
 			}
 		});
 	}
@@ -1348,7 +1350,7 @@
 		initScrollWidget();
 		show(apiTitleBoxNode);
 		removeLoading();
-		if(wiktionaryHistorySaveFlag && !isSavedHistoryMemory(this.data.service, this.data.text)){
+		if(wiktionaryHistorySaveFlag && !isInHistorySaveMemory(this.data.service, this.data.text)){
 			saveHistoryWithNode(apiTitleNode).catch(onSaveError);
 			addSavedHistoryMemory(this.data.service, this.data.text)
 		}
@@ -1374,7 +1376,7 @@
 		initScrollWidget();
 		show(apiTitleBoxNode);
 		removeLoading();
-		if(wikipediaHistorySaveFlag && !isSavedHistoryMemory(this.data.service, this.data.text)){
+		if(wikipediaHistorySaveFlag && !isInHistorySaveMemory(this.data.service, this.data.text)){
 			saveHistoryWithNode(apiTitleNode).catch(onSaveError);
 			addSavedHistoryMemory(this.data.service, this.data.text)
 		}
@@ -1524,7 +1526,7 @@
 		return meaningNode;
 	}
 
-	function isSavedHistoryMemory(service, text){
+	function isInHistorySaveMemory(service, text){
 		return historySaveMemory.hasOwnProperty(service) && historySaveMemory[service].includes(text);
 	}
 
