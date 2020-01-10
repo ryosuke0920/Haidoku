@@ -38,7 +38,7 @@
 		let sampleWidgetStyle = sampleWidgetNode.querySelector("#widgetStyle");
 		sampleWidgetStyle.textContent = WIDGET_STYLE;
 		let container = document.querySelector("#widgetContainer");
-		let shadow = container.attachShadow({"mode": "open"});
+		let shadow = container.attachShadow({"mode": "closed"});
 		shadow.appendChild(widgetTemplate);
 	}
 
