@@ -182,13 +182,13 @@ const PRESET_OPTION_LIST = [
 	},
 	{
 		"la": "en",
-		"l": "Oxford Dictionaries",
-		"u": "https://en.oxforddictionaries.com/search?utf8=✓&filter=dictionary&query=$1"
+		"l": "Lexico(UK Dictionary)",
+		"u": "https://www.lexico.com/search?utf8=%E2%9C%93&filter=dictionary&dictionary=en&query=$1"
 	},
 	{
 		"la": "en",
-		"l": "Oxford Dictionaries(North American English)",
-		"u": "https://en.oxforddictionaries.com/search?utf8=✓&filter=noad&query=$1"
+		"l": "Lexico(US Dictionary)",
+		"u": "https://www.lexico.com/search?utf8=%E2%9C%93&filter=noad&dictionary=en&query=$1"
 	},
 	{
 		"la": "en",
