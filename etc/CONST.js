@@ -1,29 +1,20 @@
 const CSS_PREFIX = "hdk";
 const LINK_NODE_PADDING = 0;
-/* cl */
 const LINK_LIST_STYLE_CLASSIC = "c";
 const LINK_LIST_STYLE_DARK = "d";
-/* f */
 const LINK_LIST_FAVICON_NORMAL = "n";
 const LINK_LIST_FAVICON_ONLY = "o";
-/* ld */
 const LINK_LIST_DIRECTION_VERTICAL = "v";
 const LINK_LIST_DIRECTION_HORIZAONTAL = "h";
-/* ls */
 const LINK_LIST_SEPARATOR_VERTICAL = "v";
 const LINK_LIST_SEPARATOR_HORIZONTAL = "h";
-/* ca */
 const LINK_LIST_ACTION_NORMAL = "n";
 const LINK_LIST_ACTION_MOUSEOVER = "m";
 const LINK_LIST_ACTION_MOUSECLICK = "c";
-/* ah */
 const DEFAULT_WIKTIONARY_HISTORY_SAVE_VALUE = true;
-/* wh */
 const DEFAULT_WIKIPEDIA_HISTORY_SAVE_VALUE = true;
-
 const DOMAIN_MAX_LENGTH = 253;
 const DOMAIN_LIST_MAX_SIZE = 50;
-
 const DEFAULT_AUTO_VIEW_FLAG = true;
 const DEFAULT_SHIFT_KEY_VIEW_FLAG = false;
 const DEFAULT_CTRL_KEY_VIEW_FLAG = false;
@@ -32,12 +23,9 @@ const DEFAULT_OPTION_LIST_ON_GET = [];
 const DEFAULT_DOMAIN_LIST = [];
 const DEFAULT_MEANING_VALUE = false;
 const LINK_LIST_DEFAULT_STYLE = LINK_LIST_STYLE_CLASSIC;
-
 const DEFAULT_LOCALE = "en";
-
 const FOOTER_CONTENT = "Provided by Wiktionary under Creative Commons Attribution-Share Alike 3.0; additional terms may apply.";//https://www.mediawiki.org/wiki/API:Licensing
 const FOOTER_CONTENT2 = "Provided by Wikipedia under Creative Commons Attribution-Share Alike 3.0; additional terms may apply.";//https://www.mediawiki.org/wiki/API:Licensing
-
 const API_SWITCH_DISABLED = "";
 const API_SWITCH_ENABLED = "1";
 const API_SERVICE_CODE_NONE = "-";
