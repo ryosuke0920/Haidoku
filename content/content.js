@@ -55,6 +55,7 @@
 	let linkListFlag = false;
 	let shiftKeyFlag = false;
 	let ctrlKeyFlag = false;
+	let altKeyFlag = false;
 	let linkListStyle;
 	let faviconDisplay;
 	let linknListDirection;
@@ -386,7 +387,7 @@
 		if( e.key == "Escape" || e.key == "Esc"){
 			closeLinkList();
 		}
-		else if((shiftKeyFlag && e.key == "Shift")||(ctrlKeyFlag && e.key == "Control")){
+		else if((shiftKeyFlag && e.key == "Shift")||(ctrlKeyFlag && e.key == "Control")||(altKeyFlag && e.key == "Alt")){
 			switchLinkList();
 		}
 	}
@@ -736,6 +737,9 @@
 		if( change["sk"] ){
 			setShiftKeyFlag( change["sk"]["newValue"] );
 		}
+		if( change["ak"] ){
+			setAltKeyFlag( change["ak"]["newValue"] );
+		}
 		if( change["ol"] ) {
 			closeLinkList();
 			setOptionList( change["ol"]["newValue"] );
@@ -831,6 +835,7 @@
 			"bf": DEFAULT_AUTO_VIEW_FLAG,
 			"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
 			"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
+			"ak": DEFAULT_ALT_KEY_VIEW_FLAG,
 			"lh": LINK_NODE_DEFAULT_HEIGHT,
 			"lw": LINK_NODE_DEFAULT_WIDTH,
 			"as": ANCHOR_DEFAULT_SIZE,
@@ -871,6 +876,7 @@
 		setLinkListFlag( res["bf"] );
 		setCtrlKeyFlag( res["ck"] );
 		setShiftKeyFlag( res["sk"] );
+		setAltKeyFlag( res["ak"] );
 		setLinkListStyle( res["cl"] );
 		setLinkListAction( res["ca"] );
 		setFaviconDisplay( res["f"] );
@@ -899,6 +905,10 @@
 
 	function setCtrlKeyFlag(res){
 		ctrlKeyFlag = res;
+	}
+
+	function setAltKeyFlag(res){
+		altKeyFlag = res;
 	}
 
 	function setServiceCode(res){

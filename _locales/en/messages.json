@@ -17,6 +17,9 @@
 	"extensionOptionManualViewByCtrlKey": {
 		"message": "Display/hide with Ctrl key"
 	},
+	"extensionOptionManualViewByAltKey": {
+		"message": "Display/hide with Alt key"
+	},
 	"extensionOptionName": {
 		"message": "Options"
 	},

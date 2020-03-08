@@ -23,6 +23,9 @@
 		"message": "按住 Ctrl 键显示",
 		"hash": "b0dca8092ed2d52450401adf96df67da"
 	},
+	"extensionOptionManualViewByAltKey": {
+		"message": "按住 Alt 键显示"
+	},
 	"extensionOptionName": {
 		"message": "选项",
 		"hash": "531dad0078a72193602b18495f0ad4e9"

@@ -5,6 +5,7 @@ let optionList = [];
 let autoViewFlag = true;
 let shiftKey = false;
 let ctrlKey = false;
+let altKey = false;
 let options = {};
 let faviconCache = {};
 let apiDocumentCache = {};
@@ -46,7 +47,8 @@ function getSetting() {
 		"ol": DEFAULT_OPTION_LIST_ON_GET,
 		"bf": DEFAULT_AUTO_VIEW_FLAG,
 		"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
-		"ck": DEFAULT_CTRL_KEY_VIEW_FLAG
+		"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
+		"ak": DEFAULT_ALT_KEY_VIEW_FLAG
 	}).then(onGotSetting);
 }
 
@@ -55,6 +57,7 @@ function onGotSetting(json){
 	autoViewFlag = json["bf"];
 	shiftKey = json["sk"];
 	ctrlKey = json["ck"];
+	altKey = json["ak"];
 }
 
 function initListener(){
@@ -137,6 +140,10 @@ function saveManualViewCtrlKey(flag=false){
 	return save({"ck":flag}).catch(onSaveError);
 }
 
+function saveManualViewAltKey(flag=false){
+	return save({"ak":flag}).catch(onSaveError);
+}
+
 function addHistory(e){
 	let db = e.target.result;
 	let transaction = db.transaction([HISTORYS], WRITE);
@@ -163,11 +170,12 @@ function saveHistory(data){
 }
 
 function onStorageChanged(change, area){
-	if(change["ol"] || change["bf"] || change["sk"] || change["ck"]) {
+	if(change["ol"] || change["bf"] || change["sk"] || change["ck"] || change["ak"]) {
 		if(change["ol"]) optionList = change["ol"]["newValue"];
 		if(change["bf"]) autoViewFlag = change["bf"]["newValue"];
 		if(change["sk"]) shiftKey = change["sk"]["newValue"];
 		if(change["ck"]) ctrlKey = change["ck"]["newValue"];
+		if(change["ak"]) altKey = change["ak"]["newValue"];
 		resetMenu();
 	}
 	if(change["ol"]) {
@@ -267,6 +275,14 @@ function resetMenu(json){
 		"contexts": ["page","image","selection"]
 	});
 	ponyfill.contextMenus.create({
+		"parentId": "manualView",
+		"id": "manualViewAltKey",
+		"title": ponyfill.i18n.getMessage("extensionOptionManualViewByAltKey"),
+		"checked": altKey,
+		"type": "checkbox",
+		"contexts": ["page","image","selection"]
+	});
+	ponyfill.contextMenus.create({
 		"id": "option",
 		"title": ponyfill.i18n.getMessage("extensionOptionName"),
 		"contexts": ["page","image","selection"]
@@ -285,6 +301,9 @@ function contextMenuBehavior(info, tab){
 	}
 	else if ( info.menuItemId == "manualViewCtrlKey" ){
 		saveManualViewCtrlKey(info.checked);
+	}
+	else if ( info.menuItemId == "manualViewAltKey" ){
+		saveManualViewAltKey(info.checked);
 	}
 	else if ( options.hasOwnProperty( info.menuItemId ) ){
 		let text;

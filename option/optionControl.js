@@ -16,6 +16,7 @@
 			{ "selector": "#autoDisplayText", "property": "innerText", "key": "extensionOptionAutoView" },
 			{ "selector": "#manualDisplayShiftKeyText", "property": "innerText", "key": "extensionOptionManualViewByShiftKey" },
 			{ "selector": "#manualDisplayCtrlKeyText", "property": "innerText", "key": "extensionOptionManualViewByCtrlKey" },
+			{ "selector": "#manualDisplayAltKeyText", "property": "innerText", "key": "extensionOptionManualViewByAltKey" },
 			{ "selector": "#domainListTitle", "property": "innerText", "key": "htmlDomainListTitle" },
 			{ "selector": "#domainListDescription", "property": "innerText", "key": "htmlDomainListDescription" },
 			{ "selector": "#addDomainButton", "property": "innerText", "key": "htmlAddDomainButton" },
@@ -37,13 +38,15 @@
 		return ponyfill.storage.sync.get({
 			"bf": DEFAULT_AUTO_VIEW_FLAG,
 			"sk": DEFAULT_SHIFT_KEY_VIEW_FLAG,
-			"ck": DEFAULT_CTRL_KEY_VIEW_FLAG
+			"ck": DEFAULT_CTRL_KEY_VIEW_FLAG,
+			"ak": DEFAULT_ALT_KEY_VIEW_FLAG
 		});
 	}
 	function gotConfig(e){
 		applyAutoDisplayCheck(e.bf);
 		applyManualDisplayShiftKeyCheck(e.sk);
 		applyManualDisplayCtrlKeyCheck(e.ck);
+		applyManualDisplayAltKeyCheck(e.ak);
 	}
 	function storageOnChageBehavior(e){
 		if(e.hasOwnProperty("dl")){
@@ -60,6 +63,9 @@
 		else if(e.hasOwnProperty("ck")){
 			applyManualDisplayCtrlKeyCheck(e.ck.newValue);
 		}
+		else if(e.hasOwnProperty("ak")){
+			applyManualDisplayAltKeyCheck(e.ak.newValue);
+		}
 		else if(e.hasOwnProperty("e")){
 			applyWidgetEnableCheck(e.e.newValue);
 		}
@@ -75,6 +81,9 @@
 	}
 	function applyManualDisplayCtrlKeyCheck(value){
 		controlNode.querySelector("#manualDisplayCtrlKeyCheck").checked = value;
+	}
+	function applyManualDisplayAltKeyCheck(value){
+		controlNode.querySelector("#manualDisplayAltKeyCheck").checked = value;
 	}
 	function applyDomainList(domainList){
 		let domainListNode = controlNode.querySelector("#domainAllowedList");
@@ -105,6 +114,9 @@
 		}
 		else if(e.target.id == "manualDisplayCtrlKeyCheck"){
 			saveW({"ck": e.target.checked}).catch(onSaveError);
+		}
+		else if(e.target.id == "manualDisplayAltKeyCheck"){
+			saveW({"ak": e.target.checked}).catch(onSaveError);
 		}
 		else if(e.target.id == "addDomainButton"){
 			let domain = controlNode.querySelector("#addDomainText").value.trim();

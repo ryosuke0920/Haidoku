@@ -17,6 +17,9 @@
 	"extensionOptionManualViewByCtrlKey": {
 		"message": "Ctrlキーで表示"
 	},
+	"extensionOptionManualViewByAltKey": {
+		"message": "Altキーで表示"
+	},
 	"extensionOptionName": {
 		"message": "設定"
 	},
